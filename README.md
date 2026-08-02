@@ -1,8 +1,8 @@
 # mei-llm
 
-MEI / MeiLang 基座模型工作线的**代码根**（与 `mei-agent`、`rubble` 同级独立仓）。
+MEI / MeiLang 基座模型工作线的代码根（独立 Git 仓；与 `mei-agent`、`rubble` 并列）。
 
-设计合同与题库 MD 正文仍在文档仓：`docs/draft/mei-llm/` · 薄入口 `docs/mei-llm/README.md`。
+本仓只含可运行的脚本、数据与训练旁路。**设计主张与过程笔记不在本仓发布**；正式发行文档将另行写入本仓自有说明，而不是链到外部文档树。
 
 ## 目录
 
@@ -25,8 +25,10 @@ python3 scripts/run_eval_mlx_v0.py --help
 python3 scripts/run_eval_qwen_cloud_v0.py --help
 ```
 
-稳定背景包默认读 monorepo：`docs/draft/mei-llm/2026-07-31-ctx-stable-v0.md`（可用 `--ctx` 覆盖）。
+背景包请用 `--ctx /path/to/ctx.md` 显式传入（仓库不捆绑外部文档路径）。
+
+跑分结束后同目录可生成客观报告 `report.md`（由 `summary.json` + `predictions.jsonl` 派生；需已安装旁路包 `mei_eval`）。
 
 ## 依赖
 
-见 `requirements.txt`。MLX 本机评测需 `mlx` / `mlx_lm`；云 / Ollama runner 可选用旁路 `tools/mei-eval/python` 的 `mei_eval` 加载 `.env`。
+见 `requirements.txt`。MLX 本机评测需 `mlx` / `mlx_lm`。云 / Ollama runner 可选用已发布的 [`mei-eval`](https://github.com/arcstep/mei-eval)（`pip install -e` 其 `python/`），用于加载 `.env` 与写报告。

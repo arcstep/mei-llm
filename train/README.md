@@ -34,5 +34,4 @@ python3 scripts/export_mlx_sft_seed_v0.py \
 ```bash
 python3 scripts/compare_mlx_base_lora_v0.py --limit 8 --faces face.edge,face.dev
 # 读 experiments/runs/*-compare/summary.json
-# 笔记仍在 docs/draft/mei-llm/2026-07-31-mlx-0p8b-base-lora-compare-note.md
 ```
