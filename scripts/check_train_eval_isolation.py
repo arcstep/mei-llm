@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fail if train seed intersects eval bank item_ids, embeds EVAL-* text,
-or lacks evidence_release / source_refs when claimed as domain-train samples.
+or lacks task/evidence release provenance when claimed as domain-train samples.
 """
 
 from __future__ import annotations
@@ -58,6 +58,8 @@ def main() -> int:
     domain_rows = load_jsonl(args.domain_train) if args.domain_train else []
     for r in domain_rows:
         sid = r.get("sample_id")
+        if not r.get("task_catalog_release"):
+            domain_errors.append(f"{sid}:missing_task_catalog_release")
         if not r.get("evidence_release"):
             domain_errors.append(f"{sid}:missing_evidence_release")
         if not r.get("source_refs"):

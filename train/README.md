@@ -23,6 +23,14 @@ python3 scripts/run_eval_mlx_v0.py --face face.edge --limit 5 --judge none
 
 种子：`seed/sft-smoke-v0.jsonl`（合成对话，非题库抄录；现行约 30 条）。
 
+Evidence 派生的领域样本必须同时记录：
+
+- `task_catalog_release`：任务域知识、Catalog 与 contracts 的版本；
+- `evidence_release`：求解事实/代码证据版本；
+- `source_refs` 与 `transform_recipe`。
+
+缺任一项时 `check_train_eval_isolation.py --domain-train ...` 必须失败。
+
 ```bash
 python3 scripts/export_mlx_sft_seed_v0.py \
   --upsample-topics tp.bucket_archive,tp.archive_as_current,tp.bucket_ssot,tp.three_buckets \
