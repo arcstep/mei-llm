@@ -79,7 +79,7 @@ def main() -> int:
     parser.add_argument("--evidence-root", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=False)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--evidence-release", default="mei-lang-evidence@HEAD")
+    parser.add_argument("--evidence-release", required=True)
     parser.add_argument("--task-catalog-release", default="meilang-task-catalog-v2")
     args = parser.parse_args()
 
@@ -88,6 +88,14 @@ def main() -> int:
     if args.manifest and args.manifest.exists():
         manifest = load_manifest(args.manifest.resolve())
         release = manifest.get("evidence_release", release)
+    if (
+        not isinstance(release, str)
+        or not release.strip()
+        or "@head" in release.casefold()
+        or "+dirty" in release.casefold()
+    ):
+        parser.error("--evidence-release must be an immutable non-dirty revision")
+    release = release.strip()
 
     rows = []
     for path in iter_knowledge_files(evidence_root):
