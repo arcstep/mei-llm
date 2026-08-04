@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]  # mei-llm/
 MEI_PROJECTS_ROOT = ROOT.parent  # mei-llm → mei-projects
 DRAFT_DOCS = MEI_PROJECTS_ROOT / "docs/draft/mei-llm"
 DEFAULT_BANK = ROOT / "data/eval/eval-bank-v0.pending.jsonl"
-DEFAULT_CTX = DRAFT_DOCS / "2026-07-31-ctx-stable-v0.md"
+DEFAULT_CTX = MEI_PROJECTS_ROOT / "docs/mei-llm/02-eval/0205-ctx-stable-v0.md"
 FALLBACK_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 
 _EVAL_SRC = MEI_PROJECTS_ROOT / "tools/mei-eval/python/src"
