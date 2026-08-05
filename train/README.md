@@ -25,7 +25,7 @@ python3 scripts/run_eval_mlx_v0.py --face face.edge --limit 5 --judge none
 
 Evidence 派生的领域样本必须同时记录：
 
-- `task_catalog_release`：任务域知识、Catalog 与 contracts 的版本；
+- `task_catalog_release`：可选钉定；记录所用 Evidence knowledge/contracts，以及若使用则记录 task-seeds catalog 版本；
 - `evidence_release`：求解事实/代码证据版本；
 - `source_refs` 与 `transform_recipe`。
 

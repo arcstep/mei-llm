@@ -27,9 +27,10 @@ python3 scripts/run_eval_qwen_cloud_v0.py --help
 
 背景包请用 `--ctx /path/to/ctx.md` 显式传入（仓库不捆绑外部文档路径）。
 
-领域语料组合必须钉两个独立版本：`task_catalog_release`（Evidence Task
-Model：L0–L9/LX knowledge + Catalog + contracts）与 `evidence_release`
-（求解事实/代码）。训练样本不得从 sibling docs 或 bench 临时拼装任务定义。
+领域语料组合必须钉两个独立版本：`task_catalog_release`（可选；钉定所用
+Evidence knowledge / contracts，以及若使用则钉定 `construction/task-seeds`
+抽样 catalog）与 `evidence_release`（求解事实/代码）。训练样本不得从 sibling
+docs 或 bench 临时拼装任务定义；不得把 seeds 称作 Task Model 或 Universe 真源。
 
 跑分结束后同目录可生成客观报告 `report.md`（由 `summary.json` + `predictions.jsonl` 派生；需已安装旁路包 `mei_eval`）。
 
