@@ -40,7 +40,8 @@ python3 scripts/eval_needle_toolcall_v0.py --bank eval/banks/needle-vrm-agent-v0
 # needle-zh 主线（规格 / 学生 / 词表 v1 / 预训阶梯 / SFT）
 python3 tasks/needle-zh/model/check_student.py
 python3 scripts/train_zh_vocab_spm.py --freeze-v1
-python3 scripts/build_needle_vrm_holdout_v1.py --tier 2k
+python3 scripts/build_needle_home_sft_packs.py --tier 2k
+python3 scripts/validate_needle_home_sft_pack.py --pack tasks/needle-zh/train/packs/home-sft-2k.jsonl
 python3 scripts/check_train_eval_isolation.py --all
 python3 scripts/build_zh_pretrain_v0.py --smoke
 python3 scripts/train_needle_zh_pretrain.py --rung 100m --smoke

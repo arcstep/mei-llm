@@ -1,0 +1,14 @@
+{
+  "unique_train_tokens": 4861158,
+  "exposure_train_tokens": 4861158,
+  "by_source": {
+    "structure_clean": 4861158
+  },
+  "valid": {
+    "structure_clean": 105850
+  },
+  "parent_checkpoint": null,
+  "tokenizer": "corpora/zh-vocab-v0/zh-24k-v1.model",
+  "seq_len": 256,
+  "note": "Do not multiply unique by epochs to name 2B/10B. 2B/10B need new immutable batches."
+}

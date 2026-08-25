@@ -8,9 +8,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from repo_paths import ROOT, TASKS_ROOT, TASK_NEEDLE_ZH
+
+sys.path.insert(0, str(TASKS_ROOT / TASK_NEEDLE_ZH / "model"))
+from data import format_sft_user_text  # noqa: E402
 
 
 def main() -> int:
@@ -31,7 +35,7 @@ def main() -> int:
                 json.dumps(
                     {
                         "messages": [
-                            {"role": "user", "content": row["query"]},
+                            {"role": "user", "content": format_sft_user_text(row)},
                             {"role": "assistant", "content": ans},
                         ],
                         "sample_id": row.get("sample_id"),

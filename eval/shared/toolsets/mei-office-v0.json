@@ -1,0 +1,43 @@
+{
+  "toolset_id": "mei-office-v0",
+  "description": "Train-seen office/calendar/volume/price schema for mei-1.0-58m schema-conditioned SFT.",
+  "split": "train",
+  "tools": [
+    {
+      "name": "create_event",
+      "description": "Create a calendar event.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {"type": "string"},
+          "duration_min": {"type": "integer", "minimum": 1, "maximum": 480},
+          "all_day": {"type": "boolean"}
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "set_volume",
+      "description": "Set playback volume from 0 to 10.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "level": {"type": "integer", "minimum": 0, "maximum": 10}
+        },
+        "required": ["level"]
+      }
+    },
+    {
+      "name": "lookup_price",
+      "description": "Look up a unit price times quantity.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "item": {"type": "string"},
+          "qty": {"type": "number"}
+        },
+        "required": ["item", "qty"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{"probe_id": "PROBE-SCHEMA-001", "family": "schema", "input": "合法空调用列表", "target": "[]"}
+{"probe_id": "PROBE-SCHEMA-002", "family": "schema", "input": "JSON object 的 required 字段名", "target": "required"}
+{"probe_id": "PROBE-SCHEMA-003", "family": "json", "input": "布尔 false 的 JSON", "target": "false"}
+{"probe_id": "PROBE-SCHEMA-004", "family": "json", "input": "数字 0 的 JSON", "target": "0"}
+{"probe_id": "PROBE-OPENAPI-001", "family": "schema", "input": "OpenAPI 版本键名", "target": "openapi"}

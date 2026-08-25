@@ -21,21 +21,30 @@
     },
     {
       "id": "needle-zh",
-      "title": "中文 Needle 一期 · 端侧工具调用",
+      "canonical_id": "mei-1.0-58m",
+      "aliases": ["needle-zh", "mei-1.0-58m"],
+      "physical_dir": "tasks/needle-zh",
+      "title": "MEI 1.0 58M · 中文 schema-conditioned 工具调用（历史别名 needle-zh）",
       "kind": "from-scratch-router",
       "base_model": null,
       "phase": 1,
+      "sft_mixture": "tasks/needle-zh/recipes/sft-mixture-v1.json",
       "train_seed": "tasks/needle-zh/train/seed/sft-phase1-v0.jsonl",
       "train_seeds": [
         "tasks/needle-zh/train/seed/sft-phase1-v0.jsonl",
-        "tasks/needle-zh/train/packs/home-sft-2k.jsonl"
+        "tasks/needle-zh/train/packs/home-sft-2k.jsonl",
+        "tasks/needle-zh/train/packs/home-sft-10k.jsonl",
+        "tasks/needle-zh/train/packs/mei-tool-sft-v1-2k.jsonl",
+        "tasks/needle-zh/train/packs/mei-tool-sft-v1-10k.jsonl"
       ],
       "eval_banks": [
         "eval/banks/needle-toolcall-v0/eval-bank-v0.jsonl",
-        "eval/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl"
+        "eval/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl",
+        "eval/banks/needle-vrm-agent-v0/eval-bank-v2.jsonl",
+        "eval/banks/mei-tool-schema-v1/eval-bank-v0.jsonl"
       ],
       "heldout_task_ids": null,
-      "corpora": ["corpora/zh-vocab-v0", "corpora/zh-pretrain-v0"]
+      "corpora": ["corpora/zh-vocab-v0", "corpora/zh-pretrain-v0", "corpora/zh-pretrain-v1", "corpora/zh-pretrain-v2", "corpora/zh-pretrain-v3"]
     }
   ]
 }

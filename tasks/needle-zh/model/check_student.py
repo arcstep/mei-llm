@@ -34,9 +34,11 @@ from architecture import (
 )
 from checkpoint import load_params, load_train_state, save_params, save_train_state
 from config import NeedleZhConfig
-from data import PackedTokenSource, encode_sft_row, pack_windows, write_uint16_tokens
+from data import PackedTokenSource, WeightedPackedSources, encode_sft_row, format_sft_user_text, pack_windows, write_uint16_tokens
 from decode import greedy_constrained
 from grammar import dump_calls, is_legal_prefix, parse_phase1_text
+from schema_mask import compile_schema
+from schema_render import load_toolset_json, render_request, schema_hash
 from parity import (
     apply_rope_np,
     engram_indices_np,
@@ -74,21 +76,91 @@ def param_max_abs(a, b) -> float:
     return worst
 
 
+def _vrm():
+    return load_toolset_json("needle-vrm-agent-v0")
+
+
+def _office():
+    return load_toolset_json("mei-office-v0")
+
+
 def test_grammar() -> dict:
-    ok = parse_phase1_text("[]")
+    vrm = _vrm()
+    ok = parse_phase1_text("[]", vrm)
     assert ok["ok"]
-    nod = parse_phase1_text('[{"name":"nod","arguments":{}}]')
+    nod = parse_phase1_text('[{"name":"nod","arguments":{}}]', vrm)
     assert nod["ok"], nod
-    bad = parse_phase1_text(
-        '[{"name":"order_food","arguments":{"shop":"兰州拉面","dish":"巨无霸"}}]'
+    pair = parse_phase1_text(
+        '[{"name":"order_food","arguments":{"shop":"兰州拉面","dish":"巨无霸"}}]',
+        vrm,
     )
-    assert not bad["ok"]
-    assert is_legal_prefix("[")
-    assert is_legal_prefix("[]")
-    assert not is_legal_prefix("请")
+    assert pair["ok"], pair
+    pair_prod = parse_phase1_text(
+        '[{"name":"order_food","arguments":{"shop":"兰州拉面","dish":"巨无霸"}}]',
+        vrm,
+        product_rules=True,
+    )
+    assert not pair_prod["ok"]
+    unknown = parse_phase1_text('[{"name":"not_a_tool","arguments":{}}]', vrm)
+    assert not unknown["ok"]
+    assert is_legal_prefix("[", vrm)
+    assert is_legal_prefix("[]", vrm)
+    assert not is_legal_prefix("请", vrm)
     dumped = dump_calls([{"name": "nod", "arguments": {}}])
     assert dumped.startswith("[")
     return {"grammar_ok": True}
+
+
+def test_schema_runtime() -> dict:
+    vrm = _vrm()
+    office = _office()
+    assert schema_hash(vrm) != schema_hash(office)
+    assert is_legal_prefix('[{"name":"n', vrm)
+    assert not is_legal_prefix('[{"name":"zzz', vrm)
+    assert is_legal_prefix('[{"name":"create_event"', office)
+    assert not is_legal_prefix('[{"name":"nod"', office)
+    same_q = {"query": "把音量调到 4"}
+    a = render_request(same_q, office)
+    b = render_request(same_q, vrm)
+    assert a != b and a.startswith("<tools>") and b.startswith("<tools>")
+    tok = ZhTokenizerV1()
+    block = render_request(same_q, office)
+    ids = tok.encode(block)
+    assert ids.count(8) == 1 and ids.count(9) == 1, ids[:12]
+    assert tok.sp.id_to_piece(8) == "<tools>"
+    assert tok.sp.id_to_piece(9) == "</tools>"
+    tiny = {
+        "toolset_id": "mei-office-v0",
+        "schema_conditioned": True,
+        "query": "音量4",
+        "answers": [{"name": "set_volume", "arguments": {"level": 4}}],
+        "confidence_label": 1,
+    }
+    packed = encode_sft_row(tok, tiny, 2048, inject_schema=True)
+    assert packed["reject_reason"] is None
+    assert packed["n_unmasked"] > 0
+    assert packed["n_prompt"] > 20
+    refused = encode_sft_row(tok, tiny, 8, inject_schema=True)
+    assert refused["n_unmasked"] == 0
+    assert refused["reject_reason"] in {"tools_overflow", "seq_overflow"}
+    bool_ok = parse_phase1_text(
+        '[{"name":"set_switch","arguments":{"id":"kitchen_light","on":false}}]',
+        vrm,
+    )
+    assert bool_ok["ok"], bool_ok
+    int_ok = parse_phase1_text(
+        '[{"name":"set_volume","arguments":{"level":3}}]',
+        office,
+    )
+    assert int_ok["ok"], int_ok
+    try:
+        parse_phase1_text("[]", None)
+        raise AssertionError("default toolset must be rejected")
+    except ValueError:
+        pass
+    compile_schema(vrm)
+    compile_schema(office)
+    return {"schema_runtime_ok": True, "tools_atom": 8, "tools_close_atom": 9}
 
 
 def test_tokenizer() -> dict:
@@ -118,6 +190,24 @@ def test_sft_mask() -> dict:
     assert all(packed["mask"][i] == 0.0 for i in prompt_positions)
     assert any(m == 1.0 for m in packed["mask"])
     return {"n_unmasked": packed["n_unmasked"], "n_prompt": packed["n_prompt"], "mask_ok": True}
+
+
+def test_sft_scene_prefix() -> dict:
+    with_scene = format_sft_user_text({"query": "打开前门", "scene": "前门已经开着"})
+    assert with_scene == "场景：前门已经开着。用户：打开前门"
+    bare = format_sft_user_text({"query": "关掉厨房灯"})
+    assert bare == "用户：关掉厨房灯"
+    packed = encode_sft_row(
+        ZhTokenizerV1(),
+        {
+            "query": "打开前门",
+            "scene": "前门已经开着",
+            "answers": [],
+            "confidence_label": 0,
+        },
+        64,
+    )
+    return {"scene_prefix_ok": True, "n_prompt": packed["n_prompt"]}
 
 
 def test_tiny_overfit() -> dict:
@@ -291,11 +381,12 @@ def test_block_and_decode() -> dict:
     model = NeedleZh(cfg)
     mx.eval(model.parameters())
     prompt = tok.encode_chat("点头")["prompt_ids"]
-    out = greedy_constrained(model, tok, prompt, max_new=16)
+    vrm = _vrm()
+    out = greedy_constrained(model, tok, prompt, vrm, max_new=16)
     return {
         "block_loss_finite": bool(np.isfinite(float(loss))),
         "decode_ran": "text" in out,
-        "prefix_ok": is_legal_prefix("[") and is_legal_prefix(out["text"] or "["),
+        "prefix_ok": is_legal_prefix("[", vrm) and is_legal_prefix(out["text"] or "[", vrm),
         "grads_ok": grads is not None,
     }
 
@@ -646,6 +737,189 @@ def test_resume_strict_meta() -> dict:
     }
 
 
+def test_skip_and_mix() -> dict:
+    seq = 4
+    a = list(range(4, 4 + 24))
+    b = list(range(40, 40 + 24))
+    with tempfile.TemporaryDirectory() as td:
+        pa = Path(td) / "a.bin"
+        pb = Path(td) / "b.bin"
+        write_uint16_tokens(pa, a)
+        write_uint16_tokens(pb, b)
+        skipped = PackedTokenSource([pa], seq, pad_id=0, skip_tokens=8)
+        full = PackedTokenSource([pa], seq, pad_id=0)
+        skip_ok = skipped[0] == full[2] and skipped.n_predictable_tokens == max(0, len(a) - 8 - 1)
+        mix = WeightedPackedSources(
+            {
+                "wiki": PackedTokenSource([pa], seq, pad_id=0, skip_tokens=8),
+                "hq": PackedTokenSource([pb], seq, pad_id=0),
+            },
+            {"wiki": 0.5, "hq": 0.5},
+            seed=0,
+            max_epochs={"wiki": 1.0, "hq": 1.2},
+        )
+        first = mix.take_windows(4)
+        mix2 = WeightedPackedSources(
+            {
+                "wiki": PackedTokenSource([pa], seq, pad_id=0, skip_tokens=8),
+                "hq": PackedTokenSource([pb], seq, pad_id=0),
+            },
+            {"wiki": 0.5, "hq": 0.5},
+            seed=0,
+            max_epochs={"wiki": 1.0, "hq": 1.2},
+        )
+        second = mix2.take_windows(4)
+        replay_ok = [w["source_id"] for w in first] == [w["source_id"] for w in second]
+        mix2.load_state_dict(json.loads(json.dumps(mix.state_dict())))
+        resume_draw = mix.take_one()
+        resume_draw2 = mix2.take_one()
+        cursor_ok = (
+            resume_draw is not None
+            and resume_draw2 is not None
+            and resume_draw["source_id"] == resume_draw2["source_id"]
+            and resume_draw["source_window"] == resume_draw2["source_window"]
+        )
+        unique = mix.unique_predictable_tokens()
+        exposure = mix.exposure_cap_tokens()
+        ledger_ok = unique < exposure
+        rest = mix.take_windows(10_000)
+        exhaust_ok = mix.take_one() is None and mix.consumed_windows == 4 + 1 + len(rest)
+    return {
+        "skip_mix_ok": skip_ok and replay_ok and cursor_ok and ledger_ok and exhaust_ok,
+        "skip_ok": skip_ok,
+        "replay_ok": replay_ok,
+        "cursor_ok": cursor_ok,
+        "unique": unique,
+        "exposure_cap": exposure,
+        "exhausted_draws": mix.consumed_windows,
+    }
+
+
+def test_weights_only_init() -> dict:
+    cfg = NeedleZhConfig().tiny()
+    batches = [{"x": [2, 11, 12, 13], "y": [11, 12, 13, 1], "mask": [1.0, 1.0, 1.0, 1.0]}]
+    with tempfile.TemporaryDirectory() as td:
+        path = Path(td) / "state.npz"
+        mx.random.seed(0)
+        model = NeedleZh(cfg)
+        mx.eval(model.parameters())
+        opt = optim.Adam(learning_rate=2e-3)
+        first = train_lm_steps(model, batches, steps=3, lr=2e-3, seed=1, optimizer=opt, total_steps=8)
+        save_train_state(
+            path,
+            model,
+            first["optimizer"],
+            {
+                "step": first["steps"],
+                "tokens_seen": first["tokens_seen"],
+                "tokenizer_sha256": "tok",
+                "corpus_sha256": "old",
+                "seq_len": 4,
+                "lr_horizon_tokens": 8,
+            },
+        )
+        fresh = NeedleZh(cfg)
+        mx.eval(fresh.parameters())
+        opt_new = optim.Adam(learning_rate=1e-4)
+        load_train_state(
+            path,
+            fresh,
+            opt_new,
+            mode="weights_only",
+            expected_meta={"tokenizer_sha256": "nope", "corpus_sha256": "new", "seq_len": 99},
+        )
+        param_ok = param_max_abs(model, fresh) < 1e-6
+        rejected = False
+        try:
+            load_train_state(
+                path,
+                NeedleZh(cfg),
+                optim.Adam(learning_rate=1e-4),
+                mode="strict",
+                expected_meta={"tokenizer_sha256": "tok", "corpus_sha256": "new", "seq_len": 4},
+            )
+        except ValueError:
+            rejected = True
+    return {
+        "weights_only_ok": param_ok and rejected,
+        "param_match": param_ok,
+        "strict_still_rejects": rejected,
+    }
+
+
+def test_route_grounding() -> dict:
+    from candidates import ToolContext, load_entity_catalog, load_lexicon
+    from grammar import is_legal_route_prefix
+    from route_compiler import compile_routes
+    from route_protocol import dump_internal, is_legal_internal_prefix, materialize_internal
+    from schema_render import ROUTE_SERIALIZER_ID, load_toolset_json
+
+    cat = load_entity_catalog()
+    train_ents = [e for e in cat["entities"] if e.get("split") == "train"]
+    ts = load_toolset_json("needle-home-v0")
+    ctx = ToolContext(
+        query="帮我查一下成都今天的天气",
+        toolset=ts,
+        entities=train_ents,
+        lexicon=load_lexicon(),
+        param_types=dict(cat.get("param_types") or {}),
+    )
+    manifest = compile_routes(ctx)
+    assert len(manifest.routes) == 1
+    assert manifest.routes[0].arguments["city"] == "成都"
+    assert manifest.routes[0].provenance["city"]["evidence_source"] == "query"
+    mat = materialize_internal(dump_internal(0), manifest, ts)
+    assert mat["ok"] and mat["function_calls"][0]["name"] == "get_weather"
+    unknown = materialize_internal('{"route_id":99}', manifest, ts)
+    assert unknown["function_calls"] == []
+    assert is_legal_internal_prefix('{"route_id":', 1)
+    assert is_legal_route_prefix("[]", 1)
+    assert not is_legal_internal_prefix('[{"name":', 1)
+
+    missing = compile_routes(
+        ToolContext(
+            query="查天气",
+            toolset=ts,
+            entities=train_ents,
+            lexicon=load_lexicon(),
+            param_types=dict(cat.get("param_types") or {}),
+        )
+    )
+    assert missing.routes == []
+
+    office = load_toolset_json("mei-office-v0")
+    swapped = compile_routes(
+        ToolContext(
+            query="帮我查一下成都今天的天气",
+            toolset=office,
+            entities=train_ents,
+            lexicon=load_lexicon(),
+            param_types=dict(cat.get("param_types") or {}),
+        )
+    )
+    assert swapped.routes == []
+
+    tok = ZhTokenizerV1()
+    row = {
+        "query": "帮我查一下成都今天的天气",
+        "toolset_id": "needle-home-v0",
+        "serializer": ROUTE_SERIALIZER_ID,
+        "protocol": "mei-route-protocol-v1",
+        "schema_conditioned": True,
+        "entities": train_ents,
+        "lexicon": load_lexicon(),
+        "param_types": dict(cat.get("param_types") or {}),
+        "answers": [{"name": "get_weather", "arguments": {"city": "成都"}}],
+        "confidence_label": 1,
+    }
+    packed = encode_sft_row(tok, row, 2048)
+    assert packed["reject_reason"] is None, packed
+    assert packed["n_unmasked"] > 0
+    ans = tok.decode([int(t) for t, m in zip(packed["y"], packed["mask"]) if m > 0])
+    assert '{"route_id":0}' in ans.replace(" ", "") or dump_internal(0) in ans
+    return {"route_grounding_ok": True, "n_routes": len(manifest.routes)}
+
+
 def _run(name, fn):
     try:
         return fn()
@@ -656,8 +930,10 @@ def _run(name, fn):
 def main() -> int:
     report = {
         "grammar": _run("grammar", test_grammar),
+        "schema_runtime": _run("schema_runtime", test_schema_runtime),
         "tokenizer": _run("tokenizer", test_tokenizer),
         "sft_mask": _run("sft_mask", test_sft_mask),
+        "sft_scene": _run("sft_scene", test_sft_scene_prefix),
         "tiny": _run("tiny", test_tiny_overfit),
         "resume": _run("resume", test_resume),
         "token_stop": _run("token_stop", test_token_stop),
@@ -666,15 +942,20 @@ def main() -> int:
         "unique_epoch": _run("unique_epoch", test_unique_epoch_stop),
         "unique_tail": _run("unique_tail", test_unique_epoch_last_window),
         "strict_meta": _run("strict_meta", test_resume_strict_meta),
+        "skip_mix": _run("skip_mix", test_skip_and_mix),
+        "weights_only": _run("weights_only", test_weights_only_init),
         "parity": _run("parity", test_op_parity),
         "kv": _run("kv", test_kv_cache),
         "block_decode": _run("block_decode", test_block_and_decode),
         "full": _run("full", test_full_short),
+        "route_grounding": _run("route_grounding", test_route_grounding),
     }
     flags = [
         report["grammar"].get("grammar_ok"),
+        report["schema_runtime"].get("schema_runtime_ok"),
         report["tokenizer"].get("tokenizer_ok"),
         report["sft_mask"].get("mask_ok"),
+        report["sft_scene"].get("scene_prefix_ok"),
         report["tiny"].get("overfit_ok"),
         report["resume"].get("resume_ok"),
         report["token_stop"].get("token_stop_ok"),
@@ -683,10 +964,13 @@ def main() -> int:
         report["unique_epoch"].get("unique_epoch_ok"),
         report["unique_tail"].get("unique_tail_ok"),
         report["strict_meta"].get("strict_meta_ok"),
+        report["skip_mix"].get("skip_mix_ok"),
+        report["weights_only"].get("weights_only_ok"),
         report["parity"].get("parity_ok"),
         report["kv"].get("kv_ok"),
         report["block_decode"].get("block_loss_finite"),
         report["full"].get("full_ok"),
+        report["route_grounding"].get("route_grounding_ok"),
     ]
     report["ok"] = all(bool(v) for v in flags)
     print(json.dumps(report, ensure_ascii=False, indent=2, default=str))

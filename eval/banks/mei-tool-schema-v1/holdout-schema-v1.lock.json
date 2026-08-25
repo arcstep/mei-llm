@@ -1,0 +1,23 @@
+{
+  "id": "mei-tool-schema-v1",
+  "serializer": "mei-schema-serializer-v1",
+  "generator_version": "mei-tool-schema-v1",
+  "n_eval": 67,
+  "n_dev": 10,
+  "slices": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "eval_sha256": "5a3befe16cdd7e9eb59feee56f66390298a170045894b65a413fb4b15ee3a019",
+  "dev_sha256": "ea8269b5587be4fb26924a8283746fdb8f4561f92cb4b72ce2d25d42ceeef7bf",
+  "does_not_modify": [
+    "eval/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl",
+    "eval/banks/needle-vrm-agent-v0/eval-bank-v2.jsonl",
+    "eval/banks/needle-vrm-mw-v0/eval-bank-v0.jsonl"
+  ]
+}

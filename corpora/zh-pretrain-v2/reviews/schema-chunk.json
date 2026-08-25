@@ -1,0 +1,244 @@
+{
+  "samples": [
+    {
+      "id": "abc-clinical-demand-forecast-1.0.0:big:16",
+      "n_chars": 129,
+      "split": "train",
+      "preview": "\"additionalProperties\": false } }, \"required\": [\"enrollment\", \"sites\", \"notes\", \"siteNotes\"], \"additionalProperties\": false } } }"
+    },
+    {
+      "id": "abc-clinical-demand-forecast-5.0.0:big:7",
+      "n_chars": 2943,
+      "split": "train",
+      "preview": "}, \"adverseEventRate\": { \"type\": \"number\", \"title\": \"Adverse Event Rate\", \"description\": \"Fraction of subjects who experience adverse events when TRIALING THIS level from the previous level (0\\u20131, where 0.10 means 10%).\", \"minimum\": 0, "
+    },
+    {
+      "id": "abc-supply-plan-10.0.0:big:5",
+      "n_chars": 3057,
+      "split": "train",
+      "preview": "ype\": \"object\", \"definitions\": { \"ABCMaterialState\": { \"type\": \"object\", \"title\": \"ABC Material State\", \"description\": \"Represents the state of a material in the system including its attributes and planning parameters.\", \"abcDemandDetailsMa"
+    },
+    {
+      "id": "abc-supply-plan-11.2.0:big:1",
+      "n_chars": 1212,
+      "split": "train",
+      "preview": "\"items\": { \"type\": \"string\" } }, \"visualization\": { \"type\": \"object\", \"oneOf\": [ { \"properties\": { \"type\": { \"type\": \"string\", \"enum\": [\"line\"] }, \"strokeWidth\": { \"type\": \"number\" }, \"strokeDasharray\": { \"type\": \"string\" }, \"dotSize\": { \"t"
+    },
+    {
+      "id": "abc-supply-plan-14.0.0:big:3",
+      "n_chars": 3310,
+      "split": "train",
+      "preview": "\"description\": \"List of Initial Inventory records, each associated with specific lot and dates.\" }, \"firmOrders\": { \"$ref\": \"#/definitions/ABCFirmOrders\", \"title\": \"Firm Orders\", \"description\": \"List of Firm Orders with their respective qua"
+    },
+    {
+      "id": "abc-supply-plan-8.0.0:big:3",
+      "n_chars": 1612,
+      "split": "train",
+      "preview": "\"then\": { \"properties\": { \"showQuantitiesAs\": { \"enum\": [\"Units\", \"Lots\"] } } } }, { \"if\": { \"properties\": { \"metricType\": { \"const\": \"plannedRelease\" } } }, \"then\": { \"properties\": { \"showQuantitiesAs\": { \"enum\": [\"Units\", \"Lots\"] } } } } "
+    },
+    {
+      "id": "accelerator:big:10",
+      "n_chars": 1537,
+      "split": "train",
+      "preview": "ptions\", \"allOf\": [ { \"$ref\": \"#/definitions/AcceleratorOption\" } ] } }, \"tags\": { \"title\": \"tags\", \"description\": \"A list of tags used to filter accelerators\", \"type\": \"array\", \"items\": { \"type\": \"string\", \"title\": \"tags\" } }, \"types\": { \""
+    },
+    {
+      "id": "airlock-microgateway-3.0:big:4",
+      "n_chars": 2348,
+      "split": "train",
+      "preview": "}, \"additionalProperties\": false, \"description\": \"The specification to validate against.\" }, \"treat_json_objects_as_parameters\": { \"type\": [\"boolean\", \"null\"], \"description\": \"If enabled, Microgateway parses JSON objects in requests and fil"
+    },
+    {
+      "id": "airlock-microgateway-3.1:big:22",
+      "n_chars": 480,
+      "split": "train",
+      "preview": "ore_mode\": { \"type\": \"string\", \"enum\": [\"server\", \"cluster\", \"disabled\"], \"description\": \"Defines the redis session store connection mode. By default, the Microgateway tries to determine the connection mode depending on the number of redis "
+    },
+    {
+      "id": "apollo-router-2.8.1:big:6",
+      "n_chars": 3027,
+      "split": "train",
+      "preview": "_credentials\": { \"description\": \"Set to true to add the `Access-Control-Allow-Credentials` header.\", \"type\": \"boolean\", \"default\": false }, \"allow_headers\": { \"description\": \"The headers to allow.\\n\\nIf this value is not set, the router wil"
+    },
+    {
+      "id": "apollo-router-2.8.1:big:26",
+      "n_chars": 2735,
+      "split": "train",
+      "preview": "\"description\": \"Critical error if it happens\", \"allOf\": [ { \"$ref\": \"#/definitions/ErrorRepr\" } ] } }, \"additionalProperties\": false, \"required\": [\"error\"] }, { \"description\": \"Cost attributes\", \"type\": \"object\", \"properties\": { \"cost\": { \""
+    },
+    {
+      "id": "apollo-router-2.8.1:big:46",
+      "n_chars": 2887,
+      "split": "train",
+      "preview": ": \"Send all headers except those specified\", \"type\": \"object\", \"properties\": { \"except\": { \"description\": \"Send all headers except those specified\", \"type\": \"array\", \"items\": { \"type\": \"string\" }, \"default\": null } }, \"required\": [\"except\"]"
+    },
+    {
+      "id": "apollo-router-2.9.0:big:27",
+      "n_chars": 2823,
+      "split": "train",
+      "preview": "tion\": \"The actual cost of the operation using the currently configured cost model\", \"type\": \"string\", \"const\": \"actual\" }, { \"description\": \"The delta between the estimated and actual cost of the operation using the currently configured co"
+    },
+    {
+      "id": "app-config:big:0",
+      "n_chars": 2702,
+      "split": "train",
+      "preview": "{ \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"$id\": \"https://json.schemastore.org/app-config.json\", \"title\": \"Application Configuration Schema\", \"type\": \"object\", \"description\": \"This is the schema describing the structure of the"
+    },
+    {
+      "id": "app-config:big:20",
+      "n_chars": 2337,
+      "split": "train",
+      "preview": "\"type\": \"string\" }, \"type\": { \"description\": \"The name of the attribute that shall be used for the value of\\nthe spec.type field of the entity. Defaults to \\\"groupType\\\".\", \"type\": \"string\" }, \"displayName\": { \"description\": \"The name of th"
+    },
+    {
+      "id": "app-config:big:39",
+      "n_chars": 2545,
+      "split": "train",
+      "preview": "perties\": { \"anyOf\": [ { \"type\": \"object\", \"properties\": { \"target\": { \"description\": \"Target of the proxy. Url string to be parsed with the url module.\", \"type\": \"string\" }, \"headers\": { \"description\": \"Object with extra headers to be adde"
+    },
+    {
+      "id": "appsettings:big:8",
+      "n_chars": 1940,
+      "split": "train",
+      "preview": "]\\\\w*)$\", \"minItems\": 1, \"uniqueItems\": true, \"items\": { \"$ref\": \"#/definitions/Serilog/definitions/MethodCallReferenceItem\" }, \"additionalProperties\": { \"$ref\": \"#/definitions/Serilog/definitions/MethodCallReferenceItem\" } }, \"CSharpMethod"
+    },
+    {
+      "id": "bamboo-spec:big:6",
+      "n_chars": 2551,
+      "split": "train",
+      "preview": "} } } } ] }, \"any-task\": { \"$ref\": \"#/definitions/anyTask\" }, \"vcs-branch\": { \"$ref\": \"#/definitions/vcsBranchTask\" }, \"vcs-tag\": { \"$ref\": \"#/definitions/vcsTagTask\" }, \"vcs-commit\": { \"$ref\": \"#/definitions/vcsCommitTask\" }, \"test-parser\""
+    },
+    {
+      "id": "boyka-config:big:7",
+      "n_chars": 2488,
+      "split": "train",
+      "preview": "}, \"relaxed_security\": { \"description\": \"Set to true, to allow relaxed security\", \"default\": false, \"type\": \"boolean\" }, \"session_override\": { \"description\": \"Set to true, to allow overriding the Appium session\", \"type\": \"boolean\" }, \"stric"
+    },
+    {
+      "id": "buf:big:6",
+      "n_chars": 3539,
+      "split": "train",
+      "preview": "If the option is unset, for any line in a leading comment that starts with buf:lint:ignore <rule_id>, the linter ignores errors for that rule.\", \"type\": \"boolean\" }, \"enum_zero_value_suffix\": { \"$comment\": \"https://buf.build/docs/configurat"
+    },
+    {
+      "id": "cargo-lints-clippy:big:5",
+      "n_chars": 3582,
+      "split": "train",
+      "preview": "\"default\": \"warn\" }, \"collapsible_str_replace\": { \"$ref\": \"#/definitions/Lint\", \"title\": \"Collapsible Str Replace\", \"description\": \"Checks for consecutive calls to `str::replace` (2 or more) that can be collapsed into a single call.\", \"defa"
+    },
+    {
+      "id": "cargo-lints-clippy:big:26",
+      "n_chars": 3522,
+      "split": "train",
+      "preview": "\"default\": \"deny\" }, \"multi_assignments\": { \"$ref\": \"#/definitions/Lint\", \"title\": \"Multi Assignments\", \"description\": \"Checks for nested assignments.\", \"default\": \"warn\" }, \"multiple_bound_locations\": { \"$ref\": \"#/definitions/Lint\", \"title"
+    },
+    {
+      "id": "cargo-lints-clippy:big:45",
+      "n_chars": 3634,
+      "split": "train",
+      "preview": "etween raw pointers that don't change type or constness.\", \"default\": \"warn\" }, \"unnecessary_clippy_cfg\": { \"$ref\": \"#/definitions/Lint\", \"title\": \"Unnecessary Clippy Cfg\", \"description\": \"Checks for `#[cfg_attr(clippy, allow(clippy::lint))"
+    },
+    {
+      "id": "cargo-lints-rust:big:16",
+      "n_chars": 2950,
+      "split": "train",
+      "preview": "ect code that has future-compatibility problems\" }, \"keyword-idents\": { \"$ref\": \"#/definitions/Lint\", \"title\": \"Keyword Idents\", \"description\": \"Lints that detect identifiers which will be come keywords in later editions\" }, \"let-underscore"
+    },
+    {
+      "id": "cargo:big:2",
+      "n_chars": 3030,
+      "split": "train",
+      "preview": "ndencies) are ignored). See the [Multiple\\n> locations](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#multiple-locations) section for a fallback alternative.\\n\", \"type\": \"string\", \"x-taplo\": { \"links\": { \"key\": \"htt"
+    },
+    {
+      "id": "cargo:big:19",
+      "n_chars": 3854,
+      "split": "train",
+      "preview": "(https://doc.rust-lang.org/reference/linkage.html) that will be generated by the\\ntarget. It is an array of strings, allowing you to specify multiple crate\\ntypes for a single target. This can only be specified for libraries and\\nexamples. "
+    },
+    {
+      "id": "cargo:big:39",
+      "n_chars": 3416,
+      "split": "train",
+      "preview": "eloped`: New features are being added and bugs are being fixed.\\n# - `passively-maintained`: There are no plans for new features, but the maintainer intends to\\n# respond to issues that get filed.\\n# - `as-is`: The crate is feature complete"
+    },
+    {
+      "id": "chrome-manifest:big:5",
+      "n_chars": 3065,
+      "split": "train",
+      "preview": "also opt to send the TLS channel ID to the extension via setting includeTlsChannelId to true in runtime.connect's connectInfo or runtime.sendMessage's options.\" } } }, \"file_browser_handlers\": { \"type\": \"array\", \"description\": \"You can use "
+    },
+    {
+      "id": "clang-format-18.x:big:13",
+      "n_chars": 3582,
+      "split": "train",
+      "preview": "ng-format 3.7\\r\\r If true, spaces may be inserted into C style casts. This option is deprecated in clang-format 17. See InConditionalStatements of SpacesInParensOptions.\", \"type\": \"boolean\" }, \"SpacesInConditionalStatement\": { \"description\""
+    },
+    {
+      "id": "clangd:big:1",
+      "n_chars": 3354,
+      "split": "train",
+      "preview": "\"bugprone-sizeof-expression\", \"bugprone-spuriously-wake-up-functions\", \"bugprone-standalone-empty\", \"bugprone-string-constructor\", \"bugprone-string-integer-assignment\", \"bugprone-string-literal-with-embedded-nul\", \"bugprone-stringview-nullp"
+    },
+    {
+      "id": "claude-code-marketplace:big:12",
+      "n_chars": 1791,
+      "split": "train",
+      "preview": "ype: allow an array of strings\", \"type\": \"boolean\" }, \"sensitive\": { \"description\": \"If true, masks dialog input and stores value in secure storage (keychain/credentials file) instead of settings.json\", \"type\": \"boolean\" }, \"min\": { \"descri"
+    },
+    {
+      "id": "claude-code-plugin-manifest:big:17",
+      "n_chars": 621,
+      "split": "train",
+      "preview": "\"sensitive\": { \"description\": \"If true, masks dialog input and stores value in secure storage (keychain/credentials file) instead of settings.json\", \"type\": \"boolean\" }, \"min\": { \"description\": \"Minimum value (number type only)\", \"type\": \"n"
+    },
+    {
+      "id": "claude-code-settings:big:16",
+      "n_chars": 3549,
+      "split": "train",
+      "preview": "pe\": \"string\", \"description\": \"Set to 1 to start in safe mode: CLAUDE.md, skills, plugins, hooks, MCP servers, custom commands and agents, output styles, workflows, custom themes, custom keybindings, status line and file-suggestion commands"
+    },
+    {
+      "id": "claude-code-settings:big:33",
+      "n_chars": 3501,
+      "split": "train",
+      "preview": "defined falls back to the default and an empty array blocks all channel plugins. Requires channelsEnabled: true. See https://code.claude.com/docs/en/channels#restrict-which-channel-plugins-can-run\" }, \"allowedHttpHookUrls\": { \"type\": \"array"
+    },
+    {
+      "id": "cloud-run-v1:big:1",
+      "n_chars": 3590,
+      "split": "train",
+      "preview": "ent`: Revision, Execution. * `run.googleapis.com/function-target`: Service. * `run.googleapis.com/gc-traffic-tags`: Service. * `run.googleapis.com/image-uri`: Service. * `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-st"
+    },
+    {
+      "id": "cloud-sdk-pipeline-config-schema:big:4",
+      "n_chars": 2985,
+      "split": "train",
+      "preview": "folder. An example can be found below.\", \"type\": \"array\", \"items\": { \"type\": \"string\" } }, \"customOdataServices\": { \"description\": \"We recommend only using OData services listed in the in SAP API Business Hub. Despite that for using custom "
+    },
+    {
+      "id": "cloudify:big:12",
+      "n_chars": 2192,
+      "split": "train",
+      "preview": "}, \"then\": { \"properties\": { \"properties\": { \"$ref\": \"#/definitions/nodeTypeOpenstackSecurityGroupRuleProperties\" }, \"interfaces\": { \"$ref\": \"#/definitions/nodeTypeOpenstackSecurityGroupRuleInterfaces\" } } } }, { \"if\": { \"properties\": { \"ty"
+    },
+    {
+      "id": "cloudify:big:29",
+      "n_chars": 3300,
+      "split": "train",
+      "preview": "urce\" }, \"use_external_resource\": { \"$ref\": \"#/definitions/cloudifyBooleanOrGetInput\", \"description\": \"Indicate whether the resource exists or if Cloudify should create the resource\", \"default\": false }, \"retry_after\": { \"$ref\": \"#/definiti"
+    },
+    {
+      "id": "cryproj.52.schema:big:7",
+      "n_chars": 3134,
+      "split": "train",
+      "preview": ", \"e_ShadowsCascadesCentered\", \"e_ShadowsCascadesDebug\", \"e_ShadowsCastViewDistRatio\", \"e_ShadowsCastViewDistRatioLights\", \"e_ShadowsClouds\", \"e_ShadowsConstBias\", \"e_ShadowsConstBiasHQ\", \"e_ShadowsDebug\", \"e_ShadowsFrustums\", \"e_ShadowsLod"
+    },
+    {
+      "id": "cryproj.53.schema:big:12",
+      "n_chars": 3008,
+      "split": "train",
+      "preview": ", \"net_SimUseProfile\", \"net_socketBoostTimeout\", \"net_socketMaxTimeout\", \"net_socketMaxTimeoutMultiplayer\", \"net_stats_login\", \"net_stats_pass\", \"osm_debug\", \"osm_enabled\", \"osm_fbMinScale\", \"osm_fbScaleDeltaDown\", \"osm_fbScaleDeltaUp\", \"os"
+    }
+  ]
+}

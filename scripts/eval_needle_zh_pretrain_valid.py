@@ -18,7 +18,7 @@ import mlx.core as mx  # noqa: E402
 from architecture import NeedleZh  # noqa: E402
 from checkpoint import load_params  # noqa: E402
 from config import NeedleZhConfig  # noqa: E402
-from data import PackedTokenSource, list_token_shards  # noqa: E402
+from data import PackedTokenSource, list_token_shards, list_valid_set  # noqa: E402
 from tokenizer import ZhTokenizerV1  # noqa: E402
 from train_common import eval_lm_loss, peak_bytes, stratified_window_indices  # noqa: E402
 
@@ -31,11 +31,16 @@ def main() -> int:
     ap.add_argument("--batch-size", type=int, default=4)
     ap.add_argument("--stratified-windows", type=int, default=512)
     ap.add_argument("--out", type=Path, default=None)
+    ap.add_argument("--corpus-dir", type=Path, default=CORPUS_ZH_PRETRAIN)
+    ap.add_argument("--valid-set", choices=["wiki", "hq", "colloquial", "structure"], default="wiki")
     args = ap.parse_args()
     tok = ZhTokenizerV1()
-    bins = list_token_shards(CORPUS_ZH_PRETRAIN, "valid")
+    corpus_dir = args.corpus_dir if args.corpus_dir.is_absolute() else ROOT / args.corpus_dir
+    bins = list_valid_set(corpus_dir, args.valid_set) or (
+        list_token_shards(corpus_dir, "valid") if args.valid_set == "wiki" else []
+    )
     if not bins:
-        print(f"missing valid shards under {CORPUS_ZH_PRETRAIN / 'tokens'}", file=sys.stderr)
+        print(f"missing {args.valid_set} valid shards under {corpus_dir}", file=sys.stderr)
         return 2
     valid = PackedTokenSource(bins, args.seq_len, tok.pad_id)
     cfg = NeedleZhConfig.from_spec()
@@ -65,6 +70,7 @@ def main() -> int:
     )
     report = {
         "mode": args.mode,
+        "valid_set": args.valid_set,
         "ckpt": str(Path(args.ckpt).resolve().relative_to(ROOT))
         if Path(args.ckpt).resolve().is_relative_to(ROOT)
         else str(args.ckpt),

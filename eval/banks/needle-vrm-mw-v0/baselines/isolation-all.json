@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "mode": "all",
+  "eval_n": 3332,
+  "mw_sft_in_pairs": true,
+  "mw_eval_in_banks": true,
+  "id_overlap": [],
+  "query_overlap": [],
+  "token_near_dups": [],
+  "pretrain_leaks": [],
+  "pretrain_token_near_dups": [],
+  "note": "Full printer output from scripts/check_train_eval_isolation.py --all on 2026-08-25. ok=true.",
+  "mw_sft_sha256": "fd6ff3c76ea86dadc950c2cf4fe49abadb1a52befefa2ae95c343cec32129b2f",
+  "mw_eval_sha256": "699d90856f27c178c38b41cfd8869a85e18991c1b056296c283eacc8c38a3f06",
+  "v1_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+  "v2_sha256": "a6b13fe77e740865c5b4abfd2712100171d5a456d8912639dbd167bdf34ebc84",
+  "home_sft_2k_sha256": "48a38d0b44e52ed892fb9d54ab8ed7bb16c406cdfb11e6ec9acdd4c9ca717e63"
+}

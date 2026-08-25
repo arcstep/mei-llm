@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Build VRM holdout EVAL (~220 total) and isolated home SFT packs.
+"""Build VRM holdout EVAL (~220 total). Does not write train packs.
 
-Gold is assigned by schema/program. Templates only vary query/scene wording.
-The original 48 reviewed items stay as public split=dev.
+Home SFT packs live in scripts/build_needle_home_sft_packs.py so generating
+training data cannot rewrite holdout/lock. The original 48 reviewed items stay
+as public split=dev.
 """
 
 from __future__ import annotations
@@ -418,53 +419,64 @@ def build_sft(n: int, blocked: set[str], seed: int = 20260824) -> list[dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tier", default="2k", choices=["2k", "10k", "20k", "50k"])
-    ap.add_argument("--sft-only", action="store_true", help="Rebuild SFT pack only; do not rewrite eval/lock")
+    ap.add_argument("--tier", default="2k", choices=["2k", "10k", "20k", "50k"], help="ignored; SFT moved")
+    ap.add_argument("--sft-only", action="store_true", help="rejected; use build_needle_home_sft_packs.py")
+    ap.add_argument(
+        "--rewrite-eval",
+        action="store_true",
+        help="Dangerous: rebuild eval bank + lock. Default is a no-op status print.",
+    )
     args = ap.parse_args()
-    tier_n = {"2k": 2000, "10k": 10000, "20k": 20000, "50k": 50000}[args.tier]
+    if args.sft_only:
+        print(
+            "refusing: home SFT moved to scripts/build_needle_home_sft_packs.py "
+            "(this script must not rewrite train packs)",
+            file=sys.stderr,
+        )
+        return 2
     lock = EVAL_BANKS_ROOT / "needle-vrm-agent-v0" / "holdout-v1.lock.json"
+    freeze = json.loads(lock.read_text(encoding="utf-8")) if lock.is_file() else {}
+    if not args.rewrite_eval:
+        print(
+            json.dumps(
+                {
+                    "eval": freeze,
+                    "sft": "use scripts/build_needle_home_sft_packs.py",
+                    "note": "eval/lock unchanged; pass --rewrite-eval to rebuild holdout",
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
 
     existing = [json.loads(l) for l in BANK_NEEDLE_VRM_AGENT.read_text(encoding="utf-8").splitlines() if l.strip()]
     blocked = {str(r.get("query") or "").strip() for r in existing}
-    freeze = None
-    if not args.sft_only:
-        for row in existing:
-            row["split"] = "dev"
-        holdout = build_holdout(set(blocked))
-        blocked |= {r["query"] for r in holdout}
-        merged = existing + holdout
-        dump_jsonl(BANK_NEEDLE_VRM_AGENT, merged)
-        freeze = {
-            "bank": "needle-vrm-agent-v0",
-            "n_total": len(merged),
-            "n_dev": sum(1 for r in merged if r.get("split") == "dev"),
-            "n_eval": sum(1 for r in merged if r.get("split") == "eval"),
-            "sha256": sha256_file(BANK_NEEDLE_VRM_AGENT),
-        }
-        lock.write_text(json.dumps(freeze, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    else:
-        freeze = json.loads(lock.read_text(encoding="utf-8")) if lock.is_file() else {
-            "sha256": sha256_file(BANK_NEEDLE_VRM_AGENT)
-        }
-
-    packs_dir = TASKS_ROOT / TASK_NEEDLE_ZH / "train/packs"
-    sft = build_sft(tier_n, blocked)
-    pack_path = packs_dir / f"home-sft-{args.tier}.jsonl"
-    dump_jsonl(pack_path, sft)
-    man = {
-        "pack": pack_path.name,
-        "n": len(sft),
-        "sha256": sha256_file(pack_path),
-        "gold": "schema-program",
-        "teacher": "query-variants-only",
-        "eval_lock": str(lock.relative_to(ROOT)),
-        "eval_sha256": freeze["sha256"],
-        "token_near_dup_blocked": True,
+    for row in existing:
+        row["split"] = "dev"
+    holdout = build_holdout(set(blocked))
+    blocked |= {r["query"] for r in holdout}
+    merged = existing + holdout
+    dump_jsonl(BANK_NEEDLE_VRM_AGENT, merged)
+    freeze = {
+        "bank": "needle-vrm-agent-v0",
+        "n_total": len(merged),
+        "n_dev": sum(1 for r in merged if r.get("split") == "dev"),
+        "n_eval": sum(1 for r in merged if r.get("split") == "eval"),
+        "sha256": sha256_file(BANK_NEEDLE_VRM_AGENT),
     }
-    (packs_dir / f"home-sft-{args.tier}.manifest.json").write_text(
-        json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    lock.write_text(json.dumps(freeze, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    print(
+        json.dumps(
+            {
+                "eval": freeze,
+                "sft": "use scripts/build_needle_home_sft_packs.py",
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
     )
-    print(json.dumps({"eval": freeze, "sft": man}, ensure_ascii=False, indent=2))
     return 0
 
 

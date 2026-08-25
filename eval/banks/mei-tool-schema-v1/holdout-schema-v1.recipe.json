@@ -1,0 +1,13 @@
+{
+  "id": "mei-tool-schema-v1",
+  "slices": {
+    "S0": "seen",
+    "S1": "unseen",
+    "S2": "schema-mutation",
+    "S3": "rename",
+    "S4": "crosstalk",
+    "S5": "type-stress",
+    "S6": "refuse"
+  },
+  "isolation": "whole toolset / canonical family / template / counterfactual"
+}

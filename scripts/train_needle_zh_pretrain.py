@@ -18,6 +18,7 @@ from repo_paths import (
     TASKS_ROOT,
     TASK_NEEDLE_ZH,
 )
+from mei_cpt_gates import refuse_dirty_v2_for_1b
 
 sys.path.insert(0, str(TASKS_ROOT / TASK_NEEDLE_ZH / "model"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -35,6 +36,8 @@ from data import (  # noqa: E402
     iter_split_documents,
     list_pretrain_shards,
     list_token_shards,
+    list_valid_set,
+    load_scheduled_train,
     refuse_if_short,
 )
 from eval_needle_pretrain_probes import eval_probes, load_probes  # noqa: E402
@@ -94,12 +97,22 @@ def main() -> int:
     ap.add_argument("--eval-every-tokens", type=int, default=None)
     ap.add_argument("--save-every-tokens", type=int, default=None)
     ap.add_argument("--resume", type=Path, default=None)
+    ap.add_argument("--init-weights", type=Path, default=None, help="weights-only stage init; resets Adam")
     ap.add_argument("--allow-repeat", action="store_true")
     ap.add_argument("--stop-at-tokens", type=int, default=None)
     ap.add_argument("--compile", action="store_true")
     ap.add_argument("--precision", choices=["fp32", "fp16", "bf16"], default="fp32")
     ap.add_argument("--lr", type=float, default=3e-4)
+    ap.add_argument(
+        "--corpus-dir",
+        type=Path,
+        default=CORPUS_ZH_PRETRAIN,
+        help="pretrain pack root (default zh-pretrain-v0; v2 CPT uses zh-pretrain-v2 + schedule.json)",
+    )
     args = ap.parse_args()
+    if args.resume and args.init_weights:
+        print("use either --resume (same stage) or --init-weights (new stage), not both", file=sys.stderr)
+        return 2
 
     if args.count_params:
         cfg = NeedleZhConfig.from_spec()
@@ -110,20 +123,35 @@ def main() -> int:
         return 0 if 45_000_000 <= n <= 60_000_000 else 1
 
     tok = ZhTokenizerV1()
-    man_path = CORPUS_ZH_PRETRAIN / "manifest.json"
+    corpus_dir = CORPUS_ZH_PRETRAIN if args.smoke else args.corpus_dir
+    if not corpus_dir.is_absolute():
+        corpus_dir = ROOT / corpus_dir
+    blocked = refuse_dirty_v2_for_1b(corpus_dir, args.rung)
+    if blocked:
+        print(blocked, file=sys.stderr)
+        return 4
+    man_path = corpus_dir / "manifest.json"
     man = json.loads(man_path.read_text(encoding="utf-8")) if man_path.is_file() else {}
-    train_bins = list_token_shards(CORPUS_ZH_PRETRAIN, "train")
-    valid_bins = list_token_shards(CORPUS_ZH_PRETRAIN, "valid")
+    train_bins = list_token_shards(corpus_dir, "train")
+    valid_bins = list_token_shards(corpus_dir, "valid")
     use_mmap = bool(train_bins) and not args.smoke
-    shards = list_pretrain_shards(CORPUS_ZH_PRETRAIN, smoke=args.smoke)
+    shards = list_pretrain_shards(corpus_dir, smoke=args.smoke)
     if not use_mmap and not shards:
         print(
-            f"missing shards under {CORPUS_ZH_PRETRAIN / 'shards'} or tokens/; run build_zh_pretrain_v0.py",
+            f"missing shards under {corpus_dir / 'shards'} or tokens/; "
+            "run build_zh_pretrain_v0.py or build_zh_pretrain_v1.py",
             file=sys.stderr,
         )
         return 1
     hash_files = train_bins + valid_bins if use_mmap else shards
     corpus_hash = "".join(file_sha256(p) for p in hash_files)
+    mix_path = corpus_dir / "mix.json"
+    if mix_path.is_file():
+        corpus_hash = corpus_hash + file_sha256(mix_path)
+    schedule_path = corpus_dir / "schedule.json"
+    schedule_sha = file_sha256(schedule_path) if schedule_path.is_file() else ""
+    if schedule_sha:
+        corpus_hash = corpus_hash + schedule_sha
     if man_path.is_file():
         manifest_sha = file_sha256(man_path)
         corpus_hash = corpus_hash + manifest_sha
@@ -137,32 +165,63 @@ def main() -> int:
     batch_size = args.batch_size or (1 if args.smoke else 2)
     grad_accum = args.grad_accum or (1 if args.smoke else 4)
     dft = DEFAULTS[args.rung]
-    target = args.target_tokens if args.target_tokens is not None else (None if args.smoke else int(dft["target"]))
-    horizon_tokens = args.lr_horizon_tokens or (None if args.smoke else int(dft["horizon"]))
     eval_every = args.eval_every_tokens or (10**18 if args.smoke else int(dft["eval_every"]))
     save_every = args.save_every_tokens or (10**18 if args.smoke else int(dft["save_every"]))
-
-    if args.stop_at_tokens is not None:
-        if target is None or int(args.stop_at_tokens) < int(target):
-            target = int(args.stop_at_tokens)
+    schedule = {}
+    extra_valids: dict[str, list] = {}
+    parent_tokens = 0
+    init_mode = "scratch"
 
     if use_mmap:
-        train = PackedTokenSource(train_bins, seq, tok.pad_id)
-        valid = PackedTokenSource(valid_bins, seq, tok.pad_id)[:128] if valid_bins else []
-        packed_tokens = int(train.n_tokens)
-        if not args.allow_repeat:
-            pred = int(train.n_predictable_tokens)
-            if target is None or int(target) > pred:
-                target = pred
+        scheduled = None if args.smoke else load_scheduled_train(corpus_dir, seq, tok.pad_id)
+        if scheduled is not None:
+            train = scheduled
+            schedule = dict(scheduled.schedule or {})
+            parent_tokens = int(schedule.get("parent_tokens_seen") or 0)
+        else:
+            train = PackedTokenSource(train_bins, seq, tok.pad_id)
+        wiki_bins = list_valid_set(corpus_dir, "wiki") or valid_bins
+        valid = PackedTokenSource(wiki_bins, seq, tok.pad_id)[:128] if wiki_bins else []
+        for name in ("hq", "colloquial", "structure"):
+            bins = list_valid_set(corpus_dir, name)
+            if bins:
+                extra_valids[name] = PackedTokenSource(bins, seq, tok.pad_id)[:32]
+        packed_tokens = int(getattr(train, "n_predictable_tokens", train.n_tokens if hasattr(train, "n_tokens") else 0))
     else:
-        train_limit = int(target / max(seq, 1)) + 32 if target else (64 if args.smoke else None)
+        target_guess = args.target_tokens if args.target_tokens is not None else (None if args.smoke else int(dft["target"]))
+        train_limit = int(target_guess / max(seq, 1)) + 32 if target_guess else (64 if args.smoke else None)
         train = collect_windows(shards, tok, seq, "train", limit=train_limit)
         valid = collect_windows(shards, tok, seq, "valid", limit=128)
         packed_tokens = len(train) * seq
     if not train:
         print("no train windows", file=sys.stderr)
         return 1
-    corpus_tokens = int(man.get("n_train_tokens") or packed_tokens)
+
+    exposure_cap = int(train.exposure_cap_tokens()) if hasattr(train, "exposure_cap_tokens") else int(
+        getattr(train, "n_predictable_tokens", packed_tokens)
+    )
+    unique_remaining = int(getattr(train, "n_predictable_tokens", packed_tokens))
+    if args.target_tokens is not None:
+        target = int(args.target_tokens)
+    elif args.smoke:
+        target = None
+    elif schedule:
+        target = parent_tokens + exposure_cap
+    else:
+        target = int(dft["target"])
+    if args.stop_at_tokens is not None:
+        if target is None or int(args.stop_at_tokens) < int(target):
+            target = int(args.stop_at_tokens)
+    if use_mmap and not args.allow_repeat and not schedule:
+        pred = int(getattr(train, "n_predictable_tokens", packed_tokens))
+        if target is None or int(target) > pred:
+            target = pred
+    if schedule and args.lr_horizon_tokens is None:
+        horizon_tokens = exposure_cap
+    else:
+        horizon_tokens = args.lr_horizon_tokens or (None if args.smoke else int(dft["horizon"]))
+
+    corpus_tokens = int(man.get("n_unique_train_tokens") or man.get("n_train_tokens") or packed_tokens)
     try:
         refuse_if_short(
             "100m" if args.smoke else args.rung,
@@ -178,9 +237,10 @@ def main() -> int:
         else:
             print(str(exc), file=sys.stderr)
             return 2
-    if not args.smoke and target and packed_tokens < target and not args.allow_repeat:
+    cover = packed_tokens if not schedule else (parent_tokens + exposure_cap)
+    if not args.smoke and target and cover < int(target) and not args.allow_repeat:
         print(
-            f"packed windows cover ~{packed_tokens} tokens < target {target}; pass --allow-repeat to multi-epoch",
+            f"packed windows cover ~{cover} tokens < target {target}; pass --allow-repeat to multi-epoch",
             file=sys.stderr,
         )
         return 2
@@ -207,13 +267,28 @@ def main() -> int:
         "precision": args.precision,
         "shuffle_seed": 0,
     }
-    if args.resume:
+    if schedule_sha:
+        expected["schedule_sha256"] = schedule_sha
+    if args.init_weights:
+        init_mode = "weights_only"
         opt = optim.Adam(learning_rate=args.lr)
-        prev = load_train_state(args.resume, model, opt, strict=True, expected_meta=expected)
+        load_train_state(args.init_weights, model, opt, mode="weights_only")
+        start_step = 0
+        start_tokens = parent_tokens
+        start_window = 0
+    elif args.resume:
+        init_mode = "strict"
+        opt = optim.Adam(learning_rate=args.lr)
+        prev = load_train_state(args.resume, model, opt, mode="strict", expected_meta=expected)
         start_step = int(prev.get("step") or 0)
         start_tokens = int(prev.get("tokens_seen") or 0)
         start_window = int(prev.get("window_index") or 0)
         total_steps = int(prev.get("total_steps") or total_steps or 1)
+        sampler_state = prev.get("sampler_state")
+        if hasattr(train, "load_state_dict"):
+            if not sampler_state:
+                raise ValueError("scheduled mix resume requires sampler_state in checkpoint meta")
+            train.load_state_dict(sampler_state)
 
     run_name = "smoke" if args.smoke else args.rung
     out_dir = EXPERIMENTS_RUNS / f"needle-zh-pretrain-{run_name}"
@@ -241,8 +316,11 @@ def main() -> int:
     t0 = time.time()
 
     def copy_milestone(tokens_seen: int) -> None:
-        for mark in (100_000_000, 300_000_000):
+        for mark in (100_000_000, 300_000_000, 1_000_000_000):
             if tokens_seen >= mark and mark not in saved_milestones:
+                if start_tokens >= mark:
+                    saved_milestones.add(mark)
+                    continue
                 tag = f"{mark // 1_000_000}m"
                 shutil.copy2(last_state, ckpt_dir / f"pretrain-{run_name}-{tag}-state.npz")
                 meta_src = last_state.with_suffix(".meta.json")
@@ -280,6 +358,14 @@ def main() -> int:
             "compile_train": bool(args.compile),
             "allow_repeat": bool(args.allow_repeat),
             "mmap": use_mmap,
+            "init_mode": init_mode,
+            "parent_tokens_seen": parent_tokens,
+            "schedule_sha256": schedule_sha,
+            "n_unique_remaining": unique_remaining,
+            "n_exposure_cap_tokens": exposure_cap,
+            "source_cursors": dict(getattr(train, "cursor", {}) or {}),
+            "source_window_counts": dict(getattr(train, "window_counts", {}) or {}),
+            "sampler_state": train.state_dict() if hasattr(train, "state_dict") else None,
         }
         save_params(model, last_ckpt)
         save_train_state(last_state, model, state["optimizer"], meta)
@@ -295,8 +381,13 @@ def main() -> int:
         due_eval = force or (tokens_seen - last_eval_at >= eval_every)
         due_save = force or (tokens_seen - last_save_at >= save_every)
         if not due_eval and not due_save:
-            return None, None
+            return None, None, {}
         valid_loss = eval_lm_loss(model, valid, batch_size=min(batch_size, 4)) if valid else None
+        extra_losses = {
+            name: eval_lm_loss(model, windows, batch_size=min(batch_size, 4))
+            for name, windows in extra_valids.items()
+            if windows
+        }
         probe_rep = eval_probes(model, tok, probes) if probes and due_eval else None
         if probe_rep is not None:
             (out_dir / "probes.json").write_text(
@@ -311,7 +402,7 @@ def main() -> int:
         if due_save or is_best or force:
             write_ckpt("eval" if not force else "final", valid_loss, probe_rep, is_best=bool(is_best))
             last_save_at = tokens_seen
-        return valid_loss, probe_rep
+        return valid_loss, probe_rep, extra_losses
 
     def on_step(step: int, info: dict) -> None:
         state["steps"] = step - start_step + 1
@@ -321,7 +412,7 @@ def main() -> int:
         elapsed = max(1e-6, time.time() - t0)
         if not finite(info["loss"]) or not finite(info["grad_norm"]):
             raise RuntimeError(f"non-finite loss/grad at step {step}: {info}")
-        valid_loss, probe_rep = maybe_eval(info["tokens_seen"])
+        valid_loss, probe_rep, extra_losses = maybe_eval(info["tokens_seen"])
         seg_tok = int(info["tokens_seen"]) - int(start_tokens)
         tok_s = segment_throughput(info["tokens_seen"], start_tokens, elapsed)
         row = {
@@ -335,8 +426,14 @@ def main() -> int:
             "segment_tok_s": tok_s,
             "peak_bytes": info.get("peak_bytes") or peak_bytes(),
         }
+        if info.get("source_cursors"):
+            row["source_cursors"] = info["source_cursors"]
+        if info.get("source_window_counts"):
+            row["source_window_counts"] = info["source_window_counts"]
         if valid_loss is not None:
             row["valid_loss"] = valid_loss
+        for name, loss in (extra_losses or {}).items():
+            row[f"valid_loss_{name}"] = loss
         if probe_rep:
             row["probe_mean_nll"] = probe_rep.get("mean_nll")
             row["probe_family_nll"] = probe_rep.get("family_nll")
@@ -369,18 +466,22 @@ def main() -> int:
         precision=args.precision,
     )
     state.update(result)
-    valid_loss, probe_rep = maybe_eval(result["tokens_seen"], force=True)
+    valid_loss, probe_rep, extra_losses = maybe_eval(result["tokens_seen"], force=True)
     meta = json.loads((out_dir / "summary.json").read_text(encoding="utf-8"))
     meta["valid_loss"] = valid_loss
+    for name, loss in (extra_losses or {}).items():
+        meta[f"valid_loss_{name}"] = loss
     meta["init_probe_mean_nll"] = None if probes_init is None else probes_init.get("mean_nll")
     meta["final_probe_mean_nll"] = None if probe_rep is None else probe_rep.get("mean_nll")
     elapsed = time.time() - t0
     meta["elapsed_s"] = elapsed
     meta["ckpt"] = str(last_ckpt.relative_to(ROOT))
     meta["n_source_tokens"] = int(getattr(train, "n_tokens", packed_tokens))
-    meta["n_predictable_tokens"] = int(
-        getattr(train, "n_predictable_tokens", max(0, packed_tokens - 1))
-    )
+    meta["n_predictable_tokens"] = unique_remaining
+    meta["n_exposure_cap_tokens"] = exposure_cap
+    meta["parent_tokens_seen"] = parent_tokens
+    meta["init_mode"] = init_mode
+    meta["schedule_sha256"] = schedule_sha
     meta["n_windows"] = len(train)
     meta["exhausted"] = bool(result.get("exhausted"))
     meta["segment_tokens"] = int(result["tokens_seen"]) - int(start_tokens)

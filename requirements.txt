@@ -4,3 +4,5 @@ mlx>=0.20
 # Cloud/Ollama env loading prefers sibling mei_eval:
 #   pip install -e ../tools/mei-eval/python
 # Or rely on scripts' path insert when mei-projects/.env exists.
+openai>=1.40
+python-dotenv>=1.0

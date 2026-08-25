@@ -1,0 +1,54 @@
+{
+  "id": "mei-tool-call-protocol-v2",
+  "status": "target_contract",
+  "implementation_state": "not_implemented",
+  "blocking_for_publish": false,
+  "legacy_peer": "route-protocol-v1.json",
+  "serializer": "mei-tool-call-serializer-v2",
+  "request_payload": [
+    "locked_task_contract",
+    "optional_system_facts",
+    "top5_canonical_tool_schemas",
+    "short_conversation_or_query",
+    "optional_prior_tool_results"
+  ],
+  "forbidden_request_fields": [
+    "gold_route_id",
+    "compiled_call_candidates",
+    "gold_provenance",
+    "gold_entity_link",
+    "holdout_only_relation"
+  ],
+  "model_output": {
+    "format": "json_array",
+    "max_calls_phase1": 1,
+    "empty_means_no_accepted_call": true,
+    "item": {
+      "name": "registered_tool_name",
+      "arguments": "schema_legal_object"
+    }
+  },
+  "tool_selection": {
+    "direct_render_max_tools": 5,
+    "large_catalog": "contrastive_top5",
+    "unselected_tool_reachable": false
+  },
+  "decode": {
+    "grammar": "byte_level_from_selected_schemas",
+    "post_parse_only": false,
+    "collect_call_token_probability": true
+  },
+  "post_generation": [
+    "provenance_validator",
+    "permission_and_state_validator",
+    "confidence_gate"
+  ],
+  "missing_required_behavior": "decision_required_before_sft",
+  "multi_step": "sdk_executes_and_feeds_results_back",
+  "not_supported_in_phase1": [
+    "unbounded_free_text",
+    "long_reasoning",
+    "unbounded_multi_call",
+    "unbounded_agent_loop"
+  ]
+}

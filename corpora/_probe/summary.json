@@ -1,5 +1,5 @@
 {
-  "n_cards": 13,
+  "n_cards": 14,
   "cards": [
     {
       "source_id": "api-bank-init",
@@ -70,6 +70,25 @@
       "noise_rate_est": 0.1435,
       "review_noise_frac": 0.15,
       "jsonish_frac": 0.0029,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "fineweb2-hq-cmn-hani-b",
+      "n_docs": 40000,
+      "n_tokens": 51080209,
+      "unk_token_rate": 0.000415,
+      "chars_per_token": 1.0652,
+      "cjk_char_ratio": 0.7754,
+      "wiki_norm_overlap": 0.0008,
+      "complement_score": 0.9992,
+      "noise_rate_est": 0.0603,
+      "review_noise_frac": 0.075,
+      "jsonish_frac": 0.0066,
       "hard_gates": {
         "unk_ok": true,
         "leak_ok": true,

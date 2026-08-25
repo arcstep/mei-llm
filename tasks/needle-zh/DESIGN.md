@@ -1,54 +1,84 @@
-# needle-zh
+# needle-zh / mei-1.0-58m design boundary
 
-中文端侧工具调用路由器（Needle 类产品合同）。不是通用聊天模型。
+正式族名是 **`mei-1.0-58m`**；`needle-zh` 仅为历史目录名。
 
-对用户可以「又调又说」；结构上必须**先路由、后生成**。本模型只输出 `execute` 或 `[]`。说话器（若有）只读已执行的工具 JSON + 垂直术语，不得再调工具，不得把 `[]` 改写成「请补充城市」。说话器权重可替换，不与本路由器嫁接词表。
+## 状态
 
-首个学生是 **Needle 2 参考配方的中文变体**（`d_model=512`、27 层、8/4 GQA、RoPE、HadamardMLP、engram 2/15、mHC 4 lanes、vocab 24000，MLX 计数约 58.5M）。这是工程基线，不宣称论文纯 SAN。运行时是 Apple Silicon MLX + 自有 checkpoint，不接官方 libneedle。
+| 面 | 当前 | 目标 |
+|----|------|------|
+| 协议 | Route-ID v1：`[]` / `{"route_id":N}` | Needle2-aligned 完整工具 JSON / `[]` |
+| 工具选择 | Python 编译 `<routes>` | ContrastiveHead + top-5 |
+| 参数 | Python 候选编译并确定性渲染 | 模型抽取 + byte grammar |
+| 来源安全 | RouteManifest provenance | 生成后 MEI validator |
+| KV | 无界普通 cache | tool sinks + bounded sliding |
+| Confidence | 历史 execute/refuse probe | 完整调用 correctness + decode probability |
+| 实现状态 | `implemented_in_code/legacy_frozen` | `not_implemented` |
 
-冻结规格：`spec/model.json`、`spec/special-tokens.json`、`spec/runtime.md`、`spec/gates.json`。
+机器规格索引：[`spec/README.md`](spec/README.md)。
 
-## 一期产品合同
+## 当前可复现 legacy
 
-- 输出只有 `execute`（函数调用）或空 `[]`。
-- 空 call 表示「覆盖不了 / 不要执行」，不是「请用户补充」。缺槽、场景冲突、非法搭配、离题均为 `[]`。
-- 槽值 exact-match。用 query 子串当槽值算失败。
-- 离题大约 1/8 的 SFT，必须空 call。
-- 一期就要校准中文置信头。官方 Needle 2 LoRA 不更新该头。
-- 不要输出「请补充城市」这类自然语言。
-- 不要在英文 Needle 2 上全参微调救中文（8k SentencePiece 冻结）。
-- **预训是本路线必经步骤**。随机初始化 + 同一套 SFT 只作负对照。Qwen 旁路只验证数据能否被学会。
+当前模型/runner/pack/bank 使用：
 
-## 二期（以后）
+- `spec/model.json`；
+- `spec/route-protocol-v1.json`；
+- `spec/schema-subset-v1.json`；
+- `spec/source-grounding-v1.json`；
+- `spec/runtime.md`；
+- `spec/special-tokens.json`；
+- `spec/gates.json`。
 
-把 `[]` 拆成 `expand` / `shape` / `escalate` / `stop`。改后训练与语法，不丢一期词表/基座。一期 `execute/[]` 与置信校准通过前，不把二期动作混进训练。
+代码入口包括 `model/route_compiler.py`、`model/route_protocol.py`、`model/decode.py`、`scripts/mei_tool_grounded_lib.py` 和 `scripts/promote_mei_58m_release.py`。
 
-## 共享 vs 本 task
+Legacy 行为保持冻结，仅用于复现历史 checkpoint/runner/题库。禁止原地改变 protocol/hash/promote semantics。
 
-| 共享 | 本 task |
-|------|---------|
-| `corpora/zh-vocab-v0` | tokenizer v1（`zh-24k-v1`；旧 `zh-24k.model` 为草稿） |
-| `corpora/zh-pretrain-v0` | 窄中文预训槽（探针验收；token 阶梯） |
-| `eval/banks/needle-toolcall-v0` | exact-match 协议烟测 |
-| `eval/banks/needle-vrm-agent-v0` | 家居数字人产品 EVAL（48 公开 dev + holdout） |
-| `eval/banks/needle-vrm-agent-en-v0` | 英文对照（**不是** KPI） |
-| `eval/banks/needle-pretrain-probes-v0` | 预训探针 |
-| `eval/shared/toolsets/` | 工具 schema |
+## 经批准的目标合同
 
-本 task 协议回归种子：`train/seed/sft-phase1-v0.jsonl`（天气/灯/发票）。家居垂直 SFT 在 `train/packs/`。
+目标 v2：
 
-## 预训验收（不是产品 KPI）
-
-产品 KPI 是 SFT 后在 `needle-vrm-agent-v0` holdout 上的 exact-match，以及同一次跑分的完整作答时延（产物在 `experiments/runs/`）。对照：随机+SFT vs 预训+同一套 SFT。
-
-工作门槛见 `spec/gates.json`。硬件证伪必须改规格，禁止静默放宽。
-
-## 命令
-
-```bash
-python3 scripts/validate_needle_sft_seed.py
-python3 scripts/check_train_eval_isolation.py --all
-python3 scripts/eval_needle_toolcall_v0.py --bank eval/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl
-python3 tasks/needle-zh/model/check_student.py
-python3 scripts/train_zh_vocab_spm.py --freeze-v1
+```text
+中文 query + 完整工具目录
+→ query/tool ContrastiveHead embeddings
+→ top-5 canonical schemas
+→ canonical prompt + tool KV sinks
+→ byte grammar constrained full-call generation
+→ MEI provenance / permission / state validator
+→ confidence gate
+→ execute / escalate / stop
 ```
+
+目标 specs：
+
+- `spec/model-target-v2.json`；
+- `spec/tool-call-protocol-v2.target.json`；
+- `spec/schema-subset-v2.target.json`；
+- `spec/source-grounding-v2.target.json`；
+- `spec/special-tokens-target-v2.json`；
+- `spec/runtime-target-v2.md`；
+- `spec/gates-v2.target.json`。
+
+这些文件是实现输入，不是 runner 配置。当前脚本不得自动消费它们。
+
+## 保留主干资产
+
+- `zh-24k-v1` tokenizer；
+- 512×27、8Q/4KV GQA、RoPE；
+- HadamardMLP、2/3-gram engram、4-lane mHC；
+- tied embedding/LM head；
+- `mei-1.0-58m-base-cpt300m-v1` warm start。
+
+Route-ID SFT checkpoint 不作为 v2 parent。
+
+## 实现前置
+
+1. 用户确认缺槽、MTP、滑窗、量化/QAT、confidence 风险和首发平台。
+2. 迁移 300M 主干并证明 logits/NLL parity。
+3. 实现 grammar/KV/retrieval/confidence 与分层 eval。
+4. 通过 query-blind、unseen/hard-negative 和 provenance hard gates。
+5. 再由用户决定是否创建 CPT/SFT。
+
+## SSOT
+
+本仓可执行 machine contract 以 `spec/README.md` 及其索引文件为准。产品方法、训练批准和评测治理在私有 monorepo 另行维护，不作为公开仓依赖。
+
+**本轮禁止**：实现 v2、改现有 runner/pack/bank、生成数据、启动训练。

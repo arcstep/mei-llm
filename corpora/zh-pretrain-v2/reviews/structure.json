@@ -1,0 +1,244 @@
+{
+  "samples": [
+    {
+      "id": "train-00000-of-01126.parquet:43",
+      "n_chars": 418,
+      "split": "train",
+      "preview": "// right now I assume order is correct because I'm a terrible person. make an order array or base it on File Locations and make that an array // inject the observer and the utils always. then initialize the options. function init(options) {"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:79",
+      "n_chars": 1832,
+      "split": "train",
+      "preview": "// // Constants.h // // #define LANGUAGES_API @\"https://api.unfoldingword.org/obs/txt/1/obs-catalog.json\" #define SELECTION_BLUE_COLOR [UIColor colorWithRed:76.0/255.0 green:185.0/255.0 blue:224.0/255.0 alpha:1.0] #define TEXT_COLOR_NORMAL "
+    },
+    {
+      "id": "train-00000-of-01126.parquet:111",
+      "n_chars": 107,
+      "split": "train",
+      "preview": "/// <summary> /// Get requested user by email /// </summary> /// <summary> /// Get all users /// </summary>"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:156",
+      "n_chars": 439,
+      "split": "train",
+      "preview": "@Bind(R.id.div_comment_dialog_avatar) @Bind(R.id.tv_comment_dialog_teacher_course) @Bind(R.id.rb_comment_dialog_score) @Bind(R.id.et_comment_dialog_input) @Bind(R.id.tv_comment_dialog_commit) @Bind(R.id.iv_comment_dialog_close) @Override @O"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:192",
+      "n_chars": 1975,
+      "split": "train",
+      "preview": "def renderComment(in : String) : NodeSeq = { def toXHTML(input : String) : NodeSeq = { def tidy(seq : NodeSeq, isLink : Boolean) : NodeSeq = def tidy(node : Node, isLink : Boolean) : NodeSeq = node match { def renderBlock(in : List[String])"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:242",
+      "n_chars": 482,
+      "split": "train",
+      "preview": "class fifaSpider(Spider): def parse(self, response): #obtains links from page to page and passes links to parse_playerURL def parse_playerURL(self, response): #parses player specific data into items list #stats = site.xpath('//div[@class=\"r"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:275",
+      "n_chars": 137,
+      "split": "train",
+      "preview": "class Auth // Load language //if ($this->checkCaptcha($captcha) == false) { //} // Validate email // Validate password //return \"verify\";"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:319",
+      "n_chars": 1039,
+      "split": "train",
+      "preview": "@threadpool = ZK::Threadpool.new @threadpool.shutdown @threadpool.should be_running @threadpool.size.should == ZK::Threadpool.default_size @th = nil @threadpool.defer { @th = Thread.current } @th.should_not == Thread.current @threadpool.shu"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:356",
+      "n_chars": 85,
+      "split": "train",
+      "preview": "@Override // User cancelled the dialog // Create the AlertDialog object and return it"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:399",
+      "n_chars": 2039,
+      "split": "train",
+      "preview": "// Licensed under the MIT license. See LICENSE file in the project root for full license information. // =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ // // ActionOnDispose.cs // // // Implemention o"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:431",
+      "n_chars": 1597,
+      "split": "train",
+      "preview": "class RestoreOptions implements INuGetCommandOptions { export async function run(nuGetPath: string): Promise<void> { // Reading inputs // Discovering NuGet quirks based on the version // Clauses ordered in this way to avoid short-circuit ev"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:461",
+      "n_chars": 1199,
+      "split": "train",
+      "preview": "#ifndef XAPIAN_INCLUDED_SAFESYSSTAT_H #define XAPIAN_INCLUDED_SAFESYSSTAT_H #include <sys/stat.h> #include <sys/types.h> #ifdef __WIN32__ // MSVC lacks these POSIX macros and other compilers may too: #ifndef S_ISDIR # define S_ISDIR(ST_MODE"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:496",
+      "n_chars": 573,
+      "split": "train",
+      "preview": "# == Schema Information # # Table name: accounts # # id :integer not null, primary key # type :string default(\"Account\"), not null # description :string default(\"\"), not null # currency :string default(\"USD\"), not null # created_at :datetim"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:535",
+      "n_chars": 663,
+      "split": "train",
+      "preview": "// // JJProductCell.h // Footprints // // Created by Jinjin on 14/12/3. // Copyright (c) 2014年 JiaJun. All rights reserved. // #import <UIKit/UIKit.h> @interface JJProductCell : UITableViewCell @property (weak, nonatomic) IBOutlet UIView *r"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:571",
+      "n_chars": 160,
+      "split": "train",
+      "preview": "#ifndef __NV_FACE_MLP_STATIC_H #define __NV_FACE_MLP_STATIC_H #include \"nv_core.h\" #include \"nv_ml.h\" #ifdef __cplusplus #endif #ifdef __cplusplus #endif #endif"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:618",
+      "n_chars": 416,
+      "split": "train",
+      "preview": "#ifndef INCLUDED_openfl__legacy_events_KeyboardEvent #define INCLUDED_openfl__legacy_events_KeyboardEvent #ifndef HXCPP_H #include <hxcpp.h> #endif #ifndef INCLUDED_openfl__legacy_events_Event #include <openfl/_legacy/events/Event.h> #endif"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:658",
+      "n_chars": 1807,
+      "split": "train",
+      "preview": "class SFTP extends SSH2 // this value isn't really used anymore but i'm keeping it reserved for historical reasons // http://tools.ietf.org/html/draft-ietf-secsh-filexfer-13#section-7.1 // the order, in this case, matters quite a lot - see "
+    },
+    {
+      "id": "train-00000-of-01126.parquet:690",
+      "n_chars": 263,
+      "split": "train",
+      "preview": "// null (attach to input/textarea) or a jQuery object (attach elsewhere) // at2 is used when \"usePreview\" is false (centers keyboard at the bottom // of the input/textarea) // used when disabling the decimal button {dec} // when a decimal e"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:730",
+      "n_chars": 1028,
+      "split": "train",
+      "preview": "// // Copyright (C) 2006-2008 Mateusz Loskot // Distributed under the Boost Software License, Version 1.0. // (See accompanying file LICENSE_1_0.txt or copy at // http://www.boost.org/LICENSE_1_0.txt) // #ifndef SOCI_PLATFORM_H_INCLUDED #de"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:783",
+      "n_chars": 152,
+      "split": "train",
+      "preview": "function valuefy(value) { function serialize(target) { function extract(t, outter, onlyContent) { function objectify(v) { function deserialize(values) {"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:822",
+      "n_chars": 323,
+      "split": "train",
+      "preview": "//图片的平移与缩放 @Override @Override @Override @Override // ImageLoaderUtils.load(imgUrl,mGestureImageView); //解决图片倒置 //解决图片多指缩放 //图片等比例缩放 // getAvatarBitmap(imageRequest, controller, hierarchy, ClipPhotoActivity.this); @Override @Override @Overr"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:856",
+      "n_chars": 328,
+      "split": "train",
+      "preview": "#ifndef _absnodeaction_h_ #define _absnodeaction_h_ #include \"cocos2d.h\" #include <string> #include <iostream> #include <vector> class TouchNode; enum EaseType enum MoveInType{ enum MoveOutType{ enum RunningEffectType class BasNodeEffectAct"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:892",
+      "n_chars": 1890,
+      "split": "train",
+      "preview": "/// This is a C String abstractions that presents a CStr like /// interface for interop purposes but tries to be little nicer /// by avoiding heap allocations if the string is within the /// generous bounds (512 bytes) of the statically siz"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:945",
+      "n_chars": 124,
+      "split": "train",
+      "preview": "# Tablespoon ### Installation ### Documentation ### Example usage // Get the rows that don't have 15 ### Testing ### Used in"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:985",
+      "n_chars": 600,
+      "split": "train",
+      "preview": "// *********************************************************** // This example plugins/index.js can be used to load plugins // // You can change the location of this file or turn off loading // the plugins file with the 'pluginsFile' config"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1022",
+      "n_chars": 114,
+      "split": "train",
+      "preview": "@Expose @SerializedName(value = \"user_name\") @Expose @Expose @Expose @SerializedName(value = \"password\") @Override"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1076",
+      "n_chars": 92,
+      "split": "valid",
+      "preview": "// persist // remove persisted // persist // remove persisted // persist // remove persisted"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1110",
+      "n_chars": 926,
+      "split": "train",
+      "preview": "#pragma once #include <VoxieBackend/VoxieBackend.hpp> #include <VoxieBackend/Data/Data.hpp> #include <VoxieClient/ObjectExport/Client.hpp> #include <VoxieClient/ObjectExport/ExportedObject.hpp> #include <QtCore/QPointer> #include <QtDBus/QD"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1150",
+      "n_chars": 2035,
+      "split": "train",
+      "preview": "#ifndef _UFS_FFS_FS_H_ #define _UFS_FFS_FS_H_ #define SBLOCK_FLOPPY 0 #define SBLOCK_UFS1 8192 #define SBLOCK_UFS2 65536 #define SBLOCK_PIGGY 262144 #define SBLOCKSIZE 8192 #define SBLOCKSEARCH \\ #define MAXFRAG 8 #define MINBSIZE 4096 #def"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1193",
+      "n_chars": 173,
+      "split": "train",
+      "preview": "type: GraphQLID, type: NoteInputType, type: CommunicationInputType, type: TranslationInputType, type: GraphQLBoolean, type: GraphQLBoolean, type: new GraphQLList(GraphQLID),"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1231",
+      "n_chars": 1976,
+      "split": "train",
+      "preview": "// How much to interpolate between the current orientation estimate and the // previous estimate position. This is helpful for devices with low // deviceorientation firing frequency (eg. on iOS8 and below, it is 20 Hz). The // larger this v"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1273",
+      "n_chars": 86,
+      "split": "train",
+      "preview": "class Palestrantes_model extends CI_Model { // $idioma = $this->input->post('idioma');"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1309",
+      "n_chars": 614,
+      "split": "train",
+      "preview": "@ScalaJSDefined class TextAreaSettingsBuilder(val dict: SettingsMap) def rows(v: Int) = setting(\"rows\", v) def cols(v: Int) = setting(\"cols\", v) def height(v: CSSSize) = setting(\"height\", v) def maxLength(v: Int) = setting(\"maxLength\", v) d"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1364",
+      "n_chars": 407,
+      "split": "train",
+      "preview": "function($scope, Authentication, $http, $modal, $rootScope) { // This provides Authentication context. //setTimeout(function() { // $scope.$apply(function(){ // console.log('broadcasting event'); // $rootScope.$broadcast('OpenCardDetails', "
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1396",
+      "n_chars": 455,
+      "split": "train",
+      "preview": "class TableDumperCollection extends ArrayObject //Make sure we're adding a TableDumper object //Append with table_name as key //Make sure we're adding a TableDumper object //Append with table_name as key //First check if a dumper already ex"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1431",
+      "n_chars": 815,
+      "split": "train",
+      "preview": "// /** // * Load the repositories, this action starts the request saga // * // * @return {object} An action object with a type of LOAD_REPOS // */ export function loadSongs() { type: LOAD_SONGS, // /** // * Dispatched when the repositories "
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1467",
+      "n_chars": 400,
+      "split": "train",
+      "preview": "''' Refer to docs for all the exact formats. There are many so check them out before converting things yourself ''' ''' If there's a specific offset you want to do things from, use pack_into and unack_into from the docs ''' #Integer to stri"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1499",
+      "n_chars": 615,
+      "split": "train",
+      "preview": "class BestaPlayer: def __init__(self, fichier, player): def getFirstGrid(self): \"\"\" \"\"\" def updateGrid(self): \"\"\" \"\"\" def grilleEmpty(self): \"\"\" \"\"\" def checkLines(self, player, inARow): \"\"\" \"\"\" def canPlayLine(self, line, col): \"\"\" \"\"\" def"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1562",
+      "n_chars": 227,
+      "split": "train",
+      "preview": "#include \"Extensions.hpp\" #include \"Extensions.inl\" #include <Math/Rect.hpp> #include <Math/Vector.hpp> #include <Script/ScriptExtensions.hpp> #include <SFML/Graphics/CircleShape.hpp> #include <angelscript.h> #include <cassert>"
+    },
+    {
+      "id": "train-00000-of-01126.parquet:1604",
+      "n_chars": 400,
+      "split": "train",
+      "preview": "//================================================================ // RS_ChangeWindowTextColorSafely.js // --------------------------------------------------------------- // The MIT License // Copyright (c) 2017 biud436 // -----------------"
+    }
+  ]
+}

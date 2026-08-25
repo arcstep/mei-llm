@@ -1,0 +1,29 @@
+{
+  "id": "mei-tool-route-sft-v1-10k",
+  "n": 10000,
+  "eval_lock_sha256": "4c6c856166bca2b2fa17e2eb2f47096bc4bc3dcf87880dd928af45db5b7b24bc",
+  "pack_sha256": "1687d529519bfafc02497e1da32e789fbe2227f82c30b0070acf1d71ada84371",
+  "protocol": "mei-route-protocol-v1",
+  "serializer": "mei-route-serializer-v1",
+  "kind": {
+    "refuse": 2296,
+    "execute": 7704
+  },
+  "family": {
+    "灯": 7958,
+    "离题": 751,
+    "天气": 573,
+    "音量": 430,
+    "类型": 46,
+    "发票": 25,
+    "日程": 34,
+    "标签": 23,
+    "报价": 27,
+    "收款": 35,
+    "开关": 75,
+    "点餐": 11,
+    "动作": 8,
+    "缺槽": 4
+  },
+  "note": "Leftover universe after grounded eval freeze. 2k/10k independently sampled from cpt300m-ready pool."
+}

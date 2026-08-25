@@ -1,0 +1,44 @@
+{
+  "toolset_id": "mei-office-rename-v0",
+  "description": "Renamed office tools/slots. Eval-only; train names must not leak.",
+  "split": "eval-rename",
+  "parent_toolset_id": "mei-office-v0",
+  "tools": [
+    {
+      "name": "add_meeting",
+      "description": "Create a calendar meeting.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "topic": {"type": "string"},
+          "minutes": {"type": "integer", "minimum": 1, "maximum": 480},
+          "all_day": {"type": "boolean"}
+        },
+        "required": ["topic"]
+      }
+    },
+    {
+      "name": "adjust_loudness",
+      "description": "Set playback loudness from 0 to 10.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "gain": {"type": "integer", "minimum": 0, "maximum": 10}
+        },
+        "required": ["gain"]
+      }
+    },
+    {
+      "name": "quote_item",
+      "description": "Look up a unit price times quantity.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sku_name": {"type": "string"},
+          "count": {"type": "number"}
+        },
+        "required": ["sku_name", "count"]
+      }
+    }
+  ]
+}

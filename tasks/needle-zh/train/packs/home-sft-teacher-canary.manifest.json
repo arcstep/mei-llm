@@ -1,0 +1,18 @@
+{
+  "id": "home-sft-teacher-canary-v1",
+  "model": "qwen-max",
+  "provider": "QWEN",
+  "prompt_version": "sft-teacher-v1",
+  "n_in": 200,
+  "n_calls": 200,
+  "n_accepted": 195,
+  "n_fail": 5,
+  "accept_rate": 0.975,
+  "overlay": true,
+  "overlay_n": 192,
+  "prompt_tokens": 65561,
+  "completion_tokens": 6962,
+  "overlay": false,
+  "run_dir": "experiments/runs/needle-zh-sft-teacher-1787628590",
+  "notes": "Canary only rewrites query; gold remains schema-program. Raw logs gitignored."
+}

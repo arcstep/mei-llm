@@ -9,7 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from repo_paths import CORPUS_ZH_PRETRAIN, EXPERIMENTS_RUNS, ROOT, TASKS_ROOT, TASK_NEEDLE_ZH
+from repo_paths import CORPUS_ZH_PRETRAIN, CORPUS_ZH_PRETRAIN_V2, CORPUS_ZH_PRETRAIN_V3, EXPERIMENTS_RUNS, ROOT, TASKS_ROOT, TASK_NEEDLE_ZH
+from mei_cpt_gates import refuse_dirty_v2_for_1b, write_v2_block
 
 PY = sys.executable
 CKPT_DIR = TASKS_ROOT / TASK_NEEDLE_ZH / "checkpoints"
@@ -118,9 +119,22 @@ def review_gate(
     if coverage:
         n_windows = int(summary.get("n_windows") or 0)
         gates["exhausted"] = bool(summary.get("exhausted"))
-        gates["unique_epoch"] = (not summary.get("allow_repeat")) and int(summary.get("epoch") or 0) == 0
-        if n_windows > 0:
+        gates["unique_epoch"] = not summary.get("allow_repeat")
+        if summary.get("schedule_sha256") or summary.get("init_mode") == "weights_only":
+            gates["unique_epoch"] = (not summary.get("allow_repeat")) and bool(summary.get("exhausted"))
+        elif n_windows > 0:
             gates["cursor_at_end"] = int(summary.get("window_index") or 0) >= n_windows
+            gates["unique_epoch"] = (not summary.get("allow_repeat")) and int(summary.get("epoch") or 0) == 0
+    for key in ("valid_loss_hq", "valid_loss_colloquial", "valid_loss_structure"):
+        vals = [r for r in metrics if r.get(key) is not None]
+        if not vals:
+            continue
+        gates[f"{key}_finite"] = all(
+            float(r[key]) == float(r[key]) and abs(float(r[key])) != float("inf") for r in vals
+        )
+        gates[f"{key}_not_twice_worse"] = valid_not_twice_worse(
+            [{"valid_loss": r[key]} for r in vals]
+        )
     gates["promote"] = all(bool(v) for v in gates.values())
     gates["tokens_seen"] = tokens
     gates["valid_loss"] = valid
@@ -142,9 +156,10 @@ def disk_ok(path: Path, need_gb: float = 8.0) -> bool:
     return True
 
 
-def eval_valid(rung: str, mode: str) -> int:
+def eval_valid(rung: str, mode: str, *, corpus_dir: Path | None = None, valid_set: str = "wiki") -> int:
     ckpt = CKPT_DIR / f"pretrain-{rung}.npz"
-    out = EXPERIMENTS_RUNS / f"needle-zh-pretrain-{rung}" / f"valid-{mode}.json"
+    suffix = mode if valid_set == "wiki" else f"{mode}-{valid_set}"
+    out = EXPERIMENTS_RUNS / f"needle-zh-pretrain-{rung}" / f"valid-{suffix}.json"
     cmd = [
         PY,
         str(ROOT / "scripts" / "eval_needle_zh_pretrain_valid.py"),
@@ -152,9 +167,13 @@ def eval_valid(rung: str, mode: str) -> int:
         str(ckpt),
         "--mode",
         mode,
+        "--valid-set",
+        valid_set,
         "--out",
         str(out),
     ]
+    if corpus_dir is not None:
+        cmd += ["--corpus-dir", str(corpus_dir)]
     return run(cmd).returncode
 
 
@@ -209,30 +228,26 @@ def main() -> int:
 
     if not disk_ok(CKPT_DIR):
         return 5
-    rc = train(
-        "1b",
-        [
-            "--resume",
-            str(CKPT_DIR / "pretrain-300m-state.npz"),
-            "--stop-at-tokens",
-            str(n_predictable),
-            *horizon,
-            *flags,
-        ],
-    )
-    if rc != 0:
-        return rc
-    gfull = review_gate("1b", n_predictable, prev_valid=g300.get("valid_loss"), coverage=True)
-    gfull["unique_train_tokens"] = n_train
-    gfull["prediction_targets"] = n_predictable
-    gfull["reached_1b"] = n_train >= 1_000_000_000
-    gfull["gap_to_1b"] = max(0, 1_000_000_000 - n_train)
+    write_v2_block()
+    blocked = refuse_dirty_v2_for_1b(CORPUS_ZH_PRETRAIN_V2, "1b")
+    v3_rel = load_json(CORPUS_ZH_PRETRAIN_V3 / "RELEASE.json")
+    gfull = {
+        "promote": False,
+        "blocked": True,
+        "reason": blocked,
+        "v3_promote_structure": bool(v3_rel.get("promote_structure")),
+        "init_mode": "weights_only",
+        "parent": "mei-1.0-58m-base-cpt300m-v1",
+        "skip_seen_wiki": True,
+        "note": "Do not start 1B on dirty v2. 2B/10B each need a new unique batch, not repeated epochs.",
+        "release": "zh-pretrain-v3-required",
+    }
     full_dir = EXPERIMENTS_RUNS / "needle-zh-pretrain-1b"
     full_dir.mkdir(parents=True, exist_ok=True)
-    (full_dir / "promote-full.json").write_text(json.dumps(gfull, indent=2) + "\n", encoding="utf-8")
-    if gfull.get("promote"):
-        eval_valid("1b", "full")
-    return 0 if gfull.get("promote") else 4
+    (full_dir / "promote-1b.json").write_text(json.dumps(gfull, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(gfull, indent=2))
+    print(blocked or "1B blocked pending clean mix", file=sys.stderr)
+    return 4
 
 
 if __name__ == "__main__":

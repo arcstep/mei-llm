@@ -1,17 +1,49 @@
 {
-  "version": "v1",
-  "note": "Frozen before hardware proof. If unreachable, edit this file and 0104 explicitly.",
+  "version": "v2-grounded-route",
+  "note": "Blocking gates. Hardware falsification must edit this file and 0104 explicitly.",
+  "protocol": "mei-route-protocol-v1",
+  "eval_bank": "mei-tool-grounded-v1",
+  "publish_behavior_baseline": {
+    "blocking": true,
+    "model_id": "qwen35-9b",
+    "runner_model": "qwen3.5:9b-mlx",
+    "backend": "ollama",
+    "same_serializer": true,
+    "same_manifest": true,
+    "same_validator": true,
+    "zero_shot_only": true,
+    "rule": "accepted_call_exact >= max(0.90, 9B same-protocol accepted_call_exact)"
+  },
   "exact_match": {
     "overall": 0.9,
     "execute_family": 0.9,
     "refuse_family": 0.9,
+    "metric": "accepted_call_exact_after_validator",
     "always_refuse_baseline_must_be_reported": true
+  },
+  "grounding": {
+    "blocking": true,
+    "unsupported_accepted_max": 0.0,
+    "unprovenanced_accepted_max": 0.0,
+    "provenance_valid_min": 1.0
+  },
+  "protocol_preflight": {
+    "blocking": true,
+    "require": [
+      "eval_lock_hash",
+      "serializer_id",
+      "route_manifest_hash",
+      "prompt_sha256",
+      "validator_id",
+      "scorer_id"
+    ]
   },
   "package": {"quantized_bytes_max": 26214400},
   "latency": {
     "metric": "full_answer_wall_clock",
     "p50_ms_max": 100,
-    "not_ttft": true
+    "not_ttft": true,
+    "applies_to": "student_only"
   },
   "memory": {"peak_ram_bytes_max": 67108864},
   "quantize_order": ["float_correctness", "4bit", "lower_bits"]

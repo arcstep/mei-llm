@@ -10,9 +10,13 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 from repo_paths import BANK_NEEDLE_TOOLCALL, EVAL_SHARED_ROOT, ROOT
+
+REFUSE_FAMILIES = {"missing", "scene_conflict", "illegal_pair", "offtopic"}
+EXECUTE_FAMILIES = {"gesture", "home", "order", "sequence", "paraphrase"}
 
 REQUIRED_BANK = ("item_id", "query", "gold", "pass", "toolset_id")
 
@@ -31,9 +35,19 @@ def norm_scalar(value):
         return value.strip()
     if isinstance(value, bool):
         return value
-    if isinstance(value, (int, float)):
-        return float(value)
+    if isinstance(value, int):
+        return value
+    if isinstance(value, float):
+        return value
     return value
+
+
+def values_equal(a, b) -> bool:
+    if isinstance(a, bool) or isinstance(b, bool):
+        return isinstance(a, bool) and isinstance(b, bool) and a is b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return float(a) == float(b)
+    return a == b
 
 
 def norm_args(args: dict | None) -> dict:
@@ -42,14 +56,46 @@ def norm_args(args: dict | None) -> dict:
     return {str(k): norm_scalar(v) for k, v in args.items()}
 
 
-def norm_calls(calls) -> list[dict]:
+def extract_arguments(call: dict, *, accept_parameters: bool = False) -> dict:
+    args = call.get("arguments")
+    if isinstance(args, dict):
+        return args
+    if accept_parameters and isinstance(call.get("parameters"), dict):
+        return call["parameters"]
+    if accept_parameters:
+        rest = {k: v for k, v in call.items() if k not in {"name", "function", "description", "parameters", "type", "properties", "required"}}
+        if rest:
+            return rest
+    return {}
+
+
+def calls_equal(a, b) -> bool:
+    left, right = norm_calls(a), norm_calls(b)
+    if len(left) != len(right):
+        return False
+    for x, y in zip(left, right):
+        if x.get("name") != y.get("name"):
+            return False
+        xa, ya = x.get("arguments") or {}, y.get("arguments") or {}
+        if set(xa) != set(ya):
+            return False
+        for k in xa:
+            if not values_equal(xa[k], ya[k]):
+                return False
+    return True
+
+
+def norm_calls(calls, *, accept_parameters: bool = False) -> list[dict]:
     if not calls:
         return []
     out = []
     for c in calls:
         if not isinstance(c, dict):
             continue
-        out.append({"name": str(c.get("name") or ""), "arguments": norm_args(c.get("arguments"))})
+        name = str(c.get("name") or c.get("function") or "")
+        if isinstance(c.get("name"), dict):
+            name = str(c["name"].get("name") or "")
+        out.append({"name": name, "arguments": norm_args(extract_arguments(c, accept_parameters=accept_parameters))})
     return out
 
 
@@ -141,44 +187,114 @@ def schema_errors(rows: list[dict]) -> list[str]:
     return errors
 
 
+def _inc(slot: dict, passed: bool) -> None:
+    slot["n"] += 1
+    if passed:
+        slot["n_pass"] += 1
+
+
+def _finalize(table: dict[str, dict]) -> dict[str, dict]:
+    for slot in table.values():
+        slot["exact_match"] = round(slot["n_pass"] / slot["n"], 4) if slot["n"] else 0.0
+    return table
+
+
+def gold_baselines(rows: list[dict]) -> dict:
+    """Always-refuse and strata from gold only (no model predictions)."""
+    n = len(rows)
+    n_empty = 0
+    by_family: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_er: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_tool: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_call_count: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_style: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_case: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    for row in rows:
+        gold = norm_calls((row.get("gold") or {}).get("function_calls"))
+        empty = not gold
+        n_empty += int(empty)
+        passed_if_refuse = empty
+        fam = str(row.get("family") or "?")
+        _inc(by_family[fam], passed_if_refuse)
+        er = "refuse" if fam in REFUSE_FAMILIES else "execute"
+        _inc(by_er[er], passed_if_refuse)
+        names = [c.get("name") or "?" for c in gold] or ["_empty"]
+        for name in names:
+            _inc(by_tool[str(name)], passed_if_refuse)
+        _inc(by_call_count[str(len(gold))], passed_if_refuse)
+        for tag in list(row.get("style_tags") or ["_none"]):
+            _inc(by_style[str(tag)], passed_if_refuse)
+        for tag in list(row.get("case_tags") or ["_none"]):
+            _inc(by_case[str(tag)], passed_if_refuse)
+    return {
+        "n": n,
+        "always_refuse_exact_match": round(n_empty / n, 4) if n else 0.0,
+        "n_gold_empty": n_empty,
+        "by_family": _finalize(dict(by_family)),
+        "by_execute_refuse": _finalize(dict(by_er)),
+        "by_tool": _finalize(dict(by_tool)),
+        "by_call_count": _finalize(dict(by_call_count)),
+        "by_style_tag": _finalize(dict(by_style)),
+        "by_case_tag": _finalize(dict(by_case)),
+        "note": "always_refuse is the constant-[] baseline; execute items score 0 under it.",
+    }
+
+
 def score(rows: list[dict], preds: list[dict]) -> dict:
     by_id = {r["item_id"]: r for r in rows}
     pred_by = {p.get("item_id"): p for p in preds if p.get("item_id")}
     details = []
     n_pass = 0
+    by_family: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_er: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_tool: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_call_count: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_style: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
+    by_case: dict[str, dict] = defaultdict(lambda: {"n": 0, "n_pass": 0})
     for iid, row in by_id.items():
         pred = pred_by.get(iid) or {}
         gold_calls = norm_calls((row.get("gold") or {}).get("function_calls"))
         got_calls = norm_calls(pred.get("function_calls"))
-        passed = gold_calls == got_calls
+        passed = calls_equal(gold_calls, got_calls)
         if passed:
             n_pass += 1
+        fam = str(row.get("family") or "?")
+        _inc(by_family[fam], passed)
+        er = "refuse" if fam in REFUSE_FAMILIES else "execute"
+        if fam not in REFUSE_FAMILIES and fam not in EXECUTE_FAMILIES:
+            er = "refuse" if not gold_calls else "execute"
+        _inc(by_er[er], passed)
+        names = [c.get("name") or "?" for c in gold_calls] or ["_empty"]
+        for name in names:
+            _inc(by_tool[str(name)], passed)
+        _inc(by_call_count[str(len(gold_calls))], passed)
+        for tag in list(row.get("style_tags") or ["_none"]):
+            _inc(by_style[str(tag)], passed)
+        for tag in list(row.get("case_tags") or ["_none"]):
+            _inc(by_case[str(tag)], passed)
         details.append(
             {
                 "item_id": iid,
                 "lang": row.get("lang"),
-                "family": row.get("family"),
+                "family": fam,
                 "pass": passed,
                 "gold": gold_calls,
                 "pred": got_calls,
             }
         )
     n = len(by_id)
-    by_family: dict[str, dict] = {}
-    for row in details:
-        fam = str(row.get("family") or "?")
-        slot = by_family.setdefault(fam, {"n": 0, "n_pass": 0})
-        slot["n"] += 1
-        if row["pass"]:
-            slot["n_pass"] += 1
-    for slot in by_family.values():
-        slot["exact_match"] = round(slot["n_pass"] / slot["n"], 4) if slot["n"] else 0.0
     return {
         "n": n,
         "n_pass": n_pass,
         "n_pred": len(pred_by),
         "exact_match": round(n_pass / n, 4) if n else 0.0,
-        "by_family": by_family,
+        "by_family": _finalize(dict(by_family)),
+        "by_execute_refuse": _finalize(dict(by_er)),
+        "by_tool": _finalize(dict(by_tool)),
+        "by_call_count": _finalize(dict(by_call_count)),
+        "by_style_tag": _finalize(dict(by_style)),
+        "by_case_tag": _finalize(dict(by_case)),
+        "always_refuse": gold_baselines(rows),
         "missing_pred": sorted(set(by_id) - set(pred_by)),
         "details": details,
     }
@@ -203,6 +319,7 @@ def main() -> int:
         "bank": str(bank.resolve().relative_to(ROOT)),
         "n": len(rows),
         "schema_errors": errors,
+        "always_refuse": gold_baselines(rows),
     }
     if args.predictions:
         preds = load_jsonl(args.predictions)

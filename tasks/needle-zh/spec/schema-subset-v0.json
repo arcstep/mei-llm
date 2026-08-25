@@ -1,0 +1,27 @@
+{
+  "id": "mei-schema-subset-v0",
+  "serializer": "mei-schema-serializer-v1",
+  "product_seq_len": 2048,
+  "output": {
+    "shape": "json_array",
+    "max_calls": 1,
+    "empty_means_refuse": true,
+    "arguments": "object"
+  },
+  "supported": {
+    "required": true,
+    "enum": true,
+    "types": ["string", "boolean", "integer", "number"]
+  },
+  "unsupported": [
+    "array_arguments",
+    "nested_object_arguments",
+    "multi_call",
+    "generic_json_schema"
+  ],
+  "request_shape": "<tools>{canonical_compact_schema}</tools> + optional scene + user",
+  "overflow": "reject_sample_if_tools_or_row_exceed_seq_len",
+  "no_default_toolset": true,
+  "product_rules": "gold_and_policy_not_grammar",
+  "grammar": "schema_hash_cached_fsm_token_mask"
+}

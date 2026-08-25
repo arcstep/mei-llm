@@ -201,10 +201,12 @@ def main() -> int:
 
     pretrain_leaks: list[dict] = []
     pretrain_token_hits: list[dict] = []
+    grounded_leaks: list[str] = []
     if args.all:
         sys.path.insert(0, str(TASKS_ROOT / TASK_NEEDLE_ZH / "model"))
         from data import (  # noqa: E402
             document_leaks_eval,
+            build_leak_index,
             iter_jsonl,
             leak_strings_from_rows,
             list_pretrain_shards,
@@ -218,6 +220,7 @@ def main() -> int:
         if BANK_NEEDLE_PRETRAIN_PROBES.is_file():
             leak_rows.extend(load_jsonl(BANK_NEEDLE_PRETRAIN_PROBES))
         leaks = leak_strings_from_rows(leak_rows)
+        leak_index = build_leak_index(leaks)
         tok = ZhTokenizerV1()
         eval_tok = [
             (
@@ -245,7 +248,7 @@ def main() -> int:
                 continue
             for i, row in enumerate(iter_jsonl(sp)):
                 text = normalize_document(str(row.get("text") or ""))
-                hit = document_leaks_eval(text, leaks)
+                hit = document_leaks_eval(text, leaks, index=leak_index)
                 if hit is not None:
                     h = str(row.get("sha256") or "")
                     consumed = (not token_shas) or (h in token_shas)
@@ -264,6 +267,28 @@ def main() -> int:
                 pretrain_sample, eval_tok, threshold=0.9, limit=16
             )
 
+    grounded_leaks: list[str] = []
+    if args.all:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from mei_tool_grounded_lib import normalized_body as _nb
+
+        g_eval = [
+            r
+            for r in eval_rows
+            if str(r.get("protocol") or "") == "mei-route-protocol-v1"
+            or str(r.get("generator_version") or "").startswith("mei-tool-grounded")
+        ]
+        g_train = [r for r in all_seed_rows if str(r.get("protocol") or "") == "mei-route-protocol-v1"]
+        eval_pairs = {(_nb(str(r.get("query") or "")), str(r.get("toolset_id") or "")) for r in g_eval}
+        eval_cf = {str(r.get("counterfactual_id") or "") for r in g_eval if r.get("counterfactual_id")}
+        for r in g_train:
+            pair = (_nb(str(r.get("query") or "")), str(r.get("toolset_id") or ""))
+            if pair in eval_pairs:
+                grounded_leaks.append(f"{record_id(r)}:body_toolset")
+            cf = str(r.get("counterfactual_id") or "")
+            if cf and cf in eval_cf and pair[0] in {p[0] for p in eval_pairs}:
+                grounded_leaks.append(f"{record_id(r)}:counterfactual")
+
     ok = (
         ok_pairs
         and not domain_errors
@@ -271,6 +296,7 @@ def main() -> int:
         and not token_hits
         and not pretrain_leaks
         and not pretrain_token_hits
+        and not grounded_leaks
     )
     out = {
         "ok": ok,
@@ -284,6 +310,7 @@ def main() -> int:
         "token_near_dups": token_hits,
         "pretrain_leaks": pretrain_leaks,
         "pretrain_token_near_dups": pretrain_token_hits,
+        "grounded_leaks": grounded_leaks,
     }
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return 0 if ok else 1

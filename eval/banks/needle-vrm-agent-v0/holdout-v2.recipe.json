@@ -1,0 +1,93 @@
+{
+  "id": "holdout-v2",
+  "bank": "needle-vrm-agent-v0",
+  "holdout_version": "v2",
+  "toolset_id": "needle-vrm-agent-v0",
+  "phase": 1,
+  "contract": "single_turn_query_optional_scene_execute_or_empty",
+  "gold": "schema-program",
+  "teacher_role": "query-scene-variants-only",
+  "generator_version": "holdout-v2-pack-v1",
+  "prompt_version": "holdout-v2-teacher-v1",
+  "n_total": 2000,
+  "n_dev": 200,
+  "n_eval": 1800,
+  "candidate_overgen": 3,
+  "max_template_share": 0.03,
+  "seq_len_eval": 256,
+  "v1_lock": "eval/banks/needle-vrm-agent-v0/holdout-v1.lock.json",
+  "v1_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+  "item_id_prefix": "EVAL-NVA2-",
+  "targets": {
+    "execute_n": 1100,
+    "refuse_n": 900
+  },
+  "family_n": {
+    "gesture": 300,
+    "home": 480,
+    "order": 160,
+    "sequence": 160,
+    "missing": 260,
+    "scene_conflict": 220,
+    "illegal_pair": 160,
+    "offtopic": 260
+  },
+  "dev_family_n": {
+    "gesture": 30,
+    "home": 48,
+    "order": 16,
+    "sequence": 16,
+    "missing": 26,
+    "scene_conflict": 22,
+    "illegal_pair": 16,
+    "offtopic": 26
+  },
+  "min_execute_per_tool": 40,
+  "min_cells": {
+    "point_left": 15,
+    "point_right": 15,
+    "point_user": 14,
+    "go_to_kitchen": 35,
+    "go_to_living": 35,
+    "go_to_entry": 35,
+    "go_to_trash": 35,
+    "light_kitchen_on": 35,
+    "light_kitchen_off": 35,
+    "light_living_on": 35,
+    "light_living_off": 35,
+    "door_front_open": 25,
+    "door_front_close": 25,
+    "door_back_open": 25,
+    "door_back_close": 25,
+    "food_lanzhou": 45,
+    "food_mcd": 45
+  },
+  "style_tags": [
+    "formal", "colloquial", "command", "statement", "negation",
+    "ellipsis", "inversion", "particle", "deixis", "correction", "redundant"
+  ],
+  "case_tags": [
+    "negation_scope", "same_word_diff_slot", "correction",
+    "scene_flips_execute", "illegal_food", "short_ellipsis", "sequence_order"
+  ],
+  "legal_food": [["兰州拉面", "牛肉面"], ["麦当劳", "巨无霸"]],
+  "illegal_food": [["兰州拉面", "巨无霸"], ["麦当劳", "牛肉面"]],
+  "places": [["厨房", "kitchen"], ["客厅", "living"], ["门口", "entry"], ["垃圾桶", "trash"]],
+  "lights": [["厨房灯", "kitchen_light"], ["客厅灯", "living_light"]],
+  "doors": [["前门", "front"], ["后门", "back"]],
+  "point_targets": [["左边", "left"], ["右边", "right"], ["我", "user"]],
+  "review": {
+    "n": 600,
+    "include_all_dev": true,
+    "include_all_sequence": true,
+    "include_all_scene_conflict": true,
+    "extra_hard": 58,
+    "pass_rate_min": 0.97
+  },
+  "notes": [
+    "v1 bank and lock are byte-frozen. This recipe never writes eval-bank-v0.jsonl.",
+    "Family decides gold. Teachers only rewrite query/scene.",
+    "Sequence gold order equals stated execution order. Incomplete requests are [].",
+    "qwen-max must be passed explicitly if used."
+  ]
+}

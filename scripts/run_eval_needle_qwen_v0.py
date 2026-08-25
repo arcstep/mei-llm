@@ -19,7 +19,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from eval_needle_toolcall_v0 import load_jsonl, load_toolset, score
-from repo_paths import BANK_NEEDLE_VRM_AGENT, EXPERIMENTS_RUNS, ROOT
+from repo_paths import BANK_NEEDLE_VRM_AGENT, EXPERIMENTS_RUNS, ROOT, TASKS_ROOT, TASK_NEEDLE_ZH
+
+sys.path.insert(0, str(TASKS_ROOT / TASK_NEEDLE_ZH / "model"))
+from schema_render import compact_tools  # noqa: E402
 
 UNPARSED = [{"name": "_unparsed", "arguments": {}}]
 CLARIFY = [{"name": "_clarify", "arguments": {}}]
@@ -48,19 +51,6 @@ Output only a JSON array, like [{"name":"nod","arguments":{}}] or [].
 """
 
 _MLX = {"model": None, "tokenizer": None}
-
-
-def compact_tools(toolset: dict) -> list[dict]:
-    out = []
-    for tool in toolset.get("tools") or []:
-        out.append(
-            {
-                "name": tool.get("name"),
-                "description": tool.get("description"),
-                "parameters": tool.get("parameters") or {},
-            }
-        )
-    return out
 
 
 def _lang(row: dict) -> str:
@@ -332,13 +322,20 @@ def self_test() -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Qwen closed-set needle tool-router baseline")
-    ap.add_argument("--bank", type=Path, default=BANK_NEEDLE_VRM_AGENT)
+    ap.add_argument(
+        "--bank",
+        type=Path,
+        default=BANK_NEEDLE_VRM_AGENT,
+        help="Explicit bank path. Default is frozen v1 holdout; do not infer from directory order. "
+        "For current 2K KPI pass eval/banks/needle-vrm-agent-v0/eval-bank-v2.jsonl",
+    )
     ap.add_argument("--backend", choices=["ollama", "openai", "mlx"], default="ollama")
     ap.add_argument("--model", default="qwen3.5:0.8b-mlx")
     ap.add_argument("--host", default="http://127.0.0.1:11434")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=120)
     ap.add_argument("--temperature", type=float, default=0.0)
+    ap.add_argument("--split", default=None, help="Optional split filter (dev|eval). Default: whole bank.")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--out-dir", type=Path, default=None)
@@ -348,6 +345,8 @@ def main() -> int:
 
     bank = args.bank if args.bank.is_absolute() else (ROOT / args.bank)
     rows = load_jsonl(bank)
+    if args.split:
+        rows = [r for r in rows if str(r.get("split") or "") == args.split]
     if args.limit and args.limit > 0:
         rows = rows[: args.limit]
 

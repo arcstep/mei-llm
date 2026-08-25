@@ -1,0 +1,9 @@
+{
+  "corpus": "corpora/zh-pretrain-v3",
+  "n_sample": 256,
+  "clean_rate": 1.0,
+  "schema_hint_rate": 1.0,
+  "heavy_comment_rate": 0.0,
+  "idx_files": 2,
+  "ok": true
+}

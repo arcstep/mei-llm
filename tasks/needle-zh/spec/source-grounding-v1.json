@@ -1,0 +1,36 @@
+{
+  "id": "mei-source-grounding-v1",
+  "product": "mei-1.0-58m",
+  "role": "grounded_structured_prediction",
+  "not": "open-ended tool-call generation",
+  "allowed_sources": ["schema.enum", "query", "scene", "entity", "normalizer"],
+  "enum_is_domain_not_evidence": true,
+  "provenance_fields": [
+    "evidence_source",
+    "evidence_span",
+    "canonical_value",
+    "resolution_source",
+    "normalizer_id",
+    "normalizer_version",
+    "entity_id"
+  ],
+  "allow": {
+    "normalize": ["三千五百→3500", "客厅的灯→living_light", "人民币→CNY"],
+    "copy": ["查成都天气→city=成都"]
+  },
+  "forbid": {
+    "invent_facts": ["没说房间→kitchen", "没说城市→北京"],
+    "whole_query_as_slot": true,
+    "lm_free_text": true
+  },
+  "fail_closed": [
+    "missing_required",
+    "ambiguous_entity",
+    "scene_conflict",
+    "type_or_range_mismatch",
+    "no_matching_tool",
+    "unprovenanced_value",
+    "unknown_route_id",
+    "manifest_overflow"
+  ]
+}

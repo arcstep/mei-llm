@@ -1,0 +1,13 @@
+{
+  "release_id": "zh-pretrain-v2",
+  "parent_release": "zh-pretrain-v1",
+  "tokenizer": "zh-24k-v1",
+  "tokenizer_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629",
+  "unique_train_tokens": 1152419036,
+  "ledger": "unique counts first-seen SHA256 chunks; exposure is trainer-side",
+  "blocked": [
+    "bigcode/the-stack",
+    "bigcode/starcoderdata"
+  ],
+  "created_unix": 1787630462
+}

@@ -1,0 +1,5 @@
+{
+  "status": "invalid_for_publish",
+  "kind": "historical_schema_v1",
+  "note": "Frozen in place. Do not overwrite. Route-ID grounded protocol lives in mei-tool-grounded-v1."
+}

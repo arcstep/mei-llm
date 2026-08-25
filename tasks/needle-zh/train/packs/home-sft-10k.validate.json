@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "n": 10000,
+  "empty_answers": 3500,
+  "execute_frac": 0.65,
+  "refuse_frac": 0.35,
+  "offtopic_frac": 0.14,
+  "valid_frac": 0.104,
+  "family": {
+    "gesture": 2052,
+    "order": 1275,
+    "home": 3173,
+    "missing": 1112,
+    "illegal_pair": 401,
+    "scene_conflict": 587,
+    "offtopic": 1400
+  },
+  "tools_hit": [
+    "bow",
+    "cancel_order",
+    "close_door",
+    "come_here",
+    "go_to",
+    "nod",
+    "open_door",
+    "order_food",
+    "point",
+    "set_switch",
+    "shake_head",
+    "sit",
+    "stand",
+    "stop",
+    "take_out_trash",
+    "wave"
+  ],
+  "missing_tools": [],
+  "errors": [],
+  "n_errors": 0,
+  "pack": "tasks/needle-zh/train/packs/home-sft-10k.jsonl",
+  "sha256": "f0ead9f80ea5451a1dfd3e7e70b3cfd1833365d4dc5ffa9d72bd9f41342e18c7",
+  "eval_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+  "eval_lock_ok": true
+}

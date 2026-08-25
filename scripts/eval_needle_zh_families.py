@@ -15,7 +15,7 @@ from repo_paths import BANK_NEEDLE_VRM_AGENT, EXPERIMENTS_RUNS, ROOT
 
 
 REFUSE_FAMILIES = {"missing", "scene_conflict", "illegal_pair", "offtopic"}
-EXECUTE_FAMILIES = {"gesture", "home", "order", "paraphrase"}
+EXECUTE_FAMILIES = {"gesture", "home", "order", "sequence", "paraphrase"}
 
 
 def gold_calls(row: dict) -> list:
@@ -39,8 +39,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="eval")
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument(
+        "--bank",
+        type=Path,
+        default=BANK_NEEDLE_VRM_AGENT,
+        help="Explicit bank path. Default is frozen v1; pass eval-bank-v2.jsonl for current 2K KPI.",
+    )
     args = ap.parse_args()
-    rows = [json.loads(l) for l in BANK_NEEDLE_VRM_AGENT.read_text(encoding="utf-8").splitlines() if l.strip()]
+    bank = args.bank if args.bank.is_absolute() else (ROOT / args.bank)
+    rows = [json.loads(l) for l in bank.read_text(encoding="utf-8").splitlines() if l.strip()]
     rows = [r for r in rows if r.get("split") == args.split]
     fam = defaultdict(lambda: {"n": 0, "gold_empty": 0, "always_refuse_correct": 0})
     buckets = defaultdict(lambda: {"n": 0, "always_refuse_correct": 0})
@@ -56,7 +63,7 @@ def main() -> int:
     n = max(len(rows), 1)
     always_refuse = sum(1 for r in rows if is_empty(gold_calls(r))) / n
     report = {
-        "bank": str(BANK_NEEDLE_VRM_AGENT.relative_to(ROOT)),
+        "bank": str(bank.resolve().relative_to(ROOT)),
         "split": args.split,
         "n": len(rows),
         "always_refuse_exact_match": round(always_refuse, 4),

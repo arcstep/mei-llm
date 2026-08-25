@@ -91,8 +91,14 @@ def load_train_state(
     *,
     strict: bool = True,
     expected_meta: dict[str, Any] | None = None,
+    mode: str | None = None,
 ) -> dict[str, Any]:
     path = Path(path)
+    resolved = mode or ("strict" if strict else "weights_only")
+    if resolved not in {"strict", "weights_only"}:
+        raise ValueError(f"unsupported load mode {resolved}")
+    load_opt = resolved == "strict"
+    check_meta = resolved == "strict"
     blob = mx.load(str(path))
     p_cur = flatten_params(model)
     p_next = {}
@@ -103,21 +109,23 @@ def load_train_state(
             p_next[key] = blob[bkey]
         else:
             missing_p.append(key)
-    if strict and missing_p:
+    if missing_p:
         raise KeyError(f"train state missing params {missing_p[:5]}")
     extra_p = [k[2:] for k in blob if k.startswith("p.") and k[2:] not in p_cur]
-    if strict and extra_p:
+    if load_opt and extra_p:
         raise KeyError(f"train state extra params {extra_p[:5]}")
     model.update(xu.tree_unflatten(list((p_next or p_cur).items())))
     o_blob = {k[2:]: blob[k] for k in blob if k.startswith("o.")}
-    if strict and not o_blob:
+    if load_opt and not o_blob:
         raise KeyError("train state missing optimizer tensors")
-    if o_blob:
+    if load_opt and o_blob:
         optimizer.state = xu.tree_unflatten(list(o_blob.items()))
-    mx.eval(model.parameters(), optimizer.state)
+        mx.eval(model.parameters(), optimizer.state)
+    else:
+        mx.eval(model.parameters())
     meta_path = path.with_suffix(".meta.json")
     meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
-    if strict and expected_meta:
+    if check_meta and expected_meta:
         keys = list(expected_meta.keys())
         extra = (
             "tokenizer_sha256",

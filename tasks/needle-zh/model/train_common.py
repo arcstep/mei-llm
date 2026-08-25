@@ -189,6 +189,7 @@ def train_lm_steps(
     n_windows = len(batches)
     sample0 = batches[0]
     want_conf = conf_weight > 0 and "confidence" in sample0
+    take_windows = getattr(batches, "take_windows", None)
     toks_per_update = max(1, bs * accum * max(1, len(sample0["x"])))
     precision = str(precision or "fp32").lower()
     if precision not in {"fp32", "fp16", "bf16"}:
@@ -223,6 +224,12 @@ def train_lm_steps(
 
     def take_micro():
         nonlocal window_i
+        if take_windows is not None:
+            chunk = take_windows(bs)
+            if not chunk:
+                return None
+            window_i = int(getattr(batches, "consumed_windows", window_i + len(chunk)))
+            return stack_windows(chunk, conf=want_conf)
         chunk = []
         for _ in range(bs):
             if not allow_repeat and window_i >= n_windows:
@@ -248,18 +255,22 @@ def train_lm_steps(
         last = acc_loss / float(acc_tok)
         seen += acc_tok
         if on_step:
-            on_step(
-                start_step + opt_steps,
-                {
-                    "loss": last,
-                    "grad_norm": float(gn),
-                    "tokens_seen_step": acc_tok,
-                    "tokens_seen": seen,
-                    "lr": float(opt.learning_rate),
-                    "window_index": window_i,
-                    "peak_bytes": peak_bytes(),
-                },
-            )
+            info = {
+                "loss": last,
+                "grad_norm": float(gn),
+                "tokens_seen_step": acc_tok,
+                "tokens_seen": seen,
+                "lr": float(opt.learning_rate),
+                "window_index": window_i,
+                "peak_bytes": peak_bytes(),
+            }
+            cursors = getattr(batches, "cursor", None)
+            counts = getattr(batches, "window_counts", None)
+            if isinstance(cursors, dict):
+                info["source_cursors"] = dict(cursors)
+            if isinstance(counts, dict):
+                info["source_window_counts"] = dict(counts)
+            on_step(start_step + opt_steps, info)
         opt_steps += 1
         micro_in_accum = 0
         acc_grads = None
