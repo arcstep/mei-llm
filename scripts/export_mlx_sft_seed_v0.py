@@ -12,10 +12,11 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SEED = ROOT / "train/seed/sft-smoke-v0.jsonl"
-DEFAULT_OUT = ROOT / "mlx/exports/sft-smoke-v0"
-EVAL_RE = re.compile(r"\bEVAL-(?:DEV|EDGE)-\d+\b")
+from repo_paths import MLX_EXPORT_MEI_EXPERT, ROOT, SEED_MEI_EXPERT
+
+DEFAULT_SEED = SEED_MEI_EXPERT
+DEFAULT_OUT = MLX_EXPORT_MEI_EXPERT
+EVAL_RE = re.compile(r"\bEVAL-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+\b")
 
 
 def load_seed(path: Path) -> list[dict]:

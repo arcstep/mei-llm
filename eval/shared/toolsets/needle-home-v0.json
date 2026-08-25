@@ -1,0 +1,29 @@
+{
+  "toolset_id": "needle-home-v0",
+  "description": "Shared home-router tools for needle-toolcall eval/train. City/room must be exact values, not query substrings.",
+  "tools": [
+    {
+      "name": "get_weather",
+      "description": "Get the current weather for a city.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {"type": "string", "description": "City name as a standalone value"}
+        },
+        "required": ["city"]
+      }
+    },
+    {
+      "name": "set_lights",
+      "description": "Set a room's lights to a brightness level 0-100.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "room": {"type": "string"},
+          "brightness": {"type": "integer", "minimum": 0, "maximum": 100}
+        },
+        "required": ["room", "brightness"]
+      }
+    }
+  ]
+}

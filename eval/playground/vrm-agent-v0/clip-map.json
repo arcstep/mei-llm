@@ -1,0 +1,18 @@
+{
+  "nod": {"kind": "head_pitch", "expression": "happy"},
+  "shake_head": {"kind": "head_yaw", "expression": "angry"},
+  "come_here": {"kind": "walk", "place": "user"},
+  "stop": {"kind": "idle"},
+  "point": {"kind": "point"},
+  "wave": {"kind": "wave", "expression": "happy"},
+  "bow": {"kind": "bow"},
+  "sit": {"kind": "sit"},
+  "stand": {"kind": "stand"},
+  "go_to": {"kind": "walk"},
+  "set_switch": {"kind": "switch"},
+  "open_door": {"kind": "door", "open": true},
+  "close_door": {"kind": "door", "open": false},
+  "take_out_trash": {"kind": "walk", "place": "trash"},
+  "order_food": {"kind": "bow", "expression": "happy"},
+  "cancel_order": {"kind": "shake_head", "expression": "angry"}
+}

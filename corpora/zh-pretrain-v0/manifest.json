@@ -1,0 +1,988 @@
+{
+  "source": "zhwiki-full-raw",
+  "raw_dir": "corpora/zh-pretrain-v0/raw",
+  "dump_sha256": "4699d4dc8342b21beaca36b3d699ad28844dd3837e319e84b9640759b6c62455",
+  "cleaner_id": "zhwiki-pretrain-v1-paragraph",
+  "extract_manifest": "corpora/zh-pretrain-v0/extract-manifest.json",
+  "n_pages_in": 1330123,
+  "n_docs": 1330083,
+  "n_train": 1263190,
+  "n_valid": 66893,
+  "n_tokens": 684514703,
+  "n_train_tokens": 649904474,
+  "n_valid_tokens": 34610229,
+  "n_unk_tokens": 295816,
+  "unk_token_rate": 0.00043215,
+  "n_chars": 764525547,
+  "chars_per_token": 1.1169,
+  "dedup_dropped": 0,
+  "short_dropped": 0,
+  "leak_dropped": 40,
+  "leak_examples": [
+    "3500",
+    "3500",
+    "世界上最长的河流",
+    "3500",
+    "世界上最长的河流",
+    "3500",
+    "3500",
+    "3500"
+  ],
+  "decode_checks": [
+    {
+      "page_id": "13",
+      "roundtrip_prefix": ",西元前三世紀的古希臘數學家,而現在被認為是幾何之父,此畫為拉斐爾的作品《雅典學",
+      "n_tokens": 3684
+    },
+    {
+      "page_id": "13",
+      "roundtrip_prefix": "上的一般]]如上所述,數學主要的學科最先產生於商業上計算的需要、了解數字間的關係",
+      "n_tokens": 2652
+    },
+    {
+      "page_id": "18",
+      "roundtrip_prefix": "之死,由雅克·路易·大卫所繪(1787年)]] 哲學是研究普遍、基本问题的領域,",
+      "n_tokens": 1217
+    },
+    {
+      "page_id": "21",
+      "roundtrip_prefix": "文學( ),在狭义上,是一种以語言和文字進行表達的藝術。亦即使用语言文字为手段,",
+      "n_tokens": 3457
+    },
+    {
+      "page_id": "22",
+      "roundtrip_prefix": "历史是对过去的系统研究。作为一门学科,历史分析和解释证据,构建关于发生的事情的叙",
+      "n_tokens": 3989
+    },
+    {
+      "page_id": "22",
+      "roundtrip_prefix": "历史是一个广泛的研究领域,涵盖了许多分支。一些分支专注于特定的时间段,而另一些则",
+      "n_tokens": 4058
+    },
+    {
+      "page_id": "22",
+      "roundtrip_prefix": "一些历史分支通过它们所采用的方法来区分,如 和数字史学,它们依赖于定量研究和数字",
+      "n_tokens": 3855
+    },
+    {
+      "page_id": "22",
+      "roundtrip_prefix": "与现实主义、经验主义和重建主义 相关的一些观点将历史概念化为对真理或知识的探索,",
+      "n_tokens": 2138
+    }
+  ],
+  "tokenizer_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629",
+  "token_shards": [
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0000.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0000.idx.jsonl",
+      "split": "train",
+      "n_docs": 3281,
+      "n_tokens": 7998214,
+      "n_unk": 2778,
+      "sha256": "27de8fdf489a5d4c27e770b513a89e7079332b0a2d3ef0c2648dbb4736bf90f5"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0001.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0001.idx.jsonl",
+      "split": "train",
+      "n_docs": 3944,
+      "n_tokens": 7999677,
+      "n_unk": 2861,
+      "sha256": "080525ba82f01c1bd0a559efc972264573b2f512386a4c59e4c964d85127443d"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0002.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0002.idx.jsonl",
+      "split": "train",
+      "n_docs": 4527,
+      "n_tokens": 7998406,
+      "n_unk": 3964,
+      "sha256": "473ec1d301e560be0b80a8d143204e3a04fab01747ccca471727ccc1f94f91b4"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0003.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0003.idx.jsonl",
+      "split": "train",
+      "n_docs": 4693,
+      "n_tokens": 7997282,
+      "n_unk": 3030,
+      "sha256": "e0522315062765ca1b4dfe46039c6ec9f5b06ee177eb5ecf11b1519968b0a800"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0004.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0004.idx.jsonl",
+      "split": "train",
+      "n_docs": 5178,
+      "n_tokens": 7997965,
+      "n_unk": 3734,
+      "sha256": "c0bebbabaf08e270e269d4f7ad9cd1fc07543e91a564aae0258f6612f28733fd"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0005.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0005.idx.jsonl",
+      "split": "train",
+      "n_docs": 5781,
+      "n_tokens": 7999503,
+      "n_unk": 5134,
+      "sha256": "9ba3a0a0274204a4601b06d25f5ef79caa64c11c338c12715ad9e06fb99d0282"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0006.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0006.idx.jsonl",
+      "split": "train",
+      "n_docs": 5382,
+      "n_tokens": 7999600,
+      "n_unk": 2889,
+      "sha256": "d58713bfbfddb499b189c4faeb42366b823d5406cbd9797d0e62421fa9327b9b"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0007.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0007.idx.jsonl",
+      "split": "train",
+      "n_docs": 5836,
+      "n_tokens": 7997648,
+      "n_unk": 3184,
+      "sha256": "936fe72ab4abd4a19aad0f6ede9b9f59ea0c991a33a312aa440d1673604d8ae1"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0008.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0008.idx.jsonl",
+      "split": "train",
+      "n_docs": 6515,
+      "n_tokens": 7998823,
+      "n_unk": 2573,
+      "sha256": "eb06adcca4efb9fa9ed7903c5c549f61a147a728ea7bea42c9ff96b522ebf115"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0009.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0009.idx.jsonl",
+      "split": "train",
+      "n_docs": 6841,
+      "n_tokens": 7999747,
+      "n_unk": 3583,
+      "sha256": "ee7c0229615db98baa2503450c6a0958a3c381ffa9094f27c2ffb7767c5c452d"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0010.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0010.idx.jsonl",
+      "split": "train",
+      "n_docs": 7011,
+      "n_tokens": 7999888,
+      "n_unk": 3316,
+      "sha256": "3349d8a87f0508128e3065c3b366fffd733b04c31e6135947fb08283a9ae06de"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0011.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0011.idx.jsonl",
+      "split": "train",
+      "n_docs": 7265,
+      "n_tokens": 7998013,
+      "n_unk": 2936,
+      "sha256": "a8a4128996b40280d95a449ef9bcecb2a2ebe19aa110eff819cc806eb5f17eab"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0012.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0012.idx.jsonl",
+      "split": "train",
+      "n_docs": 8265,
+      "n_tokens": 7997776,
+      "n_unk": 3172,
+      "sha256": "c1517063b393d1f397a036608c5d2eaedf0507530e6a45bc67a1c43c87a10a85"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0013.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0013.idx.jsonl",
+      "split": "train",
+      "n_docs": 10146,
+      "n_tokens": 7998960,
+      "n_unk": 3938,
+      "sha256": "9e70d5f20ef8f60fcb7e56b478c2a48b9155c67d61fc1faf4598338802e33149"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0014.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0014.idx.jsonl",
+      "split": "train",
+      "n_docs": 10025,
+      "n_tokens": 7999052,
+      "n_unk": 2951,
+      "sha256": "5118c4526f52c1298f579761de6526c67e8f45c8c58f28115de875352b656409"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0015.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0015.idx.jsonl",
+      "split": "train",
+      "n_docs": 8771,
+      "n_tokens": 7999943,
+      "n_unk": 2658,
+      "sha256": "e53285873ec82061837ca19082f9259545d4a0004d925debf2863d8753e5bffd"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0016.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0016.idx.jsonl",
+      "split": "train",
+      "n_docs": 9099,
+      "n_tokens": 7999868,
+      "n_unk": 3134,
+      "sha256": "4c4600c9a1e1bf59d9d35fff03592dc0ea98d17b305ce31738202a0eb88b3ebc"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0017.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0017.idx.jsonl",
+      "split": "train",
+      "n_docs": 10013,
+      "n_tokens": 7997684,
+      "n_unk": 2947,
+      "sha256": "2043a5df960c90c05eca1bafe255dfaa1e1734fe9fd3febdde35ab1fb87d0f04"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0018.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0018.idx.jsonl",
+      "split": "train",
+      "n_docs": 9610,
+      "n_tokens": 7999651,
+      "n_unk": 3258,
+      "sha256": "d56d0e412d8d57b933bb10ade691e0fa56efb77f187fc44874ce0ec1cd84fbd4"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0019.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0019.idx.jsonl",
+      "split": "train",
+      "n_docs": 10392,
+      "n_tokens": 7998379,
+      "n_unk": 2797,
+      "sha256": "ee4434c66b81cd7ef0b3ef21d688edcadec33e1f671515e0d4d347065480d71c"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0020.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0020.idx.jsonl",
+      "split": "train",
+      "n_docs": 10084,
+      "n_tokens": 7999519,
+      "n_unk": 3317,
+      "sha256": "e79abc75c5e36d45c8087745710a2e5874824286b7b70cddda8c36e6451696c6"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0021.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0021.idx.jsonl",
+      "split": "train",
+      "n_docs": 10299,
+      "n_tokens": 7999386,
+      "n_unk": 3013,
+      "sha256": "61cb2ba3490814d25f82c45ef5983eb54a058c7e60e11b6bc391f612a9f988a3"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0022.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0022.idx.jsonl",
+      "split": "train",
+      "n_docs": 11994,
+      "n_tokens": 7996186,
+      "n_unk": 3559,
+      "sha256": "af6fe00da279f04d8ab31d38729bf0716299c386419c10266978ec7c15c9ac71"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0023.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0023.idx.jsonl",
+      "split": "train",
+      "n_docs": 11307,
+      "n_tokens": 7999873,
+      "n_unk": 3935,
+      "sha256": "6a2b71586d473eb6a01a8c33967d0abb9061db394b77dfd43b338e2cc8516ae9"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0024.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0024.idx.jsonl",
+      "split": "train",
+      "n_docs": 20368,
+      "n_tokens": 7999807,
+      "n_unk": 3101,
+      "sha256": "3d617353c47b97c8d8c1dc17e8546e4bdf5f544108fb9d15cc32a489632187be"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0025.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0025.idx.jsonl",
+      "split": "train",
+      "n_docs": 13936,
+      "n_tokens": 7999749,
+      "n_unk": 3226,
+      "sha256": "edac8dfd8b600614fa3885efc373abcc6d564c9d52b63e8fa9fb7839ebf4ddb1"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0026.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0026.idx.jsonl",
+      "split": "train",
+      "n_docs": 13138,
+      "n_tokens": 7999547,
+      "n_unk": 3819,
+      "sha256": "ef4f38e9482ee0303dce9af63faceee1734a363b1dc18d9b69e73509339613b1"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0027.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0027.idx.jsonl",
+      "split": "train",
+      "n_docs": 12871,
+      "n_tokens": 7999165,
+      "n_unk": 4009,
+      "sha256": "a263a0dc0363511a4d567eb5ea1d1eb12ff970574790d0ff1807a0cdc800c898"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0028.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0028.idx.jsonl",
+      "split": "train",
+      "n_docs": 14111,
+      "n_tokens": 7998461,
+      "n_unk": 3978,
+      "sha256": "5141c051938956f33ad69d4ebc8dcfad4264e74b49cba5bbfddec20c0a76af40"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0029.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0029.idx.jsonl",
+      "split": "train",
+      "n_docs": 12854,
+      "n_tokens": 7996780,
+      "n_unk": 3686,
+      "sha256": "51b0798eeb67e67c7f2ff3baf7169010885935b7dcf25e0c671eb7b14efde737"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0030.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0030.idx.jsonl",
+      "split": "train",
+      "n_docs": 13842,
+      "n_tokens": 7999857,
+      "n_unk": 3757,
+      "sha256": "2c4e3a03a288441ef1dc1dbee7957b2aba115a4aa2ab907871b42724628d5c28"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0031.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0031.idx.jsonl",
+      "split": "train",
+      "n_docs": 12850,
+      "n_tokens": 7999014,
+      "n_unk": 4376,
+      "sha256": "a627a3913f63e42fde71f12e01e8471092c9258b133ba1d703acfb45ff788336"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0032.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0032.idx.jsonl",
+      "split": "train",
+      "n_docs": 14625,
+      "n_tokens": 7998009,
+      "n_unk": 3845,
+      "sha256": "e71a905016ad833aadefac9e4ad429e319b7647eabe42e2b949a2d9794f5981f"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0033.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0033.idx.jsonl",
+      "split": "train",
+      "n_docs": 16060,
+      "n_tokens": 7997633,
+      "n_unk": 4288,
+      "sha256": "55f62ccfc319e5d82bda1feb0ebfd00364c46f896dff7dc9af96cfec0025dcc6"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0034.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0034.idx.jsonl",
+      "split": "train",
+      "n_docs": 23766,
+      "n_tokens": 7999753,
+      "n_unk": 3892,
+      "sha256": "8cacdb48a7671bb61e7e3b9e1d0b0cc580b003af0da90a0c41c7d4635b25fb59"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0035.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0035.idx.jsonl",
+      "split": "train",
+      "n_docs": 24894,
+      "n_tokens": 7999819,
+      "n_unk": 3450,
+      "sha256": "ae9023f15c4f11d66ba06a7c3eba9b152db6e31a7b4f5422ed3c74d5349c30ae"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0036.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0036.idx.jsonl",
+      "split": "train",
+      "n_docs": 30164,
+      "n_tokens": 7998083,
+      "n_unk": 2959,
+      "sha256": "0c49fee3a5fb3aceb19a44036b36b5ebafb236bed93c8ffc5232dc73685ed7eb"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0037.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0037.idx.jsonl",
+      "split": "train",
+      "n_docs": 41264,
+      "n_tokens": 7999991,
+      "n_unk": 1664,
+      "sha256": "106fc096e60198bb353e3d1ece3abf94cdd64770591b56d66f20ca6d25e2bf30"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0038.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0038.idx.jsonl",
+      "split": "train",
+      "n_docs": 29344,
+      "n_tokens": 7999983,
+      "n_unk": 2007,
+      "sha256": "4a2d42874dd790eb9901f56f398d9d3f882b64392e0f39b84139b38f945b2955"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0039.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0039.idx.jsonl",
+      "split": "train",
+      "n_docs": 29315,
+      "n_tokens": 7999949,
+      "n_unk": 3219,
+      "sha256": "ebbdcff440c1f8581307feae9dc607b38f9836e92e09d910402d3108cb780226"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0040.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0040.idx.jsonl",
+      "split": "train",
+      "n_docs": 21171,
+      "n_tokens": 7999926,
+      "n_unk": 4047,
+      "sha256": "0f30a925d280a9d8938e93bd6929ca6ee5624ae54b58b1f50cfd9b3bf8c0fce7"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0041.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0041.idx.jsonl",
+      "split": "train",
+      "n_docs": 21973,
+      "n_tokens": 7998515,
+      "n_unk": 3539,
+      "sha256": "07bf23fdf519c168905d2458b2d928fb2884cf1da6f20c581bfd446dd694a0a6"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0042.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0042.idx.jsonl",
+      "split": "train",
+      "n_docs": 17572,
+      "n_tokens": 7999627,
+      "n_unk": 4787,
+      "sha256": "fac81182d709a09b273a609cfaeb14dcdb7199b0532353d2960fffb66b3af008"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0043.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0043.idx.jsonl",
+      "split": "train",
+      "n_docs": 19568,
+      "n_tokens": 7999854,
+      "n_unk": 3547,
+      "sha256": "664cbe22df117728e353898db4b472ac18a99d63f07eeddf8c420b2f04ac4019"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0044.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0044.idx.jsonl",
+      "split": "train",
+      "n_docs": 17472,
+      "n_tokens": 7998165,
+      "n_unk": 3355,
+      "sha256": "619569b54f4ab72bf3fc4bf3452c7ad331697217a253c02af02fc63ed26cdc6a"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0045.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0045.idx.jsonl",
+      "split": "train",
+      "n_docs": 16479,
+      "n_tokens": 7999600,
+      "n_unk": 3459,
+      "sha256": "a8dd2fcf86f9d86f9c77903139139ddd8f1568cda49b9c82917fc9da63ccaaab"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0046.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0046.idx.jsonl",
+      "split": "train",
+      "n_docs": 16870,
+      "n_tokens": 7999931,
+      "n_unk": 3133,
+      "sha256": "46d47e20c4bed9e074b7997ea8da7a387840ecb29208fc28ed1d42cc1bde5cf0"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0047.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0047.idx.jsonl",
+      "split": "train",
+      "n_docs": 19151,
+      "n_tokens": 7998463,
+      "n_unk": 3484,
+      "sha256": "64f0f7351ea13d5320f89df33dc567e05227b660f17a8eec836d76e701ebec8e"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0048.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0048.idx.jsonl",
+      "split": "train",
+      "n_docs": 16542,
+      "n_tokens": 7999755,
+      "n_unk": 3306,
+      "sha256": "c2a6059c3d07276c89bea02ebfb8eeb1feec876e5721c0d92f9a5d0b0a8e1774"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0049.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0049.idx.jsonl",
+      "split": "train",
+      "n_docs": 21236,
+      "n_tokens": 7999707,
+      "n_unk": 2815,
+      "sha256": "ec9f11307da1cc416b7bb15a2916cc32a8038255de23199e602943d9e4f71606"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0050.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0050.idx.jsonl",
+      "split": "train",
+      "n_docs": 18509,
+      "n_tokens": 7999482,
+      "n_unk": 3935,
+      "sha256": "b3567027998438487ae982ceeaf0021d5cdd22db611a0beeccffe18b789446d6"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0051.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0051.idx.jsonl",
+      "split": "train",
+      "n_docs": 18984,
+      "n_tokens": 7999766,
+      "n_unk": 3837,
+      "sha256": "3d5dc3bf2577f695589c6a29f7dc8970c3cf9677e673325b2d3451a2246f6722"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0052.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0052.idx.jsonl",
+      "split": "train",
+      "n_docs": 18774,
+      "n_tokens": 7999863,
+      "n_unk": 3437,
+      "sha256": "172f4464a8d30ff2a6d859b3d06fdc80e7d89a5844f8e989c77cab41a75c5ef3"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0053.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0053.idx.jsonl",
+      "split": "train",
+      "n_docs": 17690,
+      "n_tokens": 7999366,
+      "n_unk": 3310,
+      "sha256": "cb47ea6d52fc10d8db28dee7d4825073edd750058d68295de5f7db227f3c8889"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0054.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0054.idx.jsonl",
+      "split": "train",
+      "n_docs": 19850,
+      "n_tokens": 7999831,
+      "n_unk": 5077,
+      "sha256": "e71b517af0725aa2812ebc7293980b09e43e2844e7e152b528426804853f74e9"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0055.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0055.idx.jsonl",
+      "split": "train",
+      "n_docs": 17921,
+      "n_tokens": 7997474,
+      "n_unk": 3055,
+      "sha256": "bc3277fc79fc6b1676b15945eb05a0bedbfda0bdf55ed16f0836891596031f31"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0056.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0056.idx.jsonl",
+      "split": "train",
+      "n_docs": 16914,
+      "n_tokens": 7999436,
+      "n_unk": 4441,
+      "sha256": "58ae2eae4608ead63c6769f75bb09a77334662cfa878792bf150a272d940c0f6"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0057.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0057.idx.jsonl",
+      "split": "train",
+      "n_docs": 18058,
+      "n_tokens": 7999909,
+      "n_unk": 3388,
+      "sha256": "2757ae90b5f66485de253dcd368fc0c36cd4ba1bf4d69d2bae6b90d303ca6866"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0058.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0058.idx.jsonl",
+      "split": "train",
+      "n_docs": 17031,
+      "n_tokens": 7999389,
+      "n_unk": 3842,
+      "sha256": "0b681f314702ee55b2676b156e094870c1953847556a49d315deb6f6bbe73275"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0059.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0059.idx.jsonl",
+      "split": "train",
+      "n_docs": 15741,
+      "n_tokens": 7998446,
+      "n_unk": 3227,
+      "sha256": "1f2e873529598f4af9eae4f96c03862e45b2c5e8cd760f3afe4a60374a8101f8"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0060.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0060.idx.jsonl",
+      "split": "train",
+      "n_docs": 17792,
+      "n_tokens": 7999564,
+      "n_unk": 3136,
+      "sha256": "e133e6f5f946d9ee42feb7bd76a6dc24932a120f7951ebab6f1dc19efe941130"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0061.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0061.idx.jsonl",
+      "split": "train",
+      "n_docs": 18212,
+      "n_tokens": 7999549,
+      "n_unk": 2590,
+      "sha256": "fea78e31c06ac410e9e281f1966ecef0e73226f8c1e4373461bb628df06de94d"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0062.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0062.idx.jsonl",
+      "split": "train",
+      "n_docs": 17931,
+      "n_tokens": 7999994,
+      "n_unk": 3595,
+      "sha256": "9149199d9a0e383c7afe5c98d1d328a73bc44e0b1f085ef5b15a048401423e08"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0063.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0063.idx.jsonl",
+      "split": "train",
+      "n_docs": 18681,
+      "n_tokens": 7999893,
+      "n_unk": 4368,
+      "sha256": "ba03d113cc4543ca82b6f07d5576057469bede8dc33562340e4023e8378841a4"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0064.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0064.idx.jsonl",
+      "split": "train",
+      "n_docs": 18400,
+      "n_tokens": 7999524,
+      "n_unk": 4920,
+      "sha256": "a66532683fcfdf6664dbd30a9f9d0f41e26e973dc7e3862fc3af14a8509b25e7"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0065.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0065.idx.jsonl",
+      "split": "train",
+      "n_docs": 17593,
+      "n_tokens": 7997864,
+      "n_unk": 3967,
+      "sha256": "6555ebb0034f11b7eeff90b321cb698ab395ecaa817e04363bc77dad3af83c0b"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0066.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0066.idx.jsonl",
+      "split": "train",
+      "n_docs": 20045,
+      "n_tokens": 7999663,
+      "n_unk": 3241,
+      "sha256": "b4de82394419d0bb8e057e16be55a165acf355707910483095f89a67218a1fb9"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0067.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0067.idx.jsonl",
+      "split": "train",
+      "n_docs": 15965,
+      "n_tokens": 7998542,
+      "n_unk": 2839,
+      "sha256": "89c4b7410ec74bdb07f2bffba54636d23b2eb96ee6643a7527e6edf1be90e507"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0068.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0068.idx.jsonl",
+      "split": "train",
+      "n_docs": 19864,
+      "n_tokens": 7999992,
+      "n_unk": 3514,
+      "sha256": "5d7db790af73a5870061e2cec3d64cbcd2bf921df05815b2580483f327a7a29c"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0069.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0069.idx.jsonl",
+      "split": "train",
+      "n_docs": 19981,
+      "n_tokens": 7998772,
+      "n_unk": 3823,
+      "sha256": "b15fd5a10d2e0c212ca8f9738afa47781b98c531ad7ebe216a8503bd214fc53f"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0070.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0070.idx.jsonl",
+      "split": "train",
+      "n_docs": 18928,
+      "n_tokens": 7998887,
+      "n_unk": 4103,
+      "sha256": "3415efc4b4032c61725b2c08760b70e94958c987f852a58215ba74c9819d3810"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0071.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0071.idx.jsonl",
+      "split": "train",
+      "n_docs": 18976,
+      "n_tokens": 7999949,
+      "n_unk": 3901,
+      "sha256": "6c057988f1ce73a4fe03eb0fd003acf6c79023968c7c0631501a824d2920b5eb"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0072.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0072.idx.jsonl",
+      "split": "train",
+      "n_docs": 17785,
+      "n_tokens": 7999986,
+      "n_unk": 3389,
+      "sha256": "8b44bc2db01f12f9cdd6520161806f8b11bda7b80b36782958b9176b6dcf91c0"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0073.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0073.idx.jsonl",
+      "split": "train",
+      "n_docs": 19354,
+      "n_tokens": 7999966,
+      "n_unk": 3133,
+      "sha256": "d441d9d607c180e86239dbb012a0524512255ced140271dc20bced015485f2d5"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0074.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0074.idx.jsonl",
+      "split": "train",
+      "n_docs": 20676,
+      "n_tokens": 7999821,
+      "n_unk": 2464,
+      "sha256": "c766a6e6eba5370a6baa74e183f4f7233ca1717e785eebfe0403b6a3d3e14a07"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0075.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0075.idx.jsonl",
+      "split": "train",
+      "n_docs": 19062,
+      "n_tokens": 7999442,
+      "n_unk": 2754,
+      "sha256": "f9420110f989063d3f5fd54cb92a94954d236c1b333bf86af80664ca658419a8"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0076.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0076.idx.jsonl",
+      "split": "train",
+      "n_docs": 17634,
+      "n_tokens": 7999920,
+      "n_unk": 2976,
+      "sha256": "87d6f392163408cd8701a7a8ab389f6a297aaadf2334c3c1b54bf6cbde356854"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0077.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0077.idx.jsonl",
+      "split": "train",
+      "n_docs": 16577,
+      "n_tokens": 7999365,
+      "n_unk": 2438,
+      "sha256": "7aa15d79790ec4de0b83e14003a1fccaea7340eaed0ddae52712546f6e87cee3"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0078.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0078.idx.jsonl",
+      "split": "train",
+      "n_docs": 18324,
+      "n_tokens": 7999363,
+      "n_unk": 4790,
+      "sha256": "9985e1dd554335dbdd8cbc1b97677fb771b3840794e656bd3523133c69784380"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0079.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0079.idx.jsonl",
+      "split": "train",
+      "n_docs": 16936,
+      "n_tokens": 7998019,
+      "n_unk": 2924,
+      "sha256": "62096b4d2945f59327706fc0d0dc57d4dec4c790e043260bb464abd92ccea863"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0080.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0080.idx.jsonl",
+      "split": "train",
+      "n_docs": 13634,
+      "n_tokens": 7999697,
+      "n_unk": 2913,
+      "sha256": "50db67e584083f0599739c7e1e267be1eeae8ad659ca02245a9ba914af5afdf7"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/train-0081.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/train-0081.idx.jsonl",
+      "split": "train",
+      "n_docs": 3673,
+      "n_tokens": 1973554,
+      "n_unk": 589,
+      "sha256": "b56d2774a6416f457166d85aaef048cb544d38046663b31cab4c221f9173aeff"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0000.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0000.idx.jsonl",
+      "split": "valid",
+      "n_docs": 1062,
+      "n_tokens": 1998594,
+      "n_unk": 858,
+      "sha256": "21cd949aad80b387d25700f5b2a9018eb55b47ec9bbe8c57f455ce106ca8a7c3"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0001.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0001.idx.jsonl",
+      "split": "valid",
+      "n_docs": 1457,
+      "n_tokens": 1999930,
+      "n_unk": 741,
+      "sha256": "bd864924929a651a51eed1461f298f63fcce6caf87d5200a1c966f905ff891e5"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0002.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0002.idx.jsonl",
+      "split": "valid",
+      "n_docs": 1942,
+      "n_tokens": 1998112,
+      "n_unk": 793,
+      "sha256": "1746e56221da0aa49d4267be7dd3a97703b74e70f90014eb35ba3637461270ac"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0003.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0003.idx.jsonl",
+      "split": "valid",
+      "n_docs": 2407,
+      "n_tokens": 1998754,
+      "n_unk": 697,
+      "sha256": "aac448ba79104c3b5ed9fde5b608f23d32b8ab8e3e299b3823b4dfe8b39e7047"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0004.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0004.idx.jsonl",
+      "split": "valid",
+      "n_docs": 2593,
+      "n_tokens": 1999908,
+      "n_unk": 1374,
+      "sha256": "80c34b86372067cb232803aeb81295c218ce1896b8cb01b6fb626083877ae268"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0005.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0005.idx.jsonl",
+      "split": "valid",
+      "n_docs": 3562,
+      "n_tokens": 1996709,
+      "n_unk": 838,
+      "sha256": "1b5f1bddb6b94e2739705b7b56319d3a55690ae5091625b784d77fa0ff7f8e92"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0006.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0006.idx.jsonl",
+      "split": "valid",
+      "n_docs": 3336,
+      "n_tokens": 1999866,
+      "n_unk": 1548,
+      "sha256": "da644f0fee08445cda6cbc6b34965bd5c0b7890fe831c2781fc93f15109c1005"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0007.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0007.idx.jsonl",
+      "split": "valid",
+      "n_docs": 5698,
+      "n_tokens": 1999976,
+      "n_unk": 1294,
+      "sha256": "ec65151f51ea26bc91b5472417ea5901910637566373ce07671f5346fa1c865c"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0008.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0008.idx.jsonl",
+      "split": "valid",
+      "n_docs": 7221,
+      "n_tokens": 1997442,
+      "n_unk": 689,
+      "sha256": "39f3fa2294032ef35f1d5ba843864ae5e41ce78d5eceefdd47e94399133540a6"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0009.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0009.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4384,
+      "n_tokens": 1998084,
+      "n_unk": 1008,
+      "sha256": "02ffaab74b4e544bc251f114e3bc465e01ecc5995ed960914a863f340caceda0"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0010.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0010.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4649,
+      "n_tokens": 1999700,
+      "n_unk": 792,
+      "sha256": "259dff01677ec495d03c292ac8c88bc12e5b32628ee6801b16e9787095ea6521"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0011.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0011.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4670,
+      "n_tokens": 1999958,
+      "n_unk": 915,
+      "sha256": "573befad68759425216304acfb968527b717c1b798590560cc82f27333f04243"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0012.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0012.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4261,
+      "n_tokens": 1999346,
+      "n_unk": 975,
+      "sha256": "3deb7193e40dfe2636fd8d62698ac3ebe5eedbf6b61c0eca47f311fbb5d524cd"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0013.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0013.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4583,
+      "n_tokens": 1999579,
+      "n_unk": 897,
+      "sha256": "558f345c75b510f20436c6fec28691ee6c1f32dd760378da8e80379ae788b111"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0014.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0014.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4710,
+      "n_tokens": 1999948,
+      "n_unk": 1150,
+      "sha256": "68fcf67798a0d2b78193ea5a9e4dd75129aa443cccf6f672bbeddb72778c739e"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0015.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0015.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4726,
+      "n_tokens": 1999929,
+      "n_unk": 873,
+      "sha256": "dc4a965d2a358bd72bacb8efd5de286149c6558dd24784e5f48930760acac15a"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0016.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0016.idx.jsonl",
+      "split": "valid",
+      "n_docs": 4517,
+      "n_tokens": 1999870,
+      "n_unk": 704,
+      "sha256": "cae39b0f79343f63841680482d5955a03636c9f94c6055a46b402352383cdd65"
+    },
+    {
+      "path": "corpora/zh-pretrain-v0/tokens/valid-0017.bin",
+      "index": "corpora/zh-pretrain-v0/tokens/valid-0017.idx.jsonl",
+      "split": "valid",
+      "n_docs": 1115,
+      "n_tokens": 624524,
+      "n_unk": 345,
+      "sha256": "896da888f1d2b6fb308e60aef5238304fa2272a3548694615d12bdfc2c9ed04f"
+    }
+  ],
+  "valid_frac": 0.05,
+  "min_chars": 32,
+  "tokens_per_shard": 8000000,
+  "binary": true,
+  "byte_fallback": false,
+  "unk_gate_ok": true,
+  "unk_token_max": 0.005,
+  "gap_to_100m": 0,
+  "gap_to_1b": 315485297,
+  "rung": "100m",
+  "smoke": false,
+  "budget_ok": true
+}

@@ -1,0 +1,11 @@
+{
+  "corpus_id": "zh-vocab-v0",
+  "spm_vocab_size": 24000,
+  "spm_model_type": "unigram",
+  "user_defined_symbols_n": 3932,
+  "hanzi_level1_n": 3500,
+  "spm_sample_chars": 80000054,
+  "spm_sample_pages": 366300,
+  "dump": "zhwiki-latest-pages-articles.xml.bz2 (complete local 3379207113 bytes, bzip2 -t ok; dumps/ gitignored)",
+  "committed": ["seeds/", "vocab.txt", "coverage-v0.json", "SOURCES.md"]
+}

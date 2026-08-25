@@ -1,0 +1,566 @@
+{
+  "dump": "corpora/zh-vocab-v0/dumps/zhwiki-latest-pages-articles.xml.bz2",
+  "dump_sha256": "4699d4dc8342b21beaca36b3d699ad28844dd3837e319e84b9640759b6c62455",
+  "dump_bytes": 3379207113,
+  "cleaner_id": "zhwiki-pretrain-v1-paragraph",
+  "max_chunk_chars": 4096,
+  "min_chars": 64,
+  "docs_per_shard": 20000,
+  "last_ordinal": 4939350,
+  "n_pages_in": 4939350,
+  "n_pages_kept": 1288332,
+  "n_chunks": 1330123,
+  "n_chars": 764640580,
+  "n_dup": 286,
+  "n_short": 243210,
+  "n_ns": 1941682,
+  "n_redirect": 1465840,
+  "n_skipped_resume": 0,
+  "length_hist": {
+    "le_4096": 96178,
+    "le_2048": 101640,
+    "le_256": 728981,
+    "le_1024": 167161,
+    "le_512": 236163
+  },
+  "frac_le_256": 0.548055,
+  "shards": [
+    {
+      "idx": 0,
+      "name": "pages-0000.jsonl",
+      "n_docs": 20000,
+      "n_chars": 41692409,
+      "sha256": "b91fd547bc010d4bf8654e74247851ef5ea2f1936dfee843b1cc66f4a1633b80",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0000.jsonl"
+    },
+    {
+      "idx": 1,
+      "name": "pages-0001.jsonl",
+      "n_docs": 20000,
+      "n_chars": 31520043,
+      "sha256": "6570584b393aecb435d3114092e6da21296642c8b11e4e945cd14179fec4e371",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0001.jsonl"
+    },
+    {
+      "idx": 2,
+      "name": "pages-0002.jsonl",
+      "n_docs": 20000,
+      "n_chars": 26476459,
+      "sha256": "c6ee425bafe66cbbb45250d6511add5da9cabd4934c418769ddf5b8aa54abc6f",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0002.jsonl"
+    },
+    {
+      "idx": 3,
+      "name": "pages-0003.jsonl",
+      "n_docs": 20000,
+      "n_chars": 23212651,
+      "sha256": "0092ed55177c67d27e70988bb7411211800e27c10418fa5ffadb467476f65050",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0003.jsonl"
+    },
+    {
+      "idx": 4,
+      "name": "pages-0004.jsonl",
+      "n_docs": 20000,
+      "n_chars": 17525067,
+      "sha256": "39b7ed048d458bbd431586e9130d1b79a142069ddcb76b87a5364ea3700db1a0",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0004.jsonl"
+    },
+    {
+      "idx": 5,
+      "name": "pages-0005.jsonl",
+      "n_docs": 20000,
+      "n_chars": 19813229,
+      "sha256": "4ea125265cdbc579b1c08cf7979e043312a1b5c8d8fd074a95d35d90ab74c014",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0005.jsonl"
+    },
+    {
+      "idx": 6,
+      "name": "pages-0006.jsonl",
+      "n_docs": 20000,
+      "n_chars": 18431998,
+      "sha256": "0fab8919989dce2c47d8e0dc065368edfe7b87ad1920ad658d33e028bbffa121",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0006.jsonl"
+    },
+    {
+      "idx": 7,
+      "name": "pages-0007.jsonl",
+      "n_docs": 20000,
+      "n_chars": 17597087,
+      "sha256": "5b01c504af94a720fe10f9e94a02878470c7cb80c3a80ed3d64d3782c39da27b",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0007.jsonl"
+    },
+    {
+      "idx": 8,
+      "name": "pages-0008.jsonl",
+      "n_docs": 20000,
+      "n_chars": 16401545,
+      "sha256": "6d1121fc40f5852811312421a6b80062a092c3679fa294c3e01a20763d79716d",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0008.jsonl"
+    },
+    {
+      "idx": 9,
+      "name": "pages-0009.jsonl",
+      "n_docs": 20000,
+      "n_chars": 15961276,
+      "sha256": "ca62421bfce4b1018e2238a550951a6d54879aedd18461223a9b8806508151d2",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0009.jsonl"
+    },
+    {
+      "idx": 10,
+      "name": "pages-0010.jsonl",
+      "n_docs": 20000,
+      "n_chars": 7524332,
+      "sha256": "1e7a1641d51ef838c9e1920a88a4e271fe3a6dcc98be5bb0575f6620c3967251",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0010.jsonl"
+    },
+    {
+      "idx": 11,
+      "name": "pages-0011.jsonl",
+      "n_docs": 20000,
+      "n_chars": 13803101,
+      "sha256": "d1e1f5304a3aff2e09d2ed081ebce48237c86cdb3539ad194b507dc20ac1b017",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0011.jsonl"
+    },
+    {
+      "idx": 12,
+      "name": "pages-0012.jsonl",
+      "n_docs": 20000,
+      "n_chars": 13219443,
+      "sha256": "57f49d34bae90925800fd27fafe9e9cae71a6f785c48705776504ad8f650b3ba",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0012.jsonl"
+    },
+    {
+      "idx": 13,
+      "name": "pages-0013.jsonl",
+      "n_docs": 20000,
+      "n_chars": 12957185,
+      "sha256": "fb7eaa921f4378e1ebfed57229188d4ad5713e5780dfff36bf2b64c54334c55e",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0013.jsonl"
+    },
+    {
+      "idx": 14,
+      "name": "pages-0014.jsonl",
+      "n_docs": 20000,
+      "n_chars": 13362281,
+      "sha256": "0e952c8ab493a2a9eb0e3ce3518442de20d895a1983f67dc744ce594a3460148",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0014.jsonl"
+    },
+    {
+      "idx": 15,
+      "name": "pages-0015.jsonl",
+      "n_docs": 20000,
+      "n_chars": 13525609,
+      "sha256": "990f16d776be1e57f2c6dd5c3917808980e8c525a40ecbda5182f741e601e10b",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0015.jsonl"
+    },
+    {
+      "idx": 16,
+      "name": "pages-0016.jsonl",
+      "n_docs": 20000,
+      "n_chars": 11642457,
+      "sha256": "4e778ba9b6178d88e805f55a802cc7a8e3b0a837840a15e15a370aa2cd3b5d2f",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0016.jsonl"
+    },
+    {
+      "idx": 17,
+      "name": "pages-0017.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10542911,
+      "sha256": "185445a33b3c333bbf8695f251b682ca39dd08e7ec39b2d546cb1849716aef6e",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0017.jsonl"
+    },
+    {
+      "idx": 18,
+      "name": "pages-0018.jsonl",
+      "n_docs": 20000,
+      "n_chars": 6537447,
+      "sha256": "8ba7c9d99d109c9bccab948b7faafb90c46377b650be9b674634947dac674631",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0018.jsonl"
+    },
+    {
+      "idx": 19,
+      "name": "pages-0019.jsonl",
+      "n_docs": 20000,
+      "n_chars": 6790405,
+      "sha256": "40628946944f4f61b7d005dada0b47d6076f39915bd8cb5bb8c2cb59ca89d129",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0019.jsonl"
+    },
+    {
+      "idx": 20,
+      "name": "pages-0020.jsonl",
+      "n_docs": 20000,
+      "n_chars": 5388830,
+      "sha256": "68a6ea497643e39f023074506e4c68c49cb348a3fda28248f024e90a58fe7a0d",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0020.jsonl"
+    },
+    {
+      "idx": 21,
+      "name": "pages-0021.jsonl",
+      "n_docs": 20000,
+      "n_chars": 7066798,
+      "sha256": "6ae3c81bac6c49706ac6fc797b338e540d4a1d60b241c069fb0fe7a1c65ff6f0",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0021.jsonl"
+    },
+    {
+      "idx": 22,
+      "name": "pages-0022.jsonl",
+      "n_docs": 20000,
+      "n_chars": 3829509,
+      "sha256": "ea67906b0325a631a3eb9c21c767476ef7016a464954aaea2ac45b442d77c450",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0022.jsonl"
+    },
+    {
+      "idx": 23,
+      "name": "pages-0023.jsonl",
+      "n_docs": 20000,
+      "n_chars": 4248203,
+      "sha256": "cf9dc9edd5caaf3f93eedead631b3c7bcfa409db05911525212457ef0d2572ec",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0023.jsonl"
+    },
+    {
+      "idx": 24,
+      "name": "pages-0024.jsonl",
+      "n_docs": 20000,
+      "n_chars": 6101846,
+      "sha256": "e7a94e8a1014136d7e8b35e7cd74ef5e41004a72869e1fbad6b11c257d2a94a7",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0024.jsonl"
+    },
+    {
+      "idx": 25,
+      "name": "pages-0025.jsonl",
+      "n_docs": 20000,
+      "n_chars": 6716293,
+      "sha256": "d94b4036c8e1fbe542d225321eb8896dbc4b09afeeb0543104b860809e6eb501",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0025.jsonl"
+    },
+    {
+      "idx": 26,
+      "name": "pages-0026.jsonl",
+      "n_docs": 20000,
+      "n_chars": 5238890,
+      "sha256": "4b7bd71c4c5506e4776356d7085ccb9918287701af915c98da14917a73fdd2c8",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0026.jsonl"
+    },
+    {
+      "idx": 27,
+      "name": "pages-0027.jsonl",
+      "n_docs": 20000,
+      "n_chars": 8932786,
+      "sha256": "00e2f4d5eb3b72267b26308c5e86e767c90239987172650e909bfca5eb7eb4f7",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0027.jsonl"
+    },
+    {
+      "idx": 28,
+      "name": "pages-0028.jsonl",
+      "n_docs": 20000,
+      "n_chars": 8063094,
+      "sha256": "83d07a7c9495d0ce909024f015dcaae86dd50939eb56e4b0211053c55857aaff",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0028.jsonl"
+    },
+    {
+      "idx": 29,
+      "name": "pages-0029.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10198454,
+      "sha256": "2630d6e3fe05e8cd0566e598599e4af06501ec0d26cf914393bf6068a4eb92b6",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0029.jsonl"
+    },
+    {
+      "idx": 30,
+      "name": "pages-0030.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9372125,
+      "sha256": "e9e50619d26f3143ef0fdf6eaceee8c138b5b0a3678d9cf20dd1a193aecb6df2",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0030.jsonl"
+    },
+    {
+      "idx": 31,
+      "name": "pages-0031.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10000414,
+      "sha256": "8b0a8e645835bcd01f7ca1b55e23dae873ff7c5d849515db3e512892f6fd0579",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0031.jsonl"
+    },
+    {
+      "idx": 32,
+      "name": "pages-0032.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10596732,
+      "sha256": "0e2cf1d633526a055507b02842ccb5215ab019deb8f423ee778e7684ca6279be",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0032.jsonl"
+    },
+    {
+      "idx": 33,
+      "name": "pages-0033.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10377696,
+      "sha256": "976c7f836ebaf86b837e15f508dd3e1006bbadc39559817c49b64eaf80d1f821",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0033.jsonl"
+    },
+    {
+      "idx": 34,
+      "name": "pages-0034.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9798534,
+      "sha256": "01ebcb3cf30ed16b6a57f7ca17f119d7ad362bfd4e1847a213feac485cba8b9c",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0034.jsonl"
+    },
+    {
+      "idx": 35,
+      "name": "pages-0035.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10347177,
+      "sha256": "70628ee2927320ca6eb5cbb11026faf0bd0208b6936ae3606e2850b41bdc3869",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0035.jsonl"
+    },
+    {
+      "idx": 36,
+      "name": "pages-0036.jsonl",
+      "n_docs": 20000,
+      "n_chars": 8585018,
+      "sha256": "3f04b59ce8322657e76a57d5423d89139ee61f38feb8cbef014a7654e5250af8",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0036.jsonl"
+    },
+    {
+      "idx": 37,
+      "name": "pages-0037.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9628616,
+      "sha256": "1e1253629451d2ccbbdf2bb7a62de656cfbea5230d2e4404f89695639a2a6ce7",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0037.jsonl"
+    },
+    {
+      "idx": 38,
+      "name": "pages-0038.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9512767,
+      "sha256": "a32eb50e7774cdda0be43e35e7542d9b9e990054846dbeafd2e86c6713608404",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0038.jsonl"
+    },
+    {
+      "idx": 39,
+      "name": "pages-0039.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9811789,
+      "sha256": "70e193f4beeb8137e0d1cbbe102c19704b70bd494854bbd6426ca4bace90fc3b",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0039.jsonl"
+    },
+    {
+      "idx": 40,
+      "name": "pages-0040.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9687604,
+      "sha256": "cf35741619ed5fd50e1e6bd3f7306788ad3bf4cdf6c8fc03a8fdc94388c2c2d0",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0040.jsonl"
+    },
+    {
+      "idx": 41,
+      "name": "pages-0041.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9195571,
+      "sha256": "173baaf40d4f99922e9f963be75f384ac666858d072d29a73e65b005b9dea6f6",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0041.jsonl"
+    },
+    {
+      "idx": 42,
+      "name": "pages-0042.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9695368,
+      "sha256": "b4853b545a5f75ce91081506d91f76d72bc0e86d02e057c05c87ff78a8187965",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0042.jsonl"
+    },
+    {
+      "idx": 43,
+      "name": "pages-0043.jsonl",
+      "n_docs": 20000,
+      "n_chars": 11015879,
+      "sha256": "e41b0ec91385eaed2d446f95f3e67b3c50a9d26505fb3a7ec991154c6869a233",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0043.jsonl"
+    },
+    {
+      "idx": 44,
+      "name": "pages-0044.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9846742,
+      "sha256": "07628c039ad4f069823ac8f76c80c1f1f511470d3a0a8e05e534a03fd9adc3a9",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0044.jsonl"
+    },
+    {
+      "idx": 45,
+      "name": "pages-0045.jsonl",
+      "n_docs": 20000,
+      "n_chars": 11353020,
+      "sha256": "ef6896e96f60bff680ec06d8aeacfc3399b184d73a23ed272ccaa3220401ef85",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0045.jsonl"
+    },
+    {
+      "idx": 46,
+      "name": "pages-0046.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10318808,
+      "sha256": "04b4b4329ea278abdd1a7d7aa355ea41af89b27bcf84a00d60d0f6ff2fae0466",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0046.jsonl"
+    },
+    {
+      "idx": 47,
+      "name": "pages-0047.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9815493,
+      "sha256": "40a44b6e82d775eeb11d6ef4c02e3f8cf048d9ab74321ad86eab11d2fb1ff41c",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0047.jsonl"
+    },
+    {
+      "idx": 48,
+      "name": "pages-0048.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9959213,
+      "sha256": "3f4afafa1a9b09e74aed7d5ce321773c5990131bb5b20593e8a804a2287aea94",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0048.jsonl"
+    },
+    {
+      "idx": 49,
+      "name": "pages-0049.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9441309,
+      "sha256": "01d0488889909d1532751c4588f38c89929be76750c942043c70a3feb22f90f6",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0049.jsonl"
+    },
+    {
+      "idx": 50,
+      "name": "pages-0050.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9600284,
+      "sha256": "d783b607f47adc62cfb0b5a455959a99c39bf77f9ca9d2464d5f6f8ad030d5ef",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0050.jsonl"
+    },
+    {
+      "idx": 51,
+      "name": "pages-0051.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10094806,
+      "sha256": "5a624a75d0c5bdb788241a6a0510cdcec29b393011ad760c69c8992bd0eb901e",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0051.jsonl"
+    },
+    {
+      "idx": 52,
+      "name": "pages-0052.jsonl",
+      "n_docs": 20000,
+      "n_chars": 8974477,
+      "sha256": "dbe50cb12038cddd3ca2db12ba4a451196dc46e117bb92285449ddfc698dec21",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0052.jsonl"
+    },
+    {
+      "idx": 53,
+      "name": "pages-0053.jsonl",
+      "n_docs": 20000,
+      "n_chars": 11002779,
+      "sha256": "023164df055ab8d86fa8b84bc0d5180b48a4c26f12568dc3c854faec7007a8a8",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0053.jsonl"
+    },
+    {
+      "idx": 54,
+      "name": "pages-0054.jsonl",
+      "n_docs": 20000,
+      "n_chars": 8531727,
+      "sha256": "cf906931c3f655671eaf4e2b8e31a82baa38dc40e5380a5b98ae67635a8b59c3",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0054.jsonl"
+    },
+    {
+      "idx": 55,
+      "name": "pages-0055.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9001957,
+      "sha256": "a96032cdbb7ab274bf798c1397cd5827a7da3966f744442b6de068c76dbd6c67",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0055.jsonl"
+    },
+    {
+      "idx": 56,
+      "name": "pages-0056.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9767509,
+      "sha256": "b081ebf0279037095e3ce6a1e6a830b517e9b720b069c1dbc5184c090fdbe2e0",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0056.jsonl"
+    },
+    {
+      "idx": 57,
+      "name": "pages-0057.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9103640,
+      "sha256": "b08ad4151de41cb56f6a0c1bced3b0cabb23d80fa4802fa2d3477c303a6aeadd",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0057.jsonl"
+    },
+    {
+      "idx": 58,
+      "name": "pages-0058.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10300761,
+      "sha256": "eba3eb617ffe4972f87b05762f863c907f6d097ad1b47acd985a25c8f7305144",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0058.jsonl"
+    },
+    {
+      "idx": 59,
+      "name": "pages-0059.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9000517,
+      "sha256": "c636598d55681076b7f812685e4667a8b4f431e3a87a3471e1ea2da280dbf995",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0059.jsonl"
+    },
+    {
+      "idx": 60,
+      "name": "pages-0060.jsonl",
+      "n_docs": 20000,
+      "n_chars": 8664096,
+      "sha256": "4ac8b4c6b1eb051b7dfa29c10e61784baab6f29d24c10cd2a93335359f363989",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0060.jsonl"
+    },
+    {
+      "idx": 61,
+      "name": "pages-0061.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9398584,
+      "sha256": "ad14b7530364350af96af45ddc387d398744eb8b1e00a2086547fae0d3026cab",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0061.jsonl"
+    },
+    {
+      "idx": 62,
+      "name": "pages-0062.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10164680,
+      "sha256": "0ac97bce6733a0ca51e5dcd866e462ba3551e423aa4afa0e84c3f24fe76ce612",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0062.jsonl"
+    },
+    {
+      "idx": 63,
+      "name": "pages-0063.jsonl",
+      "n_docs": 20000,
+      "n_chars": 10596400,
+      "sha256": "483ff162bec410ad3bb80e9b838029c0ee29e036ca1720b166db98d5488ecb50",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0063.jsonl"
+    },
+    {
+      "idx": 64,
+      "name": "pages-0064.jsonl",
+      "n_docs": 20000,
+      "n_chars": 9772650,
+      "sha256": "55f3c33333c6c3086d43e4654a2b2ef415bd9426fc3f604b438d5347eeebfbd3",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0064.jsonl"
+    },
+    {
+      "idx": 65,
+      "name": "pages-0065.jsonl",
+      "n_docs": 20000,
+      "n_chars": 11671418,
+      "sha256": "03b17d93f025b88122c76824d73d25cb66d85a9bccadadd31f71e71c21e97599",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0065.jsonl"
+    },
+    {
+      "idx": 66,
+      "name": "pages-0066.jsonl",
+      "n_docs": 10123,
+      "n_chars": 6312782,
+      "sha256": "53cfd6dd1158be5497302bbc1defaea75871dd645636ad476e6c58cf1222ab1b",
+      "path": "corpora/zh-pretrain-v0/raw/pages-0066.jsonl"
+    }
+  ],
+  "complete": true
+}

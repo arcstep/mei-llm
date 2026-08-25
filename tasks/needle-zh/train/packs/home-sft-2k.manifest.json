@@ -1,0 +1,10 @@
+{
+  "pack": "home-sft-2k.jsonl",
+  "n": 2000,
+  "sha256": "0226b1224c02ea74caa4a7759bf307d4145f438f8ba0f048691be49f980961b4",
+  "gold": "schema-program",
+  "teacher": "query-variants-only",
+  "eval_lock": "eval/banks/needle-vrm-agent-v0/holdout-v1.lock.json",
+  "eval_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+  "token_near_dup_blocked": true
+}

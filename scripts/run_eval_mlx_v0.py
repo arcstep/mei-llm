@@ -13,10 +13,11 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+from repo_paths import BANK_MEI_EXPERT, ROOT
+
 MEI_PROJECTS_ROOT = ROOT.parent
 DRAFT_DOCS = MEI_PROJECTS_ROOT / "docs/draft/mei-llm"
-DEFAULT_BANK = ROOT / "data/eval/eval-bank-v0.pending.jsonl"
+DEFAULT_BANK = BANK_MEI_EXPERT
 DEFAULT_CTX = MEI_PROJECTS_ROOT / "docs/mei-llm/02-eval/0205-ctx-stable-v0.md"
 DEFAULT_MODEL = "Qwen/Qwen3.5-0.8B"
 

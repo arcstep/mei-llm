@@ -1,5 +1,6 @@
 # Optional; install what the runner you use needs.
-# MLX local: mlx mlx-lm
+# MLX local (Apple Silicon student + Qwen eval): mlx mlx-lm
+mlx>=0.20
 # Cloud/Ollama env loading prefers sibling mei_eval:
 #   pip install -e ../tools/mei-eval/python
 # Or rely on scripts' path insert when mei-projects/.env exists.

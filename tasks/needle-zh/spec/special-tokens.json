@@ -1,0 +1,28 @@
+{
+  "version": "v1",
+  "control": {"PAD": 0, "EOS": 1, "BOS": 2, "UNK": 3},
+  "protocol": [
+    "<|im_start|>",
+    "<|im_end|>",
+    "<think>",
+    "</think>",
+    "<tools>",
+    "</tools>",
+    "<tool_call>",
+    "</tool_call>",
+    "<tool_result>",
+    "</tool_result>"
+  ],
+  "act_bits": [
+    "<act_execute>",
+    "<act_refuse>",
+    "<act_expand>",
+    "<act_shape>",
+    "<act_escalate>",
+    "<act_stop>"
+  ],
+  "phase1_allowed_act": ["<act_execute>", "<act_refuse>"],
+  "tool_sink": "all_declared_tools",
+  "tool_retrieval": "none_in_phase1",
+  "output_grammar": "phase1-v1"
+}

@@ -1,0 +1,18 @@
+{
+  "version": "v1",
+  "note": "Frozen before hardware proof. If unreachable, edit this file and 0104 explicitly.",
+  "exact_match": {
+    "overall": 0.9,
+    "execute_family": 0.9,
+    "refuse_family": 0.9,
+    "always_refuse_baseline_must_be_reported": true
+  },
+  "package": {"quantized_bytes_max": 26214400},
+  "latency": {
+    "metric": "full_answer_wall_clock",
+    "p50_ms_max": 100,
+    "not_ttft": true
+  },
+  "memory": {"peak_ram_bytes_max": 67108864},
+  "quantize_order": ["float_correctness", "4bit", "lower_bits"]
+}

@@ -135,7 +135,9 @@ def parse_file(path: Path, face_fallback: str) -> list[dict]:
 
 
 def main() -> int:
-    out_path = ROOT / "data/eval/eval-bank-v0.pending.jsonl"
+    from repo_paths import BANK_MEI_EXPERT
+
+    out_path = BANK_MEI_EXPERT
     out_path.parent.mkdir(parents=True, exist_ok=True)
     all_recs: list[dict] = []
     for face, path in FACE_FILES.items():

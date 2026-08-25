@@ -1,0 +1,414 @@
+{
+  "source_id": "toolace",
+  "path": "corpora/_probe/cache/toolace/data.json",
+  "n_docs": 4000,
+  "n_chars": 14655898,
+  "n_tokens": 8026943,
+  "n_unk_tokens": 46,
+  "unk_token_rate": 6e-06,
+  "unk_gate_ok": true,
+  "chars_per_token": 1.8258,
+  "cjk_char_ratio": 0.0001,
+  "latin_char_ratio": 0.6673,
+  "digit_char_ratio": 0.0137,
+  "exact_dup_rate": 0.0,
+  "short_frac_lt_256": 0.0,
+  "jsonish_frac": 1.0,
+  "leak_docs": 0,
+  "wiki_raw_overlap": 0.0,
+  "wiki_norm_overlap": 0.0,
+  "complement_score": 1.0,
+  "heuristic_flag_frac": {
+    "commandish": 0.0008,
+    "email": 0.0262,
+    "garbled": 0.0003,
+    "has_url": 0.066,
+    "jsonish": 1.0,
+    "nav_or_ad": 0.0065,
+    "negation": 0.0008,
+    "phone": 0.0055
+  },
+  "noise_rate_est": 0.0067,
+  "length_hist": {
+    "le_16384": 131,
+    "le_8192": 1157,
+    "le_4096": 1944,
+    "le_32768": 1,
+    "le_2048": 728,
+    "le_1024": 39
+  },
+  "review_n": 40,
+  "review_noise_frac": 0.025,
+  "review_samples": [
+    {
+      "id": "toolace:3472",
+      "n_chars": 2513,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1293",
+      "n_chars": 915,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2072",
+      "n_chars": 1561,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3207",
+      "n_chars": 1084,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1485",
+      "n_chars": 1157,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3278",
+      "n_chars": 907,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1832",
+      "n_chars": 1507,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2088",
+      "n_chars": 2380,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2988",
+      "n_chars": 2495,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3374",
+      "n_chars": 1273,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2812",
+      "n_chars": 1574,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3532",
+      "n_chars": 2101,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3403",
+      "n_chars": 2093,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3867",
+      "n_chars": 2712,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3082",
+      "n_chars": 3094,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1006",
+      "n_chars": 3525,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3131",
+      "n_chars": 3716,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1267",
+      "n_chars": 3596,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1549",
+      "n_chars": 2581,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1017",
+      "n_chars": 3444,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:792",
+      "n_chars": 3583,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1678",
+      "n_chars": 3125,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "email",
+        "jsonish"
+      ],
+      "noise": true
+    },
+    {
+      "id": "toolace:2940",
+      "n_chars": 3510,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3728",
+      "n_chars": 3206,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3983",
+      "n_chars": 3155,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:679",
+      "n_chars": 3271,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:140",
+      "n_chars": 4962,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2828",
+      "n_chars": 4318,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2188",
+      "n_chars": 4199,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:50",
+      "n_chars": 5619,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1121",
+      "n_chars": 6350,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2939",
+      "n_chars": 4818,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1927",
+      "n_chars": 5550,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1191",
+      "n_chars": 5339,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:676",
+      "n_chars": 5187,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:3765",
+      "n_chars": 4013,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:246",
+      "n_chars": 6105,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:672",
+      "n_chars": 4098,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:2739",
+      "n_chars": 5182,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "toolace:1449",
+      "n_chars": 2931,
+      "preview": "{\"system\": \"You are an expert in composing functions. You are given a question and a set of possible functions. \\nBased on the question, you will need to make one or more function/tool calls to achieve the purpose. \\nIf none of the function",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    }
+  ],
+  "hard_gates": {
+    "unk_ok": true,
+    "leak_ok": true,
+    "wiki_overlap_ok": true,
+    "noise_ok": true
+  }
+}

@@ -53,7 +53,9 @@ def load_preds(path: Path) -> dict[str, dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--adapter", default=str(ROOT / "mlx/adapters/qwen35-0.8b-sft-smoke"))
+    from repo_paths import MLX_ADAPTER_MEI_EXPERT
+
+    ap.add_argument("--adapter", default=str(MLX_ADAPTER_MEI_EXPERT))
     ap.add_argument("--faces", default="face.edge,face.dev")
     ap.add_argument("--limit", type=int, default=8)
     args = ap.parse_args()

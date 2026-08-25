@@ -1,0 +1,252 @@
+{
+  "n_cards": 13,
+  "cards": [
+    {
+      "source_id": "api-bank-init",
+      "n_docs": 200,
+      "n_tokens": 59730,
+      "unk_token_rate": 0.0,
+      "chars_per_token": 1.8161,
+      "cjk_char_ratio": 0.0,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0,
+      "review_noise_frac": 0.0,
+      "jsonish_frac": 1.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "chinese-c4",
+      "n_docs": 8000,
+      "n_tokens": 6567798,
+      "unk_token_rate": 0.00097,
+      "chars_per_token": 1.0439,
+      "cjk_char_ratio": 0.8169,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0616,
+      "review_noise_frac": 0.025,
+      "jsonish_frac": 0.0022,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "crosswoz-train",
+      "n_docs": 5012,
+      "n_tokens": 1128011,
+      "unk_token_rate": 0.002409,
+      "chars_per_token": 1.031,
+      "cjk_char_ratio": 0.8016,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0,
+      "review_noise_frac": 0.0,
+      "jsonish_frac": 0.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "fineweb2-cmn-hani-test",
+      "n_docs": 8000,
+      "n_tokens": 11940270,
+      "unk_token_rate": 0.000913,
+      "chars_per_token": 1.0585,
+      "cjk_char_ratio": 0.7951,
+      "wiki_norm_overlap": 0.0001,
+      "complement_score": 0.9999,
+      "noise_rate_est": 0.1435,
+      "review_noise_frac": 0.15,
+      "jsonish_frac": 0.0029,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "fineweb2-hq-cmn-hani",
+      "n_docs": 8000,
+      "n_tokens": 10859174,
+      "unk_token_rate": 0.000481,
+      "chars_per_token": 1.0687,
+      "cjk_char_ratio": 0.7545,
+      "wiki_norm_overlap": 0.0019,
+      "complement_score": 0.9981,
+      "noise_rate_est": 0.0622,
+      "review_noise_frac": 0.075,
+      "jsonish_frac": 0.0035,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "hplt2-zho-hans",
+      "n_docs": 8000,
+      "n_tokens": 23397170,
+      "unk_token_rate": 0.000647,
+      "chars_per_token": 1.0413,
+      "cjk_char_ratio": 0.8103,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0897,
+      "review_noise_frac": 0.225,
+      "jsonish_frac": 0.0095,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "hplt3-cmn-hans",
+      "n_docs": 6629,
+      "n_tokens": 33871803,
+      "unk_token_rate": 0.000394,
+      "chars_per_token": 1.0293,
+      "cjk_char_ratio": 0.8412,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.1941,
+      "review_noise_frac": 0.175,
+      "jsonish_frac": 0.0036,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": false
+      }
+    },
+    {
+      "source_id": "json-schema-test-suite",
+      "n_docs": 400,
+      "n_tokens": 139678,
+      "unk_token_rate": 0.000315,
+      "chars_per_token": 1.7221,
+      "cjk_char_ratio": 0.0,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0,
+      "review_noise_frac": 0.0,
+      "jsonish_frac": 1.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "kdconv-train",
+      "n_docs": 3600,
+      "n_tokens": 1354267,
+      "unk_token_rate": 0.00217,
+      "chars_per_token": 1.0495,
+      "cjk_char_ratio": 0.7498,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0008,
+      "review_noise_frac": 0.275,
+      "jsonish_frac": 0.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "oai-openapi-examples",
+      "n_docs": 3,
+      "n_tokens": 2980,
+      "unk_token_rate": 0.0,
+      "chars_per_token": 1.8933,
+      "cjk_char_ratio": 0.0,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 1.0,
+      "review_noise_frac": 1.0,
+      "jsonish_frac": 0.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": false
+      }
+    },
+    {
+      "source_id": "schemastore-json",
+      "n_docs": 400,
+      "n_tokens": 7092277,
+      "unk_token_rate": 9e-06,
+      "chars_per_token": 1.8036,
+      "cjk_char_ratio": 0.0,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.045,
+      "review_noise_frac": 0.075,
+      "jsonish_frac": 1.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "skypile-150b",
+      "n_docs": 8000,
+      "n_tokens": 7628676,
+      "unk_token_rate": 0.000266,
+      "chars_per_token": 1.0409,
+      "cjk_char_ratio": 0.8237,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0765,
+      "review_noise_frac": 0.05,
+      "jsonish_frac": 0.0022,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    },
+    {
+      "source_id": "toolace",
+      "n_docs": 4000,
+      "n_tokens": 8026943,
+      "unk_token_rate": 6e-06,
+      "chars_per_token": 1.8258,
+      "cjk_char_ratio": 0.0001,
+      "wiki_norm_overlap": 0.0,
+      "complement_score": 1.0,
+      "noise_rate_est": 0.0067,
+      "review_noise_frac": 0.025,
+      "jsonish_frac": 1.0,
+      "hard_gates": {
+        "unk_ok": true,
+        "leak_ok": true,
+        "wiki_overlap_ok": true,
+        "noise_ok": true
+      }
+    }
+  ]
+}

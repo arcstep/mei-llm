@@ -8,9 +8,10 @@ import json
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+from repo_paths import BANK_MEI_EXPERT, ROOT
+
 DRAFT_DOCS = ROOT.parent / "docs/draft/mei-llm"
-BANK = ROOT / "data/eval/eval-bank-v0.pending.jsonl"
+BANK = BANK_MEI_EXPERT
 DEFAULT_TAG = "20260731T072836Z"
 
 
