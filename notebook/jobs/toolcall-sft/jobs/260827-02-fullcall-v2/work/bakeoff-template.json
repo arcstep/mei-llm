@@ -1,0 +1,61 @@
+{
+  "lanes": {
+    "template": {
+      "n": 24,
+      "n_accepted": 24,
+      "n_accepted_unique": 24,
+      "gold_keep_rate": 1.0,
+      "protected_slot_keep_rate": 1.0,
+      "compiler_pass_rate": 1.0,
+      "spend_cny": 0.0,
+      "cny_per_1k_accepted_unique": 0.0,
+      "p95_latency_ms": 0.005541020072996616
+    }
+  },
+  "metric_unit": "accepted_unique_row",
+  "ok": true,
+  "task": "fullcall",
+  "n_cases": 24,
+  "share": {
+    "policy": "candidate_until_paid_canary",
+    "usable_lanes": [
+      "template"
+    ],
+    "candidate_share": {
+      "deepseek-v4-flash-0731": [
+        0.55,
+        0.7
+      ],
+      "qwen-plus-2025-12-01": [
+        0.2,
+        0.3
+      ],
+      "qwen3.7-plus": [
+        0.1,
+        0.2
+      ]
+    },
+    "note": "Do not freeze production share until a paid same-item canary reports quality/cost Pareto."
+  },
+  "adaptive": {
+    "start": {
+      "template": {
+        "workers": 1,
+        "qps": 100.0
+      }
+    },
+    "cap": {
+      "template": {
+        "workers": 1,
+        "qps": 100.0
+      }
+    },
+    "ramp": {
+      "min_n": 20,
+      "max_429_rate": 0.01,
+      "max_retry_error_rate": 0.02,
+      "require_p95_stable": true
+    },
+    "note": "Ramp only when 429≤1%, retry/error≤2%, and p95 is stable."
+  }
+}

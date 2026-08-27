@@ -1,0 +1,44 @@
+{
+  "id": "mei-1.0-58m-scratch-pretrain-v1",
+  "mode": "scratch",
+  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "config_loader": "NeedleZhConfig.from_spec",
+  "spec": "architecture/mei-1.0-58m-arch-v1/spec/model.json",
+  "target_v2": "architecture/mei-1.0-58m-arch-v1/spec/model-target-v2.json",
+  "v2_heads_in_default_pretrain": false,
+  "implemented_in_code_is_not_publishable": true,
+  "tokenizer": "tokenizer/zh-24k-v1",
+  "corpus": "corpus/lm-v1",
+  "schedule": "corpus/lm-v1/schedule-scratch.json",
+  "parent_checkpoint": null,
+  "init_mode": "scratch",
+  "roles": [
+    "wiki",
+    "hq",
+    "structure",
+    "colloquial"
+  ],
+  "exposure_tokens": 300000000,
+  "source_quotas": {
+    "wiki": 166657644,
+    "hq": 98372582,
+    "structure": 4861158,
+    "colloquial": 30108616
+  },
+  "seq": {
+    "max_positions": 2048,
+    "train_seq_len_default": 512,
+    "seq_curriculum": [512, 1024, 2048],
+    "runtime_ordinary_kv": 256,
+    "note": "Scratch 300M trains 150M@512, 100M@1024, 50M@2048. Position, training, and runtime KV budgets remain separate."
+  },
+  "quantization": {
+    "product": "cq2_first",
+    "code_status": "naive_4bit_ptq_scan_diagnostic_only",
+    "ready": false
+  },
+  "legacy": {
+    "cpt_after_300m": "notebook/archive/plans/20260827-cpt-after-300m/",
+    "may_be_used_as_parent": false
+  }
+}

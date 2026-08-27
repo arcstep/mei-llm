@@ -1,0 +1,500 @@
+{
+  "ok": true,
+  "limit": 2000,
+  "spend_cny": 0,
+  "lines": [
+    {
+      "job": "260827-01-retrieval-v2",
+      "task": "retrieval",
+      "builder": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "n": 2000,
+          "n_train": 1824,
+          "n_valid": 176,
+          "engineering_smoke": false,
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+          "splits": {
+            "n": 2000,
+            "n_train": 1824,
+            "n_valid": 176,
+            "cf_cross_split": {},
+            "ok": true
+          }
+        }
+      },
+      "teacher": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "task": "retrieval",
+          "lane": "template",
+          "model_snapshot": "template",
+          "n_accepted": 2000,
+          "n_rejected": 0,
+          "n_accepted_unique": 2000,
+          "spend_cny": 0.0,
+          "cny_per_1k_accepted_unique": 0.0,
+          "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-01-retrieval-v2/work/candidates-2k",
+          "ledger": {
+            "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+            "phase": "2k",
+            "committed_cny": 0.0604812,
+            "actual_cny": 0.0604812,
+            "global_limit": 1000.0,
+            "phase_limit": 300.0,
+            "global_status": "ok",
+            "warn_cny": 800.0
+          },
+          "http_stats": {
+            "n": 2000,
+            "n429": 0,
+            "nerr": 0,
+            "rate_429": 0.0,
+            "retry_error_rate": 0.0,
+            "workers": 1,
+            "qps": 100.0
+          }
+        }
+      },
+      "validator": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "n": 2000,
+          "n_errors": 0,
+          "errors": [],
+          "splits": {
+            "n": 2000,
+            "n_train": 1824,
+            "n_valid": 176,
+            "cf_cross_split": {},
+            "ok": true
+          },
+          "lexical": {
+            "all": {
+              "recall_at_1": 0.076,
+              "recall_at_5": 0.2185,
+              "mrr": 0.17428008629740874,
+              "n": 2000
+            },
+            "split:train": {
+              "recall_at_1": 0.07785087719298246,
+              "recall_at_5": 0.2225877192982456,
+              "mrr": 0.17668163942417264,
+              "n": 1824
+            },
+            "family:park_seen": {
+              "recall_at_1": 0.410958904109589,
+              "recall_at_5": 0.6575342465753424,
+              "mrr": 0.5613006780130068,
+              "n": 365
+            },
+            "split:valid": {
+              "recall_at_1": 0.056818181818181816,
+              "recall_at_5": 0.17613636363636365,
+              "mrr": 0.14939126298367356,
+              "n": 176
+            },
+            "family:no_match": {
+              "recall_at_1": 0.0,
+              "recall_at_5": 0.0,
+              "mrr": 0.0,
+              "n": 209
+            },
+            "family:seen_schema": {
+              "recall_at_1": 0.0,
+              "recall_at_5": 0.09739524348810873,
+              "mrr": 0.09163031762110163,
+              "n": 883
+            },
+            "family:same_action_diff_object": {
+              "recall_at_1": 0.0,
+              "recall_at_5": 0.0,
+              "mrr": 0.04233269394714407,
+              "n": 68
+            },
+            "family:same_object_diff_action": {
+              "recall_at_1": 0.029411764705882353,
+              "recall_at_5": 0.6323529411764706,
+              "mrr": 0.25935828877005346,
+              "n": 68
+            },
+            "family:similar_name": {
+              "recall_at_1": 0.0,
+              "recall_at_5": 0.0,
+              "mrr": 0.0763895363895364,
+              "n": 135
+            },
+            "family:unseen_schema": {
+              "recall_at_1": 0.0,
+              "recall_at_5": 0.25,
+              "mrr": 0.11745691332088391,
+              "n": 272
+            }
+          },
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl"
+        }
+      },
+      "n": 2000,
+      "n_accepted_unique": 2000,
+      "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+      "ok": true
+    },
+    {
+      "job": "260827-02-fullcall-v2",
+      "task": "fullcall",
+      "builder": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "n": 2000,
+          "engineering_smoke": false,
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+          "source": "generate",
+          "splits": {
+            "n": 2000,
+            "n_train": 1936,
+            "n_valid": 64,
+            "cf_cross_split": {},
+            "ok": true
+          },
+          "kinds": {
+            "execute": 1056,
+            "fault": 46,
+            "illegal_pair": 36,
+            "missing": 244,
+            "no_rsv": 26,
+            "noop": 25,
+            "offtopic": 530,
+            "scene_conflict": 37
+          }
+        }
+      },
+      "teacher": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "task": "fullcall",
+          "lane": "template",
+          "model_snapshot": "template",
+          "n_accepted": 2000,
+          "n_rejected": 0,
+          "n_accepted_unique": 1820,
+          "spend_cny": 0.0,
+          "cny_per_1k_accepted_unique": 0.0,
+          "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-02-fullcall-v2/work/candidates-2k",
+          "ledger": {
+            "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+            "phase": "2k",
+            "committed_cny": 0.0604812,
+            "actual_cny": 0.0604812,
+            "global_limit": 1000.0,
+            "phase_limit": 300.0,
+            "global_status": "ok",
+            "warn_cny": 800.0
+          },
+          "http_stats": {
+            "n": 2000,
+            "n429": 0,
+            "nerr": 0,
+            "rate_429": 0.0,
+            "retry_error_rate": 0.0,
+            "workers": 1,
+            "qps": 100.0
+          }
+        }
+      },
+      "validator": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "n": 2000,
+          "n_errors": 0,
+          "errors": [],
+          "splits": {
+            "n": 2000,
+            "n_train": 1936,
+            "n_valid": 64,
+            "cf_cross_split": {},
+            "ok": true
+          },
+          "require_compiler": true,
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+          "isolation_returncode": 0
+        }
+      },
+      "n": 2000,
+      "n_accepted_unique": 1820,
+      "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+      "ok": true
+    },
+    {
+      "job": "260827-03-mw-disposition-v1",
+      "task": "mw",
+      "builder": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "n": 2000,
+          "engineering_smoke": false,
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+          "n_reason_codes": 16,
+          "reason_codes": [
+            "ambiguous_scope",
+            "authority_required",
+            "capability_insufficient",
+            "correction_incomplete",
+            "deixis_unresolved",
+            "illegal_pair",
+            "missing_external_fact",
+            "missing_permission_token",
+            "missing_slot",
+            "mixed_intent",
+            "partial_sequence_blocked",
+            "ready_to_execute",
+            "safety_judgment",
+            "scene_conflict",
+            "unknown_slot_value",
+            "unsupported_scope"
+          ],
+          "splits": {
+            "n": 2000,
+            "n_train": 1806,
+            "n_valid": 194,
+            "cf_cross_split": {},
+            "ok": true
+          },
+          "head_target": "reason_code"
+        }
+      },
+      "teacher": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "task": "mw",
+          "lane": "template",
+          "model_snapshot": "template",
+          "n_accepted": 2000,
+          "n_rejected": 0,
+          "n_accepted_unique": 2000,
+          "spend_cny": 0.0,
+          "cny_per_1k_accepted_unique": 0.0,
+          "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-03-mw-disposition-v1/work/candidates-2k",
+          "ledger": {
+            "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+            "phase": "2k",
+            "committed_cny": 0.0604812,
+            "actual_cny": 0.0604812,
+            "global_limit": 1000.0,
+            "phase_limit": 300.0,
+            "global_status": "ok",
+            "warn_cny": 800.0
+          },
+          "http_stats": {
+            "n": 2000,
+            "n429": 0,
+            "nerr": 0,
+            "rate_429": 0.0,
+            "retry_error_rate": 0.0,
+            "workers": 1,
+            "qps": 100.0
+          }
+        }
+      },
+      "validator": {
+        "returncode": 0,
+        "stderr": "",
+        "stdout": {
+          "ok": true,
+          "n": 2000,
+          "n_errors": 0,
+          "errors": [],
+          "n_reason_codes": 16,
+          "splits": {
+            "n": 2000,
+            "n_train": 1806,
+            "n_valid": 194,
+            "cf_cross_split": {},
+            "ok": true
+          },
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl"
+        }
+      },
+      "n": 2000,
+      "n_accepted_unique": 2000,
+      "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+      "ok": true
+    }
+  ],
+  "isolation": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": {
+      "ok": true,
+      "mode": "sft-v2",
+      "scope": "sft-v2",
+      "eval_n": 174,
+      "banks": [
+        "notebook/evaluation/banks/mei-mw-disposition-v2/eval-bank-smoke.jsonl",
+        "notebook/evaluation/banks/mei-park-toolcall-v1/eval-bank-v1.jsonl",
+        "notebook/evaluation/banks/mei-retrieval-v2/eval-bank-smoke.jsonl",
+        "notebook/evaluation/banks/mei-toolcall-v2/eval-bank-smoke.jsonl"
+      ],
+      "seeds": [
+        "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl"
+      ],
+      "pairs": [
+        {
+          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+          "seed_n": 2000,
+          "id_overlap": [],
+          "eval_text_leaks_in_seed": [],
+          "query_overlap": [],
+          "ok": true
+        },
+        {
+          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+          "seed_n": 24,
+          "id_overlap": [],
+          "eval_text_leaks_in_seed": [],
+          "query_overlap": [],
+          "ok": true
+        },
+        {
+          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+          "seed_n": 2000,
+          "id_overlap": [],
+          "eval_text_leaks_in_seed": [],
+          "query_overlap": [],
+          "ok": true
+        },
+        {
+          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
+          "seed_n": 24,
+          "id_overlap": [],
+          "eval_text_leaks_in_seed": [],
+          "query_overlap": [],
+          "ok": true
+        },
+        {
+          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+          "seed_n": 2000,
+          "id_overlap": [],
+          "eval_text_leaks_in_seed": [],
+          "query_overlap": [],
+          "ok": true
+        },
+        {
+          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl",
+          "seed_n": 24,
+          "id_overlap": [],
+          "eval_text_leaks_in_seed": [],
+          "query_overlap": [],
+          "ok": true
+        }
+      ],
+      "domain_train_n": 0,
+      "domain_provenance_errors": [],
+      "heldout_leaks": [],
+      "token_near_dups": [],
+      "pretrain_leaks": [],
+      "pretrain_token_near_dups": [],
+      "grounded_leaks": [],
+      "sft_v2_extra": {
+        "holdout_lock_fp": "44fc865f60981bfecaae047371fa1cb7ba29bce2f44a1d9967a59ed78e1d9072",
+        "hits": [],
+        "n_hits": 0
+      },
+      "publish_gate": true
+    }
+  },
+  "promote": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": {
+      "ok": true,
+      "order": [
+        "retrieval",
+        "fullcall-oracle-top5",
+        "mw-disposition"
+      ],
+      "packs": [
+        {
+          "kind": "retrieval",
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+          "state": "candidate",
+          "ok": true,
+          "register": {
+            "returncode": 0,
+            "stderr": "",
+            "ok": true,
+            "pack": {
+              "id": "mei-retrieval-v2-2k.candidates",
+              "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+              "task_id": "mei-1.0-58m",
+              "state": "candidate"
+            }
+          }
+        },
+        {
+          "kind": "fullcall-oracle-top5",
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+          "state": "candidate",
+          "ok": true,
+          "register": {
+            "returncode": 0,
+            "stderr": "",
+            "ok": true,
+            "pack": {
+              "id": "mei-toolcall-v2-oracle-2k.candidates",
+              "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+              "task_id": "mei-1.0-58m",
+              "state": "candidate"
+            }
+          }
+        },
+        {
+          "kind": "mw-disposition",
+          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+          "state": "candidate",
+          "ok": true,
+          "register": {
+            "returncode": 0,
+            "stderr": "",
+            "ok": true,
+            "pack": {
+              "id": "mei-mw-disposition-v2-2k.candidates",
+              "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+              "task_id": "mei-1.0-58m",
+              "state": "candidate"
+            }
+          }
+        }
+      ],
+      "post_gates": [
+        "learned-top5 E2E data waits for retrieval Recall@5 gate",
+        "joint tool+MW data waits for pure-tool baseline",
+        "Confidence labels wait for the final QAT model generations",
+        "tool-index rebuild waits for quant-aware base",
+        "park browser mei-58m manifest stays released=false until QAT + confidence"
+      ],
+      "note": "Eval banks are never registered. Confidence/QAT remain post-gates. accepted needs 0303 + float base."
+    }
+  },
+  "note": "Template 2k candidates only. Paid 2k waits for canary gates. accepted semantic pack waits for 0303."
+}

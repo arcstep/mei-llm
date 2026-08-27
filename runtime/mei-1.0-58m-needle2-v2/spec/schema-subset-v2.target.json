@@ -1,0 +1,51 @@
+{
+  "id": "mei-schema-subset-v2",
+  "status": "target_contract",
+  "implementation_state": "implemented_in_code",
+  "blocking_for_publish": false,
+  "legacy_peer": "schema-subset-v1.json",
+  "serializer": "mei-tool-call-serializer-v2",
+  "output": {
+    "internal_and_external": "schema_legal_json_array",
+    "max_calls_phase1": 1,
+    "empty_allowed": true,
+    "arguments": "object"
+  },
+  "supported": {
+    "required": true,
+    "optional": true,
+    "enum": true,
+    "const": true,
+    "types": [
+      "string",
+      "boolean",
+      "integer",
+      "number"
+    ],
+    "minimum": true,
+    "maximum": true,
+    "exclusive_minimum": true,
+    "exclusive_maximum": true,
+    "multiple_of": true,
+    "min_length": true,
+    "max_length": true,
+    "pattern": true
+  },
+  "deferred": [
+    "nested_object_arguments",
+    "array_arguments",
+    "unbounded_multi_call",
+    "generic_anyof_oneof_allof"
+  ],
+  "open_string": {
+    "grammar_role": "utf8_and_declared_constraints",
+    "semantic_source_role": "model_plus_post_generation_validator"
+  },
+  "grammar": {
+    "level": "byte",
+    "compiled_per_selected_toolset": true,
+    "invalid_token_logit": "negative_infinity",
+    "validity_is_not_semantic_correctness": true
+  },
+  "no_default_toolset": true
+}

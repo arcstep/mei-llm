@@ -1,0 +1,18 @@
+{
+  "unique_train_tokens": 30108616,
+  "exposure_train_tokens": 30108616,
+  "unique_valid_tokens": 302228,
+  "n_unique_frame_ids": 178720,
+  "n_duplicate_frame_ids": 0,
+  "by_source": {
+    "colloquial_synth": 30108616
+  },
+  "valid": {
+    "colloquial_synth": 302228
+  },
+  "allow_repeat": false,
+  "parent_checkpoint": null,
+  "tokenizer": "tokenizer/zh-24k-v1/zh-24k-v1.model",
+  "seq_len": 256,
+  "note": "Spoken-role unique is first frame_id only. Do not multiply epochs. Student outputs never re-enter."
+}

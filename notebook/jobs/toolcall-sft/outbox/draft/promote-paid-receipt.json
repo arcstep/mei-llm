@@ -1,0 +1,120 @@
+{
+  "order": [
+    "retrieval",
+    "fullcall-oracle-top5",
+    "mw-disposition"
+  ],
+  "candidate": {
+    "ok": true,
+    "order": [
+      "retrieval",
+      "fullcall-oracle-top5",
+      "mw-disposition"
+    ],
+    "packs": [
+      {
+        "kind": "retrieval",
+        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+        "state": "candidate",
+        "ok": true,
+        "register": {
+          "returncode": 0,
+          "stderr": "",
+          "ok": true,
+          "pack": {
+            "id": "mei-retrieval-v2-2k.paid.candidates",
+            "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+            "task_id": "mei-1.0-58m",
+            "state": "candidate"
+          }
+        }
+      },
+      {
+        "kind": "fullcall-oracle-top5",
+        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+        "state": "candidate",
+        "ok": true,
+        "register": {
+          "returncode": 0,
+          "stderr": "",
+          "ok": true,
+          "pack": {
+            "id": "mei-toolcall-v2-oracle-2k.paid.candidates",
+            "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+            "task_id": "mei-1.0-58m",
+            "state": "candidate"
+          }
+        }
+      },
+      {
+        "kind": "mw-disposition",
+        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+        "state": "candidate",
+        "ok": true,
+        "register": {
+          "returncode": 0,
+          "stderr": "",
+          "ok": true,
+          "pack": {
+            "id": "mei-mw-disposition-v2-2k.paid.candidates",
+            "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+            "task_id": "mei-1.0-58m",
+            "state": "candidate"
+          }
+        }
+      }
+    ],
+    "post_gates": [
+      "learned-top5 E2E data waits for retrieval Recall@5 gate",
+      "joint tool+MW data waits for pure-tool baseline",
+      "Confidence labels wait for the final QAT model generations",
+      "tool-index rebuild waits for quant-aware base",
+      "park browser mei-58m manifest stays released=false until QAT + confidence"
+    ],
+    "note": "Eval banks are never registered. Confidence/QAT remain post-gates. accepted needs 0303 + float base."
+  },
+  "accepted": {
+    "ok": false,
+    "order": [
+      "retrieval",
+      "fullcall-oracle-top5",
+      "mw-disposition"
+    ],
+    "packs": [
+      {
+        "kind": "retrieval",
+        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+        "ok": false,
+        "reason": "0303_base_sft_null"
+      },
+      {
+        "kind": "fullcall-oracle-top5",
+        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+        "ok": false,
+        "reason": "0303_base_sft_null"
+      },
+      {
+        "kind": "mw-disposition",
+        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+        "ok": false,
+        "reason": "0303_base_sft_null"
+      }
+    ],
+    "post_gates": [
+      "learned-top5 E2E data waits for retrieval Recall@5 gate",
+      "joint tool+MW data waits for pure-tool baseline",
+      "Confidence labels wait for the final QAT model generations",
+      "tool-index rebuild waits for quant-aware base",
+      "park browser mei-58m manifest stays released=false until QAT + confidence"
+    ],
+    "note": "Eval banks are never registered. Confidence/QAT remain post-gates. accepted needs 0303 + float base."
+  },
+  "post_gates": [
+    "learned-top5 E2E data waits for retrieval Recall@5 gate",
+    "joint tool+MW data waits for pure-tool baseline",
+    "Confidence labels wait for the final QAT model generations",
+    "tool-index rebuild waits for quant-aware base",
+    "park browser mei-58m manifest stays released=false until QAT + confidence"
+  ],
+  "note": "Paid 2k candidates registered. accepted refused by 0303. Do not train. park released=false."
+}

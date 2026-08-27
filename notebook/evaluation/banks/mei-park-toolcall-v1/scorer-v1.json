@@ -1,0 +1,38 @@
+{
+  "id": "mei-park-toolcall-v1-scorer",
+  "dynamic_scenarios": {
+    "n": 12,
+    "score_by": [
+      "final_state",
+      "validator_receipt",
+      "tool_effect"
+    ],
+    "forbid_fake_as_oracle": true
+  },
+  "l0_l1_blind": {
+    "match": "exact_normalized",
+    "layers": [
+      "command",
+      "schedule",
+      "autonomy",
+      "refuse"
+    ],
+    "tools": [
+      "control_room_devices",
+      "create_or_update_reservation",
+      "cancel_reservation",
+      "update_room_policy",
+      "empty"
+    ],
+    "selected_entity": true,
+    "absolute_relative_clamp": true,
+    "state_tool_result_provenance": true
+  },
+  "keep_0206": [
+    "retrieval",
+    "oracle-top5",
+    "learned-top5",
+    "grammar",
+    "safety"
+  ]
+}

@@ -1,0 +1,2 @@
+{"item_id": "mei-toolcall-v2-smoke-001", "split": "eval", "query": "把客厅那盏灯打开", "family": "home", "gold": {"function_calls": []}, "note": "smoke isolation only"}
+{"item_id": "mei-toolcall-v2-smoke-002", "split": "eval", "query": "帮我查一下外卖到哪了", "family": "order", "gold": {"function_calls": []}, "note": "smoke isolation only"}

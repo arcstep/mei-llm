@@ -1,0 +1,1471 @@
+{
+  "id": "sft-v2-baseline-scorecard-v2",
+  "created_utc": "20260827T143524Z",
+  "split": "test",
+  "lock_dir": "notebook/evaluation/banks/sft-v2-eval-lock-v2",
+  "lock_sha256": "570ac9c17457888c4b5f68922132273b4f86243177481e314fa9eb8bdadf93ab",
+  "contract": "notebook/sft/mei-1.0-58m/recipes/sft-v2-baseline-contract-v2.json",
+  "models_matrix": "notebook/sft/mei-1.0-58m/recipes/sft-v2-baseline-models-v2.json",
+  "prompt": {
+    "prompt_version": "sft-v2-fair-prompt-v1",
+    "fullcall_system_sha256": "286493076713749b778f8de6359dbeae2baaa04e12f899e155cef381feaa0a08",
+    "mw_system_sha256": "5dafbea8a4676d4e40d45097e669be49e571fb264bf025be655b63925d56947b"
+  },
+  "qwen_0.6b": "not_invented",
+  "minimind": {
+    "25m": {
+      "available": false,
+      "status": "missing_checkpoint",
+      "comparable": false,
+      "note": "Place weights under notebook/archive/external-baselines/minimind-{size} or set MEI_MINIMIND_* . Same-data comparison requires identical retrieval/MW heads."
+    },
+    "45m": {
+      "available": false,
+      "status": "missing_checkpoint",
+      "comparable": false,
+      "note": "Place weights under notebook/archive/external-baselines/minimind-{size} or set MEI_MINIMIND_* . Same-data comparison requires identical retrieval/MW heads."
+    }
+  },
+  "retrieval": {
+    "bm25": {
+      "retriever": "bm25",
+      "overall": {
+        "n": 8,
+        "recall_at_1": {
+          "n": 8,
+          "k": 3,
+          "rate": 0.375,
+          "ci95_lo": 0.136842,
+          "ci95_hi": 0.694262
+        },
+        "recall_at_5": {
+          "n": 8,
+          "k": 5,
+          "rate": 0.625,
+          "ci95_lo": 0.305738,
+          "ci95_hi": 0.863158
+        },
+        "mrr": 0.472922
+      },
+      "by_family": {
+        "seen": {
+          "n": 8,
+          "recall_at_1": {
+            "n": 8,
+            "k": 3,
+            "rate": 0.375,
+            "ci95_lo": 0.136842,
+            "ci95_hi": 0.694262
+          },
+          "recall_at_5": {
+            "n": 8,
+            "k": 5,
+            "rate": 0.625,
+            "ci95_lo": 0.305738,
+            "ci95_hi": 0.863158
+          },
+          "mrr": 0.472922
+        }
+      },
+      "by_catalog_size": {
+        "128": {
+          "n": 3,
+          "recall_at_1": {
+            "n": 3,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.561506
+          },
+          "recall_at_5": {
+            "n": 3,
+            "k": 1,
+            "rate": 0.333333,
+            "ci95_lo": 0.06149,
+            "ci95_hi": 0.792345
+          },
+          "mrr": 0.112978
+        },
+        "147": {
+          "n": 3,
+          "recall_at_1": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.666667,
+            "ci95_lo": 0.207655,
+            "ci95_hi": 0.93851
+          },
+          "recall_at_5": {
+            "n": 3,
+            "k": 3,
+            "rate": 1.0,
+            "ci95_lo": 0.438494,
+            "ci95_hi": 1.0
+          },
+          "mrr": 0.777778
+        },
+        "32": {
+          "n": 2,
+          "recall_at_1": {
+            "n": 2,
+            "k": 1,
+            "rate": 0.5,
+            "ci95_lo": 0.094529,
+            "ci95_hi": 0.905471
+          },
+          "recall_at_5": {
+            "n": 2,
+            "k": 1,
+            "rate": 0.5,
+            "ci95_lo": 0.094529,
+            "ci95_hi": 0.905471
+          },
+          "mrr": 0.555556
+        }
+      },
+      "no_match": {
+        "n": 0,
+        "accuracy_no_gold_in_top5": {
+          "n": 0,
+          "k": 0,
+          "rate": null,
+          "ci95_lo": null,
+          "ci95_hi": null
+        },
+        "fpr_always_returns_top5": {
+          "rate": 0.0,
+          "note": "sparse/dense retrievers always return k=5; no-match is not in positive Recall denominator"
+        }
+      },
+      "latency": {
+        "p50": 0.3,
+        "p95": 0.3,
+        "n": 8
+      }
+    },
+    "char-tfidf": {
+      "retriever": "tfidf",
+      "overall": {
+        "n": 8,
+        "recall_at_1": {
+          "n": 8,
+          "k": 3,
+          "rate": 0.375,
+          "ci95_lo": 0.136842,
+          "ci95_hi": 0.694262
+        },
+        "recall_at_5": {
+          "n": 8,
+          "k": 5,
+          "rate": 0.625,
+          "ci95_lo": 0.305738,
+          "ci95_hi": 0.863158
+        },
+        "mrr": 0.519345
+      },
+      "by_family": {
+        "seen": {
+          "n": 8,
+          "recall_at_1": {
+            "n": 8,
+            "k": 3,
+            "rate": 0.375,
+            "ci95_lo": 0.136842,
+            "ci95_hi": 0.694262
+          },
+          "recall_at_5": {
+            "n": 8,
+            "k": 5,
+            "rate": 0.625,
+            "ci95_lo": 0.305738,
+            "ci95_hi": 0.863158
+          },
+          "mrr": 0.519345
+        }
+      },
+      "by_catalog_size": {
+        "128": {
+          "n": 3,
+          "recall_at_1": {
+            "n": 3,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.561506
+          },
+          "recall_at_5": {
+            "n": 3,
+            "k": 1,
+            "rate": 0.333333,
+            "ci95_lo": 0.06149,
+            "ci95_hi": 0.792345
+          },
+          "mrr": 0.277778
+        },
+        "147": {
+          "n": 3,
+          "recall_at_1": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.666667,
+            "ci95_lo": 0.207655,
+            "ci95_hi": 0.93851
+          },
+          "recall_at_5": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.666667,
+            "ci95_lo": 0.207655,
+            "ci95_hi": 0.93851
+          },
+          "mrr": 0.690476
+        },
+        "32": {
+          "n": 2,
+          "recall_at_1": {
+            "n": 2,
+            "k": 1,
+            "rate": 0.5,
+            "ci95_lo": 0.094529,
+            "ci95_hi": 0.905471
+          },
+          "recall_at_5": {
+            "n": 2,
+            "k": 2,
+            "rate": 1.0,
+            "ci95_lo": 0.342372,
+            "ci95_hi": 1.0
+          },
+          "mrr": 0.625
+        }
+      },
+      "no_match": {
+        "n": 0,
+        "accuracy_no_gold_in_top5": {
+          "n": 0,
+          "k": 0,
+          "rate": null,
+          "ci95_lo": null,
+          "ci95_hi": null
+        },
+        "fpr_always_returns_top5": {
+          "rate": 0.0,
+          "note": "sparse/dense retrievers always return k=5; no-match is not in positive Recall denominator"
+        }
+      },
+      "latency": {
+        "p50": 9.2,
+        "p95": 11.0,
+        "n": 8
+      }
+    },
+    "mei-58m-contrastive-no-sft": {
+      "retriever": "mei-58m-contrastive-no-sft",
+      "overall": {
+        "n": 8,
+        "recall_at_1": {
+          "n": 8,
+          "k": 2,
+          "rate": 0.25,
+          "ci95_lo": 0.071478,
+          "ci95_hi": 0.59073
+        },
+        "recall_at_5": {
+          "n": 8,
+          "k": 5,
+          "rate": 0.625,
+          "ci95_lo": 0.305738,
+          "ci95_hi": 0.863158
+        },
+        "mrr": 0.42317
+      },
+      "by_family": {
+        "seen": {
+          "n": 8,
+          "recall_at_1": {
+            "n": 8,
+            "k": 2,
+            "rate": 0.25,
+            "ci95_lo": 0.071478,
+            "ci95_hi": 0.59073
+          },
+          "recall_at_5": {
+            "n": 8,
+            "k": 5,
+            "rate": 0.625,
+            "ci95_lo": 0.305738,
+            "ci95_hi": 0.863158
+          },
+          "mrr": 0.42317
+        }
+      },
+      "by_catalog_size": {
+        "128": {
+          "n": 3,
+          "recall_at_1": {
+            "n": 3,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.561506
+          },
+          "recall_at_5": {
+            "n": 3,
+            "k": 1,
+            "rate": 0.333333,
+            "ci95_lo": 0.06149,
+            "ci95_hi": 0.792345
+          },
+          "mrr": 0.172515
+        },
+        "147": {
+          "n": 3,
+          "recall_at_1": {
+            "n": 3,
+            "k": 2,
+            "rate": 0.666667,
+            "ci95_lo": 0.207655,
+            "ci95_hi": 0.93851
+          },
+          "recall_at_5": {
+            "n": 3,
+            "k": 3,
+            "rate": 1.0,
+            "ci95_lo": 0.438494,
+            "ci95_hi": 1.0
+          },
+          "mrr": 0.777778
+        },
+        "32": {
+          "n": 2,
+          "recall_at_1": {
+            "n": 2,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.657628
+          },
+          "recall_at_5": {
+            "n": 2,
+            "k": 1,
+            "rate": 0.5,
+            "ci95_lo": 0.094529,
+            "ci95_hi": 0.905471
+          },
+          "mrr": 0.267241
+        }
+      },
+      "no_match": {
+        "n": 0,
+        "accuracy_no_gold_in_top5": {
+          "n": 0,
+          "k": 0,
+          "rate": null,
+          "ci95_lo": null,
+          "ci95_hi": null
+        },
+        "fpr_always_returns_top5": {
+          "rate": 0.0,
+          "note": "sparse/dense retrievers always return k=5; no-match is not in positive Recall denominator"
+        }
+      },
+      "latency": {
+        "p50": 23.2,
+        "p95": 25.5,
+        "n": 8
+      }
+    },
+    "mei-58m-hnsw": {
+      "available": false,
+      "error": "missing:No module named 'hnswlib'",
+      "build_ms": null,
+      "note": "efficiency column on 128-tool slice; quality remains exact cosine/dot"
+    },
+    "bge-small-zh-v1.5": {
+      "status": "unavailable",
+      "error": "sentence_transformers_missing",
+      "hf_id": "BAAI/bge-small-zh-v1.5"
+    },
+    "minilm-multilingual": {
+      "status": "unavailable",
+      "error": "sentence_transformers_missing",
+      "hf_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    }
+  },
+  "generation": {
+    "always-refuse": {
+      "fullcall": {
+        "oracle_top5": {
+          "n": 8,
+          "content": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "format": {
+            "n": 8,
+            "k": 8,
+            "rate": 1.0,
+            "ci95_lo": 0.675584,
+            "ci95_hi": 1.0
+          },
+          "strict_e2e": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "execute_content": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "refuse_content": {
+            "n": 0,
+            "k": 0,
+            "rate": null,
+            "ci95_lo": null,
+            "ci95_hi": null
+          },
+          "cascade": {
+            "retrieval_hit@5": null,
+            "retrieval_miss": 0,
+            "pipeline_strict": {
+              "n": 8,
+              "k": 0,
+              "rate": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.324416
+            },
+            "generator_content_fail": 8,
+            "generator_format_fail": 0
+          },
+          "latency": {
+            "p50": 0.0,
+            "p95": 0.0
+          },
+          "errors": 0
+        },
+        "learned_top5": {
+          "n": 8,
+          "content": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "format": {
+            "n": 8,
+            "k": 8,
+            "rate": 1.0,
+            "ci95_lo": 0.675584,
+            "ci95_hi": 1.0
+          },
+          "strict_e2e": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "execute_content": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "refuse_content": {
+            "n": 0,
+            "k": 0,
+            "rate": null,
+            "ci95_lo": null,
+            "ci95_hi": null
+          },
+          "cascade": {
+            "retrieval_hit@5": {
+              "n": 8,
+              "k": 8,
+              "rate": 1.0,
+              "ci95_lo": 0.675584,
+              "ci95_hi": 1.0
+            },
+            "retrieval_miss": 0,
+            "pipeline_strict": {
+              "n": 8,
+              "k": 0,
+              "rate": 0.0,
+              "ci95_lo": 0.0,
+              "ci95_hi": 0.324416
+            },
+            "generator_content_fail": 8,
+            "generator_format_fail": 0
+          },
+          "latency": {
+            "p50": 0.0,
+            "p95": 0.0
+          },
+          "errors": 0
+        }
+      }
+    },
+    "majority-mw": {
+      "mw": {
+        "oracle_top5": {
+          "n": 8,
+          "content": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "format": {
+            "n": 8,
+            "k": 8,
+            "rate": 1.0,
+            "ci95_lo": 0.675584,
+            "ci95_hi": 1.0
+          },
+          "strict_e2e": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "unsafe_execute": 8,
+          "macro_f1": 0.0,
+          "per_class": {
+            "ambiguous_scope": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 8
+            },
+            "authority_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "capability_insufficient": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "correction_incomplete": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "deixis_unresolved": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "illegal_pair": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "missing_external_fact": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "missing_permission_token": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "missing_slot": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "mixed_intent": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "partial_sequence_blocked": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "ready_to_execute": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 8,
+              "fn": 0
+            },
+            "safety_judgment": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "scene_conflict": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "unknown_slot_value": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "unsupported_scope": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "matrix": {
+            "ambiguous_scope": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 8,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "authority_required": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "capability_insufficient": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "correction_incomplete": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "deixis_unresolved": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "illegal_pair": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "missing_external_fact": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "missing_permission_token": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "missing_slot": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "mixed_intent": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "partial_sequence_blocked": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "ready_to_execute": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "safety_judgment": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "scene_conflict": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "unknown_slot_value": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "unsupported_scope": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            }
+          },
+          "latency": {
+            "p50": 0.0,
+            "p95": 0.0
+          }
+        },
+        "learned_top5": {
+          "n": 8,
+          "content": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "format": {
+            "n": 8,
+            "k": 8,
+            "rate": 1.0,
+            "ci95_lo": 0.675584,
+            "ci95_hi": 1.0
+          },
+          "strict_e2e": {
+            "n": 8,
+            "k": 0,
+            "rate": 0.0,
+            "ci95_lo": 0.0,
+            "ci95_hi": 0.324416
+          },
+          "unsafe_execute": 8,
+          "macro_f1": 0.0,
+          "per_class": {
+            "ambiguous_scope": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 8
+            },
+            "authority_required": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "capability_insufficient": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "correction_incomplete": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "deixis_unresolved": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "illegal_pair": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "missing_external_fact": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "missing_permission_token": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "missing_slot": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "mixed_intent": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "partial_sequence_blocked": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "ready_to_execute": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 8,
+              "fn": 0
+            },
+            "safety_judgment": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "scene_conflict": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "unknown_slot_value": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            },
+            "unsupported_scope": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "tp": 0,
+              "fp": 0,
+              "fn": 0
+            }
+          },
+          "matrix": {
+            "ambiguous_scope": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 8,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "authority_required": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "capability_insufficient": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "correction_incomplete": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "deixis_unresolved": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "illegal_pair": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "missing_external_fact": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "missing_permission_token": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "missing_slot": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "mixed_intent": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "partial_sequence_blocked": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "ready_to_execute": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "safety_judgment": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "scene_conflict": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "unknown_slot_value": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            },
+            "unsupported_scope": {
+              "ambiguous_scope": 0,
+              "authority_required": 0,
+              "capability_insufficient": 0,
+              "correction_incomplete": 0,
+              "deixis_unresolved": 0,
+              "illegal_pair": 0,
+              "missing_external_fact": 0,
+              "missing_permission_token": 0,
+              "missing_slot": 0,
+              "mixed_intent": 0,
+              "partial_sequence_blocked": 0,
+              "ready_to_execute": 0,
+              "safety_judgment": 0,
+              "scene_conflict": 0,
+              "unknown_slot_value": 0,
+              "unsupported_scope": 0,
+              "<illegal_or_empty>": 0
+            }
+          },
+          "latency": {
+            "p50": 0.0,
+            "p95": 0.0
+          }
+        }
+      }
+    }
+  },
+  "traces": [
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/always-refuse.fullcall.oracle_top5.test.jsonl",
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/always-refuse.fullcall.learned_top5.test.jsonl",
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/majority-mw.oracle_top5.test.jsonl",
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/majority-mw.learned_top5.test.jsonl",
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/retrieval.bm25.test.jsonl",
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/retrieval.char-tfidf.test.jsonl",
+    "notebook/jobs/toolcall-sft/outbox/draft/sft-v2-baseline-traces-v2/retrieval.mei-58m-contrastive-no-sft.test.jsonl"
+  ],
+  "memory": {
+    "peak_rss_mb": 514.2,
+    "status": "rusage"
+  },
+  "note": "v1 scorecard remains a prompt-contract diagnostic and must not be overwritten.",
+  "current_json": "unchanged",
+  "training": "not_run"
+}

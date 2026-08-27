@@ -1,0 +1,13 @@
+{
+  "tokenizer_id": "zh-24k-v1",
+  "retired_draft": "zh-24k.model",
+  "spm_vocab_size": 24000,
+  "pad_id": 0,
+  "eos_id": 1,
+  "bos_id": 2,
+  "unk_id": 3,
+  "user_defined_symbols_n": 3989,
+  "model_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629",
+  "sample": "notebook/corpus/tokenizer-v1/work/zh-vocab-v0/raw/spm-sample.txt",
+  "sample_bytes": 210819874
+}

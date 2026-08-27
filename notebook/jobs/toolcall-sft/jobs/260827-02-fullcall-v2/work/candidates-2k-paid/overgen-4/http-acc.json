@@ -1,0 +1,9 @@
+{
+  "n": 7,
+  "n429": 0,
+  "nerr": 0,
+  "rate_429": 0.0,
+  "retry_error_rate": 0.0,
+  "workers": 6,
+  "qps": 4.0
+}

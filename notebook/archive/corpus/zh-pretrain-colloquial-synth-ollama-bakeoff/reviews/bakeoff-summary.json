@@ -1,0 +1,45 @@
+{
+  "n": 32,
+  "models": {
+    "qwen3.5-9b": {
+      "ollama_model": "qwen3.5:9b-mlx",
+      "workers": 4,
+      "elapsed_s": 90.7,
+      "docs_per_s": 0.353,
+      "ok_filter_rate": 0.6562,
+      "auto_pass_rate": 0.4375,
+      "json_ok_rate": 0.6562,
+      "thin_rate": 0.5,
+      "mean_len_ratio_vs_plus": 0.506,
+      "mean_style_rate": 0.625,
+      "mean_decode_tok_s": 56.5
+    },
+    "qwen3.6-27b": {
+      "ollama_model": "qwen3.6:27b-mlx",
+      "workers": 2,
+      "elapsed_s": 420.0,
+      "docs_per_s": 0.076,
+      "ok_filter_rate": 0.4375,
+      "auto_pass_rate": 0.2812,
+      "json_ok_rate": 0.4375,
+      "thin_rate": 0.6562,
+      "mean_len_ratio_vs_plus": 0.396,
+      "mean_style_rate": 0.5,
+      "mean_decode_tok_s": 11.8
+    },
+    "qwen3.6-35b": {
+      "ollama_model": "qwen3.6:35b-mlx",
+      "workers": 1,
+      "elapsed_s": 103.5,
+      "docs_per_s": 0.309,
+      "ok_filter_rate": 0.7812,
+      "auto_pass_rate": 0.6562,
+      "json_ok_rate": 0.7812,
+      "thin_rate": 0.2812,
+      "mean_len_ratio_vs_plus": 0.727,
+      "mean_style_rate": 0.719,
+      "mean_decode_tok_s": 70.1
+    }
+  },
+  "plus_auto_pass_rate": 0.8438
+}

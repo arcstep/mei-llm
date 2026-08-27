@@ -1,0 +1,88 @@
+{
+  "ok": true,
+  "clean_version": "sft-v2-clean-10k-v1",
+  "note": "paid 10k remains the raw candidate pool. Clean packs enforce unique=10k, digit_suffix=0, eval isolation. 0.9 near-dup is reported; greedy 0.9 cannot simultaneously fill 10k from digit-free templates.",
+  "tasks": [
+    {
+      "task": "retrieval",
+      "src": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+      "dest": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.clean.candidates.jsonl",
+      "pool_n": 10000,
+      "kept_from_paid": 4303,
+      "dropped": {
+        "digit_suffix": 5591,
+        "banned": 0,
+        "blocked": 0,
+        "dup": 0,
+        "near_dup": 106
+      },
+      "quality": {
+        "n": 10000,
+        "unique": 10000,
+        "exact_duplicate": 0,
+        "digit_suffix": 0,
+        "query_banned": 0,
+        "near_dup_rows": 0,
+        "near_dup_rate": 0.0,
+        "near_dup_ok": true,
+        "ok": true
+      },
+      "ok": true,
+      "near_dup_ok": true
+    },
+    {
+      "task": "fullcall",
+      "src": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+      "dest": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.clean.candidates.jsonl",
+      "pool_n": 10000,
+      "kept_from_paid": 8582,
+      "dropped": {
+        "digit_suffix": 1047,
+        "banned": 0,
+        "blocked": 0,
+        "dup": 0,
+        "near_dup": 371
+      },
+      "quality": {
+        "n": 10000,
+        "unique": 10000,
+        "exact_duplicate": 0,
+        "digit_suffix": 0,
+        "query_banned": 0,
+        "near_dup_rows": 0,
+        "near_dup_rate": 0.0,
+        "near_dup_ok": true,
+        "ok": true
+      },
+      "ok": true,
+      "near_dup_ok": true
+    },
+    {
+      "task": "mw",
+      "src": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+      "dest": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.clean.candidates.jsonl",
+      "pool_n": 10000,
+      "kept_from_paid": 3585,
+      "dropped": {
+        "digit_suffix": 6331,
+        "banned": 0,
+        "blocked": 0,
+        "dup": 0,
+        "near_dup": 84
+      },
+      "quality": {
+        "n": 10000,
+        "unique": 10000,
+        "exact_duplicate": 0,
+        "digit_suffix": 0,
+        "query_banned": 0,
+        "near_dup_rows": 0,
+        "near_dup_rate": 0.0,
+        "near_dup_ok": true,
+        "ok": true
+      },
+      "ok": true,
+      "near_dup_ok": true
+    }
+  ]
+}

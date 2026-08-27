@@ -1,0 +1,90 @@
+{
+  "prompt_version": "colloquial-synth-v1",
+  "axes": {
+    "scenes": [
+      "home",
+      "commute",
+      "restaurant",
+      "shopping",
+      "school",
+      "clinic",
+      "workplace",
+      "phone_call",
+      "delivery",
+      "weather",
+      "sports",
+      "travel",
+      "family",
+      "neighbors",
+      "repair",
+      "pet",
+      "cooking",
+      "gaming"
+    ],
+    "relations": [
+      "couple",
+      "parent_child",
+      "siblings",
+      "friends",
+      "colleagues",
+      "customer_staff",
+      "neighbors",
+      "strangers_polite"
+    ],
+    "speech_acts": [
+      "ask",
+      "answer",
+      "request",
+      "refuse",
+      "confirm",
+      "correct",
+      "complain",
+      "comfort",
+      "tease",
+      "plan",
+      "remind"
+    ],
+    "styles": [
+      "ellipsis",
+      "repair",
+      "interrupt",
+      "short_reply",
+      "filler",
+      "number_date_unit",
+      "code_mix",
+      "emotion",
+      "negation",
+      "deixis"
+    ],
+    "moods": [
+      "neutral",
+      "hurried",
+      "tired",
+      "happy",
+      "annoyed",
+      "worried"
+    ],
+    "region_light": [
+      "none",
+      "north",
+      "south",
+      "wu_light"
+    ],
+    "turns": [
+      2,
+      3,
+      4,
+      6,
+      8
+    ]
+  },
+  "sampling": {
+    "temperature": 0.9,
+    "top_p": 0.95,
+    "max_tokens": 768
+  },
+  "terms_hash": "12e12665426a7ad21a9abcf399fa3ee54ee79f5c595457cfc4a37f07e5716423",
+  "contract_sha256": "0038808a07433827c6884bd711575e40c44f9fe81a86df2db81ba6e863ecebb4",
+  "generator": "mixed-bailian-fleet",
+  "model_snapshot": "mixed-bailian-fleet"
+}

@@ -1,0 +1,18 @@
+{
+  "source": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
+  "bits": 4,
+  "nibble_pack_is_publish_kernel": false,
+  "new_cpt_lineage": false,
+  "qat_or_cq2_started": false,
+  "most_sensitive": ["embedding", "attention_kv", "other"],
+  "components": {
+    "embedding": {"max_abs_logit_delta": 9.873361587524414, "mse": 3.958458423614502},
+    "attention_kv": {"max_abs_logit_delta": 2.6453304290771484, "mse": 0.16861853003501892},
+    "other": {"max_abs_logit_delta": 1.7971758842468262, "mse": 0.07937582582235336},
+    "mhc": {"max_abs_logit_delta": 1.5956816673278809, "mse": 0.05548332259058952},
+    "engram": {"max_abs_logit_delta": 0.8642873764038086, "mse": 0.016489746049046516},
+    "norm": {"max_abs_logit_delta": 0.3423002362251282, "mse": 0.003546416526660323},
+    "confidence": {"max_abs_logit_delta": 0.0, "mse": 0.0}
+  },
+  "note": "Per-component fake 4-bit PTQ on the 300M float base. Independent CPT did not produce a new checkpoint. Quality-delta thresholds remain unregistered; QAT/CQ2 not started."
+}

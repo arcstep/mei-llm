@@ -1,0 +1,317 @@
+{
+  "id": "zh-pretrain-colloquial-synth-pooled-v1",
+  "formal_cpt_eligible": false,
+  "mixed_generator": true,
+  "pooled_target": 30000000,
+  "parents": [
+    {
+      "dir": "zh-pretrain-colloquial-synth-qwen-v1",
+      "src_exists": true,
+      "copied": 20359,
+      "skipped": 0
+    },
+    {
+      "dir": "zh-pretrain-colloquial-synth-dsflash-v1",
+      "src_exists": true,
+      "copied": 47774,
+      "skipped": 0
+    },
+    {
+      "dir": "zh-pretrain-colloquial-synth-qwen36plus-v1",
+      "src_exists": true,
+      "copied": 51375,
+      "skipped": 0
+    },
+    {
+      "dir": "zh-pretrain-colloquial-synth-qwen37plus-v1",
+      "src_exists": true,
+      "copied": 29675,
+      "skipped": 0
+    },
+    {
+      "dir": "zh-pretrain-colloquial-synth-glm52-v1",
+      "src_exists": true,
+      "copied": 18549,
+      "skipped": 0
+    },
+    {
+      "dir": "zh-pretrain-colloquial-synth-kimi-k3-v1",
+      "src_exists": true,
+      "copied": 10988,
+      "skipped": 0
+    }
+  ],
+  "unique_by_first_frame": {
+    "n_docs": 178720,
+    "unique_train_tokens": 30108616,
+    "n_unique_frame_ids": 178720
+  },
+  "cursor_sum_note": "cursor unique was per-dir first-frame; pooled unique below is first frame_id across concatenated jsonl",
+  "overall": {
+    "n_docs": 178720,
+    "unique_train_tokens_sum": 30108616,
+    "spend_cny": 461.6197,
+    "unk_rate": 0.000454,
+    "spoken_rate": 1.0,
+    "cjk_rate": 1.0,
+    "mean_tokens": 170.2,
+    "hard": {
+      "pii": 0,
+      "eval_leak": 0,
+      "illegal_or_tool": 0
+    },
+    "hard_ok": true,
+    "soft_ok": true,
+    "quality_ok": true,
+    "dup_sample": {
+      "n_sample": 4096,
+      "exact_dup": 0,
+      "near_dup": 0,
+      "dup_rate": 0.0
+    },
+    "n_scenes": 18,
+    "n_styles": 10,
+    "missing_scenes": [],
+    "missing_styles": [],
+    "top_template_share": 0.001,
+    "opening_share": 0.0005,
+    "closing_share": 0.0021,
+    "snapshots": {
+      "qwen-plus-2025-12-01": 20359,
+      "deepseek-v4-flash-0731": 47774,
+      "qwen3.6-plus": 51375,
+      "qwen3.7-plus": 29675,
+      "glm-5.2": 18549,
+      "kimi-k3": 10988
+    },
+    "examples": [
+      "甲：哎，你那个快递到了没？我看物流显示上午就派送了呀。 | 乙：没呢。刚才骑手打电话说放驿站了，但我没空去拿。 | 甲：不是……你就不能顺路带回来？我在家等着拆箱啊。 | 乙：切，我在公司加班呢好吗。哪有空顺路。 | 甲：行吧行吧，那我自己去取。真是服了。 | 乙：哦对，取件码发你微信了。别搞错哈。",
+      "甲：这个包打折吗？我看标价写着原价八百多呢。 | 乙：哎，您眼光真好！这个今儿打七折，折完五百九十九，划算的。 | 甲：七折啊……那还行，不过我记得上周来好像六折？ | 乙：哦，那个是上周的活动，结束了。今儿这价——哎，您要是真喜欢，我给您抹个零，五百九得了。 | 甲：五百九……恩，那行吧，这颜色耐脏不？ | 乙：耐脏！这料子您放心，擦擦就干净。您拿这个，我"
+    ]
+  },
+  "by_generator": {
+    "qwen-plus": {
+      "n_docs": 20359,
+      "unique_train_tokens_sum": 3360304,
+      "spend_cny": 10.2322,
+      "unk_rate": 0.000797,
+      "spoken_rate": 1.0,
+      "cjk_rate": 1.0,
+      "mean_tokens": 167.0,
+      "hard": {
+        "pii": 0,
+        "eval_leak": 0,
+        "illegal_or_tool": 0
+      },
+      "hard_ok": true,
+      "soft_ok": true,
+      "quality_ok": true,
+      "dup_sample": {
+        "n_sample": 1024,
+        "exact_dup": 0,
+        "near_dup": 0,
+        "dup_rate": 0.0
+      },
+      "n_scenes": 18,
+      "n_styles": 10,
+      "missing_scenes": [],
+      "missing_styles": [],
+      "top_template_share": 0.0013,
+      "opening_share": 0.0023,
+      "closing_share": 0.001,
+      "snapshots": {
+        "qwen-plus-2025-12-01": 20359
+      },
+      "examples": [
+        "甲：哎哟……烤箱咋又跳闸了？ | 乙：啊？哦…我刚关了，怕糊——哎不对，是定时器到点自动断的！ | 甲：哦…那您家这老西门子，比我家还扛造啊 | 乙：扛啥扛…上礼拜修过三回！昨天才换的温控探头 | 甲：…12月3号？ | 乙：恩…不不，12月2号下午，小张来弄的",
+        "甲：哎哟喂——这都几点了还等位？我饿得前胸贴后背啦！ | 乙：别急别急，刚问过，马上有table！ | 甲：啊？又‘马上’？上回说马上是十分钟前！ | 乙：哎哎，真滴，前台刚say‘two minutes’！ | 甲：两分钟？两分钟我能吃碗米线了！ | 乙：……你先坐这儿凳子上，别晃手机了行不？ | 甲：坐？这凳子比我妈的竹椅还咯屁股！ | 乙：哦…那要不…"
+      ]
+    },
+    "deepseek-v4-flash": {
+      "n_docs": 47774,
+      "unique_train_tokens_sum": 10851603,
+      "spend_cny": 29.9196,
+      "unk_rate": 0.000415,
+      "spoken_rate": 1.0,
+      "cjk_rate": 1.0,
+      "mean_tokens": 229.2,
+      "hard": {
+        "pii": 0,
+        "eval_leak": 0,
+        "illegal_or_tool": 0
+      },
+      "hard_ok": true,
+      "soft_ok": true,
+      "quality_ok": true,
+      "dup_sample": {
+        "n_sample": 1024,
+        "exact_dup": 0,
+        "near_dup": 0,
+        "dup_rate": 0.0
+      },
+      "n_scenes": 18,
+      "n_styles": 10,
+      "missing_scenes": [],
+      "missing_styles": [],
+      "top_template_share": 0.001,
+      "opening_share": 0.0019,
+      "closing_share": 0.0001,
+      "snapshots": {
+        "deepseek-v4-flash-0731": 47774
+      },
+      "examples": [
+        "甲：哎，你那个报告弄完了没？我看你盯着电脑半天了。 | 乙：没呢，还差最后一部分，数据老对不上，烦死了。 | 甲：别急别急，这不还有两天嘛，下午我帮你看看那个表？ | 乙：不是表的事，是那个模型跑出来的结果跟预期差太多，我怀疑是不是参数设错了。 | 甲：哦，那玩意儿啊，我之前也遇到过，你试试把那个迭代次数调高一点，可能就好了。 | 乙：调了，没用。算了，先放",
+        "甲：哎，师傅，这前面咋又堵上了？刚过那个路口还挺顺的呀。 | 乙：嗨，这不前面有个小剐蹭嘛，你看那俩车，估计得等一会儿了。您着急不？ | 甲：着急倒不着急，就是怕迟到……哎，你说这周一早上，咋老这样啊？ | 乙：可不是嘛，周一早高峰，十回有八回得堵。您今儿个几点出门的？ | 甲：七点半就出来了，想着能早点到，结果……哎，算了，反正也就这样了。 | 乙：哈哈，"
+      ]
+    },
+    "qwen3.6-plus": {
+      "n_docs": 51375,
+      "unique_train_tokens_sum": 7192235,
+      "spend_cny": 153.702,
+      "unk_rate": 0.000486,
+      "spoken_rate": 1.0,
+      "cjk_rate": 1.0,
+      "mean_tokens": 141.5,
+      "hard": {
+        "pii": 0,
+        "eval_leak": 0,
+        "illegal_or_tool": 0
+      },
+      "hard_ok": true,
+      "soft_ok": true,
+      "quality_ok": true,
+      "dup_sample": {
+        "n_sample": 1024,
+        "exact_dup": 0,
+        "near_dup": 0,
+        "dup_rate": 0.0
+      },
+      "n_scenes": 18,
+      "n_styles": 10,
+      "missing_scenes": [],
+      "missing_styles": [],
+      "top_template_share": 0.001,
+      "opening_share": 0.0012,
+      "closing_share": 0.0048,
+      "snapshots": {
+        "qwen3.6-plus": 51375
+      },
+      "examples": [
+        "甲：哎，这周报真是写吐了。改了三版，老板还是说逻辑不通... | 乙：停停停，先别写了。几点了都？ | 甲：才十一点半。我想着今...今晚弄完算了。 | 乙：拉倒吧。你那个破项目下周才汇报，急什么呀。 | 甲：也是哦... 就是心里堵得慌。 | 乙：合上电脑。过来，给你捏捏肩。",
+        "甲：哎你那个高铁票改好了没呀？我这边打车马上到站了，急死个人。 | 乙：在弄在弄！App卡死了... 切，烦人。 | 甲：啊？不是吧... 我这还有二十分钟就检票了哎。 | 乙：别催嘛，刷出来了！改签到14:30那班，G7522。 | 甲：哦好... 等等，14点半？那我不赶趟了呀！ | 乙：哎呀没事，我帮你退了重买，稍等两秒哈，done。"
+      ]
+    },
+    "qwen3.7-plus": {
+      "n_docs": 29675,
+      "unique_train_tokens_sum": 4300305,
+      "spend_cny": 67.2351,
+      "unk_rate": 0.000414,
+      "spoken_rate": 1.0,
+      "cjk_rate": 1.0,
+      "mean_tokens": 146.3,
+      "hard": {
+        "pii": 0,
+        "eval_leak": 0,
+        "illegal_or_tool": 0
+      },
+      "hard_ok": true,
+      "soft_ok": true,
+      "quality_ok": true,
+      "dup_sample": {
+        "n_sample": 1024,
+        "exact_dup": 0,
+        "near_dup": 0,
+        "dup_rate": 0.0
+      },
+      "n_scenes": 18,
+      "n_styles": 10,
+      "missing_scenes": [],
+      "missing_styles": [],
+      "top_template_share": 0.001,
+      "opening_share": 0.0012,
+      "closing_share": 0.004,
+      "snapshots": {
+        "qwen3.7-plus": 29675
+      },
+      "examples": [
+        "甲：刚才那会开得... 哎，真是无语。老张那个方案根本行不通啊。 | 乙：别往心里去啦。他那个思路太old school了，跟现在市场脱节好几年，not your fault. | 甲：可老板当场就黑脸了呀。我准备了整整两周的deck... | 乙：停停停，打住。老板那是冲项目去的，又不是冲你人。再说了，你数据做得那么细，谁都挑不出毛病。 | 甲：恩... ",
+        "甲：哎，你包拉好没？这人多眼杂的。 | 乙：拉着呢。 | 甲：手机别拿手里晃，塞兜里。刚才那边那人一直瞅你。 | 乙：啊？哪边儿？ | 甲：就那穿灰衣服的。快收起来！ | 乙：哦...行。"
+      ]
+    },
+    "glm-5.2": {
+      "n_docs": 18549,
+      "unique_train_tokens_sum": 2693967,
+      "spend_cny": 107.5855,
+      "unk_rate": 0.00022,
+      "spoken_rate": 0.9999,
+      "cjk_rate": 1.0,
+      "mean_tokens": 146.7,
+      "hard": {
+        "pii": 0,
+        "eval_leak": 0,
+        "illegal_or_tool": 0
+      },
+      "hard_ok": true,
+      "soft_ok": true,
+      "quality_ok": true,
+      "dup_sample": {
+        "n_sample": 1024,
+        "exact_dup": 0,
+        "near_dup": 0,
+        "dup_rate": 0.0
+      },
+      "n_scenes": 18,
+      "n_styles": 10,
+      "missing_scenes": [],
+      "missing_styles": [],
+      "top_template_share": 0.001,
+      "opening_share": 0.001,
+      "closing_share": 0.0008,
+      "snapshots": {
+        "glm-5.2": 18549
+      },
+      "examples": [
+        "甲：哎你那个高铁票改了没啊，我们赶紧走吧，来不及了。 | 乙：改好了改好了，把原来下午3点的改到5点20了，手续费扣了15块。 | 甲：哦行，那APP上显示候补还是已出票啊？ | 乙：已经出票了呀，你赶紧看一眼微信，我把截图发你了。 | 甲：哦看到了看到了，那走吧走吧，打车过去差不多要40分钟。 | 乙：哎等一下，我手机忘拿了，你先按电梯！",
+        "甲：你快递我拿上来了，放门口了啊。 | 乙：哦好，我等下—— | 甲：还有个箱子呢，哎你能不能别老买…… | 乙：行行行知道了。 | 甲：不是，主要是那箱子太大挡着门了。 | 乙：恩恩我待会儿挪进去。"
+      ]
+    },
+    "kimi-k3": {
+      "n_docs": 10988,
+      "unique_train_tokens_sum": 1710202,
+      "spend_cny": 92.9453,
+      "unk_rate": 0.00035,
+      "spoken_rate": 0.9998,
+      "cjk_rate": 1.0,
+      "mean_tokens": 157.2,
+      "hard": {
+        "pii": 0,
+        "eval_leak": 0,
+        "illegal_or_tool": 0
+      },
+      "hard_ok": true,
+      "soft_ok": true,
+      "quality_ok": true,
+      "dup_sample": {
+        "n_sample": 1024,
+        "exact_dup": 0,
+        "near_dup": 0,
+        "dup_rate": 0.0
+      },
+      "n_scenes": 18,
+      "n_styles": 10,
+      "missing_scenes": [],
+      "missing_styles": [],
+      "top_template_share": 0.0011,
+      "opening_share": 0.0009,
+      "closing_share": 0.0003,
+      "snapshots": {
+        "kimi-k3": 10988
+      },
+      "examples": [
+        "甲：哎你脸怎么红成这样？ | 乙：发烧了，38度5，刚才量的。 | 甲：啊？那你还跑来诊所排队，直接挂急诊啊。 | 乙：不是，我本来想扛一下的，结果早上更晕了。 | 甲：头晕就别乱走了，先坐这儿，我去拿号。 | 乙：哦好，谢了啊。 | 甲：你昨天是不是还加班到十一点？ | 乙：对啊，额，不是，是十二点多，回去还淋了点雨。",
+        "甲：哎，别急别急，刚看你跑过来喘得厉害。 | 乙：恩……我手机可能掉在刚才那个座位了。 | 甲：啊？就是那个靠窗的单人座？ | 乙：对……就那儿，我刚还握着呢，一下车就……哎呀。 | 甲：先别慌，我记得刚才坐着那位大姐下车了，可能看见。你打电话试试？ | 乙：哦对哦……谢谢你啊，我这脑子一急就空白了。"
+      ]
+    }
+  },
+  "note": "Quality uses produce-time n_unk. Mixed pack cannot admit under the frozen qwen-plus contract."
+}

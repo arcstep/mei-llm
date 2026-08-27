@@ -1,63 +1,44 @@
 # mei-llm
 
-MEI 专家模型及其训练、评测工作线的代码根（独立 Git 仓；与 `mei-agent`、`rubble`
-并列）。本仓不是在线模型 provider SDK；运行时模型连接由消费它的 Host 显式配置。
+MEI 1.0 58M 及其训练、评测工作线的代码根（独立 Git 仓）。本仓不是在线模型 provider SDK。
 
-本仓只含可运行的脚本、数据与训练旁路。**设计主张与过程笔记不在本仓发布**；正式发行文档将另行写入本仓自有说明，而不是链到外部文档树。
-
-布局合同见 `DESIGN.md`：语料与评测共享，模型线按 task 拆分。
+现行指针见 `CURRENT.json`。布局合同见 `DESIGN.md`。
 
 ## 目录
 
 ```text
-corpora/              # 共享语料槽（大文件默认不入库）
-eval/banks/           # 共享评测题库（多 task 订阅）
-eval/shared/          # 共享 tool schema 等
-tasks/                # 每条可训练模型线（配方 / seed / mlx）
-  mei-expert-qwen35-0p8b/
-  needle-zh/
-scripts/              # 训评 / 导出 / 隔离检查
-experiments/runs/     # 跑分产物（默认 gitignore）
+CURRENT.json
+tokenizer/zh-24k-v1/     # 冻结词表
+corpus/lm-v1/            # 冻结消费面（mix + 各包 tokens）
+architecture/            # 模型结构（Needle 主干与 heads）
+training/                # 正式 trainer 与 runs
+runtime/                 # Route-ID v1 与 Needle2 v2
+base/                    # 正式 base（当前为空）
+sft/                     # 正式 SFT 模型（当前为空）
+notebook/                # 语料准备、测试、验证、评测、归档
 ```
+
+当前阶段：`scratch-pretrain-ready`。`CURRENT.corpus` 指向 `corpus/lm-v1`。四角色 300M 从零预训练已冻结：口语 30,108,616 与 structure 4,861,158 完整消费，课程 150M@512 → 100M@1024 → 50M@2048。正式架构与 trainer 已升格；`CURRENT.base` / `CURRENT.runtime` 在 300M final 过门前保持 `null`。
+
+从零预训练默认走 `from_spec()` 主干（58,541,901）+ 冻结 `zh-24k-v1`。默认训练课程从 `seq_len=512` 起；`max_seq_len=2048` 是位置上限，末段 50M 证明 2048。v2 retrieval/confidence 头不进默认 LM pretrain。CQ2/QAT 未落地。
 
 ## 常用命令
 
 ```bash
 cd mei-llm
 
-# 所有 task 的 train↔eval 隔离
-python3 scripts/check_train_eval_isolation.py --all
+.venv/bin/python training/mei-1.0-58m-train-v1/train_pretrain.py --count-params
+.venv/bin/python training/mei-1.0-58m-train-v1/train_pretrain.py --smoke
+.venv/bin/python training/mei-1.0-58m-train-v1/check_pretrain_readiness.py --require-formal
+.venv/bin/python training/mei-1.0-58m-train-v1/run_scratch_curriculum.py --dry-run
+.venv/bin/python training/mei-1.0-58m-train-v1/run_scratch_curriculum.py --pilot-5m
 
-# 既有 0.8B 专家线（默认仍指向该 task）
-python3 scripts/check_train_eval_isolation.py
-python3 scripts/export_mlx_sft_seed_v0.py
-python3 scripts/run_eval_mlx_v0.py --help
+.venv/bin/python notebook/_tooling/scripts/check_train_eval_isolation.py --scope cpt-v2
+.venv/bin/python notebook/_tooling/scripts/check_train_eval_isolation.py --scope sft-v2
 
-# 中文 Needle 题库 schema / exact-match
-python3 scripts/eval_needle_toolcall_v0.py
-python3 scripts/eval_needle_toolcall_v0.py --bank eval/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl --split eval
-
-# needle-zh 主线（规格 / 学生 / 词表 v1 / 预训阶梯 / SFT）
-python3 tasks/needle-zh/model/check_student.py
-python3 scripts/train_zh_vocab_spm.py --freeze-v1
-python3 scripts/build_needle_home_sft_packs.py --tier 2k
-python3 scripts/validate_needle_home_sft_pack.py --pack tasks/needle-zh/train/packs/home-sft-2k.jsonl
-python3 scripts/check_train_eval_isolation.py --all
-python3 scripts/build_zh_pretrain_v0.py --smoke
-python3 scripts/train_needle_zh_pretrain.py --rung 100m --smoke
-python3 scripts/train_needle_zh_sft.py --init pretrained --tier 2k --smoke
-python3 scripts/ablate_needle_zh.py --require-baseline
+.venv/bin/python notebook/_tooling/model/mei-1.0-58m/check_student.py
+.venv/bin/python notebook/_tooling/scripts/test_mei_route_runtime.py
+.venv/bin/python notebook/_tooling/scripts/test_mei_v2_runtime.py
 ```
 
-背景包请用 `--ctx /path/to/ctx.md` 显式传入（仓库不捆绑外部文档路径）。
-
-领域语料组合必须钉两个独立版本：`task_catalog_release`（可选；钉定所用
-Evidence knowledge / contracts，以及若使用则钉定 `construction/task-seeds`
-抽样 catalog）与 `evidence_release`（求解事实/代码）。训练样本不得从 sibling
-docs 或 bench 临时拼装任务定义；不得把 seeds 称作 Task Model 或 Universe 真源。
-
-跑分结束后同目录可生成客观报告 `report.md`（由 `summary.json` + `predictions.jsonl` 派生；需已安装旁路包 `mei_eval`）。
-
-## 依赖
-
-见 `requirements.txt`。MLX 本机评测需 `mlx` / `mlx_lm`。云 / Ollama runner 可选用已发布的 [`mei-eval`](https://github.com/arcstep/mei-eval)（`pip install -e` 其 `python/`），用于加载 `.env` 与写报告。
+依赖见 `requirements.txt`（转发到 `notebook/_tooling/requirements/`）。请用仓内 `.venv`；系统 `python3` 通常没有 `mlx` / `sentencepiece`。

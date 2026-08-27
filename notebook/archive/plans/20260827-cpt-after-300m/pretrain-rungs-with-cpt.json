@@ -1,0 +1,20 @@
+{
+  "id": "mei-1.0-58m-pretrain-rungs-v1",
+  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "seq_len": 256,
+  "max_seq_len": 2048,
+  "config": "from_spec",
+  "scratch_schedule": "corpus/lm-v1/schedule-scratch.json",
+  "cpt_schedule": "corpus/lm-v1/schedule.json",
+  "rungs": {
+    "pilot-1m": {"target": 1000000, "horizon": 5000000, "eval_every": 250000, "save_every": 250000, "kind": "scratch"},
+    "pilot-5m": {"target": 5000000, "horizon": 5000000, "eval_every": 500000, "save_every": 500000, "kind": "scratch"},
+    "100m": {"target": 100000000, "horizon": 100000000, "eval_every": 5000000, "save_every": 5000000, "kind": "scratch"},
+    "300m": {"target": 300000000, "horizon": 300000000, "eval_every": 5000000, "save_every": 5000000, "kind": "scratch"},
+    "1b": {"target": 1000000000, "horizon": 1000000000, "eval_every": 5000000, "save_every": 5000000, "kind": "scratch"},
+    "cpt-v2-5m": {"target": 5000000, "horizon": 5000000, "eval_every": 5000000, "save_every": 5000000, "kind": "cpt"},
+    "cpt-v2-20m": {"target": 20000000, "horizon": 20000000, "eval_every": 5000000, "save_every": 5000000, "kind": "cpt"},
+    "cpt-v2-50m": {"target": 50000000, "horizon": 50000000, "eval_every": 5000000, "save_every": 10000000, "kind": "cpt"},
+    "cpt-v2-300m": {"target": 300000000, "horizon": 300000000, "eval_every": 10000000, "save_every": 25000000, "kind": "cpt"}
+  }
+}

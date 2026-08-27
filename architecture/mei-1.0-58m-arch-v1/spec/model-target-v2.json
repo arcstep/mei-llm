@@ -1,0 +1,67 @@
+{
+  "id": "mei-1.0-58m-model-target-v2",
+  "status": "target_contract",
+  "implementation_state": "implemented_in_code",
+  "blocking_for_publish": false,
+  "legacy_peer": "model.json",
+  "product": "mei-1.0-58m",
+  "runtime_target": "mlx_then_target_platform_kernels",
+  "architecture": {
+    "d_model": 512,
+    "n_layers": 27,
+    "n_heads": 8,
+    "n_kv_heads": 4,
+    "head_dim": 64,
+    "rope_theta": 100000.0,
+    "mlp": "HadamardMLP",
+    "engram_layers": [2, 15],
+    "engram_orders": [2, 3],
+    "engram_slots": 8192,
+    "mhc_lanes": 4,
+    "vocab_size": 24000,
+    "max_seq_len": 2048,
+    "ordinary_kv_window_target": 256,
+    "tool_kv_sinks": true,
+    "tie_embeddings": true,
+    "mtp": false,
+    "contrastive_head": {
+      "enabled": true,
+      "dim": 128,
+      "probes": 4,
+      "backbone_gradient": "stop_gradient"
+    },
+    "confidence_head": {
+      "enabled": true,
+      "probes": 8,
+      "target": "full_call_correctness",
+      "combine_with_decode_probability": "min"
+    }
+  },
+  "decisions_frozen": {
+    "missing_required": "empty_array",
+    "optional_missing": "omit",
+    "mtp": false,
+    "ordinary_kv_window": 256,
+    "retrieval_backbone_gradient": "stop_gradient",
+    "first_platform": "apple_silicon_mlx",
+    "quantization_note": "Product path is CQ2-first QAT; naive 4-bit PTQ scan is diagnostic only.",
+    "quantization": "cq2_first",
+    "confidence_risk_levels": [0.001, 0.005, 0.01],
+    "auto_execute": {
+      "error_rate_95ucb_max": 0.01,
+      "coverage_min": 0.5
+    }
+  },
+  "tokenizer": {
+    "id": "zh-24k-v1",
+    "must_preserve_existing_ids": true
+  },
+  "parent_checkpoint": {
+    "model_id": "mei-1.0-58m-base-cpt300m-v1",
+    "role": "warm_start_only"
+  },
+  "forbidden_parents": [
+    "mei-1.0-58m-route-cpt300m-sft2k-v1",
+    "mei-tool-route-sft-v1"
+  ]
+}

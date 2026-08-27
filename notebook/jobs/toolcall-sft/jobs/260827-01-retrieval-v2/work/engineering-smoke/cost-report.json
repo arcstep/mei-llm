@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "task": "retrieval",
+  "lane": "template",
+  "model_snapshot": "template",
+  "n_accepted": 24,
+  "n_rejected": 0,
+  "n_accepted_unique": 24,
+  "spend_cny": 0.0,
+  "cny_per_1k_accepted_unique": 0.0,
+  "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-01-retrieval-v2/work/engineering-smoke",
+  "ledger": {
+    "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+    "phase": "smoke",
+    "committed_cny": 0.0,
+    "actual_cny": 0.0,
+    "global_limit": 1000.0,
+    "phase_limit": null,
+    "global_status": "ok",
+    "warn_cny": 800.0
+  },
+  "http_stats": {
+    "n": 24,
+    "n429": 0,
+    "nerr": 0,
+    "rate_429": 0.0,
+    "retry_error_rate": 0.0,
+    "workers": 1,
+    "qps": 100.0
+  }
+}

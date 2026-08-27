@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "mix_id": "lm-v1",
+  "roles_complete": false,
+  "colloquial_promoted": false,
+  "n_colloquial_train_tokens": 0,
+  "formal_cpt": "fail_closed",
+  "train_pretrain_cpt_v2_5m_exit": 4,
+  "current_blocked": ["colloquial-contract-not-promoted"],
+  "n_active_bins": 149,
+  "inode_mismatches": 0,
+  "hq_hardlink_breaks": 0,
+  "fineweb_parquet_nlink_ge2": 4,
+  "leftover_process_under_corpus": 0,
+  "loader_train_shards": 131,
+  "loader_valid_shards": 18,
+  "loader_sources": ["wiki", "hq", "structure"],
+  "isolation_cpt_v2": true,
+  "tests": {
+    "test_jobs_lifecycle": true,
+    "test_colloquial_synth_pipeline": true
+  },
+  "build_v4_default_wrote_live": false
+}

@@ -1,0 +1,53 @@
+{
+  "pack": "mw-sft-v0-2k.jsonl",
+  "n": 2000,
+  "sha256": "fd6ff3c76ea86dadc950c2cf4fe49abadb1a52befefa2ae95c343cec32129b2f",
+  "recipe_sha256": "0bea0a4245462e85c2139a74a768bc32f50afb41fada96bdf54ba9b08f80a51d",
+  "review_n": 699,
+  "n_pass": 699,
+  "n_rejected": 0,
+  "pass_rate": 1.0,
+  "reviewer": "protocol-mw-v0",
+  "validate": {
+    "ok": true,
+    "n": 2000,
+    "n_train": 1815,
+    "n_valid": 185,
+    "act": {
+      "escalate": 200,
+      "execute": 800,
+      "expand": 400,
+      "shape": 300,
+      "stop": 300
+    },
+    "tools_execute": [
+      "bow",
+      "cancel_order",
+      "close_door",
+      "come_here",
+      "go_to",
+      "nod",
+      "open_door",
+      "order_food",
+      "point",
+      "set_switch",
+      "shake_head",
+      "sit",
+      "stand",
+      "stop",
+      "take_out_trash",
+      "wave"
+    ],
+    "n_errors": 0,
+    "errors": [],
+    "cf_n": 1634
+  },
+  "not_training_entry": true,
+  "generator_version": "mw-sft-v0-pack-v1",
+  "n_candidates_kept_after_filter": 2769,
+  "isolation_all_ok": true,
+  "eval_lock": "notebook/evaluation/banks/needle-vrm-mw-v0/holdout-mw-v0.lock.json",
+  "eval_sha256": "699d90856f27c178c38b41cfd8869a85e18991c1b056296c283eacc8c38a3f06",
+  "v1_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+  "v2_sha256": "a6b13fe77e740865c5b4abfd2712100171d5a456d8912639dbd167bdf34ebc84"
+}

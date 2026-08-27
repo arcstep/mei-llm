@@ -1,0 +1,19 @@
+{
+  "wiki": {
+    "role": "cpt_encyclopedia",
+    "band": "A"
+  },
+  "hq": {
+    "role": "cpt_hq_web",
+    "band": "C"
+  },
+  "structure": {
+    "role": "cpt_structure_tech",
+    "band": "B"
+  },
+  "colloquial": {
+    "role": "cpt_colloquial_synth",
+    "band": "B",
+    "present": false
+  }
+}

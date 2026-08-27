@@ -1,0 +1,9 @@
+{
+  "engineering_contrast_only": true,
+  "formal_cpt_eligible": false,
+  "do_not_register_v4": true,
+  "do_not_resume_qwen_into_this_dir": true,
+  "corrected_unique_train_tokens_by_first_frame": 23235371,
+  "claimed_exposure_train_tokens": 38076010,
+  "n_duplicate_frame_ids": 181174
+}

@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "product": "mei-1.0-58m",
+  "historical_alias": "needle-zh",
+  "shared": {
+    "tokenizer": "tokenizer/zh-24k-v1",
+    "eval_banks_root": "notebook/evaluation/banks",
+    "eval_shared_root": "notebook/evaluation/shared",
+    "runs_root": "notebook/archive/runs"
+  },
+  "tasks": [
+    {
+      "id": "mei-1.0-58m",
+      "canonical_id": "mei-1.0-58m",
+      "aliases": [
+        "needle-zh",
+        "mei-1.0-58m"
+      ],
+      "title": "MEI 1.0 58M",
+      "kind": "from-scratch-router",
+      "spec": "notebook/base/pretrain-v1/spec",
+      "model": "notebook/_tooling/model/mei-1.0-58m",
+      "sft_mixture": "notebook/sft/mei-1.0-58m/recipes/sft-mixture-v1.json",
+      "train_seed": "notebook/sft/mei-1.0-58m/train/seed/sft-smoke-v0.jsonl",
+      "train_seeds": [
+        "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.jsonl",
+        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-smoke.jsonl"
+      ],
+      "eval_banks": [
+        "notebook/evaluation/banks/needle-toolcall-v0/eval-bank-v0.jsonl",
+        "notebook/evaluation/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl",
+        "notebook/evaluation/banks/needle-vrm-agent-v0/eval-bank-v2.jsonl",
+        "notebook/evaluation/banks/mei-tool-schema-v1/eval-bank-v0.jsonl"
+      ]
+    }
+  ]
+}

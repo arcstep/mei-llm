@@ -1,0 +1,66 @@
+{
+  "id": "sft-synth-staircase-v1",
+  "product": "mei-1.0-58m",
+  "overgenerate": 3,
+  "budget_plan": "notebook/sft/mei-1.0-58m/recipes/sft-synth-budget-1000-v1.json",
+  "note": "1000 CNY envelope. Canary ≤50 before any 2k. 2k ≤300. 10k ≤500 only if 2k curve justifies. 20k/50k stay at 0 this round.",
+  "tiers": {
+    "smoke": {
+      "accepted_unique": 24,
+      "allow_spend": false,
+      "max_spend_cny": 0.0,
+      "lanes": ["template"],
+      "engineering_smoke": true
+    },
+    "canary": {
+      "accepted_unique": 12,
+      "allow_spend": true,
+      "max_spend_cny": 50.0,
+      "lanes": ["template", "deepseek-v4-flash-0731", "qwen-plus-2025-12-01", "qwen3.7-plus"],
+      "same_item": true
+    },
+    "2k": {
+      "accepted_unique": 2000,
+      "allow_spend": true,
+      "max_spend_cny": 300.0,
+      "requires": ["canary"],
+      "lanes": ["template", "deepseek-v4-flash-0731", "qwen-plus-2025-12-01", "qwen3.7-plus"]
+    },
+    "10k": {
+      "accepted_unique": 10000,
+      "allow_spend": true,
+      "max_spend_cny": 500.0,
+      "requires": ["2k"]
+    },
+    "20k": {
+      "accepted_unique": 20000,
+      "allow_spend": true,
+      "max_spend_cny": 0.0,
+      "requires": ["10k"],
+      "hold": "learning_curve"
+    },
+    "50k": {
+      "accepted_unique": 50000,
+      "allow_spend": true,
+      "max_spend_cny": 0.0,
+      "requires": ["20k"],
+      "hold": "learning_curve"
+    }
+  },
+  "gates": {
+    "compiler_pass_min": 0.98,
+    "protected_slot_keep_min": 1.0,
+    "provenance_keep_min": 1.0,
+    "isolation_ok": true,
+    "gold_leak_max": 0,
+    "near_dup_max": 0.05,
+    "max_429_rate": 0.01,
+    "max_retry_error_rate": 0.02,
+    "cost_per_1k_accepted_unique_warn": true
+  },
+  "task_notes": {
+    "retrieval": "Park is one seen catalog family (~400/2k). Scale schema-family and hard-negative breadth first.",
+    "fullcall": "Park quotas L0 320 / L1 160 / L2 160 / L3 160 inside 800 park + 1200 generic. L2 queries are environment sentences.",
+    "mw": "Keep mw-governance-v0 only. Do not absorb park reasonCode taxonomy."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "mei-1.0-58m-route-v1",
+  "kind": "runtime",
+  "product": "mei-1.0-58m",
+  "status": "legacy_frozen",
+  "protocol": "mei-route-protocol-v1",
+  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "not_a_needle2_release": true,
+  "digest_sha256": "7dbbef8a061523336e460536d16203001cb6cbbc924edda2de23d4e8ba41f116"
+}

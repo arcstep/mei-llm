@@ -1,0 +1,6 @@
+{
+  "status": "legacy_diagnostic_only",
+  "invalid_for_v2_publish": true,
+  "seed": "sft-phase1-v0.jsonl",
+  "note": "Contains a known query overlap (TRAIN-NTC-063). Frozen; do not rewrite. Not a v2 SFT release."
+}

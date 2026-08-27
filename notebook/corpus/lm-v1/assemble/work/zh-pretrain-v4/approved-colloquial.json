@@ -1,0 +1,30 @@
+{
+  "source_id": "zh-pretrain-colloquial-synth-pooled-v1",
+  "mode": "internal_scratch_pretraining",
+  "generator": "mixed-bailian-fleet",
+  "model_snapshot": "mixed-bailian-fleet",
+  "n_train_tokens": 30108616,
+  "n_valid_tokens": 302228,
+  "train_shards": [
+    "corpus/lm-v1/colloquial/zh-pretrain-colloquial-synth-pooled-v1/tokens/colloquial-train-0000.bin",
+    "corpus/lm-v1/colloquial/zh-pretrain-colloquial-synth-pooled-v1/tokens/colloquial-train-0001.bin",
+    "corpus/lm-v1/colloquial/zh-pretrain-colloquial-synth-pooled-v1/tokens/colloquial-train-0002.bin",
+    "corpus/lm-v1/colloquial/zh-pretrain-colloquial-synth-pooled-v1/tokens/colloquial-train-0003.bin"
+  ],
+  "valid_shards": [
+    "corpus/lm-v1/colloquial/zh-pretrain-colloquial-synth-pooled-v1/tokens/colloquial-valid-0000.bin"
+  ],
+  "quality_ok": true,
+  "isolation_ok": true,
+  "scratch_pretrain_eligible": true,
+  "formal_cpt_eligible": false,
+  "public_distribution_clearance_asserted": false,
+  "evidence": {
+    "contract": "corpus/lm-v1/colloquial/contract-mixed-v1.json",
+    "quality": "notebook/corpus/lm-v1/colloquial/outbox/draft/colloquial-v1/reviews/quality.json",
+    "isolation": "notebook/corpus/lm-v1/colloquial/outbox/draft/colloquial-v1/reviews/isolation.json",
+    "approval_basis": "explicit product-owner direction plus automated quality and train/eval isolation evidence",
+    "blind_review_required_for_corpus_admission": false,
+    "public_distribution_clearance_asserted": false
+  }
+}

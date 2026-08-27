@@ -1,0 +1,144 @@
+{
+  "lanes": {
+    "template": {
+      "n": 12,
+      "n_accepted": 12,
+      "n_accepted_unique": 12,
+      "gold_keep_rate": 1.0,
+      "protected_slot_keep_rate": 1.0,
+      "compiler_pass_rate": 1.0,
+      "spend_cny": 0.0,
+      "cny_per_1k_accepted_unique": 0.0,
+      "p95_latency_ms": 0.005249981768429279,
+      "reject_reasons": {},
+      "rate_429": 0.0,
+      "retry_error_rate": 0.0
+    },
+    "deepseek-v4-flash-0731": {
+      "n": 12,
+      "n_accepted": 12,
+      "n_accepted_unique": 12,
+      "gold_keep_rate": 1.0,
+      "protected_slot_keep_rate": 1.0,
+      "compiler_pass_rate": 1.0,
+      "spend_cny": 0.002886,
+      "cny_per_1k_accepted_unique": 0.24050000000000002,
+      "p95_latency_ms": 1744.8480000020936,
+      "reject_reasons": {},
+      "rate_429": 0.0,
+      "retry_error_rate": 0.0
+    },
+    "qwen-plus-2025-12-01": {
+      "n": 12,
+      "n_accepted": 12,
+      "n_accepted_unique": 12,
+      "gold_keep_rate": 1.0,
+      "protected_slot_keep_rate": 1.0,
+      "compiler_pass_rate": 1.0,
+      "spend_cny": 0.00253,
+      "cny_per_1k_accepted_unique": 0.21083333333333334,
+      "p95_latency_ms": 1026.0811669868417,
+      "reject_reasons": {},
+      "rate_429": 0.0,
+      "retry_error_rate": 0.0
+    },
+    "qwen3.7-plus": {
+      "n": 12,
+      "n_accepted": 12,
+      "n_accepted_unique": 12,
+      "gold_keep_rate": 1.0,
+      "protected_slot_keep_rate": 1.0,
+      "compiler_pass_rate": 1.0,
+      "spend_cny": 0.0064399999999999995,
+      "cny_per_1k_accepted_unique": 0.5366666666666666,
+      "p95_latency_ms": 1334.4414999592118,
+      "reject_reasons": {},
+      "rate_429": 0.0,
+      "retry_error_rate": 0.0
+    }
+  },
+  "metric_unit": "accepted_unique_row",
+  "task": "mw",
+  "n_cases": 12,
+  "max_spend_cny": 50.0,
+  "spend_cny": 0.011856,
+  "share": {
+    "policy": "pareto_from_canary",
+    "usable_lanes": [
+      "qwen-plus-2025-12-01",
+      "deepseek-v4-flash-0731",
+      "qwen3.7-plus"
+    ],
+    "ranked": [
+      {
+        "lane": "qwen-plus-2025-12-01",
+        "n": 12,
+        "n_accepted": 12,
+        "n_accepted_unique": 12,
+        "gold_keep_rate": 1.0,
+        "protected_slot_keep_rate": 1.0,
+        "compiler_pass_rate": 1.0,
+        "spend_cny": 0.00253,
+        "cny_per_1k_accepted_unique": 0.21083333333333334,
+        "p95_latency_ms": 1026.0811669868417,
+        "reject_reasons": {}
+      },
+      {
+        "lane": "deepseek-v4-flash-0731",
+        "n": 12,
+        "n_accepted": 12,
+        "n_accepted_unique": 12,
+        "gold_keep_rate": 1.0,
+        "protected_slot_keep_rate": 1.0,
+        "compiler_pass_rate": 1.0,
+        "spend_cny": 0.002886,
+        "cny_per_1k_accepted_unique": 0.24050000000000002,
+        "p95_latency_ms": 1744.8480000020936,
+        "reject_reasons": {}
+      },
+      {
+        "lane": "qwen3.7-plus",
+        "n": 12,
+        "n_accepted": 12,
+        "n_accepted_unique": 12,
+        "gold_keep_rate": 1.0,
+        "protected_slot_keep_rate": 1.0,
+        "compiler_pass_rate": 1.0,
+        "spend_cny": 0.0064399999999999995,
+        "cny_per_1k_accepted_unique": 0.5366666666666666,
+        "p95_latency_ms": 1334.4414999592118,
+        "reject_reasons": {}
+      }
+    ],
+    "candidate_share": {
+      "deepseek-v4-flash-0731": [
+        0.55,
+        0.7
+      ],
+      "qwen-plus-2025-12-01": [
+        0.2,
+        0.3
+      ],
+      "qwen3.7-plus": [
+        0.1,
+        0.2
+      ]
+    },
+    "note": "Ranked by compiler_pass_rate then ¥/1k accepted unique. Do not majority-vote gold."
+  },
+  "gates": {
+    "ok": true,
+    "fails": [],
+    "paid_lanes_ran": true
+  },
+  "ledger": {
+    "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+    "phase": "canary",
+    "committed_cny": 0.0604812,
+    "actual_cny": 0.0604812,
+    "global_limit": 1000.0,
+    "phase_limit": 50.0,
+    "global_status": "ok",
+    "warn_cny": 800.0
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "scale_10k": true,
+  "scale_20k": false,
+  "scale_50k": false,
+  "budget_10k_cny": 500.0,
+  "budget_20k_cny": 0.0,
+  "budget_50k_cny": 0.0,
+  "gates": {
+    "2k": {
+      "tier": "2k",
+      "target_accepted_unique": 2000,
+      "max_spend_cny": 300.0,
+      "ok": true,
+      "blocked": [],
+      "gates": {
+        "allow_spend_ok": true,
+        "budget_positive": true,
+        "phase_budget_ok": true,
+        "quality_ok": true,
+        "isolation_ok": true,
+        "cost_ok": true,
+        "learning_curve_ok": true,
+        "accepted_unique_met": true
+      },
+      "next": null
+    },
+    "10k": {
+      "tier": "10k",
+      "target_accepted_unique": 10000,
+      "max_spend_cny": 500.0,
+      "ok": false,
+      "blocked": [
+        "accepted_unique_met"
+      ],
+      "gates": {
+        "allow_spend_ok": true,
+        "budget_positive": true,
+        "phase_budget_ok": true,
+        "quality_ok": true,
+        "isolation_ok": true,
+        "cost_ok": true,
+        "learning_curve_ok": true,
+        "accepted_unique_met": false
+      },
+      "next": "refuse_until_budget_and_gates"
+    },
+    "learning_curve": true,
+    "park_blind": true
+  },
+  "reason": "2k curve, isolation, cost, and park blind all passed; 10k may use remaining 500 CNY phase cap.",
+  "fleet_global_budget_cny": 1000.0
+}

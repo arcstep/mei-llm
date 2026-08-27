@@ -1,0 +1,11 @@
+{
+  "id": "mei-1.0-58m-arch-v1",
+  "kind": "architecture",
+  "product": "mei-1.0-58m",
+  "status": "implemented_in_code",
+  "tokenizer": "tokenizer/zh-24k-v1",
+  "spec": "spec/model.json",
+  "target_spec": "spec/model-target-v2.json",
+  "params": 58541901,
+  "digest_sha256": "ec25c47c5e644b10b05d16eed441b0d2c6da2abe0f90912fec6e794d4c4a67ff"
+}

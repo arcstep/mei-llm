@@ -1,0 +1,47 @@
+{
+  "id": "mw-sft-v0",
+  "product": "needle-zh",
+  "pack": "mw-sft-v0-2k.jsonl",
+  "toolset_id": "needle-vrm-agent-v0",
+  "schema": "notebook/evaluation/shared/mw-governance-v0.json",
+  "phase": "data-prep-only",
+  "not_training_entry": true,
+  "not_phase1_kpi": true,
+  "gold": "schema-program",
+  "teacher_role": "query-scene-variants-only",
+  "teacher_model": "template",
+  "generator_version": "mw-sft-v0-pack-v1",
+  "prompt_version": "mw-sft-teacher-v0",
+  "n_total": 2000,
+  "valid_frac": 0.09,
+  "candidate_overgen": 3,
+  "seq_len_train": 256,
+  "seed": 202608251,
+  "sample_id_prefix": "TRAIN-MW-",
+  "item_pool": "sft",
+  "max_template_share": 0.04,
+  "act_n": {
+    "execute": 800,
+    "expand": 400,
+    "shape": 300,
+    "escalate": 200,
+    "stop": 300
+  },
+  "review": {
+    "include_all_escalate": true,
+    "include_all_unknown_cell": true,
+    "include_all_sequence": true,
+    "include_all_counterfactual_canary": true,
+    "extra_stratified": 80
+  },
+  "style_tags": [
+    "formal", "colloquial", "command", "statement", "negation",
+    "ellipsis", "inversion", "particle", "deixis", "correction", "redundant",
+    "asr_noise", "injection_wrap"
+  ],
+  "notes": [
+    "Independent of home-sft-2k/10k. Do not overwrite those packs.",
+    "Do not add this pack to tasks/index.json train_seeds from this task.",
+    "Parallel training jobs consume path + schema + hash only."
+  ]
+}

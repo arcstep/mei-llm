@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "task": "retrieval",
+  "lane": "qwen-plus-2025-12-01",
+  "model_snapshot": "qwen-plus-2025-12-01",
+  "n_accepted": 1456,
+  "n_rejected": 544,
+  "n_accepted_unique": 1456,
+  "spend_cny": 0.42725440000000003,
+  "cny_per_1k_accepted_unique": 0.29344395604395607,
+  "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-01-retrieval-v2/work/candidates-10k-paid/qwen-plus-2025-12-01",
+  "ledger": {
+    "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+    "phase": "10k",
+    "committed_cny": 3.7023424,
+    "actual_cny": 3.7023424,
+    "global_limit": 1000.0,
+    "phase_limit": 500.0,
+    "global_status": "ok",
+    "warn_cny": 800.0
+  },
+  "http_stats": {
+    "n": 2000,
+    "n429": 0,
+    "nerr": 0,
+    "rate_429": 0.0,
+    "retry_error_rate": 0.0,
+    "workers": 12,
+    "qps": 8.0
+  }
+}

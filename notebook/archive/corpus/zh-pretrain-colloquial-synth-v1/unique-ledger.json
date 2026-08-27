@@ -1,0 +1,18 @@
+{
+  "unique_train_tokens": 38076010,
+  "exposure_train_tokens": 38076010,
+  "by_source": {
+    "colloquial_synth": 38076010
+  },
+  "valid": {
+    "colloquial_synth": 377681
+  },
+  "allow_repeat": false,
+  "parent_checkpoint": null,
+  "tokenizer": "tokenizer/zh-24k-v1/zh-24k-v1.model",
+  "seq_len": 256,
+  "note": "Ledger unique_train_tokens remains bin exposure. See ACCOUNTING.json for first-frame unique. This pack is engineering contrast only.",
+  "unique_by_first_frame_id": 23235371,
+  "n_duplicate_frame_ids": 181174,
+  "accounting_corrected": true
+}

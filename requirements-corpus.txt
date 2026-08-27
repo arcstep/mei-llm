@@ -1,5 +1,1 @@
-# Optional extras for zh-vocab / dump extract / SentencePiece.
-# Install: pip install -r requirements-corpus.txt
-# Do not mix into the MLX eval line in requirements.txt.
-sentencepiece>=0.2.0
-mwparserfromhell>=0.6.5
+-r notebook/_tooling/requirements/requirements-corpus.txt

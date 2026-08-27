@@ -1,0 +1,13 @@
+{
+  "id": "zh-pretrain-v3",
+  "status": "active",
+  "tokenizer": "zh-24k-v1",
+  "n_train_tokens": 4861158,
+  "n_unique_train_tokens": 4861158,
+  "n_valid_tokens": 105850,
+  "unk_rate": 0.0,
+  "token_shards": [
+    "corpus/lm-v1/structure/zh-pretrain-v3/tokens/structure-train-0000.bin",
+    "corpus/lm-v1/structure/zh-pretrain-v3/tokens/structure-valid-0000.bin"
+  ]
+}

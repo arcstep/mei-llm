@@ -1,0 +1,12 @@
+{
+  "README.md": "31724079ba871ca44fc377be2282cf0287f6bd84c98494f1f4d85ce43f8bbb00",
+  "RELEASE.json": "f98b92c0839de5722d5355a99662d63a220658e9eee7c2f419230467ec935cd1",
+  "manifest.json": "2d2c4466b252846c3f18d4cd0a5cdb5bccbca66ef09ece38d3264c5cf715d69f",
+  "source-license.json": "b763f13dd11bdbe6951cdd8fcbe85606098e18ce03b0ea6c79171d648ae30252",
+  "admission.json": "535b1b2d9fb0700c10a8ae3ac1d325298260bed68ea0413cb266e380b4b17bdb",
+  "tokens/colloquial-train-0000.bin": "5c1cd0c9ee84315ad98814d165c788ca456d2e7d7c8622886a37302438ef7df3",
+  "tokens/colloquial-train-0001.bin": "6f23c0b6023ad3591fff35b837026f25b610d1d3f211d5386be80a238b462ce6",
+  "tokens/colloquial-train-0002.bin": "6b9c77ff9f85153d86516c6197186130893126561755967597b4151528a4d2e3",
+  "tokens/colloquial-train-0003.bin": "eb95f1fb474146a105d5742fed02718717738e286122617562e44d9499449104",
+  "tokens/colloquial-valid-0000.bin": "3005ebae26f45f722c4ce2dafa4d2a528fef0ca80a39945cc78c74ac42f8c8cd"
+}

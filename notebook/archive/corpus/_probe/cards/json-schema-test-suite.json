@@ -1,0 +1,431 @@
+{
+  "source_id": "json-schema-test-suite",
+  "path": "notebook/archive/corpus/_probe/cache/github/JSON-Schema-Test-Suite/tests",
+  "n_docs": 400,
+  "n_chars": 240534,
+  "n_tokens": 139678,
+  "n_unk_tokens": 44,
+  "unk_token_rate": 0.000315,
+  "unk_gate_ok": true,
+  "chars_per_token": 1.7221,
+  "cjk_char_ratio": 0.0,
+  "latin_char_ratio": 0.6152,
+  "digit_char_ratio": 0.0236,
+  "exact_dup_rate": 0.0325,
+  "short_frac_lt_256": 0.115,
+  "jsonish_frac": 1.0,
+  "leak_docs": 0,
+  "wiki_raw_overlap": 0.0,
+  "wiki_norm_overlap": 0.0,
+  "complement_score": 1.0,
+  "heuristic_flag_frac": {
+    "email": 0.01,
+    "has_url": 0.5975,
+    "jsonish": 1.0
+  },
+  "noise_rate_est": 0.0,
+  "length_hist": {
+    "le_8192": 9,
+    "le_512": 199,
+    "le_256": 47,
+    "le_1024": 130,
+    "le_2048": 11,
+    "le_4096": 4
+  },
+  "review_n": 40,
+  "review_noise_frac": 0.0,
+  "review_samples": [
+    {
+      "id": "json-schema-test-suite:278",
+      "n_chars": 296,
+      "preview": "{\"description\": \"items with boolean schema (true)\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"items\": true}, \"tests\": [{\"description\": \"any array is valid\", \"data\": [1, \"foo\", true], \"valid\": true}, {\"descriptio",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:325",
+      "n_chars": 329,
+      "preview": "{\"description\": \"minContains = 0 with no maxContains\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"contains\": {\"const\": 1}, \"minContains\": 0}, \"tests\": [{\"description\": \"empty data\", \"data\": [], \"valid\": true}, {\"",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:236",
+      "n_chars": 339,
+      "preview": "{\"description\": \"const with [false] does not match [0]\", \"schema\": {\"$schema\": \"https://json-schema.org/v1\", \"const\": [false]}, \"tests\": [{\"description\": \"[false] is valid\", \"data\": [false], \"valid\": true}, {\"description\": \"[0] is invalid\",",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:104",
+      "n_chars": 308,
+      "preview": "{\"description\": \"unevaluatedProperties can't see inside cousins (reverse order)\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"allOf\": [{\"unevaluatedProperties\": false}, {\"properties\": {\"foo\": true}}]}, \"tests\": [{",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:7",
+      "n_chars": 224,
+      "preview": "{\"description\": \"oneOf with boolean schemas, all false\", \"schema\": {\"$schema\": \"https://json-schema.org/v1\", \"oneOf\": [false, false, false]}, \"tests\": [{\"description\": \"any value is invalid\", \"data\": \"foo\", \"valid\": false}]}",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:314",
+      "n_chars": 200,
+      "preview": "{\"description\": \"maximum integer comparison\", \"schema\": {\"maximum\": 18446744073709551615}, \"tests\": [{\"description\": \"comparison works for high numbers\", \"data\": 18446744073709551600, \"valid\": true}]}",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:344",
+      "n_chars": 327,
+      "preview": "{\"description\": \"nested oneOf, to check validation semantics\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"oneOf\": [{\"oneOf\": [{\"type\": \"null\"}]}]}, \"tests\": [{\"description\": \"null is valid\", \"data\": null, \"valid\"",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:32",
+      "n_chars": 324,
+      "preview": "{\"description\": \"empty tokens in $ref json-pointer\", \"schema\": {\"definitions\": {\"\": {\"definitions\": {\"\": {\"type\": \"number\"}}}}, \"allOf\": [{\"$ref\": \"#/definitions//definitions/\"}]}, \"tests\": [{\"description\": \"number is valid\", \"data\": 1, \"va",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:285",
+      "n_chars": 329,
+      "preview": "{\"description\": \"items with heterogeneous array\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"prefixItems\": [{}], \"items\": false}, \"tests\": [{\"description\": \"heterogeneous invalid instance\", \"data\": [\"foo\", \"bar\",",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:347",
+      "n_chars": 296,
+      "preview": "{\"description\": \"unevaluatedItems true\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"unevaluatedItems\": true}, \"tests\": [{\"description\": \"with no unevaluated items\", \"data\": [], \"valid\": true}, {\"description\": \"wi",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:215",
+      "n_chars": 253,
+      "preview": "{\"description\": \"contains keyword with boolean schema true\", \"schema\": {\"contains\": true}, \"tests\": [{\"description\": \"any non-empty array is valid\", \"data\": [\"foo\"], \"valid\": true}, {\"description\": \"empty array is invalid\", \"data\": [], \"val",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:128",
+      "n_chars": 230,
+      "preview": "{\"description\": \"float division = inf\", \"schema\": {\"type\": \"integer\", \"multipleOf\": 0.123456789}, \"tests\": [{\"description\": \"always invalid, but naive implementations may raise an overflow error\", \"data\": 1e+308, \"valid\": false}]}",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:83",
+      "n_chars": 344,
+      "preview": "{\"description\": \"unevaluatedProperties false\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"type\": \"object\", \"unevaluatedProperties\": false}, \"tests\": [{\"description\": \"with no unevaluated properties\", \"data\": {}, ",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:397",
+      "n_chars": 430,
+      "preview": "{\"description\": \"maxLength validation\", \"schema\": {\"maxLength\": 2}, \"tests\": [{\"description\": \"shorter is valid\", \"data\": \"f\", \"valid\": true}, {\"description\": \"exact length is valid\", \"data\": \"fo\", \"valid\": true}, {\"description\": \"too long ",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:367",
+      "n_chars": 519,
+      "preview": "{\"description\": \"item is evaluated in an uncle schema to unevaluatedItems\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"properties\": {\"foo\": {\"prefixItems\": [{\"type\": \"string\"}], \"unevaluatedItems\": false}}, \"anyO",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:86",
+      "n_chars": 474,
+      "preview": "{\"description\": \"unevaluatedProperties with adjacent bool additionalProperties\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"type\": \"object\", \"properties\": {\"foo\": {\"type\": \"string\"}}, \"additionalProperties\": true",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:51",
+      "n_chars": 413,
+      "preview": "{\"description\": \"unevaluatedProperties with boolean schemas\", \"schema\": {\"$schema\": \"https://json-schema.org/v1\", \"type\": \"object\", \"properties\": {\"foo\": {\"type\": \"string\"}}, \"allOf\": [true], \"unevaluatedProperties\": false}, \"tests\": [{\"des",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:110",
+      "n_chars": 513,
+      "preview": "{\"description\": \"cousin unevaluatedProperties, true and false, false with properties\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"type\": \"object\", \"allOf\": [{\"unevaluatedProperties\": true}, {\"properties\": {\"foo\":",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:177",
+      "n_chars": 378,
+      "preview": "{\"description\": \"maxContains with contains, value with a decimal\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"contains\": {\"const\": 1}, \"maxContains\": 1.0}, \"tests\": [{\"description\": \"one element matches, valid ma",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:227",
+      "n_chars": 467,
+      "preview": "{\"description\": \"exclusiveMinimum validation\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"exclusiveMinimum\": 1.1}, \"tests\": [{\"description\": \"above the exclusiveMinimum is valid\", \"data\": 1.2, \"valid\": true}, {\"d",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:27",
+      "n_chars": 417,
+      "preview": "{\"description\": \"Location-independent identifier with base URI change in subschema\", \"schema\": {\"id\": \"http://localhost:1234/root\", \"allOf\": [{\"$ref\": \"http://localhost:1234/nested.json#foo\"}], \"definitions\": {\"A\": {\"id\": \"nested.json\", \"de",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:84",
+      "n_chars": 432,
+      "preview": "{\"description\": \"unevaluatedProperties with adjacent properties\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"type\": \"object\", \"properties\": {\"foo\": {\"type\": \"string\"}}, \"unevaluatedProperties\": false}, \"tests\": [",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:190",
+      "n_chars": 503,
+      "preview": "{\"description\": \"nested items\", \"schema\": {\"type\": \"array\", \"items\": {\"type\": \"array\", \"items\": {\"type\": \"array\", \"items\": {\"type\": \"array\", \"items\": {\"type\": \"number\"}}}}}, \"tests\": [{\"description\": \"valid nested array\", \"data\": [[[[1]], [",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:353",
+      "n_chars": 420,
+      "preview": "{\"description\": \"unevaluatedItems with items\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"items\": {\"type\": \"number\"}, \"unevaluatedItems\": {\"type\": \"string\"}}, \"tests\": [{\"description\": \"valid under items\", \"comme",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:61",
+      "n_chars": 495,
+      "preview": "{\"description\": \"cousin unevaluatedProperties, true and false, true with properties\", \"schema\": {\"$schema\": \"https://json-schema.org/v1\", \"type\": \"object\", \"allOf\": [{\"properties\": {\"foo\": {\"type\": \"string\"}}, \"unevaluatedProperties\": true}",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:107",
+      "n_chars": 518,
+      "preview": "{\"description\": \"nested unevaluatedProperties, outer true, inner false, properties outside\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"type\": \"object\", \"properties\": {\"foo\": {\"type\": \"string\"}}, \"allOf\": [{\"unev",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:198",
+      "n_chars": 564,
+      "preview": "{\"description\": \"email format\", \"schema\": {\"format\": \"email\"}, \"tests\": [{\"description\": \"all string formats ignore integers\", \"data\": 12, \"valid\": true}, {\"description\": \"all string formats ignore floats\", \"data\": 13.7, \"valid\": true}, {\"d",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:387",
+      "n_chars": 783,
+      "preview": "{\"description\": \"additionalProperties being false does not allow other properties\", \"schema\": {\"$schema\": \"https://json-schema.org/v1\", \"properties\": {\"foo\": {}, \"bar\": {}}, \"patternProperties\": {\"^v\": {}}, \"additionalProperties\": false}, \"",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:343",
+      "n_chars": 584,
+      "preview": "{\"description\": \"oneOf with missing optional property\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"oneOf\": [{\"properties\": {\"bar\": true, \"baz\": true}, \"required\": [\"bar\"]}, {\"properties\": {\"foo\": true}, \"required",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:254",
+      "n_chars": 1037,
+      "preview": "{\"description\": \"properties, patternProperties, additionalProperties interaction\", \"schema\": {\"properties\": {\"foo\": {\"type\": \"array\", \"maxItems\": 3}, \"bar\": {\"type\": \"array\"}}, \"patternProperties\": {\"f.o\": {\"minItems\": 2}}, \"additionalPrope",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:168",
+      "n_chars": 542,
+      "preview": "{\"description\": \"array of items with no additionalItems permitted\", \"schema\": {\"items\": [{}, {}, {}], \"additionalItems\": false}, \"tests\": [{\"description\": \"empty array\", \"data\": [], \"valid\": true}, {\"description\": \"fewer number of items pre",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:372",
+      "n_chars": 542,
+      "preview": "{\"description\": \"non-array instances are valid\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"unevaluatedItems\": false}, \"tests\": [{\"description\": \"ignores booleans\", \"data\": true, \"valid\": true}, {\"description\": \"",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:11",
+      "n_chars": 566,
+      "preview": "{\"description\": \"oneOf with missing optional property\", \"schema\": {\"$schema\": \"https://json-schema.org/v1\", \"oneOf\": [{\"properties\": {\"bar\": true, \"baz\": true}, \"required\": [\"bar\"]}, {\"properties\": {\"foo\": true}, \"required\": [\"foo\"]}]}, \"te",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:194",
+      "n_chars": 710,
+      "preview": "{\"description\": \"boolean schema 'false'\", \"schema\": false, \"tests\": [{\"description\": \"number is invalid\", \"data\": 1, \"valid\": false}, {\"description\": \"string is invalid\", \"data\": \"foo\", \"valid\": false}, {\"description\": \"boolean true is inva",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:147",
+      "n_chars": 653,
+      "preview": "{\"description\": \"patterns always use unicode semantics with patternProperties\", \"schema\": {\"type\": \"object\", \"patternProperties\": {\"\\\\p{Letter}cole\": true}, \"additionalProperties\": false}, \"tests\": [{\"description\": \"ascii character in json ",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:116",
+      "n_chars": 2172,
+      "preview": "{\"description\": \"dynamic evalation inside nested refs\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2019-09/schema\", \"$defs\": {\"one\": {\"oneOf\": [{\"$ref\": \"#/$defs/two\"}, {\"required\": [\"b\"], \"properties\": {\"b\": true}}, {\"required\": ",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:256",
+      "n_chars": 631,
+      "preview": "{\"description\": \"properties with escaped characters\", \"schema\": {\"properties\": {\"foo\\nbar\": {\"type\": \"number\"}, \"foo\\\"bar\": {\"type\": \"number\"}, \"foo\\\\bar\": {\"type\": \"number\"}, \"foo\\rbar\": {\"type\": \"number\"}, \"foo\\tbar\": {\"type\": \"number\"}, ",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:280",
+      "n_chars": 1331,
+      "preview": "{\"description\": \"items and subitems\", \"schema\": {\"$schema\": \"https://json-schema.org/draft/2020-12/schema\", \"$defs\": {\"item\": {\"type\": \"array\", \"items\": false, \"prefixItems\": [{\"$ref\": \"#/$defs/sub-item\"}, {\"$ref\": \"#/$defs/sub-item\"}]}, \"s",
+      "flags": [
+        "has_url",
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:144",
+      "n_chars": 847,
+      "preview": "{\"description\": \"pattern with ASCII ranges\", \"schema\": {\"pattern\": \"[a-z]cole\"}, \"tests\": [{\"description\": \"literal unicode character in json string\", \"data\": \"Les hivers de mon enfance étaient des saisons longues, longues. Nous vivions en ",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    },
+    {
+      "id": "json-schema-test-suite:170",
+      "n_chars": 207,
+      "preview": "{\"description\": \"additionalItems are allowed by default\", \"schema\": {\"items\": [{\"type\": \"integer\"}]}, \"tests\": [{\"description\": \"only the first item is validated\", \"data\": [1, \"foo\", false], \"valid\": true}]}",
+      "flags": [
+        "jsonish"
+      ],
+      "noise": false
+    }
+  ],
+  "hard_gates": {
+    "unk_ok": true,
+    "leak_ok": true,
+    "wiki_overlap_ok": true,
+    "noise_ok": true
+  }
+}

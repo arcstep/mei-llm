@@ -1,0 +1,26 @@
+{
+  "corpus": "notebook/archive/corpus/zh-pretrain-colloquial-synth-smoke",
+  "n_accepted": 96,
+  "n_sample": 96,
+  "hard": {
+    "pii_accepted": 0,
+    "eval_leak_accepted": 0,
+    "illegal_structure_accepted": 0,
+    "hash_ledger_mismatch": 0,
+    "unk_rate": 0.004665025268886873
+  },
+  "hard_ok": true,
+  "soft": {
+    "spoken_rate": 0.9792,
+    "cjk_rate": 1.0,
+    "exact_dup_in_sample": 0,
+    "near_dup_in_sample": 0,
+    "top_template_share": 0.0104,
+    "n_scenes": 18,
+    "n_styles": 10,
+    "missing_styles": []
+  },
+  "generator": "offline-frame-renderer",
+  "formal_cpt_eligible_claimed": false,
+  "ok": true
+}

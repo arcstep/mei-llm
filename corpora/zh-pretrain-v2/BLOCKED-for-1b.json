@@ -1,8 +1,0 @@
-{
-  "blocked_for": ["1b", "2b", "10b"],
-  "reason": "structure ~39.7M tokens, mostly over-wide GitHub signature/comment extract",
-  "rewrite_release": false,
-  "successor": "corpora/zh-pretrain-v3",
-  "init_from": "mei-1.0-58m-base-cpt300m-v1",
-  "init_mode": "weights_only"
-}

@@ -1,0 +1,6 @@
+{"item_id": "mei-mw-disposition-v2-smoke-001", "query": "今晚月色真美请写一首七言但家里的灯一个都别动", "reason_code": "offtopic", "split": "eval", "family": "stop"}
+{"item_id": "mei-mw-disposition-v2-smoke-002", "query": "把访客权限审批升级到值班长那边再执行", "reason_code": "authority_required", "split": "eval", "family": "escalate"}
+{"item_id": "mei-mw-disposition-v2-smoke-003", "query": "没说房间就把灯打开到某个未指明的地方", "reason_code": "missing_slot", "split": "eval", "family": "expand"}
+{"item_id": "mei-mw-disposition-v2-smoke-004", "query": "把书房门和厨房灯当成同一个对象一起操作", "reason_code": "mixed_intent", "split": "eval", "family": "shape"}
+{"item_id": "mei-mw-disposition-v2-smoke-005", "query": "车库明明空着却让我停进已经满员的车位", "reason_code": "scene_conflict", "split": "eval", "family": "stop"}
+{"item_id": "mei-mw-disposition-v2-smoke-006", "query": "去一家没合作的店点菜单上不存在的套餐", "reason_code": "illegal_pair", "split": "eval", "family": "stop"}

@@ -1,0 +1,1 @@
+../../../../architecture/mei-1.0-58m-arch-v1/architecture.py

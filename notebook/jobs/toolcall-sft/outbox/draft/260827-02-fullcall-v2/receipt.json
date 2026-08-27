@@ -1,0 +1,20 @@
+{
+  "job_id": "260827-02-fullcall-v2",
+  "topic": "toolcall-sft",
+  "status": "draft",
+  "publish_policy": "promote_only",
+  "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-02-fullcall-v2/work/engineering-smoke",
+  "gates": {
+    "offline_template": true,
+    "paid_api": false,
+    "confidence_qat": false
+  },
+  "unique_train_tokens": null,
+  "n_accepted_unique": 24,
+  "spend_cny": 0,
+  "note": "offline template engineering_smoke for fullcall",
+  "engineering_smoke": true,
+  "fleet_id": "sft-synth-fleet-v1",
+  "model_snapshot": "template",
+  "prompt_version": "sft-teacher-v2-query-only"
+}

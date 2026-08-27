@@ -1,0 +1,115 @@
+{
+  "ok": true,
+  "models": [
+    {
+      "id": "always-refuse",
+      "role": "floor",
+      "params": 0,
+      "backend": "deterministic",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "lexical-retrieval",
+      "role": "floor",
+      "params": 0,
+      "backend": "deterministic",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "majority-mw",
+      "role": "floor",
+      "params": 0,
+      "backend": "deterministic",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "random-init-58m",
+      "role": "floor",
+      "params": 58541901,
+      "backend": "mlx",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "mei-58m-base-300m-no-sft",
+      "role": "self_baseline",
+      "params": 58541901,
+      "backend": "mlx",
+      "status": "checkpoint_present",
+      "note": "no-SFT self baseline; generation uses product runtime if load succeeds",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "minimind-25m",
+      "role": "capacity_peer",
+      "params": 25000000,
+      "backend": "local_optional",
+      "status": "missing_checkpoint",
+      "note": "Place weights under notebook/archive/external-baselines/minimind-{size} or set MEI_MINIMIND_* . Same-data comparison requires identical retrieval/MW heads.",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "minimind-45m",
+      "role": "capacity_peer",
+      "params": 45000000,
+      "backend": "local_optional",
+      "status": "missing_checkpoint",
+      "note": "Place weights under notebook/archive/external-baselines/minimind-{size} or set MEI_MINIMIND_* . Same-data comparison requires identical retrieval/MW heads.",
+      "retrieval_scoring": null,
+      "same_data_sft_this_round": null
+    },
+    {
+      "id": "qwen3.5-0.8b",
+      "role": "small_behavior_ref",
+      "params": 800000000,
+      "backend": "ollama",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding",
+      "same_data_sft_this_round": false
+    },
+    {
+      "id": "qwen3.5-4b",
+      "role": "upper_bound",
+      "params": 4000000000,
+      "backend": "ollama",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding",
+      "same_data_sft_this_round": false
+    },
+    {
+      "id": "qwen3.5-9b",
+      "role": "upper_bound",
+      "params": 9000000000,
+      "backend": "ollama",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding",
+      "same_data_sft_this_round": false
+    },
+    {
+      "id": "qwen3.6-35b",
+      "role": "ceiling_efficiency",
+      "params": 35000000000,
+      "backend": "ollama",
+      "status": "ready",
+      "note": "",
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding",
+      "same_data_sft_this_round": null
+    }
+  ]
+}

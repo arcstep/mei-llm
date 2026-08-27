@@ -1,0 +1,1631 @@
+{
+  "created_utc": "20260825T075309Z",
+  "spine": "needle-mw-no-train-baselines",
+  "did_not_train": true,
+  "did_not_modify_v1_v2_home_sft_cpt": true,
+  "runner": "scripts/run_needle_mw_no_train_baselines.py",
+  "runner_sha256": "89dd40d1a4dfd88afd7eaa3b235cb8102a9355b21b4e9d8472c7c3c98f8f3e83",
+  "schema_sha256": "bf0a954adbd5e06118e860b4ac84a7ad32acd23628b79ee4fcfc95050a94160c",
+  "mw_bank_sha256": "699d90856f27c178c38b41cfd8869a85e18991c1b056296c283eacc8c38a3f06",
+  "mw_sft_sha256": "fd6ff3c76ea86dadc950c2cf4fe49abadb1a52befefa2ae95c343cec32129b2f",
+  "mw_lock_sha256": "3974625a7cc86de0b97a82ce60428707271e13db22ae46a9de398f8f188c8cda",
+  "frozen_upstream": {
+    "v1_bank_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+    "v1_expected": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+    "v2_bank_sha256": "a6b13fe77e740865c5b4abfd2712100171d5a456d8912639dbd167bdf34ebc84",
+    "v2_expected": "a6b13fe77e740865c5b4abfd2712100171d5a456d8912639dbd167bdf34ebc84",
+    "toolset_sha256": "7bcaf33bbbdc19342cb83f691040759785f3a4b6bb57bbfd779a2fa9a1e2ef6e",
+    "home_sft_2k_sha256": "48a38d0b44e52ed892fb9d54ab8ed7bb16c406cdfb11e6ec9acdd4c9ca717e63",
+    "home_sft_10k_sha256": "f0ead9f80ea5451a1dfd3e7e70b3cfd1833365d4dc5ffa9d72bd9f41342e18c7",
+    "schema_sha256": "bf0a954adbd5e06118e860b4ac84a7ad32acd23628b79ee4fcfc95050a94160c"
+  },
+  "v1_eval": {
+    "bank": "notebook/evaluation/banks/needle-vrm-agent-v0/eval-bank-v0.jsonl",
+    "split": "eval",
+    "n": 164,
+    "schema_ok": true,
+    "sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+    "always_refuse": {
+      "n": 164,
+      "always_refuse_exact_match": 0.5549,
+      "n_gold_empty": 91,
+      "by_family": {
+        "gesture": {
+          "n": 21,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "paraphrase": {
+          "n": 31,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "missing": {
+          "n": 16,
+          "n_pass": 16,
+          "exact_match": 1.0
+        },
+        "home": {
+          "n": 16,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "scene_conflict": {
+          "n": 5,
+          "n_pass": 5,
+          "exact_match": 1.0
+        },
+        "order": {
+          "n": 5,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "illegal_pair": {
+          "n": 8,
+          "n_pass": 8,
+          "exact_match": 1.0
+        },
+        "offtopic": {
+          "n": 62,
+          "n_pass": 62,
+          "exact_match": 1.0
+        }
+      },
+      "by_execute_refuse": {
+        "execute": {
+          "n": 73,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "refuse": {
+          "n": 91,
+          "n_pass": 91,
+          "exact_match": 1.0
+        }
+      },
+      "by_tool": {
+        "nod": {
+          "n": 5,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "shake_head": {
+          "n": 4,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "come_here": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "stop": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "wave": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "bow": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "sit": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "stand": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "point": {
+          "n": 7,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "_empty": {
+          "n": 91,
+          "n_pass": 91,
+          "exact_match": 1.0
+        },
+        "go_to": {
+          "n": 10,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "set_switch": {
+          "n": 9,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "open_door": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "close_door": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "take_out_trash": {
+          "n": 3,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "order_food": {
+          "n": 7,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "cancel_order": {
+          "n": 4,
+          "n_pass": 0,
+          "exact_match": 0.0
+        }
+      },
+      "by_call_count": {
+        "1": {
+          "n": 73,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "0": {
+          "n": 91,
+          "n_pass": 91,
+          "exact_match": 1.0
+        }
+      },
+      "by_style_tag": {
+        "_none": {
+          "n": 164,
+          "n_pass": 91,
+          "exact_match": 0.5549
+        }
+      },
+      "by_case_tag": {
+        "_none": {
+          "n": 164,
+          "n_pass": 91,
+          "exact_match": 0.5549
+        }
+      },
+      "note": "always_refuse is the constant-[] baseline; execute items score 0 under it."
+    }
+  },
+  "v2_eval": {
+    "bank": "notebook/evaluation/banks/needle-vrm-agent-v0/eval-bank-v2.jsonl",
+    "split": "eval",
+    "n": 1800,
+    "schema_ok": true,
+    "sha256": "a6b13fe77e740865c5b4abfd2712100171d5a456d8912639dbd167bdf34ebc84",
+    "always_refuse": {
+      "n": 1800,
+      "always_refuse_exact_match": 0.45,
+      "n_gold_empty": 810,
+      "by_family": {
+        "gesture": {
+          "n": 270,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "home": {
+          "n": 432,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "order": {
+          "n": 144,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "sequence": {
+          "n": 144,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "missing": {
+          "n": 234,
+          "n_pass": 234,
+          "exact_match": 1.0
+        },
+        "scene_conflict": {
+          "n": 198,
+          "n_pass": 198,
+          "exact_match": 1.0
+        },
+        "illegal_pair": {
+          "n": 144,
+          "n_pass": 144,
+          "exact_match": 1.0
+        },
+        "offtopic": {
+          "n": 234,
+          "n_pass": 234,
+          "exact_match": 1.0
+        }
+      },
+      "by_execute_refuse": {
+        "execute": {
+          "n": 990,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "refuse": {
+          "n": 810,
+          "n_pass": 810,
+          "exact_match": 1.0
+        }
+      },
+      "by_tool": {
+        "nod": {
+          "n": 53,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "shake_head": {
+          "n": 36,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "come_here": {
+          "n": 39,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "stop": {
+          "n": 38,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "wave": {
+          "n": 65,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "bow": {
+          "n": 45,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "sit": {
+          "n": 48,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "stand": {
+          "n": 48,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "point": {
+          "n": 60,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "go_to": {
+          "n": 176,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "set_switch": {
+          "n": 147,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "open_door": {
+          "n": 63,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "close_door": {
+          "n": 52,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "take_out_trash": {
+          "n": 118,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "order_food": {
+          "n": 98,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "cancel_order": {
+          "n": 65,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "_empty": {
+          "n": 810,
+          "n_pass": 810,
+          "exact_match": 1.0
+        }
+      },
+      "by_call_count": {
+        "1": {
+          "n": 846,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "2": {
+          "n": 127,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "3": {
+          "n": 17,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "0": {
+          "n": 810,
+          "n_pass": 810,
+          "exact_match": 1.0
+        }
+      },
+      "by_style_tag": {
+        "formal": {
+          "n": 178,
+          "n_pass": 74,
+          "exact_match": 0.4157
+        },
+        "colloquial": {
+          "n": 172,
+          "n_pass": 71,
+          "exact_match": 0.4128
+        },
+        "command": {
+          "n": 162,
+          "n_pass": 69,
+          "exact_match": 0.4259
+        },
+        "statement": {
+          "n": 167,
+          "n_pass": 78,
+          "exact_match": 0.4671
+        },
+        "negation": {
+          "n": 165,
+          "n_pass": 75,
+          "exact_match": 0.4545
+        },
+        "ellipsis": {
+          "n": 160,
+          "n_pass": 75,
+          "exact_match": 0.4688
+        },
+        "particle": {
+          "n": 164,
+          "n_pass": 74,
+          "exact_match": 0.4512
+        },
+        "deixis": {
+          "n": 156,
+          "n_pass": 74,
+          "exact_match": 0.4744
+        },
+        "correction": {
+          "n": 158,
+          "n_pass": 74,
+          "exact_match": 0.4684
+        },
+        "redundant": {
+          "n": 155,
+          "n_pass": 71,
+          "exact_match": 0.4581
+        },
+        "inversion": {
+          "n": 163,
+          "n_pass": 75,
+          "exact_match": 0.4601
+        }
+      },
+      "by_case_tag": {
+        "_none": {
+          "n": 1240,
+          "n_pass": 412,
+          "exact_match": 0.3323
+        },
+        "same_word_diff_slot": {
+          "n": 8,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "negation_scope": {
+          "n": 10,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "sequence_order": {
+          "n": 144,
+          "n_pass": 0,
+          "exact_match": 0.0
+        },
+        "short_ellipsis": {
+          "n": 56,
+          "n_pass": 56,
+          "exact_match": 1.0
+        },
+        "scene_flips_execute": {
+          "n": 198,
+          "n_pass": 198,
+          "exact_match": 1.0
+        },
+        "illegal_food": {
+          "n": 144,
+          "n_pass": 144,
+          "exact_match": 1.0
+        }
+      },
+      "note": "always_refuse is the constant-[] baseline; execute items score 0 under it."
+    }
+  },
+  "mw_schema_ok": true,
+  "mw_strategies": {
+    "always_stop": {
+      "strategy": "always_stop",
+      "split": "eval",
+      "n": 900,
+      "score": {
+        "n": 900,
+        "n_pred": 900,
+        "missing_pred": [],
+        "unparsed_rate": 0.0,
+        "unsafe_execute_rate": 0.0,
+        "n_should_not_execute": 589,
+        "n_unsafe_execute": 0,
+        "act_accuracy": 0.2056,
+        "act_macro_f1": 0.0682,
+        "act_prf": {
+          "execute": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 311
+          },
+          "expand": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 177
+          },
+          "shape": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 127
+          },
+          "escalate": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 100
+          },
+          "stop": {
+            "precision": 0.2056,
+            "recall": 1.0,
+            "f1": 0.341,
+            "tp": 185,
+            "fp": 715,
+            "fn": 0
+          }
+        },
+        "phase1_projection": {
+          "n_non_execute_unspecified": 0,
+          "note": "[] maps to non-execute, not stop. Five-class macro-F1 unsupported for phase-1 models."
+        },
+        "execute": {
+          "n": 311,
+          "call_exact_match": 0.0,
+          "slot_exact_match": 0.0,
+          "order_exact_match": 0.0
+        },
+        "reason_exact_match": 0.0,
+        "gaps_set_match": 0.3456,
+        "by_act": {
+          "escalate": {
+            "n": 100,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 0
+          },
+          "execute": {
+            "n": 311,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 0
+          },
+          "expand": {
+            "n": 177,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 0
+          },
+          "shape": {
+            "n": 127,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 0
+          },
+          "stop": {
+            "n": 185,
+            "act_accuracy": 1.0,
+            "unsafe_execute_n": 0
+          }
+        },
+        "by_style_tag": {
+          "negation": {
+            "n": 121,
+            "act_accuracy": 0.5041
+          },
+          "statement": {
+            "n": 69,
+            "act_accuracy": 0.1449
+          },
+          "formal": {
+            "n": 47,
+            "act_accuracy": 0.1702
+          },
+          "ellipsis": {
+            "n": 76,
+            "act_accuracy": 0.1447
+          },
+          "deixis": {
+            "n": 75,
+            "act_accuracy": 0.16
+          },
+          "particle": {
+            "n": 80,
+            "act_accuracy": 0.1625
+          },
+          "colloquial": {
+            "n": 58,
+            "act_accuracy": 0.1379
+          },
+          "inversion": {
+            "n": 73,
+            "act_accuracy": 0.1644
+          },
+          "correction": {
+            "n": 72,
+            "act_accuracy": 0.1528
+          },
+          "injection_wrap": {
+            "n": 49,
+            "act_accuracy": 0.1633
+          },
+          "redundant": {
+            "n": 76,
+            "act_accuracy": 0.1842
+          },
+          "command": {
+            "n": 55,
+            "act_accuracy": 0.1091
+          },
+          "asr_noise": {
+            "n": 49,
+            "act_accuracy": 0.2245
+          }
+        },
+        "by_tool": {
+          "_empty": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "go_to": {
+            "n": 12,
+            "call_exact_match": 0.0
+          },
+          "take_out_trash": {
+            "n": 36,
+            "call_exact_match": 0.0
+          },
+          "bow": {
+            "n": 31,
+            "call_exact_match": 0.0
+          },
+          "point": {
+            "n": 16,
+            "call_exact_match": 0.0
+          },
+          "wave": {
+            "n": 32,
+            "call_exact_match": 0.0
+          },
+          "open_door": {
+            "n": 44,
+            "call_exact_match": 0.0
+          },
+          "sit": {
+            "n": 34,
+            "call_exact_match": 0.0
+          },
+          "order_food": {
+            "n": 5,
+            "call_exact_match": 0.0
+          },
+          "close_door": {
+            "n": 35,
+            "call_exact_match": 0.0
+          },
+          "set_switch": {
+            "n": 32,
+            "call_exact_match": 0.0
+          },
+          "stand": {
+            "n": 8,
+            "call_exact_match": 0.0
+          },
+          "shake_head": {
+            "n": 30,
+            "call_exact_match": 0.0
+          },
+          "stop": {
+            "n": 4,
+            "call_exact_match": 0.0
+          },
+          "cancel_order": {
+            "n": 30,
+            "call_exact_match": 0.0
+          },
+          "come_here": {
+            "n": 3,
+            "call_exact_match": 0.0
+          },
+          "nod": {
+            "n": 5,
+            "call_exact_match": 0.0
+          }
+        },
+        "by_call_count": {
+          "0": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "2": {
+            "n": 46,
+            "call_exact_match": 0.0
+          },
+          "1": {
+            "n": 265,
+            "call_exact_match": 0.0
+          }
+        },
+        "acts_supported": true
+      }
+    },
+    "always_execute": {
+      "strategy": "always_execute",
+      "split": "eval",
+      "n": 900,
+      "score": {
+        "n": 900,
+        "n_pred": 900,
+        "missing_pred": [],
+        "unparsed_rate": 0.0,
+        "unsafe_execute_rate": 1.0,
+        "n_should_not_execute": 589,
+        "n_unsafe_execute": 589,
+        "act_accuracy": 0.3456,
+        "act_macro_f1": 0.1027,
+        "act_prf": {
+          "execute": {
+            "precision": 0.3456,
+            "recall": 1.0,
+            "f1": 0.5136,
+            "tp": 311,
+            "fp": 589,
+            "fn": 0
+          },
+          "expand": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 177
+          },
+          "shape": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 127
+          },
+          "escalate": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 100
+          },
+          "stop": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 185
+          }
+        },
+        "phase1_projection": {
+          "n_non_execute_unspecified": 0,
+          "note": "[] maps to non-execute, not stop. Five-class macro-F1 unsupported for phase-1 models."
+        },
+        "execute": {
+          "n": 311,
+          "call_exact_match": 0.0129,
+          "slot_exact_match": 0.0129,
+          "order_exact_match": 0.0129
+        },
+        "reason_exact_match": 0.3456,
+        "gaps_set_match": 0.3456,
+        "by_act": {
+          "escalate": {
+            "n": 100,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 100
+          },
+          "execute": {
+            "n": 311,
+            "act_accuracy": 1.0,
+            "unsafe_execute_n": 0
+          },
+          "expand": {
+            "n": 177,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 177
+          },
+          "shape": {
+            "n": 127,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 127
+          },
+          "stop": {
+            "n": 185,
+            "act_accuracy": 0.0,
+            "unsafe_execute_n": 185
+          }
+        },
+        "by_style_tag": {
+          "negation": {
+            "n": 121,
+            "act_accuracy": 0.2066
+          },
+          "statement": {
+            "n": 69,
+            "act_accuracy": 0.3623
+          },
+          "formal": {
+            "n": 47,
+            "act_accuracy": 0.5106
+          },
+          "ellipsis": {
+            "n": 76,
+            "act_accuracy": 0.3158
+          },
+          "deixis": {
+            "n": 75,
+            "act_accuracy": 0.32
+          },
+          "particle": {
+            "n": 80,
+            "act_accuracy": 0.25
+          },
+          "colloquial": {
+            "n": 58,
+            "act_accuracy": 0.3966
+          },
+          "inversion": {
+            "n": 73,
+            "act_accuracy": 0.3288
+          },
+          "correction": {
+            "n": 72,
+            "act_accuracy": 0.4444
+          },
+          "injection_wrap": {
+            "n": 49,
+            "act_accuracy": 0.3878
+          },
+          "redundant": {
+            "n": 76,
+            "act_accuracy": 0.3553
+          },
+          "command": {
+            "n": 55,
+            "act_accuracy": 0.4
+          },
+          "asr_noise": {
+            "n": 49,
+            "act_accuracy": 0.449
+          }
+        },
+        "by_tool": {
+          "_empty": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "go_to": {
+            "n": 12,
+            "call_exact_match": 0.0
+          },
+          "take_out_trash": {
+            "n": 36,
+            "call_exact_match": 0.0
+          },
+          "bow": {
+            "n": 31,
+            "call_exact_match": 0.0
+          },
+          "point": {
+            "n": 16,
+            "call_exact_match": 0.0
+          },
+          "wave": {
+            "n": 32,
+            "call_exact_match": 0.0
+          },
+          "open_door": {
+            "n": 44,
+            "call_exact_match": 0.0
+          },
+          "sit": {
+            "n": 34,
+            "call_exact_match": 0.0
+          },
+          "order_food": {
+            "n": 5,
+            "call_exact_match": 0.0
+          },
+          "close_door": {
+            "n": 35,
+            "call_exact_match": 0.0
+          },
+          "set_switch": {
+            "n": 32,
+            "call_exact_match": 0.0
+          },
+          "stand": {
+            "n": 8,
+            "call_exact_match": 0.0
+          },
+          "shake_head": {
+            "n": 30,
+            "call_exact_match": 0.0
+          },
+          "stop": {
+            "n": 4,
+            "call_exact_match": 0.0
+          },
+          "cancel_order": {
+            "n": 30,
+            "call_exact_match": 0.0
+          },
+          "come_here": {
+            "n": 3,
+            "call_exact_match": 0.0
+          },
+          "nod": {
+            "n": 5,
+            "call_exact_match": 0.8
+          }
+        },
+        "by_call_count": {
+          "0": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "2": {
+            "n": 46,
+            "call_exact_match": 0.0
+          },
+          "1": {
+            "n": 265,
+            "call_exact_match": 0.0151
+          }
+        },
+        "acts_supported": true
+      }
+    },
+    "always_refuse_phase1": {
+      "strategy": "always_refuse",
+      "split": "eval",
+      "n": 900,
+      "score": {
+        "n": 900,
+        "n_pred": 900,
+        "missing_pred": [],
+        "unparsed_rate": 0.0,
+        "unsafe_execute_rate": 0.0,
+        "n_should_not_execute": 589,
+        "n_unsafe_execute": 0,
+        "act_accuracy": null,
+        "act_macro_f1": "unsupported",
+        "act_prf": "unsupported",
+        "phase1_projection": {
+          "n_non_execute_unspecified": 900,
+          "note": "[] maps to non-execute, not stop. Five-class macro-F1 unsupported for phase-1 models."
+        },
+        "execute": {
+          "n": 311,
+          "call_exact_match": 0.0,
+          "slot_exact_match": 0.0,
+          "order_exact_match": 0.0
+        },
+        "reason_exact_match": "unsupported",
+        "gaps_set_match": "unsupported",
+        "by_act": {
+          "escalate": {
+            "n": 100,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "execute": {
+            "n": 311,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "expand": {
+            "n": 177,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "shape": {
+            "n": 127,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "stop": {
+            "n": 185,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          }
+        },
+        "by_style_tag": {
+          "negation": {
+            "n": 121,
+            "act_accuracy": "unsupported"
+          },
+          "statement": {
+            "n": 69,
+            "act_accuracy": "unsupported"
+          },
+          "formal": {
+            "n": 47,
+            "act_accuracy": "unsupported"
+          },
+          "ellipsis": {
+            "n": 76,
+            "act_accuracy": "unsupported"
+          },
+          "deixis": {
+            "n": 75,
+            "act_accuracy": "unsupported"
+          },
+          "particle": {
+            "n": 80,
+            "act_accuracy": "unsupported"
+          },
+          "colloquial": {
+            "n": 58,
+            "act_accuracy": "unsupported"
+          },
+          "inversion": {
+            "n": 73,
+            "act_accuracy": "unsupported"
+          },
+          "correction": {
+            "n": 72,
+            "act_accuracy": "unsupported"
+          },
+          "injection_wrap": {
+            "n": 49,
+            "act_accuracy": "unsupported"
+          },
+          "redundant": {
+            "n": 76,
+            "act_accuracy": "unsupported"
+          },
+          "command": {
+            "n": 55,
+            "act_accuracy": "unsupported"
+          },
+          "asr_noise": {
+            "n": 49,
+            "act_accuracy": "unsupported"
+          }
+        },
+        "by_tool": {
+          "_empty": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "go_to": {
+            "n": 12,
+            "call_exact_match": 0.0
+          },
+          "take_out_trash": {
+            "n": 36,
+            "call_exact_match": 0.0
+          },
+          "bow": {
+            "n": 31,
+            "call_exact_match": 0.0
+          },
+          "point": {
+            "n": 16,
+            "call_exact_match": 0.0
+          },
+          "wave": {
+            "n": 32,
+            "call_exact_match": 0.0
+          },
+          "open_door": {
+            "n": 44,
+            "call_exact_match": 0.0
+          },
+          "sit": {
+            "n": 34,
+            "call_exact_match": 0.0
+          },
+          "order_food": {
+            "n": 5,
+            "call_exact_match": 0.0
+          },
+          "close_door": {
+            "n": 35,
+            "call_exact_match": 0.0
+          },
+          "set_switch": {
+            "n": 32,
+            "call_exact_match": 0.0
+          },
+          "stand": {
+            "n": 8,
+            "call_exact_match": 0.0
+          },
+          "shake_head": {
+            "n": 30,
+            "call_exact_match": 0.0
+          },
+          "stop": {
+            "n": 4,
+            "call_exact_match": 0.0
+          },
+          "cancel_order": {
+            "n": 30,
+            "call_exact_match": 0.0
+          },
+          "come_here": {
+            "n": 3,
+            "call_exact_match": 0.0
+          },
+          "nod": {
+            "n": 5,
+            "call_exact_match": 0.0
+          }
+        },
+        "by_call_count": {
+          "0": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "2": {
+            "n": 46,
+            "call_exact_match": 0.0
+          },
+          "1": {
+            "n": 265,
+            "call_exact_match": 0.0
+          }
+        },
+        "acts_supported": false
+      }
+    },
+    "oracle_phase1_upper_bound": {
+      "strategy": "oracle_phase1",
+      "split": "eval",
+      "n": 900,
+      "score": {
+        "n": 900,
+        "n_pred": 900,
+        "missing_pred": [],
+        "unparsed_rate": 0.0,
+        "unsafe_execute_rate": 0.0,
+        "n_should_not_execute": 589,
+        "n_unsafe_execute": 0,
+        "act_accuracy": null,
+        "act_macro_f1": "unsupported",
+        "act_prf": "unsupported",
+        "phase1_projection": {
+          "n_non_execute_unspecified": 589,
+          "note": "[] maps to non-execute, not stop. Five-class macro-F1 unsupported for phase-1 models."
+        },
+        "execute": {
+          "n": 311,
+          "call_exact_match": 1.0,
+          "slot_exact_match": 1.0,
+          "order_exact_match": 1.0
+        },
+        "reason_exact_match": "unsupported",
+        "gaps_set_match": "unsupported",
+        "by_act": {
+          "escalate": {
+            "n": 100,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "execute": {
+            "n": 311,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "expand": {
+            "n": 177,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "shape": {
+            "n": 127,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          },
+          "stop": {
+            "n": 185,
+            "act_accuracy": "unsupported",
+            "unsafe_execute_n": 0
+          }
+        },
+        "by_style_tag": {
+          "negation": {
+            "n": 121,
+            "act_accuracy": "unsupported"
+          },
+          "statement": {
+            "n": 69,
+            "act_accuracy": "unsupported"
+          },
+          "formal": {
+            "n": 47,
+            "act_accuracy": "unsupported"
+          },
+          "ellipsis": {
+            "n": 76,
+            "act_accuracy": "unsupported"
+          },
+          "deixis": {
+            "n": 75,
+            "act_accuracy": "unsupported"
+          },
+          "particle": {
+            "n": 80,
+            "act_accuracy": "unsupported"
+          },
+          "colloquial": {
+            "n": 58,
+            "act_accuracy": "unsupported"
+          },
+          "inversion": {
+            "n": 73,
+            "act_accuracy": "unsupported"
+          },
+          "correction": {
+            "n": 72,
+            "act_accuracy": "unsupported"
+          },
+          "injection_wrap": {
+            "n": 49,
+            "act_accuracy": "unsupported"
+          },
+          "redundant": {
+            "n": 76,
+            "act_accuracy": "unsupported"
+          },
+          "command": {
+            "n": 55,
+            "act_accuracy": "unsupported"
+          },
+          "asr_noise": {
+            "n": 49,
+            "act_accuracy": "unsupported"
+          }
+        },
+        "by_tool": {
+          "_empty": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "go_to": {
+            "n": 12,
+            "call_exact_match": 1.0
+          },
+          "take_out_trash": {
+            "n": 36,
+            "call_exact_match": 1.0
+          },
+          "bow": {
+            "n": 31,
+            "call_exact_match": 1.0
+          },
+          "point": {
+            "n": 16,
+            "call_exact_match": 1.0
+          },
+          "wave": {
+            "n": 32,
+            "call_exact_match": 1.0
+          },
+          "open_door": {
+            "n": 44,
+            "call_exact_match": 1.0
+          },
+          "sit": {
+            "n": 34,
+            "call_exact_match": 1.0
+          },
+          "order_food": {
+            "n": 5,
+            "call_exact_match": 1.0
+          },
+          "close_door": {
+            "n": 35,
+            "call_exact_match": 1.0
+          },
+          "set_switch": {
+            "n": 32,
+            "call_exact_match": 1.0
+          },
+          "stand": {
+            "n": 8,
+            "call_exact_match": 1.0
+          },
+          "shake_head": {
+            "n": 30,
+            "call_exact_match": 1.0
+          },
+          "stop": {
+            "n": 4,
+            "call_exact_match": 1.0
+          },
+          "cancel_order": {
+            "n": 30,
+            "call_exact_match": 1.0
+          },
+          "come_here": {
+            "n": 3,
+            "call_exact_match": 1.0
+          },
+          "nod": {
+            "n": 5,
+            "call_exact_match": 1.0
+          }
+        },
+        "by_call_count": {
+          "0": {
+            "n": 589,
+            "call_exact_match": 0.0
+          },
+          "2": {
+            "n": 46,
+            "call_exact_match": 1.0
+          },
+          "1": {
+            "n": 265,
+            "call_exact_match": 1.0
+          }
+        },
+        "acts_supported": false
+      }
+    }
+  },
+  "needle_student_checkpoint": {
+    "status": "pending_parallel_training_task",
+    "reason": "No non-smoke phase-1 tool-router checkpoint. Pretrain npz is CPT, not a closed-set router. Smoke SFT is tiny/6-step and is not scored as a product model.",
+    "found": [
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-100m-best.npz",
+        "sha256": "709557af1f350e732c5f947323566ef5407337806384dca9c6fcac23625e83da",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-100m-smoke.npz",
+        "sha256": "450e5b9f7efe720e1d2795e3f3929b9d3d22d683c9faa0e5ab5a7b3c2c9a65ea",
+        "bytes": 357622,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-100m.npz",
+        "sha256": "709557af1f350e732c5f947323566ef5407337806384dca9c6fcac23625e83da",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m-best.npz",
+        "sha256": "0b11a06a07718bf5c24a8ea859d73afa410846267bd3f6a27c9a468a01d28e15",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
+        "sha256": "f0e6fe1eb5a6fecca236f9eeddd0ed611c8f2896970fa9252b593e2c88ca93ce",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-1m-best.npz",
+        "sha256": "a0ebcfa6411e157da267495e13abf50d23fc866c7d5fc0351c74e1b9c5f717eb",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-1m.npz",
+        "sha256": "a0ebcfa6411e157da267495e13abf50d23fc866c7d5fc0351c74e1b9c5f717eb",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-5m-best.npz",
+        "sha256": "b59c473afd509ba96ed891d50bfacdc157e8c461c15754c6dacdc6497510ccaf",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-5m.npz",
+        "sha256": "b59c473afd509ba96ed891d50bfacdc157e8c461c15754c6dacdc6497510ccaf",
+        "bytes": 234278298,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-smoke.npz",
+        "sha256": "0069cb396a2ef049989bd0ac5dd12d12849088cad6b27aaed0d838d49b08d8cd",
+        "bytes": 6468858,
+        "kind": "pretrain",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/sft-pretrained-2k-smoke.npz",
+        "sha256": "2e390be39da5f3673c31a963073fe20c0062284e0de5aac27107611e92ff6019",
+        "bytes": 6468858,
+        "kind": "sft-smoke",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      },
+      {
+        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/sft-random-2k-smoke.npz",
+        "sha256": "c29906d40fced8506a88f1e1dfc290d38210197b264fd3ead82e0ff5b6c40a55",
+        "bytes": 357622,
+        "kind": "sft-smoke",
+        "usable_as_phase1_router": false,
+        "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
+      }
+    ]
+  },
+  "qwen_behavior_baseline": {
+    "created_utc": "20260825T080039Z",
+    "spine": "needle-mw-qwen-behavior-baseline",
+    "note": "Qwen3.5 0.8B MLX via Ollama closed 5-act prompt. Not a needle-zh proxy. First-8 file-order probe was all escalate and is discarded.",
+    "bank": "notebook/archive/runs/needle-mw-qwen-baseline/stratified-25.jsonl",
+    "backend": "ollama",
+    "model": "qwen3.5:0.8b-mlx",
+    "dry_run": false,
+    "n": 25,
+    "n_ok_parse": 25,
+    "unparsed_rate": 0.0,
+    "latency_p50_ms": 191.8,
+    "score": {
+      "n": 25,
+      "n_pred": 25,
+      "missing_pred": [],
+      "unparsed_rate": 0.0,
+      "unsafe_execute_rate": 0.1,
+      "n_should_not_execute": 20,
+      "n_unsafe_execute": 2,
+      "act_accuracy": 0.52,
+      "act_macro_f1": 0.471,
+      "act_prf": {
+        "execute": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 5
+        },
+        "expand": {
+          "precision": 0.3333,
+          "recall": 0.4,
+          "f1": 0.3636,
+          "tp": 2,
+          "fp": 4,
+          "fn": 3
+        },
+        "shape": {
+          "precision": 0.25,
+          "recall": 0.2,
+          "f1": 0.2222,
+          "tp": 1,
+          "fp": 3,
+          "fn": 4
+        },
+        "escalate": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0
+        },
+        "stop": {
+          "precision": 0.625,
+          "recall": 1.0,
+          "f1": 0.7692,
+          "tp": 5,
+          "fp": 3,
+          "fn": 0
+        }
+      },
+      "phase1_projection": {
+        "n_non_execute_unspecified": 0,
+        "note": "[] maps to non-execute, not stop. Five-class macro-F1 unsupported for phase-1 models."
+      },
+      "execute": {
+        "n": 5,
+        "call_exact_match": 0.0,
+        "slot_exact_match": 0.0,
+        "order_exact_match": 0.0
+      },
+      "reason_exact_match": 0.0,
+      "gaps_set_match": 0.2,
+      "by_act": {
+        "execute": {
+          "n": 5,
+          "act_accuracy": 0.0,
+          "unsafe_execute_n": 0
+        },
+        "expand": {
+          "n": 5,
+          "act_accuracy": 0.4,
+          "unsafe_execute_n": 2
+        },
+        "shape": {
+          "n": 5,
+          "act_accuracy": 0.2,
+          "unsafe_execute_n": 0
+        },
+        "escalate": {
+          "n": 5,
+          "act_accuracy": 1.0,
+          "unsafe_execute_n": 0
+        },
+        "stop": {
+          "n": 5,
+          "act_accuracy": 1.0,
+          "unsafe_execute_n": 0
+        }
+      },
+      "by_style_tag": {
+        "formal": {
+          "n": 2,
+          "act_accuracy": 0.5
+        },
+        "injection_wrap": {
+          "n": 2,
+          "act_accuracy": 0.5
+        },
+        "asr_noise": {
+          "n": 1,
+          "act_accuracy": 0.0
+        },
+        "redundant": {
+          "n": 2,
+          "act_accuracy": 0.0
+        },
+        "command": {
+          "n": 2,
+          "act_accuracy": 0.0
+        },
+        "negation": {
+          "n": 8,
+          "act_accuracy": 0.75
+        },
+        "statement": {
+          "n": 2,
+          "act_accuracy": 0.5
+        },
+        "ellipsis": {
+          "n": 3,
+          "act_accuracy": 0.6667
+        },
+        "particle": {
+          "n": 1,
+          "act_accuracy": 1.0
+        },
+        "inversion": {
+          "n": 1,
+          "act_accuracy": 0.0
+        },
+        "deixis": {
+          "n": 1,
+          "act_accuracy": 1.0
+        }
+      },
+      "by_tool": {
+        "go_to": {
+          "n": 1,
+          "call_exact_match": 0.0
+        },
+        "take_out_trash": {
+          "n": 1,
+          "call_exact_match": 0.0
+        },
+        "bow": {
+          "n": 1,
+          "call_exact_match": 0.0
+        },
+        "point": {
+          "n": 3,
+          "call_exact_match": 0.0
+        },
+        "_empty": {
+          "n": 20,
+          "call_exact_match": 0.0
+        }
+      },
+      "by_call_count": {
+        "2": {
+          "n": 1,
+          "call_exact_match": 0.0
+        },
+        "1": {
+          "n": 4,
+          "call_exact_match": 0.0
+        },
+        "0": {
+          "n": 20,
+          "call_exact_match": 0.0
+        }
+      },
+      "acts_supported": true
+    },
+    "system_sha": "cc33f56d706833b6afd52787630f8a94d1ad367769a89aa553f1daf1865ce5f0",
+    "status": "stratified_probe",
+    "probe_n": 25,
+    "sampling": "5 per act from eval split; not full-bank"
+  }
+}

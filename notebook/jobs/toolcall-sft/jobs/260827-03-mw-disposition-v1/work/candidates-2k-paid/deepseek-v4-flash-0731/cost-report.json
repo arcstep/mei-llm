@@ -1,0 +1,31 @@
+{
+  "ok": true,
+  "task": "mw",
+  "lane": "deepseek-v4-flash-0731",
+  "model_snapshot": "deepseek-v4-flash-0731",
+  "n_accepted": 1189,
+  "n_rejected": 11,
+  "n_accepted_unique": 1189,
+  "spend_cny": 0.296762,
+  "cny_per_1k_accepted_unique": 0.24958957106812452,
+  "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-03-mw-disposition-v1/work/candidates-2k-paid/deepseek-v4-flash-0731",
+  "ledger": {
+    "path": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/jobs/toolcall-sft/work/fleet-ledger.sqlite",
+    "phase": "2k",
+    "committed_cny": 1.7880532,
+    "actual_cny": 1.7880532,
+    "global_limit": 1000.0,
+    "phase_limit": 300.0,
+    "global_status": "ok",
+    "warn_cny": 800.0
+  },
+  "http_stats": {
+    "n": 1200,
+    "n429": 0,
+    "nerr": 0,
+    "rate_429": 0.0,
+    "retry_error_rate": 0.0,
+    "workers": 24,
+    "qps": 16.0
+  }
+}

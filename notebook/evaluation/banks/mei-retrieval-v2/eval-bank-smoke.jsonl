@@ -1,0 +1,6 @@
+{"item_id": "mei-retrieval-v2-smoke-001", "query": "帮我看下杭州明天会不会下雨", "gold_tool": "get_weather", "split": "eval", "family": "seen_schema"}
+{"item_id": "mei-retrieval-v2-smoke-002", "query": "把书房亮度调到八十", "gold_tool": "set_lights", "split": "eval", "family": "seen_schema"}
+{"item_id": "mei-retrieval-v2-smoke-003", "query": "帮我约个户外两人桌", "gold_tool": "book_table", "split": "eval", "family": "unseen_schema"}
+{"item_id": "mei-retrieval-v2-smoke-004", "query": "天气服务健康检查做一下", "gold_tool": "get_weather_status", "split": "eval", "family": "similar_name"}
+{"item_id": "mei-retrieval-v2-smoke-005", "query": "把走廊灯关上", "gold_tool": "set_switch", "split": "eval", "family": "same_action_diff_object"}
+{"item_id": "mei-retrieval-v2-smoke-006", "query": "把走廊灯调亮一点", "gold_tool": "set_lights", "split": "eval", "family": "same_object_diff_action"}

@@ -1,0 +1,88 @@
+{
+  "prompt_version": "colloquial-synth-v1",
+  "axes": {
+    "scenes": [
+      "home",
+      "commute",
+      "restaurant",
+      "shopping",
+      "school",
+      "clinic",
+      "workplace",
+      "phone_call",
+      "delivery",
+      "weather",
+      "sports",
+      "travel",
+      "family",
+      "neighbors",
+      "repair",
+      "pet",
+      "cooking",
+      "gaming"
+    ],
+    "relations": [
+      "couple",
+      "parent_child",
+      "siblings",
+      "friends",
+      "colleagues",
+      "customer_staff",
+      "neighbors",
+      "strangers_polite"
+    ],
+    "speech_acts": [
+      "ask",
+      "answer",
+      "request",
+      "refuse",
+      "confirm",
+      "correct",
+      "complain",
+      "comfort",
+      "tease",
+      "plan",
+      "remind"
+    ],
+    "styles": [
+      "ellipsis",
+      "repair",
+      "interrupt",
+      "short_reply",
+      "filler",
+      "number_date_unit",
+      "code_mix",
+      "emotion",
+      "negation",
+      "deixis"
+    ],
+    "moods": [
+      "neutral",
+      "hurried",
+      "tired",
+      "happy",
+      "annoyed",
+      "worried"
+    ],
+    "region_light": [
+      "none",
+      "north",
+      "south",
+      "wu_light"
+    ],
+    "turns": [
+      2,
+      3,
+      4,
+      6,
+      8
+    ]
+  },
+  "sampling": {
+    "temperature": 0.9,
+    "top_p": 0.95,
+    "max_tokens": 512
+  },
+  "terms_hash": "12e12665426a7ad21a9abcf399fa3ee54ee79f5c595457cfc4a37f07e5716423",
+  "contract_sha256": "205f4632bb58b40ef45c2667816c41b95c3ea89a7b52bc9ee73618471c8b6292"
+}

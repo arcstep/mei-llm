@@ -1,0 +1,33 @@
+{
+  "id": "mei-1.0-58m-v2-runtime-acceptance",
+  "ok": true,
+  "not_a_product_claim": true,
+  "parent": "mei-1.0-58m-base-cpt300m-v1",
+  "tests": {
+    "check_student": true,
+    "test_mei_route_runtime": true,
+    "test_mei_v2_runtime": true,
+    "eval_mei_retrieval_v2": true,
+    "run_eval_mei_toolcall_v2_oracle": true,
+    "isolation_cpt_v2": true,
+    "isolation_sft_v2": true
+  },
+  "migration_300m": {
+    "max_abs": 0.0,
+    "n_loaded": 429,
+    "params": 58541901,
+    "tokenizer_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629"
+  },
+  "kv_parity_max_abs": 1.430511474609375e-06,
+  "infonce_descended": true,
+  "grammar_illegal_unreachable": true,
+  "prompt_no_gold_leak": true,
+  "confidence_blocks_low_score": true,
+  "retrieval_smoke": {
+    "n_catalog": 12,
+    "n_queries": 6,
+    "learned_recall_at_5": 0.8333333333333334,
+    "random_recall_at_5": 0.4166666666666667,
+    "note": "Untrained tiny head; not a quality claim."
+  }
+}

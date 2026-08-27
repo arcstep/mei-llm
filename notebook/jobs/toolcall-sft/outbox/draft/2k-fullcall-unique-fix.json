@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "fullcall_accepted": 2000,
+  "fullcall_unique_query": 2000,
+  "isolation_ok": true,
+  "park_holdout_hits": 0,
+  "note": "Query-only uniquify in build_mei_toolcall_v2.py; pack re-exported after template produce."
+}

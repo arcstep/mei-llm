@@ -1,0 +1,9 @@
+{
+  "topic": "colloquial-cpt",
+  "contract": "notebook/base/pretrain-v1/spec/colloquial-synth-v1.json",
+  "prompt_version": "colloquial-synth-v1",
+  "frozen_snapshot": "qwen-plus-2025-12-01",
+  "formal_requires_generator": "qwen-plus",
+  "pooled_unique_target": 30000000,
+  "note": "Mixed-generator packs stay outbox/draft until the contract is changed."
+}

@@ -1,0 +1,10 @@
+{
+  "id": "zh-pretrain-colloquial-synth-smoke",
+  "n_train_tokens": 7966,
+  "n_unique_train_tokens": 7966,
+  "n_valid_tokens": 106,
+  "unk_rate": 0.004831516352824579,
+  "tokenizer_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629",
+  "generator": "offline-frame-renderer",
+  "model_snapshot": "offline-v1"
+}

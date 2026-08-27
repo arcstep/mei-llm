@@ -1,0 +1,9 @@
+{
+  "job_id": "260827-03-mw-disposition-v1",
+  "task": "mw",
+  "fleet_id": "sft-synth-fleet-v1",
+  "model_snapshot": "template",
+  "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+  "n_accepted_unique": 24,
+  "source_license": "schema-program + optional CrossWOZ/KdConv style only"
+}

@@ -1,0 +1,6 @@
+{
+  "kind": "assemble-pointer",
+  "published_path": "corpus/lm-v1",
+  "writable": false,
+  "note": "Process ledgers live here. Trainer consumes corpus/lm-v1, not this directory."
+}

@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "release": {
+    "id": "zh-pretrain-colloquial-synth-pooled-v1",
+    "generator": "mixed-bailian-fleet",
+    "model_snapshot": "mixed-bailian-fleet",
+    "n_unique_train_tokens": 30108616,
+    "unk_rate": 0.00045358820031433526,
+    "formal_cpt_eligible": false,
+    "eligibility_reason": "requires_qwen_plus_snapshot,mixed_generator,awaiting_quality_isolation_blind_review",
+    "n_docs": 178720,
+    "spend_cny": 461.6196749999995
+  }
+}

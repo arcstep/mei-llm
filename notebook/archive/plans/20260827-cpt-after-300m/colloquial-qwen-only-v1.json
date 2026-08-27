@@ -1,0 +1,155 @@
+{
+  "id": "colloquial-synth-v1",
+  "role": "cpt_colloquial_subcorpus_only",
+  "implementation_state": "implemented_in_code",
+  "blocking_for_formal_cpt": true,
+  "note": "Spoken-role unique tokens only. Wiki/HQ/structure remain human or previously admitted sources. Student model outputs must never re-enter generation.",
+  "generator": {
+    "production": "qwen-plus",
+    "frozen_snapshot": "qwen-plus-2025-12-01",
+    "thinking": false,
+    "endpoint": "openai_compatible_dashscope",
+    "env_keys": ["QWEN_API_KEY", "DASHSCOPE_API_KEY"],
+    "offline_backend": "offline-frame-renderer",
+    "offline_formal_cpt_eligible": false
+  },
+  "sampling": {
+    "temperature": 0.9,
+    "top_p": 0.95,
+    "max_tokens": 768
+  },
+  "quality_vs_provenance": {
+    "generator_snapshot_proves_provenance_only": true,
+    "quality_requires_hard_gates_and_stratified_audit_and_blind_review": true,
+    "formal_cpt_eligible_never_self_certifies": true
+  },
+  "prompt_version": "colloquial-synth-v1",
+  "terms": {
+    "text": "Synthetic colloquial Chinese generated under a frozen qwen-plus snapshot for internal mei-1.0-58m CPT spoken-role only. No third-party web scrape. No EVAL/holdout/tool gold. No student-model recycle. API keys never stored. Commercial use of derived weights is an internal product decision recorded in private monorepo training contracts.",
+    "must_hash": true
+  },
+  "excludes": [
+    "cwt2",
+    "ChineseWebText2.0",
+    "CASIA-LM/ChineseWebText2.0",
+    "common-voice",
+    "tatoeba",
+    "purchased-taobao",
+    "eval-gold",
+    "holdout",
+    "student-model-output"
+  ],
+  "targets": {
+    "smoke_docs": 96,
+    "pilot_unique_tokens": 5000000,
+    "scale_raw_tokens": [500000, 5000000, 20000000, 35000000],
+    "full_unique_tokens": 30000000
+  },
+  "hard_gates": {
+    "pii_accepted_max": 0,
+    "eval_leak_accepted_max": 0,
+    "illegal_structure_accepted_max": 0,
+    "hash_ledger_mismatch_max": 0,
+    "unk_rate_max": 0.005,
+    "duplicate_frame_id_max": 0,
+    "wrong_generator_max": 0,
+    "spoken_rate_min": 0.85,
+    "exact_near_dup_rate_max": 0.02
+  },
+  "soft_gates_note": "Provenance (generator/snapshot) never auto-passes quality. Spoken rate, exact/near-dup, and per-bucket floors are audited on stratified samples plus full-file hard gates.",
+  "budget": {
+    "input_cny_per_million": 0.8,
+    "output_cny_per_million_non_thinking": 2.0,
+    "cny_per_1k_output_tokens_estimate": 0.002,
+    "production_max_spend_cny": 200.0,
+    "default_max_spend_cny": 200.0,
+    "warn_spend_ratio": 0.8,
+    "fail_closed_on_budget": true
+  },
+  "axes": {
+    "scenes": [
+      "home",
+      "commute",
+      "restaurant",
+      "shopping",
+      "school",
+      "clinic",
+      "workplace",
+      "phone_call",
+      "delivery",
+      "weather",
+      "sports",
+      "travel",
+      "family",
+      "neighbors",
+      "repair",
+      "pet",
+      "cooking",
+      "gaming"
+    ],
+    "relations": [
+      "couple",
+      "parent_child",
+      "siblings",
+      "friends",
+      "colleagues",
+      "customer_staff",
+      "neighbors",
+      "strangers_polite"
+    ],
+    "speech_acts": [
+      "ask",
+      "answer",
+      "request",
+      "refuse",
+      "confirm",
+      "correct",
+      "complain",
+      "comfort",
+      "tease",
+      "plan",
+      "remind"
+    ],
+    "styles": [
+      "ellipsis",
+      "repair",
+      "interrupt",
+      "short_reply",
+      "filler",
+      "number_date_unit",
+      "code_mix",
+      "emotion",
+      "negation",
+      "deixis"
+    ],
+    "moods": ["neutral", "hurried", "tired", "happy", "annoyed", "worried"],
+    "region_light": ["none", "north", "south", "wu_light"],
+    "turns": [2, 3, 4, 6, 8]
+  },
+  "formal_cpt": {
+    "requires_generator": "qwen-plus",
+    "requires_snapshot": "qwen-plus-2025-12-01",
+    "requires_unique_tokens": 30000000,
+    "requires_audit_ok": true,
+    "requires_isolation_ok": true,
+    "requires_blind_review_ok": true,
+    "pilot_does_not_open_cpt": true,
+    "offline_is_engineering_contrast_only": true
+  },
+  "feedback_loop": {
+    "card_fields": [
+      "card_id",
+      "cluster",
+      "layer",
+      "evidence_runs",
+      "target_scenes",
+      "target_styles",
+      "quota_docs",
+      "forbidden_strings",
+      "stop_conditions"
+    ],
+    "forbid_holdout_copy": true,
+    "accumulate_releases": true,
+    "mei_taxonomy_source": "private mei-world SSOT; this file does not redefine HD/SF leaves"
+  }
+}

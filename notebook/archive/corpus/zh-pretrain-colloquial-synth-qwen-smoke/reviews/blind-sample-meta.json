@@ -1,0 +1,7 @@
+{
+  "n": 24,
+  "corpus": "notebook/archive/corpus/zh-pretrain-colloquial-synth-qwen-smoke",
+  "reviewer": "gpt-5.6-sol",
+  "not_qwen": true,
+  "pairs_path": "notebook/archive/corpus/zh-pretrain-colloquial-synth-qwen-smoke/reviews/blind-pairs.jsonl"
+}

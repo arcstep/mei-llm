@@ -1,0 +1,10 @@
+{
+  "status": "invalid_for_v2_publish",
+  "kind": "legacy_diagnostic_only",
+  "packs": [
+    "mei-tool-route-sft-v1-2k.jsonl",
+    "mei-tool-route-sft-v1-10k.jsonl",
+    "mei-tool-route-sft-v1-valid.jsonl"
+  ],
+  "reason": "Route-ID packs overlap grounded universe-pool queries. Frozen for historical reproduction only. Not a v2 CPT/SFT parent."
+}
