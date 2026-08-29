@@ -1,0 +1,10 @@
+{
+  "kind": "qat-q4-gates-preregister",
+  "registered_before_any_rung_eval": true,
+  "valid_loss_delta_vs_float_anchor_max": 0.15,
+  "probe_mean_nll_delta_vs_float_anchor_max": 0.4,
+  "greedy_token_match_min": 2,
+  "greedy_prompts_n": 3,
+  "note": "Greedy is compared to stored greedy_float in q4-dequant-parity.json. Do not reload float.",
+  "bit_map": "notebook/evaluation/jobs/mei-1.0-51m/q4-baseline-bit-map.json"
+}

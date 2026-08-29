@@ -1,0 +1,32 @@
+{
+  "tools": [
+    {
+      "name": "light.set",
+      "description": "开灯",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  ],
+  "compact": [
+    {
+      "name": "light.set",
+      "description": "开灯",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  ],
+  "canonical": "[{\"name\":\"light.set\",\"description\":\"开灯\",\"parameters\":{\"type\":\"object\",\"properties\":{\"on\":{\"type\":\"boolean\"}}}}]",
+  "sha256": "7e87821278df862d450d868624d80b6500dca4b5a057b6f27bb382d5741e7831"
+}

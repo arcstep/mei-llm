@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import time
 from typing import Any, Callable
 
 import mlx.core as mx
@@ -109,8 +110,17 @@ class RuntimeV2:
                 "blocked": True,
             }
         enc = encode_v2_segments(self.tokenizer, rendered)
+        t_prefill = time.perf_counter()
         kv = KVManager(ordinary_cap=self.ordinary_cap)
-        kv.prefill_forward(self.model, enc["sink_ids"], enc["ordinary_ids"])
+        prefill_out = kv.prefill_forward(
+            self.model,
+            enc["sink_ids"],
+            enc["ordinary_ids"],
+            reserve_tokens=max_new,
+        )
+        start_logits = prefill_out["logits"][:, -1, :]
+        prefill_ms = (time.perf_counter() - t_prefill) * 1000
+        t_decode = time.perf_counter()
         if decode_mode == "raw":
             decode_out = greedy_unconstrained(
                 self.model,
@@ -118,6 +128,7 @@ class RuntimeV2:
                 enc["prompt_ids"],
                 max_new=max_new,
                 kv=kv,
+                start_logits=start_logits,
             )
         else:
             decode_out = greedy_byte_grammar(
@@ -127,8 +138,11 @@ class RuntimeV2:
                 selected,
                 max_new=max_new,
                 kv=kv,
+                start_logits=start_logits,
             )
+        decode_ms = (time.perf_counter() - t_decode) * 1000
         text = decode_out.get("text") or ""
+        t_val = time.perf_counter()
         validated = validate_generated_call(
             text,
             tools=selected,
@@ -140,7 +154,7 @@ class RuntimeV2:
             state=state,
         )
         conf_head = 0.0
-        if bool(getattr(self.model.cfg, "confidence_v2", False)):
+        if self.confidence_threshold > 0 and bool(getattr(self.model.cfg, "confidence_v2", False)):
             last_ids = kv.visible_ids[-min(16, len(kv.visible_ids)) :]
             last_pos = kv.visible_positions[-len(last_ids) :]
             cout = self.model(
@@ -166,6 +180,11 @@ class RuntimeV2:
                 "blocked_by_confidence": True,
                 "error": None,
             }
+        n_prompt = len(enc.get("prompt_ids") or [])
+        n_out = len(decode_out.get("ids") or [])
+        grammar_ms = float((decode_out.get("timings") or {}).get("grammar_ms") or 0.0)
+        validate_ms = (time.perf_counter() - t_val) * 1000
+        output_tok_s = (n_out / (decode_ms / 1000.0)) if decode_ms > 0 and n_out else 0.0
         return {
             "text": text,
             "selected_tools": [t.get("name") for t in selected],
@@ -177,6 +196,15 @@ class RuntimeV2:
             "kv_visible": len(kv.visible_ids),
             "kv_ordinary": len(kv.ordinary_ids),
             "sink_len": len(kv.sink_ids),
+            "prompt_tokens": n_prompt,
+            "output_tokens": n_out,
+            "output_tok_s": output_tok_s,
+            "timings": {
+                "prefill_ms": prefill_ms,
+                "decode_ms": decode_ms,
+                "grammar_ms": grammar_ms,
+                "validate_ms": validate_ms,
+            },
         }
 
     def run(self, query: str, *, max_steps: int = 4, **kwargs) -> dict[str, Any]:

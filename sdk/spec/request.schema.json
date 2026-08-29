@@ -1,0 +1,63 @@
+{
+  "$id": "mei-runtime-wire-v1/request",
+  "title": "CompleteRequest",
+  "type": "object",
+  "required": ["query"],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "type": "string", "const": "mei-runtime-wire-v1" },
+    "query": { "type": "string" },
+    "catalog": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/tool" },
+      "description": "Full tool catalog before retrieval. Optional when oracle_tools is set."
+    },
+    "oracle_tools": {
+      "type": ["array", "null"],
+      "items": { "$ref": "#/$defs/tool" },
+      "maxItems": 5,
+      "description": "Skip retrieval and use these schemas. At most 5."
+    },
+    "system_facts": { "type": ["string", "null"] },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "content"],
+        "properties": {
+          "role": { "type": "string" },
+          "content": { "type": "string" }
+        }
+      }
+    },
+    "prior_tool_results": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "permissions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "selected_entity": { "type": ["string", "null"] },
+    "decode_mode": {
+      "type": "string",
+      "enum": ["raw", "constrained"]
+    },
+    "max_new": { "type": "integer", "minimum": 1, "maximum": 512 },
+    "candidate_text": {
+      "type": ["string", "null"],
+      "description": "Protocol-only path: validate this generation instead of calling the local engine."
+    }
+  },
+  "$defs": {
+    "tool": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "parameters": { "type": "object" }
+      }
+    }
+  }
+}

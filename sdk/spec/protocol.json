@@ -1,0 +1,16 @@
+{
+  "protocol_id": "mei-tool-call-protocol-v2",
+  "serializer_id": "mei-tool-call-serializer-v2",
+  "max_selected_tools": 5,
+  "max_calls": 1,
+  "task_contract": "任务：只输出一个 schema 合法的工具 JSON 数组，或 []。最多一次调用。缺少 required 证据时输出 []。禁止输出解释或 route_id。",
+  "forbidden_markers": [
+    "<routes>",
+    "gold_route_id",
+    "gold_provenance",
+    "compiled_call_candidates",
+    "gold_entity_link",
+    "holdout_only_relation",
+    "scenario_id"
+  ]
+}

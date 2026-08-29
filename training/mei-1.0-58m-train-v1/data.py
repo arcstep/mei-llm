@@ -27,6 +27,8 @@ RUNG_TOKEN_BUDGET = {
     "100m": 100_000_000,
     "300m": 300_000_000,
     "1b": 1_000_000_000,
+    "cpt-smoke": 1,
+    "cpt-5m": 5_000_000,
 }
 
 
@@ -923,6 +925,7 @@ class QuotaPackedSources:
         self.alignment_overshoot: dict[str, int] = {name: 0 for name in self.names}
         self.draw_count = 0
         self.exhausted_names: set[str] = set()
+        self.parent_ledger: dict[str, Any] = {}
         self.schedule: dict[str, Any] = {}
         self.schedule_path: Path | None = None
 
@@ -1040,6 +1043,45 @@ class QuotaPackedSources:
         self.draw_count = 0
         self.window_counts = {name: 0 for name in self.names}
         self.exhausted_names = set()
+        self.parent_ledger = {
+            "source_tokens_drawn": {name: int(lifetime.get(name) or 0) for name in self.names},
+            "token_cursors": {name: int(cursors.get(name) or 0) for name in self.names},
+        }
+
+    def migrate_from_parent(
+        self,
+        state: dict[str, Any],
+        *,
+        reset_sources: tuple[str, ...] | list[str] = (),
+    ) -> None:
+        """Keep lifetime drawn; continue wiki/HQ cursors; reset named fresh sources to 0."""
+        names = list(state.get("names") or self.names)
+        if set(names) != set(self.names):
+            raise ValueError(f"sampler source names mismatch: ckpt={names} expected={list(self.names)}")
+        reset = {str(name) for name in reset_sources}
+        cursors = state.get("token_cursors") or state.get("cursor") or {}
+        lifetime = state.get("source_tokens_drawn") or {}
+        parent_cursors = {}
+        for name in self.names:
+            parent_cursors[name] = int(cursors.get(name) or 0)
+            self.source_tokens_drawn[name] = int(lifetime.get(name) or 0)
+            if name in reset:
+                self.token_cursors[name] = 0
+            else:
+                self.token_cursors[name] = parent_cursors[name]
+        self.cursor = self.token_cursors
+        self.stage_tokens_drawn = {name: 0 for name in self.names}
+        self.quota_remaining = dict(self.stage_quotas)
+        self.alignment_overshoot = {name: 0 for name in self.names}
+        self.plan_index = 0
+        self.draw_count = 0
+        self.window_counts = {name: 0 for name in self.names}
+        self.exhausted_names = set()
+        self.parent_ledger = {
+            "source_tokens_drawn": dict(self.source_tokens_drawn),
+            "token_cursors": parent_cursors,
+            "reset_sources": sorted(reset),
+        }
 
     def state_dict(self) -> dict[str, Any]:
         return {
@@ -1055,12 +1097,15 @@ class QuotaPackedSources:
             "window_counts": dict(self.window_counts),
             "stage_tokens_drawn": dict(self.stage_tokens_drawn),
             "source_tokens_drawn": dict(self.source_tokens_drawn),
+            "incremental_drawn": dict(self.stage_tokens_drawn),
+            "cumulative_drawn": dict(self.source_tokens_drawn),
             "quota_remaining": dict(self.quota_remaining),
             "stage_quotas": dict(self.stage_quotas),
             "alignment_overshoot": dict(self.alignment_overshoot),
             "alignment_slack": dict(self.alignment_slack),
             "draw_count": self.draw_count,
             "exhausted": sorted(self.exhausted_names),
+            "parent_ledger": dict(getattr(self, "parent_ledger", {}) or {}),
         }
 
     def load_state_dict(self, state: dict[str, Any]) -> None:
@@ -1096,6 +1141,8 @@ class QuotaPackedSources:
         self.alignment_overshoot = {name: int(overshoot.get(name) or 0) for name in self.names}
         self.draw_count = int(state.get("draw_count") or 0)
         self.exhausted_names = set(state.get("exhausted") or [])
+        if state.get("parent_ledger"):
+            self.parent_ledger = dict(state.get("parent_ledger") or {})
 
 
 def load_scheduled_train(
@@ -1187,6 +1234,9 @@ def resolve_schedule_file(root: Path, kind: str) -> Path | None:
     root = Path(root)
     if kind == "scratch":
         path = root / "schedule-scratch.json"
+        return path if path.is_file() else None
+    if kind == "cpt":
+        path = root / "schedule-cpt-1b.json"
         return path if path.is_file() else None
     return None
 

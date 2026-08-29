@@ -1,14 +1,14 @@
 {
   "tokenizer": "tokenizer/zh-24k-v1",
   "corpus": "corpus/lm-v1",
-  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "architecture": "architecture/mei-1.0-51m-arch-v1",
   "training": "training/mei-1.0-58m-train-v1",
-  "base": "base/mei-1.0-58m-base-scratch300m-v1",
+  "base": "base/mei-1.0-51m-base-scratch300m-v1",
   "sft": null,
   "runtime": null,
   "stage": "scratch-300m-promoted",
   "blocked": [],
-  "product": "mei-1.0-58m",
+  "product": "mei-1.0-51m",
   "plan": {
     "mode": "scratch",
     "schedule": "corpus/lm-v1/schedule-scratch.json",
@@ -31,5 +31,7 @@
       "structure": 4861158,
       "colloquial": 30108616
     }
-  }
+  },
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "base_model_id": "mei-1.0-51m-base-scratch300m-v1"
 }

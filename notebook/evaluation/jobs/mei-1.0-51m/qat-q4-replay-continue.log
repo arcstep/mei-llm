@@ -1,0 +1,98 @@
+{"skipped_unique_tokens": 503808, "requested": 503808}
+{
+  "rung": "0p5m",
+  "quality_ok": true,
+  "product_ok": true,
+  "tokens": 503808,
+  "report": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/evaluation/jobs/mei-1.0-51m/qat-q4-rung-0p5m.json"
+}
+{
+  "saved_master": true,
+  "rung": "0p5m",
+  "release": {
+    "kind": "qat-fp32-master",
+    "model_id": "mei-1.0-51m-base-scratch300m-qat-q4-v1",
+    "parent_model_id": "mei-1.0-51m-base-scratch300m-v1",
+    "parent_weights_sha256": "97f4b537f2869ab315245fd8769eff8a61117b112eb7dce40ebfbd39e2afbd48",
+    "architecture_id": "mei-1.0-51m-arch-v1",
+    "params": 51463797,
+    "weights_sha256": "032d23fef5c6159c534ae262b01fb3d03c53d7d4d5009a9e30cc30dcc4a3fbbe",
+    "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4",
+    "bit_map": "notebook/evaluation/jobs/mei-1.0-51m/q4-baseline-bit-map.json",
+    "bit_map_sha256": "6f2cdca36aa7ef64ad353f5db598a6837b689c1b711fa91b357b5043d9f438c4",
+    "tokens_seen_qat_replay": 503808,
+    "immutable_parent": true,
+    "qat_mandatory": true,
+    "note": "CQ2-first mixed Q2/Q4 QAT is mandatory for the on-device 51M core. PTQ is diagnostic only."
+  }
+}
+{"step": 1, "tokens": 507904, "target": 2000000, "loss": 3.0717411041259766, "tok_s": 5179.630227687177, "grad_norm": 0.5056877732276917}
+{"step": 20, "tokens": 585728, "target": 2000000, "loss": 2.8524169921875, "tok_s": 5687.466248985684, "grad_norm": 0.5071690082550049}
+{"step": 40, "tokens": 667648, "target": 2000000, "loss": 2.863874912261963, "tok_s": 5689.10509464067, "grad_norm": 0.5065629482269287}
+{"step": 60, "tokens": 749568, "target": 2000000, "loss": 3.0967397689819336, "tok_s": 5676.139823444275, "grad_norm": 0.5728381872177124}
+{"step": 80, "tokens": 831488, "target": 2000000, "loss": 2.902200698852539, "tok_s": 5651.009608247398, "grad_norm": 0.5833902955055237}
+{"step": 100, "tokens": 913408, "target": 2000000, "loss": 3.6278910636901855, "tok_s": 5638.036578815514, "grad_norm": 0.7729982137680054}
+{"step": 120, "tokens": 995328, "target": 2000000, "loss": 2.943720579147339, "tok_s": 5636.40930281736, "grad_norm": 0.5364601016044617}
+{"step": 140, "tokens": 1077248, "target": 2000000, "loss": 2.903724193572998, "tok_s": 5640.673661619435, "grad_norm": 0.5219018459320068}
+{"step": 160, "tokens": 1159168, "target": 2000000, "loss": 3.130464792251587, "tok_s": 5640.360943542722, "grad_norm": 0.596932053565979}
+{"step": 180, "tokens": 1241088, "target": 2000000, "loss": 3.2925195693969727, "tok_s": 5590.669100893917, "grad_norm": 0.5159657597541809}
+{"step": 200, "tokens": 1323008, "target": 2000000, "loss": 3.3504791259765625, "tok_s": 5555.270379998875, "grad_norm": 0.5375245213508606}
+{"step": 220, "tokens": 1404928, "target": 2000000, "loss": 3.2812395095825195, "tok_s": 5511.449750385148, "grad_norm": 0.5124934911727905}
+{"step": 240, "tokens": 1486848, "target": 2000000, "loss": 2.9655447006225586, "tok_s": 5435.026368958032, "grad_norm": 0.5048344731330872}
+{"step": 260, "tokens": 1568768, "target": 2000000, "loss": 3.2945876121520996, "tok_s": 5374.567257786323, "grad_norm": 0.5026738047599792}
+{"step": 280, "tokens": 1650688, "target": 2000000, "loss": 3.014352560043335, "tok_s": 5322.0058773007, "grad_norm": 0.5195801258087158}
+{"step": 300, "tokens": 1732608, "target": 2000000, "loss": 2.6538772583007812, "tok_s": 5268.510875499338, "grad_norm": 0.517568051815033}
+{"step": 320, "tokens": 1814528, "target": 2000000, "loss": 2.8380961418151855, "tok_s": 5223.479081116088, "grad_norm": 0.5723270177841187}
+{"step": 340, "tokens": 1896448, "target": 2000000, "loss": 2.8142285346984863, "tok_s": 5186.909009506827, "grad_norm": 0.46772465109825134}
+{"step": 360, "tokens": 1978368, "target": 2000000, "loss": 3.3573880195617676, "tok_s": 5153.390527581005, "grad_norm": 0.5277544856071472}
+{
+  "rung": "2m",
+  "quality_ok": true,
+  "product_ok": false,
+  "tokens": 2002944,
+  "report": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/evaluation/jobs/mei-1.0-51m/qat-q4-rung-2m.json"
+}
+{"step": 1, "tokens": 2007040, "target": 5000000, "loss": 2.975281000137329, "tok_s": 5604.552693190105, "grad_norm": 0.5354748964309692}
+{"step": 20, "tokens": 2084864, "target": 5000000, "loss": 3.089723587036133, "tok_s": 4975.017067862433, "grad_norm": 0.5120906829833984}
+{"step": 40, "tokens": 2166784, "target": 5000000, "loss": 3.1174144744873047, "tok_s": 4904.642120184737, "grad_norm": 0.5344384908676147}
+{"step": 60, "tokens": 2248704, "target": 5000000, "loss": 3.226343870162964, "tok_s": 4878.4536939442905, "grad_norm": 0.4745723307132721}
+{"step": 80, "tokens": 2330624, "target": 5000000, "loss": 3.5786430835723877, "tok_s": 4862.132194347764, "grad_norm": 0.5704343318939209}
+{"step": 100, "tokens": 2412544, "target": 5000000, "loss": 3.5842461585998535, "tok_s": 4867.895697822932, "grad_norm": 0.5314379930496216}
+{"step": 120, "tokens": 2494464, "target": 5000000, "loss": 2.87451434135437, "tok_s": 4865.260262365159, "grad_norm": 0.658081591129303}
+{"step": 140, "tokens": 2576384, "target": 5000000, "loss": 3.282728672027588, "tok_s": 4854.7393107066555, "grad_norm": 0.5566749572753906}
+{"step": 160, "tokens": 2658304, "target": 5000000, "loss": 2.659245491027832, "tok_s": 4852.850143076847, "grad_norm": 0.4452759027481079}
+{"step": 180, "tokens": 2740224, "target": 5000000, "loss": 3.2443747520446777, "tok_s": 4842.121286544493, "grad_norm": 0.7746360301971436}
+{"step": 200, "tokens": 2822144, "target": 5000000, "loss": 2.966400623321533, "tok_s": 4843.006605718591, "grad_norm": 0.5110549926757812}
+{"step": 220, "tokens": 2904064, "target": 5000000, "loss": 3.1033012866973877, "tok_s": 4835.125147381483, "grad_norm": 0.44513756036758423}
+{"step": 240, "tokens": 2985984, "target": 5000000, "loss": 3.336650848388672, "tok_s": 4826.102309955806, "grad_norm": 0.5304121971130371}
+{"step": 260, "tokens": 3067904, "target": 5000000, "loss": 3.1476426124572754, "tok_s": 4823.913530339258, "grad_norm": 0.4954153001308441}
+{"step": 280, "tokens": 3149824, "target": 5000000, "loss": 2.5853757858276367, "tok_s": 4828.625039735892, "grad_norm": 0.4284361004829407}
+{"step": 300, "tokens": 3231744, "target": 5000000, "loss": 2.590620279312134, "tok_s": 4826.587944711141, "grad_norm": 0.4463864862918854}
+{"step": 320, "tokens": 3313664, "target": 5000000, "loss": 2.9951837062835693, "tok_s": 4823.4143899173005, "grad_norm": 0.5076795220375061}
+{"step": 340, "tokens": 3395584, "target": 5000000, "loss": 3.217766761779785, "tok_s": 4824.800775171328, "grad_norm": 0.5152367949485779}
+{"step": 360, "tokens": 3477504, "target": 5000000, "loss": 2.3460285663604736, "tok_s": 4820.658484439353, "grad_norm": 0.47490444779396057}
+{"step": 380, "tokens": 3559424, "target": 5000000, "loss": 2.427600860595703, "tok_s": 4815.328633838668, "grad_norm": 0.5129249095916748}
+{"step": 400, "tokens": 3641344, "target": 5000000, "loss": 3.2147035598754883, "tok_s": 4814.696009714298, "grad_norm": 0.5100485682487488}
+{"step": 420, "tokens": 3723264, "target": 5000000, "loss": 3.1847593784332275, "tok_s": 4818.708590726075, "grad_norm": 0.4880335330963135}
+{"step": 440, "tokens": 3805184, "target": 5000000, "loss": 2.5283844470977783, "tok_s": 4821.295469257012, "grad_norm": 0.4508763253688812}
+{"step": 460, "tokens": 3887104, "target": 5000000, "loss": 3.0253663063049316, "tok_s": 4823.592416924617, "grad_norm": 0.49775269627571106}
+{"step": 480, "tokens": 3969024, "target": 5000000, "loss": 2.917876720428467, "tok_s": 4825.5931372863215, "grad_norm": 0.5390624403953552}
+{"step": 500, "tokens": 4050944, "target": 5000000, "loss": 2.9430975914001465, "tok_s": 4828.719584018658, "grad_norm": 0.5240065455436707}
+{"step": 520, "tokens": 4132864, "target": 5000000, "loss": 2.9789347648620605, "tok_s": 4832.125239599231, "grad_norm": 0.4673300087451935}
+{"step": 540, "tokens": 4214784, "target": 5000000, "loss": 3.3948168754577637, "tok_s": 4836.186245381035, "grad_norm": 0.5497708320617676}
+{"step": 560, "tokens": 4296704, "target": 5000000, "loss": 2.976043939590454, "tok_s": 4840.309304393978, "grad_norm": 0.6348000168800354}
+{"step": 580, "tokens": 4378624, "target": 5000000, "loss": 3.026259183883667, "tok_s": 4842.953084321518, "grad_norm": 0.5285922288894653}
+{"step": 600, "tokens": 4460544, "target": 5000000, "loss": 3.2341458797454834, "tok_s": 4846.024563010369, "grad_norm": 0.5366326570510864}
+{"step": 620, "tokens": 4542464, "target": 5000000, "loss": 3.177530527114868, "tok_s": 4849.298374152, "grad_norm": 0.529540479183197}
+{"step": 640, "tokens": 4624384, "target": 5000000, "loss": 3.146913766860962, "tok_s": 4853.437629493905, "grad_norm": 0.46598419547080994}
+{"step": 660, "tokens": 4706304, "target": 5000000, "loss": 3.2648372650146484, "tok_s": 4856.253107814564, "grad_norm": 0.7491843104362488}
+{"step": 680, "tokens": 4788224, "target": 5000000, "loss": 2.8284363746643066, "tok_s": 4859.374935481541, "grad_norm": 0.5812247395515442}
+{"step": 700, "tokens": 4870144, "target": 5000000, "loss": 3.561955690383911, "tok_s": 4863.065376671197, "grad_norm": 0.5574430227279663}
+{"step": 720, "tokens": 4952064, "target": 5000000, "loss": 3.9163928031921387, "tok_s": 4866.130087810124, "grad_norm": 0.5109012126922607}
+{
+  "rung": "5m",
+  "quality_ok": true,
+  "product_ok": false,
+  "tokens": 5001216,
+  "report": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/evaluation/jobs/mei-1.0-51m/qat-q4-rung-5m.json"
+}

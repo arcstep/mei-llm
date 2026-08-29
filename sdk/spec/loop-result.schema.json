@@ -1,0 +1,19 @@
+{
+  "$id": "mei-runtime-wire-v1/loop-result",
+  "title": "LoopResult",
+  "type": "object",
+  "required": ["wire_version", "ok", "turns", "stopped_reason"],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "type": "string", "const": "mei-runtime-wire-v1" },
+    "ok": { "type": "boolean" },
+    "turns": {
+      "type": "array",
+      "items": { "$ref": "turn-result.schema.json" }
+    },
+    "stopped_reason": {
+      "type": "string",
+      "enum": ["refuse", "call", "error", "max_turns", "cancelled"]
+    }
+  }
+}

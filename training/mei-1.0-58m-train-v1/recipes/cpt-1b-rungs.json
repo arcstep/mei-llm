@@ -1,0 +1,64 @@
+{
+  "id": "mei-1.0-58m-cpt-1b-rungs-v1",
+  "mode": "cpt",
+  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "corpus": "corpus/lm-v2",
+  "schedule": "corpus/lm-v2/schedule-cpt-1b.json",
+  "parent_checkpoint": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch-state.npz",
+  "seq_len": 2048,
+  "max_seq_len": 2048,
+  "config": "from_spec",
+  "init_mode": "continuation",
+  "lr": 0.00003,
+  "lr_final": 0.00001,
+  "lr_horizon_tokens": 699999515,
+  "lr_token_offset": 300000485,
+  "precision": "fp32",
+  "compile_train": true,
+  "allow_repeat": false,
+  "layouts": {
+    "2048": {"batch_size": 1, "grad_accum": 1}
+  },
+  "curriculum": [
+    {
+      "id": "cpt1",
+      "seq_len": 2048,
+      "stage_tokens": 699999515,
+      "stop_at_tokens": 1000000000,
+      "batch_size": 1,
+      "grad_accum": 1
+    }
+  ],
+  "milestones": [350000000, 500000000, 750000000, 1000000000],
+  "rungs": {
+    "cpt-smoke": {
+      "target": 300008533,
+      "horizon": 699999515,
+      "eval_every": 1000000000,
+      "save_every": 1000000000,
+      "seq_len": 2048,
+      "batch_size": 1,
+      "grad_accum": 1,
+      "not_for_promote": true
+    },
+    "cpt-5m": {
+      "target": 305000485,
+      "horizon": 699999515,
+      "eval_every": 1000000,
+      "save_every": 1000000,
+      "seq_len": 2048,
+      "batch_size": 1,
+      "grad_accum": 1,
+      "not_for_promote": true
+    },
+    "1b": {
+      "target": 1000000000,
+      "horizon": 699999515,
+      "eval_every": 10000000,
+      "save_every": 10000000,
+      "seq_len": 2048,
+      "batch_size": 1,
+      "grad_accum": 1
+    }
+  }
+}

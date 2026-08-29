@@ -1,0 +1,198 @@
+{
+  "ok": true,
+  "mode": "sft-v2",
+  "scope": "sft-v2",
+  "eval_n": 7774,
+  "banks": [
+    "notebook/evaluation/banks/mei-mw-disposition-v2/eval-bank-dev.jsonl",
+    "notebook/evaluation/banks/mei-mw-disposition-v2/eval-bank-smoke.jsonl",
+    "notebook/evaluation/banks/mei-mw-disposition-v2/eval-bank-test.jsonl",
+    "notebook/evaluation/banks/mei-park-toolcall-v1/eval-bank-v1.jsonl",
+    "notebook/evaluation/banks/mei-retrieval-v2/eval-bank-dev.jsonl",
+    "notebook/evaluation/banks/mei-retrieval-v2/eval-bank-smoke.jsonl",
+    "notebook/evaluation/banks/mei-retrieval-v2/eval-bank-test.jsonl",
+    "notebook/evaluation/banks/mei-toolcall-v2/eval-bank-dev.jsonl",
+    "notebook/evaluation/banks/mei-toolcall-v2/eval-bank-smoke.jsonl",
+    "notebook/evaluation/banks/mei-toolcall-v2/eval-bank-test.jsonl"
+  ],
+  "seeds": [
+    "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.clean.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.clean.v2.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.clean.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.clean.v2.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.clean.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.clean.v2.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl"
+  ],
+  "pairs": [
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.clean.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.clean.v2.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+      "seed_n": 2000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+      "seed_n": 2000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+      "seed_n": 24,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.clean.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.clean.v2.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+      "seed_n": 2000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+      "seed_n": 2000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
+      "seed_n": 24,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.clean.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.clean.v2.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+      "seed_n": 10000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+      "seed_n": 2000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+      "seed_n": 2000,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    },
+    {
+      "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl",
+      "seed_n": 24,
+      "id_overlap": [],
+      "eval_text_leaks_in_seed": [],
+      "query_overlap": [],
+      "ok": true
+    }
+  ],
+  "domain_train_n": 0,
+  "domain_provenance_errors": [],
+  "heldout_leaks": [],
+  "token_near_dups": [],
+  "pretrain_leaks": [],
+  "pretrain_token_near_dups": [],
+  "grounded_leaks": [],
+  "sft_v2_extra": {
+    "holdout_lock_fp": "44fc865f60981bfecaae047371fa1cb7ba29bce2f44a1d9967a59ed78e1d9072",
+    "hits": [],
+    "n_hits": 0
+  },
+  "publish_gate": true,
+  "returncode": 0
+}

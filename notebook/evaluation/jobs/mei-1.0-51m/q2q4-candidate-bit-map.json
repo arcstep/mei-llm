@@ -1,0 +1,30 @@
+{
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "model_id": "mei-1.0-51m-base-scratch300m-v1",
+  "kind": "q2q4-candidate-bit-map",
+  "candidate": true,
+  "product_final": false,
+  "qat_mandatory": true,
+  "first_method": "4bit_ptq_diagnostic",
+  "bits": {
+    "embedding": 4,
+    "attention_kv": 4,
+    "mhc": 4,
+    "engram": 4,
+    "other": 2,
+    "norm": 2,
+    "confidence": 2
+  },
+  "ranking": [
+    "embedding",
+    "attention_kv",
+    "mhc",
+    "engram",
+    "other",
+    "norm",
+    "confidence"
+  ],
+  "rule": "Top-half logit-delta components stay 4-bit; the rest are proposed 2-bit. Tied embedding always stays 4-bit. This is not a product mixed-bit map.",
+  "note": "CQ2-first mixed Q2/Q4 QAT is mandatory for the on-device 51M core. PTQ is diagnostic only.",
+  "not_a_claim": "PTQ sensitivity is not QAT, packed-kernel, or tool-calling ability."
+}

@@ -1,0 +1,15 @@
+[package]
+name = "mei-sdk-ffi"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Stable C ABI for MEI Runtime. No Rust types leak across the boundary."
+
+[lib]
+name = "mei_sdk"
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+mei-sdk-core = { workspace = true }
+serde_json = { workspace = true }

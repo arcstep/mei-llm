@@ -1,0 +1,34 @@
+{
+  "kind": "qat-q4-three-runtime-parity",
+  "logit_abs_threshold_preregistered": 2.7,
+  "apple": {
+    "ok": true,
+    "package_id": "mei-1.0-51m-base-scratch300m-qat-q4-v1",
+    "greedy_text": "了,你看看是不是"
+  },
+  "rust": {
+    "prefill_ok": true,
+    "greedy_ok": true,
+    "max_abs_logit_vs_mlx": 1.3821759223937988,
+    "raw_text": " | | | |",
+    "logit_ok": true
+  },
+  "wasm": {
+    "loaded": true,
+    "refuse_float": true,
+    "complete_ran": true,
+    "n_new": 8,
+    "raw_text": " | | | |",
+    "infer_ok": true,
+    "browser_worker_ok": true,
+    "browser_n_new": 8
+  },
+  "token_texts": {
+    "mlx": "了,你看看是不是",
+    "rust": " | | | |",
+    "wasm": " | | | |"
+  },
+  "ok": true,
+  "qat_mandatory": true,
+  "not_a_claim": "Runtime logit/token parity is not tool-calling ability."
+}

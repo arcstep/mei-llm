@@ -1,0 +1,31 @@
+{
+  "stage": "P4",
+  "kind": "qat-smoke",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "model_id": "mei-1.0-51m-base-scratch300m-v1",
+  "params": 51463797,
+  "ste": true,
+  "kernel_math": "mei-qpack-v1-block64-q4s7-q2u4",
+  "tiny_qat_step": {
+    "ok": true,
+    "loss": 0.006835846230387688,
+    "ste": true,
+    "qat_step": true,
+    "activation_kv_ste": true,
+    "logits_finite": true,
+    "kind": "tiny-qat-ste-step"
+  },
+  "vs_frozen_float_anchor": {
+    "float_anchor_probe_mean_nll": 4.3068690155824045,
+    "float_anchor_valid_loss": 3.1709813214838505,
+    "parity_float_probe_mean_nll": 3.350050051386158,
+    "q4_probe_mean_nll": 3.3283866974525154,
+    "delta_probe_mean_nll": -0.021663353933642604,
+    "compared_without_reloading_float_model": true,
+    "qat_mandatory": true
+  },
+  "product_mixed_map_frozen": false,
+  "qat_mandatory": true,
+  "note": "CQ2-first mixed Q2/Q4 QAT is mandatory for the on-device 51M core. PTQ is diagnostic only.",
+  "not_a_claim": "Tiny STE step is not 0.5M–5M replay or a product mixed-bit freeze."
+}

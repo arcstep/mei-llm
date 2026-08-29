@@ -17,8 +17,11 @@ import mlx.nn as nn
 from architecture import NeedleZh, count_params
 from byte_grammar import (
     compile_byte_grammar,
+    compile_byte_grammar_cached,
     is_accept_bytes,
     is_legal_byte_prefix,
+    select_legal_token,
+    select_legal_token_oracle,
     token_to_bytes,
 )
 from checkpoint import flatten_params, load_params
@@ -251,6 +254,106 @@ def test_kv_parity() -> dict:
     }
 
 
+def test_prefill_handoff() -> dict:
+    cfg = NeedleZhConfig().tiny()
+    model = NeedleZh(cfg)
+    mx.eval(model.parameters())
+    sink = [2, 11, 12]
+    ordinary = [13, 14, 15]
+    kv = KVManager(ordinary_cap=16)
+    pre = kv.prefill_forward(model, sink, ordinary)
+    mx.eval(pre["logits"], kv.last_logits)
+    delta = float(mx.max(mx.abs(pre["logits"][:, -1, :] - kv.last_logits)).item())
+    return {"max_abs": delta, "ok": delta < 2e-4 and kv.last_logits is not None}
+
+
+def test_full_incremental_parity() -> dict:
+    cfg = NeedleZhConfig().tiny()
+    model = NeedleZh(cfg)
+    mx.eval(model.parameters())
+    tok = ZhTokenizerV1()
+    sink = [tok.bos_id, 11, 12, 13]
+    ordinary = [14, 15, 16, 17]
+    kv = KVManager(ordinary_cap=32)
+    kv.prefill_forward(model, sink, ordinary)
+    ids = list(kv.visible_ids)
+    max_new = 8
+    full_pieces: list[int] = []
+    cur = list(ids)
+    for _ in range(max_new):
+        logits = model(mx.array([cur], dtype=mx.int32), position_ids=mx.array(list(range(len(cur))), dtype=mx.int32))[
+            "logits"
+        ][:, -1, :]
+        chosen = int(mx.argmax(nn.log_softmax(logits, axis=-1)[0]).item())
+        if chosen in {tok.eos_id, tok.pad_id}:
+            break
+        full_pieces.append(chosen)
+        cur.append(chosen)
+    inc_pieces: list[int] = []
+    logits = kv.last_logits
+    for _ in range(max_new):
+        chosen = int(mx.argmax(nn.log_softmax(logits, axis=-1)[0]).item())
+        if chosen in {tok.eos_id, tok.pad_id}:
+            break
+        inc_pieces.append(chosen)
+        step = kv.decode_step(model, chosen)
+        logits = step["logits"][:, -1, :]
+    match = inc_pieces == full_pieces
+    # last-step logits vs full sequence at the first generated token
+    kv2 = KVManager(ordinary_cap=32)
+    first = kv2.prefill_forward(model, sink, ordinary)
+    stepped = kv2.decode_step(model, full_pieces[0] if full_pieces else ordinary[-1])
+    vis = kv2.visible_ids
+    pos = kv2.visible_positions
+    full = model(mx.array([vis], dtype=mx.int32), position_ids=mx.array(pos, dtype=mx.int32))
+    mx.eval(full["logits"], stepped["logits"])
+    delta = float(mx.max(mx.abs(full["logits"][:, -1, :] - stepped["logits"][:, -1, :])).item())
+    return {
+        "token_match": match,
+        "full_ids": full_pieces,
+        "inc_ids": inc_pieces,
+        "max_abs": delta,
+        "ok": match and delta < 2e-4,
+    }
+
+
+def test_grammar_exact_choice() -> dict:
+    tok = ZhTokenizerV1()
+    g = compile_byte_grammar_cached(HOME, tok)
+    mx.random.seed(1)
+    logits = mx.random.normal((1, tok.vocab_size)).astype(mx.float32)
+    prefixes = [b"", b"[", b"[]"[:1], dump_call("get_weather", {"city": "成"}).encode("utf-8")[:8]]
+    rows = []
+    ok = True
+    for prefix in prefixes:
+        fast = select_legal_token(logits, tok, g, prefix)
+        oracle = select_legal_token_oracle(logits, tok, g, prefix)
+        rows.append({"prefix": prefix.decode("utf-8", errors="replace"), "fast": fast, "oracle": oracle})
+        if fast != oracle:
+            ok = False
+    return {"cases": rows, "ok": ok}
+
+
+def test_complete_memory_100() -> dict:
+    import resource
+
+    cfg = NeedleZhConfig().tiny()
+    model = NeedleZh(cfg)
+    mx.eval(model.parameters())
+    tok = ZhTokenizerV1()
+    rt = RuntimeV2(model, tok, catalog=HOME, confidence_threshold=0.0)
+    rss = []
+    for i in range(100):
+        rt.complete("帮我查一下成都天气", oracle_tools=HOME[:2], decode_mode="raw", max_new=8)
+        if i % 10 == 9:
+            rss.append(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+    # macOS ru_maxrss is bytes
+    delta = (rss[-1] - rss[0]) if rss else 0
+    # macOS ru_maxrss is bytes; Linux is KB. Tiny allocator noise is not a leak.
+    limit = 8_000_000 if rss and rss[0] > 10_000_000 else 8_000
+    return {"rss_samples": rss, "delta": delta, "ok": delta <= limit}
+
+
 def test_heads_off_parity() -> dict:
     mx.random.seed(0)
     cfg = NeedleZhConfig().tiny()
@@ -400,6 +503,10 @@ def main() -> int:
         "provenance": test_provenance(),
         "kv": test_kv_ring(),
         "kv_parity": test_kv_parity(),
+        "prefill_handoff": test_prefill_handoff(),
+        "full_incremental": test_full_incremental_parity(),
+        "grammar_choice": test_grammar_exact_choice(),
+        "memory_100": test_complete_memory_100(),
         "parity": test_heads_off_parity(),
         "cells": test_cells_and_contrastive(),
         "infonce": test_infonce_descends(),

@@ -1,0 +1,22 @@
+{
+  "ok": false,
+  "package_id": "mei-1.0-51m-base-scratch300m-qat-cq2-v1",
+  "model_id": "mei-1.0-51m-base-scratch300m-qat-cq2-v1",
+  "out_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-base-scratch300m-qat-cq2-v1",
+  "master": "/Users/xuehongwei/codeup/mei-projects/mei-llm/base/mei-1.0-51m-base-scratch300m-qat-cq2-v1/mei-1.0-51m-base-scratch300m-qat-cq2-v1.npz",
+  "master_sha256": "7c1628079a09f9d71dd2027c321f0697e2c9e2d0be1df4eb31ec926d283f2040",
+  "parent_model_id": "mei-1.0-51m-base-scratch300m-v1",
+  "parent_weights_sha256": "97f4b537f2869ab315245fd8769eff8a61117b112eb7dce40ebfbd39e2afbd48",
+  "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4",
+  "bit_map": "/Users/xuehongwei/codeup/mei-projects/mei-llm/notebook/evaluation/jobs/mei-1.0-51m/q2q4-product-candidate-bit-map.json",
+  "bit_map_sha256": "603ed89d6263f3ffb376563c0b340d4742144ab2ab950933b9d14eb87456db4b",
+  "weights_bytes": 29186432,
+  "weights_mb": 27.8343505859375,
+  "package_files_bytes": 31190200,
+  "package_files_mb": 29.74529266357422,
+  "budget_bytes": 20237516,
+  "within_budget": false,
+  "n_tensors": 400,
+  "qat_mandatory": true,
+  "immutable_parent_untouched": true
+}

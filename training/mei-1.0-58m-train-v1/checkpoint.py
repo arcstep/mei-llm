@@ -104,6 +104,15 @@ def save_train_state(path: Path, model, optimizer, meta: dict[str, Any]) -> None
 
 
 CURRICULUM_FLEX_META = ("seq_len", "batch_size", "grad_accum")
+CONTINUATION_FLEX_META = (
+    "corpus_sha256",
+    "schedule_sha256",
+    "manifest_sha256",
+    "lr_horizon_tokens",
+    "seq_len",
+    "batch_size",
+    "grad_accum",
+)
 STRICT_META_KEYS = (
     "tokenizer_sha256",
     "corpus_sha256",
@@ -114,7 +123,11 @@ STRICT_META_KEYS = (
     "grad_accum",
     "precision",
     "shuffle_seed",
+    "architecture_id",
+    "architecture_sha256",
+    "params",
 )
+LOAD_MODES = {"strict", "weights_only", "curriculum", "continuation"}
 
 
 def validate_expected_meta(
@@ -130,7 +143,11 @@ def validate_expected_meta(
     for key in STRICT_META_KEYS:
         if key not in keys:
             keys.append(key)
-    flex = set(CURRICULUM_FLEX_META) if mode == "curriculum" else set()
+    flex = set()
+    if mode == "curriculum":
+        flex = set(CURRICULUM_FLEX_META)
+    elif mode == "continuation":
+        flex = set(CONTINUATION_FLEX_META)
     for key in keys:
         if key not in expected_meta:
             continue
@@ -153,10 +170,10 @@ def load_train_state(
 ) -> dict[str, Any]:
     path = Path(path)
     resolved = mode or ("strict" if strict else "weights_only")
-    if resolved not in {"strict", "weights_only", "curriculum"}:
+    if resolved not in LOAD_MODES:
         raise ValueError(f"unsupported load mode {resolved}")
-    load_opt = resolved in {"strict", "curriculum"}
-    check_meta = resolved in {"strict", "curriculum"}
+    load_opt = resolved in {"strict", "curriculum", "continuation"}
+    check_meta = resolved in {"strict", "curriculum", "continuation"}
     blob = mx.load(str(path))
     p_cur = flatten_params(model)
     p_next = {}

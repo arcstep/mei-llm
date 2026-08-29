@@ -1,0 +1,56 @@
+{
+  "cases": [
+    {
+      "text": "[]",
+      "parsed": {
+        "ok": true,
+        "function_calls": [],
+        "error": null,
+        "refuse": true
+      }
+    },
+    {
+      "text": "[{\"name\":\"light.set\",\"arguments\":{\"on\":true}}]",
+      "parsed": {
+        "ok": true,
+        "function_calls": [
+          {
+            "name": "light.set",
+            "arguments": {
+              "on": true
+            }
+          }
+        ],
+        "error": null,
+        "refuse": false
+      }
+    },
+    {
+      "text": "[{\"name\":\"a\",\"arguments\":{}},{\"name\":\"b\",\"arguments\":{}}]",
+      "parsed": {
+        "ok": false,
+        "function_calls": [],
+        "error": "illegal_shape",
+        "refuse": true
+      }
+    },
+    {
+      "text": "",
+      "parsed": {
+        "ok": false,
+        "function_calls": [],
+        "error": "empty",
+        "refuse": true
+      }
+    },
+    {
+      "text": "{",
+      "parsed": {
+        "ok": false,
+        "function_calls": [],
+        "error": "json",
+        "refuse": true
+      }
+    }
+  ]
+}

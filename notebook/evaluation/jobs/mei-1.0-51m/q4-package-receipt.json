@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "package_id": "mei-1.0-51m-base-scratch300m-q4-v1",
+  "out_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-base-scratch300m-q4-v1",
+  "weights_bytes": 29188480,
+  "weights_mb": 27.8363037109375,
+  "package_files_bytes": 31192248,
+  "package_files_mb": 29.74724578857422,
+  "budget_mb": 30.0,
+  "within_30mb_budget": true,
+  "n_tensors": 400,
+  "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4",
+  "qat_mandatory": true,
+  "product_final": false,
+  "weights_sha256": "c4b55fa1c92d58cc5f9efcb59b3ab59e6ad07335834da27b1245f0f8233ee76e"
+}

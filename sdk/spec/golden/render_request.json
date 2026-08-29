@@ -1,0 +1,37 @@
+{
+  "request": {
+    "query": "把客厅灯打开",
+    "oracle_tools": [
+      {
+        "name": "light.set",
+        "description": "开灯",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "on": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    ],
+    "system_facts": "客厅灯 id=L1",
+    "permissions": [
+      "light.control"
+    ],
+    "selected_entity": "L1",
+    "history": [
+      {
+        "role": "user",
+        "content": "你好"
+      }
+    ]
+  },
+  "prompt": "任务：只输出一个 schema 合法的工具 JSON 数组，或 []。最多一次调用。缺少 required 证据时输出 []。禁止输出解释或 route_id。\n系统事实：客厅灯 id=L1\n权限：light.control\n点选实体：L1\n<tools>[{\"name\":\"light.set\",\"description\":\"开灯\",\"parameters\":{\"type\":\"object\",\"properties\":{\"on\":{\"type\":\"boolean\"}}}}]</tools>\nuser：你好\nuser：把客厅灯打开",
+  "schema_fingerprint": "7e87821278df862d450d868624d80b6500dca4b5a057b6f27bb382d5741e7831",
+  "serializer_id": "mei-tool-call-serializer-v2",
+  "protocol_id": "mei-tool-call-protocol-v2",
+  "selected_tools": [
+    "light.set"
+  ]
+}

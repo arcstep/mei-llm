@@ -16,6 +16,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
+_SCRIPTS = Path(__file__).resolve().parent
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
 from eval_sft_v2_layered import cascade_score, confusion, score_fullcall, score_mw
 from repo_paths import (
     NOTEBOOK_JOBS,
@@ -26,11 +30,15 @@ from repo_paths import (
 )
 from sft_canonical_lib import load_jsonl
 from sft_v2_baseline_adapters import (
-    load_mei58m,
+    MEI58M_SDK_BACKEND,
+    load_mei58m_sdk_engine,
+    mei58m_chat_factory,
     mei58m_status,
     minimind_status,
     ollama_available,
     qwen_ollama_factory,
+    resolve_promoted_58m_base,
+    sdk_backend_revision,
 )
 from sft_v2_baseline_lib import dump_json, rel, sha256_file, wilson_interval
 from sft_v2_fair_prompts import (
@@ -42,11 +50,11 @@ from sft_v2_fair_prompts import (
     render_mw_user,
     tools_to_ollama,
 )
+from sft_v2_scorecard_metrics import summarize_column
 from sft_v2_retrieval_backends import (
     DenseExactRetriever,
     HnswRetriever,
     SparseRetriever,
-    mei58m_encode_fn,
     try_sentence_transformer,
 )
 
@@ -97,11 +105,6 @@ def dump_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 def retrieval_report(rows: list[dict], universe: dict, search_rank: Callable[[str, list[dict]], list[str]], *, name: str) -> dict:
-    pos_ranks: list[int] = []
-    by_fam: dict[str, list[int]] = defaultdict(list)
-    by_size: dict[str, list[int]] = defaultdict(list)
-    pos_top1: list[float] = []
-    nm_top1: list[float] = []
     traces = []
     for row in rows:
         catalog = hydrate_catalog(row, universe)
@@ -110,48 +113,34 @@ def retrieval_report(rows: list[dict], universe: dict, search_rank: Callable[[st
         wall = (time.perf_counter() - t0) * 1000
         gold = row.get("gold_tool")
         if row.get("no_match") or not gold:
-            # score proxy: 1 if top-1 name looks weakly related is not used; keep rank=-1
-            nm_top1.append(1.0 if order else 0.0)
-            traces.append({"item_id": row["item_id"], "family": "no_match", "rank": -1, "pred_top5": order[:5], "wall_ms": wall})
+            traces.append(
+                {
+                    "item_id": row["item_id"],
+                    "family": "no_match",
+                    "rank": -1,
+                    "pred_top5": order[:5],
+                    "wall_ms": wall,
+                    "catalog_size": row.get("catalog_size"),
+                    "no_match": True,
+                }
+            )
             continue
         rank = order.index(gold) if gold in order else -1
-        pos_ranks.append(rank)
-        by_fam[str(row.get("family") or "na")].append(rank)
-        by_size[str(row.get("catalog_size") or "na")].append(rank)
-        pos_top1.append(1.0 if rank == 0 else 0.0)
-        traces.append({"item_id": row["item_id"], "family": row.get("family"), "gold": gold, "rank": rank, "pred_top5": order[:5], "wall_ms": wall})
-    def agg(ranks: list[int]) -> dict:
-        n = len(ranks)
-        r1 = sum(1 for r in ranks if r == 0)
-        r5 = sum(1 for r in ranks if 0 <= r < 5)
-        mrr = sum((1.0 / (r + 1) if r >= 0 else 0.0) for r in ranks)
-        return {
-            "n": n,
-            "recall_at_1": wilson_interval(r1, n),
-            "recall_at_5": wilson_interval(r5, n),
-            "mrr": round(mrr / max(1, n), 6),
-        }
-    nm_n = sum(1 for r in rows if r.get("no_match"))
-    # FPR: retrieved a "confident" hit; without calibrated score, use top-1 always-returns.
-    # Operational: no_match items never have gold in top-5, so miss is correct;
-    # FPR = fraction whose top-1 is a similar-name/seen tool (always 1 if catalog nonempty).
-    # Report accuracy as 1.0 for "did not retrieve the nonexistent gold" and FPR via DEV-frozen
-    # rule: if top-1 exists, count as retrieval attempt (FPR=1). Explicitly labeled.
-    fpr = 1.0 if nm_n else 0.0
-    walls = [t["wall_ms"] for t in traces]
-    return {
-        "retriever": name,
-        "overall": agg(pos_ranks),
-        "by_family": {k: agg(v) for k, v in sorted(by_fam.items())},
-        "by_catalog_size": {k: agg(v) for k, v in sorted(by_size.items())},
-        "no_match": {
-            "n": nm_n,
-            "accuracy_no_gold_in_top5": wilson_interval(nm_n, nm_n) if nm_n else wilson_interval(0, 0),
-            "fpr_always_returns_top5": {"rate": fpr, "note": "sparse/dense retrievers always return k=5; no-match is not in positive Recall denominator"},
-        },
-        "latency": {"p50": _pctl(walls, 0.5), "p95": _pctl(walls, 0.95), "n": len(walls)},
-        "traces": traces,
-    }
+        traces.append(
+            {
+                "item_id": row["item_id"],
+                "family": row.get("family"),
+                "gold": gold,
+                "rank": rank,
+                "pred_top5": order[:5],
+                "wall_ms": wall,
+                "catalog_size": row.get("catalog_size"),
+                "seen_schema": row.get("seen_schema"),
+                "no_match": False,
+            }
+        )
+    summary = summarize_column(traces, task="retrieval")
+    return {"retriever": name, **summary, "traces": traces}
 
 
 def run_sparse(rows, universe, mode: str) -> dict:
@@ -176,49 +165,8 @@ def run_dense(rows, universe, encode_fn, name: str) -> dict:
     return retrieval_report(rows, universe, rank, name=name)
 
 
-def summarize_from_traces(traces: list[dict], *, task: str) -> dict:
-    if task == "fullcall":
-        n = len(traces)
-        content = sum(1 for t in traces if t.get("content_exact"))
-        fmt = sum(1 for t in traces if t.get("format_ok"))
-        strict = sum(1 for t in traces if t.get("strict_e2e"))
-        exe = [t for t in traces if t.get("gold_execute")]
-        ref = [t for t in traces if not t.get("gold_execute")]
-        hit = [t for t in traces if t.get("retrieval_hit")]
-        miss = [t for t in traces if t.get("top5_mode") == "learned_top5" and not t.get("retrieval_hit")]
-        walls = [t.get("wall_ms") or 0 for t in traces]
-        return {
-            "n": n,
-            "content": wilson_interval(content, n),
-            "format": wilson_interval(fmt, n),
-            "strict_e2e": wilson_interval(strict, n),
-            "execute_content": wilson_interval(sum(1 for t in exe if t.get("content_exact")), len(exe)),
-            "refuse_content": wilson_interval(sum(1 for t in ref if t.get("content_exact")), len(ref)),
-            "cascade": {
-                "retrieval_hit@5": wilson_interval(len(hit), n) if traces and traces[0].get("top5_mode") == "learned_top5" else None,
-                "retrieval_miss": len(miss) if traces and traces[0].get("top5_mode") == "learned_top5" else 0,
-                "pipeline_strict": wilson_interval(sum(1 for t in traces if t.get("pipeline_strict")), n),
-                "generator_content_fail": sum(1 for t in traces if t.get("generator_content_fail")),
-                "generator_format_fail": sum(1 for t in traces if t.get("generator_format_fail")),
-            },
-            "latency": {"p50": _pctl(walls, 0.5), "p95": _pctl(walls, 0.95)},
-            "errors": sum(1 for t in traces if t.get("error")),
-        }
-    scored = [score_mw({"reason_code": t["gold"]}, raw_text=t.get("raw") or "") for t in traces]
-    n = len(scored)
-    walls = [t.get("wall_ms") or 0 for t in traces]
-    conf = confusion(scored)
-    return {
-        "n": n,
-        "content": wilson_interval(sum(1 for s in scored if s["content_ok"]), n),
-        "format": wilson_interval(sum(1 for s in scored if s["format_ok"]), n),
-        "strict_e2e": wilson_interval(sum(1 for s in scored if s["strict_e2e"]), n),
-        "unsafe_execute": sum(1 for s in scored if s["unsafe_execute"]),
-        "macro_f1": conf["macro_f1"],
-        "per_class": conf["per_class"],
-        "matrix": conf["matrix"],
-        "latency": {"p50": _pctl(walls, 0.5), "p95": _pctl(walls, 0.95)},
-    }
+def summarize_from_traces(traces: list[dict], *, task: str, bank_by_id: dict[str, dict] | None = None) -> dict:
+    return summarize_column(traces, task=task, bank_by_id=bank_by_id)
 
 
 def selected_tools(row: dict, mode: str) -> list[dict]:
@@ -274,6 +222,11 @@ def generate_fullcall(row, *, top5_mode, infer_mode, chat_fn, system) -> dict:
         "generator_content_fail": cas["generator_content_fail"],
         "generator_format_fail": cas["generator_format_fail"],
         "wall_ms": wall,
+        "prompt_tokens": (lat or {}).get("prompt_tokens"),
+        "output_tokens": (lat or {}).get("output_tokens"),
+        "output_tok_s": (lat or {}).get("output_tok_s"),
+        "family": row.get("family"),
+        "slice": row.get("slice"),
         "error": err,
         "prompt_hash": prompt_asset()["fullcall_system_sha256"],
     }
@@ -303,37 +256,13 @@ def generate_mw(row, *, top5_mode, chat_fn, system) -> dict:
         "strict_e2e": scored["strict_e2e"],
         "unsafe_execute": scored["unsafe_execute"],
         "wall_ms": wall,
+        "prompt_tokens": (lat or {}).get("prompt_tokens"),
+        "output_tokens": (lat or {}).get("output_tokens"),
+        "output_tok_s": (lat or {}).get("output_tok_s"),
+        "family": row.get("family"),
         "error": err,
         "prompt_hash": prompt_asset()["mw_system_sha256"],
     }
-
-
-def mei58m_chat_factory(decode_mode: str):
-    from runtime_v2 import RuntimeV2
-
-    status = mei58m_status()
-    if not status.get("available"):
-        return None, status
-    model, tok, report = load_mei58m()
-    rt_holder = {"rt": None, "catalog_key": None}
-
-    def _fn(user: str, **kwargs):
-        # user is already the v2 prompt for full-call; RuntimeV2.complete rebuilds prompt.
-        # We pass query via kwargs sidecar.
-        row = kwargs.get("_row")
-        tools = kwargs.get("_tools") or []
-        query = str((row or {}).get("query") or user)
-        facts = str((row or {}).get("system_facts") or "")
-        rt = rt_holder["rt"]
-        if rt is None:
-            rt = RuntimeV2(model, tok, catalog=tools, confidence_threshold=0.0)
-            rt_holder["rt"] = rt
-        t0 = time.perf_counter()
-        out = rt.complete(query, oracle_tools=tools, system_facts=facts, decode_mode=decode_mode, max_new=48)
-        wall = (time.perf_counter() - t0) * 1000
-        return out.get("text") or "", {"wall_ms": wall, "decode_mode": decode_mode, "selected": out.get("selected_tools")}
-
-    return _fn, {**status, "load_report": {k: report.get(k) for k in ("n_loaded", "n_missing") if isinstance(report, dict)}}
 
 
 def wrap_row_chat(fn, row, tools):
@@ -344,6 +273,117 @@ def wrap_row_chat(fn, row, tools):
         return fn(user, **kwargs)
 
     return _inner
+
+
+INFER_MODES = GEN_MODES
+
+
+def parse_trace_stem(stem: str) -> dict[str, str] | None:
+    if "." not in stem:
+        return None
+    body, split = stem.rsplit(".", 1)
+    if split not in {"dev", "test"}:
+        return None
+    if body.startswith("retrieval."):
+        return {"task": "retrieval", "name": body[len("retrieval.") :], "split": split}
+    if ".fullcall." in body:
+        left, top5 = body.split(".fullcall.", 1)
+        return {"task": "fullcall", "name": left, "top5": top5, "split": split}
+    if body.startswith("majority-mw."):
+        return {"task": "mw", "name": "majority-mw", "top5": body.split(".", 1)[1], "split": split}
+    if ".mw." in body:
+        left, top5 = body.split(".mw.", 1)
+        if left.endswith(".raw"):
+            left = left[: -len(".raw")]
+        return {"task": "mw", "name": left, "top5": top5, "split": split}
+    return None
+
+
+def nest_summary(generation: dict, retrieval: dict, parsed: dict, summary: dict) -> None:
+    task = parsed["task"]
+    name = parsed["name"]
+    if task == "retrieval":
+        retrieval[name] = summary
+        return
+    if task == "fullcall":
+        top5 = parsed["top5"]
+        if name.startswith("mei-58m."):
+            dec = name.split(".", 1)[1]
+            generation.setdefault("mei-58m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summary
+            return
+        if name == "always-refuse":
+            generation.setdefault("always-refuse", {}).setdefault("fullcall", {})[top5] = summary
+            return
+        for infer in INFER_MODES:
+            suffix = "." + infer
+            if name.endswith(suffix):
+                mid = name[: -len(suffix)]
+                generation.setdefault(mid, {}).setdefault("fullcall", {}).setdefault(infer, {})[top5] = summary
+                return
+        generation.setdefault(name, {}).setdefault("fullcall", {})[top5] = summary
+        return
+    generation.setdefault(name, {}).setdefault("mw", {})[parsed["top5"]] = summary
+
+
+def aggregate_from_traces(args) -> int:
+    split = args.split
+    lock_dir = args.lock_dir
+    fc_by_id = {str(r["item_id"]): r for r in load_jsonl(lock_dir / f"eval-fullcall-{split}.jsonl")}
+    mw_by_id = {str(r["item_id"]): r for r in load_jsonl(lock_dir / f"eval-mw-{split}.jsonl")}
+    generation: dict[str, Any] = {}
+    retrieval: dict[str, Any] = {}
+    traces_written = []
+    for path in sorted(args.trace_dir.glob(f"*.{split}.jsonl")):
+        parsed = parse_trace_stem(path.stem)
+        if not parsed:
+            continue
+        rows = load_jsonl(path)
+        if not rows:
+            continue
+        traces_written.append(rel(path))
+        if parsed["task"] == "retrieval":
+            summary = summarize_column(rows, task="retrieval")
+        elif parsed["task"] == "mw":
+            summary = summarize_column(rows, task="mw", bank_by_id=mw_by_id)
+        else:
+            summary = summarize_column(rows, task="fullcall", bank_by_id=fc_by_id)
+        summary["partial"] = True
+        nest_summary(generation, retrieval, parsed, summary)
+    prompt = prompt_asset()
+    payload = {
+        "id": "sft-v2-baseline-scorecard-v2",
+        "created_utc": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
+        "split": split,
+        "source": "aggregate_from_traces",
+        "lock_dir": rel(lock_dir),
+        "lock_sha256": sha256_file(lock_dir / "lock.json") if (lock_dir / "lock.json").is_file() else None,
+        "contract": rel(SFT_V2_BASELINE_CONTRACT_V2),
+        "models_matrix": rel(SFT_V2_BASELINE_MODELS_V2),
+        "prompt": {k: prompt[k] for k in ("prompt_version", "fullcall_system_sha256", "mw_system_sha256")},
+        "qwen_0.6b": "not_invented",
+        "minimind": {"25m": minimind_status("25m"), "45m": minimind_status("45m")},
+        "retrieval": retrieval,
+        "generation": generation,
+        "traces": traces_written,
+        "mei58m_checkpoint": resolve_promoted_58m_base(),
+        "scorecard_metrics": {
+            "required": ["accuracy", "rate"],
+            "accuracy_primary": {"retrieval": "recall_at_5", "fullcall": "strict_e2e", "mw": "strict_e2e"},
+            "rate": ["items_per_s", "items_per_min", "mean_ms", "p50_ms", "p95_ms", "total_wall_s"],
+        },
+        "note": "Aggregated from traces. Partial columns are allowed. Each column has accuracy + sequential rate.",
+        "current_json": "sft_and_runtime_unchanged",
+        "training": "not_run",
+    }
+    dump_json(args.out, payload)
+    print(
+        json.dumps(
+            {"ok": True, "out": rel(args.out), "n_traces": len(traces_written), "retrieval": list(retrieval), "generation": list(generation)},
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+    return 0
 
 
 def main() -> int:
@@ -360,8 +400,28 @@ def main() -> int:
     ap.add_argument("--resume", action="store_true", default=True, help="Reuse/continue existing trace JSONL files.")
     ap.add_argument("--no-resume", dest="resume", action="store_false")
     ap.add_argument("--tasks", default="retrieval,fullcall,mw")
+    ap.add_argument(
+        "--aggregate-from-traces",
+        action="store_true",
+        help="Rebuild scorecard accuracy+rate from existing JSONL traces; do not call models.",
+    )
     args = ap.parse_args()
+    if args.aggregate_from_traces:
+        return aggregate_from_traces(args)
     lock_dir = args.lock_dir
+    print(
+        json.dumps(
+            {
+                "mei58m_checkpoint": resolve_promoted_58m_base(),
+                "split": args.split,
+                "tasks": args.tasks,
+                "skip_qwen": args.skip_qwen,
+                "skip_58m_generate": args.skip_58m_generate,
+            },
+            ensure_ascii=False,
+        ),
+        flush=True,
+    )
     universe = load_universe(lock_dir)
     split = args.split
     ret_rows = load_jsonl(lock_dir / f"eval-retrieval-{split}.jsonl")
@@ -369,6 +429,8 @@ def main() -> int:
     mw_rows = load_jsonl(lock_dir / f"eval-mw-{split}.jsonl")
     if args.limit:
         ret_rows, fc_rows, mw_rows = ret_rows[: args.limit], fc_rows[: args.limit], mw_rows[: args.limit]
+    fc_by_id = {str(r["item_id"]): r for r in fc_rows}
+    mw_by_id = {str(r["item_id"]): r for r in mw_rows}
     tasks = {t.strip() for t in args.tasks.split(",") if t.strip()}
     prompt = prompt_asset()
     retrieval_rows_out = {}
@@ -377,12 +439,25 @@ def main() -> int:
         retrieval_rows_out["char-tfidf"] = run_sparse(ret_rows, universe, "tfidf")
         st58 = mei58m_status()
         if st58.get("available"):
-            import sys as _sys
+            engine = load_mei58m_sdk_engine()
+            session = engine.create_session()
 
-            _sys.path.insert(0, str(ROOT / "notebook/_tooling/model/mei-1.0-58m"))
-            model, tok, _rep = load_mei58m()
-            enc = mei58m_encode_fn(model, tok)
-            retrieval_rows_out["mei-58m-contrastive-no-sft"] = run_dense(ret_rows, universe, enc, "mei-58m-contrastive-no-sft")
+            def enc(text: str):
+                return session.embed(text)
+
+            dense = run_dense(ret_rows, universe, enc, "mei-58m-contrastive-no-sft")
+            for t in dense.get("traces") or []:
+                t["checkpoint"] = st58.get("path")
+                t["checkpoint_sha256"] = st58.get("weights_sha256")
+                t["via_sdk"] = True
+                t["eval_surface"] = "mei_sdk.embed"
+                t["sdk_backend"] = MEI58M_SDK_BACKEND
+                t["sdk_backend_revision"] = sdk_backend_revision()
+                t["performance_profile"] = "clean"
+            retrieval_rows_out["mei-58m-contrastive-no-sft"] = {
+                **dense,
+                "checkpoint": {k: st58.get(k) for k in ("path", "weights_sha256", "model_id", "abandoned_archive")},
+            }
             hnsw = HnswRetriever(enc, name="mei-58m-hnsw")
             hnsw.build(universe["tools"][:128])
             retrieval_rows_out["mei-58m-hnsw"] = {
@@ -405,6 +480,7 @@ def main() -> int:
 
     gen_results = {}
     traces_written = []
+    retrieval_compact: dict[str, Any] = {}
 
     def store_traces(name: str, rows: list[dict]):
         path = args.trace_dir / f"{name}.{split}.jsonl"
@@ -415,6 +491,31 @@ def main() -> int:
     def run_row_traces(name: str, rows: list[dict], build_one):
         path = args.trace_dir / f"{name}.{split}.jsonl"
         existing = load_jsonl(path) if path.is_file() else []
+        if name.startswith("mei-58m"):
+            want_sha = resolve_promoted_58m_base().get("weights_sha256")
+            got_sha = (existing[0] or {}).get("checkpoint_sha256") if existing else None
+            via_sdk = bool(existing and existing[0].get("via_sdk"))
+            got_rev = (existing[0] or {}).get("sdk_backend_revision") if existing else None
+            want_rev = sdk_backend_revision()
+            profile = (existing[0] or {}).get("performance_profile") if existing else None
+            if existing and got_sha != want_sha:
+                print(
+                    f"discard {name}: trace checkpoint {got_sha} != promoted {want_sha}",
+                    flush=True,
+                )
+                existing = []
+            elif existing and not via_sdk:
+                print(f"discard {name}: traces did not go through mei_sdk.complete", flush=True)
+                existing = []
+            elif existing and got_rev != want_rev:
+                print(
+                    f"discard {name}: sdk_backend_revision {got_rev} != {want_rev}",
+                    flush=True,
+                )
+                existing = []
+            elif existing and profile in {"preopt/contended", "contended"}:
+                print(f"discard {name}: performance_profile={profile} is not a clean baseline", flush=True)
+                existing = []
         if args.resume and len(existing) >= len(rows):
             traces_written.append(rel(path))
             return existing[: len(rows)]
@@ -435,6 +536,13 @@ def main() -> int:
         traces_written.append(rel(path))
         return existing[: len(rows)]
 
+    for k, v in retrieval_rows_out.items():
+        if isinstance(v, dict) and "traces" in v:
+            store_traces(f"retrieval.{k}", v["traces"])
+            retrieval_compact[k] = {kk: vv for kk, vv in v.items() if kk != "traces"}
+        else:
+            retrieval_compact[k] = v
+
     if "fullcall" in tasks:
         # floors
         def refuse_chat(_user, **_k):
@@ -446,30 +554,51 @@ def main() -> int:
                 fc_rows,
                 lambda r, top5=top5: generate_fullcall(r, top5_mode=top5, infer_mode="prompt_adapted_raw", chat_fn=refuse_chat, system=fullcall_system()),
             )
-            gen_results.setdefault("always-refuse", {}).setdefault("fullcall", {})[top5] = summarize_from_traces(traces, task="fullcall")
+            gen_results.setdefault("always-refuse", {}).setdefault("fullcall", {})[top5] = summarize_from_traces(
+                traces, task="fullcall", bank_by_id=fc_by_id
+            )
 
         if not args.skip_58m_generate and mei58m_status().get("available"):
-            import sys as _sys
-
-            _sys.path.insert(0, str(ROOT / "notebook/_tooling/model/mei-1.0-58m"))
             for dec in ("raw", "constrained"):
                 fn, meta = mei58m_chat_factory(dec)
                 if fn is None:
                     gen_results.setdefault("mei-58m-base-300m-no-sft", {})[dec] = meta
                     continue
+                ckpt_meta = resolve_promoted_58m_base()
+
+                def _stamp_58m(rec: dict, lat: dict | None = None) -> dict:
+                    rec["checkpoint"] = ckpt_meta.get("path")
+                    rec["checkpoint_sha256"] = ckpt_meta.get("weights_sha256")
+                    rec["base_model_id"] = ckpt_meta.get("model_id")
+                    rec["via_sdk"] = True
+                    rec["eval_surface"] = "mei_sdk.complete"
+                    rec["sdk_backend"] = MEI58M_SDK_BACKEND
+                    rec["sdk_backend_revision"] = sdk_backend_revision()
+                    rec["performance_profile"] = "clean"
+                    rec["max_new"] = 128
+                    rec["prompt_hash"] = "mei-tool-call-serializer-v2"
+                    return rec
+
                 for top5 in ("oracle_top5", "learned_top5"):
                     traces = run_row_traces(
                         f"mei-58m.{dec}.fullcall.{top5}",
                         fc_rows,
-                        lambda row, top5=top5, dec=dec, fn=fn: generate_fullcall(
-                            row,
-                            top5_mode=top5,
-                            infer_mode="prompt_adapted_raw" if dec == "raw" else "format_constrained",
-                            chat_fn=wrap_row_chat(fn, row, selected_tools(row, top5)),
-                            system=fullcall_system(),
+                        lambda row, top5=top5, dec=dec, fn=fn: _stamp_58m(
+                            {
+                                **generate_fullcall(
+                                    row,
+                                    top5_mode=top5,
+                                    infer_mode="prompt_adapted_raw",
+                                    chat_fn=wrap_row_chat(fn, row, selected_tools(row, top5)),
+                                    system="",
+                                ),
+                                "decode_mode": dec,
+                            }
                         ),
                     )
-                    gen_results.setdefault("mei-58m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summarize_from_traces(traces, task="fullcall")
+                    gen_results.setdefault("mei-58m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summarize_from_traces(
+                        traces, task="fullcall", bank_by_id=fc_by_id
+                    )
 
         if not args.skip_qwen:
             for mid, tag, params in QWEN_MODELS:
@@ -488,7 +617,9 @@ def main() -> int:
                                 r, top5_mode=top5, infer_mode=infer, chat_fn=chat, system=fullcall_system()
                             ),
                         )
-                        gen_results[mid].setdefault("fullcall", {}).setdefault(infer, {})[top5] = summarize_from_traces(traces, task="fullcall")
+                        gen_results[mid].setdefault("fullcall", {}).setdefault(infer, {})[top5] = summarize_from_traces(
+                            traces, task="fullcall", bank_by_id=fc_by_id
+                        )
 
     if "mw" in tasks:
         majority = "ready_to_execute"
@@ -502,7 +633,7 @@ def main() -> int:
                 mw_rows,
                 lambda r, top5=top5: generate_mw(r, top5_mode=top5, chat_fn=maj, system=mw_codebook_block()),
             )
-            gen_results.setdefault("majority-mw", {}).setdefault("mw", {})[top5] = summarize_from_traces(traces, task="mw")
+            gen_results.setdefault("majority-mw", {}).setdefault("mw", {})[top5] = summarize_from_traces(traces, task="mw", bank_by_id=mw_by_id)
         if not args.skip_qwen:
             for mid, tag, params in QWEN_MODELS:
                 if gen_results.get(mid, {}).get("status") == "unavailable":
@@ -518,17 +649,9 @@ def main() -> int:
                         mw_rows,
                         lambda r, top5=top5, chat=chat: generate_mw(r, top5_mode=top5, chat_fn=chat, system=mw_codebook_block()),
                     )
-                    gen_results.setdefault(mid, {}).setdefault("mw", {})[top5] = summarize_from_traces(traces, task="mw")
+                    gen_results.setdefault(mid, {}).setdefault("mw", {})[top5] = summarize_from_traces(traces, task="mw", bank_by_id=mw_by_id)
 
-    # strip traces from retrieval payload for the aggregate json
-    retrieval_compact = {}
-    for k, v in retrieval_rows_out.items():
-        if isinstance(v, dict) and "traces" in v:
-            store_traces(f"retrieval.{k}", v["traces"])
-            retrieval_compact[k] = {kk: vv for kk, vv in v.items() if kk != "traces"}
-        else:
-            retrieval_compact[k] = v
-
+    # retrieval traces already persisted before generation
     payload = {
         "id": "sft-v2-baseline-scorecard-v2",
         "created_utc": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
@@ -544,8 +667,14 @@ def main() -> int:
         "generation": gen_results,
         "traces": traces_written,
         "memory": _peak_mem(),
-        "note": "v1 scorecard remains a prompt-contract diagnostic and must not be overwritten.",
-        "current_json": "unchanged",
+        "mei58m_checkpoint": resolve_promoted_58m_base(),
+        "scorecard_metrics": {
+            "required": ["accuracy", "rate"],
+            "accuracy_primary": {"retrieval": "recall_at_5", "fullcall": "strict_e2e", "mw": "strict_e2e"},
+            "rate": ["items_per_s", "items_per_min", "mean_ms", "p50_ms", "p95_ms", "total_wall_s"],
+        },
+        "note": "v1 scorecard remains a prompt-contract diagnostic and must not be overwritten. 58M columns use CURRENT.json promoted base only; archive 300M parents are not eval targets. Each column reports accuracy (with splits) and sequential rate.",
+        "current_json": "sft_and_runtime_unchanged",
         "training": "not_run",
     }
     dump_json(args.out, payload)

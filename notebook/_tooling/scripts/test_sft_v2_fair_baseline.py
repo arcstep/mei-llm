@@ -82,6 +82,90 @@ def main() -> int:
     check("prompt_mentions_arguments", "arguments" in fullcall_system())
     check("mw_has_16_codes", mw_codebook_block().count("reason_code") >= 0 and "ready_to_execute" in mw_codebook_block())
 
+    from sft_v2_baseline_adapters import ABANDONED_58M_ARCHIVE, _is_abandoned_58m_archive, resolve_promoted_58m_base
+
+    st = resolve_promoted_58m_base()
+    check("58m_available", bool(st.get("available")), status=st.get("status"), path=st.get("path"))
+    check("58m_not_archive", ABANDONED_58M_ARCHIVE not in str(st.get("path") or ""))
+    check("58m_is_scratch300m", "scratch300m-v1" in str(st.get("path") or "") and str(st.get("path") or "").endswith("pretrain-300m-scratch.npz"))
+    check(
+        "58m_sha_pinned",
+        st.get("weights_sha256") == "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
+        sha=st.get("weights_sha256"),
+    )
+    check(
+        "archive_path_refused",
+        _is_abandoned_58m_archive("notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz"),
+    )
+
+    from sft_v2_scorecard_metrics import rate_block, summarize_column
+
+    fake = [
+        {
+            "gold": [{"name": "set_lights", "arguments": {"room": "a"}}],
+            "extracted": [{"name": "set_lights", "arguments": {"room": "a"}}],
+            "gold_execute": True,
+            "content_exact": True,
+            "format_ok": True,
+            "strict_e2e": True,
+            "legal": True,
+            "retrieval_hit": True,
+            "pipeline_strict": True,
+            "wall_ms": 100.0,
+            "family": "park",
+            "slice": "execute",
+        },
+        {
+            "gold": [],
+            "extracted": [],
+            "gold_execute": False,
+            "content_exact": True,
+            "format_ok": True,
+            "strict_e2e": True,
+            "legal": True,
+            "retrieval_hit": True,
+            "pipeline_strict": True,
+            "wall_ms": 100.0,
+            "family": "park",
+            "slice": "refuse",
+        },
+        {
+            "gold": [{"name": "set_lights", "arguments": {"room": "a"}}],
+            "extracted": [{"name": "set_lights", "arguments": {"room": "b"}}],
+            "gold_execute": True,
+            "content_exact": False,
+            "format_ok": True,
+            "strict_e2e": False,
+            "legal": True,
+            "retrieval_hit": True,
+            "pipeline_strict": False,
+            "wall_ms": 200.0,
+            "family": "park",
+            "slice": "execute",
+        },
+    ]
+    col = summarize_column(fake, task="fullcall")
+    check("scorecard_has_accuracy", "accuracy" in col and "rate" in col)
+    check("rate_10_items_per_s", col["rate"]["items_per_s"] == 7.5, rate=col["rate"])
+    check("accuracy_split_execute_refuse", "execute" in col["accuracy"]["splits"] and "refuse" in col["accuracy"]["splits"])
+    check("tool_name_split", col["accuracy"]["metrics"]["tool_name"]["k"] == 3)
+    check("arguments_split", col["accuracy"]["metrics"]["arguments"]["k"] == 2)
+    check("headline_has_both", col["headline"]["accuracy_metric"] == "strict_e2e" and col["headline"]["items_per_s"] == 7.5)
+
+    ret_traces = [
+        {"family": "seen", "rank": 0, "wall_ms": 10.0, "catalog_size": 128},
+        {"family": "seen", "rank": 4, "wall_ms": 10.0, "catalog_size": 128},
+        {"family": "unseen", "rank": -1, "wall_ms": 10.0, "catalog_size": 128},
+        {"family": "no_match", "rank": -1, "wall_ms": 10.0},
+    ]
+    rcol = summarize_column(ret_traces, task="retrieval")
+    check("retrieval_primary_recall5", rcol["accuracy"]["primary_metric"] == "recall_at_5")
+    check("retrieval_rate_present", rcol["rate"]["items_per_s"] == 100.0)
+    check("retrieval_family_split", "seen" in rcol["accuracy"]["splits"]["by_family"])
+
+    rb = rate_block([{"wall_ms": 250.0} for _ in range(4)])
+    check("rate_4_per_s", rb["items_per_s"] == 4.0 and rb["items_per_min"] == 240.0)
+
     ok = all(c["ok"] for c in cases)
     print(json.dumps({"ok": ok, "cases": cases}, ensure_ascii=False, indent=2))
     return 0 if ok else 1

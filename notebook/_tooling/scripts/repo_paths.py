@@ -38,6 +38,8 @@ TOKENIZER_ZH_V1 = TOKENIZER_DIR / "zh-24k-v1.model"
 TOKENIZER_MANIFEST = TOKENIZER_DIR / "tokenizer-v1-manifest.json"
 
 PUBLISHED_LM_V1 = ROOT / "corpus" / "lm-v1"
+PUBLISHED_LM_V2 = ROOT / "corpus" / "lm-v2"
+LM_V2 = NOTEBOOK / "corpus" / "lm-v2"
 ARCHITECTURE_V1 = ROOT / "architecture" / "mei-1.0-58m-arch-v1"
 TRAINING_V1 = ROOT / "training" / "mei-1.0-58m-train-v1"
 TRAIN_RUNS = ROOT / "training" / "runs"

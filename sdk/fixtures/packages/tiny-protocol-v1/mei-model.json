@@ -1,0 +1,37 @@
+{
+  "package_format": "mei-model-package-v1",
+  "product": "mei-1.0-58m",
+  "package_id": "tiny-protocol-v1",
+  "runtime_min": "mei-runtime-abi-1",
+  "architecture": {
+    "id": "mei-1.0-58m-arch-v1",
+    "d_model": 512,
+    "n_layers": 27,
+    "n_heads": 8,
+    "n_kv_heads": 4,
+    "head_dim": 64,
+    "vocab_size": 24000,
+    "max_seq_len": 2048
+  },
+  "tokenizer": {
+    "id": "zh-24k-v1",
+    "file": "tokenizer.model",
+    "sha256": "f2d534c483f4aa130359d00dd540d1f7ae95d0f1154ae124a7e71ebed570e6b5"
+  },
+  "weights": {
+    "file": "weights.bin",
+    "format": "raw",
+    "sha256": "87ec7f72f0069f3366733e424a255cad019bd722b39a10d2fa12c4c30ebb87d1",
+    "quantization": {
+      "scheme": "none",
+      "status": "untrained"
+    }
+  },
+  "heads": {
+    "lm": { "present": true, "trained": false, "status": "untrained" },
+    "contrastive": { "present": false, "trained": false, "status": "missing" },
+    "mw_disposition": { "present": false, "trained": false, "status": "missing" },
+    "confidence": { "present": false, "trained": false, "status": "missing" }
+  },
+  "release_class": "experimental"
+}

@@ -1,0 +1,43 @@
+{
+  "sdk_semver": "0.1.0-experimental",
+  "languages": {
+    "rust": {
+      "status": "experimental",
+      "crate": "mei-sdk-core",
+      "inference": "quantized-q4-portable",
+      "protocol": "available"
+    },
+    "c": {
+      "status": "experimental",
+      "abi": "mei-runtime-abi-1",
+      "inference": "via-rust-core-quantized",
+      "protocol": "available"
+    },
+    "python": {
+      "status": "experimental",
+      "bindings": ["protocol-native", "ctypes-ffi", "mlx-reference-oracle", "mlx-51m-q4"],
+      "inference": "mlx-q4-and-mlx-fused-wht",
+      "note": "Python+MLX is the golden oracle for Q4 vs frozen float-anchor deltas. WASM never loads float weights."
+    },
+    "node": {
+      "status": "experimental",
+      "api_surface": "node-local",
+      "inference": "unavailable",
+      "protocol": "available"
+    },
+    "browser": {
+      "status": "declared-separately",
+      "api_surface": "browser",
+      "inference": "wasm-tier-1-quantized-only",
+      "protocol": "available"
+    },
+    "wasm": {
+      "status": "tier-1-quantized",
+      "tiers": {
+        "0": "protocol and package validation only",
+        "1": "51M quantized package (mei-q4-packed-v1) in-browser; float npz refused"
+      },
+      "inference": "quantized-only"
+    }
+  }
+}

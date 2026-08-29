@@ -1,0 +1,48 @@
+{
+  "package_id": "tiny-protocol-v1",
+  "capabilities": {
+    "package_id": "tiny-protocol-v1",
+    "release_class": "experimental",
+    "inference": false,
+    "protocol": true,
+    "heads": {
+      "lm": {
+        "present": true,
+        "trained": false,
+        "status": "untrained"
+      },
+      "contrastive": {
+        "present": false,
+        "trained": false,
+        "status": "missing"
+      },
+      "mw_disposition": {
+        "present": false,
+        "trained": false,
+        "status": "missing"
+      },
+      "confidence": {
+        "present": false,
+        "trained": false,
+        "status": "missing"
+      }
+    },
+    "missing_or_untrained_heads": [
+      "lm",
+      "contrastive",
+      "mw_disposition",
+      "confidence"
+    ],
+    "hash_verified": true,
+    "versions": {
+      "sdk_semver": "0.1.0-experimental",
+      "wire_version": "mei-runtime-wire-v1",
+      "model_package_version": "mei-model-package-v1",
+      "runtime_abi_version": "mei-runtime-abi-1",
+      "protocol_id": "mei-tool-call-protocol-v2",
+      "serializer_id": "mei-tool-call-serializer-v2",
+      "release_class": "experimental",
+      "product": "mei-1.0-58m Runtime"
+    }
+  }
+}

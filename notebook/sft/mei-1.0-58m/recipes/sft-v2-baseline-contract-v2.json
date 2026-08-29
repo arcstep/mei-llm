@@ -4,7 +4,7 @@
   "blocking_for_publish": false,
   "ssot_promotion": "not_this_round",
   "draft": "docs/draft/mei-llm/2026-08-27-mei-park-toolcall-training-contract.md",
-  "current_json": "must_remain_scratch-pretrain-ready",
+  "current_json": "must_not_write_sft_or_runtime; base_is_scratch-300m-promoted",
   "training": "not_authorized",
   "accepted_release": false,
   "v1_contract": "sft-v2-baseline-contract-v1",
@@ -76,7 +76,23 @@
     "max_tokens": 128,
     "tune_prompts_on_dev_only": true,
     "teacher_must_not_read_eval": true,
-    "no_gold_or_compiler_leak_in_prompt": true
+    "no_gold_or_compiler_leak_in_prompt": true,
+    "scorecard_must_report": ["accuracy", "rate"],
+    "accuracy_primary": {
+      "retrieval": "recall_at_5",
+      "full_call": "strict_e2e",
+      "mw": "strict_e2e"
+    },
+    "accuracy_splits": {
+      "full_call": ["content", "format", "strict_e2e", "tool_name", "arguments", "execute", "refuse", "by_family", "by_slice", "cascade"],
+      "retrieval": ["recall_at_1", "recall_at_5", "mrr", "by_family", "by_catalog_size"],
+      "mw": ["content", "format", "strict_e2e", "macro_f1", "per_class", "unsafe_execute"]
+    },
+    "rate": {
+      "primary": "items_per_s",
+      "also": ["items_per_min", "mean_ms", "p50_ms", "p95_ms", "total_wall_s", "output_tok_s_mean_if_available"],
+      "definition": "sequential n / sum(wall_ms); not batch QPS"
+    }
   },
   "eval_lock": {
     "id": "sft-v2-eval-lock-v2",

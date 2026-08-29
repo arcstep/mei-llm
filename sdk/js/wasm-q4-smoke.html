@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>51M Q4 WASM smoke</title>
+<p>Quantized-only WASM complete() smoke. Float npz is refused.</p>
+<pre id="out">loading…</pre>
+<script type="module">
+  const out = document.getElementById("out");
+  const worker = new Worker("./wasm-q4-worker.js", { type: "module" });
+  worker.onmessage = (ev) => {
+    out.textContent = JSON.stringify(ev.data, null, 2);
+  };
+  worker.onerror = (err) => {
+    out.textContent = JSON.stringify(
+      {
+        error: String(err && err.message ? err.message : err),
+        filename: err && err.filename,
+        lineno: err && err.lineno,
+        colno: err && err.colno,
+      },
+      null,
+      2,
+    );
+  };
+</script>

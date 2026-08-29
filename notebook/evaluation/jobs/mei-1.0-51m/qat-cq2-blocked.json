@@ -1,0 +1,67 @@
+{
+  "kind": "qat-cq2-blocked",
+  "quality_blocked": true,
+  "reason": "CQ2 whole-tensor Q2 STE (75 tensors, coarsened from mixed-block candidate) missed the float-anchor valid_loss delta at 0.5M. Mixed stays blocked; ship QAT Q4 only.",
+  "eval": {
+    "valid_loss": 3.326747016981244,
+    "float_anchor_valid_loss": 3.1709813214838505,
+    "delta_valid_loss": 0.1557656954973936,
+    "probe_mean_nll": 4.475453024752261,
+    "probe_family_nll": {
+      "utf8_roundtrip": 5.402161677678426,
+      "copy": 2.72205734004577,
+      "number": 6.691930532455444,
+      "date": 4.080530178546906,
+      "json": 4.0422433143015954,
+      "instruction": 4.347004815936089
+    },
+    "probe_exact_rate": 0.0,
+    "probe_n": 7,
+    "float_anchor_probe_mean_nll": 4.3068690155824045,
+    "delta_probe_mean_nll": 0.16858400916985605,
+    "greedy": [
+      {
+        "prompt": "厨房灯打开",
+        "greedy_qat": "了,你看看是不是",
+        "greedy_float_stored": "了,你看看是不是",
+        "match": true
+      },
+      {
+        "prompt": "[]",
+        "greedy_qat": "}} }} }}",
+        "greedy_float_stored": "} {\"$schema\"",
+        "match": false
+      },
+      {
+        "prompt": "{\"name\":",
+        "greedy_qat": "\"set_rate\", ",
+        "greedy_float_stored": "\"string\", \"",
+        "match": false
+      }
+    ],
+    "greedy_match_n": 1,
+    "greedy_match_min_preregistered": 2,
+    "greedy_ok": false,
+    "quality_ok": false,
+    "product_ok": false,
+    "quality_fail_reasons": [
+      "delta_valid_loss 0.1558 > 0.15"
+    ],
+    "did_not_reload_float": true,
+    "eval_used_weight_fake_quant": true,
+    "eval_activation_ste": false,
+    "train_activation_ste": true,
+    "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4"
+  },
+  "quality_ok": false,
+  "product_final": false,
+  "ship": "QAT Q4 only",
+  "coarsened": "q2q4-product-tensor-bits-coarsened.json",
+  "rung": "0p5m",
+  "quant_counts": {
+    "2": 75,
+    "4": 212,
+    "32": 113
+  },
+  "stale_2m_almost_q4_ste": "qat-cq2-rung-2m.pre-coarsen-almost-q4.json"
+}

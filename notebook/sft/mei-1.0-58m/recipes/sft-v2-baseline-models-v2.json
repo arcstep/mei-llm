@@ -1,7 +1,7 @@
 {
   "id": "sft-v2-baseline-models-v2",
   "status": "fair_baseline_rebuild",
-  "note": "Retrieval baselines are retrievers, not chat models. Qwen 0.6B has no in-repo runner. MiniMind same-data SFT is not authorized. 58M no-SFT must emit real generations, not always-refuse.",
+  "note": "Retrieval baselines are retrievers, not chat models. Qwen 0.6B has no in-repo runner. MiniMind same-data SFT is not authorized. 58M no-SFT must emit real generations, not always-refuse. 58M weights come from CURRENT.json base (scratch300m-v1); notebook/archive/base/mei-1.0-58m-checkpoints is abandoned and is not an eval target.",
   "protocol": {
     "temperature": 0,
     "max_tokens": 128,
@@ -46,7 +46,10 @@
       "role": "self_baseline",
       "backend": "mlx_contrastive_head",
       "params": 58541901,
-      "checkpoint": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
+      "checkpoint": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch.npz",
+      "weights_sha256": "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
+      "source": "CURRENT.json base",
+      "abandoned_archive": "not_used",
       "dim": 128,
       "encode": "raw_query_and_canonical_tool_text",
       "normalize": "l2",
@@ -78,9 +81,12 @@
       "role": "self_baseline",
       "params": 58541901,
       "backend": "mlx",
-      "checkpoint": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
+      "checkpoint": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch.npz",
+      "weights_sha256": "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
+      "source": "CURRENT.json base",
+      "abandoned_archive": "not_used",
       "inference_columns": ["prompt_adapted_raw", "format_constrained"],
-      "note": "Run real unconstrained and product grammar decoders. Do not substitute always-refuse."
+      "note": "Promoted scratch-300m only. Archive pretrain-300m.npz is abandoned and must not be evaluated. Run real unconstrained and product grammar decoders. Do not substitute always-refuse."
     },
     {
       "id": "minimind-25m",

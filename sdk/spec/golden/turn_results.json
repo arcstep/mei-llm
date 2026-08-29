@@ -1,0 +1,387 @@
+{
+  "versions": {
+    "sdk_semver": "0.1.0-experimental",
+    "wire_version": "mei-runtime-wire-v1",
+    "model_package_version": "mei-model-package-v1",
+    "runtime_abi_version": "mei-runtime-abi-1",
+    "protocol_id": "mei-tool-call-protocol-v2",
+    "serializer_id": "mei-tool-call-serializer-v2",
+    "release_class": "experimental",
+    "product": "mei-1.0-58m Runtime"
+  },
+  "turns": {
+    "refuse": {
+      "wire_version": "mei-runtime-wire-v1",
+      "ok": true,
+      "error": null,
+      "refuse": true,
+      "selected_tools": [
+        "light.set"
+      ],
+      "schema_fingerprint": "1a1642ef107eb8d91277534bcded72366dfbdffd30d9cfd56b1bdf0972a6b3f6",
+      "function_calls": [],
+      "raw_text": "[]",
+      "confidence": {
+        "available": false,
+        "value": null,
+        "source": null
+      },
+      "provenance": {
+        "validated": true,
+        "ok": true,
+        "detail": null
+      },
+      "capabilities": {
+        "package_id": "tiny-protocol-v1",
+        "release_class": "experimental",
+        "inference": false,
+        "protocol": true,
+        "heads": {
+          "lm": {
+            "present": true,
+            "trained": false,
+            "status": "untrained"
+          },
+          "contrastive": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "mw_disposition": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "confidence": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          }
+        },
+        "missing_or_untrained_heads": [
+          "lm",
+          "contrastive",
+          "mw_disposition",
+          "confidence"
+        ],
+        "hash_verified": true,
+        "versions": {
+          "sdk_semver": "0.1.0-experimental",
+          "wire_version": "mei-runtime-wire-v1",
+          "model_package_version": "mei-model-package-v1",
+          "runtime_abi_version": "mei-runtime-abi-1",
+          "protocol_id": "mei-tool-call-protocol-v2",
+          "serializer_id": "mei-tool-call-serializer-v2",
+          "release_class": "experimental",
+          "product": "mei-1.0-58m Runtime"
+        }
+      },
+      "stats": {
+        "backend": "protocol",
+        "wall_ms": 0,
+        "decode_mode": "constrained"
+      }
+    },
+    "call": {
+      "wire_version": "mei-runtime-wire-v1",
+      "ok": true,
+      "error": null,
+      "refuse": false,
+      "selected_tools": [
+        "light.set"
+      ],
+      "schema_fingerprint": "1a1642ef107eb8d91277534bcded72366dfbdffd30d9cfd56b1bdf0972a6b3f6",
+      "function_calls": [
+        {
+          "name": "light.set",
+          "arguments": {}
+        }
+      ],
+      "raw_text": "[{\"name\":\"light.set\",\"arguments\":{}}]",
+      "confidence": {
+        "available": false,
+        "value": null,
+        "source": null
+      },
+      "provenance": {
+        "validated": true,
+        "ok": true,
+        "detail": null
+      },
+      "capabilities": {
+        "package_id": "tiny-protocol-v1",
+        "release_class": "experimental",
+        "inference": false,
+        "protocol": true,
+        "heads": {
+          "lm": {
+            "present": true,
+            "trained": false,
+            "status": "untrained"
+          },
+          "contrastive": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "mw_disposition": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "confidence": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          }
+        },
+        "missing_or_untrained_heads": [
+          "lm",
+          "contrastive",
+          "mw_disposition",
+          "confidence"
+        ],
+        "hash_verified": true,
+        "versions": {
+          "sdk_semver": "0.1.0-experimental",
+          "wire_version": "mei-runtime-wire-v1",
+          "model_package_version": "mei-model-package-v1",
+          "runtime_abi_version": "mei-runtime-abi-1",
+          "protocol_id": "mei-tool-call-protocol-v2",
+          "serializer_id": "mei-tool-call-serializer-v2",
+          "release_class": "experimental",
+          "product": "mei-1.0-58m Runtime"
+        }
+      },
+      "stats": {
+        "backend": "protocol",
+        "wall_ms": 0,
+        "decode_mode": "constrained"
+      }
+    },
+    "too_many": {
+      "wire_version": "mei-runtime-wire-v1",
+      "ok": false,
+      "error": {
+        "code": 8,
+        "id": "too_many_tools",
+        "message": "complete() accepts at most 5 selected tools; retrieval must run first"
+      },
+      "refuse": true,
+      "selected_tools": [],
+      "schema_fingerprint": null,
+      "function_calls": [],
+      "raw_text": null,
+      "confidence": {
+        "available": false,
+        "value": null,
+        "source": null
+      },
+      "provenance": {
+        "validated": true,
+        "ok": false,
+        "detail": "too_many_tools"
+      },
+      "capabilities": {
+        "package_id": "tiny-protocol-v1",
+        "release_class": "experimental",
+        "inference": false,
+        "protocol": true,
+        "heads": {
+          "lm": {
+            "present": true,
+            "trained": false,
+            "status": "untrained"
+          },
+          "contrastive": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "mw_disposition": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "confidence": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          }
+        },
+        "missing_or_untrained_heads": [
+          "lm",
+          "contrastive",
+          "mw_disposition",
+          "confidence"
+        ],
+        "hash_verified": true,
+        "versions": {
+          "sdk_semver": "0.1.0-experimental",
+          "wire_version": "mei-runtime-wire-v1",
+          "model_package_version": "mei-model-package-v1",
+          "runtime_abi_version": "mei-runtime-abi-1",
+          "protocol_id": "mei-tool-call-protocol-v2",
+          "serializer_id": "mei-tool-call-serializer-v2",
+          "release_class": "experimental",
+          "product": "mei-1.0-58m Runtime"
+        }
+      },
+      "stats": {
+        "backend": "protocol",
+        "wall_ms": 0,
+        "decode_mode": "constrained"
+      }
+    },
+    "leak": {
+      "wire_version": "mei-runtime-wire-v1",
+      "ok": false,
+      "error": {
+        "code": 9,
+        "id": "gold_leak",
+        "message": "forbidden markers: gold_route_id"
+      },
+      "refuse": true,
+      "selected_tools": [],
+      "schema_fingerprint": null,
+      "function_calls": [],
+      "raw_text": null,
+      "confidence": {
+        "available": false,
+        "value": null,
+        "source": null
+      },
+      "provenance": {
+        "validated": true,
+        "ok": false,
+        "detail": "gold_leak"
+      },
+      "capabilities": {
+        "package_id": "tiny-protocol-v1",
+        "release_class": "experimental",
+        "inference": false,
+        "protocol": true,
+        "heads": {
+          "lm": {
+            "present": true,
+            "trained": false,
+            "status": "untrained"
+          },
+          "contrastive": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "mw_disposition": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "confidence": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          }
+        },
+        "missing_or_untrained_heads": [
+          "lm",
+          "contrastive",
+          "mw_disposition",
+          "confidence"
+        ],
+        "hash_verified": true,
+        "versions": {
+          "sdk_semver": "0.1.0-experimental",
+          "wire_version": "mei-runtime-wire-v1",
+          "model_package_version": "mei-model-package-v1",
+          "runtime_abi_version": "mei-runtime-abi-1",
+          "protocol_id": "mei-tool-call-protocol-v2",
+          "serializer_id": "mei-tool-call-serializer-v2",
+          "release_class": "experimental",
+          "product": "mei-1.0-58m Runtime"
+        }
+      },
+      "stats": {
+        "backend": "protocol",
+        "wall_ms": 0,
+        "decode_mode": "constrained"
+      }
+    },
+    "unavailable": {
+      "wire_version": "mei-runtime-wire-v1",
+      "ok": false,
+      "error": {
+        "code": 6,
+        "id": "engine_unavailable",
+        "message": "portable inference is not in this experimental SDK; pass candidate_text for protocol validation"
+      },
+      "refuse": true,
+      "selected_tools": [
+        "light.set"
+      ],
+      "schema_fingerprint": "1a1642ef107eb8d91277534bcded72366dfbdffd30d9cfd56b1bdf0972a6b3f6",
+      "function_calls": [],
+      "raw_text": null,
+      "confidence": {
+        "available": false,
+        "value": null,
+        "source": null
+      },
+      "provenance": {
+        "validated": false,
+        "ok": false,
+        "detail": "engine_unavailable"
+      },
+      "capabilities": {
+        "package_id": "tiny-protocol-v1",
+        "release_class": "experimental",
+        "inference": false,
+        "protocol": true,
+        "heads": {
+          "lm": {
+            "present": true,
+            "trained": false,
+            "status": "untrained"
+          },
+          "contrastive": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "mw_disposition": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          },
+          "confidence": {
+            "present": false,
+            "trained": false,
+            "status": "missing"
+          }
+        },
+        "missing_or_untrained_heads": [
+          "lm",
+          "contrastive",
+          "mw_disposition",
+          "confidence"
+        ],
+        "hash_verified": true,
+        "versions": {
+          "sdk_semver": "0.1.0-experimental",
+          "wire_version": "mei-runtime-wire-v1",
+          "model_package_version": "mei-model-package-v1",
+          "runtime_abi_version": "mei-runtime-abi-1",
+          "protocol_id": "mei-tool-call-protocol-v2",
+          "serializer_id": "mei-tool-call-serializer-v2",
+          "release_class": "experimental",
+          "product": "mei-1.0-58m Runtime"
+        }
+      },
+      "stats": {
+        "backend": "protocol",
+        "wall_ms": 0,
+        "decode_mode": "constrained"
+      }
+    }
+  }
+}

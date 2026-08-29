@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -18,6 +19,61 @@ from sft_v2_baseline_lib import REASON_CODES_16, STUDENT_SYSTEM, env_path, rel
 
 MODELS = json.loads(SFT_V2_BASELINE_MODELS.read_text(encoding="utf-8"))["models"]
 MODEL_BY_ID = {m["id"]: m for m in MODELS}
+
+ABANDONED_58M_ARCHIVE = "notebook/archive/base/mei-1.0-58m-checkpoints"
+PROMOTED_58M_WEIGHTS = "pretrain-300m-scratch.npz"
+MEI58M_SDK_BACKEND = "mlx-fused"
+
+
+def _is_abandoned_58m_archive(path: str | os.PathLike[str] | None) -> bool:
+    text = str(path or "").replace("\\", "/")
+    return ABANDONED_58M_ARCHIVE in text
+
+
+def resolve_promoted_58m_base() -> dict[str, Any]:
+    """Load the CURRENT.json promoted base. Archive 300M parents are not eval targets."""
+    current_path = ROOT / "CURRENT.json"
+    current = json.loads(current_path.read_text(encoding="utf-8")) if current_path.is_file() else {}
+    base_rel = current.get("base")
+    if not base_rel:
+        return {
+            "available": False,
+            "status": "base_null_in_current",
+            "path": None,
+            "abandoned_archive": "not_used",
+        }
+    if _is_abandoned_58m_archive(base_rel):
+        return {
+            "available": False,
+            "status": "abandoned_archive_refused",
+            "path": str(base_rel),
+        }
+    ckpt_rel = f"{str(base_rel).rstrip('/')}/{PROMOTED_58M_WEIGHTS}"
+    ckpt = ROOT / ckpt_rel
+    if not ckpt.is_file():
+        return {
+            "available": False,
+            "status": "missing_checkpoint",
+            "path": ckpt_rel,
+            "stage": current.get("stage"),
+        }
+    release: dict[str, Any] = {}
+    release_path = ROOT / base_rel / "RELEASE.json"
+    if release_path.is_file():
+        release = json.loads(release_path.read_text(encoding="utf-8"))
+    return {
+        "available": True,
+        "status": "promoted_base",
+        "path": ckpt_rel,
+        "bytes": ckpt.stat().st_size,
+        "weights_sha256": release.get("weights_sha256"),
+        "model_id": release.get("model_id") or Path(str(base_rel)).name,
+        "tokens_seen_exposure": release.get("tokens_seen_exposure"),
+        "init_mode": release.get("init_mode"),
+        "valid_loss": release.get("valid_loss"),
+        "stage": current.get("stage"),
+        "abandoned_archive": "not_used",
+    }
 
 
 def model_spec(model_id: str) -> dict:
@@ -198,38 +254,96 @@ def qwen_ollama_factory(host: str, tag: str, timeout: int) -> Callable[..., tupl
 
 
 def mei58m_status() -> dict[str, Any]:
-    spec = model_spec("mei-58m-base-300m-no-sft")
-    ckpt = ROOT / spec["checkpoint"]
-    if not ckpt.is_file():
-        return {"available": False, "status": "missing_checkpoint", "path": spec["checkpoint"]}
-    return {"available": True, "status": "checkpoint_present", "path": spec["checkpoint"], "bytes": ckpt.stat().st_size}
+    return resolve_promoted_58m_base()
+
+
+def _sdk_python_path() -> None:
+    sdk_py = ROOT / "sdk" / "python"
+    text = str(sdk_py)
+    if text not in sys.path:
+        sys.path.insert(0, text)
+
+
+_SDK_ENGINE = None
+_SDK_REVISION = None
+
+
+def sdk_backend_revision() -> str:
+    global _SDK_REVISION
+    if _SDK_REVISION is None:
+        _sdk_python_path()
+        from mei_sdk.mlx_backend import backend_revision
+
+        _SDK_REVISION = backend_revision(MEI58M_SDK_BACKEND)
+    return _SDK_REVISION
+
+
+def load_mei58m_sdk_engine(*, verify_hashes: bool = True):
+    """Load mei-58m-base through the public SDK. Eval must not import RuntimeV2 directly."""
+    global _SDK_ENGINE
+    if _SDK_ENGINE is not None:
+        return _SDK_ENGINE
+    _sdk_python_path()
+    from mei_sdk import Engine
+
+    package = ROOT / "sdk" / "packages" / "mei-1.0-58m-base-scratch300m-v1"
+    if _is_abandoned_58m_archive(str(package)):
+        raise RuntimeError("abandoned archive checkpoint is not a valid eval target")
+    _SDK_ENGINE = Engine.load(
+        str(package),
+        verify_hashes=verify_hashes,
+        backend=MEI58M_SDK_BACKEND,
+    )
+    return _SDK_ENGINE
 
 
 def load_mei58m():
-    import sys
+    """Retired alias: still loads via SDK so callers cannot skip the product API."""
+    engine = load_mei58m_sdk_engine()
+    rt = engine.runtime
+    return rt.model, rt.tokenizer, engine.load_report
 
-    sys.path.insert(0, str(TASKS_ROOT / TASK_NEEDLE_ZH / "model"))
-    from architecture import NeedleZh
-    from checkpoint import load_params
-    from config import NeedleZhConfig
-    from tokenizer import ZhTokenizerV1
 
-    spec = model_spec("mei-58m-base-300m-no-sft")
-    ckpt = ROOT / spec["checkpoint"]
-    tok = ZhTokenizerV1()
-    cfg = NeedleZhConfig.from_target_v2()
-    model = NeedleZh(cfg)
-    report = load_params(
-        model,
-        ckpt,
-        strict=False,
-        allow_missing_prefixes=("contrastive", "mw", "confidence", "conf"),
-        return_report=True,
-    )
-    import mlx.core as mx
+def mei58m_chat_factory(decode_mode: str):
+    status = mei58m_status()
+    if not status.get("available"):
+        return None, status
+    engine = load_mei58m_sdk_engine()
+    session = engine.create_session()
+    mode = "raw" if decode_mode == "raw" else "constrained"
 
-    mx.eval(model.parameters())
-    return model, tok, report
+    def _fn(user: str, **kwargs):
+        row = kwargs.get("_row")
+        tools = kwargs.get("_tools") or []
+        query = str((row or {}).get("query") or user)
+        facts = str((row or {}).get("system_facts") or "")
+        out = session.complete(
+            {
+                "query": query,
+                "oracle_tools": tools,
+                "system_facts": facts,
+                "decode_mode": mode,
+                "max_new": 128,
+            }
+        )
+        return out.get("raw_text") or "", {
+            "wall_ms": (out.get("stats") or {}).get("wall_ms"),
+            "decode_mode": mode,
+            "selected": out.get("selected_tools"),
+            "via_sdk": True,
+            "sdk_backend": (out.get("stats") or {}).get("backend"),
+            "wire_version": out.get("wire_version"),
+            "prompt_tokens": (out.get("stats") or {}).get("prompt_tokens"),
+            "output_tokens": (out.get("stats") or {}).get("output_tokens"),
+            "output_tok_s": (out.get("stats") or {}).get("output_tok_s"),
+            "prefill_ms": (out.get("stats") or {}).get("prefill_ms"),
+            "decode_ms": (out.get("stats") or {}).get("decode_ms"),
+            "grammar_ms": (out.get("stats") or {}).get("grammar_ms"),
+            "validate_ms": (out.get("stats") or {}).get("validate_ms"),
+            "sdk_backend_revision": (out.get("stats") or {}).get("sdk_backend_revision") or sdk_backend_revision(),
+        }
+
+    return _fn, {**status, "eval_surface": "mei_sdk.complete", "sdk_backend": "mlx-reference"}
 
 
 def adapter_matrix(*, host: str = "http://127.0.0.1:11434", timeout: int = 8) -> list[dict[str, Any]]:
@@ -273,7 +387,10 @@ def resolve_adapters(*, host: str, timeout: int, include: set[str] | None = None
         elif spec["id"] == "mei-58m-base-300m-no-sft":
             st = mei58m_status()
             ad.status = st["status"]
-            ad.note = "no-SFT self baseline; generation uses product runtime if load succeeds"
+            ad.note = (
+                f"no-SFT self baseline from CURRENT.json base ({st.get('path')}); "
+                "abandoned archive checkpoints are not evaluated"
+            )
         elif spec["id"] in {"lexical-retrieval", "majority-mw", "random-init-58m"}:
             ad.status = "ready"
         out.append(ad)

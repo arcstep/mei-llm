@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "compiled": true,
+  "loaded": true,
+  "refuse_float": true,
+  "quantized_only": true,
+  "wasm_tier": 1,
+  "weights_bytes": 29188480,
+  "package_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-base-scratch300m-qat-q4-v1",
+  "complete_ran": true,
+  "n_new": 8,
+  "raw_text": " | | | |",
+  "cold_start_ms": 538,
+  "infer_ms": 2440,
+  "decode_tok_s": 3.278688524590164,
+  "worker_note": "Node smoke runs complete() off the browser main thread; see wasm-q4-smoke.html for Worker.",
+  "note": "WASM short decode ran (max_new>=8)."
+}

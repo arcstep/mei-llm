@@ -44,9 +44,14 @@
       "role": "self_baseline",
       "params": 58541901,
       "backend": "mlx",
-      "checkpoint": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
-      "registry": "notebook/archive/base/mei-1.0-58m-checkpoints/registry/mei-1.0-58m-base-cpt300m-v1.json",
-      "heads": "product_contrastive_mw_if_present_else_untrained"
+      "checkpoint": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch.npz",
+      "weights_sha256": "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
+      "source": "CURRENT.json base",
+      "abandoned_archive": "not_used",
+      "historical_v1_scorecard_checkpoint": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
+      "registry": "base/mei-1.0-58m-base-scratch300m-v1/RELEASE.json",
+      "heads": "product_contrastive_mw_if_present_else_untrained",
+      "note": "Archive 300M parents are abandoned. Do not evaluate them. load_mei58m() reads CURRENT.json base only."
     },
     {
       "id": "minimind-25m",

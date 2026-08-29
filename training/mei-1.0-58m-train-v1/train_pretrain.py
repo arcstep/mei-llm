@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import sys
 import time
@@ -15,10 +16,14 @@ if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
 from _repo import (
+    ARCHITECTURE_DIR,
+    ARCHITECTURE_ID,
     CORPUS_LM_V1,
+    CORPUS_LM_V2,
     CORPUS_ZH_PRETRAIN,
     ROOT,
     TRAIN_RUNS,
+    architecture_sha256,
     ensure_formal_on_path,
 )
 
@@ -28,6 +33,14 @@ if _NOTEBOOK_SCRIPTS.is_dir() and str(_NOTEBOOK_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_NOTEBOOK_SCRIPTS))
 
 from pretrain_gates import refuse_non_scratch_source
+from cpt_gates import (
+    PARENT_TOKENS_SEEN,
+    RESET_SOURCE_CURSORS,
+    refuse_cpt_parent,
+    refuse_cpt_source,
+    refuse_weights_only_continuation,
+)
+from run_lock import acquire_run_lock, other_held_runs, write_heartbeat
 
 import mlx.core as mx  # noqa: E402
 import mlx.optimizers as optim  # noqa: E402
@@ -58,19 +71,51 @@ from tokenizer import ZhTokenizerV1  # noqa: E402
 from train_common import eval_lm_loss, peak_bytes, segment_throughput, train_lm_steps  # noqa: E402
 
 RECIPE_PATH = _HERE / "recipes/pretrain-rungs.json"
+RECIPE_51M_PATH = _HERE / "recipes/pretrain-51m-rungs.json"
+CPT_RECIPE_PATH = _HERE / "recipes/cpt-1b-rungs.json"
+PARENT_STATE = ROOT / "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch-state.npz"
 DEFAULTS = {
     "pilot-1m": {"target": 1_000_000, "horizon": 300_000_000, "eval_every": 250_000, "save_every": 250_000},
     "pilot-5m": {"target": 5_000_000, "horizon": 300_000_000, "eval_every": 500_000, "save_every": 500_000},
     "100m": {"target": 100_000_000, "horizon": 300_000_000, "eval_every": 5_000_000, "save_every": 5_000_000},
     "300m": {"target": 300_000_000, "horizon": 300_000_000, "eval_every": 5_000_000, "save_every": 5_000_000},
+    "cpt-smoke": {"target": 300_008_533, "horizon": 699_999_515, "eval_every": 10**18, "save_every": 10**18},
+    "cpt-5m": {"target": 305_000_485, "horizon": 699_999_515, "eval_every": 1_000_000, "save_every": 1_000_000},
+    "1b": {"target": 1_000_000_000, "horizon": 699_999_515, "eval_every": 10_000_000, "save_every": 10_000_000},
 }
-MILESTONES = (100_000_000, 150_000_000, 250_000_000, 300_000_000, 1_000_000_000)
+MILESTONES = (100_000_000, 150_000_000, 250_000_000, 300_000_000, 350_000_000, 500_000_000, 750_000_000, 1_000_000_000)
+CPT_RUNGS = {"cpt-smoke", "cpt-5m", "1b"}
 
 
-def load_recipe() -> dict:
-    if RECIPE_PATH.is_file():
-        return json.loads(RECIPE_PATH.read_text(encoding="utf-8"))
+def load_recipe(kind: str = "scratch") -> dict:
+    if kind == "cpt":
+        path = CPT_RECIPE_PATH
+    elif ARCHITECTURE_ID.startswith("mei-1.0-51m-"):
+        path = RECIPE_51M_PATH
+    else:
+        path = RECIPE_PATH
+    if path.is_file():
+        return json.loads(path.read_text(encoding="utf-8"))
     return {}
+
+
+def expected_param_gate() -> dict:
+    spec = json.loads((ARCHITECTURE_DIR / "spec/model.json").read_text(encoding="utf-8"))
+    band = spec.get("expected_trainable_params") or spec.get("expected_params") or {}
+    target = band.get("target", band.get("measured_mlx"))
+    return {
+        "min": int(band.get("min") or 45_000_000),
+        "max": int(band.get("max") or 60_000_000),
+        "target": int(target) if target is not None else None,
+    }
+
+
+def params_in_band(n: int, gate: dict) -> bool:
+    if not (gate["min"] <= n <= gate["max"]):
+        return False
+    if ARCHITECTURE_ID.startswith("mei-1.0-51m-") and gate["target"] is not None:
+        return n == gate["target"]
+    return True
 
 
 def collect_windows(shards, tok, seq: int, split: str, *, limit: int | None) -> list[dict]:
@@ -119,6 +164,8 @@ def emit_progress(path: Path, row: dict) -> None:
 
 
 def resolve_auto_schedule_kind(corpus_dir: Path) -> str:
+    if (corpus_dir / "schedule-cpt-1b.json").is_file():
+        return "cpt"
     scratch = corpus_dir / "schedule-scratch.json"
     if scratch.is_file():
         return "scratch"
@@ -133,6 +180,10 @@ def refuse_schedule_mismatch(kind: str, schedule: dict) -> str | None:
             "(parent_tokens_seen/skip_tokens/parent_checkpoint). "
             "Use corpus/lm-v1/schedule-scratch.json."
         )
+    if kind == "cpt" and actual != "cpt":
+        return "cpt schedule kind must classify as cpt"
+    if kind == "scratch" and actual not in {"scratch", "none"}:
+        return f"scratch schedule classified as {actual}"
     return None
 
 
@@ -160,7 +211,6 @@ def write_not_for_promote(out_dir: Path, reason: str) -> None:
 
 
 def main() -> int:
-    recipe = load_recipe()
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--rung",
@@ -170,6 +220,9 @@ def main() -> int:
             "pilot-5m",
             "100m",
             "300m",
+            "cpt-smoke",
+            "cpt-5m",
+            "1b",
         ],
     )
     ap.add_argument("--smoke", action="store_true")
@@ -185,10 +238,14 @@ def main() -> int:
     ap.add_argument("--resume", type=Path, default=None)
     ap.add_argument(
         "--resume-mode",
-        choices=["auto", "strict", "curriculum", "weights_only"],
+        choices=["auto", "strict", "curriculum", "weights_only", "continuation"],
         default="auto",
     )
-    ap.add_argument("--curriculum-stage", default=None, help="s1, s2, or s3")
+    ap.add_argument("--parent", type=Path, default=None, help="scratch300m state for first CPT hop")
+    ap.add_argument("--out-dir", type=Path, default=None)
+    ap.add_argument("--lr-final", type=float, default=None)
+    ap.add_argument("--lr-token-offset", type=int, default=None)
+    ap.add_argument("--curriculum-stage", default=None, help="s1, s2, s3, or cpt1")
     ap.add_argument("--allow-repeat", action="store_true")
     ap.add_argument("--stop-at-tokens", type=int, default=None)
     ap.add_argument("--compile", action="store_true")
@@ -197,9 +254,9 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=None)
     ap.add_argument(
         "--schedule-kind",
-        choices=["auto", "none", "scratch"],
+        choices=["auto", "none", "scratch", "cpt"],
         default="auto",
-        help="auto: corpus/lm-v1→scratch; a pack without schedule-scratch.json→none.",
+        help="auto: lm-v2→cpt, lm-v1→scratch; a pack without schedule→none.",
     )
     ap.add_argument(
         "--corpus-dir",
@@ -210,24 +267,57 @@ def main() -> int:
     ap.add_argument("--exclude-source", action="append", default=[], help="Drop a scheduled mix source (ablation)")
     ap.add_argument("--run-suffix", default="", help="Append to run/ckpt name, e.g. no-colloquial")
     args = ap.parse_args()
+    recipe = load_recipe("cpt" if args.rung in CPT_RUNGS else "scratch")
+    if (
+        args.rung == "300m"
+        and not args.smoke
+        and not args.count_params
+        and args.curriculum_stage is None
+        and args.steps is None
+    ):
+        print(
+            "300m scratch must run through run_scratch_curriculum.py "
+            "(or run_scratch_curriculum_51m.py); bare --rung 300m is ambiguous",
+            file=sys.stderr,
+        )
+        return 2
 
     if args.count_params:
         cfg = NeedleZhConfig.from_spec()
         model = NeedleZh(cfg)
         mx.eval(model.parameters())
         n = count_params(model)
-        print(json.dumps({"full_params": n, "in_band": 45_000_000 <= n <= 60_000_000}))
-        return 0 if 45_000_000 <= n <= 60_000_000 else 1
+        gate = expected_param_gate()
+        ok = params_in_band(n, gate)
+        print(
+            json.dumps(
+                {
+                    "architecture_id": ARCHITECTURE_ID,
+                    "architecture_sha256": architecture_sha256(),
+                    "full_params": n,
+                    "expected_params": gate,
+                    "in_band": ok,
+                }
+            )
+        )
+        return 0 if ok else 1
 
     tok = ZhTokenizerV1()
+    if args.rung in CPT_RUNGS and args.corpus_dir == CORPUS_LM_V1:
+        args.corpus_dir = CORPUS_LM_V2
     corpus_dir = CORPUS_ZH_PRETRAIN if args.smoke else args.corpus_dir
     if not corpus_dir.is_absolute():
         corpus_dir = ROOT / corpus_dir
     schedule_kind = "none" if args.smoke else (
         args.schedule_kind if args.schedule_kind != "auto" else resolve_auto_schedule_kind(corpus_dir)
     )
+    if schedule_kind == "cpt":
+        recipe = load_recipe("cpt")
     if not args.smoke:
-        blocked = refuse_non_scratch_source(corpus_dir, args.rung)
+        if schedule_kind == "cpt":
+            blocked = refuse_cpt_source(corpus_dir, args.rung)
+        else:
+            blocked = refuse_non_scratch_source(corpus_dir, args.rung)
         if blocked:
             print(blocked, file=sys.stderr)
             return 4
@@ -266,6 +356,7 @@ def main() -> int:
             schedule_doc,
             stage_id=args.curriculum_stage,
             seq_len=args.seq_len,
+            tokens_seen=PARENT_TOKENS_SEEN if schedule_kind == "cpt" else None,
         )
     seq = args.seq_len or (
         32 if args.smoke else int(stage.get("seq_len") or rung_row.get("seq_len") or recipe.get("seq_len") or 512)
@@ -278,6 +369,12 @@ def main() -> int:
         1 if args.smoke else int(stage.get("grad_accum") or rung_row.get("grad_accum") or layout_ga or 1)
     )
     lr = float(args.lr if args.lr is not None else (recipe.get("lr") or 3e-4))
+    lr_final = args.lr_final if args.lr_final is not None else recipe.get("lr_final")
+    lr_token_offset = (
+        args.lr_token_offset
+        if args.lr_token_offset is not None
+        else int(recipe.get("lr_token_offset") or ((schedule_doc.get("lr") or {}).get("token_offset") or 0))
+    )
     eval_every = args.eval_every_tokens or (10**18 if args.smoke else int(rung_row.get("eval_every") or dft["eval_every"]))
     save_every = args.save_every_tokens or (10**18 if args.smoke else int(rung_row.get("save_every") or dft["save_every"]))
     schedule = {}
@@ -285,7 +382,7 @@ def main() -> int:
     parent_tokens = 0
     init_mode = "scratch"
     scheduled = None
-    if schedule_kind == "scratch":
+    if schedule_kind in {"scratch", "cpt"}:
         if schedule_path is None:
             print(f"missing {schedule_kind} schedule under {corpus_dir}", file=sys.stderr)
             return 2
@@ -297,6 +394,7 @@ def main() -> int:
                 exclude_sources=tuple(args.exclude_source or ()),
                 schedule_path=schedule_path,
                 curriculum_stage=str(stage.get("id") or args.curriculum_stage or "") or None,
+                tokens_seen=PARENT_TOKENS_SEEN if schedule_kind == "cpt" else None,
             )
             if scheduled is None:
                 print(f"schedule {schedule_path} produced no sources", file=sys.stderr)
@@ -331,7 +429,7 @@ def main() -> int:
         wiki_bins = list_valid_set(corpus_dir, "wiki") or valid_bins
         valid = PackedTokenSource(wiki_bins, seq, tok.pad_id)[: (8 if args.smoke else 128)] if wiki_bins else []
         if not args.smoke:
-            for name in ("hq", "colloquial", "structure"):
+            for name in ("hq", "colloquial", "structure", "structure_parent", "colloquial_parent"):
                 bins = list_valid_set(corpus_dir, name)
                 if bins:
                     extra_valids[name] = PackedTokenSource(bins, seq, tok.pad_id)[:32]
@@ -371,9 +469,12 @@ def main() -> int:
             or recipe.get("lr_horizon_tokens")
             or dft["horizon"]
         )
-    if schedule and not args.allow_repeat and target and int(schedule.get("exposure_tokens") or exposure_cap) < int(target):
+    scheduled_exposure = int(schedule.get("exposure_tokens") or exposure_cap)
+    if schedule_kind == "cpt":
+        scheduled_exposure = int(schedule.get("parent_tokens_seen") or parent_tokens) + scheduled_exposure
+    if schedule and not args.allow_repeat and target and scheduled_exposure < int(target):
         print(
-            f"schedule exposure {schedule.get('exposure_tokens') or exposure_cap} < target {target}",
+            f"schedule exposure {scheduled_exposure} < target {target}",
             file=sys.stderr,
         )
         return 2
@@ -404,6 +505,21 @@ def main() -> int:
 
     model = NeedleZh(cfg)
     mx.eval(model.parameters())
+    n_params = count_params(model)
+    gate = expected_param_gate()
+    if not args.smoke and not params_in_band(n_params, gate):
+        print(
+            json.dumps(
+                {
+                    "error": "trainable parameter count outside architecture gate",
+                    "architecture_id": ARCHITECTURE_ID,
+                    "full_params": n_params,
+                    "expected_params": gate,
+                }
+            ),
+            file=sys.stderr,
+        )
+        return 2
     steps = args.steps or (8 if args.smoke else None)
     start_step = 0
     start_tokens = 0
@@ -424,45 +540,114 @@ def main() -> int:
         "precision": args.precision,
         "shuffle_seed": 0,
     }
+    if ARCHITECTURE_ID != "mei-1.0-58m-arch-v1":
+        expected["architecture_id"] = ARCHITECTURE_ID
+        expected["architecture_sha256"] = architecture_sha256()
+        expected["params"] = n_params
     if schedule_sha:
         expected["schedule_sha256"] = schedule_sha
     resume_mode = "scratch"
-    if args.resume:
-        meta_path = Path(args.resume).with_suffix(".meta.json")
+    parent_checkpoint = None
+    resume_path = args.resume or args.parent
+    if schedule_kind == "cpt" and resume_path is None:
+        resume_path = PARENT_STATE
+        args.parent = PARENT_STATE
+    if resume_path:
+        resume_path = Path(resume_path)
+        if not resume_path.is_absolute():
+            resume_path = ROOT / resume_path
+        meta_path = resume_path.with_suffix(".meta.json")
         prev_meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.is_file() else {}
         prev_seq = int(prev_meta.get("seq_len") or seq)
+        is_parent_hop = (
+            schedule_kind == "cpt"
+            and (
+                resume_path.resolve() == PARENT_STATE.resolve()
+                or "scratch300m" in resume_path.as_posix()
+                or str(prev_meta.get("schedule_kind") or "") == "scratch"
+            )
+        )
         stage_changed = prev_seq != int(seq) or str(prev_meta.get("curriculum_stage") or "") != str(
             stage.get("id") or prev_meta.get("curriculum_stage") or ""
         )
         resume_mode = args.resume_mode
         if resume_mode == "auto":
-            resume_mode = "curriculum" if stage_changed else "strict"
-        if stage_changed and resume_mode not in {"curriculum", "weights_only"}:
-            print("seq/stage change requires --resume-mode curriculum", file=sys.stderr)
+            if is_parent_hop:
+                resume_mode = "continuation"
+            else:
+                resume_mode = "curriculum" if stage_changed else "strict"
+        if schedule_kind == "cpt":
+            banned = refuse_weights_only_continuation(resume_mode)
+            if banned:
+                print(banned, file=sys.stderr)
+                return 2
+            parent_err = refuse_cpt_parent()
+            if parent_err:
+                print(parent_err, file=sys.stderr)
+                return 4
+        if stage_changed and resume_mode not in {"curriculum", "weights_only", "continuation"}:
+            print("seq/stage change requires --resume-mode curriculum or continuation", file=sys.stderr)
             return 2
         init_mode = resume_mode
         opt = optim.Adam(learning_rate=lr)
-        prev = load_train_state(args.resume, model, opt, mode=resume_mode, expected_meta=expected)
+        prev = load_train_state(resume_path, model, opt, mode=resume_mode, expected_meta=expected)
         start_step = int(prev.get("step") or 0)
         start_tokens = int(prev.get("tokens_seen") or 0)
         start_window = int(prev.get("window_index") or 0)
         total_steps = int(prev.get("total_steps") or total_steps or 1)
         sampler_state = prev.get("sampler_state")
-        if hasattr(train, "load_state_dict"):
+        if not sampler_state:
+            sampler_state = {
+                "names": list(getattr(train, "names", [])),
+                "token_cursors": dict(prev.get("source_token_cursors") or prev.get("source_cursors") or {}),
+                "source_tokens_drawn": dict(prev.get("source_tokens_drawn") or {}),
+            }
+        if hasattr(train, "migrate_from_parent") and is_parent_hop:
+            train.migrate_from_parent(sampler_state, reset_sources=RESET_SOURCE_CURSORS)
+            parent_checkpoint = str(PARENT_STATE.relative_to(ROOT))
+        elif hasattr(train, "load_state_dict"):
             if not sampler_state:
                 raise ValueError("scheduled mix resume requires sampler_state in checkpoint meta")
             if stage_changed and hasattr(train, "continue_from"):
                 train.continue_from(sampler_state)
             else:
                 train.load_state_dict(sampler_state)
+        if is_parent_hop:
+            parent_checkpoint = str(PARENT_STATE.relative_to(ROOT))
 
     suffix = f"-{args.run_suffix}" if args.run_suffix else ""
     if schedule_kind == "scratch" and "scratch" not in suffix:
         suffix = f"-scratch{suffix}"
-    run_name = "smoke" if args.smoke else f"{args.rung}{suffix}"
-    out_dir = TRAIN_RUNS / f"pretrain-{run_name}"
+    if args.out_dir:
+        out_dir = Path(args.out_dir)
+        if not out_dir.is_absolute():
+            out_dir = ROOT / out_dir
+        run_name = out_dir.name.removeprefix("pretrain-")
+    elif args.smoke:
+        run_name = "smoke"
+        out_dir = TRAIN_RUNS / "pretrain-smoke"
+    elif schedule_kind == "cpt" and args.rung == "1b":
+        run_name = "1b-cpt-from-scratch300m"
+        out_dir = TRAIN_RUNS / "pretrain-1b-cpt-from-scratch300m"
+    else:
+        run_name = f"{args.rung}{suffix}"
+        out_dir = TRAIN_RUNS / f"pretrain-{run_name}"
     out_dir.mkdir(parents=True, exist_ok=True)
-    if args.smoke or str(args.rung).startswith("pilot-"):
+    if schedule_kind == "cpt":
+        held = other_held_runs(except_dir=out_dir)
+        if held:
+            print(json.dumps({"error": "other formal run lock held", "held": held}, ensure_ascii=False), file=sys.stderr)
+            return 4
+        acquire_run_lock(
+            out_dir,
+            {
+                "recipe": "cpt-1b",
+                "rung": args.rung,
+                "corpus": str(corpus_dir.relative_to(ROOT)) if str(corpus_dir).startswith(str(ROOT)) else str(corpus_dir),
+                "parent": parent_checkpoint,
+            },
+        )
+    if args.smoke or str(args.rung).startswith("pilot-") or str(args.rung).startswith("cpt-"):
         write_not_for_promote(out_dir, "smoke" if args.smoke else f"{args.rung} is not a base release")
     metrics_path = out_dir / "metrics.jsonl"
     progress_path = out_dir / "progress.log"
@@ -507,6 +692,8 @@ def main() -> int:
 
     def write_ckpt(tag: str, valid_loss, probe_rep, *, is_best: bool) -> dict:
         meta = {
+            "architecture_id": ARCHITECTURE_ID,
+            "architecture_sha256": architecture_sha256(),
             "rung": run_name,
             "requested_rung": args.rung,
             "smoke": args.smoke,
@@ -536,12 +723,12 @@ def main() -> int:
             "allow_repeat": bool(args.allow_repeat),
             "mmap": use_mmap,
             "init_mode": init_mode,
-            "resume_mode": resume_mode if args.resume else "scratch",
+            "resume_mode": resume_mode if resume_path else "scratch",
             "schedule_kind": schedule_kind,
             "curriculum_stage": stage_id,
             "config_source": "tiny" if args.smoke else "from_spec",
             "parent_tokens_seen": parent_tokens,
-            "parent_checkpoint": None,
+            "parent_checkpoint": parent_checkpoint,
             "schedule_sha256": schedule_sha,
             "n_unique_remaining": unique_remaining,
             "n_exposure_cap_tokens": exposure_cap,
@@ -641,12 +828,24 @@ def main() -> int:
         if due_progress or valid_loss is not None:
             emit_progress(progress_path, row)
             last_progress_at = int(info["tokens_seen"])
+        write_heartbeat(
+            out_dir / "heartbeat.json",
+            {
+                "tokens_seen": info["tokens_seen"],
+                "loss": info["loss"],
+                "lr": info["lr"],
+                "tok_s": tok_s,
+                "step": step,
+                "rung": args.rung,
+            },
+        )
 
-    probes_init = eval_probes(model, tok, probes) if probes and not args.smoke and args.resume is None else None
+    probes_init = eval_probes(model, tok, probes) if probes and not args.smoke and resume_path is None else None
     if probes_init:
         (out_dir / "probes-init.json").write_text(
             json.dumps(slim_probes(probes_init), indent=2) + "\n", encoding="utf-8"
         )
+    write_heartbeat(out_dir / "heartbeat.json", {"tokens_seen": start_tokens, "status": "starting", "rung": args.rung})
 
     result = train_lm_steps(
         model,
@@ -658,7 +857,7 @@ def main() -> int:
         start_tokens_seen=start_tokens,
         total_steps=total_steps,
         optimizer=opt,
-        reseed=args.resume is None,
+        reseed=resume_path is None,
         on_step=on_step,
         batch_size=batch_size,
         grad_accum=grad_accum,
@@ -668,6 +867,9 @@ def main() -> int:
         compile_train=compile_train,
         precision=args.precision,
         horizon_tokens=None if args.smoke else horizon_tokens,
+        lr_final=None if args.smoke else (float(lr_final) if lr_final is not None else None),
+        lr_token_offset=0 if args.smoke else int(lr_token_offset or 0),
+        stop_path=None if args.smoke else (out_dir / "STOP"),
     )
     state.update(result)
     valid_loss, probe_rep, extra_losses = maybe_eval(result["tokens_seen"], force=True)
@@ -691,6 +893,7 @@ def main() -> int:
     meta["schedule_sha256"] = schedule_sha
     meta["n_windows"] = len(train)
     meta["exhausted"] = bool(result.get("exhausted"))
+    meta["paused"] = bool(result.get("paused"))
     meta["segment_tokens"] = int(result["tokens_seen"]) - int(start_tokens)
     meta["segment_tok_s"] = segment_throughput(result["tokens_seen"], start_tokens, elapsed)
     meta["window_index"] = int(result.get("window_index") or meta.get("window_index") or 0)

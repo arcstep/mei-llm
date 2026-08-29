@@ -1,0 +1,17 @@
+{
+  "kind": "qat-replay-smoke",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "parent": "mei-1.0-51m-base-scratch300m-v1",
+  "quant_counts": {
+    "2": 0,
+    "4": 287,
+    "32": 113
+  },
+  "train": {
+    "tokens": 4096,
+    "steps": 4,
+    "last_loss": 3.439929485321045
+  },
+  "qat_mandatory": true,
+  "not_a_claim": "Smoke steps are not a quality gate."
+}

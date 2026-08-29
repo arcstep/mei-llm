@@ -1,0 +1,145 @@
+{
+  "$id": "mei-model-package-v1",
+  "title": "MeiModelPackage",
+  "type": "object",
+  "required": [
+    "package_format",
+    "product",
+    "package_id",
+    "runtime_min",
+    "architecture",
+    "tokenizer",
+    "weights",
+    "heads",
+    "release_class"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "package_format": { "type": "string", "const": "mei-model-package-v1" },
+    "product": { "type": "string", "enum": ["mei-1.0-58m", "mei-1.0-51m"] },
+    "package_id": { "type": "string" },
+    "runtime_min": { "type": "string" },
+    "parent_package_id": { "type": "string" },
+    "parent_weights_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "quant_math_id": { "type": "string" },
+    "endianness": { "type": "string", "enum": ["little", "big"] },
+    "bit_map_sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+    "qat_mandatory": { "type": "boolean" },
+    "note": { "type": "string" },
+    "architecture": {
+      "type": "object",
+      "required": ["id", "d_model", "n_layers", "vocab_size", "max_seq_len"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "d_model": { "type": "integer" },
+        "n_layers": { "type": "integer" },
+        "n_heads": { "type": "integer" },
+        "n_kv_heads": { "type": "integer" },
+        "head_dim": { "type": "integer" },
+        "vocab_size": { "type": "integer" },
+        "max_seq_len": { "type": "integer" },
+        "rope_theta": { "type": "number" },
+        "engram_layers": { "type": "array", "items": { "type": "integer" } },
+        "engram_orders": { "type": "array", "items": { "type": "integer" } },
+        "engram_slots": { "type": "integer" },
+        "engram_conv_taps": { "type": "integer" },
+        "mhc_lanes": { "type": "integer" },
+        "sinkhorn_iters": { "type": "integer" },
+        "tie_embeddings": { "type": "boolean" },
+        "rms_eps": { "type": "number" },
+        "conf_probes": { "type": "integer" },
+        "kv_window": { "type": "integer" }
+      }
+    },
+    "tokenizer": {
+      "type": "object",
+      "required": ["id", "file", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "file": { "type": "string" },
+        "sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+        "vocab_file": { "type": "string" },
+        "vocab_sha256": { "type": "string", "minLength": 64, "maxLength": 64 }
+      }
+    },
+    "weights": {
+      "type": "object",
+      "required": ["file", "format", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "file": { "type": "string" },
+        "format": {
+          "type": "string",
+          "enum": ["mlx-npz", "safetensors", "gguf", "raw", "mei-q4-packed-v1"]
+        },
+        "sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+        "payload_bytes": { "type": "integer" },
+        "directory": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/tensor_entry" }
+        },
+        "quantization": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "scheme": { "type": "string", "enum": ["none", "cq2", "q4"] },
+            "status": { "type": "string", "enum": ["untrained", "diagnostic", "ready"] },
+            "block_size": { "type": "integer" },
+            "quant_math_id": { "type": "string" }
+          }
+        }
+      }
+    },
+    "heads": {
+      "type": "object",
+      "required": ["lm", "contrastive", "mw_disposition", "confidence"],
+      "description": "Every head must be listed. Missing or untrained heads must not be omitted.",
+      "additionalProperties": false,
+      "properties": {
+        "lm": { "$ref": "#/$defs/head" },
+        "contrastive": { "$ref": "#/$defs/head" },
+        "mw_disposition": { "$ref": "#/$defs/head" },
+        "confidence": { "$ref": "#/$defs/head" }
+      }
+    },
+    "release_class": {
+      "type": "string",
+      "enum": ["experimental", "candidate", "release"]
+    }
+  },
+  "$defs": {
+    "head": {
+      "type": "object",
+      "required": ["present", "trained", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "present": { "type": "boolean" },
+        "trained": { "type": "boolean" },
+        "status": {
+          "type": "string",
+          "enum": ["ready", "untrained", "missing", "disabled"]
+        }
+      }
+    },
+    "tensor_entry": {
+      "type": "object",
+      "required": ["name", "shape", "n_params", "bits", "packed_offset", "packed_nbytes"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "shape": { "type": "array", "items": { "type": "integer" } },
+        "n_params": { "type": "integer" },
+        "bits": { "type": "integer" },
+        "block_size": { "type": "integer" },
+        "n_blocks": { "type": "integer" },
+        "packed_offset": { "type": "integer" },
+        "packed_nbytes": { "type": "integer" },
+        "scale_offset": { "type": "integer" },
+        "scale_nbytes": { "type": "integer" },
+        "dtype": { "type": "string" }
+      }
+    }
+  }
+}

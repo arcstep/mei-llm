@@ -11,9 +11,10 @@ _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
-from _repo import CORPUS_LM_V1, ROOT, ensure_formal_on_path
+from _repo import CORPUS_LM_V1, CORPUS_LM_V2, ROOT, ensure_formal_on_path
 
 ensure_formal_on_path()
+from cpt_gates import refuse_cpt_source
 from data import classify_schedule, file_sha256, resolve_schedule_file
 from pretrain_gates import (
     REQUIRED_ROLES,
@@ -45,6 +46,11 @@ def test_schedules_split() -> None:
     assert resolve_schedule_file(CORPUS_LM_V1, "cpt") is None
     assert resolve_schedule_file(CORPUS_LM_V1, "none") is None
     assert refuse_non_scratch_source(CORPUS_LM_V1, "300m") is None
+    assert resolve_schedule_file(CORPUS_LM_V1, "cpt") is None
+    cpt_err = refuse_cpt_source(CORPUS_LM_V2, "1b")
+    assert cpt_err is None, cpt_err
+    assert resolve_schedule_file(CORPUS_LM_V2, "cpt") == CORPUS_LM_V2 / "schedule-cpt-1b.json"
+    assert resolve_schedule_file(CORPUS_LM_V2, "scratch") is None
 
 
 def test_hashes_include_scratch() -> None:

@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "browser_worker": true,
+  "refuse_float": true,
+  "complete_ran": true,
+  "n_new": 8,
+  "raw_text": "。 [] [] ",
+  "quantized_only": true,
+  "url": "http://127.0.0.1:8765/js/wasm-q4-smoke.html",
+  "package_id": "mei-1.0-51m-base-scratch300m-qat-q4-v1",
+  "note": "Chrome Worker complete(max_new>=8) after wasm-abi split (no node:fs in worker)."
+}

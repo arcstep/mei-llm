@@ -1,0 +1,119 @@
+{
+  "stage": "M2.1",
+  "kind": "ptq-scan",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "model_id": "mei-1.0-51m-base-scratch300m-v1",
+  "params": 51463797,
+  "weights_sha256": "97f4b537f2869ab315245fd8769eff8a61117b112eb7dce40ebfbd39e2afbd48",
+  "bits": 4,
+  "prompt": "厨房灯打开",
+  "nibble_pack_is_publish_kernel": false,
+  "product_final": false,
+  "candidate": true,
+  "qat_mandatory": true,
+  "qat_or_cq2": "mandatory",
+  "source": "base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1.npz",
+  "components": {
+    "attention_kv": {
+      "n_tensors": 189,
+      "max_abs_logit_delta": 2.4198405742645264,
+      "mse": 0.1476321816444397,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": 0.016089680759856506
+    },
+    "confidence": {
+      "n_tensors": 3,
+      "max_abs_logit_delta": 0.0,
+      "mse": 0.0,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": 0.0
+    },
+    "embedding": {
+      "n_tensors": 1,
+      "max_abs_logit_delta": 6.700199604034424,
+      "mse": 1.0813326835632324,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": 1.0673452611081302
+    },
+    "engram": {
+      "n_tensors": 8,
+      "max_abs_logit_delta": 0.6442956924438477,
+      "mse": 0.008451540023088455,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": 0.040561674938847325
+    },
+    "mhc": {
+      "n_tensors": 9,
+      "max_abs_logit_delta": 1.0788695812225342,
+      "mse": 0.045232903212308884,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": 0.049942412646487355
+    },
+    "norm": {
+      "n_tensors": 82,
+      "max_abs_logit_delta": 0.3085298538208008,
+      "mse": 0.00526193343102932,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": -0.027972877607680857
+    },
+    "other": {
+      "n_tensors": 108,
+      "max_abs_logit_delta": 0.5126490592956543,
+      "mse": 0.005640337709337473,
+      "bits": 4,
+      "probe_subset_delta_mean_nll": 0.03473386688468327
+    }
+  },
+  "probe_subset_ids": [
+    "PROBE-COPY-001",
+    "PROBE-JSON-001"
+  ],
+  "probe_subset_deltas": {
+    "embedding": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 4.417395312494288,
+      "delta_mean_nll": 1.0673452611081302
+    },
+    "norm": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 3.322077173778477,
+      "delta_mean_nll": -0.027972877607680857
+    },
+    "attention_kv": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 3.3661397321460145,
+      "delta_mean_nll": 0.016089680759856506
+    },
+    "other": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 3.3847839182708412,
+      "delta_mean_nll": 0.03473386688468327
+    },
+    "engram": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 3.3906117263250053,
+      "delta_mean_nll": 0.040561674938847325
+    },
+    "mhc": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 3.3999924640326453,
+      "delta_mean_nll": 0.049942412646487355
+    },
+    "confidence": {
+      "base_mean_nll": 3.350050051386158,
+      "quant_mean_nll": 3.350050051386158,
+      "delta_mean_nll": 0.0
+    }
+  },
+  "most_sensitive": [
+    "embedding",
+    "attention_kv",
+    "mhc",
+    "engram",
+    "other",
+    "norm",
+    "confidence"
+  ],
+  "note": "CQ2-first mixed Q2/Q4 QAT is mandatory for the on-device 51M core. PTQ is diagnostic only.",
+  "not_a_claim": "PTQ sensitivity is not QAT, packed-kernel, or tool-calling ability."
+}

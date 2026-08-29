@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "kind": "rust-short-greedy",
+  "raw_text": " | | | |",
+  "wall_ms": 10671,
+  "max_abs_logit_vs_mlx": 1.3821759223937988,
+  "logit_abs_threshold": 2.7,
+  "package_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-base-scratch300m-qat-q4-v1",
+  "n_prompt_tokens": 6
+}

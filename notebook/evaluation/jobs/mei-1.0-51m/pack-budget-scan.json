@@ -1,0 +1,117 @@
+{
+  "stage": "P0",
+  "kind": "pack-budget-scan",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "model_id": "mei-1.0-51m-base-scratch300m-v1",
+  "params": 51463797,
+  "weights_sha256": "97f4b537f2869ab315245fd8769eff8a61117b112eb7dce40ebfbd39e2afbd48",
+  "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4",
+  "block_size": 64,
+  "qat_mandatory": true,
+  "product_final": false,
+  "source": "base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1.npz",
+  "fp32_mb": 196.31880569458008,
+  "fp16_mb": 98.15940284729004,
+  "uniform_q4_raw_mb": 24.53985071182251,
+  "q4_package_budget_mb": 30.0,
+  "cq2_raw_payload_budget_mb": 19.3,
+  "cq2_avg_bits_target": 3.0,
+  "components": {
+    "embedding": {
+      "n_tensors": 1,
+      "n_params": 12288000,
+      "mse_q4": 4.4922708184458315e-05,
+      "mse_q2": 0.0010211518965661526
+    },
+    "norm": {
+      "n_tensors": 82,
+      "n_params": 41984,
+      "mse_q4": 0.0001050855124980799,
+      "mse_q2": 0.002426299335372566
+    },
+    "attention": {
+      "n_tensors": 189,
+      "n_params": 28315008,
+      "mse_q4": 3.3058803440498106e-05,
+      "mse_q2": 0.0007293804701842467
+    },
+    "other": {
+      "n_tensors": 27,
+      "n_params": 27,
+      "mse_q4": 1.3209598024475243e-16,
+      "mse_q2": 1.3209598024475243e-16
+    },
+    "mlp": {
+      "n_tensors": 81,
+      "n_params": 41472,
+      "mse_q4": 0.0016976164770537174,
+      "mse_q2": 0.02850489199799658
+    },
+    "engram": {
+      "n_tensors": 8,
+      "n_params": 9441280,
+      "mse_q4": 4.371769964662653e-05,
+      "mse_q2": 0.000965069540636917
+    },
+    "mhc": {
+      "n_tensors": 9,
+      "n_params": 1327833,
+      "mse_q4": 5.6026446098818525e-05,
+      "mse_q2": 0.0016104710696536076
+    },
+    "confidence": {
+      "n_tensors": 3,
+      "n_params": 8193,
+      "mse_q4": 4.505578791805636e-06,
+      "mse_q2": 9.920658405252273e-05
+    }
+  },
+  "lowest_loss_per_byte_tensors": [
+    "embed.weight",
+    "engrams.0.tables",
+    "engrams.1.tables",
+    "mhc_phi_res",
+    "blocks.9.attn.o_proj.weight",
+    "blocks.13.attn.o_proj.weight",
+    "blocks.12.attn.o_proj.weight",
+    "blocks.26.attn.o_proj.weight",
+    "blocks.5.attn.o_proj.weight",
+    "blocks.1.attn.q_proj.weight",
+    "blocks.1.attn.o_proj.weight",
+    "blocks.24.attn.o_proj.weight",
+    "blocks.20.attn.o_proj.weight",
+    "blocks.0.attn.o_proj.weight",
+    "blocks.10.attn.o_proj.weight",
+    "blocks.0.attn.q_proj.weight",
+    "blocks.11.attn.o_proj.weight",
+    "blocks.8.attn.o_proj.weight",
+    "blocks.2.attn.q_proj.weight",
+    "blocks.12.attn.q_proj.weight"
+  ],
+  "highest_loss_per_byte_tensors": [
+    "blocks.14.mlp.d1",
+    "blocks.3.attn.q_norm.scale",
+    "blocks.25.attn.k_norm.scale",
+    "blocks.25.attn.q_norm.scale",
+    "blocks.22.attn.k_norm.scale",
+    "blocks.7.attn.k_norm.scale",
+    "blocks.23.attn.k_norm.scale",
+    "blocks.3.attn.k_norm.scale",
+    "blocks.4.mlp.d1",
+    "blocks.23.attn.q_norm.scale",
+    "blocks.22.attn.q_norm.scale",
+    "blocks.7.attn.q_norm.scale",
+    "blocks.2.mlp.d1",
+    "blocks.0.mlp.d1",
+    "blocks.15.attn.k_norm.scale",
+    "blocks.1.mlp.d1",
+    "blocks.15.attn.q_norm.scale",
+    "blocks.19.attn.k_norm.scale",
+    "blocks.19.attn.q_norm.scale",
+    "mhc_b_res"
+  ],
+  "n_tensors": 400,
+  "note": "CQ2-first mixed Q2/Q4 QAT is mandatory for the on-device 51M core. PTQ is diagnostic only.",
+  "not_a_claim": "Reconstruction MSE ranking is not LM quality, kernel parity, or tool-calling ability.",
+  "coarse_component_map_rejected": "The earlier component top-half candidate only moved ~91k params to Q2 and cannot be a product mixed-bit map."
+}

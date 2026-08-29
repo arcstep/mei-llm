@@ -1,0 +1,22 @@
+{
+  "abi": "mei-runtime-abi-1",
+  "ok": 0,
+  "codes": [
+    {"code": 0, "id": "ok", "message": "success"},
+    {"code": 1, "id": "invalid_argument", "message": "invalid argument or handle"},
+    {"code": 2, "id": "invalid_json", "message": "JSON parse or type error"},
+    {"code": 3, "id": "package_invalid", "message": "model package manifest is invalid"},
+    {"code": 4, "id": "package_hash_mismatch", "message": "model package file hash mismatch"},
+    {"code": 5, "id": "head_missing", "message": "required head is missing from the package report"},
+    {"code": 6, "id": "engine_unavailable", "message": "local inference engine is not available in this build"},
+    {"code": 7, "id": "session_closed", "message": "session is closed"},
+    {"code": 8, "id": "too_many_tools", "message": "complete() accepts at most 5 selected tools; retrieval must run first"},
+    {"code": 9, "id": "gold_leak", "message": "request contains forbidden gold/eval markers"},
+    {"code": 10, "id": "protocol_violation", "message": "generation or request violates mei-tool-call-protocol-v2"},
+    {"code": 11, "id": "cancelled", "message": "operation cancelled"},
+    {"code": 12, "id": "not_implemented", "message": "API exists but this backend has not implemented it"},
+    {"code": 13, "id": "abi_version_mismatch", "message": "runtime_abi_version is not supported"},
+    {"code": 14, "id": "file_not_found", "message": "referenced package file is missing"},
+    {"code": 15, "id": "buffer_too_small", "message": "caller buffer is too small"}
+  ]
+}

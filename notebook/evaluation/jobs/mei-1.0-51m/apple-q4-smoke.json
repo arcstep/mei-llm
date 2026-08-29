@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "inference": true,
+  "no_candidate_text": true,
+  "backend": "mlx-reference",
+  "raw_text": "[]",
+  "refuse": true,
+  "execution": "refuse",
+  "confidence": {
+    "available": true,
+    "value": 0.002169182838965889,
+    "source": "mlx-reference",
+    "version": "conf-head-v1"
+  },
+  "prompt_tokens": 146,
+  "output_tokens": 2,
+  "quantized_only": true
+}

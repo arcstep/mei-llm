@@ -15,13 +15,53 @@ import mlx.nn as nn
 
 try:
     from .config import NeedleZhConfig
+    from .fused_ops import (
+        fused_block_tail,
+        fused_engram_two,
+        fused_gqa,
+        fused_hadamard_mlp,
+        fused_hadamard_mlp_mhc_post,
+        fused_mhc_pre,
+        fused_qk_norm_rope,
+        fused_zcrms_norm,
+        supports_decode_fusion,
+    )
 except ImportError:
     from config import NeedleZhConfig
+    from fused_ops import (
+        fused_block_tail,
+        fused_engram_two,
+        fused_gqa,
+        fused_hadamard_mlp,
+        fused_hadamard_mlp_mhc_post,
+        fused_mhc_pre,
+        fused_qk_norm_rope,
+        fused_zcrms_norm,
+        supports_decode_fusion,
+    )
 
 ENGRAM_SUB_DIM = 128
 ENGRAM_CONV_TAPS = 4
 _ENGRAM_SEED = 0x9E3779B9
 _ENGRAM_PRIME = 0x01000193
+
+# Side tables, not nn.Module parameters (must not appear in weight load lists).
+_ROPE_TABLES: dict[tuple, tuple[mx.array, mx.array]] = {}
+_SITE_FLAGS: dict[tuple, list[mx.array]] = {}
+
+
+def _site_flags(cfg: NeedleZhConfig) -> list[mx.array]:
+    key = (int(cfg.n_layers), tuple(cfg.engram_layers))
+    table = _SITE_FLAGS.get(key)
+    if table is None:
+        layers = tuple(cfg.engram_layers)
+        table = [
+            mx.array([1.0 if layer == i else 0.0 for layer in layers], dtype=mx.float32)
+            for i in range(int(cfg.n_layers))
+        ]
+        mx.eval(*table)
+        _SITE_FLAGS[key] = table
+    return table
 
 
 def walsh_matrix(n: int) -> mx.array:
@@ -113,6 +153,8 @@ class ZCRMSNorm(nn.Module):
         self.scale = mx.zeros((dim,))
 
     def __call__(self, x: mx.array) -> mx.array:
+        if getattr(self, "_mei_fused", False):
+            return fused_zcrms_norm(x, self.scale, self.eps)
         xf = x.astype(mx.float32)
         rms = mx.sqrt(mx.mean(xf * xf, axis=-1, keepdims=True) + self.eps)
         return ((1.0 + self.scale) * xf / rms).astype(x.dtype)
@@ -129,6 +171,13 @@ class HadamardMLP(nn.Module):
         self.d3 = mx.full((self.n,), 0.02)
 
     def __call__(self, x: mx.array) -> mx.array:
+        if (
+            getattr(self, "_mei_fused", False)
+            and self.d_model == 512
+            and tuple(x.shape) == (1, 1, 512)
+            and x.dtype == mx.float32
+        ):
+            return fused_hadamard_mlp(x, self.H, self.d1, self.d2, self.d3)
         pad = self.n - self.d_model
         z = mx.pad(x, [(0, 0), (0, 0), (0, pad)]) if pad else x
         h = self.H.astype(z.dtype)
@@ -153,26 +202,75 @@ class GroupedAttention(nn.Module):
         self.q_norm = ZCRMSNorm(self.head_dim, cfg.rms_eps)
         self.k_norm = ZCRMSNorm(self.head_dim, cfg.rms_eps)
 
-    def __call__(self, x, rope, mask=None, cache=None, rope_offset: int = 0, position_ids=None):
+    def __call__(
+        self,
+        x,
+        rope,
+        mask=None,
+        cache=None,
+        rope_offset: int = 0,
+        position_ids=None,
+        cache_write_index=None,
+    ):
         b, t, _ = x.shape
-        q = self.q_proj(x).reshape(b, t, self.n_heads, self.head_dim).transpose(0, 2, 1, 3)
-        k = self.k_proj(x).reshape(b, t, self.n_kv_heads, self.head_dim).transpose(0, 2, 1, 3)
-        v = self.v_proj(x).reshape(b, t, self.n_kv_heads, self.head_dim).transpose(0, 2, 1, 3)
-        q, k = self.q_norm(q), self.k_norm(k)
-        q = apply_rope(q, *rope, offset=rope_offset, position_ids=position_ids)
-        k = apply_rope(k, *rope, offset=rope_offset, position_ids=position_ids)
+        packed_projection = (
+            getattr(self, "_mei_fused", False)
+            and tuple(x.shape) == (1, 1, 512)
+            and self.n_heads == 8
+            and self.n_kv_heads == 4
+            and self.head_dim == 64
+            and x.dtype == mx.float32
+            and getattr(self, "_mei_packed_qkvg", None) is not None
+        )
+        if packed_projection:
+            q_raw, k_raw, v_raw, gate = mx.split(
+                x @ self._mei_packed_qkvg.T,
+                [512, 768, 1024],
+                axis=-1,
+            )
+            position = (
+                position_ids
+                if position_ids is not None
+                else mx.array([rope_offset], dtype=mx.int32)
+            )
+            q, k = fused_qk_norm_rope(
+                q_raw,
+                k_raw,
+                self.q_norm.scale,
+                self.k_norm.scale,
+                rope,
+                position,
+            )
+            v = v_raw.reshape(b, t, self.n_kv_heads, self.head_dim).transpose(0, 2, 1, 3)
+        else:
+            q = self.q_proj(x).reshape(b, t, self.n_heads, self.head_dim).transpose(0, 2, 1, 3)
+            k = self.k_proj(x).reshape(b, t, self.n_kv_heads, self.head_dim).transpose(0, 2, 1, 3)
+            v = self.v_proj(x).reshape(b, t, self.n_kv_heads, self.head_dim).transpose(0, 2, 1, 3)
+            gate = self.gate_proj(x)
+            q, k = self.q_norm(q), self.k_norm(k)
+            q = apply_rope(q, *rope, offset=rope_offset, position_ids=position_ids)
+            k = apply_rope(k, *rope, offset=rope_offset, position_ids=position_ids)
         if cache is not None:
-            k = mx.concatenate([cache[0], k], axis=2)
-            v = mx.concatenate([cache[1], v], axis=2)
-        repeats = self.n_heads // self.n_kv_heads
-        k_use = mx.repeat(k, repeats, axis=1) if repeats > 1 else k
-        v_use = mx.repeat(v, repeats, axis=1) if repeats > 1 else v
-        attn = (q * self.scale) @ mx.swapaxes(k_use, -1, -2)
-        if mask is not None:
-            attn = mx.where(mask, attn, mx.array(-1e9, dtype=attn.dtype))
-        attn = mx.softmax(attn.astype(mx.float32), axis=-1).astype(x.dtype)
-        out = (attn @ v_use).transpose(0, 2, 1, 3).reshape(b, t, -1)
-        out = self.o_proj(out * mx.sigmoid(self.gate_proj(x)))
+            if cache_write_index is not None:
+                idx = cache_write_index if isinstance(cache_write_index, mx.array) else mx.array([int(cache_write_index)])
+                k = mx.slice_update(cache[0], k, idx, [2])
+                v = mx.slice_update(cache[1], v, idx, [2])
+            else:
+                k = mx.concatenate([cache[0], k], axis=2)
+                v = mx.concatenate([cache[1], v], axis=2)
+        if getattr(self, "_mei_fused", False):
+            out = fused_gqa(q, k, v, scale=self.scale, mask=mask)
+            out = out.transpose(0, 2, 1, 3).reshape(b, t, -1)
+        else:
+            repeats = self.n_heads // self.n_kv_heads
+            k_use = mx.repeat(k, repeats, axis=1) if repeats > 1 else k
+            v_use = mx.repeat(v, repeats, axis=1) if repeats > 1 else v
+            attn = (q * self.scale) @ mx.swapaxes(k_use, -1, -2)
+            if mask is not None:
+                attn = mx.where(mask, attn, mx.array(-1e9, dtype=attn.dtype))
+            attn = mx.softmax(attn.astype(mx.float32), axis=-1).astype(x.dtype)
+            out = (attn @ v_use).transpose(0, 2, 1, 3).reshape(b, t, -1)
+        out = self.o_proj(out * mx.sigmoid(gate))
         return out, (k, v)
 
 
@@ -214,7 +312,19 @@ class Block(nn.Module):
         self.mlp_norm = ZCRMSNorm(cfg.d_model, cfg.rms_eps)
         self.mlp = HadamardMLP(cfg.d_model)
 
-    def __call__(self, x, rope, mask=None, cache=None, engram_kv=None, site_flags=None, rope_offset: int = 0, position_ids=None):
+    def __call__(
+        self,
+        x,
+        rope,
+        mask=None,
+        cache=None,
+        engram_kv=None,
+        site_flags=None,
+        rope_offset: int = 0,
+        position_ids=None,
+        cache_write_index=None,
+        mhc_post_context=None,
+    ):
         if engram_kv is not None and site_flags is not None:
             ek, ev = engram_kv
             alpha = mx.sigmoid(
@@ -228,8 +338,51 @@ class Block(nn.Module):
             ).astype(x.dtype)
         skip = x
         x, new_cache = self.attn(
-            self.attn_norm(x), rope, mask=mask, cache=cache, rope_offset=rope_offset, position_ids=position_ids
+            self.attn_norm(x),
+            rope,
+            mask=mask,
+            cache=cache,
+            rope_offset=rope_offset,
+            position_ids=position_ids,
+            cache_write_index=cache_write_index,
         )
+        if (
+            getattr(self, "_mei_fused", False)
+            and tuple(skip.shape) == (1, 1, 512)
+            and skip.dtype == mx.float32
+        ):
+            x = fused_block_tail(
+                skip,
+                x,
+                self.attn_gate,
+                self.post_attn_norm.scale,
+                self.mlp_norm.scale,
+                self.mlp.H,
+                self.mlp.d1,
+                self.mlp.d2,
+                self.mlp.d3,
+            )
+            return x, new_cache
+        if mhc_post_context is not None:
+            lanes, hpost, hres, original_u = mhc_post_context
+            return (
+                fused_hadamard_mlp_mhc_post(
+                    skip,
+                    x,
+                    self.attn_gate,
+                    self.post_attn_norm.scale,
+                    self.mlp_norm.scale,
+                    self.mlp.H,
+                    self.mlp.d1,
+                    self.mlp.d2,
+                    self.mlp.d3,
+                    original_u,
+                    lanes,
+                    hpost,
+                    hres,
+                ),
+                new_cache,
+            )
         x = skip + mx.sigmoid(self.attn_gate).astype(x.dtype) * self.post_attn_norm(x)
         skip = x
         x = skip + self.mlp(self.mlp_norm(x))
@@ -280,15 +433,79 @@ class NeedleZh(nn.Module):
                 from confidence_v2 import ConfidenceV2Head
 
             self.conf_v2 = ConfidenceV2Head(cfg.d_model, probes=cfg.conf_probes)
+        self.set_inference_backend("mlx-reference")
+
+    def set_inference_backend(self, backend: str) -> None:
+        """Select inference operators without changing model parameters."""
+        fused = backend == "mlx-fused"
+        object.__setattr__(self, "_inference_backend", backend)
+        object.__setattr__(self.final_norm, "_mei_fused", fused)
+        for block in self.blocks:
+            # The all-in-one tail kernel is retained as an oracle-tested option,
+            # but MLX o_proj + the dedicated MLP kernel is faster on M4 Max.
+            object.__setattr__(block, "_mei_fused", False)
+            object.__setattr__(block.attn_norm, "_mei_fused", fused)
+            object.__setattr__(block.post_attn_norm, "_mei_fused", fused)
+            object.__setattr__(block.mlp_norm, "_mei_fused", fused)
+            object.__setattr__(block.attn, "_mei_fused", fused)
+            packed_qkvg = None
+            if fused:
+                packed_qkvg = mx.concatenate(
+                    [
+                        block.attn.q_proj.weight,
+                        block.attn.k_proj.weight,
+                        block.attn.v_proj.weight,
+                        block.attn.gate_proj.weight,
+                    ],
+                    axis=0,
+                )
+                mx.eval(packed_qkvg)
+            object.__setattr__(block.attn, "_mei_packed_qkvg", packed_qkvg)
+            object.__setattr__(block.attn.q_norm, "_mei_fused", fused)
+            object.__setattr__(block.attn.k_norm, "_mei_fused", fused)
+            object.__setattr__(block.mlp, "_mei_fused", fused)
+        packed_mhc = None
+        if fused:
+            packed_mhc = [
+                mx.concatenate(
+                    [
+                        self.mhc_phi_pre[i].T,
+                        self.mhc_phi_post[i].T,
+                        self.mhc_phi_res[i].T,
+                    ],
+                    axis=0,
+                )
+                for i in range(int(self.cfg.n_layers))
+            ]
+            mx.eval(*packed_mhc)
+        object.__setattr__(self, "_mei_mhc_phi_packed", packed_mhc)
 
     def _rope(self, seq_len: int) -> tuple[mx.array, mx.array]:
-        return precompute_rope(self.cfg.head_dim, seq_len, self.cfg.rope_theta)
+        cfg = self.cfg
+        need = max(int(seq_len), 1)
+        cap = max(need, int(cfg.max_seq_len))
+        key = (int(cfg.head_dim), cap, float(cfg.rope_theta))
+        table = _ROPE_TABLES.get(key)
+        if table is None or int(table[0].shape[0]) < need:
+            table = precompute_rope(cfg.head_dim, cap, cfg.rope_theta)
+            mx.eval(table[0], table[1])
+            _ROPE_TABLES[key] = table
+        return table
 
     def _engram_stack(self, tokens: mx.array, prefix_ids: mx.array | None = None):
         if not self.engrams:
             return None
         if prefix_ids is not None and int(prefix_ids.size) > 0:
             tokens = mx.concatenate([prefix_ids, tokens], axis=-1)
+        if (
+            getattr(self, "_inference_backend", "mlx-reference") == "mlx-fused"
+            and len(self.engrams) == 2
+            and tuple(self.cfg.engram_orders) == (2, 3)
+            and int(self.cfg.engram_slots) == 8192
+            and tuple(tokens.shape) == (1, 3)
+            and tokens.dtype == mx.int32
+        ):
+            return fused_engram_two(tokens, self.engrams[0], self.engrams[1])
         pairs = [e(tokens) for e in self.engrams]
         keys = mx.stack([k for k, _ in pairs])
         vals = mx.stack([v for _, v in pairs])
@@ -309,6 +526,7 @@ class NeedleZh(nn.Module):
         return_cells: bool = False,
         return_contrastive: bool = False,
         engram_prefix_ids=None,
+        cache_write_index=None,
     ) -> dict[str, Any]:
         cfg = self.cfg
         b, t = tokens.shape
@@ -317,20 +535,22 @@ class NeedleZh(nn.Module):
         cache_len = 0
         if cache is not None and len(cache) > 0 and cache[0] is not None:
             cache_len = int(cache[0][0].shape[2])
+        rope = self._rope(max(cache_len + t, int(cfg.max_seq_len)))
         if position_ids is not None:
             pos = position_ids if isinstance(position_ids, mx.array) else mx.array(position_ids, dtype=mx.int32)
-            max_pos = int(mx.max(pos).item()) + 1
+            q_pos = pos
             if cache_position_ids is not None:
                 cpos = cache_position_ids if isinstance(cache_position_ids, mx.array) else mx.array(cache_position_ids, dtype=mx.int32)
-                max_pos = max(max_pos, int(mx.max(cpos).item()) + 1)
-            rope = self._rope(max_pos)
-            q_pos = pos
-            k_pos = mx.concatenate([cpos, pos]) if cache_position_ids is not None else pos
+                if cache_write_index is not None:
+                    k_pos = cpos
+                else:
+                    k_pos = mx.concatenate([cpos, pos])
+            else:
+                k_pos = pos
             mask = (q_pos[:, None] >= k_pos[None, :])[None, None, :, :]
             rope_offset = 0
             attn_pos = pos
         else:
-            rope = self._rope(cache_len + t)
             q_pos = mx.arange(t) + cache_len
             k_pos = mx.arange(cache_len + t)
             mask = (q_pos[:, None] >= k_pos[None, :])[None, None, :, :]
@@ -338,25 +558,50 @@ class NeedleZh(nn.Module):
             attn_pos = None
         prefix = None
         if engram_prefix_ids is not None:
-            prefix = engram_prefix_ids if isinstance(engram_prefix_ids, mx.array) else mx.array([engram_prefix_ids], dtype=mx.int32)
+            prefix = engram_prefix_ids if isinstance(engram_prefix_ids, mx.array) else mx.array(engram_prefix_ids, dtype=mx.int32)
             if prefix.ndim == 1:
                 prefix = prefix[None, :]
         engram_kv = self._engram_stack(tokens, prefix)
+        site_table = _site_flags(cfg)
         n = cfg.mhc_lanes
         lanes = mx.broadcast_to(x[:, :, None, :], (b, t, n, cfg.d_model))
+        fused_decode = (
+            getattr(self, "_inference_backend", "mlx-reference") == "mlx-fused"
+            and supports_decode_fusion(
+                batch=b,
+                tokens=t,
+                lanes=n,
+                d_model=cfg.d_model,
+                dtype=lanes.dtype,
+            )
+        )
         new_cache = []
         for i, block in enumerate(self.blocks):
             xf = lanes.astype(mx.float32)
-            nx = rms_unit(lanes.reshape(b, t, n * cfg.d_model))
-            hpre = mx.sigmoid(
-                self.mhc_a_pre[i] * (nx @ self.mhc_phi_pre[i].astype(mx.float32))
-                + self.mhc_b_pre[i]
-                + self.mhc_pre_off[i]
-            )
-            u = mx.einsum("btn,btnc->btc", hpre, xf).astype(x.dtype)
+            if fused_decode:
+                u, hpost, hres = fused_mhc_pre(
+                    lanes,
+                    self._mei_mhc_phi_packed[i],
+                    self.mhc_a_pre[i],
+                    self.mhc_a_post[i],
+                    self.mhc_a_res[i],
+                    self.mhc_b_pre[i],
+                    self.mhc_b_post[i],
+                    self.mhc_b_res[i],
+                    self.mhc_pre_off[i],
+                    self.mhc_post_off[i],
+                )
+            else:
+                nx = rms_unit(lanes.reshape(b, t, n * cfg.d_model))
+                hpre = mx.sigmoid(
+                    self.mhc_a_pre[i] * (nx @ self.mhc_phi_pre[i].astype(mx.float32))
+                    + self.mhc_b_pre[i]
+                    + self.mhc_pre_off[i]
+                )
+                u = mx.einsum("btn,btnc->btc", hpre, xf).astype(x.dtype)
             site = e_kv = None
-            if engram_kv is not None:
-                site = mx.array([1.0 if layer == i else 0.0 for layer in cfg.engram_layers])
+            if engram_kv is not None and i in cfg.engram_layers:
+                site = site_table[i]
                 e_kv = engram_kv
             layer_cache = None if cache is None else cache[i]
             y, lc = block(
@@ -368,19 +613,24 @@ class NeedleZh(nn.Module):
                 site_flags=site,
                 rope_offset=rope_offset,
                 position_ids=attn_pos,
+                cache_write_index=cache_write_index,
+                mhc_post_context=(lanes, hpost, hres, u) if fused_decode else None,
             )
-            y = y - u
-            hpost = 2 * mx.sigmoid(
-                self.mhc_a_post[i] * (nx @ self.mhc_phi_post[i].astype(mx.float32))
-                + self.mhc_b_post[i]
-                + self.mhc_post_off[i]
-            )
-            res = (nx @ self.mhc_phi_res[i].astype(mx.float32)).reshape(b, t, n, n)
-            hres = sinkhorn(self.mhc_a_res[i] * res + self.mhc_b_res[i])
-            lanes = (
-                mx.einsum("btij,btjc->btic", hres, xf)
-                + hpost[..., None] * y.astype(mx.float32)[:, :, None, :]
-            ).astype(x.dtype)
+            if fused_decode:
+                lanes = y
+            else:
+                y = y - u
+                hpost = 2 * mx.sigmoid(
+                    self.mhc_a_post[i] * (nx @ self.mhc_phi_post[i].astype(mx.float32))
+                    + self.mhc_b_post[i]
+                    + self.mhc_post_off[i]
+                )
+                res = (nx @ self.mhc_phi_res[i].astype(mx.float32)).reshape(b, t, n, n)
+                hres = sinkhorn(self.mhc_a_res[i] * res + self.mhc_b_res[i])
+                lanes = (
+                    mx.einsum("btij,btjc->btic", hres, xf)
+                    + hpost[..., None] * y.astype(mx.float32)[:, :, None, :]
+                ).astype(x.dtype)
             new_cache.append(lc)
             if cells is not None:
                 cells.append(mx.mean(lanes, axis=2))

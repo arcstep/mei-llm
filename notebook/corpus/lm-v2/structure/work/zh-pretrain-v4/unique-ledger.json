@@ -1,0 +1,17 @@
+{
+  "role": "structure",
+  "unique_train_tokens": 12000377,
+  "n_valid_tokens": 150670,
+  "unk_rate": 0.0,
+  "dropped": 0,
+  "kept_docs": 14388,
+  "train_shards": [
+    "corpus/lm-v2/structure/zh-pretrain-v4/tokens/structure-train-0000.bin",
+    "corpus/lm-v2/structure/zh-pretrain-v4/tokens/structure-train-0001.bin"
+  ],
+  "valid_shards": [
+    "corpus/lm-v2/structure/zh-pretrain-v4/tokens/structure-valid-0000.bin"
+  ],
+  "public_distribution_clearance_asserted": false,
+  "excluded_cwt2": true
+}

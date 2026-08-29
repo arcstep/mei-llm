@@ -1,0 +1,80 @@
+{
+  "$id": "mei-runtime-wire-v1/turn-result",
+  "title": "TurnResult",
+  "type": "object",
+  "required": [
+    "wire_version",
+    "ok",
+    "error",
+    "refuse",
+    "selected_tools",
+    "schema_fingerprint",
+    "function_calls",
+    "raw_text",
+    "confidence",
+    "provenance",
+    "capabilities",
+    "stats"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "type": "string", "const": "mei-runtime-wire-v1" },
+    "ok": { "type": "boolean" },
+    "error": {
+      "type": ["object", "null"],
+      "required": ["code", "id", "message"],
+      "properties": {
+        "code": { "type": "integer" },
+        "id": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    },
+    "refuse": { "type": "boolean" },
+    "selected_tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "schema_fingerprint": { "type": ["string", "null"] },
+    "function_calls": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "arguments"],
+        "properties": {
+          "name": { "type": "string" },
+          "arguments": { "type": "object" }
+        }
+      }
+    },
+    "raw_text": { "type": ["string", "null"] },
+    "confidence": {
+      "type": "object",
+      "required": ["available", "value", "source"],
+      "properties": {
+        "available": { "type": "boolean" },
+        "value": { "type": ["number", "null"] },
+        "source": { "type": ["string", "null"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["validated", "ok", "detail"],
+      "properties": {
+        "validated": { "type": "boolean" },
+        "ok": { "type": "boolean" },
+        "detail": { "type": ["string", "null"] }
+      }
+    },
+    "capabilities": { "type": "object" },
+    "stats": {
+      "type": "object",
+      "required": ["backend", "wall_ms"],
+      "properties": {
+        "backend": { "type": "string" },
+        "wall_ms": { "type": "number" },
+        "decode_mode": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

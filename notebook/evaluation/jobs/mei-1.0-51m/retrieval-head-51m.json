@@ -1,0 +1,14 @@
+{
+  "stage": "P5",
+  "kind": "contrastive-head-q4",
+  "steps": 40,
+  "last_loss": 0.1312541663646698,
+  "catalog_n": 147,
+  "recall_at_5": 0.75,
+  "heads": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-base-scratch300m-q4-v1/heads.npz",
+  "backbone_frozen": true,
+  "quantized_backbone": true,
+  "product_final": false,
+  "qat_mandatory": true,
+  "not_a_claim": "Toy catalog recall is not a product retrieval freeze."
+}

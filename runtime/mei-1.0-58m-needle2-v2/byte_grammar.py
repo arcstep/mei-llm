@@ -12,6 +12,8 @@ from schema_render import compact_tools, dumps_canonical
 NEG_INF = -1e9
 
 _HEX_PIECE = re.compile(r"<0x([0-9A-Fa-f]{2})>")
+_TOKEN_BYTE_TABLES: dict[tuple, dict[int, bytes]] = {}
+_GRAMMAR_CACHE: dict[tuple, "CompiledByteGrammar"] = {}
 
 
 def token_to_bytes(tokenizer, tok_id: int) -> bytes:
@@ -97,11 +99,40 @@ def compile_byte_grammar(tools: list[dict[str, Any]]) -> CompiledByteGrammar:
     return CompiledByteGrammar(tools=tuple(compact), names=tuple(names), args_by_tool=args_by_tool)
 
 
+def tokenizer_cache_key(tokenizer) -> tuple:
+    return (
+        int(getattr(tokenizer, "vocab_size", 0) or 0),
+        str(getattr(tokenizer, "model_sha256", "") or getattr(tokenizer, "model_path", "") or id(tokenizer)),
+    )
+
+
+def token_bytes_table(tokenizer) -> dict[int, bytes]:
+    key = tokenizer_cache_key(tokenizer)
+    cached = _TOKEN_BYTE_TABLES.get(key)
+    if cached is not None:
+        return cached
+    table = {tok: token_to_bytes(tokenizer, tok) for tok in range(int(tokenizer.vocab_size))}
+    _TOKEN_BYTE_TABLES[key] = table
+    return table
+
+
 def attach_token_bytes(grammar: CompiledByteGrammar, tokenizer) -> CompiledByteGrammar:
-    table = {}
-    for tok in range(tokenizer.vocab_size):
-        table[tok] = token_to_bytes(tokenizer, tok)
-    grammar.token_bytes = table
+    grammar.token_bytes = token_bytes_table(tokenizer)
+    return grammar
+
+
+def compile_byte_grammar_cached(tools: list[dict[str, Any]], tokenizer=None) -> CompiledByteGrammar:
+    compact = compact_tools({"tools": tools})
+    fp = dumps_canonical(compact)
+    tok_key = tokenizer_cache_key(tokenizer) if tokenizer is not None else None
+    key = (fp, tok_key)
+    hit = _GRAMMAR_CACHE.get(key)
+    if hit is not None:
+        return hit
+    grammar = compile_byte_grammar(tools)
+    if tokenizer is not None:
+        attach_token_bytes(grammar, tokenizer)
+    _GRAMMAR_CACHE[key] = grammar
     return grammar
 
 
@@ -426,6 +457,76 @@ def _token_bytes(tokenizer, grammar: CompiledByteGrammar, tok: int) -> bytes:
     if grammar.token_bytes is not None and tok in grammar.token_bytes:
         return grammar.token_bytes[tok]
     return token_to_bytes(tokenizer, tok)
+
+
+def _token_is_legal(tokenizer, grammar: CompiledByteGrammar, prefix_bytes: bytes, tok: int) -> bool:
+    tok = int(tok)
+    if tok in {tokenizer.pad_id, tokenizer.bos_id}:
+        return False
+    if tok == tokenizer.eos_id:
+        return is_accept_bytes(prefix_bytes, grammar)
+    extra = _token_bytes(tokenizer, grammar, tok)
+    return bool(extra) and is_legal_byte_prefix(prefix_bytes + extra, grammar)
+
+
+def _topk_indices(row, k: int):
+    import mlx.core as mx
+
+    vocab = int(row.shape[-1])
+    k = max(1, min(int(k), vocab))
+    if k >= vocab:
+        return mx.argsort(row)[::-1]
+    part = mx.argpartition(-row, kth=k - 1)[:k]
+    return part[mx.argsort(-row[part])]
+
+
+def select_legal_token_oracle(logits, tokenizer, grammar: CompiledByteGrammar, prefix_bytes: bytes) -> int | None:
+    import mlx.core as mx
+
+    if is_accept_bytes(prefix_bytes, grammar):
+        return tokenizer.eos_id
+    row = logits[0] if logits.ndim == 2 else logits
+    ranked = mx.argsort(row)[::-1].tolist()
+    for tok in ranked:
+        if _token_is_legal(tokenizer, grammar, prefix_bytes, tok):
+            return int(tok)
+    return None
+
+
+def select_legal_token(
+    logits,
+    tokenizer,
+    grammar: CompiledByteGrammar,
+    prefix_bytes: bytes,
+    *,
+    stages: tuple[int | None, ...] = (64, 256, 1024, 4096, None),
+) -> int | None:
+    import mlx.core as mx
+
+    if is_accept_bytes(prefix_bytes, grammar):
+        return tokenizer.eos_id
+    row = logits[0] if logits.ndim == 2 else logits
+    vocab = int(row.shape[-1])
+    seen = 0
+    for stage in stages:
+        if stage is None:
+            ranked = mx.argsort(row)[::-1]
+            mx.eval(ranked)
+            ids = ranked.tolist()
+        else:
+            k = min(int(stage), vocab)
+            if k <= seen:
+                continue
+            ranked = _topk_indices(row, k)
+            mx.eval(ranked)
+            ids = ranked.tolist()
+        for tok in ids[seen:]:
+            if _token_is_legal(tokenizer, grammar, prefix_bytes, tok):
+                return int(tok)
+        seen = len(ids)
+        if seen >= vocab:
+            break
+    return None
 
 
 def mask_illegal_logits(

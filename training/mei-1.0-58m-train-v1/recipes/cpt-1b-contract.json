@@ -1,0 +1,81 @@
+{
+  "id": "mei-1.0-58m-cpt-1b-v1",
+  "mode": "cpt",
+  "kind": "continuation",
+  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "config_loader": "NeedleZhConfig.from_spec",
+  "v2_heads_in_default_pretrain": false,
+  "tokenizer": "tokenizer/zh-24k-v1",
+  "corpus": "corpus/lm-v2",
+  "schedule": "corpus/lm-v2/schedule-cpt-1b.json",
+  "run_dir": "training/runs/pretrain-1b-cpt-from-scratch300m",
+  "parent_release": "base/mei-1.0-58m-base-scratch300m-v1",
+  "parent_checkpoint": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch-state.npz",
+  "parent_weights": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch.npz",
+  "init_mode": "continuation",
+  "allow_repeat": false,
+  "weights_only_forbidden": true,
+  "seq_len": 2048,
+  "max_seq_len": 2048,
+  "precision": "fp32",
+  "compile_train": true,
+  "batch_size": 1,
+  "grad_accum": 1,
+  "roles": ["wiki", "hq", "structure", "colloquial"],
+  "reset_source_cursors": ["structure", "colloquial"],
+  "continue_source_cursors": ["wiki", "hq"],
+  "parent_tokens_seen": 300000485,
+  "parent_source_tokens_drawn": {
+    "wiki": 166658048,
+    "hq": 98373120,
+    "structure": 4861157,
+    "colloquial": 30108160
+  },
+  "parent_source_token_cursors": {
+    "wiki": 166658048,
+    "hq": 98373120,
+    "structure": 4862976,
+    "colloquial": 30108160
+  },
+  "parent_hashes": {
+    "tokenizer_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629",
+    "weights_sha256": "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
+    "state_sha256": "2e829e877127fdd0217207c21cf294a038b93c444e52646126f1163b5c9d3fef",
+    "schedule_sha256": "e97b8c9ec1d5930369cb18204217c59ac0e3a9729ace0012439599ce9ed39628"
+  },
+  "cumulative_exposure_tokens": 1000000000,
+  "incremental_exposure_tokens": 699999515,
+  "cumulative_quotas": {
+    "wiki": 555525480,
+    "hq": 327908607,
+    "structure": 16203860,
+    "colloquial": 100362053
+  },
+  "incremental_quotas": {
+    "wiki": 388867432,
+    "hq": 229535487,
+    "structure": 11342703,
+    "colloquial": 70253893
+  },
+  "mix_ratios": {
+    "wiki": 0.55552548,
+    "hq": 0.32790861,
+    "structure": 0.01620386,
+    "colloquial": 0.10036205
+  },
+  "lr": {
+    "kind": "cosine_tokens_segment",
+    "base": 3e-5,
+    "final": 1e-5,
+    "horizon_tokens": 699999515,
+    "token_offset": 300000485,
+    "note": "Segment cosine on incremental tokens. Do not stretch the 300M 3e-4→3e-5 curve to 1B."
+  },
+  "milestones": [350000000, 500000000, 750000000, 1000000000],
+  "hard_gates": [500000000, 750000000, 1000000000],
+  "eval_every_tokens": 10000000,
+  "save_every_tokens": 10000000,
+  "excludes": ["ChineseWebText2.0", "cwt2"],
+  "lm_v1_immutable": true,
+  "scratch300m_immutable": true
+}

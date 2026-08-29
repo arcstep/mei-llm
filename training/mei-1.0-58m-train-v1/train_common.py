@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 from functools import partial
+from pathlib import Path
 from typing import Any, Callable
 
 import mlx.core as mx
@@ -75,7 +76,8 @@ def stack_windows(windows: list[dict[str, Any]], *, conf: bool = False):
     x = mx.array([w["x"] for w in windows], dtype=mx.int32)
     y = mx.array([w["y"] for w in windows], dtype=mx.int32)
     mask = mx.array([w["mask"] for w in windows], dtype=mx.float32)
-    out = {"x": x, "y": y, "mask": mask}
+    n_tokens = int(sum(float(value) for window in windows for value in window["mask"]))
+    out = {"x": x, "y": y, "mask": mask, "n_tokens": n_tokens}
     if conf:
         out["confidence"] = mx.array([float(w.get("confidence") or 0.0) for w in windows], dtype=mx.float32)
     return out
@@ -180,6 +182,9 @@ def train_lm_steps(
     compile_train: bool = False,
     precision: str = "fp32",
     horizon_tokens: int | None = None,
+    lr_final: float | None = None,
+    lr_token_offset: int = 0,
+    stop_path: Path | str | None = None,
 ) -> dict[str, Any]:
     if not batches:
         raise ValueError("no batches")
@@ -204,6 +209,15 @@ def train_lm_steps(
     precision = str(precision or "fp32").lower()
     if precision not in {"fp32", "fp16", "bf16"}:
         raise ValueError(f"unsupported precision {precision}")
+    if precision != "fp32":
+        raise NotImplementedError(
+            f"precision={precision} is not a real mixed-precision path yet; "
+            "refusing misleading checkpoint metadata"
+        )
+    final_lr = float(lr_final) if lr_final is not None else float(lr) * 0.1
+    offset = int(lr_token_offset or 0)
+    stop_file = Path(stop_path) if stop_path else None
+    paused = False
     if target_tokens is not None:
         remain = max(0, int(target_tokens) - seen)
         estimated = max(1, (remain + toks_per_update - 1) // toks_per_update)
@@ -230,7 +244,18 @@ def train_lm_steps(
 
     value_and_grad = nn.value_and_grad(model, loss_fn)
     compiled_vjp = None
-    if compile_train:
+    compiled_step = None
+    if compile_train and accum == 1 and not want_conf:
+        compile_state = [model.state, opt.state]
+
+        def _step(x, y, mask):
+            loss, grads = value_and_grad(model, {"x": x, "y": y, "mask": mask})
+            grads, grad_norm = clip_grads(grads, max_grad_norm)
+            opt.update(model, grads)
+            return loss, grad_norm
+
+        compiled_step = partial(mx.compile, inputs=compile_state, outputs=compile_state)(_step)
+    elif compile_train:
         compile_state = [model.state]
 
         def _vjp(x, y, mask):
@@ -256,25 +281,15 @@ def train_lm_steps(
             return None
         return stack_windows(chunk, conf=want_conf)
 
-    def apply_update() -> None:
-        nonlocal last, seen, acc_grads, acc_loss, acc_tok, micro_in_accum, opt_steps
-        if acc_grads is None or acc_tok <= 0:
-            acc_grads = None
-            acc_loss = 0.0
-            acc_tok = 0
-            micro_in_accum = 0
-            return
-        acc_grads = _scale_tree(acc_grads, 1.0 / float(acc_tok))
-        acc_grads, gn = clip_grads(acc_grads, max_grad_norm)
-        opt.update(model, acc_grads)
-        mx.eval(model.parameters(), opt.state)
-        last = acc_loss / float(acc_tok)
-        seen += acc_tok
+    def record_update(step_loss: float, grad_norm, step_tokens: int) -> None:
+        nonlocal last, seen, opt_steps
+        last = float(step_loss)
+        seen += int(step_tokens)
         if on_step:
             info = {
                 "loss": last,
-                "grad_norm": float(gn),
-                "tokens_seen_step": acc_tok,
+                "grad_norm": float(grad_norm),
+                "tokens_seen_step": int(step_tokens),
                 "tokens_seen": seen,
                 "lr": float(opt.learning_rate),
                 "window_index": window_i,
@@ -303,6 +318,20 @@ def train_lm_steps(
                 info["alignment_overshoot"] = dict(overshoot)
             on_step(start_step + opt_steps, info)
         opt_steps += 1
+
+    def apply_update() -> None:
+        nonlocal acc_grads, acc_loss, acc_tok, micro_in_accum
+        if acc_grads is None or acc_tok <= 0:
+            acc_grads = None
+            acc_loss = 0.0
+            acc_tok = 0
+            micro_in_accum = 0
+            return
+        acc_grads = _scale_tree(acc_grads, 1.0 / float(acc_tok))
+        acc_grads, gn = clip_grads(acc_grads, max_grad_norm)
+        opt.update(model, acc_grads)
+        mx.eval(model.parameters(), opt.state)
+        record_update(acc_loss / float(acc_tok), gn, acc_tok)
         micro_in_accum = 0
         acc_grads = None
         acc_loss = 0.0
@@ -310,6 +339,9 @@ def train_lm_steps(
 
     exhausted = False
     while opt_steps < max_updates:
+        if stop_file is not None and stop_file.is_file():
+            paused = True
+            break
         if target_tokens is not None and seen >= int(target_tokens):
             break
         stacked = take_micro()
@@ -317,14 +349,22 @@ def train_lm_steps(
             exhausted = True
             break
         if horizon_tokens:
-            opt.learning_rate = cosine_lr_tokens(seen, int(horizon_tokens), lr, lr * 0.1)
+            opt.learning_rate = cosine_lr_tokens(seen - offset, int(horizon_tokens), lr, final_lr)
         else:
-            opt.learning_rate = cosine_lr(start_step + opt_steps, horizon, lr, lr * 0.1)
+            opt.learning_rate = cosine_lr(start_step + opt_steps, horizon, lr, final_lr)
+        n_tok = int(stacked.get("n_tokens") or tokens_from_mask(stacked["mask"]))
+        if compiled_step is not None:
+            loss, gn = compiled_step(stacked["x"], stacked["y"], stacked["mask"])
+            mx.eval(loss, gn, model.parameters(), opt.state)
+            record_update(float(loss), gn, n_tok)
+            if stop_file is not None and stop_file.is_file():
+                paused = True
+                break
+            continue
         if compiled_vjp is not None:
             loss, grads = compiled_vjp(stacked["x"], stacked["y"], stacked["mask"])
         else:
             loss, grads = value_and_grad(model, stacked)
-        n_tok = tokens_from_mask(stacked["mask"])
         grads = _scale_tree(grads, float(max(n_tok, 1)))
         acc_grads = grads if acc_grads is None else _add_trees(acc_grads, grads)
         acc_loss += float(loss) * max(n_tok, 1)
@@ -334,6 +374,9 @@ def train_lm_steps(
         if micro_in_accum < accum and not crossed:
             continue
         apply_update()
+        if stop_file is not None and stop_file.is_file():
+            paused = True
+            break
         if target_tokens is None and opt_steps >= max_updates:
             break
     if acc_grads is not None and acc_tok > 0:
@@ -350,4 +393,12 @@ def train_lm_steps(
         "allow_repeat": allow_repeat,
         "precision": precision,
         "compile_train": compile_train,
+        "compile_scope": (
+            "full_step"
+            if compiled_step is not None
+            else "vjp"
+            if compiled_vjp is not None
+            else "none"
+        ),
+        "paused": paused,
     }

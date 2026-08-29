@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import time
 from typing import Any
 
@@ -168,29 +169,34 @@ def greedy_byte_grammar(
     cache_position_ids=None,
     engram_prefix_ids=None,
     kv=None,
+    start_logits=None,
 ) -> dict[str, Any]:
     try:
         from .byte_grammar import (
-            attach_token_bytes,
-            compile_byte_grammar,
+            compile_byte_grammar_cached,
             is_accept_bytes,
-            mask_illegal_logits,
+            select_legal_token,
             token_to_bytes,
         )
     except ImportError:
         from byte_grammar import (
-            attach_token_bytes,
-            compile_byte_grammar,
+            compile_byte_grammar_cached,
             is_accept_bytes,
-            mask_illegal_logits,
+            select_legal_token,
             token_to_bytes,
         )
 
-    grammar = attach_token_bytes(compile_byte_grammar(tools), tokenizer)
+    t0 = time.perf_counter()
+    grammar = compile_byte_grammar_cached(tools, tokenizer)
     prefix_bytes = b""
     pieces: list[int] = []
     logps: list[float] = []
-    if kv is not None:
+    grammar_ms = 0.0
+    if start_logits is not None:
+        logits = start_logits[:, -1, :] if start_logits.ndim == 3 else start_logits
+    elif kv is not None and getattr(kv, "last_logits", None) is not None:
+        logits = kv.last_logits
+    elif kv is not None:
         out = model(
             mx.array([kv.visible_ids], dtype=mx.int32),
             position_ids=mx.array(kv.visible_positions, dtype=mx.int32),
@@ -198,6 +204,7 @@ def greedy_byte_grammar(
         mx.eval(out["logits"])
         kv.absorb_packed_cache(out["cache"])
         logits = out["logits"][:, -1, :]
+        kv.last_logits = logits
     else:
         ids = list(prompt_ids)
         kwargs = {}
@@ -214,21 +221,20 @@ def greedy_byte_grammar(
     for _ in range(max_new):
         if is_accept_bytes(prefix_bytes, grammar):
             break
-        logp = nn.log_softmax(logits, axis=-1)[0]
-        ranked = mx.argsort(logp)[::-1].tolist()
-        masked, chosen = mask_illegal_logits(logits, tokenizer, grammar, prefix_bytes, ranked)
+        tg = time.perf_counter()
+        chosen = select_legal_token(logits, tokenizer, grammar, prefix_bytes)
+        grammar_ms += (time.perf_counter() - tg) * 1000
         if chosen is None:
             break
-        masked_logp = nn.log_softmax(masked, axis=-1)[0]
-        chosen = int(mx.argmax(masked_logp).item())
-        if float(masked_logp[chosen]) < -1e8:
+        logp = nn.log_softmax(logits, axis=-1)[0]
+        if float(logp[chosen].item()) < -1e8:
             break
         if chosen == tokenizer.eos_id:
             break
         extra = token_to_bytes(tokenizer, chosen)
         prefix_bytes += extra
         pieces.append(chosen)
-        logps.append(float(masked_logp[chosen]))
+        logps.append(float(logp[chosen]))
         if kv is not None:
             step = kv.decode_step(model, chosen)
         else:
@@ -246,6 +252,10 @@ def greedy_byte_grammar(
         "mean_token_logprob": (call_lp / max(1, len(logps))),
         "cache": None if kv is not None else cache,
         "kv": kv,
+        "timings": {
+            "grammar_ms": grammar_ms,
+            "decode_ms": (time.perf_counter() - t0) * 1000,
+        },
     }
 
 
@@ -256,22 +266,62 @@ def greedy_unconstrained(
     *,
     max_new: int = 96,
     kv=None,
+    start_logits=None,
 ) -> dict[str, Any]:
     """Product-unconstrained greedy decode for the 58M raw baseline column."""
+    t0 = time.perf_counter()
     pieces: list[int] = []
     logps: list[float] = []
-    if kv is not None:
-        logits = model(
-            mx.array([kv.visible_ids[-1:]], dtype=mx.int32),
-            position_ids=mx.array(kv.visible_positions[-1:], dtype=mx.int32),
-        )["logits"][:, -1, :]
+    if start_logits is not None:
+        logits = start_logits[:, -1, :] if start_logits.ndim == 3 else start_logits
+    elif kv is not None and getattr(kv, "last_logits", None) is not None:
+        logits = kv.last_logits
+    elif kv is not None:
+        raise ValueError("raw decode with KV requires prefill logits handoff")
     else:
         out = model(mx.array([list(prompt_ids)], dtype=mx.int32))
         mx.eval(out["logits"])
         logits = out["logits"][:, -1, :]
-    for _ in range(max_new):
+    acc = ""
+    had_open = False
+    remaining = int(max_new)
+    use_chunk = (
+        kv is not None
+        and getattr(model, "_inference_backend", "mlx-reference") == "mlx-fused"
+        and int(os.environ.get("MEI_SDK_DECODE_CHUNK", "24")) > 1
+    )
+    stopped = False
+    while remaining > 0:
+        if use_chunk:
+            chunk = kv.decode_chunk(
+                model,
+                logits,
+                chunk_size=min(int(os.environ.get("MEI_SDK_DECODE_CHUNK", "24")), remaining),
+            )
+            if chunk.get("available"):
+                logits = chunk["logits"]
+                remaining -= len(chunk["ids"])
+                for chosen, selected_logp in zip(chunk["ids"], chunk["logprobs"]):
+                    if chosen == tokenizer.eos_id or chosen == tokenizer.pad_id:
+                        stopped = True
+                        break
+                    pieces.append(chosen)
+                    logps.append(float(selected_logp))
+                    piece = tokenizer.decode([chosen])
+                    acc += piece
+                    if "[" in piece:
+                        had_open = True
+                    if had_open and acc.rstrip().endswith("]"):
+                        stopped = True
+                        break
+                if stopped:
+                    break
+                continue
+            use_chunk = False
         logp = nn.log_softmax(logits, axis=-1)[0]
-        chosen = int(mx.argmax(logp).item())
+        chosen_arr = mx.argmax(logp)
+        mx.eval(chosen_arr)
+        chosen = int(chosen_arr.item())
         if chosen == tokenizer.eos_id or chosen == tokenizer.pad_id:
             break
         pieces.append(chosen)
@@ -283,14 +333,19 @@ def greedy_unconstrained(
             step = model(mx.array([[chosen]], dtype=mx.int32))
             mx.eval(step["logits"])
             logits = step["logits"][:, -1, :]
-        text_now = tokenizer.decode(pieces)
-        if text_now.rstrip().endswith("]") and "[" in text_now:
+        piece = tokenizer.decode([chosen])
+        acc += piece
+        if "[" in piece:
+            had_open = True
+        if had_open and acc.rstrip().endswith("]"):
             break
+        remaining -= 1
     call_lp = float(sum(logps)) if logps else 0.0
     return {
-        "text": tokenizer.decode(pieces),
+        "text": tokenizer.decode(pieces) if pieces else acc,
         "ids": pieces,
         "call_logprob": call_lp,
         "mean_token_logprob": (call_lp / max(1, len(logps))),
         "kv": kv,
+        "timings": {"decode_ms": (time.perf_counter() - t0) * 1000},
     }

@@ -1,0 +1,49 @@
+{
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "role": "san_corrected_training_baseline",
+  "parent_architecture": "mei-1.0-58m-arch-v1",
+  "checkpoint_compatible": false,
+  "runtime": "mlx",
+  "architecture": {
+    "d_model": 512,
+    "n_layers": 27,
+    "n_heads": 8,
+    "n_kv_heads": 4,
+    "rope_theta": 100000.0,
+    "mlp": "FixedWalshHadamardMLP",
+    "engram_layers": [2, 15],
+    "engram_orders": [2, 3],
+    "engram_slots": 8192,
+    "engram_conv_taps": 4,
+    "mhc_lanes": 4,
+    "sinkhorn_iters": 20,
+    "vocab_size": 24000,
+    "max_seq_len": 2048,
+    "kv_window": 512,
+    "tie_embeddings": true,
+    "mtp_enabled": false,
+    "confidence_head": true
+  },
+  "fixed_non_parameters": [
+    "walsh_hadamard_transform",
+    "mhc_pre_off",
+    "mhc_post_off"
+  ],
+  "engram_boundary": {
+    "ngram_ok": true,
+    "tap_ok": true,
+    "decode_history_tokens": 12
+  },
+  "tokenizer": {
+    "id": "zh-24k-v1",
+    "pad_id": 0,
+    "eos_id": 1,
+    "bos_id": 2,
+    "unk_id": 3
+  },
+  "expected_trainable_params": {
+    "min": 50000000,
+    "max": 53000000,
+    "target": 51463797
+  }
+}
