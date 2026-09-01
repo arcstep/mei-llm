@@ -483,7 +483,7 @@ def main() -> int:
 
     (PUB / "README.md").write_text(
         "# corpus/lm-v1\n\n"
-        "Serving atlas for `mei-1.0-58m`. `CURRENT.corpus` points here.\n\n"
+        "Serving atlas for `mei-1.0-51m`. `CURRENT.corpus` points here.\n\n"
         "```text\n"
         "mix.json / schedule.json / RELEASE.json / manifest.json\n"
         "language/zh-pretrain-v0/   # active wiki\n"

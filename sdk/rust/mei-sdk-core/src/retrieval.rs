@@ -16,7 +16,10 @@ pub fn select_tools<'a>(request: &'a Value) -> Result<&'a [Value], SdkError> {
             }
             return Ok(list);
         } else {
-            return Err(SdkError::new("invalid_argument", "oracle_tools must be a list"));
+            return Err(SdkError::new(
+                "invalid_argument",
+                "oracle_tools must be a list",
+            ));
         }
     }
     let catalog = request

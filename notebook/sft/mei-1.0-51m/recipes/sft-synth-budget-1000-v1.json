@@ -1,0 +1,59 @@
+{
+  "id": "sft-synth-budget-1000-v1",
+  "product": "mei-1.0-51m",
+  "confirmed_by": "user",
+  "confirmed_on": "2026-08-27",
+  "global_budget_cny": 1000.0,
+  "warn_cny": 800.0,
+  "hard_stop_cny": 1000.0,
+  "metric_unit": "accepted_unique_row",
+  "allowed_snapshots": [
+    "template",
+    "deepseek-v4-flash-0731",
+    "qwen-plus-2025-12-01",
+    "qwen3.7-plus"
+  ],
+  "provider_note": "All paid snapshots use DashScope compatible-mode via QWEN_* credentials. GLM/Kimi/Qwen3.6 stay off unless main lanes fail. Do not silently replace a missing snapshot.",
+  "phases": {
+    "canary": {
+      "max_spend_cny": 50.0,
+      "n_cases_per_task": 12,
+      "lanes": ["template", "deepseek-v4-flash-0731", "qwen-plus-2025-12-01", "qwen3.7-plus"],
+      "purpose": "Same-item quality/cost Pareto before any 2k spend"
+    },
+    "2k": {
+      "max_spend_cny": 300.0,
+      "accepted_unique_per_task": 2000,
+      "overgenerate": 3,
+      "requires": ["canary_pareto"],
+      "split_cny": {
+        "retrieval": 110.0,
+        "fullcall": 120.0,
+        "mw": 70.0
+      }
+    },
+    "10k": {
+      "max_spend_cny": 500.0,
+      "requires": ["2k_quality_isolation_cost_curve"],
+      "hold_if": "2k learning curve does not justify scale"
+    },
+    "20k_50k": {
+      "max_spend_cny": 0.0,
+      "hold": "learning_curve",
+      "note": "Zero budget this round. Do not spend 20k/50k inside this 1000 envelope until a new curve and user authorization."
+    }
+  },
+  "lane_caps_cny": {
+    "template": 0.0,
+    "deepseek-v4-flash-0731": 500.0,
+    "qwen-plus-2025-12-01": 220.0,
+    "qwen3.7-plus": 130.0
+  },
+  "unallocated_contingency_cny": 150.0,
+  "candidate_share": {
+    "deepseek-v4-flash-0731": [0.55, 0.70],
+    "qwen-plus-2025-12-01": [0.20, 0.30],
+    "qwen3.7-plus": [0.10, 0.20]
+  },
+  "note": "Phase caps and lane caps draw from the same 1000 ledger, not added. Contingency covers retries/429/price drift and is not auto-spent. Canary ≤50, 2k ≤300, 10k ≤500."
+}

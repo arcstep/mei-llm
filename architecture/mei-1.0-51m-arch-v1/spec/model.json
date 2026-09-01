@@ -1,8 +1,12 @@
 {
   "architecture_id": "mei-1.0-51m-arch-v1",
   "role": "san_corrected_training_baseline",
-  "parent_architecture": "mei-1.0-58m-arch-v1",
-  "checkpoint_compatible": false,
+  "parent_architecture": null,
+  "lineage": {
+    "historical_parent_status": "retired_before_51m_identity",
+    "historical_parent_reference": "git_history_before_mei-1.0-51m-arch-v1",
+    "checkpoint_compatible_with_historical_parent": false
+  },
   "runtime": "mlx",
   "architecture": {
     "d_model": 512,
@@ -19,10 +23,30 @@
     "sinkhorn_iters": 20,
     "vocab_size": 24000,
     "max_seq_len": 2048,
-    "kv_window": 512,
     "tie_embeddings": true,
-    "mtp_enabled": false,
     "confidence_head": true
+  },
+  "runtime_profile": {
+    "max_context_tokens": 2048,
+    "stable_prefix_max_tokens": 1024,
+    "ordinary_window_tokens": 256,
+    "default_output_max_tokens": 128,
+    "kv_cache_dtype": "int8",
+    "activation_dtype": "int8"
+  },
+  "training_aux": {
+    "mtp": {
+      "mode": "training_only_ablation",
+      "enabled_by_default": false,
+      "export": false
+    },
+    "confidence_probes": 8
+  },
+  "compatibility": {
+    "weight_contract": "ordered tensor names/shapes plus topology semantics",
+    "runtime_profile_is_not_weight_identity": true,
+    "training_aux_is_not_weight_identity": true,
+    "legacy_alias_receipt": "legacy-architecture-aliases.json"
   },
   "fixed_non_parameters": [
     "walsh_hadamard_transform",

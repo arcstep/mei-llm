@@ -82,20 +82,20 @@ def main() -> int:
     check("prompt_mentions_arguments", "arguments" in fullcall_system())
     check("mw_has_16_codes", mw_codebook_block().count("reason_code") >= 0 and "ready_to_execute" in mw_codebook_block())
 
-    from sft_v2_baseline_adapters import ABANDONED_58M_ARCHIVE, _is_abandoned_58m_archive, resolve_promoted_58m_base
+    from sft_v2_baseline_adapters import ABANDONED_51M_ARCHIVE, _is_abandoned_51m_archive, resolve_promoted_51m_base
 
-    st = resolve_promoted_58m_base()
-    check("58m_available", bool(st.get("available")), status=st.get("status"), path=st.get("path"))
-    check("58m_not_archive", ABANDONED_58M_ARCHIVE not in str(st.get("path") or ""))
-    check("58m_is_scratch300m", "scratch300m-v1" in str(st.get("path") or "") and str(st.get("path") or "").endswith("pretrain-300m-scratch.npz"))
+    st = resolve_promoted_51m_base()
+    check("51m_available", bool(st.get("available")), status=st.get("status"), path=st.get("path"))
+    check("51m_not_archive", ABANDONED_51M_ARCHIVE not in str(st.get("path") or ""))
+    check("51m_is_scratch300m", "scratch300m-v1" in str(st.get("path") or "") and str(st.get("path") or "").endswith("pretrain-300m-scratch.npz"))
     check(
-        "58m_sha_pinned",
+        "51m_sha_pinned",
         st.get("weights_sha256") == "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
         sha=st.get("weights_sha256"),
     )
     check(
         "archive_path_refused",
-        _is_abandoned_58m_archive("notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz"),
+        _is_abandoned_51m_archive("notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m.npz"),
     )
 
     from sft_v2_scorecard_metrics import rate_block, summarize_column

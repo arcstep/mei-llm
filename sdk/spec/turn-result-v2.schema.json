@@ -1,0 +1,115 @@
+{
+  "$id": "mei-runtime-wire-v2/turn-result",
+  "title": "TurnResultV2",
+  "type": "object",
+  "required": ["wire_version", "kind", "state", "selected_tools", "capabilities", "stats"],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "const": "mei-runtime-wire-v2" },
+    "kind": { "enum": ["call", "respond", "refuse", "error"] },
+    "call": {
+      "type": ["object", "null"],
+      "required": ["call_id", "name", "arguments"],
+      "additionalProperties": false,
+      "properties": {
+        "call_id": { "$ref": "#/$defs/call_id" },
+        "name": { "type": "string" },
+        "arguments": { "type": "object" }
+      }
+    },
+    "refusal": {
+      "type": ["object", "null"],
+      "required": ["reason"],
+      "additionalProperties": false,
+      "properties": { "reason": { "type": "string" }, "detail": { "type": ["string", "null"] } }
+    },
+    "error": {
+      "type": ["object", "null"],
+      "required": ["code", "id", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "integer" }, "id": { "type": "string" }, "message": { "type": "string" }
+      }
+    },
+    "state": {
+      "type": "object",
+      "required": ["step", "pending_call_id", "cancelled"],
+      "additionalProperties": false,
+      "properties": {
+        "step": { "type": "integer", "minimum": 0 },
+        "pending_call_id": {
+          "oneOf": [
+            { "$ref": "#/$defs/call_id" },
+            { "type": "null" }
+          ]
+        },
+        "cancelled": { "type": "boolean" }
+      }
+    },
+    "selected_tools": { "type": "array", "items": { "type": "string" }, "maxItems": 5 },
+    "schema_fingerprint": { "type": ["string", "null"] },
+    "execution": { "enum": ["execute", "respond", "refuse", "escalate", "unknown"] },
+    "raw_text": { "type": ["string", "null"] },
+    "generated_token_ids": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+      "maxItems": 128
+    },
+    "prefill_topk_ids": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+      "maxItems": 5
+    },
+    "confidence": { "type": "object" },
+    "provenance": { "type": "object" },
+    "capabilities": { "type": "object" },
+    "stats": { "type": "object" },
+    "ok": { "type": "boolean", "description": "v1 projection; deprecated" },
+    "refuse": { "type": "boolean", "description": "v1 projection; deprecated" },
+    "function_calls": { "type": "array", "maxItems": 1, "description": "v1 projection; deprecated" }
+  },
+  "$defs": {
+    "call_id": {
+      "type": "string",
+      "pattern": "^call-s[0-9a-f]{8}-[1-8]-[0-9a-f]{12}$"
+    }
+  },
+  "oneOf": [
+    {
+      "required": ["call", "refusal", "error"],
+      "properties": {
+        "kind": { "const": "respond" },
+        "call": { "type": "null" },
+        "refusal": { "type": "null" },
+        "error": { "type": "null" }
+      }
+    },
+    {
+      "required": ["call", "refusal", "error"],
+      "properties": {
+        "kind": { "const": "call" },
+        "call": { "type": "object" },
+        "refusal": { "type": "null" },
+        "error": { "type": "null" }
+      }
+    },
+    {
+      "required": ["call", "refusal", "error"],
+      "properties": {
+        "kind": { "const": "refuse" },
+        "call": { "type": "null" },
+        "refusal": { "type": "object" },
+        "error": { "type": "null" }
+      }
+    },
+    {
+      "required": ["call", "refusal", "error"],
+      "properties": {
+        "kind": { "const": "error" },
+        "call": { "type": "null" },
+        "refusal": { "type": "null" },
+        "error": { "type": "object" }
+      }
+    }
+  ]
+}

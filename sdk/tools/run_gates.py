@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
-"""Cross-language experimental SDK gates. Does not claim a product Runtime release."""
+"""Experimental SDK gates with an explicit product-scope boundary.
+
+The default scope qualifies Python/MLX plus Browser-WASM.  Native Rust CLI,
+Node-as-an-independent-runtime and C/FFI remain available under ``extended``
+but do not block the current 300M mechanism-validation cycle.
+"""
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import subprocess
@@ -26,7 +32,26 @@ def run(cmd: list[str], **kwargs) -> subprocess.CompletedProcess:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--scope",
+        choices=("python-browser-wasm", "extended"),
+        default="python-browser-wasm",
+    )
+    args = parser.parse_args()
+    extended = args.scope == "extended"
     failures: list[str] = []
+
+    def native_library() -> Path:
+        candidates = [
+            TARGET / "debug" / "libmei_sdk.dylib",
+            TARGET / "debug" / "libmei_sdk.so",
+            TARGET / "debug" / "mei_sdk.dll",
+        ]
+        for candidate in candidates:
+            if candidate.is_file():
+                return candidate
+        raise FileNotFoundError(candidates[0])
 
     def step(name: str, fn) -> None:
         print(f"\n== {name} ==")
@@ -40,20 +65,42 @@ def main() -> int:
     def python_tests() -> None:
         env = os.environ.copy()
         env["PYTHONPATH"] = str(ROOT / "python")
-        run(
-            [sys.executable, "-m", "unittest", "discover", "-s", str(ROOT / "python" / "tests"), "-v"],
-            env=env,
-        )
+        if extended:
+            # Pin extended FFI coverage to the immediately preceding build.
+            env["MEI_SDK_LIB"] = str(native_library())
+            command = [
+                sys.executable,
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                str(ROOT / "python" / "tests"),
+                "-v",
+            ]
+        else:
+            tests = [
+                str(path)
+                for path in sorted((ROOT / "python" / "tests").glob("test_*.py"))
+                if path.name != "test_ffi_v2.py"
+            ]
+            command = [sys.executable, "-m", "unittest", "-v", *tests]
+        run(command, env=env)
 
     def mlx_perf_gate() -> None:
         if os.environ.get("MEI_SDK_PERF_GATE") != "1":
             print("skip mlx perf gate (set MEI_SDK_PERF_GATE=1 to run on idle Apple Silicon)")
             return
+        package = os.environ.get("MEI_51M_PACKAGE_DIR")
+        if not package:
+            raise RuntimeError("MEI_51M_PACKAGE_DIR is required for the CQ2 performance gate")
         cmd = [
             sys.executable,
             str(ROOT / "tools" / "bench_mlx_complete.py"),
+            "--package",
+            str(Path(package).expanduser().resolve()),
             "--backend",
-            "mlx-fused",
+            "mlx-cq2",
+            "--kernel-only",
             "--gate",
             "--warmup",
             "2",
@@ -73,7 +120,10 @@ def main() -> int:
         run(cmd, env=env)
 
     def cargo_test() -> None:
-        run(["cargo", "test", "-p", "mei-sdk-core", "-p", "mei-sdk-cli"], env=cargo_env())
+        command = ["cargo", "test", "-p", "mei-sdk-core"]
+        if extended:
+            command.extend(["-p", "mei-sdk-cli"])
+        run(command, env=cargo_env())
 
     def cargo_ffi() -> None:
         run(["cargo", "build", "-p", "mei-sdk-ffi"], env=cargo_env())
@@ -89,8 +139,11 @@ def main() -> int:
 
     def rust_cli_parity() -> None:
         bin_path = TARGET / "debug" / "mei-sdk"
-        if not bin_path.is_file():
-            run(["cargo", "build", "-p", "mei-sdk-cli"], env=cargo_env())
+        # Always ask Cargo to refresh the CLI.  Merely checking that a binary
+        # exists can silently reuse a pre-51M executable against current
+        # fixtures, turning source/binary drift into a misleading parity
+        # failure.
+        run(["cargo", "build", "-p", "mei-sdk-cli"], env=cargo_env())
         golden = json.loads((SPEC / "golden" / "turn_results.json").read_text(encoding="utf-8"))
         tiny = ROOT / "fixtures" / "packages" / "tiny-protocol-v1"
         light = {"name": "light.set", "parameters": {"type": "object", "properties": {}}}
@@ -106,11 +159,7 @@ def main() -> int:
             raise AssertionError("CLI complete refuse != python golden")
 
     def native_python_ffi() -> None:
-        dylib = TARGET / "debug" / "libmei_sdk.dylib"
-        so = TARGET / "debug" / "libmei_sdk.so"
-        path = dylib if dylib.is_file() else so
-        if not path.is_file():
-            raise FileNotFoundError(path)
+        path = native_library()
         env = os.environ.copy()
         env["PYTHONPATH"] = str(ROOT / "python")
         env["MEI_SDK_LIB"] = str(path)
@@ -133,23 +182,27 @@ print("ffi ok")
         text = (SPEC / "split-criteria.md").read_text(encoding="utf-8")
         print(text)
         print("EVALUATION: experimental SDK skeleton is in mei-llm/sdk/; split-to-mei-sdk is NOT authorized.")
-        print("Blocking: portable inference kernels, Node native cdylib wiring, WASM tier-1, CURRENT.runtime=null.")
+        print("Blocking: final 300M CQ2/head package receipts, measured resource gates, CURRENT.runtime=null.")
 
+    print(f"runtime scope: {args.scope}")
+    if extended:
+        # Build the current ABI before extended Python discovery imports it.
+        step("cargo ffi", cargo_ffi)
     step("python unittest", python_tests)
     step("mlx perf gate (opt-in)", mlx_perf_gate)
-    step("cargo test", cargo_test)
-    step("cargo ffi", cargo_ffi)
-    step("cargo wasm tier-0", cargo_wasm)
-    step("node tests", node_tests)
-    step("rust CLI parity", rust_cli_parity)
-    step("python ctypes ABI", native_python_ffi)
+    step("Rust core tests (Browser-WASM dependency)", cargo_test)
+    step("Browser-WASM build", cargo_wasm)
+    step("browser JS wrapper tests", node_tests)
+    if extended:
+        step("rust CLI parity", rust_cli_parity)
+        step("python ctypes ABI", native_python_ffi)
     step("split criteria (informational)", split_checklist)
 
     print("\n==== summary ====")
     if failures:
         print("failed:", ", ".join(failures))
         return 1
-    print("all gates passed (experimental)")
+    print(f"all {args.scope} gates passed (experimental)")
     return 0
 
 

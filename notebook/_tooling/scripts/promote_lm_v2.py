@@ -11,7 +11,7 @@ from pathlib import Path
 from repo_paths import PUBLISHED_LM_V1, PUBLISHED_LM_V2, ROOT, TOKENIZER_ZH_V1
 
 SCRIPTS = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / "training/mei-1.0-58m-train-v1"))
+sys.path.insert(0, str(ROOT / "training/mei-1.0-51m-train-v1"))
 from _repo import ensure_formal_on_path  # noqa: E402
 
 ensure_formal_on_path()
@@ -185,7 +185,7 @@ def main() -> int:
         "formal_four_role": True,
         "parent_rung": "scratch-300m",
         "parent_tokens_seen": PARENT_TOKENS_SEEN,
-        "parent_checkpoint": "base/mei-1.0-58m-base-scratch300m-v1/pretrain-300m-scratch-state.npz",
+        "parent_checkpoint": "base/mei-1.0-51m-base-scratch300m-v1/pretrain-300m-scratch-state.npz",
         "parent_source_tokens_drawn": PARENT_SOURCE_TOKENS_DRAWN,
         "parent_source_token_cursors": PARENT_SOURCE_TOKEN_CURSORS,
         "reset_source_cursors": ["structure", "colloquial"],
@@ -235,7 +235,7 @@ def main() -> int:
         "id": "lm-v2-cpt-1b",
         "training_mode": "cpt",
         "roles_complete": True,
-        "parent_checkpoint": "base/mei-1.0-58m-base-scratch300m-v1",
+        "parent_checkpoint": "base/mei-1.0-51m-base-scratch300m-v1",
         "parent_tokens_seen": PARENT_TOKENS_SEEN,
         "exposure_tokens": CPT_INCREMENTAL_EXPOSURE,
         "cumulative_exposure_tokens": 1_000_000_000,
@@ -258,7 +258,7 @@ def main() -> int:
     dump(PUBLISHED_LM_V2 / "hashes.json", hashes)
     readme = """# corpus/lm-v2
 
-Immutable CPT consumption atlas for mei-1.0-58m 300M→1B.
+Immutable CPT consumption atlas for mei-1.0-51m 300M→1B.
 
 - Wiki/HQ shards are referenced from `corpus/lm-v1` and continue from the scratch300m cursors.
 - Structure/colloquial shards are fresh (`zh-pretrain-v4`, `colloquial-cpt-v2`); parent minor shards are not resampled.

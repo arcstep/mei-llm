@@ -22,12 +22,12 @@ from repo_paths import (
     CORPUS_ZH_PRETRAIN_HQ,
     CORPUS_ZH_PRETRAIN_V3,
     CORPUS_ZH_PRETRAIN_V4,
-    MODEL_MEI_58M,
+    MODEL_MEI_51M,
     ROOT,
 )
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-sys.path.insert(0, str(MODEL_MEI_58M))
+sys.path.insert(0, str(MODEL_MEI_51M))
 
 from colloquial_synth_lib import load_contract  # noqa: E402
 from data import file_sha256  # noqa: E402
@@ -224,7 +224,7 @@ def main() -> int:
         "formal_four_role": True,
         "parent_rung": "300m",
         "parent_tokens_seen": 300_000_000,
-        "parent_checkpoint": "mei-1.0-58m-base-cpt300m-v1",
+        "parent_checkpoint": "mei-1.0-51m-base-cpt300m-v1",
         "sampler_seed": 0,
         "skip_seen_wiki": True,
         "allow_repeat": False,
@@ -342,7 +342,7 @@ def main() -> int:
             "structure_v3": n_struct_valid,
             "colloquial": int(colloquial.get("n_valid_tokens") or 0) if roles_complete else 0,
         },
-        "parent_checkpoint": "mei-1.0-58m-base-cpt300m-v1",
+        "parent_checkpoint": "mei-1.0-51m-base-cpt300m-v1",
         "tokenizer": "zh-24k-v1",
         "note": "unique counts first-seen shards; do not multiply epochs. CWT2 excluded. v2 dirty structure excluded.",
     }
@@ -363,7 +363,7 @@ def main() -> int:
         "n_unique_remaining_wiki": remaining_wiki,
         "tokenizer": "zh-24k-v1",
         "tokenizer_sha256": tok.model_sha256,
-        "parent_checkpoint": "mei-1.0-58m-base-cpt300m-v1",
+        "parent_checkpoint": "mei-1.0-51m-base-cpt300m-v1",
         "copies_shards": False,
         "allow_repeat": False,
     }
@@ -432,7 +432,7 @@ def main() -> int:
     dump_json(dest / "hashes.json", meta_hashes)
     readme = """# corpus/lm-v1
 
-Serving atlas for `mei-1.0-58m`. Trainer consumes `mix.json` + pack `tokens/*.bin`.
+Serving atlas for `mei-1.0-51m`. Trainer consumes `mix.json` + pack `tokens/*.bin`.
 CPT uses `schedule.json`; from-scratch mix uses `schedule-scratch.json`.
 
 Active sources: wiki, hq, structure. Spoken four-role stays fail-closed until a frozen qwen-plus pack is admitted.

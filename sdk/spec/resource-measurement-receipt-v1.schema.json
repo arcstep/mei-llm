@@ -1,0 +1,43 @@
+{
+  "$id": "mei-resource-measurement-receipt-v1",
+  "title": "MeiResourceMeasurementReceiptV1",
+  "type": "object",
+  "required": [
+    "schema", "package_id", "tensor_container_sha256", "runtime_abi",
+    "measurements", "rust", "wasm"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "mei-resource-measurement-receipt-v1" },
+    "package_id": { "type": "string", "minLength": 1 },
+    "tensor_container_sha256": { "$ref": "#/$defs/sha256" },
+    "runtime_abi": { "const": "mei-runtime-abi-2" },
+    "measurements": {
+      "type": "object",
+      "required": ["package_bytes", "rust_session_peak_bytes", "wasm_heap_peak_bytes"],
+      "additionalProperties": false,
+      "properties": {
+        "package_bytes": { "type": "integer", "minimum": 0 },
+        "rust_session_peak_bytes": { "type": "integer", "minimum": 0 },
+        "wasm_heap_peak_bytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "rust": { "$ref": "#/$defs/runner" },
+    "wasm": { "$ref": "#/$defs/runner" }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "runner": {
+      "type": "object",
+      "required": ["target", "build_profile", "runner_id", "runner_sha256", "command_sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "target": { "type": "string", "minLength": 1 },
+        "build_profile": { "const": "release" },
+        "runner_id": { "type": "string", "minLength": 1 },
+        "runner_sha256": { "$ref": "#/$defs/sha256" },
+        "command_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

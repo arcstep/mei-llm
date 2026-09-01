@@ -1,0 +1,22 @@
+{
+  "id": "mei-tool-sft-v1-2k",
+  "serializer": "mei-schema-serializer-v1",
+  "generator_version": "mei-tool-schema-v1",
+  "n": 2000,
+  "n_train": 1800,
+  "n_valid": 200,
+  "seq_len": 2048,
+  "schema_conditioned": true,
+  "holdout_toolsets_excluded": [
+    "mei-retail-v0",
+    "mei-office-mut-v0",
+    "mei-office-rename-v0"
+  ],
+  "does_not_overwrite": [
+    "home-sft-2k.jsonl",
+    "home-sft-10k.jsonl",
+    "mw-sft-v0-2k.jsonl"
+  ],
+  "pack_sha256": "8e5a6b4c944955bd8e40241d2a88f4f6cc39ae7f418da2ee069a15c4b4fe48fa",
+  "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-sft-v1-2k.jsonl"
+}

@@ -4,7 +4,7 @@
   "formal_four_role": true,
   "parent_rung": "300m",
   "parent_tokens_seen": 300000000,
-  "parent_checkpoint": "mei-1.0-58m-base-cpt300m-v1",
+  "parent_checkpoint": "mei-1.0-51m-base-cpt300m-v1",
   "sampler_seed": 0,
   "skip_seen_wiki": true,
   "allow_repeat": false,

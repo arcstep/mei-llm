@@ -11,12 +11,12 @@
 5. 取消 / 会话释放路径有测试；C ABI 字符串可 `mei_sdk_string_free`。
 6. `CURRENT.runtime` 不再为 null，或明确维持 experimental 并拒绝产品 release 宣称——拆仓不等于产品发布。
 
-## 明确未达标（本轮）
+## 仍需产品候选证明
 
-- 可移植 Rust 推理 kernel 与量化执行
-- Node 本地 native 绑定（当前为协议层，待链同一 cdylib）
-- WASM tier-1 完整 58M 推理
-- SFT / contrastive / MW / confidence head 过门
+- Node 已绑定同一 Rust/WASM 数值 core；仍需正式 300M 候选 receipt 证明全链
+- 完整 51M CQ2 v2 单容器在 Rust/WASM 的最终数值与资源 receipt
+- SFT / contrastive / MW / confidence 四类 tensor 与训练 receipt 全部入同一 v2 包
+- 浏览器 ≤96 MiB heap、Rust session ≤64 MiB 的实测 receipt
 
 ## 拆仓时
 

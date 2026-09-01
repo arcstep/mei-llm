@@ -15,7 +15,7 @@ Rebuild / re-admit:
 
 ```bash
 .venv/bin/python notebook/_tooling/scripts/admit_colloquial_mixed.py
-.venv/bin/python training/mei-1.0-58m-train-v1/check_pretrain_readiness.py --require-formal
+.venv/bin/python training/mei-1.0-51m-train-v1/check_pretrain_readiness.py --require-formal
 ```
 
 Do not restore `schedule.json` or qwen-only admission onto the serving root. Formal public CPT remains a later, separate contract.

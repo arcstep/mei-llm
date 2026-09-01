@@ -5,20 +5,29 @@
 <pre id="out">loading…</pre>
 <script type="module">
   const out = document.getElementById("out");
-  const worker = new Worker("./wasm-q4-worker.js", { type: "module" });
+  const workerUrl = new URL("./wasm-q4-worker.js", import.meta.url);
+  workerUrl.search = location.search;
+  const worker = new Worker(workerUrl, { type: "module" });
+  const publish = (report) => {
+    out.textContent = JSON.stringify(report, null, 2);
+    fetch("/__mei_51m_report__", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(report),
+    }).catch(() => {});
+    worker.terminate();
+  };
   worker.onmessage = (ev) => {
-    out.textContent = JSON.stringify(ev.data, null, 2);
+    publish(ev.data);
   };
   worker.onerror = (err) => {
-    out.textContent = JSON.stringify(
-      {
+    publish({
         error: String(err && err.message ? err.message : err),
         filename: err && err.filename,
         lineno: err && err.lineno,
         colno: err && err.colno,
-      },
-      null,
-      2,
-    );
+        ok: false,
+        browser_worker: true,
+      });
   };
 </script>

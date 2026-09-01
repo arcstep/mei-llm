@@ -25,7 +25,7 @@
   },
   "prompt_version": "colloquial-synth-v1",
   "terms": {
-    "text": "Synthetic colloquial Chinese generated under a frozen qwen-plus snapshot for internal mei-1.0-58m CPT spoken-role only. No third-party web scrape. No EVAL/holdout/tool gold. No student-model recycle. API keys never stored. Commercial use of derived weights is an internal product decision recorded in private monorepo training contracts.",
+    "text": "Synthetic colloquial Chinese generated under a frozen qwen-plus snapshot for internal mei-1.0-51m CPT spoken-role only. No third-party web scrape. No EVAL/holdout/tool gold. No student-model recycle. API keys never stored. Commercial use of derived weights is an internal product decision recorded in private monorepo training contracts.",
     "must_hash": true
   },
   "excludes": [

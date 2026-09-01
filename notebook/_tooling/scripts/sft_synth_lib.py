@@ -168,7 +168,7 @@ def export_queue_rows(conn: sqlite3.Connection) -> tuple[list[dict], list[dict]]
 
 def fleet_contract(fleet: dict) -> dict:
     return {
-        "fleet": "notebook/sft/mei-1.0-58m/recipes/sft-synth-fleet-v1.json",
+        "fleet": "notebook/sft/mei-1.0-51m/recipes/sft-synth-fleet-v1.json",
         "fleet_id": fleet.get("id") or "sft-synth-fleet-v1",
         "fleet_hash": sha256_obj(fleet),
         "prompt_version": fleet.get("prompt_version") or PROMPT_VERSION,

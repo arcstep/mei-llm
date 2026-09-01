@@ -1,0 +1,62 @@
+{
+  "id": "mei-1.0-51m-qat-pilot-v1",
+  "kind": "qat-pilot-contract",
+  "status": "harness-ready",
+  "train_authorized": true,
+  "parent": "mei-1.0-51m-base-scratch300m-v1",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "params": 51463797,
+  "not_scratch_300m": true,
+  "eval_policy": {
+    "quantized_vs_frozen_float_anchor": true,
+    "do_not_rerun_float_eval_suite": true,
+    "float_anchor": "notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json",
+    "note": "Quality is the Q4/QAT delta against the frozen float Base-LM Anchor. Do not run a second float probe/valid-loss suite."
+  },
+  "wasm": {
+    "quantized_only": true,
+    "refuse_float_npz": true
+  },
+  "replay": {
+    "corpus": "corpus/lm-v1",
+    "schedule": "corpus/lm-v1/schedule-scratch.json",
+    "note": "Short LM replay from the frozen scratch schedule hashes. This is not a new 300M from-scratch run."
+  },
+  "fake_quant": {
+    "weight_math": "mei-qpack-v1-block64-q4s7-q2u4",
+    "must_match_packed_kernel": true,
+    "ste_required": true,
+    "ste_implemented": true,
+    "activation_kv": "int8-per-last-axis-vector",
+    "activation_kv_bits": 8,
+    "activation_kv_note": "Activation fake-quant is symmetric int8 with one max-abs scale per last-axis vector, matching Needle fake_quant_act. KV uses the same per-head-vector Q/DQ as an explicit MEI int8-storage enhancement; q is not fake-quantized."
+  },
+  "kernel": {
+    "feasibility_recorded": true,
+    "packed_kernel": true,
+    "nibble_pack_is_publish_kernel": true,
+    "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4"
+  },
+  "bit_map": {
+    "q4_baseline": "notebook/evaluation/jobs/mei-1.0-51m/q4-baseline-bit-map.json",
+    "cq2_candidate": "notebook/evaluation/jobs/mei-1.0-51m/q2q4-product-candidate-bit-map.json",
+    "candidate_only": true,
+    "product_final": false,
+    "quality_blocked_until": "QAT recovers probe/loss vs float-base-lm-anchor and three-runtime Q4 parity"
+  },
+  "stop_gates": {
+    "valid_loss_delta_vs_float_anchor": 0.15,
+    "probe_mean_nll_delta_vs_float_anchor": 0.40,
+    "float_anchor_valid_loss": 3.1709813214838505,
+    "float_anchor_probe_mean_nll": 4.3068690155824045,
+    "note": "Compare QAT/Q4 metrics to the frozen JSON anchor. Do not re-evaluate the float model."
+  },
+  "qat_mandatory": true,
+  "ptq_is_diagnostic_only": true,
+  "forbidden_until_ready": [
+    "overwriting base/mei-1.0-51m-base-scratch300m-v1",
+    "writing CURRENT.sft or CURRENT.runtime before full-chain gates",
+    "WASM loading of float npz"
+  ],
+  "not_a_claim": "Short QAT smoke is not a product mixed-bit freeze."
+}

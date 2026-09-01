@@ -1,0 +1,28 @@
+{
+  "catalog": [
+    {
+      "name": "工具.乙",
+      "description": "中文",
+      "parameters": {
+        "type": "object",
+        "properties": {}
+      },
+      "required_permissions": ["read"],
+      "required_state": { "online": true }
+    },
+    {
+      "name": "tool.a",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "pattern": "^[中文A-Z.-]+$"
+          }
+        }
+      }
+    }
+  ],
+  "ordering": "utf8-tool-id-ascending",
+  "sha256": "c3f629f3b0190bda1c7bfa071561c0f3367a0cd1f700e9a14438f63cb59e2ab4"
+}

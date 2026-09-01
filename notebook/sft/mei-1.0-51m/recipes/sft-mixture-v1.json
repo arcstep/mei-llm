@@ -1,0 +1,68 @@
+{
+  "id": "sft-mixture-v1",
+  "product": "needle-zh",
+  "toolset_id": "needle-vrm-agent-v0",
+  "phase": 1,
+  "contract": "single_turn_query_optional_scene_execute_or_empty",
+  "gold": "schema-program",
+  "teacher_role": "query-scene-variants-only",
+  "generator_version": "sft-pack-v1",
+  "prompt_version": "sft-teacher-v1",
+  "eval_lock": "notebook/evaluation/banks/needle-vrm-agent-v0/holdout-v1.lock.json",
+  "eval_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
+  "tiers": {
+    "2k": 2000,
+    "10k": 10000,
+    "20k": 20000,
+    "50k": 50000
+  },
+  "valid_frac": 0.09,
+  "candidate_overgen": 3,
+  "seq_len_train": 256,
+  "targets": {
+    "execute_frac": [0.65, 0.70],
+    "refuse_frac": [0.30, 0.35],
+    "offtopic_frac": [0.11, 0.14]
+  },
+  "family_weights": {
+    "gesture": 0.16,
+    "home": 0.35,
+    "order": 0.14,
+    "missing": 0.08,
+    "illegal_pair": 0.07,
+    "scene_conflict": 0.075,
+    "offtopic": 0.125
+  },
+  "home_tool_weights": {
+    "go_to": 0.34,
+    "set_switch": 0.29,
+    "open_door": 0.12,
+    "close_door": 0.12,
+    "take_out_trash": 0.13
+  },
+  "order_tool_weights": {
+    "order_food": 0.57,
+    "cancel_order": 0.43
+  },
+  "required_tools": [
+    "nod", "shake_head", "come_here", "stop", "point", "wave", "bow", "sit",
+    "stand", "go_to", "set_switch", "open_door", "close_door", "take_out_trash",
+    "order_food", "cancel_order"
+  ],
+  "style_tags": [
+    "formal", "colloquial", "command", "statement", "negation",
+    "ellipsis", "inversion", "particle", "deixis", "correction", "redundant"
+  ],
+  "legal_food": [["兰州拉面", "牛肉面"], ["麦当劳", "巨无霸"]],
+  "illegal_food": [["兰州拉面", "巨无霸"], ["麦当劳", "牛肉面"]],
+  "places": [["厨房", "kitchen"], ["客厅", "living"], ["门口", "entry"], ["垃圾桶", "trash"]],
+  "lights": [["厨房灯", "kitchen_light"], ["客厅灯", "living_light"]],
+  "doors": [["前门", "front"], ["后门", "back"]],
+  "point_targets": [["左边", "left"], ["右边", "right"], ["我", "user"]],
+  "notes": [
+    "Family decides gold. style_tags only change wording.",
+    "CrossWOZ/KdConv are style cards, never product gold.",
+    "qwen-max must be passed explicitly; never silently take COMPLETION_MODEL[0].",
+    "20k/50k keep config only until the 2k→10k curve justifies spend."
+  ]
+}

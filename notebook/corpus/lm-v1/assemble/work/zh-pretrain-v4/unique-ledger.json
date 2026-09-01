@@ -14,7 +14,7 @@
     "structure_v3": 105850,
     "colloquial": 0
   },
-  "parent_checkpoint": "mei-1.0-58m-base-cpt300m-v1",
+  "parent_checkpoint": "mei-1.0-51m-base-cpt300m-v1",
   "tokenizer": "zh-24k-v1",
   "note": "unique counts first-seen shards; do not multiply epochs. CWT2 excluded. v2 dirty structure excluded."
 }

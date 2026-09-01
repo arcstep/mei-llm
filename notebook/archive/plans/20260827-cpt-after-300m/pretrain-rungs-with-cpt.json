@@ -1,6 +1,6 @@
 {
-  "id": "mei-1.0-58m-pretrain-rungs-v1",
-  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "id": "mei-1.0-51m-pretrain-rungs-v1",
+  "architecture": "architecture/mei-1.0-51m-arch-v1",
   "seq_len": 256,
   "max_seq_len": 2048,
   "config": "from_spec",

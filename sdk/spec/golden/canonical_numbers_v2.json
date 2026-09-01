@@ -1,0 +1,16 @@
+{
+  "domain": "finite-binary64-safe-integer-v1",
+  "cases": [
+    { "input": 0, "canonical": "0" },
+    { "input": -0.0, "canonical": "0" },
+    { "input": 1.0, "canonical": "1" },
+    { "input": 0.000001, "canonical": "0.000001" },
+    { "input": 1e-7, "canonical": "1e-7" },
+    { "input": 1.25e-7, "canonical": "1.25e-7" },
+    { "input": 9007199254740991, "canonical": "9007199254740991" }
+  ],
+  "invalid_json_literals": [
+    "9007199254740992",
+    "-9007199254740992"
+  ]
+}

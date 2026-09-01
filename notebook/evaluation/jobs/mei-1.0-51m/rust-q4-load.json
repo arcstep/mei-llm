@@ -5,5 +5,5 @@
   "engine_from_bytes": true,
   "embed_row_len": 512,
   "wasm_float_refused": true,
-  "package_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-base-scratch300m-qat-q4-v1"
+  "package_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/rust/mei-sdk-core/../../packages/mei-1.0-51m-base-scratch300m-qat-q4-v1"
 }

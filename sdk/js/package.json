@@ -1,13 +1,16 @@
 {
   "name": "mei-sdk",
-  "version": "0.1.0-experimental",
+  "version": "0.2.0-experimental",
   "private": true,
   "type": "module",
-  "description": "MEI Runtime Node SDK (experimental). Product: mei-1.0-58m Runtime.",
+  "description": "MEI Runtime Node SDK (experimental). Product: mei-1.0-51m Runtime.",
   "main": "index.mjs",
   "exports": {
     ".": "./index.mjs",
-    "./browser": "./browser.mjs"
+    "./node-wasm": "./node-wasm.mjs",
+    "./browser": "./browser.mjs",
+    "./cq2": "./cq2.mjs",
+    "./tool-index": "./tool-index.mjs"
   },
   "scripts": {
     "test": "node --test test.mjs"

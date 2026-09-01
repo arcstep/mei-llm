@@ -16,7 +16,7 @@ class BackendRevisionTests(unittest.TestCase):
         files = backend_file_fingerprints()
         self.assertTrue(files)
         self.assertTrue(all(len(v) == 64 or v == "missing" for v in files.values()))
-        arch = SDK_ROOT.parent / "architecture" / "mei-1.0-58m-arch-v1" / "architecture.py"
+        arch = SDK_ROOT.parent / "architecture" / "mei-1.0-51m-arch-v1" / "architecture.py"
         self.assertTrue(arch.is_file())
 
     def test_fused_revision_is_distinct_and_includes_fused_ops(self):
@@ -25,6 +25,13 @@ class BackendRevisionTests(unittest.TestCase):
         self.assertNotEqual(reference, fused)
         files = backend_file_fingerprints("mlx-fused")
         self.assertTrue(any(path.endswith("/fused_ops.py") for path in files))
+
+    def test_cq2_revision_includes_packed_metal_source(self):
+        fused = backend_revision("mlx-fused")
+        cq2 = backend_revision("mlx-cq2")
+        self.assertNotEqual(fused, cq2)
+        files = backend_file_fingerprints("mlx-cq2")
+        self.assertTrue(any(path.endswith("/cq2_metal.py") for path in files))
 
 
 if __name__ == "__main__":

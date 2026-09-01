@@ -1,0 +1,59 @@
+{
+  "quant_math_id": "mei-cq-v2-g128-wht-codebook",
+  "container_format": "mei-cq-tensor-v2",
+  "container_magic_ascii": "MEICQ201",
+  "container_version": 2,
+  "payload_layout": "header-then-directory-ranges-no-gaps",
+  "header_contract": {
+    "encoding": "utf8-json",
+    "additional_properties": false,
+    "required_root_fields": ["quant_math_id", "tensors"],
+    "required_tensor_fields": [
+      "name", "role", "shape", "n_params", "dtype", "data", "transform", "codebook"
+    ],
+    "quantized_tensor_fields": ["scales", "bit_map", "group_size"],
+    "roles": ["lm", "contrastive", "mw_disposition", "confidence"],
+    "manifest_parity_fields": [
+      "name", "role", "shape", "n_params", "dtype", "data", "scales", "bit_map",
+      "group_size", "transform", "codebook"
+    ]
+  },
+  "group_size": 128,
+  "scale_dtype": "f16-le",
+  "scale_rounding": "ieee-754-roundTiesToEven",
+  "minimum_encoded_scale": "0x0001",
+  "zero_or_subnormal_group_policy": "round scale to binary16, clamp an encoded zero to minimum positive f16, then select codes using that exact decoded binary16 scale; ties use the lowest codebook index",
+  "transform": "orthonormal-walsh-hadamard",
+  "bit_map_scope": "per-group",
+  "bit_map_unused_bits": "zero",
+  "dtype_contracts": {
+    "cq2": {
+      "transform": "wht",
+      "codebook": "gaussian-lloyd-q2-v1",
+      "active_group_bits": [2, 4],
+      "requires_at_least_one_q2_group": true
+    },
+    "cq4": {
+      "transform": "wht",
+      "codebook": "gaussian-lloyd-q4-v1",
+      "active_group_bits": [4]
+    },
+    "safe": {
+      "dtypes": ["f16", "f32", "i8"],
+      "transform": "none",
+      "codebook": "none"
+    }
+  },
+  "mei_51m_tensor_policy": {
+    "cq4": ["embed.weight", "mhc_*"],
+    "cq2": ["blocks.*.attn.*_proj.weight", "engrams.* except *.taps"],
+    "f16": ["norms", "scalar gates", "fixed-WHT diagonal MLP factors", "engram taps", "backbone confidence", "all independent heads"],
+    "readiness": "exact name-to-dtype policy required; all-f16/all-cq4 containers are diagnostic only"
+  },
+  "q2_codebook": [-1.5104176, -0.45278, 0.45278, 1.5104176],
+  "q4_codebook": [-2.732589, -2.069018, -1.618046, -1.256231, -0.94234, -0.656759, -0.388055, -0.128396, 0.128396, 0.388055, 0.656759, 0.94234, 1.256231, 1.618046, 2.069018, 2.732589],
+  "notes": [
+    "This is MEI portable quantization, not a Cactus .cact binary format.",
+    "A tensor may mix 2-bit and 4-bit groups; whole-tensor fallback is not CQ2."
+  ]
+}

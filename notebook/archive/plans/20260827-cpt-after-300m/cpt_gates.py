@@ -52,7 +52,7 @@ def write_v2_block() -> Path:
         "reason": "structure ~39.7M tokens, mostly over-wide GitHub signature/comment extract",
         "rewrite_release": False,
         "successor": "corpus/lm-v1/structure/zh-pretrain-v3",
-        "init_from": "mei-1.0-58m-base-cpt300m-v1",
+        "init_from": "mei-1.0-51m-base-cpt300m-v1",
         "init_mode": "weights_only",
     }
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")

@@ -14,7 +14,7 @@
     ],
     [
       "tasks/needle-zh/model",
-      "notebook/_tooling/model/mei-1.0-58m"
+      "notebook/_tooling/model/mei-1.0-51m"
     ],
     [
       "tasks/needle-zh/spec",
@@ -22,19 +22,19 @@
     ],
     [
       "tasks/needle-zh/recipes",
-      "notebook/sft/mei-1.0-58m/recipes"
+      "notebook/sft/mei-1.0-51m/recipes"
     ],
     [
       "tasks/needle-zh/train",
-      "notebook/sft/mei-1.0-58m/train"
+      "notebook/sft/mei-1.0-51m/train"
     ],
     [
       "tasks/needle-zh/eval",
-      "notebook/evaluation/jobs/mei-1.0-58m"
+      "notebook/evaluation/jobs/mei-1.0-51m"
     ],
     [
       "tasks/needle-zh/checkpoints",
-      "notebook/archive/base/mei-1.0-58m-checkpoints"
+      "notebook/archive/base/mei-1.0-51m-checkpoints"
     ],
     [
       "tasks/mei-expert-qwen35-0p8b",

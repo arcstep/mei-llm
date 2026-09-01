@@ -12,17 +12,17 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-SRC_MODEL = ROOT / "notebook/_tooling/model/mei-1.0-58m"
+SRC_MODEL = ROOT / "notebook/_tooling/model/mei-1.0-51m"
 SRC_SPEC = ROOT / "notebook/base/pretrain-v1/spec"
 SRC_SCRIPTS = ROOT / "notebook/_tooling/scripts"
-SRC_RECIPES = ROOT / "notebook/sft/mei-1.0-58m/recipes"
+SRC_RECIPES = ROOT / "notebook/sft/mei-1.0-51m/recipes"
 
-ARCH = ROOT / "architecture/mei-1.0-58m-arch-v1"
-TRAIN = ROOT / "training/mei-1.0-58m-train-v1"
+ARCH = ROOT / "architecture/mei-1.0-51m-arch-v1"
+TRAIN = ROOT / "training/mei-1.0-51m-train-v1"
 RUNS = ROOT / "training/runs"
 SHARED = ROOT / "runtime/_shared"
-ROUTE = ROOT / "runtime/mei-1.0-58m-route-v1"
-V2 = ROOT / "runtime/mei-1.0-58m-needle2-v2"
+ROUTE = ROOT / "runtime/mei-1.0-51m-route-v1"
+V2 = ROOT / "runtime/mei-1.0-51m-needle2-v2"
 
 ARCH_PY = [
     "architecture.py",
@@ -73,7 +73,7 @@ V2_SPEC = [
 ]
 TRAIN_SCRIPTS = {
     "train_needle_zh_pretrain.py": "train_pretrain.py",
-    "train_mei_58m_sft.py": "train_sft.py",
+    "train_mei_51m_sft.py": "train_sft.py",
     "mei_cpt_gates.py": "cpt_gates.py",
 }
 
@@ -157,9 +157,9 @@ def main() -> int:
     write_json(
         ARCH / "RELEASE.json",
         {
-            "id": "mei-1.0-58m-arch-v1",
+            "id": "mei-1.0-51m-arch-v1",
             "kind": "architecture",
-            "product": "mei-1.0-58m",
+            "product": "mei-1.0-51m",
             "status": "implemented_in_code",
             "tokenizer": "tokenizer/zh-24k-v1",
             "spec": "spec/model.json",
@@ -171,11 +171,11 @@ def main() -> int:
     write_json(
         TRAIN / "RELEASE.json",
         {
-            "id": "mei-1.0-58m-train-v1",
+            "id": "mei-1.0-51m-train-v1",
             "kind": "training",
-            "product": "mei-1.0-58m",
+            "product": "mei-1.0-51m",
             "status": "implemented_in_code",
-            "architecture": "architecture/mei-1.0-58m-arch-v1",
+            "architecture": "architecture/mei-1.0-51m-arch-v1",
             "corpus": "corpus/lm-v1",
             "runs": "training/runs",
             "digest_sha256": tree_digest(TRAIN),
@@ -184,12 +184,12 @@ def main() -> int:
     write_json(
         ROUTE / "RELEASE.json",
         {
-            "id": "mei-1.0-58m-route-v1",
+            "id": "mei-1.0-51m-route-v1",
             "kind": "runtime",
-            "product": "mei-1.0-58m",
+            "product": "mei-1.0-51m",
             "status": "legacy_frozen",
             "protocol": "mei-route-protocol-v1",
-            "architecture": "architecture/mei-1.0-58m-arch-v1",
+            "architecture": "architecture/mei-1.0-51m-arch-v1",
             "not_a_needle2_release": True,
             "digest_sha256": tree_digest(ROUTE),
         },
@@ -197,12 +197,12 @@ def main() -> int:
     write_json(
         V2 / "RELEASE.json",
         {
-            "id": "mei-1.0-58m-needle2-v2",
+            "id": "mei-1.0-51m-needle2-v2",
             "kind": "runtime",
-            "product": "mei-1.0-58m",
+            "product": "mei-1.0-51m",
             "status": "implemented_in_code",
             "not_a_toolcall_model_release": True,
-            "architecture": "architecture/mei-1.0-58m-arch-v1",
+            "architecture": "architecture/mei-1.0-51m-arch-v1",
             "digest_sha256": tree_digest(V2) + tree_digest(SHARED),
         },
     )

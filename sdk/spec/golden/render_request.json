@@ -1,5 +1,6 @@
 {
   "request": {
+    "wire_version": "mei-runtime-wire-v2",
     "query": "把客厅灯打开",
     "oracle_tools": [
       {
@@ -15,11 +16,29 @@
         }
       }
     ],
-    "system_facts": "客厅灯 id=L1",
-    "permissions": [
-      "light.control"
-    ],
-    "selected_entity": "L1",
+    "context": {
+      "locale": "zh-CN",
+      "selected_entities": [
+        "L1"
+      ],
+      "facts": [
+        {
+          "id": "fact-light-L1",
+          "subject": "light:L1",
+          "predicate": "state",
+          "value": "off",
+          "source": "fixture",
+          "verified": true
+        }
+      ]
+    },
+    "evidence": [],
+    "permissions": {
+      "scopes": [
+        "light.control"
+      ]
+    },
+    "state": {},
     "history": [
       {
         "role": "user",
@@ -27,11 +46,14 @@
       }
     ]
   },
-  "prompt": "任务：只输出一个 schema 合法的工具 JSON 数组，或 []。最多一次调用。缺少 required 证据时输出 []。禁止输出解释或 route_id。\n系统事实：客厅灯 id=L1\n权限：light.control\n点选实体：L1\n<tools>[{\"name\":\"light.set\",\"description\":\"开灯\",\"parameters\":{\"type\":\"object\",\"properties\":{\"on\":{\"type\":\"boolean\"}}}}]</tools>\nuser：你好\nuser：把客厅灯打开",
-  "schema_fingerprint": "7e87821278df862d450d868624d80b6500dca4b5a057b6f27bb382d5741e7831",
+  "prompt": "任务：只输出一个 schema 合法的工具 JSON 数组，或 []。最多一次调用。缺少 required 证据时输出 []。禁止输出解释或 route_id。\n<tools>[{\"description\":\"开灯\",\"name\":\"light.set\",\"parameters\":{\"properties\":{\"on\":{\"type\":\"boolean\"}},\"type\":\"object\"}}]</tools>\nuser：你好\n<context>{\"facts\":[{\"id\":\"fact-light-L1\",\"predicate\":\"state\",\"source\":\"fixture\",\"subject\":\"light:L1\",\"value\":\"off\",\"verified\":true}],\"locale\":\"zh-CN\",\"selected_entities\":[\"L1\"]}</context>\n<evidence>[]</evidence>\n<permissions>{\"scopes\":[\"light.control\"]}</permissions>\n<state>{}</state>\n<mw>{}</mw>\nuser：把客厅灯打开",
+  "sink": "任务：只输出一个 schema 合法的工具 JSON 数组，或 []。最多一次调用。缺少 required 证据时输出 []。禁止输出解释或 route_id。\n<tools>[{\"description\":\"开灯\",\"name\":\"light.set\",\"parameters\":{\"properties\":{\"on\":{\"type\":\"boolean\"}},\"type\":\"object\"}}]</tools>",
+  "ordinary": "user：你好\n<context>{\"facts\":[{\"id\":\"fact-light-L1\",\"predicate\":\"state\",\"source\":\"fixture\",\"subject\":\"light:L1\",\"value\":\"off\",\"verified\":true}],\"locale\":\"zh-CN\",\"selected_entities\":[\"L1\"]}</context>\n<evidence>[]</evidence>\n<permissions>{\"scopes\":[\"light.control\"]}</permissions>\n<state>{}</state>\n<mw>{}</mw>\nuser：把客厅灯打开",
+  "schema_fingerprint": "77fbf03ad09a4281c30305a2bf360302a598638295d5f944a1ed191301e0fcd0",
   "serializer_id": "mei-tool-call-serializer-v2",
   "protocol_id": "mei-tool-call-protocol-v2",
   "selected_tools": [
     "light.set"
-  ]
+  ],
+  "compatibility": null
 }

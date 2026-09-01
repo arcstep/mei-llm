@@ -19,6 +19,9 @@ fn q4_dir() -> PathBuf {
 }
 
 fn jobs_dir() -> PathBuf {
+    if let Ok(p) = std::env::var("MEI_51M_JOBS_DIR") {
+        return PathBuf::from(p);
+    }
     sdk_root().join("../notebook/evaluation/jobs/mei-1.0-51m")
 }
 
@@ -26,7 +29,8 @@ fn load_engine(dir: &std::path::Path) -> Option<Engine> {
     if !dir.join("weights.q4").is_file() {
         return None;
     }
-    let manifest: Value = serde_json::from_str(&std::fs::read_to_string(dir.join("mei-model.json")).ok()?).ok()?;
+    let manifest: Value =
+        serde_json::from_str(&std::fs::read_to_string(dir.join("mei-model.json")).ok()?).ok()?;
     let weights = std::fs::read(dir.join("weights.q4")).ok()?;
     let vocab = std::fs::read(dir.join("tokenizer.vocab.json")).ok()?;
     Engine::from_quantized_bytes(manifest, weights, vocab).ok()
@@ -86,10 +90,9 @@ fn q4_one_token_prefill() {
     if !dir.join("weights.q4").is_file() {
         return;
     }
-    let manifest: Value = serde_json::from_str(
-        &std::fs::read_to_string(dir.join("mei-model.json")).unwrap(),
-    )
-    .unwrap();
+    let manifest: Value =
+        serde_json::from_str(&std::fs::read_to_string(dir.join("mei-model.json")).unwrap())
+            .unwrap();
     let weights = std::fs::read(dir.join("weights.q4")).unwrap();
     let packed = PackedWeights::parse(weights).unwrap();
     let arch = mei_sdk_core::model::Arch::from_manifest(&manifest);
@@ -123,10 +126,9 @@ fn q4_rowwise_one_token_prefill() {
     if !dir.join("weights.q4").is_file() {
         return;
     }
-    let manifest: Value = serde_json::from_str(
-        &std::fs::read_to_string(dir.join("mei-model.json")).unwrap(),
-    )
-    .unwrap();
+    let manifest: Value =
+        serde_json::from_str(&std::fs::read_to_string(dir.join("mei-model.json")).unwrap())
+            .unwrap();
     let weights = std::fs::read(dir.join("weights.q4")).unwrap();
     let packed = PackedWeights::parse(weights).unwrap();
     let arch = mei_sdk_core::model::Arch::from_manifest(&manifest);
@@ -144,17 +146,31 @@ fn q4_short_greedy_vs_golden() {
     let Some(engine) = load_engine(&dir) else {
         return;
     };
-    let session = engine.create_session().expect("session");
+    let mut session = engine.create_session().expect("session");
     let golden_path = jobs_dir().join("mlx-qat-q4-golden.json");
     let mut token_ids = vec![2u64];
     let mut gold_slice: Vec<f32> = Vec::new();
+    let mut gold_greedy: Vec<u64> = Vec::new();
+    let mut gold_topk: Vec<u64> = Vec::new();
     if golden_path.is_file() {
-        if let Ok(g) = serde_json::from_str::<Value>(&std::fs::read_to_string(&golden_path).unwrap()) {
+        if let Ok(g) =
+            serde_json::from_str::<Value>(&std::fs::read_to_string(&golden_path).unwrap())
+        {
             if let Some(ids) = g.get("token_ids").and_then(Value::as_array) {
                 token_ids = ids.iter().filter_map(Value::as_u64).collect();
             }
             if let Some(slice) = g.get("logits_head").and_then(Value::as_array) {
-                gold_slice = slice.iter().filter_map(Value::as_f64).map(|x| x as f32).collect();
+                gold_slice = slice
+                    .iter()
+                    .filter_map(Value::as_f64)
+                    .map(|x| x as f32)
+                    .collect();
+            }
+            if let Some(ids) = g.get("greedy_ids").and_then(Value::as_array) {
+                gold_greedy = ids.iter().filter_map(Value::as_u64).collect();
+            }
+            if let Some(ids) = g.get("prefill_topk_ids").and_then(Value::as_array) {
+                gold_topk = ids.iter().filter_map(Value::as_u64).collect();
             }
         }
     }
@@ -169,14 +185,42 @@ fn q4_short_greedy_vs_golden() {
     let result = session.complete(&req).expect("complete");
     let wall_ms = t0.elapsed().as_millis();
     let text = result.get("raw_text").and_then(Value::as_str).unwrap_or("");
+    assert_eq!(result["runtime_cache"]["kv_storage_dtype"], "int8");
+    assert_eq!(result["runtime_cache"]["cache_growth_bounded"], true);
+    assert!(
+        result["runtime_cache"]["rolling_tokens"]
+            .as_u64()
+            .unwrap_or(u64::MAX)
+            <= 256
+    );
     assert!(!text.is_empty() || result.get("ok").is_some());
+    if !gold_greedy.is_empty() {
+        let got: Vec<u64> = result["generated_token_ids"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(Value::as_u64)
+            .collect();
+        assert_eq!(
+            got, gold_greedy,
+            "generated token IDs differ from MLX golden"
+        );
+    }
+    if !gold_topk.is_empty() {
+        let got: Vec<u64> = result["prefill_topk_ids"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(Value::as_u64)
+            .collect();
+        assert_eq!(got, gold_topk, "prefill top-k IDs differ from MLX golden");
+    }
 
     let mut max_abs = None;
     if !gold_slice.is_empty() {
-        let manifest: Value = serde_json::from_str(
-            &std::fs::read_to_string(dir.join("mei-model.json")).unwrap(),
-        )
-        .unwrap();
+        let manifest: Value =
+            serde_json::from_str(&std::fs::read_to_string(dir.join("mei-model.json")).unwrap())
+                .unwrap();
         let weights = std::fs::read(dir.join("weights.q4")).unwrap();
         let packed = PackedWeights::parse(weights).unwrap();
         let arch = mei_sdk_core::model::Arch::from_manifest(&manifest);
@@ -192,12 +236,18 @@ fn q4_short_greedy_vs_golden() {
         }
         max_abs = Some(m);
         // Pre-registered: MLX dequant vs Rust kernel, not a float-reload.
-        assert!(m < 2.7, "max abs logit delta {m} exceeds 2.7 (pre-registered from q4-dequant-parity max 2.61)");
+        assert!(
+            m < 2.7,
+            "max abs logit delta {m} exceeds 2.7 (pre-registered from q4-dequant-parity max 2.61)"
+        );
     }
     let report = json!({
         "ok": true,
         "kind": "rust-short-greedy",
         "raw_text": text,
+        "prompt_token_ids": token_ids,
+        "generated_token_ids": result.get("generated_token_ids").cloned().unwrap_or_else(|| json!([])),
+        "prefill_topk_ids": result.get("prefill_topk_ids").cloned().unwrap_or_else(|| json!([])),
         "wall_ms": wall_ms,
         "max_abs_logit_vs_mlx": max_abs,
         "logit_abs_threshold": 2.7,

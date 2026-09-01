@@ -27,6 +27,6 @@
       }
     }
   ],
-  "canonical": "[{\"name\":\"light.set\",\"description\":\"开灯\",\"parameters\":{\"type\":\"object\",\"properties\":{\"on\":{\"type\":\"boolean\"}}}}]",
-  "sha256": "7e87821278df862d450d868624d80b6500dca4b5a057b6f27bb382d5741e7831"
+  "canonical": "[{\"description\":\"开灯\",\"name\":\"light.set\",\"parameters\":{\"properties\":{\"on\":{\"type\":\"boolean\"}},\"type\":\"object\"}}]",
+  "sha256": "77fbf03ad09a4281c30305a2bf360302a598638295d5f944a1ed191301e0fcd0"
 }

@@ -237,7 +237,7 @@ def main() -> int:
         "reason": blocked,
         "v3_promote_structure": bool(v3_rel.get("promote_structure")),
         "init_mode": "weights_only",
-        "parent": "mei-1.0-58m-base-cpt300m-v1",
+        "parent": "mei-1.0-51m-base-cpt300m-v1",
         "skip_seen_wiki": True,
         "note": "Do not start 1B on dirty v2. 2B/10B each need a new unique batch, not repeated epochs.",
         "release": "zh-pretrain-v3-required",

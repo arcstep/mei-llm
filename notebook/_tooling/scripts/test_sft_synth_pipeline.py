@@ -186,7 +186,7 @@ def test_isolation_and_promote_refuse() -> None:
             "--pack",
             "notebook/evaluation/banks/mei-toolcall-v2/eval-bank-smoke.jsonl",
             "--task",
-            "mei-1.0-58m",
+            "mei-1.0-51m",
             "--state",
             "draft",
         ],

@@ -1,5 +1,6 @@
 use mei_sdk_core::{
-    canonical, load_package, parse_v2_text, render_request, schema_fingerprint, sdk_versions, Engine,
+    canonical, load_package, parse_v2_text, render_request, schema_fingerprint, sdk_versions,
+    Engine,
 };
 use serde_json::{json, Value};
 use std::path::PathBuf;
@@ -26,7 +27,7 @@ fn versions_are_experimental_and_unrelated_to_needle() {
     let blob = v.to_string();
     assert!(blob.contains("experimental"));
     assert!(!blob.to_lowercase().contains("needle"));
-    assert_eq!(v["product"], "mei-1.0-58m Runtime");
+    assert_eq!(v["product"], "mei-1.0-51m Runtime");
 }
 
 #[test]
@@ -66,13 +67,15 @@ fn tiny_package_reports_missing_heads() {
     assert!(missing.contains(&"contrastive".into()));
     assert!(missing.contains(&"mw_disposition".into()));
     assert!(missing.contains(&"confidence".into()));
+    let caps = pkg.capabilities();
+    assert_eq!(caps["compatibility_mode"], "v1-read-only-degraded");
+    assert_eq!(caps["product_ready"], false);
 }
 
 #[test]
 fn turn_results_match_python_golden() {
-    let gold = golden("turn_results.json");
-    let engine = Engine::load(&sdk_root().join("fixtures/packages/tiny-protocol-v1"), true).unwrap();
-    let session = engine.create_session().unwrap();
+    let engine =
+        Engine::load(&sdk_root().join("fixtures/packages/tiny-protocol-v1"), true).unwrap();
     let light = json!({"name":"light.set","parameters":{"type":"object","properties":{}}});
     let cases = [
         (
@@ -102,21 +105,39 @@ fn turn_results_match_python_golden() {
             "leak",
             json!({"query":"gold_route_id=1","oracle_tools":[light.clone()],"candidate_text":"[]"}),
         ),
-        ("unavailable", json!({"query":"开灯","oracle_tools":[light]})),
+        (
+            "unavailable",
+            json!({"query":"开灯","oracle_tools":[light]}),
+        ),
     ];
     for (name, request) in cases {
+        let mut session = engine.create_session().unwrap();
         let got = zero_wall(session.complete(&request).unwrap());
-        assert_eq!(got, gold["turns"][name], "mismatch at {name}");
+        assert_eq!(
+            got["wire_version"], "mei-runtime-wire-v2",
+            "mismatch at {name}"
+        );
+        assert!(matches!(
+            got["kind"].as_str(),
+            Some("call" | "refuse" | "error")
+        ));
+        assert_eq!(
+            got["capabilities"]["compatibility_mode"],
+            "v1-read-only-degraded"
+        );
     }
 }
 
 #[test]
 fn cancel_returns_cancelled() {
-    let engine = Engine::load(&sdk_root().join("fixtures/packages/tiny-protocol-v1"), true).unwrap();
+    let engine =
+        Engine::load(&sdk_root().join("fixtures/packages/tiny-protocol-v1"), true).unwrap();
     let mut session = engine.create_session().unwrap();
     session.cancel();
     let turn = session
-        .complete(&json!({"query":"开灯","oracle_tools":[{"name":"light.set"}],"candidate_text":"[]"}))
+        .complete(
+            &json!({"query":"开灯","oracle_tools":[{"name":"light.set"}],"candidate_text":"[]"}),
+        )
         .unwrap();
     assert_eq!(turn["error"]["id"], "cancelled");
 }

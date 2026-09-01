@@ -16,7 +16,7 @@
   "additionalProperties": false,
   "properties": {
     "package_format": { "type": "string", "const": "mei-model-package-v1" },
-    "product": { "type": "string", "enum": ["mei-1.0-58m", "mei-1.0-51m"] },
+    "product": { "type": "string", "const": "mei-1.0-51m" },
     "package_id": { "type": "string" },
     "runtime_min": { "type": "string" },
     "parent_package_id": { "type": "string" },
@@ -84,8 +84,8 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "scheme": { "type": "string", "enum": ["none", "cq2", "q4"] },
-            "status": { "type": "string", "enum": ["untrained", "diagnostic", "ready"] },
+            "scheme": { "type": "string", "enum": ["none", "cq2", "q4", "qat-cq2", "qat-q4"] },
+            "status": { "type": "string", "enum": ["untrained", "diagnostic", "qat", "ready"] },
             "block_size": { "type": "integer" },
             "quant_math_id": { "type": "string" }
           }
@@ -102,6 +102,16 @@
         "contrastive": { "$ref": "#/$defs/head" },
         "mw_disposition": { "$ref": "#/$defs/head" },
         "confidence": { "$ref": "#/$defs/head" }
+        ,"artifact": {
+          "type": "object",
+          "required": ["file", "sha256", "dtype"],
+          "additionalProperties": false,
+          "properties": {
+            "file": { "type": "string" },
+            "sha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+            "dtype": { "type": "string" }
+          }
+        }
       }
     },
     "release_class": {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Runtime/evaluator RAG parity tests. Uses tiny random 58M, no training."""
+"""Runtime/evaluator RAG parity tests. Uses tiny random 51M, no training."""
 
 from __future__ import annotations
 
@@ -7,10 +7,10 @@ import json
 import sys
 from pathlib import Path
 
-from repo_paths import MODEL_MEI_58M, SCRIPTS_ROOT
+from repo_paths import MODEL_MEI_51M, SCRIPTS_ROOT
 
 sys.path.insert(0, str(SCRIPTS_ROOT))
-sys.path.insert(0, str(MODEL_MEI_58M))
+sys.path.insert(0, str(MODEL_MEI_51M))
 
 import mlx.core as mx
 

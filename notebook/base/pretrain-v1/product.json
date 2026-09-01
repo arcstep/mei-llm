@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "product": "mei-1.0-58m",
+  "product": "mei-1.0-51m",
   "historical_alias": "needle-zh",
   "shared": {
     "tokenizer": "tokenizer/zh-24k-v1",
@@ -10,23 +10,23 @@
   },
   "tasks": [
     {
-      "id": "mei-1.0-58m",
-      "canonical_id": "mei-1.0-58m",
+      "id": "mei-1.0-51m",
+      "canonical_id": "mei-1.0-51m",
       "aliases": [
         "needle-zh",
-        "mei-1.0-58m"
+        "mei-1.0-51m"
       ],
-      "title": "MEI 1.0 58M",
+      "title": "MEI 1.0 51M",
       "kind": "from-scratch-router",
       "spec": "notebook/base/pretrain-v1/spec",
-      "model": "notebook/_tooling/model/mei-1.0-58m",
-      "sft_mixture": "notebook/sft/mei-1.0-58m/recipes/sft-mixture-v1.json",
-      "train_seed": "notebook/sft/mei-1.0-58m/train/seed/sft-smoke-v0.jsonl",
+      "model": "notebook/_tooling/model/mei-1.0-51m",
+      "sft_mixture": "notebook/sft/mei-1.0-51m/recipes/sft-mixture-v1.json",
+      "train_seed": "notebook/sft/mei-1.0-51m/train/seed/sft-smoke-v0.jsonl",
       "train_seeds": [
-        "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-smoke.jsonl"
+        "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-smoke.jsonl"
       ],
       "eval_banks": [
         "notebook/evaluation/banks/needle-toolcall-v0/eval-bank-v0.jsonl",

@@ -1,0 +1,22 @@
+{
+  "active": {
+    "wire_version": "mei-runtime-wire-v2",
+    "request": "request-v2.schema.json",
+    "turn_result": "turn-result-v2.schema.json",
+    "tool_result": "tool-result-v2.schema.json",
+    "loop_result": "loop-result-v2.schema.json",
+    "narration_result": "narration-result-v2.schema.json",
+    "model_package": "model-package-v2.schema.json",
+    "resource_measurement_receipt": "resource-measurement-receipt-v1.schema.json",
+    "training_receipt": "training-receipt-v2.schema.json",
+    "tool_index": "tool-index-v2.schema.json"
+  },
+  "legacy_read_only": {
+    "wire_version": "mei-runtime-wire-v1",
+    "request": "request.schema.json",
+    "turn_result": "turn-result.schema.json",
+    "loop_result": "loop-result.schema.json",
+    "model_package": "model-package.schema.json",
+    "capability": "degraded"
+  }
+}

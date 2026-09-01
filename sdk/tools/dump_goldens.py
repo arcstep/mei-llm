@@ -50,12 +50,32 @@ def main() -> None:
             "sha256": schema_fingerprint(tools),
         },
     )
+    # The canonical serializer golden is a *native* CompleteRequestV2.  A v1
+    # request may be adapted to a degraded in-memory view, but that internal
+    # view deliberately carries compatibility metadata and is not valid input
+    # to the strict public v2 schema.  Never round-trip such an adapter view as
+    # though it were a caller-authored v2 request.
     request = {
+        "wire_version": "mei-runtime-wire-v2",
         "query": "把客厅灯打开",
         "oracle_tools": tools,
-        "system_facts": "客厅灯 id=L1",
-        "permissions": ["light.control"],
-        "selected_entity": "L1",
+        "context": {
+            "locale": "zh-CN",
+            "selected_entities": ["L1"],
+            "facts": [
+                {
+                    "id": "fact-light-L1",
+                    "subject": "light:L1",
+                    "predicate": "state",
+                    "value": "off",
+                    "source": "fixture",
+                    "verified": True,
+                }
+            ],
+        },
+        "evidence": [],
+        "permissions": {"scopes": ["light.control"]},
+        "state": {},
         "history": [{"role": "user", "content": "你好"}],
     }
     rendered = render_request(request, tools)
@@ -79,21 +99,33 @@ def main() -> None:
         },
     )
     engine = Engine.load(str(TINY))
-    session = engine.create_session()
     light = {"name": "light.set", "parameters": {"type": "object", "properties": {}}}
+    refuse_session = engine.create_session()
+    call_session = engine.create_session()
+    call_turn = call_session.complete(
+        {
+            "query": "开灯",
+            "oracle_tools": [light],
+            "candidate_text": '[{"name":"light.set","arguments":{}}]',
+        }
+    )
+    call_session.submit_tool_result(
+        {
+            "wire_version": "mei-runtime-wire-v2",
+            "call_id": call_turn["call"]["call_id"],
+            "status": "ok",
+            "payload": {"on": True},
+            "provenance": {"source": "golden-host", "verified": True},
+        }
+    )
     turns = {
-        "refuse": strip_timing(session.complete({"query": "开灯", "oracle_tools": [light], "candidate_text": "[]"})),
-        "call": strip_timing(
-            session.complete(
-                {
-                    "query": "开灯",
-                    "oracle_tools": [light],
-                    "candidate_text": '[{"name":"light.set","arguments":{}}]',
-                }
-            )
+        "refuse": strip_timing(refuse_session.complete({"query": "开灯", "oracle_tools": [light], "candidate_text": "[]"})),
+        "call": strip_timing(call_turn),
+        "respond": strip_timing(
+            call_session.complete({"query": "开灯", "oracle_tools": [light], "candidate_text": "[]"})
         ),
         "too_many": strip_timing(
-            session.complete(
+            engine.create_session().complete(
                 {
                     "query": "x",
                     "oracle_tools": [{"name": f"t{i}", "parameters": {"type": "object", "properties": {}}} for i in range(6)],
@@ -102,9 +134,9 @@ def main() -> None:
             )
         ),
         "leak": strip_timing(
-            session.complete({"query": "gold_route_id=1", "oracle_tools": [light], "candidate_text": "[]"})
+            engine.create_session().complete({"query": "gold_route_id=1", "oracle_tools": [light], "candidate_text": "[]"})
         ),
-        "unavailable": strip_timing(session.complete({"query": "开灯", "oracle_tools": [light]})),
+        "unavailable": strip_timing(engine.create_session().complete({"query": "开灯", "oracle_tools": [light]})),
     }
     dump("turn_results.json", {"versions": sdk_versions(), "turns": turns})
     caps = engine.capabilities()

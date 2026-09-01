@@ -47,7 +47,7 @@
     "format": "mei-q4-packed-v1",
     "sha256": "29dc5df2432df503a3d16a25aedef1dc9b2e8ff1dbb4ba5d5827bb9ac9fb2dfb",
     "quantization": {
-      "scheme": "qat-q4",
+      "scheme": "q4",
       "status": "qat",
       "block_size": 64,
       "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4"

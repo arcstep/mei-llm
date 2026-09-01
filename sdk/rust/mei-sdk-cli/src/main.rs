@@ -4,11 +4,15 @@ use std::io::{self, Read};
 use std::path::PathBuf;
 use std::process;
 
-use mei_sdk_core::{load_package, parse_v2_text, render_request, sdk_versions, Engine};
+use mei_sdk_core::{
+    load_package, parse_v2_text, render_request, sdk_versions, vocab::Vocab, Engine,
+};
 use serde_json::{json, Value};
 
 fn usage() -> ! {
-    eprintln!("mei-sdk <version|validate-package|complete|parse|render> [args]");
+    eprintln!(
+        "mei-sdk <version|runtime-contract|validate-package|tokenize|diagnose-heads|complete|parse|render> [args]"
+    );
     process::exit(2);
 }
 
@@ -39,6 +43,9 @@ fn main() {
         "version" => {
             println!("{}", sdk_versions());
         }
+        "runtime-contract" => {
+            println!("{}", mei_sdk_core::model::runtime_contract_evidence());
+        }
         "validate-package" => {
             let dir = args.get(1).expect("package dir");
             let pkg = load_package(&PathBuf::from(dir), true).unwrap_or_else(|err| {
@@ -46,6 +53,46 @@ fn main() {
                 process::exit(err.code());
             });
             println!("{}", pkg.capabilities());
+        }
+        "tokenize" => {
+            let dir = PathBuf::from(args.get(1).expect("package dir"));
+            let text = args.get(2).cloned().unwrap_or_default();
+            let manifest: Value = serde_json::from_str(
+                &fs::read_to_string(dir.join("mei-model.json")).expect("package manifest"),
+            )
+            .expect("package manifest json");
+            let vocab_rel = manifest
+                .pointer("/tokenizer/vocab_file")
+                .and_then(Value::as_str)
+                .or_else(|| manifest.pointer("/tokenizer/file").and_then(Value::as_str))
+                .unwrap_or("tokenizer.model");
+            let vocab = Vocab::from_package_payload(
+                &fs::read(dir.join(vocab_rel)).expect("tokenizer payload"),
+            )
+            .unwrap_or_else(|err| {
+                eprintln!("{err}");
+                process::exit(err.code());
+            });
+            let ids = vocab.encode(&text, false);
+            println!(
+                "{}",
+                json!({"text": text, "ids": ids, "decoded": vocab.decode(&ids)})
+            );
+        }
+        "diagnose-heads" => {
+            let dir = PathBuf::from(args.get(1).expect("package dir"));
+            let input = args.get(2).cloned().unwrap_or_else(|| "打开厨房灯".into());
+            let engine = Engine::load(&dir, true).unwrap_or_else(|err| {
+                eprintln!("{err}");
+                process::exit(err.code());
+            });
+            println!(
+                "{}",
+                engine.diagnose_heads(&input).unwrap_or_else(|err| {
+                    eprintln!("{err}");
+                    process::exit(err.code());
+                })
+            );
         }
         "complete" => {
             let dir = args.get(1).expect("package dir");
@@ -62,7 +109,7 @@ fn main() {
                 eprintln!("{}", err);
                 process::exit(err.code());
             });
-            let session = engine.create_session().unwrap();
+            let mut session = engine.create_session().unwrap();
             let request = read_json_arg(json_arg);
             let turn = session.complete(&request).unwrap();
             println!("{}", if zero { zero_wall(turn) } else { turn });

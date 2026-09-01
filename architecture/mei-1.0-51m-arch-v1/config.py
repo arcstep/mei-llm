@@ -24,7 +24,7 @@ class NeedleZhConfig:
     mhc_lanes: int = 4
     sinkhorn_iters: int = 20
     max_seq_len: int = 2048
-    kv_window: int = 512
+    kv_window: int = 256
     tie_embeddings: bool = True
     mtp_enabled: bool = False
     confidence_head: bool = True
@@ -64,6 +64,9 @@ class NeedleZhConfig:
         source = path or (_HERE / "spec/model.json")
         data = json.loads(source.read_text(encoding="utf-8"))
         arch = data["architecture"]
+        runtime_profile = data.get("runtime_profile") or {}
+        training_aux = data.get("training_aux") or {}
+        mtp = training_aux.get("mtp") or {}
         tok = data.get("tokenizer") or {}
         return cls(
             architecture_id=str(data.get("architecture_id") or data.get("spec_id") or cls.architecture_id),
@@ -81,14 +84,15 @@ class NeedleZhConfig:
             mhc_lanes=int(arch["mhc_lanes"]),
             sinkhorn_iters=int(arch.get("sinkhorn_iters") or 20),
             max_seq_len=int(arch["max_seq_len"]),
-            kv_window=int(arch.get("kv_window") or 512),
+            kv_window=int(runtime_profile.get("ordinary_window_tokens") or 256),
             tie_embeddings=bool(arch.get("tie_embeddings", True)),
-            mtp_enabled=bool(arch.get("mtp_enabled", False)),
+            mtp_enabled=bool(mtp.get("enabled_by_default", False)),
             confidence_head=bool(arch.get("confidence_head", True)),
             pad_id=int(tok.get("pad_id", 0)),
             eos_id=int(tok.get("eos_id", 1)),
             bos_id=int(tok.get("bos_id", 2)),
             unk_id=int(tok.get("unk_id", 3)),
+            conf_probes=int(training_aux.get("confidence_probes") or 8),
         )
 
     def tiny(self, **overrides) -> NeedleZhConfig:

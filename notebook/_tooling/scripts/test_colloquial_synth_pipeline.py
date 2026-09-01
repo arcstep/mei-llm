@@ -7,9 +7,9 @@ import json
 import sys
 from pathlib import Path
 
-from repo_paths import MODEL_MEI_58M, ROOT, SCRIPTS_ROOT
+from repo_paths import MODEL_MEI_51M, ROOT, SCRIPTS_ROOT
 sys.path.insert(0, str(SCRIPTS_ROOT))
-sys.path.insert(0, str(MODEL_MEI_58M))
+sys.path.insert(0, str(MODEL_MEI_51M))
 
 from colloquial_synth_lib import (  # noqa: E402
     contract_sha256,

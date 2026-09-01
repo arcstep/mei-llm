@@ -1,0 +1,119 @@
+{
+  "id": "sft-v2-baseline-models-v1",
+  "status": "pilot_preregistered",
+  "note": "Qwen 0.6B has no in-repo runner and must not be invented. MiniMind same-data training is not authorized this round.",
+  "protocol": {
+    "temperature": 0,
+    "max_tokens": 128,
+    "serializer": "mei-tool-call-serializer-v2",
+    "prompt_renderer": "prompt_v2",
+    "decoding_columns": ["raw", "constrained"]
+  },
+  "models": [
+    {
+      "id": "always-refuse",
+      "role": "floor",
+      "params": 0,
+      "backend": "deterministic",
+      "heads": "none"
+    },
+    {
+      "id": "lexical-retrieval",
+      "role": "floor",
+      "params": 0,
+      "backend": "deterministic",
+      "heads": "lexical"
+    },
+    {
+      "id": "majority-mw",
+      "role": "floor",
+      "params": 0,
+      "backend": "deterministic",
+      "heads": "majority_class"
+    },
+    {
+      "id": "random-init-51m",
+      "role": "floor",
+      "params": 58541901,
+      "backend": "mlx",
+      "heads": "untrained_product_heads",
+      "note": "Architecture floor, not a quality claim."
+    },
+    {
+      "id": "mei-51m-base-300m-no-sft",
+      "role": "self_baseline",
+      "params": 58541901,
+      "backend": "mlx",
+      "checkpoint": "base/mei-1.0-51m-base-scratch300m-v1/pretrain-300m-scratch.npz",
+      "weights_sha256": "e64bbc6baab47c578f5659ccf2e7f03986bcc44754f3e081b2a8a70a74e31d65",
+      "source": "CURRENT.json base",
+      "abandoned_archive": "not_used",
+      "historical_v1_scorecard_checkpoint": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m.npz",
+      "registry": "base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json",
+      "heads": "product_contrastive_mw_if_present_else_untrained",
+      "note": "Archive 300M parents are abandoned. Do not evaluate them. load_mei51m() reads CURRENT.json base only."
+    },
+    {
+      "id": "minimind-25m",
+      "role": "capacity_peer",
+      "params": 25000000,
+      "backend": "local_optional",
+      "expected_dir": "notebook/archive/external-baselines/minimind-25m",
+      "env": "MEI_MINIMIND_25M",
+      "same_data_comparable_only_with": "identical_retrieval_and_mw_heads",
+      "if_missing": "skip_status_missing_checkpoint"
+    },
+    {
+      "id": "minimind-45m",
+      "role": "capacity_peer",
+      "params": 45000000,
+      "backend": "local_optional",
+      "expected_dir": "notebook/archive/external-baselines/minimind-45m",
+      "env": "MEI_MINIMIND_45M",
+      "same_data_comparable_only_with": "identical_retrieval_and_mw_heads",
+      "if_missing": "skip_status_missing_checkpoint"
+    },
+    {
+      "id": "qwen3.5-0.8b",
+      "role": "small_behavior_ref",
+      "params": 800000000,
+      "backend": "ollama",
+      "ollama_tag": "qwen3.5:0.8b-mlx",
+      "hf_id": "Qwen/Qwen3.5-0.8B",
+      "columns": ["zero_shot", "same_data_sft"],
+      "same_data_sft_this_round": false,
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding"
+    },
+    {
+      "id": "qwen3.5-4b",
+      "role": "upper_bound",
+      "params": 4000000000,
+      "backend": "ollama",
+      "ollama_tag": "qwen3.5:4b-mlx",
+      "columns": ["zero_shot", "same_data_sft"],
+      "same_data_sft_this_round": false,
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding"
+    },
+    {
+      "id": "qwen3.5-9b",
+      "role": "upper_bound",
+      "params": 9000000000,
+      "backend": "ollama",
+      "ollama_tag": "qwen3.5:9b-mlx",
+      "columns": ["zero_shot", "same_data_sft"],
+      "same_data_sft_this_round": false,
+      "grounded_release_peer": true,
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding"
+    },
+    {
+      "id": "qwen3.6-35b",
+      "role": "ceiling_efficiency",
+      "params": 35000000000,
+      "backend": "ollama",
+      "ollama_tag": "qwen3.6:35b-mlx",
+      "not_a_quality_win_line": true,
+      "retrieval_scoring": "end_to_end_tool_selection_not_embedding"
+    }
+  ],
+  "missing_not_invented": ["qwen-0.6b"]
+}

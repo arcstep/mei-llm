@@ -1,0 +1,25 @@
+{
+  "portable_format_subset": "mei-runtime-wire-v2-formats-v1",
+  "cases": [
+    { "format": "date", "value": "2024-02-29", "valid": true },
+    { "format": "date", "value": "2023-02-29", "valid": false },
+    { "format": "date", "value": "0000-01-01", "valid": false },
+    { "format": "time", "value": "23:59:59.123456789Z", "valid": true },
+    { "format": "time", "value": "23:59:59+08:00", "valid": true },
+    { "format": "time", "value": "23:59:59", "valid": false },
+    { "format": "time", "value": "23:59:59.1234567890Z", "valid": false },
+    { "format": "date-time", "value": "2024-02-29T23:59:59Z", "valid": true },
+    { "format": "date-time", "value": "2024-02-29t23:59:59Z", "valid": false },
+    { "format": "email", "value": "mei.runtime@example.com", "valid": true },
+    { "format": "email", "value": "中文@example.com", "valid": false },
+    { "format": "uuid", "value": "123e4567-e89b-12d3-a456-426614174000", "valid": true },
+    { "format": "uuid", "value": "123e4567-e89b-02d3-a456-426614174000", "valid": false },
+    { "format": "uri", "value": "https://example.com/a%20b?q=x#f", "valid": true },
+    { "format": "uri", "value": "https://example.com/a%2", "valid": false },
+    { "format": "uri", "value": "https://例子.cn/", "valid": false },
+    { "format": "ipv4", "value": "192.0.2.1", "valid": true },
+    { "format": "ipv4", "value": "192.0.2.999", "valid": false },
+    { "format": "ipv6", "value": "2001:db8::1", "valid": true },
+    { "format": "ipv6", "value": "2001:db8:::1", "valid": false }
+  ]
+}

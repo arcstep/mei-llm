@@ -69,10 +69,10 @@ notebook/archive/base/**
 !notebook/archive/base/**/registry/**
 notebook/**/*.jsonl
 !notebook/evaluation/banks/**/*.jsonl
-!notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.jsonl
-!notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.jsonl
-!notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-smoke.jsonl
-!notebook/sft/mei-1.0-58m/train/seed/*.jsonl
+!notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.jsonl
+!notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.jsonl
+!notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-smoke.jsonl
+!notebook/sft/mei-1.0-51m/train/seed/*.jsonl
 notebook/archive/corpus/_probe/cache/
 notebook/archive/corpus/_probe/samples/
 notebook/archive/corpus/_probe/wiki-hashes/
@@ -81,6 +81,7 @@ notebook/archive/corpus/_probe/licenses/
 !notebook/evaluation/banks/**/README.md
 !notebook/evaluation/shared/**
 !notebook/_tooling/scripts/**
+notebook/_tooling/scripts/__pycache__/
 !notebook/_tooling/model/**
 !notebook/_tooling/skills/**
 !notebook/_tooling/requirements/**

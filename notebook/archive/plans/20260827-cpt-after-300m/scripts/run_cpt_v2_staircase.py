@@ -16,7 +16,7 @@ from pathlib import Path
 from repo_paths import (
     CORPUS_ZH_PRETRAIN_V4,
     EXPERIMENTS_RUNS,
-    REGISTRY_MEI_58M_CPT300M,
+    REGISTRY_MEI_51M_CPT300M,
     ROOT,
     SCRIPTS_ROOT,
     TASKS_ROOT,
@@ -33,7 +33,7 @@ RUNGS = (
 REG = TASKS_ROOT / TASK_NEEDLE_ZH / "checkpoints" / "registry"
 TRAIN = TRAINING_V1 / "train_pretrain.py"
 EVAL_VALID = SCRIPTS_ROOT / "eval_needle_zh_pretrain_valid.py"
-PARENT_WEIGHTS = "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz"
+PARENT_WEIGHTS = "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m.npz"
 VALID_SETS = ("wiki", "hq", "structure", "colloquial")
 
 
@@ -78,12 +78,12 @@ def eval_cmds(rung: str) -> list[list[str]]:
 def write_fail_closed(out_dir: Path, report: dict) -> None:
     (out_dir / "FAIL_CLOSED.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     REG.mkdir(parents=True, exist_ok=True)
-    (REG / "mei-1.0-58m-cpt-v2.FAIL_CLOSED.json").write_text(
+    (REG / "mei-1.0-51m-cpt-v2.FAIL_CLOSED.json").write_text(
         json.dumps(
             {
-                "model_id": "mei-1.0-58m-cpt-v2",
+                "model_id": "mei-1.0-51m-cpt-v2",
                 "status": "fail_closed",
-                "parent": "mei-1.0-58m-base-cpt300m-v1",
+                "parent": "mei-1.0-51m-base-cpt300m-v1",
                 "corpus": "zh-pretrain-v4",
                 "reason": report["stop_reason"],
                 "rungs_not_started": [r for r, _ in RUNGS],
@@ -115,7 +115,7 @@ def main() -> int:
         print("missing zh-pretrain-v4 RELEASE.json; run build_zh_pretrain_v4.py", file=sys.stderr)
         return 2
     release = json.loads(release_path.read_text(encoding="utf-8"))
-    out_dir = EXPERIMENTS_RUNS / "mei-1.0-58m-cpt-v2-staircase"
+    out_dir = EXPERIMENTS_RUNS / "mei-1.0-51m-cpt-v2-staircase"
     out_dir.mkdir(parents=True, exist_ok=True)
     REG.mkdir(parents=True, exist_ok=True)
     roles_complete = bool(release.get("roles_complete"))
@@ -137,8 +137,8 @@ def main() -> int:
         init = str(rung_ckpt(rung).relative_to(ROOT))
     report = {
         "ok": False,
-        "parent": "mei-1.0-58m-base-cpt300m-v1",
-        "parent_registry": str(REGISTRY_MEI_58M_CPT300M.relative_to(ROOT)),
+        "parent": "mei-1.0-51m-base-cpt300m-v1",
+        "parent_registry": str(REGISTRY_MEI_51M_CPT300M.relative_to(ROOT)),
         "corpus": "zh-pretrain-v4",
         "rungs_planned": [r for r, _ in RUNGS[: max_idx + 1]],
         "mtp": False,
@@ -211,11 +211,11 @@ def main() -> int:
         step_rep["eval"] = eval_reps
         step_rep["eval_ok_or_missing_valid"] = eval_ok
         report["rung_reports"].append(step_rep)
-        (REG / f"mei-1.0-58m-{step['rung']}.json").write_text(
+        (REG / f"mei-1.0-51m-{step['rung']}.json").write_text(
             json.dumps(
                 {
-                    "model_id": f"mei-1.0-58m-{step['rung']}",
-                    "parent": "mei-1.0-58m-base-cpt300m-v1",
+                    "model_id": f"mei-1.0-51m-{step['rung']}",
+                    "parent": "mei-1.0-51m-base-cpt300m-v1",
                     "rung": step["rung"],
                     "corpus": "zh-pretrain-v4",
                     "allow_repeat": False,

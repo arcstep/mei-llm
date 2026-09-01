@@ -126,7 +126,7 @@
         "n_files": 56,
         "bytes": 645044
       },
-      "dst": "notebook/_tooling/model/mei-1.0-58m"
+      "dst": "notebook/_tooling/model/mei-1.0-51m"
     },
     {
       "src": {
@@ -144,7 +144,7 @@
         "n_files": 8,
         "bytes": 10679
       },
-      "dst": "notebook/sft/mei-1.0-58m/recipes"
+      "dst": "notebook/sft/mei-1.0-51m/recipes"
     },
     {
       "src": {
@@ -153,7 +153,7 @@
         "n_files": 28,
         "bytes": 51219337
       },
-      "dst": "notebook/sft/mei-1.0-58m/train"
+      "dst": "notebook/sft/mei-1.0-51m/train"
     },
     {
       "src": {
@@ -162,7 +162,7 @@
         "n_files": 5,
         "bytes": 6280
       },
-      "dst": "notebook/evaluation/jobs/mei-1.0-58m"
+      "dst": "notebook/evaluation/jobs/mei-1.0-51m"
     },
     {
       "src": {
@@ -171,7 +171,7 @@
         "n_files": 57,
         "bytes": 13875104156
       },
-      "dst": "notebook/archive/base/mei-1.0-58m-checkpoints"
+      "dst": "notebook/archive/base/mei-1.0-51m-checkpoints"
     },
     {
       "src": {

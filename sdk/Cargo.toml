@@ -20,3 +20,5 @@ serde_json = { version = "1", features = ["preserve_order"] }
 sha2 = "0.10"
 thiserror = "2"
 hex = "0.4"
+regex = "1.13"
+unicode-normalization = "0.1.25"

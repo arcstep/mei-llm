@@ -87,7 +87,7 @@ def ensure_jobs() -> None:
     readme.write_text(
         "# toolcall-sft\n\n"
         "唯一落点：`notebook/jobs/toolcall-sft/`。三账三 Job：retrieval / full-call / MW。\n\n"
-        "- fleet：`notebook/sft/mei-1.0-58m/recipes/sft-synth-fleet-v1.json`\n"
+        "- fleet：`notebook/sft/mei-1.0-51m/recipes/sft-synth-fleet-v1.json`\n"
         "- 计量单位：accepted unique row\n"
         "- 教师只改写 query；gold 由 compiler/validator 确定\n"
         "- 付费 bake-off / 扩量必须另确认预算和 model snapshot\n",
@@ -108,7 +108,7 @@ def ensure_jobs() -> None:
             "topic": TOPIC_TOOLCALL_SFT,
             "kind": "produce",
             "status": "running",
-            "task_id": "mei-1.0-58m",
+            "task_id": "mei-1.0-51m",
             "work_dir": rel_to_root(work, root=ROOT),
             "receipt": None,
             "publish_corpus_id": None,

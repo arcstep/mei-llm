@@ -1,12 +1,34 @@
 {
-  "ok": true,
-  "browser_worker": true,
   "refuse_float": true,
   "complete_ran": true,
+  "ok": true,
+  "browser_worker": true,
   "n_new": 8,
-  "raw_text": "。 [] [] ",
-  "quantized_only": true,
-  "url": "http://127.0.0.1:8765/js/wasm-q4-smoke.html",
-  "package_id": "mei-1.0-51m-base-scratch300m-qat-q4-v1",
-  "note": "Chrome Worker complete(max_new>=8) after wasm-abi split (no node:fs in worker)."
+  "raw_text": "了,你看看是不是",
+  "prompt_token_ids": [
+    2,
+    3997,
+    3980,
+    610,
+    272,
+    152
+  ],
+  "generated_token_ids": [
+    93,
+    76,
+    858,
+    1615,
+    1615,
+    1555,
+    167,
+    1555
+  ],
+  "prefill_topk_ids": [
+    93,
+    76,
+    3997,
+    1231,
+    608
+  ],
+  "quantized_only": true
 }

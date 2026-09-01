@@ -1,0 +1,26 @@
+{
+  "format": "mei-tool-index-v2",
+  "fingerprint": "5325cd9b1beb261f686c5cb8170d49551860f5fd7a47dc560fcc48a83c912f90",
+  "catalog_sha256": "e8342baa9aacc41081d0773064b15d4165ae3fcdda0c6b87b6578bf77a60c971",
+  "model_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "head_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+  "tokenizer_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+  "serializer_id": "mei-tool-call-serializer-v2",
+  "dtype": "float16",
+  "normalized": true,
+  "dimension": 2,
+  "records": [
+    {
+      "tool_id": "a",
+      "schema": { "name": "a", "parameters": { "type": "object", "properties": {} } },
+      "schema_sha256": "5b551ac2a793515713bb3112ee083307ae0b192e0bf578e76f24fe25b40614a9",
+      "embedding_f16_base64": "ADwAAA=="
+    },
+    {
+      "tool_id": "b",
+      "schema": { "name": "b", "parameters": { "type": "object", "properties": {} } },
+      "schema_sha256": "71636bd76ebacb52b4091e8fb06066793905df9ba7b6b919734c7b170c9603c7",
+      "embedding_f16_base64": "ADwAAA=="
+    }
+  ]
+}

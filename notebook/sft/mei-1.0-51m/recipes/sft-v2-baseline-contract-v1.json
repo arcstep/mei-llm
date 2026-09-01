@@ -1,0 +1,76 @@
+{
+  "id": "sft-v2-baseline-contract-v1",
+  "status": "pilot_preregistered",
+  "blocking_for_publish": false,
+  "ssot_promotion": "not_this_round",
+  "draft": "docs/draft/mei-llm/2026-08-27-mei-park-toolcall-training-contract.md",
+  "gates_file": "runtime/mei-1.0-51m-needle2-v2/spec/gates-v2.target.json",
+  "current_json": "must_remain_scratch-pretrain-ready",
+  "training": "not_authorized",
+  "accepted_release": false,
+  "paid_30k_status": "raw_candidate_pool_only",
+  "tasks": {
+    "retrieval": {
+      "head": "ContrastiveHead",
+      "metric": "recall_at_5",
+      "not": "chat_output_as_embedding"
+    },
+    "full_call": {
+      "head": "tied_lm_json_or_empty",
+      "metric": "full_call_exact",
+      "gold": "[]_or_one_schema_call"
+    },
+    "mw": {
+      "head": "closed_set_reason_code",
+      "output": ["reason_class_id", "reason_code"],
+      "runtime_maps": ["act", "cell"],
+      "n_reason_codes_locked": 16,
+      "reason_codes": [
+        "ambiguous_scope",
+        "authority_required",
+        "capability_insufficient",
+        "correction_incomplete",
+        "deixis_unresolved",
+        "illegal_pair",
+        "missing_external_fact",
+        "missing_permission_token",
+        "missing_slot",
+        "mixed_intent",
+        "partial_sequence_blocked",
+        "ready_to_execute",
+        "safety_judgment",
+        "scene_conflict",
+        "unknown_slot_value",
+        "unsupported_scope"
+      ]
+    }
+  },
+  "fair_protocol": {
+    "same_eval_bank_hash": true,
+    "compact_schema": true,
+    "prompt_renderer": "prompt_v2",
+    "serializer": "mei-tool-call-serializer-v2",
+    "temperature": 0,
+    "split_raw_and_constrained_decoding": true,
+    "qwen_zero_shot_and_same_data_sft_split": true,
+    "teacher_must_not_read_eval": true,
+    "no_extra_system_for_large_models": true
+  },
+  "data_gates": {
+    "unique_per_task": 10000,
+    "exact_duplicate_max": 0,
+    "near_dup_max": 0.05,
+    "digit_suffix_max": 0,
+    "train_eval_overlap_max": 0
+  },
+  "eval_lock": {
+    "retrieval_dev_min": 1000,
+    "retrieval_test_min": 1000,
+    "fullcall_dev_min": 1200,
+    "fullcall_test_min": 1200,
+    "mw_dev_min": 1600,
+    "mw_test_min": 1600,
+    "mw_per_class_min": 100,
+    "park_blind": "regression_only"
+  }
+}

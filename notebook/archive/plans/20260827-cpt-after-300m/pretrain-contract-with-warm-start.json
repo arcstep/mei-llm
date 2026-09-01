@@ -1,9 +1,9 @@
 {
-  "id": "mei-1.0-58m-pretrain-contract-v1",
-  "architecture": "architecture/mei-1.0-58m-arch-v1",
+  "id": "mei-1.0-51m-pretrain-contract-v1",
+  "architecture": "architecture/mei-1.0-51m-arch-v1",
   "config_loader": "NeedleZhConfig.from_spec",
-  "spec": "architecture/mei-1.0-58m-arch-v1/spec/model.json",
-  "target_v2": "architecture/mei-1.0-58m-arch-v1/spec/model-target-v2.json",
+  "spec": "architecture/mei-1.0-51m-arch-v1/spec/model.json",
+  "target_v2": "architecture/mei-1.0-51m-arch-v1/spec/model-target-v2.json",
   "v2_heads_in_default_pretrain": false,
   "implemented_in_code_is_not_publishable": true,
   "tokenizer": "tokenizer/zh-24k-v1",
@@ -22,7 +22,7 @@
     "default": "scratch",
     "warm_start_300m": "optional",
     "forbidden_parents": [
-      "mei-1.0-58m-route-cpt300m-sft2k-v1",
+      "mei-1.0-51m-route-cpt300m-sft2k-v1",
       "mei-tool-route-sft-v1"
     ]
   },

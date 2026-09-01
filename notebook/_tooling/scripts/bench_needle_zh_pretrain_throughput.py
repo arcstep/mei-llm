@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seq-len throughput sweep for Needle-zh / mei-1.0-58m pretrain.
+"""Seq-len throughput sweep for Needle-zh / mei-1.0-51m pretrain.
 
 Objective is maximum tokens/s, not GPU or memory occupancy. A layout that
 uses more RAM but fewer tok/s is a failure. Floor: do not regress the 300M

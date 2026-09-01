@@ -11,4 +11,4 @@
 | `_tooling/` | 外围脚本、兼容入口、skills |
 | `_migration/` | 迁移记录 |
 
-正式架构、trainer、runtime 在仓根 `architecture/` `training/` `runtime/`。`notebook/_tooling/model/mei-1.0-58m` 只保留指向正式树的 symlink。
+正式架构、trainer、runtime 在仓根 `architecture/` `training/` `runtime/`。`notebook/_tooling/model/mei-1.0-51m` 只保留指向正式树的 symlink。

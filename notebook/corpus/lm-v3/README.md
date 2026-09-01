@@ -1,6 +1,6 @@
 # notebook/corpus/lm-v3
 
-Conditional 1B→2B unique expansion workdir. **Blocked** until `base/mei-1.0-58m-base-cpt1b-v1` is promoted and the 1B benefit gate passes (wiki/HQ valid improve; no catastrophic role regression).
+Conditional 1B→2B unique expansion workdir. **Blocked** until `base/mei-1.0-51m-base-cpt1b-v1` is promoted and the 1B benefit gate passes (wiki/HQ valid improve; no catastrophic role regression).
 
 Do not append shards into `corpus/lm-v2`. After the gate:
 
@@ -10,4 +10,4 @@ Do not append shards into `corpus/lm-v2`. After the gate:
 4. Global exact/near dedup vs all historical train/eval; license + CWT2 + UNK/PII isolation.
 5. Publish a new serving atlas `corpus/lm-v3` and `schedule-cpt-2b.json`.
 
-Recipe stub: `training/mei-1.0-58m-train-v1/recipes/cpt-2b-conditional.json`.
+Recipe stub: `training/mei-1.0-51m-train-v1/recipes/cpt-2b-conditional.json`.

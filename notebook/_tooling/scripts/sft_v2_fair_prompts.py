@@ -127,7 +127,7 @@ def prompt_asset() -> dict[str, Any]:
         "notes": [
             "Examples are independent stubs, not TEST items.",
             "Do not tune on TEST.",
-            "58M SFT (not this round) may drop few-shot; eval still supplies schema/query/facts.",
+            "51M SFT (not this round) may drop few-shot; eval still supplies schema/query/facts.",
         ],
     }
 

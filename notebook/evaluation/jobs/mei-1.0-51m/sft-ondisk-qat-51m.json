@@ -66,7 +66,7 @@
   "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4",
   "prompt_max_tokens": 1152,
   "clean_v2": true,
-  "used_58m_weights": false,
+  "used_51m_weights": true,
   "qat_mandatory": true,
   "not_a_claim": "On-disk SFT is not a CURRENT freeze.",
   "n_loaded": 400

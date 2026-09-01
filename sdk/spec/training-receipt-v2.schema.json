@@ -1,0 +1,44 @@
+{
+  "$id": "mei-training-receipt-v2",
+  "title": "MeiTrainingReceiptV2",
+  "type": "object",
+  "required": [
+    "schema", "product", "package_id", "component", "stage_id",
+    "stage_fingerprint_sha256", "status", "contracts",
+    "tensor_container_sha256", "tensor_directory_sha256"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "mei-training-receipt-v2" },
+    "product": { "const": "mei-1.0-51m" },
+    "package_id": { "type": "string", "minLength": 1 },
+    "component": { "enum": ["lm", "contrastive", "mw_disposition", "confidence"] },
+    "stage_id": { "type": "string", "minLength": 1 },
+    "stage_fingerprint_sha256": { "$ref": "#/$defs/sha256" },
+    "status": { "const": "passed" },
+    "contracts": {
+      "type": "object",
+      "required": ["weight_contract_sha256", "runtime_profile_sha256", "training_aux_sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "weight_contract_sha256": {
+          "const": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b"
+        },
+        "runtime_profile_sha256": {
+          "const": "74839b08155e624f14318ca8646166ddc68ee6496720dedac26aa91fdc8bdf43"
+        },
+        "training_aux_sha256": {
+          "const": "83849db3926693e49c0896a58c172ae15e4b203550cee0ef12a4c37a8c1d48ac"
+        }
+      }
+    },
+    "tensor_container_sha256": { "$ref": "#/$defs/sha256" },
+    "tensor_directory_sha256": {
+      "description": "SHA-256 of canonical JSON for tensor_container.directory entries whose role equals component, preserving directory order.",
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

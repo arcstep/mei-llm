@@ -3,7 +3,7 @@
   "task": "retrieval",
   "fleet_id": "sft-synth-fleet-v1",
   "model_snapshot": "template",
-  "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
+  "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-smoke.jsonl",
   "n_accepted_unique": 24,
   "source_license": "schema-program + optional CrossWOZ/KdConv style only"
 }

@@ -59,7 +59,7 @@ POST_GATES = [
     "joint tool+MW data waits for pure-tool baseline",
     "Confidence labels wait for the final QAT model generations",
     "tool-index rebuild waits for quant-aware base",
-    "park browser mei-58m manifest stays released=false until QAT + confidence",
+    "park browser mei-51m manifest stays released=false until QAT + confidence",
 ]
 
 
@@ -98,7 +98,7 @@ def register(pack: Path, state: str) -> dict:
             "--pack",
             str(pack.relative_to(ROOT)),
             "--task",
-            "mei-1.0-58m",
+            "mei-1.0-51m",
             "--state",
             state,
         ],

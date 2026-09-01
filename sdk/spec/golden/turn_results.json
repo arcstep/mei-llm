@@ -1,24 +1,30 @@
 {
   "versions": {
-    "sdk_semver": "0.1.0-experimental",
-    "wire_version": "mei-runtime-wire-v1",
-    "model_package_version": "mei-model-package-v1",
-    "runtime_abi_version": "mei-runtime-abi-1",
+    "sdk_semver": "0.2.0-experimental",
+    "wire_version": "mei-runtime-wire-v2",
+    "model_package_version": "mei-model-package-v2",
+    "runtime_abi_version": "mei-runtime-abi-2",
     "protocol_id": "mei-tool-call-protocol-v2",
     "serializer_id": "mei-tool-call-serializer-v2",
     "release_class": "experimental",
-    "product": "mei-1.0-58m Runtime"
+    "product": "mei-1.0-51m Runtime"
   },
   "turns": {
     "refuse": {
-      "wire_version": "mei-runtime-wire-v1",
+      "wire_version": "mei-runtime-wire-v2",
+      "kind": "refuse",
+      "call": null,
+      "refusal": {
+        "reason": "model_refusal",
+        "detail": null
+      },
       "ok": true,
       "error": null,
       "refuse": true,
       "selected_tools": [
         "light.set"
       ],
-      "schema_fingerprint": "1a1642ef107eb8d91277534bcded72366dfbdffd30d9cfd56b1bdf0972a6b3f6",
+      "schema_fingerprint": "27981263ec86ed29b2c93ef5590b0d40f4347b81535dbea09c6a4e4f663923fe",
       "function_calls": [],
       "raw_text": "[]",
       "confidence": {
@@ -29,33 +35,79 @@
       "provenance": {
         "validated": true,
         "ok": true,
-        "detail": null
+        "arguments": {},
+        "gates": [
+          {
+            "gate": "retrieval",
+            "ok": true,
+            "selected_tools": [
+              "light.set"
+            ]
+          },
+          {
+            "gate": "grammar",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "schema",
+            "ok": true,
+            "detail": null
+          }
+        ],
+        "request_compatibility": {
+          "source_wire": "mei-runtime-wire-v1",
+          "mode": "read_only_degraded_adapter",
+          "capability_complete": false
+        }
       },
       "capabilities": {
         "package_id": "tiny-protocol-v1",
+        "package_format": "mei-model-package-v1",
         "release_class": "experimental",
         "inference": false,
+        "diagnostic_inference": false,
         "protocol": true,
         "heads": {
           "lm": {
             "present": true,
             "trained": false,
-            "status": "untrained"
+            "status": "untrained",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "contrastive": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "mw_disposition": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "confidence": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "narration_adapter": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           }
         },
         "missing_or_untrained_heads": [
@@ -65,16 +117,55 @@
           "confidence"
         ],
         "hash_verified": true,
+        "inference_payload_verified": true,
+        "resource_measurement_verified": false,
+        "resource_limits_reported": false,
+        "tensor_identity_complete": false,
+        "portable_quantization_policy_complete": false,
+        "tool_index_payload_complete": false,
+        "compatibility_mode": "v1-read-only-degraded",
+        "read_only": true,
+        "degraded": true,
+        "implementation_complete": false,
+        "open_capabilities": [
+          "v2-native"
+        ],
+        "product_ready": false,
+        "resource_eligible": false,
+        "release_eligible": false,
+        "quantized_only": false,
+        "compatibility": {
+          "mode": "read_only_degraded_adapter",
+          "source_format": "mei-model-package-v1",
+          "capability_complete": false
+        },
+        "declared_capabilities": {},
         "versions": {
-          "sdk_semver": "0.1.0-experimental",
-          "wire_version": "mei-runtime-wire-v1",
-          "model_package_version": "mei-model-package-v1",
-          "runtime_abi_version": "mei-runtime-abi-1",
+          "sdk_semver": "0.2.0-experimental",
+          "wire_version": "mei-runtime-wire-v2",
+          "model_package_version": "mei-model-package-v2",
+          "runtime_abi_version": "mei-runtime-abi-2",
           "protocol_id": "mei-tool-call-protocol-v2",
           "serializer_id": "mei-tool-call-serializer-v2",
           "release_class": "experimental",
-          "product": "mei-1.0-58m Runtime"
-        }
+          "product": "mei-1.0-51m Runtime"
+        },
+        "retrieval": false,
+        "full_call": false,
+        "mw_disposition": false,
+        "confidence": false,
+        "multi_step": false,
+        "narration": false,
+        "backend_loaded": false,
+        "backend": "protocol",
+        "stateful_tool_loop": true,
+        "max_steps_default": 4,
+        "max_steps_hard": 8
+      },
+      "state": {
+        "step": 1,
+        "pending_call_id": null,
+        "cancelled": false
       },
       "stats": {
         "backend": "protocol",
@@ -83,18 +174,26 @@
       }
     },
     "call": {
-      "wire_version": "mei-runtime-wire-v1",
+      "wire_version": "mei-runtime-wire-v2",
+      "kind": "call",
+      "call": {
+        "name": "light.set",
+        "arguments": {},
+        "call_id": "call-s00000002-1-be75603afb15"
+      },
+      "refusal": null,
       "ok": true,
       "error": null,
       "refuse": false,
       "selected_tools": [
         "light.set"
       ],
-      "schema_fingerprint": "1a1642ef107eb8d91277534bcded72366dfbdffd30d9cfd56b1bdf0972a6b3f6",
+      "schema_fingerprint": "27981263ec86ed29b2c93ef5590b0d40f4347b81535dbea09c6a4e4f663923fe",
       "function_calls": [
         {
           "name": "light.set",
-          "arguments": {}
+          "arguments": {},
+          "call_id": "call-s00000002-1-be75603afb15"
         }
       ],
       "raw_text": "[{\"name\":\"light.set\",\"arguments\":{}}]",
@@ -106,33 +205,107 @@
       "provenance": {
         "validated": true,
         "ok": true,
-        "detail": null
+        "arguments": {},
+        "gates": [
+          {
+            "gate": "retrieval",
+            "ok": true,
+            "selected_tools": [
+              "light.set"
+            ]
+          },
+          {
+            "gate": "grammar",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "schema",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "provenance",
+            "ok": true,
+            "detail": null,
+            "missing": []
+          },
+          {
+            "gate": "permission",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "state",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "mw",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "confidence",
+            "ok": true,
+            "detail": null,
+            "value": null,
+            "execution": "execute"
+          }
+        ],
+        "request_compatibility": {
+          "source_wire": "mei-runtime-wire-v1",
+          "mode": "read_only_degraded_adapter",
+          "capability_complete": false
+        }
       },
       "capabilities": {
         "package_id": "tiny-protocol-v1",
+        "package_format": "mei-model-package-v1",
         "release_class": "experimental",
         "inference": false,
+        "diagnostic_inference": false,
         "protocol": true,
         "heads": {
           "lm": {
             "present": true,
             "trained": false,
-            "status": "untrained"
+            "status": "untrained",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "contrastive": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "mw_disposition": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "confidence": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "narration_adapter": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           }
         },
         "missing_or_untrained_heads": [
@@ -142,16 +315,55 @@
           "confidence"
         ],
         "hash_verified": true,
+        "inference_payload_verified": true,
+        "resource_measurement_verified": false,
+        "resource_limits_reported": false,
+        "tensor_identity_complete": false,
+        "portable_quantization_policy_complete": false,
+        "tool_index_payload_complete": false,
+        "compatibility_mode": "v1-read-only-degraded",
+        "read_only": true,
+        "degraded": true,
+        "implementation_complete": false,
+        "open_capabilities": [
+          "v2-native"
+        ],
+        "product_ready": false,
+        "resource_eligible": false,
+        "release_eligible": false,
+        "quantized_only": false,
+        "compatibility": {
+          "mode": "read_only_degraded_adapter",
+          "source_format": "mei-model-package-v1",
+          "capability_complete": false
+        },
+        "declared_capabilities": {},
         "versions": {
-          "sdk_semver": "0.1.0-experimental",
-          "wire_version": "mei-runtime-wire-v1",
-          "model_package_version": "mei-model-package-v1",
-          "runtime_abi_version": "mei-runtime-abi-1",
+          "sdk_semver": "0.2.0-experimental",
+          "wire_version": "mei-runtime-wire-v2",
+          "model_package_version": "mei-model-package-v2",
+          "runtime_abi_version": "mei-runtime-abi-2",
           "protocol_id": "mei-tool-call-protocol-v2",
           "serializer_id": "mei-tool-call-serializer-v2",
           "release_class": "experimental",
-          "product": "mei-1.0-58m Runtime"
-        }
+          "product": "mei-1.0-51m Runtime"
+        },
+        "retrieval": false,
+        "full_call": false,
+        "mw_disposition": false,
+        "confidence": false,
+        "multi_step": false,
+        "narration": false,
+        "backend_loaded": false,
+        "backend": "protocol",
+        "stateful_tool_loop": true,
+        "max_steps_default": 4,
+        "max_steps_hard": 8
+      },
+      "state": {
+        "step": 1,
+        "pending_call_id": "call-s00000002-1-be75603afb15",
+        "cancelled": false
       },
       "stats": {
         "backend": "protocol",
@@ -159,8 +371,172 @@
         "decode_mode": "constrained"
       }
     },
+    "respond": {
+      "wire_version": "mei-runtime-wire-v2",
+      "kind": "respond",
+      "call": null,
+      "refusal": null,
+      "ok": true,
+      "error": null,
+      "refuse": false,
+      "selected_tools": [
+        "light.set"
+      ],
+      "schema_fingerprint": "27981263ec86ed29b2c93ef5590b0d40f4347b81535dbea09c6a4e4f663923fe",
+      "function_calls": [],
+      "raw_text": "[]",
+      "confidence": {
+        "available": false,
+        "value": null,
+        "source": null
+      },
+      "provenance": {
+        "validated": true,
+        "ok": true,
+        "arguments": {},
+        "gates": [
+          {
+            "gate": "retrieval",
+            "ok": true,
+            "selected_tools": [
+              "light.set"
+            ]
+          },
+          {
+            "gate": "grammar",
+            "ok": true,
+            "detail": null
+          },
+          {
+            "gate": "schema",
+            "ok": true,
+            "detail": null
+          }
+        ],
+        "request_compatibility": {
+          "source_wire": "mei-runtime-wire-v1",
+          "mode": "read_only_degraded_adapter",
+          "capability_complete": false
+        }
+      },
+      "capabilities": {
+        "package_id": "tiny-protocol-v1",
+        "package_format": "mei-model-package-v1",
+        "release_class": "experimental",
+        "inference": false,
+        "diagnostic_inference": false,
+        "protocol": true,
+        "heads": {
+          "lm": {
+            "present": true,
+            "trained": false,
+            "status": "untrained",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "contrastive": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "mw_disposition": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "confidence": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "narration_adapter": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          }
+        },
+        "missing_or_untrained_heads": [
+          "lm",
+          "contrastive",
+          "mw_disposition",
+          "confidence"
+        ],
+        "hash_verified": true,
+        "inference_payload_verified": true,
+        "resource_measurement_verified": false,
+        "resource_limits_reported": false,
+        "tensor_identity_complete": false,
+        "portable_quantization_policy_complete": false,
+        "tool_index_payload_complete": false,
+        "compatibility_mode": "v1-read-only-degraded",
+        "read_only": true,
+        "degraded": true,
+        "implementation_complete": false,
+        "open_capabilities": [
+          "v2-native"
+        ],
+        "product_ready": false,
+        "resource_eligible": false,
+        "release_eligible": false,
+        "quantized_only": false,
+        "compatibility": {
+          "mode": "read_only_degraded_adapter",
+          "source_format": "mei-model-package-v1",
+          "capability_complete": false
+        },
+        "declared_capabilities": {},
+        "versions": {
+          "sdk_semver": "0.2.0-experimental",
+          "wire_version": "mei-runtime-wire-v2",
+          "model_package_version": "mei-model-package-v2",
+          "runtime_abi_version": "mei-runtime-abi-2",
+          "protocol_id": "mei-tool-call-protocol-v2",
+          "serializer_id": "mei-tool-call-serializer-v2",
+          "release_class": "experimental",
+          "product": "mei-1.0-51m Runtime"
+        },
+        "retrieval": false,
+        "full_call": false,
+        "mw_disposition": false,
+        "confidence": false,
+        "multi_step": false,
+        "narration": false,
+        "backend_loaded": false,
+        "backend": "protocol",
+        "stateful_tool_loop": true,
+        "max_steps_default": 4,
+        "max_steps_hard": 8
+      },
+      "state": {
+        "step": 2,
+        "pending_call_id": null,
+        "cancelled": false
+      },
+      "stats": {
+        "backend": "protocol",
+        "wall_ms": 0,
+        "decode_mode": "constrained"
+      },
+      "execution": "respond"
+    },
     "too_many": {
-      "wire_version": "mei-runtime-wire-v1",
+      "wire_version": "mei-runtime-wire-v2",
+      "kind": "error",
+      "call": null,
+      "refusal": null,
       "ok": false,
       "error": {
         "code": 8,
@@ -178,35 +554,57 @@
         "source": null
       },
       "provenance": {
-        "validated": true,
+        "validated": false,
         "ok": false,
         "detail": "too_many_tools"
       },
       "capabilities": {
         "package_id": "tiny-protocol-v1",
+        "package_format": "mei-model-package-v1",
         "release_class": "experimental",
         "inference": false,
+        "diagnostic_inference": false,
         "protocol": true,
         "heads": {
           "lm": {
             "present": true,
             "trained": false,
-            "status": "untrained"
+            "status": "untrained",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "contrastive": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "mw_disposition": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "confidence": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "narration_adapter": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           }
         },
         "missing_or_untrained_heads": [
@@ -216,16 +614,55 @@
           "confidence"
         ],
         "hash_verified": true,
+        "inference_payload_verified": true,
+        "resource_measurement_verified": false,
+        "resource_limits_reported": false,
+        "tensor_identity_complete": false,
+        "portable_quantization_policy_complete": false,
+        "tool_index_payload_complete": false,
+        "compatibility_mode": "v1-read-only-degraded",
+        "read_only": true,
+        "degraded": true,
+        "implementation_complete": false,
+        "open_capabilities": [
+          "v2-native"
+        ],
+        "product_ready": false,
+        "resource_eligible": false,
+        "release_eligible": false,
+        "quantized_only": false,
+        "compatibility": {
+          "mode": "read_only_degraded_adapter",
+          "source_format": "mei-model-package-v1",
+          "capability_complete": false
+        },
+        "declared_capabilities": {},
         "versions": {
-          "sdk_semver": "0.1.0-experimental",
-          "wire_version": "mei-runtime-wire-v1",
-          "model_package_version": "mei-model-package-v1",
-          "runtime_abi_version": "mei-runtime-abi-1",
+          "sdk_semver": "0.2.0-experimental",
+          "wire_version": "mei-runtime-wire-v2",
+          "model_package_version": "mei-model-package-v2",
+          "runtime_abi_version": "mei-runtime-abi-2",
           "protocol_id": "mei-tool-call-protocol-v2",
           "serializer_id": "mei-tool-call-serializer-v2",
           "release_class": "experimental",
-          "product": "mei-1.0-58m Runtime"
-        }
+          "product": "mei-1.0-51m Runtime"
+        },
+        "retrieval": false,
+        "full_call": false,
+        "mw_disposition": false,
+        "confidence": false,
+        "multi_step": false,
+        "narration": false,
+        "backend_loaded": false,
+        "backend": "protocol",
+        "stateful_tool_loop": true,
+        "max_steps_default": 4,
+        "max_steps_hard": 8
+      },
+      "state": {
+        "step": 0,
+        "pending_call_id": null,
+        "cancelled": false
       },
       "stats": {
         "backend": "protocol",
@@ -234,7 +671,10 @@
       }
     },
     "leak": {
-      "wire_version": "mei-runtime-wire-v1",
+      "wire_version": "mei-runtime-wire-v2",
+      "kind": "error",
+      "call": null,
+      "refusal": null,
       "ok": false,
       "error": {
         "code": 9,
@@ -252,35 +692,57 @@
         "source": null
       },
       "provenance": {
-        "validated": true,
+        "validated": false,
         "ok": false,
-        "detail": "gold_leak"
+        "detail": "forbidden markers: gold_route_id"
       },
       "capabilities": {
         "package_id": "tiny-protocol-v1",
+        "package_format": "mei-model-package-v1",
         "release_class": "experimental",
         "inference": false,
+        "diagnostic_inference": false,
         "protocol": true,
         "heads": {
           "lm": {
             "present": true,
             "trained": false,
-            "status": "untrained"
+            "status": "untrained",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "contrastive": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "mw_disposition": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "confidence": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "narration_adapter": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           }
         },
         "missing_or_untrained_heads": [
@@ -290,16 +752,55 @@
           "confidence"
         ],
         "hash_verified": true,
+        "inference_payload_verified": true,
+        "resource_measurement_verified": false,
+        "resource_limits_reported": false,
+        "tensor_identity_complete": false,
+        "portable_quantization_policy_complete": false,
+        "tool_index_payload_complete": false,
+        "compatibility_mode": "v1-read-only-degraded",
+        "read_only": true,
+        "degraded": true,
+        "implementation_complete": false,
+        "open_capabilities": [
+          "v2-native"
+        ],
+        "product_ready": false,
+        "resource_eligible": false,
+        "release_eligible": false,
+        "quantized_only": false,
+        "compatibility": {
+          "mode": "read_only_degraded_adapter",
+          "source_format": "mei-model-package-v1",
+          "capability_complete": false
+        },
+        "declared_capabilities": {},
         "versions": {
-          "sdk_semver": "0.1.0-experimental",
-          "wire_version": "mei-runtime-wire-v1",
-          "model_package_version": "mei-model-package-v1",
-          "runtime_abi_version": "mei-runtime-abi-1",
+          "sdk_semver": "0.2.0-experimental",
+          "wire_version": "mei-runtime-wire-v2",
+          "model_package_version": "mei-model-package-v2",
+          "runtime_abi_version": "mei-runtime-abi-2",
           "protocol_id": "mei-tool-call-protocol-v2",
           "serializer_id": "mei-tool-call-serializer-v2",
           "release_class": "experimental",
-          "product": "mei-1.0-58m Runtime"
-        }
+          "product": "mei-1.0-51m Runtime"
+        },
+        "retrieval": false,
+        "full_call": false,
+        "mw_disposition": false,
+        "confidence": false,
+        "multi_step": false,
+        "narration": false,
+        "backend_loaded": false,
+        "backend": "protocol",
+        "stateful_tool_loop": true,
+        "max_steps_default": 4,
+        "max_steps_hard": 8
+      },
+      "state": {
+        "step": 0,
+        "pending_call_id": null,
+        "cancelled": false
       },
       "stats": {
         "backend": "protocol",
@@ -308,18 +809,21 @@
       }
     },
     "unavailable": {
-      "wire_version": "mei-runtime-wire-v1",
+      "wire_version": "mei-runtime-wire-v2",
+      "kind": "error",
+      "call": null,
+      "refusal": null,
       "ok": false,
       "error": {
         "code": 6,
         "id": "engine_unavailable",
-        "message": "portable inference is not in this experimental SDK; pass candidate_text for protocol validation"
+        "message": "portable inference is unavailable; candidate_text only validates protocol semantics"
       },
       "refuse": true,
       "selected_tools": [
         "light.set"
       ],
-      "schema_fingerprint": "1a1642ef107eb8d91277534bcded72366dfbdffd30d9cfd56b1bdf0972a6b3f6",
+      "schema_fingerprint": "27981263ec86ed29b2c93ef5590b0d40f4347b81535dbea09c6a4e4f663923fe",
       "function_calls": [],
       "raw_text": null,
       "confidence": {
@@ -330,33 +834,55 @@
       "provenance": {
         "validated": false,
         "ok": false,
-        "detail": "engine_unavailable"
+        "detail": "portable inference is unavailable; candidate_text only validates protocol semantics"
       },
       "capabilities": {
         "package_id": "tiny-protocol-v1",
+        "package_format": "mei-model-package-v1",
         "release_class": "experimental",
         "inference": false,
+        "diagnostic_inference": false,
         "protocol": true,
         "heads": {
           "lm": {
             "present": true,
             "trained": false,
-            "status": "untrained"
+            "status": "untrained",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "contrastive": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "mw_disposition": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           },
           "confidence": {
             "present": false,
             "trained": false,
-            "status": "missing"
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
+          },
+          "narration_adapter": {
+            "present": false,
+            "trained": false,
+            "status": "missing",
+            "tensor_prefixes": [],
+            "training_receipt_sha256": null,
+            "label_codebook_sha256": null
           }
         },
         "missing_or_untrained_heads": [
@@ -366,16 +892,55 @@
           "confidence"
         ],
         "hash_verified": true,
+        "inference_payload_verified": true,
+        "resource_measurement_verified": false,
+        "resource_limits_reported": false,
+        "tensor_identity_complete": false,
+        "portable_quantization_policy_complete": false,
+        "tool_index_payload_complete": false,
+        "compatibility_mode": "v1-read-only-degraded",
+        "read_only": true,
+        "degraded": true,
+        "implementation_complete": false,
+        "open_capabilities": [
+          "v2-native"
+        ],
+        "product_ready": false,
+        "resource_eligible": false,
+        "release_eligible": false,
+        "quantized_only": false,
+        "compatibility": {
+          "mode": "read_only_degraded_adapter",
+          "source_format": "mei-model-package-v1",
+          "capability_complete": false
+        },
+        "declared_capabilities": {},
         "versions": {
-          "sdk_semver": "0.1.0-experimental",
-          "wire_version": "mei-runtime-wire-v1",
-          "model_package_version": "mei-model-package-v1",
-          "runtime_abi_version": "mei-runtime-abi-1",
+          "sdk_semver": "0.2.0-experimental",
+          "wire_version": "mei-runtime-wire-v2",
+          "model_package_version": "mei-model-package-v2",
+          "runtime_abi_version": "mei-runtime-abi-2",
           "protocol_id": "mei-tool-call-protocol-v2",
           "serializer_id": "mei-tool-call-serializer-v2",
           "release_class": "experimental",
-          "product": "mei-1.0-58m Runtime"
-        }
+          "product": "mei-1.0-51m Runtime"
+        },
+        "retrieval": false,
+        "full_call": false,
+        "mw_disposition": false,
+        "confidence": false,
+        "multi_step": false,
+        "narration": false,
+        "backend_loaded": false,
+        "backend": "protocol",
+        "stateful_tool_loop": true,
+        "max_steps_default": 4,
+        "max_steps_hard": 8
+      },
+      "state": {
+        "step": 0,
+        "pending_call_id": null,
+        "cancelled": false
       },
       "stats": {
         "backend": "protocol",

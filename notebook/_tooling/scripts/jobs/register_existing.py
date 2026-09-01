@@ -52,7 +52,7 @@ CORPUS_OVERRIDES = {
 TOPICS = {
     "colloquial-cpt": "Spoken-role CPT synthesis",
     "general-cpt": "Wiki / HQ / structure CPT atlas",
-    "toolcall-sft": "needle-zh / mei-1.0-58m SFT packs",
+    "toolcall-sft": "needle-zh / mei-1.0-51m SFT packs",
     "mei-expert-sft": "Qwen3.5 0.8B expert SFT",
 }
 

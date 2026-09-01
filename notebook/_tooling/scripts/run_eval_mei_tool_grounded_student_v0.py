@@ -92,7 +92,7 @@ def main() -> int:
         lats.append(ms)
     summary = aggregate(rows, scored, lats)
     summary["ckpt"] = str(args.ckpt)
-    out_dir = args.out_dir or (EXPERIMENTS_RUNS / "mei-1.0-58m-grounded-student")
+    out_dir = args.out_dir or (EXPERIMENTS_RUNS / "mei-1.0-51m-grounded-student")
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "predictions.jsonl").write_text(
         "".join(json.dumps(p, ensure_ascii=False) + "\n" for p in preds), encoding="utf-8"

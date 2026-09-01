@@ -30,12 +30,12 @@ DIR_MOVES: list[tuple[str, str]] = [
     ("scripts", "notebook/_tooling/scripts"),
     ("skills", "notebook/_tooling/skills"),
     ("eval", "notebook/evaluation"),
-    ("tasks/needle-zh/model", "notebook/_tooling/model/mei-1.0-58m"),
+    ("tasks/needle-zh/model", "notebook/_tooling/model/mei-1.0-51m"),
     ("tasks/needle-zh/spec", "notebook/base/pretrain-v1/spec"),
-    ("tasks/needle-zh/recipes", "notebook/sft/mei-1.0-58m/recipes"),
-    ("tasks/needle-zh/train", "notebook/sft/mei-1.0-58m/train"),
-    ("tasks/needle-zh/eval", "notebook/evaluation/jobs/mei-1.0-58m"),
-    ("tasks/needle-zh/checkpoints", "notebook/archive/base/mei-1.0-58m-checkpoints"),
+    ("tasks/needle-zh/recipes", "notebook/sft/mei-1.0-51m/recipes"),
+    ("tasks/needle-zh/train", "notebook/sft/mei-1.0-51m/train"),
+    ("tasks/needle-zh/eval", "notebook/evaluation/jobs/mei-1.0-51m"),
+    ("tasks/needle-zh/checkpoints", "notebook/archive/base/mei-1.0-51m-checkpoints"),
     ("tasks/mei-expert-qwen35-0p8b", "notebook/archive/legacy-products/mei-expert-qwen35-0p8b"),
     ("experiments/runs", "notebook/archive/runs"),
     ("corpora/zh-pretrain-v0", "notebook/corpus/lm-v1/language/outbox/accepted/zh-pretrain-v0"),
@@ -154,12 +154,12 @@ PATH_REPLACEMENTS: list[tuple[str, str]] = [
     ("corpora/sft-style-v0", "notebook/sft/style-v0"),
     ("corpora/shared-tool-traces-v0", "notebook/sft/shared-tool-traces-v0"),
     ("corpora/_probe", "notebook/archive/corpus/_probe"),
-    ("tasks/needle-zh/checkpoints", "notebook/archive/base/mei-1.0-58m-checkpoints"),
-    ("tasks/needle-zh/model", "notebook/_tooling/model/mei-1.0-58m"),
+    ("tasks/needle-zh/checkpoints", "notebook/archive/base/mei-1.0-51m-checkpoints"),
+    ("tasks/needle-zh/model", "notebook/_tooling/model/mei-1.0-51m"),
     ("tasks/needle-zh/spec", "notebook/base/pretrain-v1/spec"),
-    ("tasks/needle-zh/recipes", "notebook/sft/mei-1.0-58m/recipes"),
-    ("tasks/needle-zh/train", "notebook/sft/mei-1.0-58m/train"),
-    ("tasks/needle-zh/eval", "notebook/evaluation/jobs/mei-1.0-58m"),
+    ("tasks/needle-zh/recipes", "notebook/sft/mei-1.0-51m/recipes"),
+    ("tasks/needle-zh/train", "notebook/sft/mei-1.0-51m/train"),
+    ("tasks/needle-zh/eval", "notebook/evaluation/jobs/mei-1.0-51m"),
     ("tasks/mei-expert-qwen35-0p8b", "notebook/archive/legacy-products/mei-expert-qwen35-0p8b"),
     ("tasks/needle-zh", "notebook/base/pretrain-v1"),
     ("eval/banks", "notebook/evaluation/banks"),
@@ -167,7 +167,7 @@ PATH_REPLACEMENTS: list[tuple[str, str]] = [
     ("eval/playground", "notebook/evaluation/playground"),
     ("experiments/runs", "notebook/archive/runs"),
     ("python3 scripts/", "python3 notebook/_tooling/scripts/"),
-    ("python3 tasks/needle-zh/model/", "python3 notebook/_tooling/model/mei-1.0-58m/"),
+    ("python3 tasks/needle-zh/model/", "python3 notebook/_tooling/model/mei-1.0-51m/"),
     ('ROOT / "scripts"', "SCRIPTS_ROOT"),
     ('ROOT / "eval"', "EVAL_ROOT"),
 ]
@@ -237,11 +237,11 @@ def should_rewrite(path: Path) -> bool:
 
 
 def patch_python_imports(text: str) -> str:
-    """Ensure MODEL_MEI_58M / SCRIPTS_ROOT are imported when used after rewrite."""
+    """Ensure MODEL_MEI_51M / SCRIPTS_ROOT are imported when used after rewrite."""
     if "from repo_paths import" in text:
         needed = []
-        if "MODEL_MEI_58M" in text and "MODEL_MEI_58M" not in text.split("from repo_paths import", 1)[1].split("\n", 1)[0]:
-            needed.append("MODEL_MEI_58M")
+        if "MODEL_MEI_51M" in text and "MODEL_MEI_51M" not in text.split("from repo_paths import", 1)[1].split("\n", 1)[0]:
+            needed.append("MODEL_MEI_51M")
         if "SCRIPTS_ROOT" in text and "SCRIPTS_ROOT" not in text.split("from repo_paths import", 1)[1].split("\n", 1)[0]:
             needed.append("SCRIPTS_ROOT")
         if "EVAL_ROOT" in text and "EVAL_ROOT" not in text.split("from repo_paths import", 1)[1].split("\n", 1)[0]:
@@ -263,8 +263,8 @@ def patch_python_imports(text: str) -> str:
         "sys.path.insert(0, str(SCRIPTS_ROOT))",
     )
     text = text.replace(
-        'sys.path.insert(0, str(ROOT / "notebook/_tooling/model/mei-1.0-58m"))',
-        "sys.path.insert(0, str(MODEL_MEI_58M))",
+        'sys.path.insert(0, str(ROOT / "notebook/_tooling/model/mei-1.0-51m"))',
+        "sys.path.insert(0, str(MODEL_MEI_51M))",
     )
     text = text.replace('ROOT / "notebook/_tooling/scripts"', "SCRIPTS_ROOT")
     return text
@@ -275,13 +275,13 @@ def patch_test_roots(text: str, path: Path) -> str:
         text = text.replace(
             "ROOT = Path(__file__).resolve().parents[1]\n"
             'sys.path.insert(0, str(ROOT / "scripts"))\n',
-            "from repo_paths import MODEL_MEI_58M, ROOT, SCRIPTS_ROOT\n"
+            "from repo_paths import MODEL_MEI_51M, ROOT, SCRIPTS_ROOT\n"
             "sys.path.insert(0, str(SCRIPTS_ROOT))\n",
         )
         # After path rewrite, scripts path may already be new:
         text = text.replace(
             "ROOT = Path(__file__).resolve().parents[1]\n",
-            "from repo_paths import MODEL_MEI_58M, ROOT, SCRIPTS_ROOT\n",
+            "from repo_paths import MODEL_MEI_51M, ROOT, SCRIPTS_ROOT\n",
         )
         text = text.replace('sys.path.insert(0, str(ROOT / "scripts"))\n', "sys.path.insert(0, str(SCRIPTS_ROOT))\n")
         text = text.replace(
@@ -289,8 +289,8 @@ def patch_test_roots(text: str, path: Path) -> str:
             "sys.path.insert(0, str(SCRIPTS_ROOT))\n",
         )
         text = text.replace(
-            'sys.path.insert(0, str(ROOT / "notebook/_tooling/model/mei-1.0-58m"))\n',
-            "sys.path.insert(0, str(MODEL_MEI_58M))\n",
+            'sys.path.insert(0, str(ROOT / "notebook/_tooling/model/mei-1.0-51m"))\n',
+            "sys.path.insert(0, str(MODEL_MEI_51M))\n",
         )
         text = text.replace(
             'sys.path.insert(0, str(ROOT / "scripts" / "jobs"))\n',
@@ -404,7 +404,7 @@ def write_current_and_readmes() -> None:
             "sft": None,
             "stage": "corpus-preparation",
             "blocked": ["colloquial-contract-not-promoted"],
-            "product": "mei-1.0-58m",
+            "product": "mei-1.0-51m",
         },
     )
     (ROOT / "corpus").mkdir(parents=True, exist_ok=True)
@@ -445,7 +445,7 @@ def write_current_and_readmes() -> None:
 def write_product_json() -> None:
     payload = {
         "version": 1,
-        "product": "mei-1.0-58m",
+        "product": "mei-1.0-51m",
         "historical_alias": "needle-zh",
         "shared": {
             "tokenizer": "tokenizer/zh-24k-v1",
@@ -455,20 +455,20 @@ def write_product_json() -> None:
         },
         "tasks": [
             {
-                "id": "mei-1.0-58m",
-                "canonical_id": "mei-1.0-58m",
-                "aliases": ["needle-zh", "mei-1.0-58m"],
-                "title": "MEI 1.0 58M",
+                "id": "mei-1.0-51m",
+                "canonical_id": "mei-1.0-51m",
+                "aliases": ["needle-zh", "mei-1.0-51m"],
+                "title": "MEI 1.0 51M",
                 "kind": "from-scratch-router",
                 "spec": "notebook/base/pretrain-v1/spec",
-                "model": "notebook/_tooling/model/mei-1.0-58m",
-                "sft_mixture": "notebook/sft/mei-1.0-58m/recipes/sft-mixture-v1.json",
-                "train_seed": "notebook/sft/mei-1.0-58m/train/seed/sft-smoke-v0.jsonl",
+                "model": "notebook/_tooling/model/mei-1.0-51m",
+                "sft_mixture": "notebook/sft/mei-1.0-51m/recipes/sft-mixture-v1.json",
+                "train_seed": "notebook/sft/mei-1.0-51m/train/seed/sft-smoke-v0.jsonl",
                 "train_seeds": [
-                    "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.jsonl",
-                    "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.jsonl",
-                    "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.jsonl",
-                    "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-smoke.jsonl",
+                    "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.jsonl",
+                    "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.jsonl",
+                    "notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.jsonl",
+                    "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-smoke.jsonl",
                 ],
                 "eval_banks": [
                     "notebook/evaluation/banks/needle-toolcall-v0/eval-bank-v0.jsonl",
@@ -488,7 +488,7 @@ def write_job_card() -> None:
         "topic": "colloquial",
         "kind": "pack",
         "status": "draft",
-        "product": "mei-1.0-58m",
+        "product": "mei-1.0-51m",
         "work_dir": "notebook/corpus/lm-v1/colloquial/jobs/260826-01-synthesize/work",
         "publish_path": "notebook/corpus/lm-v1/colloquial/outbox/draft/colloquial-v1",
         "formal_cpt_eligible": False,
@@ -604,13 +604,13 @@ notebook/
 2. `CURRENT.json` 是人读入口。禁止再维护根目录 `corpora/index.json` 或 `tasks/` 双入口。
 3. 口语合成六车道与 pooled 包在 `notebook/corpus/lm-v1/colloquial/`；未满足合同不得写入 `corpus/` 或 `CURRENT.corpus`。
 4. 隔离门禁：`notebook/_tooling/scripts/check_train_eval_isolation.py --scope cpt-v2|sft-v2`。
-5. 现行产品只登记 `mei-1.0-58m`。0.8B 专家线在 `notebook/archive/legacy-products/`。
+5. 现行产品只登记 `mei-1.0-51m`。0.8B 专家线在 `notebook/archive/legacy-products/`。
 """
 
 
 README = """# mei-llm
 
-MEI 1.0 58M 及其训练、评测工作线的代码根（独立 Git 仓）。本仓不是在线模型 provider SDK。
+MEI 1.0 51M 及其训练、评测工作线的代码根（独立 Git 仓）。本仓不是在线模型 provider SDK。
 
 现行指针见 `CURRENT.json`。布局合同见 `DESIGN.md`。
 
@@ -639,7 +639,7 @@ python3 notebook/_tooling/scripts/check_train_eval_isolation.py --all
 python3 notebook/_tooling/scripts/check_train_eval_isolation.py --scope cpt-v2
 python3 notebook/_tooling/scripts/check_train_eval_isolation.py --scope sft-v2
 
-python3 notebook/_tooling/model/mei-1.0-58m/check_student.py
+python3 notebook/_tooling/model/mei-1.0-51m/check_student.py
 python3 notebook/_tooling/scripts/test_mei_route_runtime.py
 python3 notebook/_tooling/scripts/test_mei_v2_runtime.py
 python3 notebook/_tooling/scripts/test_colloquial_synth_pipeline.py
@@ -715,15 +715,15 @@ def main() -> int:
         rename(src, dst)
 
     # --- SFT invalid/candidates to archive ---
-    packs = ROOT / "notebook/sft/mei-1.0-58m/train/packs"
-    arch_packs = ROOT / "notebook/archive/sft/mei-1.0-58m/packs"
+    packs = ROOT / "notebook/sft/mei-1.0-51m/train/packs"
+    arch_packs = ROOT / "notebook/archive/sft/mei-1.0-51m/packs"
     arch_packs.mkdir(parents=True, exist_ok=True)
     for name in ARCHIVE_PACK_NAMES:
         src = packs / name
         if src.exists():
             rename(src, arch_packs / name)
-    seed = ROOT / "notebook/sft/mei-1.0-58m/train/seed"
-    arch_seed = ROOT / "notebook/archive/sft/mei-1.0-58m/seed"
+    seed = ROOT / "notebook/sft/mei-1.0-51m/train/seed"
+    arch_seed = ROOT / "notebook/archive/sft/mei-1.0-51m/seed"
     arch_seed.mkdir(parents=True, exist_ok=True)
     for name in ("sft-phase1-v0.jsonl", "sft-phase1-v0.LEGACY_DIAGNOSTIC_ONLY.json"):
         src = seed / name
@@ -763,7 +763,7 @@ def main() -> int:
         new = rewrite_text(text)
         new = patch_python_imports(new)
         new = patch_test_roots(new, path)
-        if "notebook/_tooling/model/mei-1.0-58m" in path.as_posix():
+        if "notebook/_tooling/model/mei-1.0-51m" in path.as_posix():
             new = patch_model_file(path, new)
         if new != text:
             path.write_text(new, encoding="utf-8")

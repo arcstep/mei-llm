@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "mei-1.0-51m-train-v1",
+  "kind": "training",
+  "product": "mei-1.0-51m",
+  "status": "implemented_in_code",
+  "architecture": "architecture/mei-1.0-51m-arch-v1",
+  "scratch_corpus": "corpus/lm-v1",
+  "cpt_corpus": "declared_by_each_immutable_schedule",
+  "runs": "training/runs",
+  "lifecycle_recipe": "recipes/cpt-lifecycle-v1.json",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "runtime_profile_sha256": "74839b08155e624f14318ca8646166ddc68ee6496720dedac26aa91fdc8bdf43",
+  "training_aux_sha256": "83849db3926693e49c0896a58c172ae15e4b203550cee0ef12a4c37a8c1d48ac",
+  "legacy_tree_digest_sha256": "7e9df7fee3f17152ba76bfeb9a6126c2043a809b45f44b7ab1a56898d9956bc4",
+  "current_policy": "read_only_until_explicit_finalize_current"
+}

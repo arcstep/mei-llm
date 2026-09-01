@@ -1,0 +1,41 @@
+{
+  "$id": "mei-runtime-wire-v2/tool-result",
+  "title": "ToolResultV2",
+  "type": "object",
+  "required": ["wire_version", "call_id", "status", "payload", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "const": "mei-runtime-wire-v2" },
+    "call_id": {
+      "type": "string",
+      "pattern": "^call-s[0-9a-f]{8}-[1-8]-[0-9a-f]{12}$"
+    },
+    "status": { "enum": ["ok", "error", "cancelled"] },
+    "payload": {},
+    "error": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": { "code": { "type": "string" }, "message": { "type": "string" } }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source", "verified"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "verified": { "type": "boolean" },
+        "receipt_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "error" } }, "required": ["status"] },
+      "then": { "required": ["error"], "properties": { "error": { "type": "object" } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "ok" } }, "required": ["status"] },
+      "then": { "properties": { "error": { "type": "null" } } }
+    }
+  ]
+}

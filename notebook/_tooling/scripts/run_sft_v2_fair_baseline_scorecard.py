@@ -30,14 +30,14 @@ from repo_paths import (
 )
 from sft_canonical_lib import load_jsonl
 from sft_v2_baseline_adapters import (
-    MEI58M_SDK_BACKEND,
-    load_mei58m_sdk_engine,
-    mei58m_chat_factory,
-    mei58m_status,
+    MEI51M_SDK_BACKEND,
+    load_mei51m_sdk_engine,
+    mei51m_chat_factory,
+    mei51m_status,
     minimind_status,
     ollama_available,
     qwen_ollama_factory,
-    resolve_promoted_58m_base,
+    resolve_promoted_51m_base,
     sdk_backend_revision,
 )
 from sft_v2_baseline_lib import dump_json, rel, sha256_file, wilson_interval
@@ -307,9 +307,9 @@ def nest_summary(generation: dict, retrieval: dict, parsed: dict, summary: dict)
         return
     if task == "fullcall":
         top5 = parsed["top5"]
-        if name.startswith("mei-58m."):
+        if name.startswith("mei-51m."):
             dec = name.split(".", 1)[1]
-            generation.setdefault("mei-58m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summary
+            generation.setdefault("mei-51m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summary
             return
         if name == "always-refuse":
             generation.setdefault("always-refuse", {}).setdefault("fullcall", {})[top5] = summary
@@ -365,7 +365,7 @@ def aggregate_from_traces(args) -> int:
         "retrieval": retrieval,
         "generation": generation,
         "traces": traces_written,
-        "mei58m_checkpoint": resolve_promoted_58m_base(),
+        "mei51m_checkpoint": resolve_promoted_51m_base(),
         "scorecard_metrics": {
             "required": ["accuracy", "rate"],
             "accuracy_primary": {"retrieval": "recall_at_5", "fullcall": "strict_e2e", "mw": "strict_e2e"},
@@ -396,7 +396,7 @@ def main() -> int:
     ap.add_argument("--timeout", type=int, default=180)
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--skip-qwen", action="store_true")
-    ap.add_argument("--skip-58m-generate", action="store_true")
+    ap.add_argument("--skip-51m-generate", action="store_true")
     ap.add_argument("--resume", action="store_true", default=True, help="Reuse/continue existing trace JSONL files.")
     ap.add_argument("--no-resume", dest="resume", action="store_false")
     ap.add_argument("--tasks", default="retrieval,fullcall,mw")
@@ -412,11 +412,11 @@ def main() -> int:
     print(
         json.dumps(
             {
-                "mei58m_checkpoint": resolve_promoted_58m_base(),
+                "mei51m_checkpoint": resolve_promoted_51m_base(),
                 "split": args.split,
                 "tasks": args.tasks,
                 "skip_qwen": args.skip_qwen,
-                "skip_58m_generate": args.skip_58m_generate,
+                "skip_51m_generate": args.skip_51m_generate,
             },
             ensure_ascii=False,
         ),
@@ -437,37 +437,37 @@ def main() -> int:
     if "retrieval" in tasks:
         retrieval_rows_out["bm25"] = run_sparse(ret_rows, universe, "bm25")
         retrieval_rows_out["char-tfidf"] = run_sparse(ret_rows, universe, "tfidf")
-        st58 = mei58m_status()
+        st58 = mei51m_status()
         if st58.get("available"):
-            engine = load_mei58m_sdk_engine()
+            engine = load_mei51m_sdk_engine()
             session = engine.create_session()
 
             def enc(text: str):
                 return session.embed(text)
 
-            dense = run_dense(ret_rows, universe, enc, "mei-58m-contrastive-no-sft")
+            dense = run_dense(ret_rows, universe, enc, "mei-51m-contrastive-no-sft")
             for t in dense.get("traces") or []:
                 t["checkpoint"] = st58.get("path")
                 t["checkpoint_sha256"] = st58.get("weights_sha256")
                 t["via_sdk"] = True
                 t["eval_surface"] = "mei_sdk.embed"
-                t["sdk_backend"] = MEI58M_SDK_BACKEND
+                t["sdk_backend"] = MEI51M_SDK_BACKEND
                 t["sdk_backend_revision"] = sdk_backend_revision()
                 t["performance_profile"] = "clean"
-            retrieval_rows_out["mei-58m-contrastive-no-sft"] = {
+            retrieval_rows_out["mei-51m-contrastive-no-sft"] = {
                 **dense,
                 "checkpoint": {k: st58.get(k) for k in ("path", "weights_sha256", "model_id", "abandoned_archive")},
             }
-            hnsw = HnswRetriever(enc, name="mei-58m-hnsw")
+            hnsw = HnswRetriever(enc, name="mei-51m-hnsw")
             hnsw.build(universe["tools"][:128])
-            retrieval_rows_out["mei-58m-hnsw"] = {
+            retrieval_rows_out["mei-51m-hnsw"] = {
                 "available": hnsw.available,
                 "error": hnsw.error,
                 "build_ms": hnsw.build_ms,
                 "note": "efficiency column on 128-tool slice; quality remains exact cosine/dot",
             }
         else:
-            retrieval_rows_out["mei-58m-contrastive-no-sft"] = st58
+            retrieval_rows_out["mei-51m-contrastive-no-sft"] = st58
         for hid, label in (
             ("BAAI/bge-small-zh-v1.5", "bge-small-zh-v1.5"),
             ("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", "minilm-multilingual"),
@@ -491,8 +491,8 @@ def main() -> int:
     def run_row_traces(name: str, rows: list[dict], build_one):
         path = args.trace_dir / f"{name}.{split}.jsonl"
         existing = load_jsonl(path) if path.is_file() else []
-        if name.startswith("mei-58m"):
-            want_sha = resolve_promoted_58m_base().get("weights_sha256")
+        if name.startswith("mei-51m"):
+            want_sha = resolve_promoted_51m_base().get("weights_sha256")
             got_sha = (existing[0] or {}).get("checkpoint_sha256") if existing else None
             via_sdk = bool(existing and existing[0].get("via_sdk"))
             got_rev = (existing[0] or {}).get("sdk_backend_revision") if existing else None
@@ -558,21 +558,21 @@ def main() -> int:
                 traces, task="fullcall", bank_by_id=fc_by_id
             )
 
-        if not args.skip_58m_generate and mei58m_status().get("available"):
+        if not args.skip_51m_generate and mei51m_status().get("available"):
             for dec in ("raw", "constrained"):
-                fn, meta = mei58m_chat_factory(dec)
+                fn, meta = mei51m_chat_factory(dec)
                 if fn is None:
-                    gen_results.setdefault("mei-58m-base-300m-no-sft", {})[dec] = meta
+                    gen_results.setdefault("mei-51m-base-300m-no-sft", {})[dec] = meta
                     continue
-                ckpt_meta = resolve_promoted_58m_base()
+                ckpt_meta = resolve_promoted_51m_base()
 
-                def _stamp_58m(rec: dict, lat: dict | None = None) -> dict:
+                def _stamp_51m(rec: dict, lat: dict | None = None) -> dict:
                     rec["checkpoint"] = ckpt_meta.get("path")
                     rec["checkpoint_sha256"] = ckpt_meta.get("weights_sha256")
                     rec["base_model_id"] = ckpt_meta.get("model_id")
                     rec["via_sdk"] = True
                     rec["eval_surface"] = "mei_sdk.complete"
-                    rec["sdk_backend"] = MEI58M_SDK_BACKEND
+                    rec["sdk_backend"] = MEI51M_SDK_BACKEND
                     rec["sdk_backend_revision"] = sdk_backend_revision()
                     rec["performance_profile"] = "clean"
                     rec["max_new"] = 128
@@ -581,9 +581,9 @@ def main() -> int:
 
                 for top5 in ("oracle_top5", "learned_top5"):
                     traces = run_row_traces(
-                        f"mei-58m.{dec}.fullcall.{top5}",
+                        f"mei-51m.{dec}.fullcall.{top5}",
                         fc_rows,
-                        lambda row, top5=top5, dec=dec, fn=fn: _stamp_58m(
+                        lambda row, top5=top5, dec=dec, fn=fn: _stamp_51m(
                             {
                                 **generate_fullcall(
                                     row,
@@ -596,7 +596,7 @@ def main() -> int:
                             }
                         ),
                     )
-                    gen_results.setdefault("mei-58m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summarize_from_traces(
+                    gen_results.setdefault("mei-51m-base-300m-no-sft", {}).setdefault("fullcall", {}).setdefault(dec, {})[top5] = summarize_from_traces(
                         traces, task="fullcall", bank_by_id=fc_by_id
                     )
 
@@ -667,13 +667,13 @@ def main() -> int:
         "generation": gen_results,
         "traces": traces_written,
         "memory": _peak_mem(),
-        "mei58m_checkpoint": resolve_promoted_58m_base(),
+        "mei51m_checkpoint": resolve_promoted_51m_base(),
         "scorecard_metrics": {
             "required": ["accuracy", "rate"],
             "accuracy_primary": {"retrieval": "recall_at_5", "fullcall": "strict_e2e", "mw": "strict_e2e"},
             "rate": ["items_per_s", "items_per_min", "mean_ms", "p50_ms", "p95_ms", "total_wall_s"],
         },
-        "note": "v1 scorecard remains a prompt-contract diagnostic and must not be overwritten. 58M columns use CURRENT.json promoted base only; archive 300M parents are not eval targets. Each column reports accuracy (with splits) and sequential rate.",
+        "note": "v1 scorecard remains a prompt-contract diagnostic and must not be overwritten. 51M columns use CURRENT.json promoted base only; archive 300M parents are not eval targets. Each column reports accuracy (with splits) and sequential rate.",
         "current_json": "sft_and_runtime_unchanged",
         "training": "not_run",
     }

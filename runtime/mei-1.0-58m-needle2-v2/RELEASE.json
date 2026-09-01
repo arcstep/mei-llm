@@ -1,9 +1,0 @@
-{
-  "id": "mei-1.0-58m-needle2-v2",
-  "kind": "runtime",
-  "product": "mei-1.0-58m",
-  "status": "implemented_in_code",
-  "not_a_toolcall_model_release": true,
-  "architecture": "architecture/mei-1.0-58m-arch-v1",
-  "digest_sha256": "8de096eb65687675a7cef6652ef9685f41c559f7b432df2665fcf7be33cb2e4fd4f4af561ec18fe170b1e41e2b8e776c1cd77ca9df33a46b771e2c1dc7e6d20d"
-}

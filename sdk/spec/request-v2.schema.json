@@ -1,0 +1,158 @@
+{
+  "$id": "mei-runtime-wire-v2/request",
+  "title": "CompleteRequestV2",
+  "type": "object",
+  "required": ["wire_version", "query"],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "const": "mei-runtime-wire-v2" },
+    "query": { "type": "string", "minLength": 1 },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "locale": { "type": "string", "default": "zh-CN" },
+        "selected_entities": { "type": "array", "items": { "type": "string" } },
+        "facts": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      }
+    },
+    "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "content"],
+        "additionalProperties": false,
+        "properties": {
+          "role": { "enum": ["system", "user", "assistant", "tool"] },
+          "content": { "type": "string" },
+          "call_id": {
+            "type": "string",
+            "pattern": "^call-s[0-9a-f]{8}-[1-8]-[0-9a-f]{12}$"
+          }
+        }
+      }
+    },
+    "tool_results": { "type": "array", "items": { "$ref": "tool-result-v2.schema.json" } },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scopes": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "grants": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "denies": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "allowed_tools": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "denied_tools": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "state": { "type": "object" },
+    "mw": { "$ref": "#/$defs/mw_protocol_override" },
+    "mw_disposition": { "$ref": "#/$defs/mw_runtime_disposition" },
+    "confidence": {
+      "description": "Protocol-test override only; production runtimes source confidence from the package head.",
+      "$ref": "#/$defs/confidence_protocol_override"
+    },
+    "enforce_confidence": {
+      "type": "boolean",
+      "description": "Protocol-test control; release mode always enforces the model confidence gate."
+    },
+    "oracle_tools": { "type": ["array", "null"], "items": { "$ref": "#/$defs/tool" }, "maxItems": 5 },
+    "candidate_text": { "type": ["string", "null"] },
+    "decode_mode": { "enum": ["raw", "constrained"], "default": "constrained" },
+    "max_new": { "type": "integer", "minimum": 1, "maximum": 128, "default": 128 }
+  },
+  "not": { "required": ["mw", "mw_disposition"] },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "required": ["value", "source", "verified"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "subject": { "type": "string", "minLength": 1 },
+        "predicate": { "type": "string", "minLength": 1 },
+        "tool": { "type": "string", "minLength": 1 },
+        "argument": { "type": "string", "minLength": 1 },
+        "value": {},
+        "source": { "type": "string", "minLength": 1 },
+        "verified": { "type": "boolean" }
+      },
+      "anyOf": [
+        { "required": ["tool", "argument"] },
+        { "required": ["subject", "predicate"] }
+      ]
+    },
+    "mw_protocol_override": {
+      "type": "object",
+      "required": ["decision", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "decision": { "enum": ["continue", "constrain", "stop"] },
+        "allowed_tools": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "source": { "const": "protocol-test" },
+        "receipt_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "if": { "properties": { "decision": { "const": "constrain" } } },
+      "then": { "required": ["allowed_tools"] }
+    },
+    "mw_runtime_disposition": {
+      "type": "object",
+      "required": ["decision", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "decision": { "enum": ["continue", "constrain", "stop"] },
+        "allowed_tools": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "source": { "enum": ["mw-head", "deterministic-policy"] },
+        "receipt_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "if": { "properties": { "decision": { "const": "constrain" } } },
+      "then": { "required": ["allowed_tools"] },
+      "allOf": [
+        {
+          "if": { "properties": { "source": { "const": "mw-head" } }, "required": ["source"] },
+          "then": { "required": ["receipt_sha256"] }
+        }
+      ]
+    },
+    "confidence_protocol_override": {
+      "type": "object",
+      "required": ["value", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": "number", "minimum": 0, "maximum": 1 },
+        "execute_high": { "type": "number", "minimum": 0, "maximum": 1 },
+        "escalate_low": { "type": "number", "minimum": 0, "maximum": 1 },
+        "source": { "const": "protocol-test" }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "parameters"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "parameters": { "type": "object" },
+        "required_permissions": { "type": "array", "items": { "type": "string" } },
+        "required_state": { "type": "object" },
+        "x-mei-permissions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "deprecated": true
+        },
+        "x-mei-state": { "type": "object", "deprecated": true }
+      }
+    }
+  }
+}

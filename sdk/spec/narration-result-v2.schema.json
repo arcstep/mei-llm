@@ -1,0 +1,26 @@
+{
+  "$id": "mei-runtime-wire-v2/narration-result",
+  "title": "NarrationResultV2",
+  "type": "object",
+  "required": [
+    "wire_version", "mode", "requested_mode", "locale", "text", "grounded",
+    "fallback_used", "adapter_verified", "provider_id", "call_ids"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "const": "mei-runtime-wire-v2" },
+    "mode": { "enum": ["off", "deterministic", "adapter"] },
+    "requested_mode": { "enum": ["off", "deterministic", "adapter"] },
+    "locale": { "const": "zh-CN" },
+    "text": { "type": ["string", "null"] },
+    "grounded": { "const": true },
+    "fallback_used": { "type": "boolean" },
+    "adapter_verified": { "type": "boolean" },
+    "provider_id": { "type": "string", "minLength": 1 },
+    "call_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^call-s[0-9a-f]{8}-[1-8]-[0-9a-f]{12}$" },
+      "maxItems": 8
+    }
+  }
+}

@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from zh_pretrain_ingest import dump_json  # noqa: E402
 
-PARENT = ROOT / "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz"
+PARENT = ROOT / "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m.npz"
 TRAIN = SCRIPTS_ROOT / "train_needle_zh_pretrain.py"
 EVAL = SCRIPTS_ROOT / "eval_needle_zh_pretrain_valid.py"
 ISOLATION = SCRIPTS_ROOT / "check_train_eval_isolation.py"
@@ -82,7 +82,7 @@ def main() -> int:
     ap.add_argument("--skip-train", action="store_true")
     ap.add_argument("--skip-ablation", action="store_true")
     args = ap.parse_args()
-    out_dir = EXPERIMENTS_RUNS / "mei-1.0-58m-cpt-v2-5m-utility"
+    out_dir = EXPERIMENTS_RUNS / "mei-1.0-51m-cpt-v2-5m-utility"
     out_dir.mkdir(parents=True, exist_ok=True)
     rel = json.loads((CORPUS_ZH_PRETRAIN_V4 / "RELEASE.json").read_text(encoding="utf-8"))
     if not rel.get("roles_complete"):
@@ -175,10 +175,10 @@ def main() -> int:
     REG.mkdir(parents=True, exist_ok=True)
     if ok:
         dump_json(
-            REG / "mei-1.0-58m-cpt-v2-5m.json",
+            REG / "mei-1.0-51m-cpt-v2-5m.json",
             {
-                "model_id": "mei-1.0-58m-cpt-v2-5m",
-                "parent": "mei-1.0-58m-base-cpt300m-v1",
+                "model_id": "mei-1.0-51m-cpt-v2-5m",
+                "parent": "mei-1.0-51m-base-cpt300m-v1",
                 "corpus": "zh-pretrain-v4",
                 "promoted": True,
                 "weights": str(CKPT_5M.relative_to(ROOT)),
@@ -186,9 +186,9 @@ def main() -> int:
         )
     else:
         dump_json(
-            REG / "mei-1.0-58m-cpt-v2-5m.NOT_PROMOTED.json",
+            REG / "mei-1.0-51m-cpt-v2-5m.NOT_PROMOTED.json",
             {
-                "model_id": "mei-1.0-58m-cpt-v2-5m",
+                "model_id": "mei-1.0-51m-cpt-v2-5m",
                 "status": "NOT_PROMOTED",
                 "reason": "utility_gate",
                 "colloquial_improved": colloquial_improved,

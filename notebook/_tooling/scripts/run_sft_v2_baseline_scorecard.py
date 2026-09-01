@@ -30,8 +30,8 @@ from repo_paths import (
 from run_eval_needle_qwen_v0 import parse_function_calls
 from sft_canonical_lib import load_jsonl
 from sft_v2_baseline_adapters import (
-    load_mei58m,
-    mei58m_status,
+    load_mei51m,
+    mei51m_status,
     minimind_status,
     parse_e2e_tool_name,
     parse_reason_code,
@@ -239,7 +239,7 @@ def append_local_baselines(
     )
     rows_out.append(
         {
-            "id": "random-init-58m",
+            "id": "random-init-51m",
             "role": "floor",
             "bank": "wave1",
             "params": 58541901,
@@ -262,9 +262,9 @@ def append_local_baselines(
                 "same_data_sft_this_round": False,
             }
         )
-    m58 = mei58m_status()
+    m58 = mei51m_status()
     mei_row: dict = {
-        "id": "mei-58m-base-300m-no-sft",
+        "id": "mei-51m-base-300m-no-sft",
         "role": "self_baseline",
         "bank": "wave1",
         "status": m58["status"],
@@ -274,7 +274,7 @@ def append_local_baselines(
     }
     if m58.get("available"):
         try:
-            model, tok, report = load_mei58m()
+            model, tok, report = load_mei51m()
             import mlx.core as mx
             from prompt_v2 import render_tools_block
 
@@ -344,7 +344,7 @@ def main() -> int:
         "always-refuse",
         "lexical-retrieval",
         "majority-mw",
-        "mei-58m-base-300m-no-sft",
+        "mei-51m-base-300m-no-sft",
         "minimind-25m",
         "minimind-45m",
         "qwen3.5-0.8b",
@@ -485,7 +485,7 @@ def main() -> int:
         "banks": banks_meta,
         "clean_packs": clean_meta,
         "models": rows_out,
-        "gates_file": "runtime/mei-1.0-58m-needle2-v2/spec/gates-v2.target.json",
+        "gates_file": "runtime/mei-1.0-51m-needle2-v2/spec/gates-v2.target.json",
         "note": "Pilot scorecard. Floors use full official TEST. Generative models use locked wave1 subsample of the same TEST hash. MiniMind same-data SFT is not authorized. Qwen retrieval is end-to-end tool selection, not embedding.",
     }
     dump_json(args.out, payload)

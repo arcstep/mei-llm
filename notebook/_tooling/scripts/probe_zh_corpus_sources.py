@@ -21,7 +21,7 @@ from typing import Any, Iterable, Iterator
 
 from repo_paths import LANGUAGE_WORK_V0, ROOT, SCRIPTS_ROOT, TOKENIZER_ZH_V1  # noqa: E402
 
-MODEL = ROOT / "notebook/_tooling/model/mei-1.0-58m"
+MODEL = ROOT / "notebook/_tooling/model/mei-1.0-51m"
 SCRIPTS = SCRIPTS_ROOT
 for p in (SCRIPTS, MODEL):
     if str(p) not in sys.path:

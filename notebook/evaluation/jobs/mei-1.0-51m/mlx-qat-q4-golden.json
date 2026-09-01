@@ -77,6 +77,13 @@
     -7.461001396179199,
     -4.519021987915039
   ],
+  "prefill_topk_ids": [
+    93,
+    76,
+    3997,
+    1231,
+    608
+  ],
   "hidden_head": [
     5.2989044189453125,
     2.8341875076293945,
@@ -124,5 +131,5 @@
   "greedy_text": "了,你看看是不是",
   "n_loaded": 400,
   "not_a_float_reload": true,
-  "logit_abs_threshold": 0.25
+  "logit_abs_threshold": 2.7
 }

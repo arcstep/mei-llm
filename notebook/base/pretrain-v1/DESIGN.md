@@ -1,10 +1,10 @@
 # mei-1.0-51m tool core / scene design boundary
 
-正式族名是 **`mei-1.0-51m`**。`needle-zh`、58M heads/runtime 与训练目录名均为历史或迁移参考，不代表现行产品身份。
+正式族名是 **`mei-1.0-51m`**。`needle-zh`、51M heads/runtime 与训练目录名均为历史或迁移参考，不代表现行产品身份。
 
 ## 状态
 
-| 面 | Legacy/58M reference | 51M product target |
+| 面 | Legacy/51M reference | 51M product target |
 |----|-----------|------------|
 | 协议 | Route-ID：`[]` / `{"route_id":N}` | 完整工具 JSON / `[]` |
 | 工具选择 | Python 编译 `<routes>` | ContrastiveHead + top-5（可关） |
@@ -12,7 +12,7 @@
 | 来源安全 | RouteManifest provenance | 生成后 MEI validator |
 | KV | 无界普通 cache | tool/system sinks + ordinary 256 |
 | Confidence | execute/refuse probe | min(head, decode)；未校准 |
-| 实现状态 | `legacy_frozen` / 58M smoke | 51M base 已晋级；tool runtime 未发布 |
+| 实现状态 | `legacy_frozen` / 51M smoke | 51M base 已晋级；tool runtime 未发布 |
 
 机器规格索引：[`spec/README.md`](spec/README.md)。
 
@@ -28,9 +28,9 @@ v1 runner/pack/bank/promote 仍只消费：
 - `spec/special-tokens.json`；
 - `spec/gates.json`。
 
-入口：`runtime/mei-1.0-58m-route-v1/` 的 `route_compiler.py`、`route_protocol.py`，`runtime/_shared/decode.py` 的 `greedy_route_id`、`scripts/promote_mei_58m_release.py`。禁止改 v1 protocol/hash/promote 语义。
+入口：`runtime/mei-1.0-51m-route-v1/` 的 `route_compiler.py`、`route_protocol.py`，`runtime/_shared/decode.py` 的 `greedy_route_id`、`scripts/promote_mei_51m_release.py`。禁止改 v1 protocol/hash/promote 语义。
 
-## 58M v2 runtime（迁移参考，非 51M tool-call 发布）
+## 51M v2 runtime（迁移参考，非 51M tool-call 发布）
 
 ```text
 catalog → ContrastiveHead / index → top-5 or ≤5 全量
@@ -41,11 +41,11 @@ catalog → ContrastiveHead / index → top-5 or ≤5 全量
 → complete() / run(max_steps)
 ```
 
-代码：`architecture/mei-1.0-58m-arch-v1/` 的 heads；`runtime/mei-1.0-58m-needle2-v2/` 的 `prompt_v2.py`、`byte_grammar.py`、`kv_manager.py`、`runtime_v2.py`、`provenance_validator_v2.py`、`tool_index.py`。
+代码：`architecture/mei-1.0-51m-arch-v1/` 的 heads；`runtime/mei-1.0-51m-needle2-v2/` 的 `prompt_v2.py`、`byte_grammar.py`、`kv_manager.py`、`runtime_v2.py`、`provenance_validator_v2.py`、`tool_index.py`。
 
 分层测试：`scripts/test_mei_v2_runtime.py`、`eval_mei_retrieval_v2.py`、`run_eval_mei_toolcall_v2_oracle.py`。
 
-现行 parent 是 immutable `mei-1.0-51m-base-scratch300m-v1`，与 58M checkpoint 不兼容。新 heads 移植到 51M 时必须显式列出随机初始化 tensors，并证明关闭时 logits/base parity。Route-ID SFT checkpoint 不是新路线 parent。
+现行 parent 是 immutable `mei-1.0-51m-base-scratch300m-v1`，与 51M checkpoint 不兼容。新 heads 移植到 51M 时必须显式列出随机初始化 tensors，并证明关闭时 logits/base parity。Route-ID SFT checkpoint 不是新路线 parent。
 
 ## 51M base 后的 tool/MW SFT 边界（目标，未实现）
 
@@ -66,7 +66,7 @@ catalog → ContrastiveHead / index → top-5 or ≤5 全量
 
 ## 量化
 
-产品目标是 CQ2-first mixed Q2/Q4 QAT。51M 诊断入口是 `training/mei-1.0-58m-train-v1/scan_ptq_51m.py`；旧的 `quantize_needle_zh.py --scan` 只服务 58M 考古，不得当作 51M 现行结果。没有 product fake-quant、STE、activation/KV 量化、product mixed-bit map 或真实 Q2/Q4 kernel。PTQ 只能产生 candidate map，不能决定最终位宽，更不是发布内核。QAT 不因 PTQ 好看而取消。`check_qat_pilot_readiness.py` 在 STE/kernel/阈值未就绪时必须 fail-closed。
+产品目标是 CQ2-first mixed Q2/Q4 QAT。51M 诊断入口是 `training/mei-1.0-51m-train-v1/scan_ptq_51m.py`；旧的 `quantize_needle_zh.py --scan` 只服务 51M 考古，不得当作 51M 现行结果。没有 product fake-quant、STE、activation/KV 量化、product mixed-bit map 或真实 Q2/Q4 kernel。PTQ 只能产生 candidate map，不能决定最终位宽，更不是发布内核。QAT 不因 PTQ 好看而取消。`check_qat_pilot_readiness.py` 在 STE/kernel/阈值未就绪时必须 fail-closed。
 
 ## 51M base 后的冻结路线
 

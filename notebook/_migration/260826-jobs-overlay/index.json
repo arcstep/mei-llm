@@ -48,91 +48,91 @@
   "sft_packs": [
     {
       "id": "home-sft-10k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.candidates.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.candidates.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "home-sft-10k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.jsonl",
       "task_id": "needle-zh",
       "state": "accepted"
     },
     {
       "id": "home-sft-10k.review-sample",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.review-sample.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.review-sample.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "home-sft-2k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.candidates.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.candidates.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "home-sft-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.jsonl",
       "task_id": "needle-zh",
       "state": "accepted"
     },
     {
       "id": "home-sft-2k.review-sample",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.review-sample.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.review-sample.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "mei-tool-route-sft-v1-10k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-route-sft-v1-10k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-route-sft-v1-10k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-route-sft-v1-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-route-sft-v1-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-route-sft-v1-2k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-route-sft-v1-valid",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-route-sft-v1-valid.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-route-sft-v1-valid.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-sft-v1-10k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-sft-v1-10k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-sft-v1-10k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-sft-v1-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-sft-v1-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-sft-v1-2k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-toolcall-v2-smoke",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-smoke.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-smoke.jsonl",
       "task_id": "needle-zh",
       "state": "smoke"
     },
     {
       "id": "mw-sft-v0-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "mw-sft-v0-2k.review-sample",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.review-sample.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.review-sample.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "sft-phase1-v0",
-      "path": "notebook/sft/mei-1.0-58m/train/seed/sft-phase1-v0.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/seed/sft-phase1-v0.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },

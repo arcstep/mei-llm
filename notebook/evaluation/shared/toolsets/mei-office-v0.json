@@ -1,6 +1,6 @@
 {
   "toolset_id": "mei-office-v0",
-  "description": "Train-seen office/calendar/volume/price schema for mei-1.0-58m schema-conditioned SFT.",
+  "description": "Train-seen office/calendar/volume/price schema for mei-1.0-51m schema-conditioned SFT.",
   "split": "train",
   "tools": [
     {

@@ -16,7 +16,7 @@
     "packs": [
       {
         "kind": "retrieval",
-        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+        "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
         "state": "candidate",
         "ok": true,
         "register": {
@@ -25,15 +25,15 @@
           "ok": true,
           "pack": {
             "id": "mei-retrieval-v2-10k.paid.candidates",
-            "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
-            "task_id": "mei-1.0-58m",
+            "path": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+            "task_id": "mei-1.0-51m",
             "state": "candidate"
           }
         }
       },
       {
         "kind": "fullcall-oracle-top5",
-        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+        "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
         "state": "candidate",
         "ok": true,
         "register": {
@@ -42,15 +42,15 @@
           "ok": true,
           "pack": {
             "id": "mei-toolcall-v2-oracle-10k.paid.candidates",
-            "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
-            "task_id": "mei-1.0-58m",
+            "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+            "task_id": "mei-1.0-51m",
             "state": "candidate"
           }
         }
       },
       {
         "kind": "mw-disposition",
-        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+        "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
         "state": "candidate",
         "ok": true,
         "register": {
@@ -59,8 +59,8 @@
           "ok": true,
           "pack": {
             "id": "mei-mw-disposition-v2-10k.paid.candidates",
-            "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
-            "task_id": "mei-1.0-58m",
+            "path": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+            "task_id": "mei-1.0-51m",
             "state": "candidate"
           }
         }
@@ -71,7 +71,7 @@
       "joint tool+MW data waits for pure-tool baseline",
       "Confidence labels wait for the final QAT model generations",
       "tool-index rebuild waits for quant-aware base",
-      "park browser mei-58m manifest stays released=false until QAT + confidence"
+      "park browser mei-51m manifest stays released=false until QAT + confidence"
     ],
     "note": "Eval banks are never registered. Confidence/QAT remain post-gates. accepted needs 0303 + float base.",
     "tier": "10k",
@@ -87,19 +87,19 @@
     "packs": [
       {
         "kind": "retrieval",
-        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+        "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
         "ok": false,
         "reason": "0303_base_sft_null"
       },
       {
         "kind": "fullcall-oracle-top5",
-        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+        "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
         "ok": false,
         "reason": "0303_base_sft_null"
       },
       {
         "kind": "mw-disposition",
-        "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+        "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
         "ok": false,
         "reason": "0303_base_sft_null"
       }
@@ -109,7 +109,7 @@
       "joint tool+MW data waits for pure-tool baseline",
       "Confidence labels wait for the final QAT model generations",
       "tool-index rebuild waits for quant-aware base",
-      "park browser mei-58m manifest stays released=false until QAT + confidence"
+      "park browser mei-51m manifest stays released=false until QAT + confidence"
     ],
     "note": "Eval banks are never registered. Confidence/QAT remain post-gates. accepted needs 0303 + float base.",
     "tier": "10k",
@@ -120,7 +120,7 @@
     "joint tool+MW data waits for pure-tool baseline",
     "Confidence labels wait for the final QAT model generations",
     "tool-index rebuild waits for quant-aware base",
-    "park browser mei-58m manifest stays released=false until QAT + confidence"
+    "park browser mei-51m manifest stays released=false until QAT + confidence"
   ],
   "note": "Paid 10k candidates registered. accepted refused by 0303. Do not train. park released=false. 20k/50k budget remains 0."
 }

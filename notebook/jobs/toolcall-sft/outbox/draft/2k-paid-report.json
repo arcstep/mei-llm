@@ -307,10 +307,10 @@
               "n": 504
             }
           },
-          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl"
+          "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl"
         }
       },
-      "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl"
+      "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl"
     },
     {
       "task": "fullcall",
@@ -641,11 +641,11 @@
             "ok": true
           },
           "require_compiler": true,
-          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+          "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
           "isolation_returncode": 0
         }
       },
-      "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl"
+      "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl"
     },
     {
       "task": "mw",
@@ -819,10 +819,10 @@
             "cf_cross_split": {},
             "ok": true
           },
-          "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl"
+          "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl"
         }
       },
-      "pack": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl"
+      "pack": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl"
     }
   ],
   "isolation": {
@@ -840,19 +840,19 @@
         "notebook/evaluation/banks/mei-toolcall-v2/eval-bank-smoke.jsonl"
       ],
       "seeds": [
-        "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
-        "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl"
+        "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-smoke.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+        "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl"
       ],
       "pairs": [
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
           "seed_n": 2000,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -860,7 +860,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
           "seed_n": 2000,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -868,7 +868,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
           "seed_n": 24,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -876,7 +876,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
           "seed_n": 2000,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -884,7 +884,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
           "seed_n": 2000,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -892,7 +892,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-smoke.jsonl",
           "seed_n": 24,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -900,7 +900,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
           "seed_n": 2000,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -908,7 +908,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
           "seed_n": 2000,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],
@@ -916,7 +916,7 @@
           "ok": true
         },
         {
-          "seed": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl",
+          "seed": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl",
           "seed_n": 24,
           "id_overlap": [],
           "eval_text_leaks_in_seed": [],

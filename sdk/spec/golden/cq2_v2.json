@@ -1,0 +1,12 @@
+{
+  "quant_math_id": "mei-cq-v2-g128-wht-codebook",
+  "input_formula": "((index % 17) - 8) / 8",
+  "n_values": 256,
+  "group_bits": [2, 4],
+  "data_nbytes": 96,
+  "data_sha256": "52681f0929c6d80fd676e776f347b3eeb0902124e69b930ab4760fdf15d06501",
+  "scales_f16_le_hex": "e438f138",
+  "bit_map_hex": "02",
+  "decoded_head": [-3.246645927429199, -0.7836468815803528, -0.32645732164382935, -0.21215994656085968, -0.09786257892847061, 0.01643478311598301, 0.01643482595682144, 0.1307321935892105],
+  "decoded_abs_tolerance": 0.000001
+}

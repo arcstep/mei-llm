@@ -1339,7 +1339,7 @@
     "reason": "No non-smoke phase-1 tool-router checkpoint. Pretrain npz is CPT, not a closed-set router. Smoke SFT is tiny/6-step and is not scored as a product model.",
     "found": [
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-100m-best.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-100m-best.npz",
         "sha256": "709557af1f350e732c5f947323566ef5407337806384dca9c6fcac23625e83da",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1347,7 +1347,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-100m-smoke.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-100m-smoke.npz",
         "sha256": "450e5b9f7efe720e1d2795e3f3929b9d3d22d683c9faa0e5ab5a7b3c2c9a65ea",
         "bytes": 357622,
         "kind": "pretrain",
@@ -1355,7 +1355,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-100m.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-100m.npz",
         "sha256": "709557af1f350e732c5f947323566ef5407337806384dca9c6fcac23625e83da",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1363,7 +1363,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m-best.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m-best.npz",
         "sha256": "0b11a06a07718bf5c24a8ea859d73afa410846267bd3f6a27c9a468a01d28e15",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1371,7 +1371,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m.npz",
         "sha256": "f0e6fe1eb5a6fecca236f9eeddd0ed611c8f2896970fa9252b593e2c88ca93ce",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1379,7 +1379,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-1m-best.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-pilot-1m-best.npz",
         "sha256": "a0ebcfa6411e157da267495e13abf50d23fc866c7d5fc0351c74e1b9c5f717eb",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1387,7 +1387,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-1m.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-pilot-1m.npz",
         "sha256": "a0ebcfa6411e157da267495e13abf50d23fc866c7d5fc0351c74e1b9c5f717eb",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1395,7 +1395,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-5m-best.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-pilot-5m-best.npz",
         "sha256": "b59c473afd509ba96ed891d50bfacdc157e8c461c15754c6dacdc6497510ccaf",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1403,7 +1403,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-pilot-5m.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-pilot-5m.npz",
         "sha256": "b59c473afd509ba96ed891d50bfacdc157e8c461c15754c6dacdc6497510ccaf",
         "bytes": 234278298,
         "kind": "pretrain",
@@ -1411,7 +1411,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-smoke.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-smoke.npz",
         "sha256": "0069cb396a2ef049989bd0ac5dd12d12849088cad6b27aaed0d838d49b08d8cd",
         "bytes": 6468858,
         "kind": "pretrain",
@@ -1419,7 +1419,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/sft-pretrained-2k-smoke.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/sft-pretrained-2k-smoke.npz",
         "sha256": "2e390be39da5f3673c31a963073fe20c0062284e0de5aac27107611e92ff6019",
         "bytes": 6468858,
         "kind": "sft-smoke",
@@ -1427,7 +1427,7 @@
         "note": "smoke SFT or CPT weights; no product phase-1 tool-router checkpoint yet"
       },
       {
-        "path": "notebook/archive/base/mei-1.0-58m-checkpoints/sft-random-2k-smoke.npz",
+        "path": "notebook/archive/base/mei-1.0-51m-checkpoints/sft-random-2k-smoke.npz",
         "sha256": "c29906d40fced8506a88f1e1dfc290d38210197b264fd3ead82e0ff5b6c40a55",
         "bytes": 357622,
         "kind": "sft-smoke",

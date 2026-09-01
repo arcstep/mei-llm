@@ -1,3 +1,3 @@
 # toolcall-sft
 
-needle-zh / mei-1.0-58m SFT packs
+needle-zh / mei-1.0-51m SFT packs

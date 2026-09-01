@@ -20,17 +20,17 @@ from sft_v2_baseline_lib import REASON_CODES_16, STUDENT_SYSTEM, env_path, rel
 MODELS = json.loads(SFT_V2_BASELINE_MODELS.read_text(encoding="utf-8"))["models"]
 MODEL_BY_ID = {m["id"]: m for m in MODELS}
 
-ABANDONED_58M_ARCHIVE = "notebook/archive/base/mei-1.0-58m-checkpoints"
-PROMOTED_58M_WEIGHTS = "pretrain-300m-scratch.npz"
-MEI58M_SDK_BACKEND = "mlx-fused"
+ABANDONED_51M_ARCHIVE = "notebook/archive/base/mei-1.0-51m-checkpoints"
+PROMOTED_51M_WEIGHTS = "pretrain-300m-scratch.npz"
+MEI51M_SDK_BACKEND = "mlx-fused"
 
 
-def _is_abandoned_58m_archive(path: str | os.PathLike[str] | None) -> bool:
+def _is_abandoned_51m_archive(path: str | os.PathLike[str] | None) -> bool:
     text = str(path or "").replace("\\", "/")
-    return ABANDONED_58M_ARCHIVE in text
+    return ABANDONED_51M_ARCHIVE in text
 
 
-def resolve_promoted_58m_base() -> dict[str, Any]:
+def resolve_promoted_51m_base() -> dict[str, Any]:
     """Load the CURRENT.json promoted base. Archive 300M parents are not eval targets."""
     current_path = ROOT / "CURRENT.json"
     current = json.loads(current_path.read_text(encoding="utf-8")) if current_path.is_file() else {}
@@ -42,13 +42,13 @@ def resolve_promoted_58m_base() -> dict[str, Any]:
             "path": None,
             "abandoned_archive": "not_used",
         }
-    if _is_abandoned_58m_archive(base_rel):
+    if _is_abandoned_51m_archive(base_rel):
         return {
             "available": False,
             "status": "abandoned_archive_refused",
             "path": str(base_rel),
         }
-    ckpt_rel = f"{str(base_rel).rstrip('/')}/{PROMOTED_58M_WEIGHTS}"
+    ckpt_rel = f"{str(base_rel).rstrip('/')}/{PROMOTED_51M_WEIGHTS}"
     ckpt = ROOT / ckpt_rel
     if not ckpt.is_file():
         return {
@@ -253,8 +253,8 @@ def qwen_ollama_factory(host: str, tag: str, timeout: int) -> Callable[..., tupl
     return _fn
 
 
-def mei58m_status() -> dict[str, Any]:
-    return resolve_promoted_58m_base()
+def mei51m_status() -> dict[str, Any]:
+    return resolve_promoted_51m_base()
 
 
 def _sdk_python_path() -> None:
@@ -274,41 +274,41 @@ def sdk_backend_revision() -> str:
         _sdk_python_path()
         from mei_sdk.mlx_backend import backend_revision
 
-        _SDK_REVISION = backend_revision(MEI58M_SDK_BACKEND)
+        _SDK_REVISION = backend_revision(MEI51M_SDK_BACKEND)
     return _SDK_REVISION
 
 
-def load_mei58m_sdk_engine(*, verify_hashes: bool = True):
-    """Load mei-58m-base through the public SDK. Eval must not import RuntimeV2 directly."""
+def load_mei51m_sdk_engine(*, verify_hashes: bool = True):
+    """Load mei-51m-base through the public SDK. Eval must not import RuntimeV2 directly."""
     global _SDK_ENGINE
     if _SDK_ENGINE is not None:
         return _SDK_ENGINE
     _sdk_python_path()
     from mei_sdk import Engine
 
-    package = ROOT / "sdk" / "packages" / "mei-1.0-58m-base-scratch300m-v1"
-    if _is_abandoned_58m_archive(str(package)):
+    package = ROOT / "sdk" / "packages" / "mei-1.0-51m-base-scratch300m-v1"
+    if _is_abandoned_51m_archive(str(package)):
         raise RuntimeError("abandoned archive checkpoint is not a valid eval target")
     _SDK_ENGINE = Engine.load(
         str(package),
         verify_hashes=verify_hashes,
-        backend=MEI58M_SDK_BACKEND,
+        backend=MEI51M_SDK_BACKEND,
     )
     return _SDK_ENGINE
 
 
-def load_mei58m():
+def load_mei51m():
     """Retired alias: still loads via SDK so callers cannot skip the product API."""
-    engine = load_mei58m_sdk_engine()
+    engine = load_mei51m_sdk_engine()
     rt = engine.runtime
     return rt.model, rt.tokenizer, engine.load_report
 
 
-def mei58m_chat_factory(decode_mode: str):
-    status = mei58m_status()
+def mei51m_chat_factory(decode_mode: str):
+    status = mei51m_status()
     if not status.get("available"):
         return None, status
-    engine = load_mei58m_sdk_engine()
+    engine = load_mei51m_sdk_engine()
     session = engine.create_session()
     mode = "raw" if decode_mode == "raw" else "constrained"
 
@@ -384,14 +384,14 @@ def resolve_adapters(*, host: str, timeout: int, include: set[str] | None = None
             st = minimind_status(size)
             ad.status = st["status"]
             ad.note = st.get("note") or ""
-        elif spec["id"] == "mei-58m-base-300m-no-sft":
-            st = mei58m_status()
+        elif spec["id"] == "mei-51m-base-300m-no-sft":
+            st = mei51m_status()
             ad.status = st["status"]
             ad.note = (
                 f"no-SFT self baseline from CURRENT.json base ({st.get('path')}); "
                 "abandoned archive checkpoints are not evaluated"
             )
-        elif spec["id"] in {"lexical-retrieval", "majority-mw", "random-init-58m"}:
+        elif spec["id"] in {"lexical-retrieval", "majority-mw", "random-init-51m"}:
             ad.status = "ready"
         out.append(ad)
     return out

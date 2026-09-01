@@ -1,4 +1,4 @@
-"""Greedy decode: legacy JSON-array filter, plus route-ID trie with KV cache."""
+"""Greedy decode adapters over the UTF-8 byte grammar and bounded KV window."""
 
 from __future__ import annotations
 
@@ -11,10 +11,16 @@ import mlx.nn as nn
 
 try:
     from .grammar import is_legal_prefix, parse_phase1_text
-    from .route_protocol import allowed_internal_texts, is_legal_internal_prefix, materialize_internal
 except ImportError:
     from grammar import is_legal_prefix, parse_phase1_text
-    from route_protocol import allowed_internal_texts, is_legal_internal_prefix, materialize_internal
+
+try:  # Route-ID v1 is an optional compatibility surface, not the v2 SSOT.
+    from .route_protocol import allowed_internal_texts, is_legal_internal_prefix, materialize_internal
+except ImportError:
+    try:
+        from route_protocol import allowed_internal_texts, is_legal_internal_prefix, materialize_internal
+    except ImportError:
+        allowed_internal_texts = is_legal_internal_prefix = materialize_internal = None
 
 
 def greedy_constrained(
@@ -67,6 +73,8 @@ def greedy_constrained(
 
 
 def _allowed_seqs(tokenizer, n_routes: int) -> list[list[int]]:
+    if allowed_internal_texts is None:
+        raise RuntimeError("Route-ID v1 compatibility module is unavailable")
     seqs = []
     for text in allowed_internal_texts(n_routes):
         seqs.append(tokenizer.encode(text, add_bos=False, add_eos=False))
@@ -82,6 +90,8 @@ def greedy_route_id(
     toolset: Any,
     max_new: int = 24,
 ) -> dict[str, Any]:
+    if allowed_internal_texts is None or is_legal_internal_prefix is None or materialize_internal is None:
+        raise RuntimeError("Route-ID v1 compatibility module is unavailable")
     if toolset is None:
         raise ValueError("toolset is required; no default VRM")
     n_routes = len(getattr(manifest, "routes", []) or [])
@@ -186,6 +196,7 @@ def greedy_byte_grammar(
             token_to_bytes,
         )
 
+    max_new = min(128, max(1, int(max_new)))
     t0 = time.perf_counter()
     grammar = compile_byte_grammar_cached(tools, tokenizer)
     prefix_bytes = b""
@@ -202,9 +213,8 @@ def greedy_byte_grammar(
             position_ids=mx.array(kv.visible_positions, dtype=mx.int32),
         )
         mx.eval(out["logits"])
-        kv.absorb_packed_cache(out["cache"])
         logits = out["logits"][:, -1, :]
-        kv.last_logits = logits
+        kv.absorb_cache(out.get("cache"), last_logits=logits)
     else:
         ids = list(prompt_ids)
         kwargs = {}
@@ -222,7 +232,13 @@ def greedy_byte_grammar(
         if is_accept_bytes(prefix_bytes, grammar):
             break
         tg = time.perf_counter()
-        chosen = select_legal_token(logits, tokenizer, grammar, prefix_bytes)
+        chosen = select_legal_token(
+            logits,
+            tokenizer,
+            grammar,
+            prefix_bytes,
+            generated_token_count=len(pieces),
+        )
         grammar_ms += (time.perf_counter() - tg) * 1000
         if chosen is None:
             break
@@ -231,7 +247,7 @@ def greedy_byte_grammar(
             break
         if chosen == tokenizer.eos_id:
             break
-        extra = token_to_bytes(tokenizer, chosen)
+        extra = token_to_bytes(tokenizer, chosen, at_start=not pieces)
         prefix_bytes += extra
         pieces.append(chosen)
         logps.append(float(logp[chosen]))
@@ -242,7 +258,7 @@ def greedy_byte_grammar(
             mx.eval(step["logits"])
             cache = step.get("cache")
         logits = step["logits"][:, -1, :]
-    text = tokenizer.decode(pieces)
+    text = prefix_bytes.decode("utf-8")
     call_lp = float(sum(logps)) if logps else 0.0
     return {
         "text": text,
@@ -268,7 +284,8 @@ def greedy_unconstrained(
     kv=None,
     start_logits=None,
 ) -> dict[str, Any]:
-    """Product-unconstrained greedy decode for the 58M raw baseline column."""
+    """Product-unconstrained greedy decode for the 51M raw baseline column."""
+    max_new = min(128, max(1, int(max_new)))
     t0 = time.perf_counter()
     pieces: list[int] = []
     logps: list[float] = []
@@ -282,6 +299,7 @@ def greedy_unconstrained(
         out = model(mx.array([list(prompt_ids)], dtype=mx.int32))
         mx.eval(out["logits"])
         logits = out["logits"][:, -1, :]
+        cache = out.get("cache")
     acc = ""
     had_open = False
     remaining = int(max_new)
@@ -330,8 +348,9 @@ def greedy_unconstrained(
             step = kv.decode_step(model, chosen)
             logits = step["logits"][:, -1, :]
         else:
-            step = model(mx.array([[chosen]], dtype=mx.int32))
+            step = model(mx.array([[chosen]], dtype=mx.int32), cache=cache)
             mx.eval(step["logits"])
+            cache = step.get("cache")
             logits = step["logits"][:, -1, :]
         piece = tokenizer.decode([chosen])
         acc += piece

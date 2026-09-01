@@ -73,7 +73,7 @@ TOPICS = {
         },
     },
     "toolcall-sft": {
-        "title": "mei-1.0-58m 工具调用 SFT",
+        "title": "mei-1.0-51m 工具调用 SFT",
         "purpose": "组织 task-local SFT seed、candidate、review、accepted pack 与训练入口。",
         "entrypoints": {
             "build": [
@@ -88,7 +88,7 @@ TOPICS = {
             ],
             "train": [
                 "scripts/train_needle_zh_sft.py",
-                "scripts/train_mei_58m_sft.py",
+                "scripts/train_mei_51m_sft.py",
             ],
         },
     },

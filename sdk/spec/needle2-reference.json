@@ -1,0 +1,78 @@
+{
+  "schema": "mei-needle2-reference-v1",
+  "reference_only": true,
+  "captured_utc_date": "2026-08-30",
+  "github": {
+    "repository": "https://github.com/cactus-compute/needle",
+    "commit": "ee221ce7c13579d9809209b979a9b7a50936614c",
+    "files": {
+      "needle/model/architecture.py": {
+        "sha256": "07638e532131fa6071d1be37d20f6f17b95f7b78b2971225df87965c6c8daf43",
+        "url": "https://raw.githubusercontent.com/cactus-compute/needle/ee221ce7c13579d9809209b979a9b7a50936614c/needle/model/architecture.py"
+      },
+      "needle/model/quantize.py": {
+        "sha256": "606ed5a9c3073f0caab3d61c5b286f2f2dd2f80f49dc68661ad31f4054d2f547",
+        "url": "https://raw.githubusercontent.com/cactus-compute/needle/ee221ce7c13579d9809209b979a9b7a50936614c/needle/model/quantize.py"
+      },
+      "doc/apis.md": {
+        "sha256": "d25fd9f13ffbee734f9e0488e3723c09cde8910f02a45a53c84051c0145e488a",
+        "url": "https://raw.githubusercontent.com/cactus-compute/needle/ee221ce7c13579d9809209b979a9b7a50936614c/doc/apis.md"
+      }
+    }
+  },
+  "huggingface": {
+    "repository": "Cactus-Compute/needle2",
+    "revision": "98fbd955b0347e78059be0c253cc1ffa09b87bc7",
+    "files": {
+      "config.json": {
+        "sha256": "abb8caffb1e078640b6fbccd006cd5462300ab813da1163bc961ce3117d80be8",
+        "url": "https://huggingface.co/Cactus-Compute/needle2/raw/98fbd955b0347e78059be0c253cc1ffa09b87bc7/config.json"
+      }
+    }
+  },
+  "mechanism_baseline": {
+    "backbone": {
+      "hidden_size": 512,
+      "layers": 27,
+      "attention_heads": 8,
+      "kv_heads": 4,
+      "head_dim": 64,
+      "max_context": 2048,
+      "rope_theta": 100000,
+      "attention": "gqa",
+      "mlp": "hadamard"
+    },
+    "engram": {
+      "sites": [2, 15],
+      "orders": [2, 3],
+      "slots": 8192,
+      "sub_dim": 128,
+      "conv_taps": 4
+    },
+    "mhc_lanes": 4,
+    "mtp": "training-time auxiliary path",
+    "quantization": {
+      "group_size": 128,
+      "embedding_bits": 4,
+      "mhc_bits": 4,
+      "default_bits": 2,
+      "kv_cache_bits": 8,
+      "activation_bits": 8,
+      "math": "WHT plus deterministic Gaussian Lloyd-Max codebook"
+    },
+    "runtime": {
+      "sliding_window": 256,
+      "retrieval_top_k": 5,
+      "constrained_json_schema": true,
+      "stepwise_complete": true,
+      "agent_run": true,
+      "confidence": true
+    }
+  },
+  "explicit_non_compatibility": [
+    ".cact package format",
+    "libneedle binary",
+    "Cactus API",
+    "Cactus ABI"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "kind": "freeze-proposal",
+  "eligible": false,
+  "selected_branch": "quality_blocked_qat_q4_only",
+  "requires_explicit_user_freeze_command": true,
+  "writes_current": false,
+  "hard_gates": "qat-product-hard-gates.json"
+}

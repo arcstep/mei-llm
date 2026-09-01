@@ -1,18 +1,24 @@
 {
-  "product": "mei-1.0-58m Runtime",
+  "product": "mei-1.0-51m Runtime",
   "product_aliases": ["MEI Runtime"],
   "forbidden_product_names": ["Needle 2", "Needle2", "needle2", "libneedle"],
-  "sdk_semver": "0.1.0-experimental",
+  "sdk_semver": "0.2.0-experimental",
   "release_class": "experimental",
-  "wire_version": "mei-runtime-wire-v1",
-  "model_package_version": "mei-model-package-v1",
-  "runtime_abi_version": "mei-runtime-abi-1",
+  "wire_version": "mei-runtime-wire-v2",
+  "model_package_version": "mei-model-package-v2",
+  "runtime_abi_version": "mei-runtime-abi-2",
+  "legacy_read_only": {
+    "wire_versions": ["mei-runtime-wire-v1"],
+    "model_package_versions": ["mei-model-package-v1"],
+    "runtime_abi_versions": ["mei-runtime-abi-1"]
+  },
   "protocol_id": "mei-tool-call-protocol-v2",
   "serializer_id": "mei-tool-call-serializer-v2",
   "notes": [
     "SDK semver, wire_version, model_package_version, and runtime_abi_version version independently.",
     "Do not claim a product Runtime release while CURRENT.runtime is null or SFT/head/quant gates are open.",
     "Needle 2 is a mechanism reference only; public API, ABI, and compatibility promises must not use that name.",
-    "This SDK does not implement or promise compatibility with .cact or libneedle."
+    "This SDK does not implement or promise compatibility with .cact or libneedle.",
+    "Version-1 packages and requests are accepted only through a degraded, read-only adapter."
   ]
 }

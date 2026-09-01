@@ -12,7 +12,7 @@ from typing import Any, Sequence
 
 from sft_canonical_lib import compact_tools
 
-PROTOCOL_DIR_HINT = "runtime/mei-1.0-58m-needle2-v2"
+PROTOCOL_DIR_HINT = "runtime/mei-1.0-51m-needle2-v2"
 
 
 def _protocol():
@@ -21,7 +21,7 @@ def _protocol():
 
     from repo_paths import ROOT
 
-    model_dir = ROOT / "notebook/_tooling/model/mei-1.0-58m"
+    model_dir = ROOT / "notebook/_tooling/model/mei-1.0-51m"
     if str(model_dir) not in sys.path:
         sys.path.insert(0, str(model_dir))
     from retrieval_rag_protocol import (  # noqa: E402
@@ -262,7 +262,7 @@ def try_sentence_transformer(model_id: str):
     }
 
 
-def mei58m_encode_fn(model, tokenizer):
+def mei51m_encode_fn(model, tokenizer):
     import mlx.core as mx
 
     from retrieval_rag_protocol import encode_text_ids

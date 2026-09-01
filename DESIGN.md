@@ -7,10 +7,10 @@ CURRENT.json
 tokenizer/zh-24k-v1/                    # 正式词表
 corpus/lm-v1/                            # 已接收语料
 architecture/mei-1.0-51m-arch-v1/      # 现行 51M 主干 + 几何合同
-training/mei-1.0-58m-train-v1/          # 正式 trainer / data / recipes
+training/mei-1.0-51m-train-v1/          # 正式 trainer / data / recipes
 training/runs/                           # 正式训练状态与中间 checkpoint
-runtime/mei-1.0-58m-route-v1/           # frozen Route-ID runtime
-runtime/mei-1.0-58m-needle2-v2/         # 历史 Python+MLX 参考实现（非 SDK 产品名）
+runtime/mei-1.0-51m-route-v1/           # frozen Route-ID runtime
+runtime/mei-1.0-51m-needle2-v2/         # 历史 Python+MLX 参考实现（非 SDK 产品名）
 sdk/                                     # 实验性 MEI Runtime 嵌入式 SDK（先协议/ABI，后拆仓）
 base/                                    # immutable pretrain/CPT 权重
 sft/                                     # 正式 SFT 权重
@@ -26,7 +26,7 @@ notebook/                                # 语料生产、研究、测试、验�
 5. Needle 主干与 runtime 是正式成果：`architecture/` 与 `runtime/`。`notebook/_tooling/model` 仅为兼容 symlink。
 6. `CURRENT.runtime` 未与正式权重组成可部署 release 前可为 `null`；这不否定历史参考实现，也不等于 `sdk/` 已是产品 Runtime。
 7. 隔离门禁：`notebook/_tooling/scripts/check_train_eval_isolation.py --scope cpt-v2|sft-v2`。
-8. 现行产品只登记 `mei-1.0-51m`；immutable base 是 `mei-1.0-51m-base-scratch300m-v1`。58M runtime/heads 与 0.8B 专家线只作迁移参考或外部实验。
+8. 现行产品只登记 `mei-1.0-51m`；immutable base 是 `mei-1.0-51m-base-scratch300m-v1`。51M runtime/heads 与 0.8B 专家线只作迁移参考或外部实验。
 9. 嵌入式 SDK 入口是 `sdk/`。公共名是 MEI Runtime；`CURRENT.runtime=null` 期间只标 experimental。
 10. 场景目标是工具调用后基于已验证结果生成用户可读解说。NarrationProvider 后端无关、无执行权限；任何 51M tool/narration 后训使用新 model ID，禁止覆盖 base。当前 tied LM head 不等于已具备 head-only/adapter 能力。
-11. PTQ 扫描是诊断，不是产品 bit-map。QAT 强制。短 QAT pilot 入口在 `training/mei-1.0-58m-train-v1/check_qat_pilot_readiness.py`，未实现 STE 前禁止开训。Float/PTQ 账本在 `notebook/evaluation/jobs/mei-1.0-51m/`。
+11. PTQ 扫描是诊断，不是产品 bit-map。QAT 强制。短 QAT pilot 入口在 `training/mei-1.0-51m-train-v1/check_qat_pilot_readiness.py`，未实现 STE 前禁止开训。Float/PTQ 账本在 `notebook/evaluation/jobs/mei-1.0-51m/`。

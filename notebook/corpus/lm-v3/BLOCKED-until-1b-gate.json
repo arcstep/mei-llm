@@ -7,6 +7,6 @@
   "structure_gap_tokens": 16203860,
   "colloquial_gap_tokens": 100362053,
   "source": "epfml/FineWeb2-HQ cmn_Hani unused parquet; no CWT2; new immutable corpus, do not append into lm-v2",
-  "parent_must_be": "base/mei-1.0-58m-base-cpt1b-v1",
+  "parent_must_be": "base/mei-1.0-51m-base-cpt1b-v1",
   "rewrite_lm_v2": false
 }

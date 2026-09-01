@@ -3,7 +3,7 @@
   "topic": "colloquial",
   "kind": "pack",
   "status": "draft",
-  "product": "mei-1.0-58m",
+  "product": "mei-1.0-51m",
   "work_dir": "notebook/corpus/lm-v1/colloquial/jobs/260826-01-synthesize/work",
   "publish_path": "corpus/lm-v1/colloquial/zh-pretrain-colloquial-synth-pooled-v1",
   "formal_cpt_eligible": false,

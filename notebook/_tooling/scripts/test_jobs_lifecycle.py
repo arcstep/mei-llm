@@ -117,8 +117,8 @@ def test_repo_indexes_exist() -> None:
     current = json.loads((ROOT / "CURRENT.json").read_text(encoding="utf-8"))
     assert current["tokenizer"] == "tokenizer/zh-24k-v1"
     assert current["corpus"] == "corpus/lm-v1"
-    assert current["architecture"] == "architecture/mei-1.0-58m-arch-v1"
-    assert current["training"] == "training/mei-1.0-58m-train-v1"
+    assert current["architecture"] == "architecture/mei-1.0-51m-arch-v1"
+    assert current["training"] == "training/mei-1.0-51m-train-v1"
     assert current["base"] is None
     assert current["sft"] is None
     assert current["runtime"] is None
@@ -149,7 +149,7 @@ def test_repo_indexes_exist() -> None:
 
 
 def test_serving_layout() -> None:
-    sys.path.insert(0, str(ROOT / "training" / "mei-1.0-58m-train-v1"))
+    sys.path.insert(0, str(ROOT / "training" / "mei-1.0-51m-train-v1"))
     from _repo import ensure_formal_on_path  # noqa: E402
 
     ensure_formal_on_path()

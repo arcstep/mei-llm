@@ -1,0 +1,14 @@
+{
+  "$id": "mei-runtime-wire-v2/loop-result",
+  "title": "LoopResultV2",
+  "type": "object",
+  "required": ["wire_version", "ok", "turns", "tool_results", "stopped_reason"],
+  "additionalProperties": false,
+  "properties": {
+    "wire_version": { "const": "mei-runtime-wire-v2" },
+    "ok": { "type": "boolean" },
+    "turns": { "type": "array", "items": { "$ref": "turn-result-v2.schema.json" }, "maxItems": 9 },
+    "tool_results": { "type": "array", "items": { "$ref": "tool-result-v2.schema.json" }, "maxItems": 8 },
+    "stopped_reason": { "enum": ["respond", "refuse", "error", "max_steps", "cancelled"] }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "kind": "toolcall-qat-lock-v2",
+  "lock": "sft-v2-eval-lock-v2",
+  "package_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/packages/mei-1.0-51m-sft-qat-q4-v1",
+  "thresholds": "notebook/evaluation/jobs/mei-1.0-51m/sft-v2-51m-thresholds-preregister.json",
+  "n_retrieval": 250,
+  "n_fullcall": 300,
+  "universe_n": 147,
+  "recall_at_5_learned": 0.048,
+  "recall_at_5_lexical": 0.588,
+  "oracle_top5_fullcall_exact": 0.23,
+  "learned_top5_e2e_exact": 0.17333333333333334,
+  "unsupported_accepted": 0,
+  "unprovenanced_argument_accepted": 0,
+  "confidence_ece": 0.14762034471380492,
+  "confidence_brier": 0.17783685129359197,
+  "input_fingerprint": "d3b661aad17a165f491b182a1ea61581ef49592d0ab976ed636b5db7a46fd532",
+  "shard_index": 2,
+  "shard_count": 4,
+  "counts": {
+    "n_retrieval": 250,
+    "learned_hits": 12,
+    "lexical_hits": 147,
+    "n_fullcall": 300,
+    "oracle_exact": 69,
+    "oracle_execute_refuse": 91,
+    "learned_exact": 52,
+    "unsupported_accepted": 0,
+    "unprovenanced_argument_accepted": 0
+  },
+  "layers": {
+    "recall_at_5_learned": {
+      "value": 0.048,
+      "floor": 0.2,
+      "ok": false
+    },
+    "recall_beats_lexical": {
+      "learned": 0.048,
+      "lexical": 0.588,
+      "ok": false
+    },
+    "oracle_top5_fullcall_exact": {
+      "value": 0.23,
+      "floor": 0.12,
+      "ok": true
+    },
+    "oracle_execute_refuse": {
+      "value": 0.30333333333333334,
+      "floor": 0.5,
+      "ok": false
+    },
+    "learned_top5_e2e_exact": {
+      "value": 0.17333333333333334,
+      "floor": 0.04,
+      "ok": true
+    },
+    "unsupported_accepted": {
+      "value": 0,
+      "max": 0,
+      "ok": true
+    },
+    "unprovenanced_argument_accepted": {
+      "value": 0,
+      "max": 0,
+      "ok": true
+    }
+  },
+  "hard_ok": false,
+  "toy_scores_rejected": true,
+  "n_loaded": 400,
+  "qat_mandatory": true,
+  "not_a_claim": "Lock-v2 scores are not a CURRENT freeze."
+}

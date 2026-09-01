@@ -1,15 +1,18 @@
 {
-  "sdk_semver": "0.1.0-experimental",
+  "sdk_semver": "0.2.0-experimental",
+  "active_wire": "mei-runtime-wire-v2",
+  "active_package": "mei-model-package-v2",
+  "legacy_policy": "v1-read-only-degraded",
   "languages": {
     "rust": {
       "status": "experimental",
       "crate": "mei-sdk-core",
-      "inference": "quantized-q4-portable",
+      "inference": "portable-cq2-and-legacy-q4",
       "protocol": "available"
     },
     "c": {
       "status": "experimental",
-      "abi": "mei-runtime-abi-1",
+      "abi": "mei-runtime-abi-2",
       "inference": "via-rust-core-quantized",
       "protocol": "available"
     },
@@ -35,7 +38,7 @@
       "status": "tier-1-quantized",
       "tiers": {
         "0": "protocol and package validation only",
-        "1": "51M quantized package (mei-q4-packed-v1) in-browser; float npz refused"
+        "1": "51M portable tensor package v2 or legacy q4 read-only; float npz refused"
       },
       "inference": "quantized-only"
     }

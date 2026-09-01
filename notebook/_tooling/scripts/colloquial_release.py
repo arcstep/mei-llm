@@ -213,7 +213,7 @@ def freeze_release(
     dump_json(out / "hashes.json", meta_hashes)
     readme = """# colloquial synth release
 
-100% synthetic spoken-role corpus for mei-1.0-58m independent CPT.
+100% synthetic spoken-role corpus for mei-1.0-51m independent CPT.
 
 - Production generator is the frozen qwen-plus snapshot.
 - Offline renderer is engineering contrast / smoke only and cannot open formal CPT.

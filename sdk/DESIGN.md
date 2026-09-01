@@ -4,12 +4,12 @@
 
 ## 1. 命名与边界
 
-产品是 **`mei-1.0-58m Runtime`** / **MEI Runtime**。
+产品是 **`mei-1.0-51m Runtime`** / **MEI Runtime**。
 
 - `Needle 2` 只作机制参考：KV sink、grammar、retrieval-before-call 等。
 - 不进入 SDK 产品名、crate 名、C 符号、npm 包名、错误码或兼容承诺。
 - 不实现、不承诺 `.cact` / `libneedle` / 官方 Needle ABI。
-- 历史实现路径 `runtime/mei-1.0-58m-needle2-v2/` 保留；**新增公共 API 不暴露 `needle2` 名称**。Python 参考后端通过显式 `mei_sdk.reference` 加载该目录，调用方仍只看见 MEI Runtime 类型。
+- 历史实现路径 `runtime/mei-1.0-51m-needle2-v2/` 保留；**新增公共 API 不暴露 `needle2` 名称**。Python 参考后端通过显式 `mei_sdk.reference` 加载该目录，调用方仍只看见 MEI Runtime 类型。
 
 ## 2. 分层
 
@@ -55,7 +55,7 @@ Python+MLX 是当前 **golden oracle**，不是 ABI。
 - `cancel`
 - `close`
 
-`TurnResult` 必须覆盖：selected tools、calls/refuse、confidence、provenance、error、stats。
+`TurnResult` 必须覆盖：selected tools、call/respond/refuse/error、confidence、provenance、stats。`respond` 仅能出现在 Session 已验收至少一个成功 ToolResult、且模型输出空 action 后；它不是 refusal 的别名。
 
 `complete` 在选中 schema 上最多 5 个工具。`candidate_text` 仅用于协议金样，跳过引擎。
 
@@ -80,7 +80,7 @@ Python+MLX 是当前 **golden oracle**，不是 ABI。
 2. 对照 Python golden vectors
 3. Python+MLX 保留 `backend=mlx-reference` 数值 oracle，并提供可回退的 `backend=mlx-fused` Metal 热路；量化仍未开始。协议路径无引擎时 `engine_unavailable` 仍合法。
 
-WASM 两级：tier-0 协议/校验；tier-1 完整 58M 推理须通过量化包、峰值内存、浏览器算子门。
+WASM 两级：tier-0 协议/校验；tier-1 完整 51M 推理须通过量化包、峰值内存、浏览器算子门。
 
 ## 6.1 Python+MLX reference / fused 后端性能（experimental）
 

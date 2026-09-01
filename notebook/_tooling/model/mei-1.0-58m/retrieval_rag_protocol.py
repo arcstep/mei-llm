@@ -1,1 +1,0 @@
-../../../../runtime/mei-1.0-58m-needle2-v2/retrieval_rag_protocol.py

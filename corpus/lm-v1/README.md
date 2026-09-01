@@ -1,6 +1,6 @@
 # corpus/lm-v1
 
-Serving atlas for `mei-1.0-58m`. `CURRENT.corpus` points here.
+Serving atlas for `mei-1.0-51m`. `CURRENT.corpus` points here.
 
 ```text
 mix.json / schedule-scratch.json / RELEASE.json / manifest.json

@@ -6,6 +6,8 @@ Corrected SAN training architecture for the 51.46M product line.
 - Walsh-Hadamard MLP is a fixed orthonormal transform, not a trainable matrix
 - mHC routing offsets are fixed; Sinkhorn uses 20 iterations
 - Engram is limited to configured layers with `ngram_ok` / `tap_ok` and a 12-token history
-- Checkpoints are **not** compatible with `mei-1.0-58m-arch-v1`
+- Checkpoint compatibility is the normalized 400-tensor weight contract, not a source-tree hash.
+- Runtime policy is independently pinned to 2048 context, 1024 stable-prefix tokens, and a 256-token ordinary window.
+- MTP is a training-only ablation and contributes no deployed tensors.
 
-This tree is the training identity for `mei-1.0-51m`. It is not `CURRENT` until a 300M Base is promoted.
+Legacy source hashes are accepted only through `spec/legacy-architecture-aliases.json`; an alias never changes runtime or training-auxiliary policy.

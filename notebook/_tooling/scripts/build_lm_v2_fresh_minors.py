@@ -25,7 +25,7 @@ from repo_paths import (
 )
 
 SCRIPTS = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / "training/mei-1.0-58m-train-v1"))
+sys.path.insert(0, str(ROOT / "training/mei-1.0-51m-train-v1"))
 from _repo import ensure_formal_on_path  # noqa: E402
 
 ensure_formal_on_path()

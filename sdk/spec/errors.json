@@ -1,5 +1,5 @@
 {
-  "abi": "mei-runtime-abi-1",
+  "abi": "mei-runtime-abi-2",
   "ok": 0,
   "codes": [
     {"code": 0, "id": "ok", "message": "success"},
@@ -17,6 +17,18 @@
     {"code": 12, "id": "not_implemented", "message": "API exists but this backend has not implemented it"},
     {"code": 13, "id": "abi_version_mismatch", "message": "runtime_abi_version is not supported"},
     {"code": 14, "id": "file_not_found", "message": "referenced package file is missing"},
-    {"code": 15, "id": "buffer_too_small", "message": "caller buffer is too small"}
+    {"code": 15, "id": "buffer_too_small", "message": "caller buffer is too small"},
+    {"code": 16, "id": "unsupported_schema", "message": "tool schema is outside the supported deterministic subset"},
+    {"code": 17, "id": "tool_result_required", "message": "submit the pending tool result before completing again"},
+    {"code": 18, "id": "stale_call_id", "message": "tool result call_id does not match the pending call"},
+    {"code": 19, "id": "tool_result_too_large", "message": "serialized tool result exceeds the session limit"},
+    {"code": 20, "id": "max_steps", "message": "session reached its configured step limit"},
+    {"code": 21, "id": "executor_missing", "message": "no host executor is registered for the requested tool"},
+    {"code": 22, "id": "package_path_unsafe", "message": "package manifest contains an unsafe relative path"},
+    {"code": 23, "id": "package_range_invalid", "message": "tensor container range is out of bounds or overlaps another range"},
+    {"code": 24, "id": "duplicate_tensor", "message": "tensor directory contains a duplicate tensor name"},
+    {"code": 25, "id": "capability_missing", "message": "package is valid but lacks a required v2 capability"},
+    {"code": 26, "id": "decode_mode_forbidden", "message": "raw decode is forbidden for candidate and release packages"},
+    {"code": 27, "id": "tool_schema_budget_exceeded", "message": "selected tool schemas exceed the 1024-token stable-prefix budget"}
   ]
 }

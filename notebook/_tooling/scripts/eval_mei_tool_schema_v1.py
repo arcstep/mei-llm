@@ -19,7 +19,7 @@ from eval_needle_toolcall_v0 import (
 )
 from repo_paths import EVAL_BANKS_ROOT, EVAL_SHARED_ROOT, ROOT
 
-sys.path.insert(0, str((ROOT / "notebook/_tooling/model/mei-1.0-58m")))
+sys.path.insert(0, str((ROOT / "notebook/_tooling/model/mei-1.0-51m")))
 from grammar import parse_phase1_text  # noqa: E402
 from schema_render import load_toolset_json  # noqa: E402
 

@@ -74,7 +74,7 @@ def main() -> int:
     summary = aggregate(rows, scored, lats)
     summary["model"] = model
     summary["backend"] = args.backend
-    out_dir = args.out_dir or (EXPERIMENTS_RUNS / "mei-1.0-58m-schema-qwen")
+    out_dir = args.out_dir or (EXPERIMENTS_RUNS / "mei-1.0-51m-schema-qwen")
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "predictions.jsonl").write_text(
         "".join(json.dumps(p, ensure_ascii=False) + "\n" for p in preds), encoding="utf-8"

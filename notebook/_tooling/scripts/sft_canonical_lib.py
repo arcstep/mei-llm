@@ -264,7 +264,7 @@ def render_v2_prompt(
     """Delegate to runtime prompt_v2 so train/student/Qwen stay isomorphic."""
     import sys
 
-    model_dir = ROOT / "notebook/_tooling/model/mei-1.0-58m"
+    model_dir = ROOT / "notebook/_tooling/model/mei-1.0-51m"
     if str(model_dir) not in sys.path:
         sys.path.insert(0, str(model_dir))
     from prompt_v2 import render_v2_request  # noqa: E402

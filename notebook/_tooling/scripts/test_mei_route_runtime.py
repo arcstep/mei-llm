@@ -7,8 +7,8 @@ import json
 import sys
 from pathlib import Path
 
-from repo_paths import MODEL_MEI_58M, ROOT, SCRIPTS_ROOT
-sys.path.insert(0, str(MODEL_MEI_58M))
+from repo_paths import MODEL_MEI_51M, ROOT, SCRIPTS_ROOT
+sys.path.insert(0, str(MODEL_MEI_51M))
 sys.path.insert(0, str(SCRIPTS_ROOT))
 
 from candidates import ToolContext, load_entity_catalog, load_lexicon  # noqa: E402

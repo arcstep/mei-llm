@@ -29,7 +29,7 @@ ROOT = find_root()
 NOTEBOOK = ROOT / "notebook"
 TOOLING = NOTEBOOK / "_tooling"
 SCRIPTS_ROOT = TOOLING / "scripts"
-MODEL_MEI_58M = TOOLING / "model" / "mei-1.0-58m"
+MODEL_MEI_51M = TOOLING / "model" / "mei-1.0-51m"
 SKILLS_ROOT = TOOLING / "skills"
 REQUIREMENTS_ROOT = TOOLING / "requirements"
 
@@ -39,15 +39,15 @@ TOKENIZER_MANIFEST = TOKENIZER_DIR / "tokenizer-v1-manifest.json"
 
 PRETRAIN_V1 = NOTEBOOK / "base" / "pretrain-v1"
 SPEC_NEEDLE_ZH = PRETRAIN_V1 / "spec"
-SPEC_MEI_58M = SPEC_NEEDLE_ZH
-SFT_MEI_58M = NOTEBOOK / "sft" / "mei-1.0-58m"
-SFT_TRAIN = SFT_MEI_58M / "train"
-SFT_RECIPES = SFT_MEI_58M / "recipes"
-CKPT_ARCHIVE = NOTEBOOK / "archive" / "base" / "mei-1.0-58m-checkpoints"
-ARCHIVE_SFT = NOTEBOOK / "archive" / "sft" / "mei-1.0-58m"
+SPEC_MEI_51M = SPEC_NEEDLE_ZH
+SFT_MEI_51M = NOTEBOOK / "sft" / "mei-1.0-51m"
+SFT_TRAIN = SFT_MEI_51M / "train"
+SFT_RECIPES = SFT_MEI_51M / "recipes"
+CKPT_ARCHIVE = NOTEBOOK / "archive" / "base" / "mei-1.0-51m-checkpoints"
+ARCHIVE_SFT = NOTEBOOK / "archive" / "sft" / "mei-1.0-51m"
 ARCHIVE_LEGACY = NOTEBOOK / "archive" / "legacy-products"
 ARCHIVE_CORPUS = NOTEBOOK / "archive" / "corpus"
-EVAL_FIXTURES = NOTEBOOK / "evaluation" / "jobs" / "mei-1.0-58m"
+EVAL_FIXTURES = NOTEBOOK / "evaluation" / "jobs" / "mei-1.0-51m"
 
 LM_V1 = NOTEBOOK / "corpus" / "lm-v1"
 LANGUAGE_ACCEPTED = LM_V1 / "language" / "outbox" / "accepted"
@@ -137,9 +137,9 @@ TASK_INDEX = PRODUCT_INDEX
 
 TASK_MEI_EXPERT = "mei-expert-qwen35-0p8b"
 TASK_NEEDLE_ZH = "needle-zh"
-TASK_MEI_1_0_58M = "mei-1.0-58m"
+TASK_MEI_1_0_51M = "mei-1.0-51m"
 TASK_ALIASES = {
-    "mei-1.0-58m": "needle-zh",
+    "mei-1.0-51m": "needle-zh",
     "needle-zh": "needle-zh",
 }
 
@@ -150,7 +150,7 @@ class _SplitTask:
     def __truediv__(self, other: object) -> Path:
         key = str(other)
         mapping = {
-            "model": MODEL_MEI_58M,
+            "model": MODEL_MEI_51M,
             "spec": SPEC_NEEDLE_ZH,
             "checkpoints": CKPT_ARCHIVE,
             "train": SFT_TRAIN,
@@ -167,7 +167,7 @@ class _SplitTask:
 class _TasksRoot:
     def __truediv__(self, other: object) -> Path | _SplitTask:
         name = str(other)
-        if name in {"needle-zh", "mei-1.0-58m"}:
+        if name in {"needle-zh", "mei-1.0-51m"}:
             return _SplitTask()
         if name == TASK_MEI_EXPERT:
             return ARCHIVE_LEGACY / TASK_MEI_EXPERT
@@ -176,7 +176,7 @@ class _TasksRoot:
     def glob(self, pattern: str) -> list[Path]:
         out: list[Path] = []
         seen: set[Path] = set()
-        bases = [SFT_MEI_58M, ARCHIVE_SFT, ARCHIVE_LEGACY]
+        bases = [SFT_MEI_51M, ARCHIVE_SFT, ARCHIVE_LEGACY]
         inner = pattern[2:] if pattern.startswith("*/") else pattern
         for base in bases:
             if not base.exists():
@@ -231,7 +231,7 @@ BANK_MEI_TOOL_SCHEMA = EVAL_BANKS_ROOT / "mei-tool-schema-v1/eval-bank-v0.jsonl"
 BANK_MEI_TOOL_SCHEMA_LOCK = EVAL_BANKS_ROOT / "mei-tool-schema-v1/holdout-schema-v1.lock.json"
 PACK_MEI_TOOL_SFT_2K = ARCHIVE_SFT / "packs/mei-tool-sft-v1-2k.jsonl"
 PACK_MEI_TOOL_SFT_10K = ARCHIVE_SFT / "packs/mei-tool-sft-v1-10k.jsonl"
-REGISTRY_MEI_58M_CPT300M = CKPT_ARCHIVE / "registry/mei-1.0-58m-base-cpt300m-v1.json"
+REGISTRY_MEI_51M_CPT300M = CKPT_ARCHIVE / "registry/mei-1.0-51m-base-cpt300m-v1.json"
 
 
 def load_task_index() -> dict:
@@ -344,7 +344,7 @@ def all_eval_jsonl(scope: str = "all") -> list[Path]:
         if p.name.startswith("universe-pool"):
             continue
         if scope == "sft-v2" and not (
-            "mei-toolcall-v2" in str(p) or "mei-58m-toolcall" in str(p)
+            "mei-toolcall-v2" in str(p) or "mei-51m-toolcall" in str(p)
         ):
             continue
         rows.append(p)

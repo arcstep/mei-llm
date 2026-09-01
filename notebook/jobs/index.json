@@ -49,7 +49,7 @@
       "topic": "toolcall-sft",
       "kind": "produce",
       "status": "draft",
-      "task_id": "mei-1.0-58m",
+      "task_id": "mei-1.0-51m",
       "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-01-retrieval-v2/work",
       "receipt": "notebook/jobs/toolcall-sft/outbox/draft/260827-01-retrieval-v2/receipt.json",
       "publish_corpus_id": null,
@@ -57,7 +57,7 @@
       "parents": [],
       "entry": "notebook/jobs/toolcall-sft/jobs/260827-01-retrieval-v2/job.json",
       "intent": "RetrievalHead pairs: positives, same-catalog hard negatives, no-match, seen/unseen schema families.",
-      "fleet": "notebook/sft/mei-1.0-58m/recipes/sft-synth-fleet-v1.json",
+      "fleet": "notebook/sft/mei-1.0-51m/recipes/sft-synth-fleet-v1.json",
       "fleet_id": "sft-synth-fleet-v1",
       "fleet_hash": "6a0dfc08472accb27d22016363a349b4293a76bea27ffd0ce22a1fe55aa2c82b",
       "prompt_version": "sft-teacher-v2-query-only.1",
@@ -73,7 +73,7 @@
       "topic": "toolcall-sft",
       "kind": "produce",
       "status": "draft",
-      "task_id": "mei-1.0-58m",
+      "task_id": "mei-1.0-51m",
       "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-02-fullcall-v2/work",
       "receipt": "notebook/jobs/toolcall-sft/outbox/draft/260827-02-fullcall-v2/receipt.json",
       "publish_corpus_id": null,
@@ -81,7 +81,7 @@
       "parents": [],
       "entry": "notebook/jobs/toolcall-sft/jobs/260827-02-fullcall-v2/job.json",
       "intent": "v2 oracle-top5 full-call. Home 2k/10k are raw material; compiler writes gold.",
-      "fleet": "notebook/sft/mei-1.0-58m/recipes/sft-synth-fleet-v1.json",
+      "fleet": "notebook/sft/mei-1.0-51m/recipes/sft-synth-fleet-v1.json",
       "fleet_id": "sft-synth-fleet-v1",
       "fleet_hash": "6a0dfc08472accb27d22016363a349b4293a76bea27ffd0ce22a1fe55aa2c82b",
       "prompt_version": "sft-teacher-v2-query-only.1",
@@ -97,7 +97,7 @@
       "topic": "toolcall-sft",
       "kind": "produce",
       "status": "draft",
-      "task_id": "mei-1.0-58m",
+      "task_id": "mei-1.0-51m",
       "work_dir": "notebook/jobs/toolcall-sft/jobs/260827-03-mw-disposition-v1/work",
       "receipt": "notebook/jobs/toolcall-sft/outbox/draft/260827-03-mw-disposition-v1/receipt.json",
       "publish_corpus_id": null,
@@ -105,7 +105,7 @@
       "parents": [],
       "entry": "notebook/jobs/toolcall-sft/jobs/260827-03-mw-disposition-v1/job.json",
       "intent": "MWDispositionHead reason_code only. Runtime maps act/cell. Holdout stays isolated.",
-      "fleet": "notebook/sft/mei-1.0-58m/recipes/sft-synth-fleet-v1.json",
+      "fleet": "notebook/sft/mei-1.0-51m/recipes/sft-synth-fleet-v1.json",
       "fleet_id": "sft-synth-fleet-v1",
       "fleet_hash": "6a0dfc08472accb27d22016363a349b4293a76bea27ffd0ce22a1fe55aa2c82b",
       "prompt_version": "sft-teacher-v2-query-only.1",
@@ -126,163 +126,163 @@
     },
     {
       "id": "home-sft-10k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.candidates.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.candidates.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "home-sft-10k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.jsonl",
       "task_id": "needle-zh",
       "state": "accepted"
     },
     {
       "id": "home-sft-10k.review-sample",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-10k.review-sample.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-10k.review-sample.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "home-sft-2k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.candidates.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.candidates.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "home-sft-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.jsonl",
       "task_id": "needle-zh",
       "state": "accepted"
     },
     {
       "id": "home-sft-2k.review-sample",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/home-sft-2k.review-sample.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.review-sample.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "mei-mw-disposition-v2-10k.paid.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-10k.paid.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-mw-disposition-v2-2k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-mw-disposition-v2-2k.paid.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-2k.paid.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-mw-disposition-v2-smoke",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-mw-disposition-v2-smoke.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "engineering_smoke"
     },
     {
       "id": "mei-retrieval-v2-10k.paid.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-10k.paid.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-retrieval-v2-2k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-retrieval-v2-2k.paid.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-2k.paid.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-retrieval-v2-smoke",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-retrieval-v2-smoke.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-retrieval-v2-smoke.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "engineering_smoke"
     },
     {
       "id": "mei-tool-route-sft-v1-10k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-route-sft-v1-10k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-route-sft-v1-10k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-route-sft-v1-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-route-sft-v1-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-route-sft-v1-2k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-route-sft-v1-valid",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-route-sft-v1-valid.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-route-sft-v1-valid.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-sft-v1-10k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-sft-v1-10k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-sft-v1-10k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-tool-sft-v1-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-tool-sft-v1-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-tool-sft-v1-2k.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     },
     {
       "id": "mei-toolcall-v2-oracle-10k.paid.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-10k.paid.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-toolcall-v2-oracle-2k.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-toolcall-v2-oracle-2k.paid.candidates",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-2k.paid.candidates.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "candidate"
     },
     {
       "id": "mei-toolcall-v2-oracle-smoke",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl",
-      "task_id": "mei-1.0-58m",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-oracle-smoke.jsonl",
+      "task_id": "mei-1.0-51m",
       "state": "engineering_smoke"
     },
     {
       "id": "mei-toolcall-v2-smoke",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mei-toolcall-v2-smoke.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-smoke.jsonl",
       "task_id": "needle-zh",
       "state": "smoke"
     },
     {
       "id": "mw-sft-v0-2k",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "mw-sft-v0-2k.review-sample",
-      "path": "notebook/sft/mei-1.0-58m/train/packs/mw-sft-v0-2k.review-sample.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.review-sample.jsonl",
       "task_id": "needle-zh",
       "state": "draft"
     },
     {
       "id": "sft-phase1-v0",
-      "path": "notebook/sft/mei-1.0-58m/train/seed/sft-phase1-v0.jsonl",
+      "path": "notebook/sft/mei-1.0-51m/train/seed/sft-phase1-v0.jsonl",
       "task_id": "needle-zh",
       "state": "invalid"
     }

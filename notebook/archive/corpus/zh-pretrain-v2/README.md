@@ -38,7 +38,7 @@ Default trainer still reads v0. After 300M promotion:
 ```bash
 .venv/bin/python scripts/train_needle_zh_pretrain.py --rung 1b \
   --corpus-dir notebook/archive/corpus/zh-pretrain-v2 \
-  --init-weights notebook/archive/base/mei-1.0-58m-checkpoints/pretrain-300m-state.npz \
+  --init-weights notebook/archive/base/mei-1.0-51m-checkpoints/pretrain-300m-state.npz \
   --lr 1e-4 --batch-size 8 --grad-accum 1
 ```
 

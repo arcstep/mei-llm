@@ -1,0 +1,15 @@
+{
+  "kind": "resource-gates-preregister",
+  "registered_before_lifecycle_run": true,
+  "package_bytes_max": 31457280,
+  "apple_cold_start_ms_max": 5000,
+  "apple_first_token_ms_max": 5000,
+  "apple_decode_tok_s_min": 1.0,
+  "apple_rss_mb_max": 1024,
+  "rss_delta_mb_max": 80,
+  "rust_test_required": true,
+  "wasm_cold_start_ms_max": 5000,
+  "wasm_decode_tok_s_min": 1.0,
+  "wasm_generated_tokens_min": 8,
+  "kv_window_ordinary": 256
+}
