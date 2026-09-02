@@ -27,7 +27,7 @@
     1231,
     608
   ],
-  "wall_ms": 6461,
+  "wall_ms": 6321,
   "max_abs_logit_vs_mlx": 0.10274791717529297,
   "logit_abs_threshold": 2.7,
   "package_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/sdk/rust/mei-sdk-core/../../packages/mei-1.0-51m-base-scratch300m-qat-q4-v1",

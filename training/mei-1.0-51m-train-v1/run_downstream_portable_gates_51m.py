@@ -92,6 +92,13 @@ def _verify_package_receipt(path: Path, package_dir: Path) -> dict[str, Any]:
     return receipt
 
 
+def portable_report_passed(report: dict[str, Any]) -> bool:
+    return bool(
+        report.get("all_gates_passed") is True
+        and (report.get("browser_wasm_build") or {}).get("profile") == "release"
+    )
+
+
 def run(args: argparse.Namespace) -> dict[str, Any]:
     package_dir = args.package.resolve()
     package_receipt_path = args.package_receipt.resolve()
@@ -123,10 +130,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         raise RuntimeError("portable gate receipt exists with a different fingerprint")
 
     report = _portable_gate_report(package_dir, out_dir)
-    if (
-        report.get("all_gates_passed") is not True
-        or (report.get("node_wasm_build") or {}).get("profile") != "release"
-    ):
+    if not portable_report_passed(report):
         raise RuntimeError("portable runtime report did not pass all gates")
     write_once(report_path, report)
     outputs = sorted(

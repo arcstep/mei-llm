@@ -55,7 +55,9 @@ DEFAULT_DATA_RELEASE = (
     ROOT
     / "notebook/sft/mei-1.0-51m/releases/mei-1.0-51m-tool-sft-v3-300m-v2"
 )
-DEFAULT_EVAL_LOCK = ROOT / "notebook/evaluation/banks/mei-51m-longitudinal-eval-v1"
+DEFAULT_EVAL_LOCK = (
+    ROOT / "notebook/evaluation/banks/sft-v2-eval-lock-v3-20class"
+)
 DEFAULT_NARRATION_RELEASE = (
     ROOT
     / "notebook/sft/mei-1.0-51m/releases/mei-1.0-51m-narration-sft-agent300m-v3"
@@ -393,12 +395,25 @@ def validate_narration_release(path: Path, data_release: dict[str, Any]) -> dict
         or (manifest.get("adapter") or {}).get("parameter_count") != 392_192
     ):
         raise RuntimeError("narration data release contract drifted")
-    parent = (manifest.get("parents") or {}).get("agent") or {}
-    if (
-        parent.get("release_id") != data_release.get("release_id")
-        or parent.get("manifest_sha256") != data_release.get("manifest_sha256")
-    ):
-        raise RuntimeError("narration release is not bound to the Agent SFT release")
+    narration_source = data_release.get("narration_source") or {}
+    directly_bound = (
+        ((manifest.get("parents") or {}).get("agent") or {}).get("release_id")
+        == data_release.get("release_id")
+        and ((manifest.get("parents") or {}).get("agent") or {}).get(
+            "manifest_sha256"
+        )
+        == data_release.get("manifest_sha256")
+    )
+    explicitly_referenced = (
+        narration_source.get("release_id") == manifest.get("release_id")
+        and narration_source.get("manifest_sha256") == sha_file(manifest_path)
+        and narration_source.get("retrain_on_final_lm") is True
+    )
+    if not (directly_bound or explicitly_referenced):
+        raise RuntimeError(
+            "narration release is neither directly bound to nor explicitly "
+            "referenced by the Agent SFT release"
+        )
     expected_names = {
         "narration.train.jsonl",
         "narration.valid.jsonl",
@@ -1041,6 +1056,12 @@ def _load_runtime(
         load_params(narration_adapter, narration_head, strict=True)
         mx.eval(narration_adapter.parameters())
     index = ToolIndex.load(tool_index) if tool_index is not None else None
+    mw_receipt_path = mw_head.parent / "receipt.json" if mw_head is not None else None
+    mw_receipt_sha256 = (
+        sha_file(mw_receipt_path)
+        if mw_receipt_path is not None and mw_receipt_path.is_file()
+        else ""
+    )
     runtime = Runtime51M(
         model,
         ZhTokenizerV1(),
@@ -1051,6 +1072,7 @@ def _load_runtime(
         model_hash=sha_file(master),
         head_hash=sha_file(retrieval_head) if retrieval_head else "",
         tokenizer_hash=sha_file(TOKENIZER_ZH_V1),
+        mw_receipt_sha256=mw_receipt_sha256,
         release_class="experimental",
     )
     if disposition is not None:

@@ -18,7 +18,7 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
 
-import sft_v3_contract_51m as contract
+import sft_v4_contract_51m as contract
 
 
 TRAINING_ID = "mei-sft-v4-training-implementation-v1-quality-schema"
@@ -30,6 +30,42 @@ AGENT_SAMPLER_ID = "mei-agent-trajectory-step-uniform-v1"
 MW_SAMPLER_ID = "mei-mw-class-uniform-oracle-learned-v1"
 MW_PROMPT_ID = "mei-mw-disposition-prompt-v3-structured"
 CONFIDENCE_SCORE_ID = "mei-confidence-combined-score-v2"
+CONFIDENCE_LABEL_ID = "actual-r1-model-exact-call-or-correct-refusal-v3"
+
+
+class ToolSchemaBudgetExceeded(RuntimeError):
+    """Structured fail-closed outcome for an oversized stable tool prefix.
+
+    Training banks must normally be frozen below the limit.  Learned retrieval
+    can nevertheless assemble a different top-5 combination at evaluation or
+    inference time.  That is a deterministic runtime outcome, not an evaluator
+    crash and not a prediction made by MW or confidence heads.
+    """
+
+    code = "tool_schema_budget_exceeded"
+
+    def __init__(
+        self,
+        *,
+        stable_prefix_tokens: int,
+        stable_prefix_max: int,
+        sample_id: str | None = None,
+    ) -> None:
+        self.sample_id = sample_id
+        self.stable_prefix_tokens = int(stable_prefix_tokens)
+        self.stable_prefix_max = int(stable_prefix_max)
+        identity = f" {sample_id}" if sample_id else ""
+        super().__init__(
+            f"{self.code}:{identity} {self.stable_prefix_tokens}"
+        )
+
+    def as_error(self) -> dict[str, Any]:
+        return {
+            "code": self.code,
+            "sample_id": self.sample_id,
+            "stable_prefix_tokens": self.stable_prefix_tokens,
+            "stable_prefix_max": self.stable_prefix_max,
+        }
 
 # 50% structural, 15% schema, 35% linguistic.  The two linguistic sources
 # receive equal slots so the smaller provenance-bound natural subset cannot be
@@ -61,6 +97,31 @@ def _visible_context(row: dict[str, Any]) -> dict[str, Any]:
     facts = str(row.get("system_facts") or row.get("scene") or "").strip()
     if facts:
         context.setdefault("facts", [facts])
+    normalized_facts: list[dict[str, Any]] = []
+    for index, fact in enumerate(context.get("facts") or []):
+        if isinstance(fact, dict):
+            normalized_facts.append(dict(fact))
+            continue
+        text = str(fact).strip()
+        if not text:
+            raise RuntimeError("request context contains an empty legacy fact")
+        identity = contract.sha_bytes(
+            contract.canonical_bytes(
+                [row.get("sample_id"), row.get("query"), index, text]
+            )
+        )[:16]
+        normalized_facts.append(
+            {
+                "id": f"fact-{identity}",
+                "subject": "request-context",
+                "predicate": "frozen-fixture-fact",
+                "value": text,
+                "source": "frozen-corpus-context",
+                "verified": True,
+            }
+        )
+    if "facts" in context or normalized_facts:
+        context["facts"] = normalized_facts
     return context
 
 
@@ -177,8 +238,10 @@ def encode_fullcall_row(
         rendered["sink"] + "\n", add_bos=True, add_eos=False
     )
     if len(stable_ids) > stable_prefix_max:
-        raise RuntimeError(
-            f"tool_schema_budget_exceeded: {row.get('sample_id')} {len(stable_ids)}"
+        raise ToolSchemaBudgetExceeded(
+            sample_id=str(row.get("sample_id") or "") or None,
+            stable_prefix_tokens=len(stable_ids),
+            stable_prefix_max=stable_prefix_max,
         )
     if full_ids[: len(stable_ids)] != stable_ids:
         raise RuntimeError("tokenizer framing does not preserve the stable sink prefix")
@@ -849,11 +912,16 @@ def encode_stable_ring_prompt(
     *,
     stable_prefix_max: int = contract.STABLE_PREFIX_TOKENS_MAX,
     rolling_window: int = contract.ROLLING_WINDOW_TOKENS,
+    sample_id: str | None = None,
 ) -> tuple[list[int], dict[str, int]]:
     full_ids = tokenizer.encode(rendered["prompt"], add_bos=True, add_eos=False)
     stable_ids = tokenizer.encode(rendered["sink"] + "\n", add_bos=True, add_eos=False)
     if len(stable_ids) > stable_prefix_max:
-        raise RuntimeError(f"tool_schema_budget_exceeded: {len(stable_ids)}")
+        raise ToolSchemaBudgetExceeded(
+            sample_id=sample_id,
+            stable_prefix_tokens=len(stable_ids),
+            stable_prefix_max=stable_prefix_max,
+        )
     if full_ids[: len(stable_ids)] != stable_ids:
         raise RuntimeError("tokenizer framing does not preserve the stable MW sink")
     ids = (
@@ -1078,7 +1146,7 @@ def harvest_confidence_outcomes_v3(
     minimum_class_rows: int = 100,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     from mei_sdk.protocol import normalize_request
-    from mei_sdk.shared import validate_generated_call
+    from mei_sdk.shared import parse_call_text, validate_generated_call
 
     selected_rows = confidence_candidate_sample(rows, limit)
     outcomes: list[dict[str, Any]] = []
@@ -1090,60 +1158,96 @@ def harvest_confidence_outcomes_v3(
         prompt_row["retrieved_tools"] = names
         expected_call = source.get("expected_call")
         prompt_row["answers"] = [expected_call] if isinstance(expected_call, dict) else []
-        prompt, _answer, prompt_stats = encode_fullcall_row(
-            runtime.tokenizer, prompt_row, tools_by_name
-        )
-        decoded = runtime.greedy(
-            prompt, tools=visible, max_new=128, decode_mode="constrained"
-        )
-        request = normalize_request(deployment_request_v3(source))
-        validated = validate_generated_call(
-            str(decoded.get("text") or ""),
-            tools=visible,
-            request=request,
-            confidence=None,
-            enforce_confidence=False,
-        )
         expected_kind = str(source.get("expected_kind") or "")
-        if expected_kind == "call":
-            expected = [expected_call] if isinstance(expected_call, dict) else []
-            correct = bool(
-                validated.get("ok") is True
-                and validated.get("refuse") is not True
-                and _calls_equal(validated.get("function_calls") or [], expected)
+        if expected_kind not in {"call", "refuse"}:
+            raise RuntimeError(f"unknown confidence expected kind: {expected_kind}")
+        common = {
+            "sample_id": str(source.get("sample_id") or ""),
+            "source_sample_id": source.get("source_sample_id"),
+            "family": source.get("family") or "unknown",
+            "candidate_tool": source.get("candidate_tool"),
+            "expected_kind": expected_kind,
+            "retrieved_tools": names,
+            "retrieval_hit": bool(
+                expected_kind != "call"
+                or str((expected_call or {}).get("name") or "") in names
+            ),
+            "label_contract": CONFIDENCE_LABEL_ID,
+        }
+        try:
+            prompt, _answer, prompt_stats = encode_fullcall_row(
+                runtime.tokenizer, prompt_row, tools_by_name
             )
-        elif expected_kind == "refuse":
-            correct = bool(
-                validated.get("ok") is True and validated.get("refuse") is True
+        except ToolSchemaBudgetExceeded as exc:
+            # The deterministic runtime gate executes before confidence.  Keep
+            # exact candidate coverage, label the model outcome incorrect,
+            # and explicitly exclude it from head training/calibration.
+            outcomes.append(
+                {
+                    **common,
+                    "prompt_ids": [],
+                    "prompt_stats": {
+                        "stable_prefix_tokens": exc.stable_prefix_tokens,
+                        "stable_prefix_max": exc.stable_prefix_max,
+                    },
+                    "label": 0,
+                    "predicted_refuse": False,
+                    "validated_ok": False,
+                    "validation_error": exc.code,
+                    "model_parse_error": exc.code,
+                    "pipeline_validation_error": exc.code,
+                    "deterministic_error": exc.as_error(),
+                    "head_eligible": False,
+                    "decode_text_sha256": contract.sha_bytes(b""),
+                    "logprob_sum": 0.0,
+                    "output_tokens": 0,
+                }
             )
         else:
-            raise RuntimeError(f"unknown confidence expected kind: {expected_kind}")
-        outcomes.append(
-            {
-                "sample_id": str(source.get("sample_id") or ""),
-                "source_sample_id": source.get("source_sample_id"),
-                "family": source.get("family") or "unknown",
-                "candidate_tool": source.get("candidate_tool"),
-                "expected_kind": expected_kind,
-                "retrieved_tools": names,
-                "retrieval_hit": bool(
-                    expected_kind != "call"
-                    or str((expected_call or {}).get("name") or "") in names
-                ),
-                "prompt_ids": prompt,
-                "prompt_stats": prompt_stats,
-                "label": int(correct),
-                "predicted_refuse": validated.get("refuse") is True,
-                "validated_ok": validated.get("ok") is True,
-                "validation_error": validated.get("error"),
-                "decode_text_sha256": contract.sha_bytes(
-                    str(decoded.get("text") or "").encode("utf-8")
-                ),
-                "logprob_sum": float(decoded.get("logprob_sum") or 0.0),
-                "output_tokens": int(decoded.get("n_out") or 0),
-                "label_contract": "actual-final-runtime-exact-call-or-correct-refusal-v2",
-            }
-        )
+            decoded = runtime.greedy(
+                prompt, tools=visible, max_new=128, decode_mode="constrained"
+            )
+            decoded_text = str(decoded.get("text") or "")
+            parsed = parse_call_text(decoded_text, visible)
+            request = normalize_request(deployment_request_v3(source))
+            validated = validate_generated_call(
+                decoded_text,
+                tools=visible,
+                request=request,
+                confidence=None,
+                enforce_confidence=False,
+            )
+            if expected_kind == "call":
+                expected = [expected_call] if isinstance(expected_call, dict) else []
+                correct = bool(
+                    parsed.get("ok") is True
+                    and parsed.get("refuse") is not True
+                    and _calls_equal(parsed.get("function_calls") or [], expected)
+                )
+            else:
+                correct = bool(
+                    parsed.get("ok") is True and parsed.get("refuse") is True
+                )
+            outcomes.append(
+                {
+                    **common,
+                    "prompt_ids": prompt,
+                    "prompt_stats": prompt_stats,
+                    "label": int(correct),
+                    "predicted_refuse": parsed.get("refuse") is True,
+                    "validated_ok": parsed.get("ok") is True,
+                    "validation_error": parsed.get("error"),
+                    "model_parse_error": parsed.get("error"),
+                    "pipeline_validation_error": validated.get("error"),
+                    "deterministic_error": None,
+                    "head_eligible": True,
+                    "decode_text_sha256": contract.sha_bytes(
+                        decoded_text.encode("utf-8")
+                    ),
+                    "logprob_sum": float(decoded.get("logprob_sum") or 0.0),
+                    "output_tokens": int(decoded.get("n_out") or 0),
+                }
+            )
         if index == 0 or (index + 1) % 100 == 0:
             print(
                 _json(
@@ -1157,24 +1261,51 @@ def harvest_confidence_outcomes_v3(
             )
     positives = sum(int(row["label"]) for row in outcomes)
     negatives = len(outcomes) - positives
+    head_eligible = [row for row in outcomes if row.get("head_eligible") is not False]
+    eligible_positives = sum(int(row["label"]) for row in head_eligible)
+    eligible_negatives = len(head_eligible) - eligible_positives
     if positives < minimum_class_rows or negatives < minimum_class_rows:
         raise RuntimeError(
             "confidence outcome class coverage failed: "
             f"positive={positives} negative={negatives} floor={minimum_class_rows}"
         )
+    if (
+        eligible_positives < minimum_class_rows
+        or eligible_negatives < minimum_class_rows
+    ):
+        raise RuntimeError(
+            "confidence head-eligible class coverage failed: "
+            f"positive={eligible_positives} negative={eligible_negatives} "
+            f"floor={minimum_class_rows}"
+        )
     sample_fingerprint = contract.sha_bytes(
         contract.canonical_bytes([row["sample_id"] for row in outcomes])
     )
     receipt = {
-        "schema": "mei-confidence-outcome-harvest-receipt-v2",
+        "schema": "mei-confidence-outcome-harvest-receipt-v3",
         "status": "passed",
         "rows": len(outcomes),
         "positive": positives,
         "negative": negatives,
+        "head_eligible_rows": len(head_eligible),
+        "head_eligible_positive": eligible_positives,
+        "head_eligible_negative": eligible_negatives,
+        "deterministic_bypass_rows": len(outcomes) - len(head_eligible),
+        "deterministic_bypass_contract": "validator-before-confidence-v1",
         "minimum_class_rows": minimum_class_rows,
         "sample_fingerprint": sample_fingerprint,
         "sampling_contract": "kind_then_family_then_tool_stratified_v1",
-        "label_contract": "actual-final-runtime-exact-call-or-correct-refusal-v2",
+        "label_contract": CONFIDENCE_LABEL_ID,
+        "pipeline_validation_error_counts": {
+            error: sum(row.get("pipeline_validation_error") == error for row in outcomes)
+            for error in sorted(
+                {
+                    str(row["pipeline_validation_error"])
+                    for row in outcomes
+                    if row.get("pipeline_validation_error")
+                }
+            )
+        },
         "correct_refusal_is_positive": True,
         "score_contract": CONFIDENCE_SCORE_ID,
     }
@@ -1240,15 +1371,22 @@ def train_confidence_v3(
     from heads import ConfidenceV2Head
     from longitudinal_eval_metrics_51m import confidence_metrics
 
-    for name, rows in (("train", train_outcomes), ("valid", valid_outcomes)):
+    eligible_sets = {
+        name: [row for row in rows if row.get("head_eligible") is not False]
+        for name, rows in (("train", train_outcomes), ("valid", valid_outcomes))
+    }
+    for name, rows in eligible_sets.items():
         positives = sum(int(row["label"]) for row in rows)
         negatives = len(rows) - positives
         if positives < minimum_class_rows or negatives < minimum_class_rows:
             raise RuntimeError(
-                f"confidence {name} coverage below floor: {positives}/{negatives}"
+                "confidence head-eligible "
+                f"{name} coverage below floor: {positives}/{negatives}"
             )
+    train_eligible = eligible_sets["train"]
+    valid_eligible = eligible_sets["valid"]
     by_label = {
-        label: [row for row in train_outcomes if int(row["label"]) == label]
+        label: [row for row in train_eligible if int(row["label"]) == label]
         for label in (0, 1)
     }
     head = ConfidenceV2Head(runtime.model.cfg.d_model)
@@ -1256,14 +1394,17 @@ def train_confidence_v3(
     optimizer = optim.Adam(learning_rate=lr)
     data_fingerprint = contract.sha_bytes(
         contract.canonical_bytes(
-            [[row["sample_id"], int(row["label"])] for row in train_outcomes]
+            [
+                [row["sample_id"], int(row["label"]), True]
+                for row in train_eligible
+            ]
         )
     )
     state_path = checkpoint_dir / "confidence-v3-state.npz" if checkpoint_dir else None
     expected_meta = {
         "kind": "mei-sft-v3-confidence-state",
         "implementation": TRAINING_ID,
-        "label_contract": "actual-final-runtime-exact-call-or-correct-refusal-v2",
+        "label_contract": CONFIDENCE_LABEL_ID,
         "score_contract": CONFIDENCE_SCORE_ID,
         "label_uniform": True,
         "data_fingerprint": data_fingerprint,
@@ -1306,7 +1447,7 @@ def train_confidence_v3(
             )
     raw_scores: list[float] = []
     labels: list[int] = []
-    for sample in valid_outcomes:
+    for sample in valid_eligible:
         frozen = runtime.model(
             mx.array([sample["prompt_ids"]], dtype=mx.int32), return_cells=True
         )["cells"]
@@ -1325,8 +1466,22 @@ def train_confidence_v3(
         {"label": label, "score": apply_platt(score, calibration)}
         for score, label in zip(raw_scores, labels)
     ]
-    metrics = confidence_metrics(
+    head_metrics = confidence_metrics(
         calibrated_rows, minimum_class_rows=minimum_class_rows
+    )
+    calibrated_by_id = {
+        str(sample["sample_id"]): row
+        for sample, row in zip(valid_eligible, calibrated_rows)
+    }
+    pipeline_rows = [
+        calibrated_by_id.get(
+            str(sample["sample_id"]),
+            {"label": int(sample["label"]), "score": 0.0},
+        )
+        for sample in valid_outcomes
+    ]
+    pipeline_metrics = confidence_metrics(
+        pipeline_rows, minimum_class_rows=minimum_class_rows
     )
     runtime.conf_v2 = head
     return (
@@ -1337,13 +1492,23 @@ def train_confidence_v3(
             "last_loss": last_loss,
             "n_train": len(train_outcomes),
             "n_valid": len(valid_outcomes),
+            "n_train_head_eligible": len(train_eligible),
+            "n_valid_head_eligible": len(valid_eligible),
+            "train_deterministic_bypass": len(train_outcomes) - len(train_eligible),
+            "valid_deterministic_bypass": len(valid_outcomes) - len(valid_eligible),
             "train_positive": len(by_label[1]),
             "train_negative": len(by_label[0]),
             "label_uniform": True,
             "correct_refusal_is_positive": True,
             "score_contract": CONFIDENCE_SCORE_ID,
+            "label_contract": CONFIDENCE_LABEL_ID,
             "calibration": {"kind": "platt-on-combined-score-v1", **calibration},
-            "valid_metrics": metrics,
+            # The preregistered head-quality gate is deliberately not inflated
+            # by easy deterministic rejections. The invocation-aware aggregate
+            # is retained separately; runtime safety remains in gate receipts.
+            "valid_metrics": head_metrics,
+            "pipeline_valid_metrics": pipeline_metrics,
+            "deterministic_bypass_contract": "validator-before-confidence-v1",
             "lm_frozen": True,
             "data_fingerprint": data_fingerprint,
         },

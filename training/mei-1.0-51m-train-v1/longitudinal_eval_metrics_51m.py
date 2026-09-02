@@ -212,27 +212,42 @@ def fullcall_metrics(
 
 
 def classification_metrics(
-    labels: list[int], predictions: list[int], *, n_classes: int
+    labels: list[int],
+    predictions: list[int],
+    *,
+    n_classes: int,
+    allow_prediction_error: bool = False,
 ) -> dict[str, Any]:
     if len(labels) != len(predictions) or not labels:
         raise RuntimeError("classification labels/predictions length mismatch")
     confusion = [[0 for _ in range(n_classes)] for _ in range(n_classes)]
+    prediction_errors_by_class = [0 for _ in range(n_classes)]
     for gold, predicted in zip(labels, predictions):
-        if not 0 <= gold < n_classes or not 0 <= predicted < n_classes:
+        if not 0 <= gold < n_classes:
+            raise RuntimeError("classification label outside class range")
+        if predicted == -1 and allow_prediction_error:
+            prediction_errors_by_class[gold] += 1
+            continue
+        if not 0 <= predicted < n_classes:
             raise RuntimeError("classification label outside class range")
         confusion[gold][predicted] += 1
     per_class: list[dict[str, Any]] = []
     for class_id in range(n_classes):
         tp = confusion[class_id][class_id]
         fp = sum(confusion[row][class_id] for row in range(n_classes)) - tp
-        fn = sum(confusion[class_id]) - tp
+        fn = (
+            sum(confusion[class_id])
+            + prediction_errors_by_class[class_id]
+            - tp
+        )
         precision = tp / (tp + fp) if tp + fp else 0.0
         recall = tp / (tp + fn) if tp + fn else 0.0
         f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
         per_class.append(
             {
                 "class_id": class_id,
-                "support": sum(confusion[class_id]),
+                "support": sum(confusion[class_id])
+                + prediction_errors_by_class[class_id],
                 "precision": precision,
                 "recall": recall,
                 "f1": f1,
@@ -248,6 +263,9 @@ def classification_metrics(
         "macro_f1": _mean(item["f1"] for item in per_class),
         "per_class": per_class,
         "confusion": confusion,
+        "prediction_error_count": sum(prediction_errors_by_class),
+        "prediction_error_rate": sum(prediction_errors_by_class) / len(labels),
+        "prediction_errors_by_class": prediction_errors_by_class,
         "class_0_false_continue_rate": false_continue / negatives if negatives else 0.0,
     }
 
@@ -257,8 +275,15 @@ def mw_metrics(
 ) -> dict[str, Any]:
     joined = _join_predictions(gold, predictions)
     labels = [int(row[0]["reason_class_id"]) for row in joined]
-    predicted = [int(row[1]["predicted_class_id"]) for row in joined]
-    return classification_metrics(labels, predicted, n_classes=20)
+    predicted = [
+        int(row[1]["predicted_class_id"])
+        if row[1].get("predicted_class_id") is not None
+        else -1
+        for row in joined
+    ]
+    return classification_metrics(
+        labels, predicted, n_classes=20, allow_prediction_error=True
+    )
 
 
 def _auroc(labels: list[int], scores: list[float]) -> float:

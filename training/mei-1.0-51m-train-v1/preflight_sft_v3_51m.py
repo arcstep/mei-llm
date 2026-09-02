@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Callable, Sequence
@@ -48,11 +49,17 @@ def _rows(path: Path) -> list[dict[str, Any]]:
 def _encode_fullcall_bank(
     rows: list[dict[str, Any]], tokenizer: Any, tools_by_name: dict[str, dict[str, Any]]
 ) -> dict[str, Any]:
+    sdk_path = str(contract.ROOT / "sdk/python")
+    if sdk_path not in sys.path:
+        sys.path.insert(0, sdk_path)
+    from mei_sdk.protocol import normalize_request
+
     prompt_lengths: list[int] = []
     stable_lengths: list[int] = []
     ordinary_lengths: list[int] = []
     answer_lengths: list[int] = []
     for row in rows:
+        normalize_request(training.deployment_request_v3(row))
         prompt, answer, stats = training.encode_fullcall_row(
             tokenizer, row, tools_by_name
         )
@@ -64,6 +71,7 @@ def _encode_fullcall_bank(
         answer_lengths.append(len(answer))
     return {
         "rows": len(rows),
+        "request_v2_validated": len(rows),
         "prompt_tokens": _quantiles(prompt_lengths),
         "stable_prefix_tokens": _quantiles(stable_lengths),
         "ordinary_tokens_retained": _quantiles(ordinary_lengths),
@@ -299,24 +307,37 @@ def _narration_release(path: Path) -> dict[str, Any]:
 
 
 def build_receipt(args: argparse.Namespace) -> tuple[dict[str, Any], str]:
-    product_args = productizer.parse_args(
-        [
-            "--base-release",
-            str(args.base_release),
-            "--base-weights",
-            str(args.base_weights),
-            "--qat-import-receipt",
-            str(args.qat_import_receipt),
-            "--data-release",
-            str(args.data_release),
-            "--linguistic-augmentation",
-            str(args.linguistic_augmentation),
-            "--eval-lock",
-            str(args.eval_lock),
-            "--narration-release",
-            str(args.narration_release),
-        ]
-    )
+    product_argv = [
+        "--base-release",
+        str(args.base_release),
+        "--base-weights",
+        str(args.base_weights),
+        "--qat-import-receipt",
+        str(args.qat_import_receipt),
+        "--data-release",
+        str(args.data_release),
+        "--linguistic-augmentation",
+        str(args.linguistic_augmentation),
+        "--eval-lock",
+        str(args.eval_lock),
+        "--narration-release",
+        str(args.narration_release),
+    ]
+    if args.adopt_training_prefix_run is not None:
+        product_argv.extend(
+            [
+                "--adopt-training-prefix-run",
+                str(args.adopt_training_prefix_run),
+            ]
+        )
+    if args.adopt_productization_prefix_run is not None:
+        product_argv.extend(
+            [
+                "--adopt-productization-prefix-run",
+                str(args.adopt_productization_prefix_run),
+            ]
+        )
+    product_args = productizer.parse_args(product_argv)
     plan = productizer.build_plan(product_args)
     release = training.verify_release_contract(args.data_release)
     linguistic = contract.load_json(args.linguistic_augmentation / "manifest.json")
@@ -617,6 +638,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--narration-release", type=Path, default=productizer.DEFAULT_NARRATION_RELEASE
     )
+    parser.add_argument("--adopt-training-prefix-run", type=Path)
+    parser.add_argument("--adopt-productization-prefix-run", type=Path)
     parser.add_argument("--out", type=Path)
     return parser.parse_args()
 

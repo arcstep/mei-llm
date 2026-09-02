@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Runtime-neutral producers for the immutable mei-51m eval-v3 scorecard."""
+"""Runtime-neutral producers for immutable mei-51m longitudinal scorecards."""
 
 from __future__ import annotations
 
@@ -13,11 +13,11 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 import longitudinal_eval_metrics_51m as metrics
-import sft_v3_contract_51m as contract
+import sft_v4_contract_51m as contract
 import sft_v3_training_51m as training
 
 
-EVALUATOR_ID = "mei-51m-longitudinal-runtime-evaluator-v3"
+EVALUATOR_ID = "mei-51m-longitudinal-runtime-evaluator-v5"
 
 
 def _ensure_sdk_path() -> None:
@@ -31,10 +31,10 @@ def catalog_from_lock(lock_dir: Path) -> list[dict[str, Any]]:
     document = contract.load_json(lock_dir / "tool-universe.json")
     tools = [contract.compact_tool(tool) for tool in document.get("tools") or []]
     if len(tools) != 147 or len({str(tool["name"]) for tool in tools}) != 147:
-        raise RuntimeError("eval-v3 portable catalog must contain 147 unique tools")
+        raise RuntimeError("portable deploy catalog must contain 147 unique tools")
     expected = (lock.get("artifacts") or {}).get("tool-universe.json") or {}
     if contract.sha_file(lock_dir / "tool-universe.json") != expected.get("sha256"):
-        raise RuntimeError("eval-v3 tool universe hash drift")
+        raise RuntimeError("eval tool universe hash drift")
     return tools
 
 
@@ -139,6 +139,39 @@ def _validated_turn(validated: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _parsed_turn(parsed: dict[str, Any]) -> dict[str, Any]:
+    """Project grammar/schema output without conflating later runtime gates."""
+
+    calls = parsed.get("function_calls") or []
+    if parsed.get("ok") is True and parsed.get("refuse") is True:
+        return {"kind": "refuse"}
+    if parsed.get("ok") is True and len(calls) == 1:
+        return {"kind": "call", "call": calls[0]}
+    return {
+        "kind": "error",
+        "error": str(parsed.get("error") or "model_output_invalid"),
+    }
+
+
+def _error_counts(
+    predictions: Sequence[dict[str, Any]], field: str
+) -> dict[str, int]:
+    counts: dict[str, int] = defaultdict(int)
+    for prediction in predictions:
+        value = prediction.get(field)
+        if value:
+            counts[str(value)] += 1
+    return dict(sorted(counts.items()))
+
+
+def _budget_turn(exc: training.ToolSchemaBudgetExceeded) -> dict[str, Any]:
+    return {
+        "kind": "error",
+        "error": exc.code,
+        "details": exc.as_error(),
+    }
+
+
 def evaluate_fullcall(
     runtime: Any,
     rows: list[dict[str, Any]],
@@ -150,7 +183,7 @@ def evaluate_fullcall(
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     _ensure_sdk_path()
     from mei_sdk.protocol import normalize_request
-    from mei_sdk.shared import validate_generated_call
+    from mei_sdk.shared import parse_call_text, validate_generated_call
 
     selected_rows = rows[:limit] if limit is not None else rows
     tools_by_name = {str(tool["name"]): tool for tool in catalog}
@@ -175,26 +208,46 @@ def evaluate_fullcall(
             raise RuntimeError(f"full-call eval row lacks five schemas: {row.get('sample_id')}")
         prompt_row = dict(row)
         prompt_row["retrieved_tools"] = [str(tool["name"]) for tool in visible]
-        prompt, _answer, _stats = training.encode_fullcall_row(
-            runtime.tokenizer, prompt_row, tools_by_name
-        )
-        decoded = runtime.greedy(
-            prompt, tools=visible, max_new=128, decode_mode="constrained"
-        )
-        request = normalize_request(training.deployment_request_v3(row))
-        validated = validate_generated_call(
-            str(decoded.get("text") or ""),
-            tools=visible,
-            request=request,
-            confidence=None,
-            enforce_confidence=False,
-        )
+        deterministic_error: dict[str, Any] | None = None
+        try:
+            prompt, _answer, _stats = training.encode_fullcall_row(
+                runtime.tokenizer, prompt_row, tools_by_name
+            )
+        except training.ToolSchemaBudgetExceeded as exc:
+            deterministic_error = exc.as_error()
+            decoded = {"text": "", "n_out": 0, "decode_ms": 0.0}
+            model_turn = _budget_turn(exc)
+            pipeline_turn = _budget_turn(exc)
+            pipeline_validation_error = exc.code
+        else:
+            decoded = runtime.greedy(
+                prompt, tools=visible, max_new=128, decode_mode="constrained"
+            )
+            decoded_text = str(decoded.get("text") or "")
+            parsed = parse_call_text(decoded_text, visible)
+            model_turn = _parsed_turn(parsed)
+            request = normalize_request(training.deployment_request_v3(row))
+            validated = validate_generated_call(
+                decoded_text,
+                tools=visible,
+                request=request,
+                confidence=None,
+                enforce_confidence=False,
+            )
+            pipeline_turn = _validated_turn(validated)
+            pipeline_validation_error = validated.get("error")
         predictions.append(
             {
                 "sample_id": row["sample_id"],
-                "result": _validated_turn(validated),
+                # ``result`` is the model-task result used by the frozen
+                # full-call metric contract. Runtime eligibility remains a
+                # separate, fail-closed diagnostic and never changes it.
+                "result": model_turn,
+                "pipeline_result": pipeline_turn,
+                "pipeline_validation_error": pipeline_validation_error,
                 "retrieval_mode": retrieval_mode,
                 "retrieved_tools": [str(tool["name"]) for tool in visible],
+                "deterministic_error": deterministic_error,
                 "decode_text_sha256": contract.sha_bytes(
                     str(decoded.get("text") or "").encode("utf-8")
                 ),
@@ -217,6 +270,11 @@ def evaluate_fullcall(
             )
     gold = selected_rows
     report = metrics.fullcall_metrics(gold, predictions, catalog)
+    pipeline_predictions = [
+        {**prediction, "result": prediction["pipeline_result"]}
+        for prediction in predictions
+    ]
+    pipeline_report = metrics.fullcall_metrics(gold, pipeline_predictions, catalog)
     report.update(
         {
             "evaluator_id": EVALUATOR_ID,
@@ -227,6 +285,22 @@ def evaluate_fullcall(
             "prompt_framing_id": contract.PROMPT_FRAMING_ID,
             "serializer_id": contract.SERIALIZER_ID,
             "deterministic_gates_applied": True,
+            "quality_scope": "model-output-after-grammar-and-schema",
+            "model_scoring_contract": "exact-call-or-correct-refusal-v3",
+            "pipeline_metrics": pipeline_report,
+            "pipeline_scoring_contract": "strict-wire-v2-runtime-gates-v1",
+            "pipeline_validation_error_counts": _error_counts(
+                predictions, "pipeline_validation_error"
+            ),
+            "tool_schema_budget_error_count": sum(
+                prediction.get("deterministic_error") is not None
+                for prediction in predictions
+            ),
+            "tool_schema_budget_error_rate": sum(
+                prediction.get("deterministic_error") is not None
+                for prediction in predictions
+            )
+            / max(len(predictions), 1),
         }
     )
     return report, predictions
@@ -252,9 +326,13 @@ def evaluate_mw_disposition(
     started = time.perf_counter()
     for index, row in enumerate(selected_rows):
         if retrieval_mode == "oracle_top5":
+            # Frozen MW-v7 rows use ``retrieved_tools`` as the canonical
+            # five-schema oracle view. Adopted historical rows may also
+            # retain ``oracle_top5``; clean supplemental rows intentionally
+            # do not. Keep evaluation aligned with ``mw_training_view``.
             visible = [
                 tools_by_name[str(item.get("name") if isinstance(item, dict) else item)]
-                for item in row.get("oracle_top5") or []
+                for item in row.get("oracle_top5") or row.get("retrieved_tools") or []
                 if str(item.get("name") if isinstance(item, dict) else item) in tools_by_name
             ]
         elif retrieval_mode == "learned_top5":
@@ -262,17 +340,34 @@ def evaluate_mw_disposition(
         else:
             raise ValueError(f"unknown MW retrieval mode: {retrieval_mode}")
         rendered = training.render_mw_prompt_parts(row, visible)
-        ids, _stats = training.encode_stable_ring_prompt(runtime.tokenizer, rendered)
-        cells = runtime.model(mx.array([ids], dtype=mx.int32), return_cells=True)["cells"]
-        logits = head(cells).astype(mx.float32)
-        mx.eval(logits)
-        predictions.append(
-            {
-                "sample_id": row["sample_id"],
-                "predicted_class_id": int(mx.argmax(logits[0]).item()),
-                "retrieval_mode": retrieval_mode,
-            }
-        )
+        try:
+            ids, _stats = training.encode_stable_ring_prompt(
+                runtime.tokenizer,
+                rendered,
+                sample_id=str(row.get("sample_id") or "") or None,
+            )
+        except training.ToolSchemaBudgetExceeded as exc:
+            predictions.append(
+                {
+                    "sample_id": row["sample_id"],
+                    "result": _budget_turn(exc),
+                    "prediction_error": exc.code,
+                    "deterministic_error": exc.as_error(),
+                    "retrieval_mode": retrieval_mode,
+                }
+            )
+        else:
+            cells = runtime.model(mx.array([ids], dtype=mx.int32), return_cells=True)["cells"]
+            logits = head(cells).astype(mx.float32)
+            mx.eval(logits)
+            predictions.append(
+                {
+                    "sample_id": row["sample_id"],
+                    "predicted_class_id": int(mx.argmax(logits[0]).item()),
+                    "deterministic_error": None,
+                    "retrieval_mode": retrieval_mode,
+                }
+            )
         if index == 0 or (index + 1) % progress_every == 0:
             print(
                 contract.canonical_bytes(
@@ -288,6 +383,15 @@ def evaluate_mw_disposition(
             "elapsed_seconds": time.perf_counter() - started,
             "semantic_boundary": "independent-20class-sidecar-not-mw-deviation-gate",
             "prompt_id": training.MW_PROMPT_ID,
+            "tool_schema_budget_error_count": sum(
+                prediction.get("deterministic_error") is not None
+                for prediction in predictions
+            ),
+            "tool_schema_budget_error_rate": sum(
+                prediction.get("deterministic_error") is not None
+                for prediction in predictions
+            )
+            / max(len(predictions), 1),
         }
     )
     return report, predictions
@@ -343,7 +447,7 @@ def evaluate_multistep(
 
     _ensure_sdk_path()
     from mei_sdk.protocol import normalize_request
-    from mei_sdk.shared import validate_generated_call
+    from mei_sdk.shared import parse_call_text, validate_generated_call
 
     tools_by_name = {str(tool["name"]): tool for tool in catalog}
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -373,6 +477,11 @@ def evaluate_multistep(
                     {
                         "sample_id": row["sample_id"],
                         "result": {"kind": "error", "error": "prior_step_inexact"},
+                        "pipeline_result": {
+                            "kind": "error",
+                            "error": "prior_step_inexact",
+                        },
+                        "pipeline_validation_error": "prior_step_inexact",
                         "retrieval_mode": retrieval_mode,
                         "retrieved_tools": [],
                     }
@@ -395,35 +504,51 @@ def evaluate_multistep(
             prompt_row["prior_calls"] = list(actual_calls)
             prompt_row["prior_tool_results"] = list(actual_results)
             prompt_row["tool_results"] = list(actual_results)
-            prompt, _answer, _stats = training.encode_fullcall_row(
-                runtime.tokenizer, prompt_row, tools_by_name
-            )
-            decoded = runtime.greedy(
-                prompt, tools=visible, max_new=128, decode_mode="constrained"
-            )
-            request = normalize_request(training.deployment_request_v3(prompt_row))
-            request["_verified_result_map"] = {
-                str(result["call_id"]): dict(result) for result in actual_results
-            }
-            validated = validate_generated_call(
-                str(decoded.get("text") or ""),
-                tools=visible,
-                request=request,
-                confidence=None,
-                enforce_confidence=False,
-            )
-            turn = _validated_turn(validated)
-            raw_text = str(decoded.get("text") or "")
-            if (
-                turn["kind"] == "refuse"
-                and actual_results
-                and all(result.get("status") == "ok" for result in actual_results)
-            ):
-                try:
-                    if json.loads(raw_text) == [] and validated.get("error") is None:
-                        turn = {"kind": "respond"}
-                except (TypeError, ValueError, json.JSONDecodeError):
-                    pass
+            deterministic_error: dict[str, Any] | None = None
+            try:
+                prompt, _answer, _stats = training.encode_fullcall_row(
+                    runtime.tokenizer, prompt_row, tools_by_name
+                )
+            except training.ToolSchemaBudgetExceeded as exc:
+                deterministic_error = exc.as_error()
+                decoded = {"text": "", "n_out": 0, "decode_ms": 0.0}
+                turn = _budget_turn(exc)
+                pipeline_turn = _budget_turn(exc)
+                pipeline_validation_error = exc.code
+                raw_text = ""
+                prefix_exact = False
+            else:
+                decoded = runtime.greedy(
+                    prompt, tools=visible, max_new=128, decode_mode="constrained"
+                )
+                request = normalize_request(training.deployment_request_v3(prompt_row))
+                request["_verified_result_map"] = {
+                    str(result["call_id"]): dict(result) for result in actual_results
+                }
+                raw_text = str(decoded.get("text") or "")
+                parsed = parse_call_text(raw_text, visible)
+                turn = _parsed_turn(parsed)
+                validated = validate_generated_call(
+                    raw_text,
+                    tools=visible,
+                    request=request,
+                    confidence=None,
+                    enforce_confidence=False,
+                )
+                pipeline_turn = _validated_turn(validated)
+                pipeline_validation_error = validated.get("error")
+                if (
+                    turn["kind"] == "refuse"
+                    and actual_results
+                    and all(result.get("status") == "ok" for result in actual_results)
+                ):
+                    try:
+                        if json.loads(raw_text) == [] and parsed.get("error") is None:
+                            turn = {"kind": "respond"}
+                            if validated.get("error") is None:
+                                pipeline_turn = {"kind": "respond"}
+                    except (TypeError, ValueError, json.JSONDecodeError):
+                        pass
             expected = (row.get("answers") or [{}])[0] if row.get("kind") == "execute" else None
             if turn["kind"] == "call" and isinstance(turn.get("call"), dict):
                 call = dict(turn["call"])
@@ -455,8 +580,11 @@ def evaluate_multistep(
                 {
                     "sample_id": row["sample_id"],
                     "result": turn,
+                    "pipeline_result": pipeline_turn,
+                    "pipeline_validation_error": pipeline_validation_error,
                     "retrieval_mode": retrieval_mode,
                     "retrieved_tools": [str(tool["name"]) for tool in visible],
+                    "deterministic_error": deterministic_error,
                     "decode_text_sha256": contract.sha_bytes(raw_text.encode("utf-8")),
                     "n_out": int(decoded.get("n_out") or 0),
                     "decode_ms": float(decoded.get("decode_ms") or 0.0),
@@ -492,6 +620,21 @@ def evaluate_multistep(
             "decode_tokens_per_second": total_output_tokens
             / max(total_decode_ms / 1000.0, 1e-9),
             "closed_loop_fixture_policy": "continue_only_after_exact_prior_call-v1",
+            "quality_scope": "model-closed-loop-after-grammar-and-schema",
+            "model_scoring_contract": "exact-prefix-call-result-continue-v2",
+            "pipeline_scoring_contract": "strict-wire-v2-runtime-gates-diagnostic-v1",
+            "pipeline_validation_error_counts": _error_counts(
+                predictions, "pipeline_validation_error"
+            ),
+            "tool_schema_budget_error_count": sum(
+                prediction.get("deterministic_error") is not None
+                for prediction in predictions
+            ),
+            "tool_schema_budget_error_rate": sum(
+                prediction.get("deterministic_error") is not None
+                for prediction in predictions
+            )
+            / max(len(predictions), 1),
         }
     )
     return report, predictions
@@ -513,17 +656,24 @@ def evaluate_confidence(
     predictions: list[dict[str, Any]] = []
     started = time.perf_counter()
     for index, sample in enumerate(outcomes):
-        cells = runtime.model(
-            mx.array([sample["prompt_ids"]], dtype=mx.int32), return_cells=True
-        )["cells"]
-        logit = runtime.conf_v2(cells).reshape(())
-        mx.eval(logit)
-        raw_score = training.combined_confidence_score(
-            float(logit.item()),
-            float(sample["logprob_sum"]),
-            int(sample["output_tokens"]),
-        )
-        score = training.apply_platt(raw_score, calibration)
+        head_eligible = sample.get("head_eligible") is not False
+        if head_eligible:
+            cells = runtime.model(
+                mx.array([sample["prompt_ids"]], dtype=mx.int32), return_cells=True
+            )["cells"]
+            logit = runtime.conf_v2(cells).reshape(())
+            mx.eval(logit)
+            raw_score = training.combined_confidence_score(
+                float(logit.item()),
+                float(sample["logprob_sum"]),
+                int(sample["output_tokens"]),
+            )
+            score = training.apply_platt(raw_score, calibration)
+        else:
+            # Deterministic validation already rejected the request.  The
+            # confidence head is not invoked and cannot override that result.
+            raw_score = 0.0
+            score = 0.0
         predictions.append(
             {
                 "sample_id": sample["sample_id"],
@@ -533,6 +683,8 @@ def evaluate_confidence(
                 "raw_score": raw_score,
                 "expected_kind": sample.get("expected_kind"),
                 "candidate_tool": sample.get("candidate_tool"),
+                "head_invoked": head_eligible,
+                "deterministic_error": sample.get("deterministic_error"),
             }
         )
         if index == 0 or (index + 1) % progress_every == 0:
@@ -543,13 +695,28 @@ def evaluate_confidence(
                 flush=True,
             )
     if candidates is None:
-        report = metrics.confidence_metrics(
+        pipeline_report = metrics.confidence_metrics(
             predictions, minimum_class_rows=minimum_class_rows
         )
     else:
-        report = metrics.confidence_outcome_metrics(
+        pipeline_report = metrics.confidence_outcome_metrics(
             candidates,
             predictions,
+            minimum_class_rows=minimum_class_rows,
+        )
+    eligible_predictions = [row for row in predictions if row["head_invoked"]]
+    if candidates is None:
+        report = metrics.confidence_metrics(
+            eligible_predictions, minimum_class_rows=minimum_class_rows
+        )
+    else:
+        eligible_ids = {str(row["sample_id"]) for row in eligible_predictions}
+        eligible_candidates = [
+            row for row in candidates if str(row["sample_id"]) in eligible_ids
+        ]
+        report = metrics.confidence_outcome_metrics(
+            eligible_candidates,
+            eligible_predictions,
             minimum_class_rows=minimum_class_rows,
         )
     report.update(
@@ -558,6 +725,15 @@ def evaluate_confidence(
             "elapsed_seconds": time.perf_counter() - started,
             "score_contract": training.CONFIDENCE_SCORE_ID,
             "calibration_kind": "platt-on-combined-score-v1",
+            "quality_scope": "head-eligible-r1-model-output-outcomes",
+            "head_eligible_n": len(eligible_predictions),
+            "deterministic_bypass_n": len(predictions) - len(eligible_predictions),
+            "deterministic_bypass_rate": (
+                len(predictions) - len(eligible_predictions)
+            )
+            / max(len(predictions), 1),
+            "pipeline_metrics": pipeline_report,
+            "deterministic_bypass_contract": "validator-before-confidence-v1",
         }
     )
     return report, predictions

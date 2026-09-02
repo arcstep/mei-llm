@@ -48,6 +48,7 @@ BOUND_SOURCES = (
     "sdk/rust/mei-sdk-core/src/packed.rs",
     "sdk/js/package.mjs",
     "sdk/js/cq2.mjs",
+    "training/mei-1.0-51m-train-v1/productize_sft_v3_300m.py",
 )
 
 
@@ -129,10 +130,120 @@ def _verify_adoption(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     return adoption, plan
 
 
-def verify(package_dir: Path, adoption_path: Path, out: Path) -> dict[str, Any]:
+def _verify_v4_productization_run(
+    run_dir: Path, package_dir: Path
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    import productize_51m as lifecycle
+
+    run_dir = run_dir.resolve()
+    plan_path = run_dir / "plan.json"
+    plan = load_json(plan_path)
+    immutable = plan.get("immutable") or {}
+    if (
+        plan.get("schema") != "mei-51m-sft-v4-productization-plan-v1"
+        or plan.get("run_fingerprint_sha256") != sha_bytes(canonical_bytes(immutable))
+        or immutable.get("stage_graph_mode")
+        != "verified-productization-prefix-continuation-v1"
+        or immutable.get("current_baseline_sha256") != sha_file(CURRENT_PATH)
+    ):
+        raise RuntimeError("SFT-v4 productization plan identity is invalid")
+    for relative, digest in (immutable.get("source_manifest") or {}).items():
+        source = ROOT / str(relative)
+        if not source.is_file() or sha_file(source) != digest:
+            raise RuntimeError(f"SFT-v4 productization source drifted: {source}")
+
+    expected_stages = (
+        "adopt_productization_prefix_v4",
+        "sidecar_eval_v4",
+        "locked_test_eval_v4",
+        "package_v2_cq2_v4",
+    )
+    if tuple(row.get("stage_id") for row in plan.get("stages") or []) != expected_stages:
+        raise RuntimeError("SFT-v4 finalization stage graph is invalid")
+    stage_rows = lifecycle.stage_map(plan)
+    stages: dict[str, Any] = {}
+    for stage_id in expected_stages:
+        receipt_path = run_dir / "stages" / stage_id / "receipt.json"
+        receipt = load_json(receipt_path)
+        expected_terminal = (
+            {"passed", "degraded"}
+            if stage_id in {"sidecar_eval_v4", "locked_test_eval_v4"}
+            else {"passed"}
+        )
+        input_fingerprint, _input_evidence = lifecycle._stage_input_fingerprint(
+            run_dir, plan, stage_id
+        )
+        outputs = receipt.get("output_hashes") or {}
+        if (
+            receipt.get("terminal_status") not in expected_terminal
+            or receipt.get("run_fingerprint_sha256")
+            != plan.get("run_fingerprint_sha256")
+            or receipt.get("stage_fingerprint_sha256")
+            != stage_rows[stage_id].get("stage_fingerprint_sha256")
+            or receipt.get("stage_input_fingerprint_sha256") != input_fingerprint
+            or not outputs
+            or any(
+                not Path(raw).is_file() or sha_file(Path(raw)) != digest
+                for raw, digest in outputs.items()
+            )
+        ):
+            raise RuntimeError(f"SFT-v4 finalization stage is not reusable: {stage_id}")
+        stages[stage_id] = {
+            "terminal_status": receipt["terminal_status"],
+            "receipt": str(receipt_path),
+            "receipt_sha256": sha_file(receipt_path),
+            "stage_fingerprint_sha256": receipt["stage_fingerprint_sha256"],
+        }
+
+    package_outputs = load_json(
+        run_dir / "stages/package_v2_cq2_v4/receipt.json"
+    ).get("output_hashes") or {}
+    package_files = sorted(path for path in package_dir.iterdir() if path.is_file())
+    for artifact in package_files:
+        resolved = str(artifact.resolve())
+        if package_outputs.get(resolved) != sha_file(artifact):
+            raise RuntimeError(f"SFT-v4 package file is not stage-bound: {artifact}")
+    binding = {
+        "source_kind": "sft-v4-productization-run",
+        "source_run": str(run_dir),
+        "source_run_fingerprint_sha256": plan["run_fingerprint_sha256"],
+        "source_plan": str(plan_path),
+        "source_plan_sha256": sha_file(plan_path),
+        "stages": stages,
+    }
+    return binding, plan
+
+
+def verify(
+    package_dir: Path,
+    adoption_path: Path | None,
+    out: Path,
+    *,
+    productization_run: Path | None = None,
+) -> dict[str, Any]:
     package_dir = package_dir.resolve()
-    adoption_path = adoption_path.resolve()
-    adoption, source_plan = _verify_adoption(adoption_path)
+    if (adoption_path is None) == (productization_run is None):
+        raise RuntimeError(
+            "exactly one source binding is required: adoption receipt or productization run"
+        )
+    if productization_run is not None:
+        source_binding, source_plan = _verify_v4_productization_run(
+            productization_run, package_dir
+        )
+        source_binding_path = Path(str(source_binding["source_plan"]))
+    else:
+        assert adoption_path is not None
+        adoption_path = adoption_path.resolve()
+        adoption, source_plan = _verify_adoption(adoption_path)
+        source_binding = {
+            "source_kind": "upstream-adoption-receipt",
+            "source_run_fingerprint_sha256": adoption[
+                "source_run_fingerprint_sha256"
+            ],
+            "source_adoption_receipt": str(adoption_path),
+            "source_adoption_receipt_sha256": sha_file(adoption_path),
+        }
+        source_binding_path = adoption_path
 
     sys.path.insert(0, str(ROOT / "sdk/python"))
     from mei_sdk.package import load_package
@@ -231,8 +342,10 @@ def verify(package_dir: Path, adoption_path: Path, out: Path) -> dict[str, Any]:
 
     container = manifest.get("tensor_container") or {}
     fingerprint_input = {
-        "adoption_receipt_sha256": sha_file(adoption_path),
-        "source_run_fingerprint_sha256": adoption["source_run_fingerprint_sha256"],
+        "source_binding_sha256": sha_file(source_binding_path),
+        "source_run_fingerprint_sha256": source_binding[
+            "source_run_fingerprint_sha256"
+        ],
         "package_id": package.package_id,
         "output_hashes": output_hashes,
         "source_hashes": source_hashes,
@@ -245,11 +358,11 @@ def verify(package_dir: Path, adoption_path: Path, out: Path) -> dict[str, Any]:
         "package_id": package.package_id,
         "package_path": str(package_dir),
         "stage_fingerprint_sha256": sha_bytes(canonical_bytes(fingerprint_input)),
-        "source_run_fingerprint_sha256": adoption[
+        "source_run_fingerprint_sha256": source_binding[
             "source_run_fingerprint_sha256"
         ],
-        "upstream_adoption_receipt": str(adoption_path),
-        "upstream_adoption_receipt_sha256": sha_file(adoption_path),
+        "source_binding": source_binding,
+        "source_binding_sha256": sha_file(source_binding_path),
         "contracts": manifest["contracts"],
         "quant_math_id": container.get("quant_math_id"),
         "tensor_container_sha256": container.get("sha256"),
@@ -279,7 +392,9 @@ def verify(package_dir: Path, adoption_path: Path, out: Path) -> dict[str, Any]:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--package", type=Path, required=True)
-    parser.add_argument("--adoption-receipt", type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--adoption-receipt", type=Path)
+    source.add_argument("--productization-run", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     return parser.parse_args(argv)
 
@@ -288,7 +403,12 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     print(
         json.dumps(
-            verify(args.package, args.adoption_receipt, args.out),
+            verify(
+                args.package,
+                args.adoption_receipt,
+                args.out,
+                productization_run=args.productization_run,
+            ),
             ensure_ascii=False,
             indent=2,
         )

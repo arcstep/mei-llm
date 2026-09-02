@@ -15,6 +15,170 @@ import sft_v4_contract_51m as contract
 
 
 class SftV4ProductizerTests(unittest.TestCase):
+    def _verified_prefix_fixture(self, root: Path, plan: dict) -> Path:
+        prefix = root / "prefix"
+        prefix.mkdir(parents=True)
+        preflight_path = root / "preflight.json"
+        preflight_path.write_bytes(
+            contract.canonical_bytes(
+                {
+                    "status": "passed",
+                    "run_fingerprint_sha256": plan["run_fingerprint_sha256"],
+                }
+            )
+            + b"\n"
+        )
+        parent = {
+            **plan,
+            "execution_preflight": {
+                "path": str(preflight_path),
+                "sha256": contract.sha_file(preflight_path),
+                "preflight_fingerprint_sha256": contract.sha_bytes(b"preflight"),
+                "status": "passed",
+            },
+        }
+        productizer.lifecycle.write_json(prefix / "plan.json", parent)
+        required_names = {
+            "oracle_top5_agent_v4": "agent-master.npz",
+            "retrieval_r1_v4": "retrieval-r1.npz",
+            "tool_index_v4": "tool-index.json",
+        }
+        for stage_id in productizer.TRAINING_PREFIX_STAGES:
+            directory = prefix / "stages" / stage_id
+            directory.mkdir(parents=True)
+            output = directory / required_names.get(stage_id, "output.bin")
+            output.write_bytes(f"{stage_id}:verified".encode("utf-8"))
+            input_fingerprint, input_evidence = (
+                productizer.lifecycle._stage_input_fingerprint(
+                    prefix, parent, stage_id
+                )
+            )
+            stage = productizer.lifecycle.stage_map(parent)[stage_id]
+            productizer.lifecycle.write_json(
+                directory / "receipt.json",
+                {
+                    "schema": "mei-productization-stage-receipt-v2",
+                    "stage_id": stage_id,
+                    "stage_fingerprint_sha256": stage[
+                        "stage_fingerprint_sha256"
+                    ],
+                    "stage_input_fingerprint_sha256": input_fingerprint,
+                    "input_artifacts": input_evidence,
+                    "run_fingerprint_sha256": parent[
+                        "run_fingerprint_sha256"
+                    ],
+                    "terminal_status": "passed",
+                    "output_hashes": {
+                        str(output.resolve()): contract.sha_file(output)
+                    },
+                },
+            )
+        return prefix
+
+    def _verified_productization_prefix_fixture(
+        self, root: Path, full_plan: dict
+    ) -> Path:
+        training_prefix = self._verified_prefix_fixture(
+            root / "training-prefix-root", full_plan
+        )
+        adopted_args = productizer.parse_args(
+            ["--adopt-training-prefix-run", str(training_prefix)]
+        )
+        with mock.patch.object(
+            productizer.lifecycle, "live_cpt_workers", return_value=[]
+        ):
+            continuation_plan = productizer.build_plan(adopted_args)
+
+        continuation = root / "productization-prefix"
+        continuation.mkdir(parents=True)
+        preflight_path = root / "productization-preflight.json"
+        preflight_path.write_bytes(
+            contract.canonical_bytes(
+                {
+                    "status": "passed",
+                    "run_fingerprint_sha256": continuation_plan[
+                        "run_fingerprint_sha256"
+                    ],
+                }
+            )
+            + b"\n"
+        )
+        parent = {
+            **continuation_plan,
+            "execution_preflight": {
+                "path": str(preflight_path),
+                "sha256": contract.sha_file(preflight_path),
+                "preflight_fingerprint_sha256": contract.sha_bytes(
+                    b"productization-preflight"
+                ),
+                "status": "passed",
+            },
+        }
+        productizer.lifecycle.write_json(continuation / "plan.json", parent)
+        paths = productizer._stage_paths(continuation, training_prefix)
+        confidence_root = continuation / "stages/confidence_harvest_v4"
+
+        for stage_id in productizer.PRODUCTIZATION_PREFIX_STAGES:
+            directory = continuation / "stages" / stage_id
+            directory.mkdir(parents=True, exist_ok=True)
+            outputs: list[Path]
+            if stage_id == productizer.TRAINING_PREFIX_ADOPTION_STAGE:
+                report = directory / "training-prefix-adoption.json"
+                report.write_bytes(b"verified-adoption")
+                outputs = [report, paths["agent"], paths["r1"], paths["index"]]
+            elif stage_id == "mw_disposition_v4":
+                paths["mw"].write_bytes(b"verified-mw")
+                outputs = [paths["mw"]]
+            elif stage_id == "confidence_harvest_v4":
+                outputs = []
+                for name in (
+                    "train-outcomes.jsonl",
+                    "valid-outcomes.jsonl",
+                    "dev-outcomes.jsonl",
+                ):
+                    output = confidence_root / name
+                    output.write_bytes((name + ":verified").encode("utf-8"))
+                    outputs.append(output)
+            elif stage_id == "confidence_head_v4":
+                paths["confidence"].write_bytes(b"verified-confidence")
+                paths["calibration"].write_bytes(b'{"scale":1,"bias":0}\n')
+                outputs = [paths["confidence"], paths["calibration"]]
+            elif stage_id == "narration_adapter_v4":
+                paths["narration"].write_bytes(b"verified-narration")
+                outputs = [paths["narration"]]
+            else:
+                output = directory / "output.bin"
+                output.write_bytes(f"{stage_id}:verified".encode("utf-8"))
+                outputs = [output]
+
+            input_fingerprint, input_evidence = (
+                productizer.lifecycle._stage_input_fingerprint(
+                    continuation, parent, stage_id
+                )
+            )
+            stage = productizer.lifecycle.stage_map(parent)[stage_id]
+            productizer.lifecycle.write_json(
+                directory / "receipt.json",
+                {
+                    "schema": "mei-productization-stage-receipt-v2",
+                    "stage_id": stage_id,
+                    "stage_fingerprint_sha256": stage[
+                        "stage_fingerprint_sha256"
+                    ],
+                    "stage_input_fingerprint_sha256": input_fingerprint,
+                    "input_artifacts": input_evidence,
+                    "run_fingerprint_sha256": parent[
+                        "run_fingerprint_sha256"
+                    ],
+                    "terminal_status": "passed",
+                    "output_hashes": {
+                        str(output.resolve()): contract.sha_file(output)
+                        for output in outputs
+                    },
+                },
+            )
+        return continuation
+
     def _schema_only_future_base(
         self, root: Path, *, exposure: int
     ) -> tuple[productizer.argparse.Namespace, Path]:
@@ -164,6 +328,102 @@ class SftV4ProductizerTests(unittest.TestCase):
         self.assertNotEqual(
             first["run_fingerprint_sha256"], second["run_fingerprint_sha256"]
         )
+
+    def test_training_prefix_adoption_is_hash_bound_and_uses_a_new_stage_graph(self):
+        args = productizer.parse_args([])
+        with mock.patch.object(productizer.lifecycle, "live_cpt_workers", return_value=[]):
+            full_plan = productizer.build_plan(args)
+        with tempfile.TemporaryDirectory() as temp_name:
+            prefix = self._verified_prefix_fixture(Path(temp_name), full_plan)
+            evidence = productizer._verify_training_prefix_run(
+                prefix, full_plan["immutable"]
+            )
+            self.assertEqual(
+                evidence["stage_ids"], list(productizer.TRAINING_PREFIX_STAGES)
+            )
+            agent = Path(evidence["artifacts"]["final_lm_master"]["path"])
+            original = agent.read_bytes()
+            agent.write_bytes(b"tampered")
+            with self.assertRaisesRegex(RuntimeError, "not reusable"):
+                productizer._verify_training_prefix_run(
+                    prefix, full_plan["immutable"]
+                )
+            agent.write_bytes(original)
+
+            adopted_args = productizer.parse_args(
+                ["--adopt-training-prefix-run", str(prefix)]
+            )
+            with mock.patch.object(
+                productizer.lifecycle, "live_cpt_workers", return_value=[]
+            ):
+                adopted_plan = productizer.build_plan(adopted_args)
+            self.assertEqual(
+                [row["stage_id"] for row in adopted_plan["stages"]],
+                [
+                    productizer.TRAINING_PREFIX_ADOPTION_STAGE,
+                    *productizer.DOWNSTREAM_STAGES,
+                ],
+            )
+            self.assertNotEqual(
+                adopted_plan["run_fingerprint_sha256"],
+                full_plan["run_fingerprint_sha256"],
+            )
+
+    def test_productization_prefix_adoption_is_recursive_and_hash_bound(self):
+        args = productizer.parse_args([])
+        with mock.patch.object(productizer.lifecycle, "live_cpt_workers", return_value=[]):
+            full_plan = productizer.build_plan(args)
+        with tempfile.TemporaryDirectory() as temp_name:
+            prefix = self._verified_productization_prefix_fixture(
+                Path(temp_name), full_plan
+            )
+            evidence = productizer._verify_productization_prefix_run(
+                prefix, full_plan["immutable"]
+            )
+            self.assertEqual(
+                evidence["stage_ids"],
+                list(productizer.PRODUCTIZATION_PREFIX_STAGES),
+            )
+            narration = Path(evidence["artifacts"]["narration"]["path"])
+            original = narration.read_bytes()
+            narration.write_bytes(b"tampered")
+            with self.assertRaisesRegex(RuntimeError, "not reusable"):
+                productizer._verify_productization_prefix_run(
+                    prefix, full_plan["immutable"]
+                )
+            narration.write_bytes(original)
+
+            adopted_args = productizer.parse_args(
+                ["--adopt-productization-prefix-run", str(prefix)]
+            )
+            with mock.patch.object(
+                productizer.lifecycle, "live_cpt_workers", return_value=[]
+            ):
+                adopted_plan = productizer.build_plan(adopted_args)
+            self.assertEqual(
+                [row["stage_id"] for row in adopted_plan["stages"]],
+                [
+                    productizer.PRODUCTIZATION_PREFIX_ADOPTION_STAGE,
+                    *productizer.FINALIZATION_STAGES,
+                ],
+            )
+            self.assertNotEqual(
+                adopted_plan["run_fingerprint_sha256"],
+                full_plan["run_fingerprint_sha256"],
+            )
+
+    def test_prefix_adoption_modes_are_mutually_exclusive(self):
+        args = productizer.parse_args(
+            [
+                "--adopt-training-prefix-run",
+                "training",
+                "--adopt-productization-prefix-run",
+                "productization",
+            ]
+        )
+        with mock.patch.object(productizer.lifecycle, "live_cpt_workers", return_value=[]):
+            with self.assertRaisesRegex(RuntimeError, "mutually exclusive"):
+                productizer.build_plan(args)
 
     def test_live_cpt_guard_fires_before_mlx_or_run_directory_mutation(self):
         args = productizer.parse_args([])
