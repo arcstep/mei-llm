@@ -21,8 +21,13 @@ TARGET_KV_DTYPE = "int8"
 TARGET_ACTIVATION_DTYPE = "int8"
 
 
-def _decode_forward(model):
-    existing = getattr(model, "_mei_compiled_decode", None)
+def _decode_forward(model, *, return_hidden: bool = False):
+    attribute = (
+        "_mei_compiled_decode_with_hidden"
+        if return_hidden
+        else "_mei_compiled_decode"
+    )
+    existing = getattr(model, attribute, None)
     if existing is not None:
         return existing
 
@@ -35,6 +40,8 @@ def _decode_forward(model):
             cache_write_index=write_index,
             engram_prefix_ids=prefix,
         )
+        if return_hidden:
+            return out["logits"], out["hidden"], out["cache"]
         return out["logits"], out["cache"]
 
     compiled = fwd
@@ -45,7 +52,7 @@ def _decode_forward(model):
             compiled = mx.compile(fwd)
         except Exception:
             compiled = fwd
-    object.__setattr__(model, "_mei_compiled_decode", compiled)
+    object.__setattr__(model, attribute, compiled)
     return compiled
 
 
@@ -333,7 +340,9 @@ class KVManager:
         if last_logits is not None:
             self.last_logits = last_logits
 
-    def decode_step(self, model, token_id: int) -> dict[str, Any]:
+    def decode_step(
+        self, model, token_id: int, *, return_hidden: bool = False
+    ) -> dict[str, Any]:
         """Append one token using the existing KV cache whenever possible.
 
         The normal product path evaluates a genuine one-token decode against a
@@ -368,8 +377,8 @@ class KVManager:
                 int(getattr(cfg, "engram_history", 0))
                 or int(getattr(cfg, "engram_conv_taps", 4)) * max(orders),
             )
-            call = _decode_forward(model)
-            logits, cache = call(
+            call = _decode_forward(model, return_hidden=return_hidden)
+            values = call(
                 mx.array([[int(token_id)]], dtype=mx.int32),
                 self._cache,
                 mx.array([self.visible_positions[-1]], dtype=mx.int32),
@@ -377,7 +386,12 @@ class KVManager:
                 mx.array([write_index], dtype=mx.int32),
                 mx.array([prefix_ids[-history:]], dtype=mx.int32),
             )
-            out = {"logits": logits, "cache": cache}
+            if return_hidden:
+                logits, hidden, cache = values
+                out = {"logits": logits, "hidden": hidden, "cache": cache}
+            else:
+                logits, cache = values
+                out = {"logits": logits, "cache": cache}
             self._cache_write_cursor = (self._cache_write_cursor + 1) % self.ordinary_cap
             self._incremental_decode_steps += 1
         else:
@@ -386,7 +400,10 @@ class KVManager:
                 position_ids=mx.array(self.visible_positions, dtype=mx.int32),
             )
             self._recomputed_decode_steps += 1
-        mx.eval(out["logits"], out.get("cache"))
+        evaluated = [out["logits"], out.get("cache")]
+        if return_hidden:
+            evaluated.append(out.get("hidden"))
+        mx.eval(*[value for value in evaluated if value is not None])
         self.last_logits = out["logits"][:, -1, :]
         self._cache = out.get("cache")
         return out

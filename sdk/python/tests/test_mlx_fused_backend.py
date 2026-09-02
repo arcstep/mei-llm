@@ -15,7 +15,8 @@ except ImportError:
 MEI_LLM = Path(__file__).resolve().parents[3]
 ARCH = MEI_LLM / "architecture" / "mei-1.0-51m-arch-v1"
 RUNTIME_SHARED = MEI_LLM / "runtime" / "_shared"
-for path in (ARCH, RUNTIME_SHARED):
+SDK_PYTHON = MEI_LLM / "sdk" / "python"
+for path in (ARCH, RUNTIME_SHARED, SDK_PYTHON):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
@@ -286,6 +287,51 @@ class FusedBackendTests(unittest.TestCase):
         self.assertEqual(manager.snapshot()["incremental_decode_steps"], 1)
         self.assertEqual(manager.snapshot()["recomputed_decode_steps"], 0)
         self.assertEqual(manager.snapshot()["measured_cache_dtype"], "mlx.core.int8")
+
+    def test_incremental_decode_can_return_hidden_for_narration_adapter(self):
+        from architecture import NeedleZh
+        from config import NeedleZhConfig
+        from kv_manager import KVManager
+
+        mx.random.seed(52)
+        cfg = NeedleZhConfig.from_spec().tiny(vocab_size=256)
+        model = NeedleZh(cfg)
+        manager = KVManager(
+            ordinary_cap=8,
+            sink_cap=4,
+            max_context=32,
+            output_reserve=4,
+        )
+        manager.prefill_forward(
+            model,
+            [2, 10, 11, 12],
+            [20, 21, 22, 23],
+            reserve_tokens=4,
+        )
+        token = int(mx.argmax(manager.last_logits).item())
+        step = manager.decode_step(model, token, return_hidden=True)
+        mx.eval(step["logits"], step["hidden"])
+        self.assertEqual(tuple(step["hidden"].shape), (1, 1, cfg.d_model))
+        self.assertEqual(manager.snapshot()["incremental_decode_steps"], 1)
+
+    def test_training_time_mw_logits_project_to_the_portable_wire_contract(self):
+        from mei_sdk.runtime_51m import project_mw_disposition_output
+
+        receipt = "a" * 64
+        logits = mx.array([[12.0, *([0.0] * 19)]], dtype=mx.float32)
+        wire, audit = project_mw_disposition_output(
+            logits, receipt_sha256=receipt
+        )
+        self.assertEqual(wire["decision"], "continue")
+        self.assertEqual(wire["receipt_sha256"], receipt)
+        self.assertEqual(audit["reason_code"], 0)
+
+        unsafe = mx.array([[0.0, 12.0, *([0.0] * 18)]], dtype=mx.float32)
+        unsafe_wire, unsafe_audit = project_mw_disposition_output(
+            unsafe, receipt_sha256=receipt
+        )
+        self.assertEqual(unsafe_wire["decision"], "stop")
+        self.assertEqual(unsafe_audit["reason_code"], 1)
 
 
 if __name__ == "__main__":

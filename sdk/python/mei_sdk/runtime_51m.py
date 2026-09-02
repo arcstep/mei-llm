@@ -162,6 +162,39 @@ def mw_disposition_from_probabilities(
     return wire, audit
 
 
+def project_mw_disposition_output(
+    value: Any, *, receipt_sha256: str
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Normalize portable wire output or a training-time 20-way logit tensor."""
+
+    if (
+        isinstance(value, tuple)
+        and len(value) == 2
+        and isinstance(value[0], dict)
+        and isinstance(value[1], dict)
+    ):
+        return value
+
+    import mlx.core as mx
+
+    try:
+        logits = value.astype(mx.float32)
+    except AttributeError as exc:
+        raise SdkError(
+            "package_invalid", "MW disposition head returned an unsupported value"
+        ) from exc
+    if tuple(int(part) for part in logits.shape) != (1, MW_N_CLASSES):
+        raise SdkError(
+            "package_invalid", "MW disposition logits must have shape [1,20]"
+        )
+    probabilities = mx.softmax(logits, axis=-1)
+    mx.eval(probabilities)
+    return mw_disposition_from_probabilities(
+        [float(item) for item in probabilities[0].tolist()],
+        receipt_sha256=receipt_sha256,
+    )
+
+
 class PortableMWDispositionHead:
     """Numerical oracle for the portable 512→20 reason-code projection."""
 
@@ -210,6 +243,7 @@ class Runtime51M:
         model_hash: str = "",
         head_hash: str = "",
         tokenizer_hash: str = "",
+        mw_receipt_sha256: str = "",
         release_class: str = "experimental",
     ):
         self.model = model
@@ -218,6 +252,7 @@ class Runtime51M:
         self.mw_disposition = mw_disposition
         self.conf_v2 = conf_v2
         self.narration_adapter = narration_adapter
+        self.mw_receipt_sha256 = mw_receipt_sha256
         self.release_class = release_class
         self.retrieval_source = "contrastive" if contrastive is not None else "backbone_fallback"
         self.index = index or ToolIndex(
@@ -303,7 +338,7 @@ class Runtime51M:
                 break
             prefix += _token_bytes(self.tokenizer, token, at_start=not pieces)
             pieces.append(token)
-            out = kv.decode_step(self.model, token)
+            out = kv.decode_step(self.model, token, return_hidden=True)
         return {
             "text": prefix.decode("utf-8", errors="ignore").strip(),
             "ids": pieces,
@@ -348,7 +383,10 @@ class Runtime51M:
         cells = head_out.get("cells")
         conf_logit = head_out.get("confidence_logit")
         if self.mw_disposition is not None and cells is not None:
-            mw_disposition, mw_audit = self.mw_disposition(cells)
+            mw_disposition, mw_audit = project_mw_disposition_output(
+                self.mw_disposition(cells),
+                receipt_sha256=self.mw_receipt_sha256,
+            )
         else:
             mw_disposition = {"decision": "stop", "source": "deterministic-policy"}
             mw_audit = {
