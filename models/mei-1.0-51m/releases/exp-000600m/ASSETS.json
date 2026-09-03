@@ -1,0 +1,90 @@
+{
+  "schema": "mei-canonical-model-assets-v1",
+  "model_id": "mei-1.0-51m",
+  "cycle_id": "exp-000600m",
+  "status": "process_complete_release_ineligible",
+  "canonical_root": "models/mei-1.0-51m/releases/exp-000600m",
+  "immutable": true,
+  "binary_files_read_only": true,
+  "local_training_evidence_preserved": true,
+  "off_device_backup_status": "open",
+  "assets": [
+    {
+      "role": "base_weights_candidate",
+      "path": "base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1.npz",
+      "bytes": 205958898,
+      "sha256": "6d55a61773cdd0a6713c43fa7565f8c2fa64414c3e4a1beadfb6507e0d91752a"
+    },
+    {
+      "role": "base_optimizer_state_candidate",
+      "path": "base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1-state.npz",
+      "bytes": 617885128,
+      "sha256": "026f8a5deae75f60dd09f803b6f8ccb6075eed9ce224a74bc64e1db2be72505b"
+    },
+    {
+      "role": "qat_cq2_master",
+      "path": "qat/mei-1.0-51m-base-cpt600m-qat-cq2-adaptive-v5/final-master.npz",
+      "bytes": 205958898,
+      "sha256": "16569490b3adf9c978b630598d4b49f7097c740829148a34cd83e79afd702f5a"
+    },
+    {
+      "role": "q4_diagnostic_package",
+      "path": "qat/q4-diagnostic/q4-diagnostic.bin",
+      "bytes": 26819741,
+      "sha256": "8302a82bf0f251ac9afd0315bd90a0d4fc7d6b47b644eb1200fddea094934c06"
+    },
+    {
+      "role": "final_sft_lm",
+      "path": "sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/lm/agent-aligned-master.npz",
+      "bytes": 205958898,
+      "sha256": "a0417172ee287a896a40366e16d4e938e627f090404a23a7151e413a208cef34"
+    },
+    {
+      "role": "retrieval_r2_head",
+      "path": "sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/heads/retrieval/retrieval-r2.npz",
+      "bytes": 1065680,
+      "sha256": "fbf9acf3aa5bae063c5752861e1dc25fec47b61d77b33af37eed8fcff64a8aec"
+    },
+    {
+      "role": "mw_disposition_head",
+      "path": "sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/heads/mw/mw-disposition.npz",
+      "bytes": 41526,
+      "sha256": "cfd090fb525164611dc23a47f86af14b4373dca417067c43cd7fb37d72ba840a"
+    },
+    {
+      "role": "execution_confidence_head",
+      "path": "sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/heads/confidence/confidence.npz",
+      "bytes": 33492,
+      "sha256": "259f76146c63f6c6db42a89e56d3f1cd227c0f7bd55e66d2f823cf9921b1ece8"
+    },
+    {
+      "role": "narration_rank16_adapter",
+      "path": "sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/heads/narration/narration-adapter.npz",
+      "bytes": 1569254,
+      "sha256": "6c144df00a4109d40e29db4b5dcebb87297903410e09a6653df2135dd8fabd93"
+    },
+    {
+      "role": "product_package_manifest",
+      "path": "package/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/mei-model.json",
+      "bytes": 94515,
+      "sha256": "477ab4fd740dd6d100f0a47d458acd1a19ef774bc2ef0a0978ae1dcd0616bc58"
+    },
+    {
+      "role": "product_package_tensors",
+      "path": "package/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/tensors.bin",
+      "bytes": 18058392,
+      "sha256": "8d3631b956dd146a23388668614d75ffebc0580e57db8ba505682754efbc8f6f"
+    },
+    {
+      "role": "product_tool_index",
+      "path": "package/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5/tool-index.json",
+      "bytes": 107388,
+      "sha256": "4280e638bfca902f1228ad1f2877b92cd392ed121500da49ce3b875124b9ad12"
+    }
+  ],
+  "lineage": {
+    "qat_run": ".local/artifacts/mei-1.0-51m/exp-000600m/runs/qat-cq2-cpt600m-clean-source-v3-v1-3769d9872a15",
+    "training_prefix_run": ".local/artifacts/mei-1.0-51m/exp-000600m/runs/productize-cpt600m-adaptive-v5-cq2-v2-6c3da768deef",
+    "heads_package_and_final_audit_run": ".local/artifacts/mei-1.0-51m/exp-000600m/runs/productize-cpt600m-adaptive-v5-cq2-v2-43bdca400ac1"
+  }
+}

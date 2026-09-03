@@ -1,0 +1,71 @@
+{
+  "schema": "mei-llm-four-domain-migration-receipt-v1",
+  "migration_id": "2026-09-four-domain",
+  "completed_on": "2026-09-03",
+  "status": "passed",
+  "source_git_revision": "17513c4da11bec8ccf07f43eba92756a08450848",
+  "scope": "structure_and_evidence_migration_only",
+  "boundaries": {
+    "training_started": false,
+    "current_json_mutated": false,
+    "git_commit_created": false,
+    "git_push_performed": false,
+    "public_release_performed": false
+  },
+  "current_json": {
+    "sha256_before": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607",
+    "sha256_after": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+  },
+  "immutable_base_evidence": {
+    "scratch300m_weights_sha256": "97f4b537f2869ab315245fd8769eff8a61117b112eb7dce40ebfbd39e2afbd48",
+    "scratch300m_state_sha256": "ba9eb459d57d1bad20608a4f11d1f8464394d3ad5fc8837cfa8e89ffe0c91205",
+    "cpt600m_weights_sha256": "6d55a61773cdd0a6713c43fa7565f8c2fa64414c3e4a1beadfb6507e0d91752a",
+    "cpt600m_state_sha256": "026f8a5deae75f60dd09f803b6f8ccb6075eed9ce224a74bc64e1db2be72505b"
+  },
+  "active_domains": [
+    "models",
+    "corpus-factory",
+    "cycles",
+    "platform"
+  ],
+  "executed_cycles": [
+    "exp-000300m",
+    "exp-000600m"
+  ],
+  "planned_cycles_are_registry_only": true,
+  "legacy_active_roots_removed": [
+    "architecture",
+    "base",
+    "corpus",
+    "notebook",
+    "runtime",
+    "sdk",
+    "sft",
+    "tokenizer",
+    "training"
+  ],
+  "compatibility": {
+    "old_receipts_rewritten": false,
+    "legacy_paths_resolved_by": ".internal/registry/migrations/2026-09-four-domain.json",
+    "active_legacy_symlinks": false
+  },
+  "validation": {
+    "lifecycle_and_training_pipeline_tests": 209,
+    "python_sdk_tests": 106,
+    "javascript_sdk_tests": 27,
+    "rust_core_tests_passed": 54,
+    "rust_core_tests_ignored": 1,
+    "four_domain_and_corpus_factory_tests": 25,
+    "architecture_direct_check": "passed",
+    "registry_cli_smoke": "passed",
+    "canonical_cursor_skill_sha_parity": "passed",
+    "active_docs_relative_links": "passed",
+    "json_syntax": "passed"
+  },
+  "large_artifacts": {
+    "root": ".local/artifacts/",
+    "gitignored": true,
+    "addressing": "mei-artifact://",
+    "history_entrypoint": "cycles/mei-1.0-51m/INDEX.md"
+  }
+}

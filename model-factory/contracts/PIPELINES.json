@@ -1,0 +1,62 @@
+{
+  "schema": "mei-model-factory-pipeline-registry-v1",
+  "pipelines": [
+    {
+      "pipeline_id": "mei-51m-cpt-lifecycle-v1",
+      "status": "current",
+      "entrypoint": "orchestration.lifecycle_51m",
+      "changes_weights": true,
+      "purpose": "plan, run, resume, register and propose freeze for arbitrary cumulative CPT exposure",
+      "recipe": "model-factory/recipes/cpt-lifecycle-v1.json"
+    },
+    {
+      "pipeline_id": "mei-51m-adaptive-productization-v5",
+      "status": "current",
+      "entrypoint": "orchestration.productize_adaptive_v5_51m",
+      "changes_weights": true,
+      "purpose": "fixed-five batched retrieval, joint-budget alignment, R2, MW, confidence, narration and CQ2 packaging",
+      "stages": [
+        "adopt_training_prefix_v4",
+        "seed_adaptive_views_v5",
+        "fullcall_alignment_replay_v5",
+        "agent_alignment_replay_v5",
+        "retrieval_r2_v5",
+        "final_adaptive_artifacts_v5",
+        "adaptive_generation_eval_v5",
+        "mw_disposition_v5",
+        "confidence_harvest_v5",
+        "confidence_head_v5",
+        "narration_adapter_v5",
+        "sidecar_runtime_eval_v5",
+        "package_v2_cq2_v5",
+        "python_runtime_gate_v5",
+        "browser_wasm_gate_v5",
+        "final_audit_v5"
+      ]
+    },
+    {
+      "pipeline_id": "mei-51m-paired-adaptive-v5",
+      "status": "current",
+      "entrypoint": "orchestration.supervise_paired_adaptive_v5_51m",
+      "changes_weights": true,
+      "purpose": "run equivalent productization contracts for two frozen bases and emit paired comparison evidence",
+      "child_pipeline": "mei-51m-adaptive-productization-v5"
+    },
+    {
+      "pipeline_id": "mei-51m-generic-productization-v2",
+      "status": "active_support",
+      "entrypoint": "orchestration.productize_51m",
+      "changes_weights": true,
+      "purpose": "shared productization and fingerprint primitives"
+    },
+    {
+      "pipeline_id": "mei-51m-sft-v3-300m",
+      "status": "maintained_compatibility",
+      "entrypoint": "orchestration.productize_sft_v3_300m",
+      "changes_weights": true,
+      "purpose": "interpret named historical 300M SFT-v3 receipts; not a new-cycle default"
+    }
+  ],
+  "rule": "New formal cycles may select only current pipelines and must freeze a conforming PIPELINE.lock.json before execution."
+}
+

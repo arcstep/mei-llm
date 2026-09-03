@@ -1,0 +1,43 @@
+{
+  "schema": "mei-runtime-profile-compatibility-v1",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "current": {
+    "runtime_profile_sha256": "f3a4ab1151e82299fee0214c5f78a18c20d83367d24a9dc073bbcd56312fa512",
+    "profiles": {
+      "compact": 1024,
+      "standard": 1536
+    },
+    "max_context_tokens": 2048,
+    "ordinary_window_policy": "dynamic_remainder",
+    "tool_batch_size": 5,
+    "context_packer_id": "mei-tool-context-packer-v1",
+    "retrieval_batch_policy_id": "mei-retrieval-fixed-five-batches-v1",
+    "prompt_framing_id": "mei-tool-prompt-framing-v1",
+    "assistant_suffix": "<|im_end|>\n<|im_start|>assistant\n"
+  },
+  "legacy_read_only": [
+    {
+      "runtime_profile_sha256": "7d2d97b2f4fabc5e638f29a64789298ac8b2ebb3484b03d94925a9f08d3e2611",
+      "profiles": {
+        "compact": 1024,
+        "standard": 1536
+      },
+      "max_context_tokens": 2048,
+      "ordinary_window_policy": "dynamic_remainder",
+      "tool_batch_size": 5,
+      "context_packer_id": "mei-tool-context-packer-v1",
+      "retrieval_batch_policy_id": "mei-retrieval-fixed-five-batches-v1",
+      "compatibility": "same_weights_degraded_prompt_framing_view",
+      "migration": "load without mutation; rerun downstream alignment with the explicit assistant suffix before repacking"
+    },
+    {
+      "runtime_profile_sha256": "74839b08155e624f14318ca8646166ddc68ee6496720dedac26aa91fdc8bdf43",
+      "stable_prefix_tokens": 1024,
+      "ordinary_window_tokens": 256,
+      "compatibility": "same_weights_degraded_runtime_view",
+      "migration": "load without mutation; repack with current runtime profile after downstream alignment"
+    }
+  ],
+  "weight_retraining_required": false
+}

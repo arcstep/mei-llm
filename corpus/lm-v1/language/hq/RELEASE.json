@@ -1,9 +1,0 @@
-{
-  "id": "zh-pretrain-hq",
-  "status": "active",
-  "role": "hq",
-  "tokenizer": "zh-24k-v1",
-  "n_train_tokens": 383617452,
-  "n_valid_tokens": 3778466,
-  "hardlinked_from": "notebook/archive/corpus/zh-pretrain-v2/tokens/hq-*"
-}

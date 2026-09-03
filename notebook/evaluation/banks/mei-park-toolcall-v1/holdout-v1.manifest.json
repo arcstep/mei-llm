@@ -1,7 +1,0 @@
-{
-  "bank_id": "mei-park-toolcall-v1",
-  "lock_sha256": "98e7c49c01aaba5859da65608f955573de7162eb3764530a060b3a35cda8743c",
-  "n_blind": 160,
-  "toolset_fingerprint": "44fc865f60981bfecaae047371fa1cb7ba29bce2f44a1d9967a59ed78e1d9072",
-  "promotable_to_train": false
-}

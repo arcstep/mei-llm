@@ -1,0 +1,2072 @@
+{
+  "schema": "mei-model-factory-source-recovery-audit-v1",
+  "plan": ".local/artifacts/mei-1.0-51m/exp-000600m/runs/productize-cpt600m-adaptive-v5-cq2-v2-6c3da768deef/plan.json",
+  "plan_sha256": "d0f34052bbf40db275db02538d45960ddfe427043232938c7712a06aea321b4a",
+  "source_manifest_sha256": "60b7323c0ff7d761d791f8e75283f3588c73d23d535633bf0c7f8bab7ecae090",
+  "manifest_entries": 242,
+  "exact_recoverable": 213,
+  "exact_unavailable": 29,
+  "recovery_method_counts": {
+    "current_tree": 99,
+    "git_head": 57,
+    "recovery_archive": 57,
+    "unavailable": 29
+  },
+  "unavailable": [
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/RELEASE.json",
+      "sha256": "77be71fd3a66c047a974cc799fdcf5f973b10cd209f2fdbc805cbc013018f634",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/.cargo/config.toml",
+      "sha256": "26d7c080f52f1d1581bc781580f1b1a684702e9b1894b907887299ec1ae92224",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/js/smoke_wasm_q4.mjs",
+      "sha256": "12aa56563b814537968899f0e38c57203f0126ca708c3b70f3a51eee6dcdac3a",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/runtime_51m.py",
+      "sha256": "9771fcdb9d8a6a04cd06c8e12cb913921207e9adb33d925187259053b9eefb2f",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/shared.py",
+      "sha256": "67cfe5f3a0b2c3ceaf6edef52c4ed8b6714460612e5618938295ad06702ed75c",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/context_budget.rs",
+      "sha256": "d7224f93775f374700f5f01c3bab7150eaa59d8bc356788eef9d49b97fc8a233",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/engine.rs",
+      "sha256": "56bf0ce87ce892ffe97f9bf0e052410b1878712c8aa5728c558796d9b15030cc",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/package.rs",
+      "sha256": "a5c67000b5b5ecc958a70d90bbcc26e132d04cfc3cc5afcd44533f15f030f512",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/adaptive_tool_context_51m.py",
+      "sha256": "5725e42e27f78adb3b8e71c3131c715a2ba7fd581e768f61a13c607b9309310b",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/base_candidate_51m.py",
+      "sha256": "ec98f51600e68c49750a5e306cd8017d26e1df2b82288b9c754dfff9fd490326",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/compare_longitudinal_products_51m.py",
+      "sha256": "7578f6c6e458c610074f9bd2a11ad8b45d10b7ca2a263693702905238a302101",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/pack_cq2_v2_51m.py",
+      "sha256": "9abf442b81e523ae085adbaa71b99b49108582110af55c3e8d559692bc440cb6",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/preflight_sft_v3_51m.py",
+      "sha256": "c4191ac02456cfa6fef2926574b8c1c9e23fadf3af4ef4c7ffa95c074cd1b524",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/productize_51m.py",
+      "sha256": "bde0d4167ac0f93f597793061f7d4200cc7a463385beac7700a348be23b97c22",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/productize_adaptive_v5_51m.py",
+      "sha256": "d6046ecbc991bf88ec37e4a4203cd2c0b45c5f601ccea92e751954a42ddd5488",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/productize_sft_v3_300m.py",
+      "sha256": "54de84e91a2b7f6bcb04c06813844605fae211ee6a70aac30bd03bbda897d099",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/qat_cq2_v2_51m.py",
+      "sha256": "7f2c98b40fd9d7192480faf1251c3c77699c249e34813f6d5b1f484af9693265",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_downstream_resource_gates_51m.py",
+      "sha256": "606ee8d26f9eaa7e37679d0e4312cf6bd2bee636d73bdb1ad6d5ee1d39670ebd",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_paired_product_runtime_gates_51m.py",
+      "sha256": "e934da545711dff22425f284dce61c1298e1ea110a77b4fc0e7a15e4f2f69e49",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/sft_v3_eval_51m.py",
+      "sha256": "8628fa266384628effa9f73ffbea490a127266fa8737369f67d864a30036ec96",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/supervise_paired_adaptive_v5_51m.py",
+      "sha256": "1ac33face76f5d39602346de86be00989917462d1948bfba5f2f04591df8bee0",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_adaptive_tool_context_51m.py",
+      "sha256": "7e07bfcab8c9b39a34766e987e217370bc0f42d0b92fb0d960b4b2be5aa544d3",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_architecture_contract_51m.py",
+      "sha256": "bdb6923a3d2e60c3deb006b5da0e68b1ed769d41033f40a1330f2c5a5fce4fc6",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_base_candidate_51m.py",
+      "sha256": "db82122c6b1c76ab66a7a74b156f1c1f172d4c786178a699dc9b14c22fb68dc2",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_compare_longitudinal_products_51m.py",
+      "sha256": "01a2941ce35b9a310c4f31e8eba6896efad7995324f4564cf874a52ea6da6e4e",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_pretrain_readiness.py",
+      "sha256": "d76441296ba5ef30f4b2e3ea5f7abbd6b5e3ef50bd56ec08cfba6ed4f5f28fe6",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_productize_adaptive_v5_51m.py",
+      "sha256": "685763950574c4bda9e8476b6aa2954fb105d0fe03489ff18020495b6ad2c057",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_supervise_paired_adaptive_v5_51m.py",
+      "sha256": "ca5af6462f30007d703bcaf71109a90f6b4f7d2a89071a06d8c6eaa2e39f6ee9",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/verify_downstream_package_51m.py",
+      "sha256": "4dafb2eea2436dbaeaecbee70647655082cae5c6dae76a551617ada0b0d06c19",
+      "recovery_method": "unavailable",
+      "matches": []
+    }
+  ],
+  "entries": [
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/RELEASE.json",
+      "sha256": "77be71fd3a66c047a974cc799fdcf5f973b10cd209f2fdbc805cbc013018f634",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/architecture.py",
+      "sha256": "4d385edd6c45b18b698a26f6393df5b7aaac8f8f73fd35b4d268235c54013d28",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/architecture.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/architecture_contract.py",
+      "sha256": "c0fc63ae3eed9b002426c1565def07045d4c4f1ff3cf5dcbcb76828bf547bda4",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/architecture_contract.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/config.py",
+      "sha256": "51311ead6263a666bbb12372233d368716531c6e86ae08b25ace3ccffd746dfd",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/config.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/cq2_metal.py",
+      "sha256": "a7538d4cd3aa3ae4eaea65d44d68c0c334ec34c8b75d1ccb50a8f3866af92d2d",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/cq2_metal.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/fused_ops.py",
+      "sha256": "2f3daf1bd0145139b485371b24d20d3e05f5c10e00ca9bda659e24787e75f684",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/fused_ops.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/heads.py",
+      "sha256": "abc9b9f9f48165e6bc024081b24b554e8a692758e368839d092b3a2551fc9b9e",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/heads.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/spec/legacy-architecture-aliases.json",
+      "sha256": "f880127ae72430db57cc0645f62ff753cf24d8038c69263a0e68aadf572f32bd",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/spec/legacy-architecture-aliases.json"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/spec/model.json",
+      "sha256": "aefb86bb943d65f3fe5f1553f53d4489627a3de76634f2524ef433512cd7d102",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/spec/model.json"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/spec/runtime-profile-compatibility.json",
+      "sha256": "8bec88f1f78756db8c5bd32aab09c83fbe7ba8fc9ef972cefb3f320148b0329c",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/spec/runtime-profile-compatibility.json"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/test_architecture.py",
+      "sha256": "883d78e72cd24860a74a391014ea7627a735ee9122e65cb7e2b0e894fc6f5a3b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "models/mei-1.0-51m/architecture/test_architecture.py"
+      ]
+    },
+    {
+      "historical_path": "architecture/mei-1.0-51m-arch-v1/tokenizer.py",
+      "sha256": "f0c340bf228d4e7054485f16f23e90b173014506687bd608c4fde634e3b711b9",
+      "recovery_method": "git_head",
+      "matches": [
+        "architecture/mei-1.0-51m-arch-v1/tokenizer.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/_repo.py",
+      "sha256": "c492941bed359e56cb651008e4b3b9d376020635a3d53767834d8420c48adebe",
+      "recovery_method": "git_head",
+      "matches": [
+        "runtime/_shared/_repo.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/byte_grammar.py",
+      "sha256": "d96a8ec9911a84fe005c7ff386abec1431e88654c804d6537259b705c03aa026",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/byte_grammar.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/canonical_json.py",
+      "sha256": "781b499efb832ca388f8023da42097e932c73c7caa0dd0cb91afb665771c6f90",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/canonical_json.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/context_budget.py",
+      "sha256": "c8e2c635dd046149421dea008997785d6ad9c5a8dd71dd1db459de43a9992a4c",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/context_budget.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/decode.py",
+      "sha256": "3dec3dbd5d6f2dae70d2bc8bb38334b8a22a43841149aded6b4f51ab8876b014",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/decode.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/grammar.py",
+      "sha256": "b5c4e1d9333df89f246eb9fed446a6413b6ca29441bf2214fee9367cd5f243b2",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/grammar.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/kv_manager.py",
+      "sha256": "b8e8d6a960d61206a242780fe910e0c9662961ddfa85398844f96d225b67332f",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/kv_manager.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/narration.py",
+      "sha256": "1616f1e1ccdd9cbee490829c0b777d047611e359e4bc26279549eeb1fb644f4d",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/narration.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/normalizers.py",
+      "sha256": "499b2a818d31decbfec35744694142c199dd2c81375d3b4aebb33690e46cf5d8",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/normalizers.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/provenance.py",
+      "sha256": "cb27a06cb55bafc88d8dbc18d035ba3d13652fa938377b51bfbb67bfc5c2c1f5",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/provenance.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/schema_render.py",
+      "sha256": "4a494680ae15868560aa2693c6f7d96cfb92b1cf45fb5aecc681f6d49a9554b7",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/schema_render.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/schema_subset.py",
+      "sha256": "64024f94f70e0b063db463177d6a9a69f13854621bf0a150c098dbed7eedca90",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/schema_subset.py"
+      ]
+    },
+    {
+      "historical_path": "runtime/_shared/tool_index.py",
+      "sha256": "87e7121201f2c5fb6866ac9ca96d21f21a2e948459293da776010d5e8f4a8d31",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/runtime/tool_index.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/.cargo/config.toml",
+      "sha256": "26d7c080f52f1d1581bc781580f1b1a684702e9b1894b907887299ec1ae92224",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/Cargo.lock",
+      "sha256": "35284208618fc321853c492f3c18ea7790e50d65e62736608ecdfcef48042aa2",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/Cargo.lock"
+      ]
+    },
+    {
+      "historical_path": "sdk/Cargo.toml",
+      "sha256": "1be4e01aadf0dc1b3dbf449125f7dabe547166e3ea50c38bf972abc201cb1c09",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/Cargo.toml"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/browser.mjs",
+      "sha256": "11be0432cd69bc37c1cf2cf92c4e300951921909e931e1782b077b741563fd70",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/browser.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/cq2.mjs",
+      "sha256": "f3c5c435be55ffbc092de393747de6491927baef4e9abc112b30ddf1473165c6",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/cq2.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/engine.mjs",
+      "sha256": "b56d3e74f6bb5903e4cdf056c9fdbb2f11374bd945dc9e11168892db312d1066",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/engine.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/index.mjs",
+      "sha256": "81d732d9865bbab148bc2829aff477f564bb0043045447c30019a4bcf7801bd0",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/index.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/node-wasm.mjs",
+      "sha256": "59a66810ee218fecf97d1500d9ae3593ff7d558a962f3030d84e9b889b49e77a",
+      "recovery_method": "git_head",
+      "matches": [
+        "sdk/js/node-wasm.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/package.mjs",
+      "sha256": "d1bd7a06aac4414117aae997fd11ff8db6e2b2a40a6c8158764495ce494f4b13",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/package.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/protocol.mjs",
+      "sha256": "93b7f5aab97595703b2b92a06ab1de80f64bc084ed092c09f7ba00088b3edd36",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/protocol.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/smoke_node_v2.mjs",
+      "sha256": "9765fc7b0ae77341fbcd519e4b37bd358385c671313d4b14e7c2c13d0c50dadb",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/smoke_node_v2.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/smoke_wasm_q4.mjs",
+      "sha256": "12aa56563b814537968899f0e38c57203f0126ca708c3b70f3a51eee6dcdac3a",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/js/test.mjs",
+      "sha256": "8d7f2a41d87fa5be31013f37c23da465933595ca0f1733ad54bc2730277c531e",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/test.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/tool-index.mjs",
+      "sha256": "c9af2200494934e9f2b63fb4a20f950c77c051e8e313156c4fd99840421b881a",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/tool-index.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/version.mjs",
+      "sha256": "072e1a03df699bc43d9580b9d5491e487f2319c2ec37cf4439c82b8b1e3ac8fa",
+      "recovery_method": "git_head",
+      "matches": [
+        "sdk/js/version.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/js/wasm-abi.mjs",
+      "sha256": "e6634737a8689906d45d8619eaf30a7845ee6b7f89fdb584852f169184144d0b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/browser-sdk/wasm-abi.mjs"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/__init__.py",
+      "sha256": "a5204e25a29f097fec6573892714adbeb74a9c0da07be68a6226b0512eb6de7a",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/__init__.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/canonical.py",
+      "sha256": "ab490eca0bd341b2bc08de64ef93ecb5266e60829149b47bf5df36a40f71e794",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/canonical.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/cq2.py",
+      "sha256": "e03cc7f0dabb814fb8497469d67d5534b7a47650f2b2f25dd760c280c085441c",
+      "recovery_method": "git_head",
+      "matches": [
+        "sdk/python/mei_sdk/cq2.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/engine.py",
+      "sha256": "e26f0813e24e838e255fe9cefe5aa07dbedb7744ccc2c6e51d8708154ab4afd5",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/engine.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/errors.py",
+      "sha256": "6bdd2492be7ede70823d1b2d3933250a57b1368b71dec4aaed4313aee4c80c25",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/errors.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/ffi.py",
+      "sha256": "4b6983f2b24f038081ef8d72ca6077309c1dc70e90ff115e30ccbabe58216bbc",
+      "recovery_method": "git_head",
+      "matches": [
+        "sdk/python/mei_sdk/ffi.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/json_schema_lite.py",
+      "sha256": "9be15dfbbb56fe3564e1a1b5d958c50c3eae467006bd59fe28768cb4c4640e84",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/json_schema_lite.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/mlx_backend.py",
+      "sha256": "fd5167fd460268fa906c4ea6d6a8369e342bf8d7d147f3048a8d372605473ff4",
+      "recovery_method": "git_head",
+      "matches": [
+        "sdk/python/mei_sdk/mlx_backend.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/package.py",
+      "sha256": "f950fa16eef9d2b7195e63a5959383b50dda57ae43c6075b11bc037215b06d26",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/package.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/protocol.py",
+      "sha256": "d85108ab616789508c5ecf414544ceaf018c94bd10c2eaea2615ce79aaeb0acd",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/protocol.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/reference.py",
+      "sha256": "1265dc38cdfd0c785d1d2a953ec68803570e3bbf8ab8db0bfccaabc5c25974e3",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/python-sdk/mei_sdk/reference.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/runtime_51m.py",
+      "sha256": "9771fcdb9d8a6a04cd06c8e12cb913921207e9adb33d925187259053b9eefb2f",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/shared.py",
+      "sha256": "67cfe5f3a0b2c3ceaf6edef52c4ed8b6714460612e5618938295ad06702ed75c",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/python/mei_sdk/version.py",
+      "sha256": "dac2400e7a97ff331eee4738778045a121e86571d6dd7fe5ab7ecfab3c46bee7",
+      "recovery_method": "git_head",
+      "matches": [
+        "sdk/python/mei_sdk/version.py"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/byte_grammar.rs",
+      "sha256": "0d91ffe299a37e71f08d3936c5d93953d82b548e614574163adcfbb1115ba389",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/byte_grammar.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/canonical.rs",
+      "sha256": "7fbcdb0271597cc0e68113a839318b993319d8ca6d43d1354689ac58da333d3f",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/canonical.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/context_budget.rs",
+      "sha256": "d7224f93775f374700f5f01c3bab7150eaa59d8bc356788eef9d49b97fc8a233",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/cq2.rs",
+      "sha256": "0395c7d19a5e671a757cd72dc3ab0fa5c65cb3a7f3787fba70a1f7ab2cfbd11f",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/cq2.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/engine.rs",
+      "sha256": "56bf0ce87ce892ffe97f9bf0e052410b1878712c8aa5728c558796d9b15030cc",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/error.rs",
+      "sha256": "647d00c5787d42895452eb3124520fdb02994f23759d64d0e228cd8d79a5fded",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/error.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/infer.rs",
+      "sha256": "e3f5dfbd21b083fb1d82cf64baebf2ecd60b5858cc7a4e577993aa140f54d160",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/infer.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/lib.rs",
+      "sha256": "06c1e9626d7b8901a97d0a0c6d4617264e08e917aa32ea6ee285636b50cba59b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/lib.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/model.rs",
+      "sha256": "ec1c679f27779e69d907a1d1d39acdbcce7c78e8bb254973a840b0f751f18b15",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/model.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/package.rs",
+      "sha256": "a5c67000b5b5ecc958a70d90bbcc26e132d04cfc3cc5afcd44533f15f030f512",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/packed.rs",
+      "sha256": "b2278cfa5be1a10f45a527293b91fe6831d3ac22c31d1758f34ff9f503d5f180",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/packed.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/protocol.rs",
+      "sha256": "3b0d1ba978a062bc88fd080752c33036cd64164eb5c705940a044ed1f62b1ee6",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/protocol.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/retrieval.rs",
+      "sha256": "dee2268d65c38e78bea5a4e9d5a206cffe066a977eeddf701f9e399e01653a4a",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/retrieval.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/tokenizer.rs",
+      "sha256": "10773a11a48c41b1407ec14f8ed00d237f7fe78977f5bf47cb2d172940a09623",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/tokenizer.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/tool_index.rs",
+      "sha256": "cdf8ede89e2ba3afc22c139b2f307867961af0b4e91d53ea662e358e038eefaa",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/tool_index.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/version.rs",
+      "sha256": "fb4d15d7d9313b55d300b9d9dae008fbf540fb37ef999035d1fe4f9eff109d74",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/version.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-core/src/vocab.rs",
+      "sha256": "dedf1f64985dfbf511eff2db73dfb911abf874c6e1e1e0c1e2507069440ae9c9",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-core/src/vocab.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/rust/mei-sdk-wasm/src/lib.rs",
+      "sha256": "eb526d4cd307a3da6f139757b674a75b0aa2d9619fc5de398cc26bbeedbe4fea",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/rust/mei-sdk-wasm/src/lib.rs"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/compatibility-matrix.json",
+      "sha256": "b73f80919e2ba1ef74f86c8c91afc4578e351e988cde2fea5faa2b0928b717cc",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/compatibility-matrix.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/cq2-v2.json",
+      "sha256": "e1f5e5a64350c1e28c0e92cc134fb89c3c67b94bd6923b0b9a8d9c768109df5d",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/cq2-v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/errors.json",
+      "sha256": "736506b41d45fbf25fc979f1da3455bddb6df3a3c2702bfdc041c48c28ebac33",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/errors.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/canonical_numbers_v2.json",
+      "sha256": "8ecf76ae50fee335a690bb2502ed49c9841994ce7944dafc6519b5b38f5d68e2",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/canonical_numbers_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/catalog_fingerprint_v2.json",
+      "sha256": "d039a804559b38e5f4f16ffb747f08ef5d7cb65ce56ffbd766609aaa7cc6123d",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/catalog_fingerprint_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/context_budget_v2.json",
+      "sha256": "866881acd1dab80b4bf7d0ce3f5f38e94199ca70dad7145918c021a287ba8bd7",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/context_budget_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/cq2_v2.json",
+      "sha256": "eba904ca5ec4f694bd465d8e05552cd116ed91d8a6c2a638e44e4ffb83c3e5b1",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/cq2_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/format_cases_v2.json",
+      "sha256": "f258e0bf3f4899ec1a038deac6a0ce60d745032be462342a96b06bb5f1635466",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/format_cases_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/package_capabilities.json",
+      "sha256": "4d7fda62c7e2953a0902412431d4e2244a3687f7caec3c254b3e4b81c55b7f9b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/package_capabilities.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/parse_cases.json",
+      "sha256": "deabe15cc8650f84ae195070b12cc05eb22c1e92be53571f0d0d8c9f66a287c0",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/parse_cases.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/render_request.json",
+      "sha256": "7dc12f8eda1b205cbd003399041310158f16d9a150c717bb5cf7898afdfa691b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/render_request.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/schema_fingerprint.json",
+      "sha256": "79248b7f63d42bcb72af0ddc72ccd96824393292ecb7d797e31caf5582bfc66b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/schema_fingerprint.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/tokenizer_v2.json",
+      "sha256": "ebcb2695b5274c5cdaffc2de6e599d9e494a1f2bebe257621b861536e5ea7d44",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/tokenizer_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/tool_index_v2.json",
+      "sha256": "02f040c7e35ff2729c13fb373ef3a44d73680931847b8f0b13abe2050fbb1613",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/tool_index_v2.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/golden/turn_results.json",
+      "sha256": "da83581d01d7411299300ead98134e444bafcf7083a8f5b8eddaac187cb7901a",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/golden/turn_results.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/loop-result-v2.schema.json",
+      "sha256": "4cf18aec92d7213c6825d44bffe0bdda3a117d791d3484c2ea4d1320446e5c37",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/loop-result-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/loop-result.schema.json",
+      "sha256": "9d4de6ff8c13bd2828df0689089219c8dfeb3ec894b335e8a7df5bae1a070da8",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/loop-result.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/model-package-v2.schema.json",
+      "sha256": "b20208c37711441e02ae5e9b8628a9cafa9f33908a078edc07a07519a501dbb0",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/model-package-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/model-package.schema.json",
+      "sha256": "ee0afdd2ec04723e7c91a1262641997497ab112c85989dbf5dd160952c15bf13",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/model-package.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/narration-result-v2.schema.json",
+      "sha256": "9da0ea734232f6e73a7035b6c3b9765f10b0a4f32c2cd1d084f86d8d9ee1a476",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/narration-result-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/needle2-reference.json",
+      "sha256": "dce31b3e93625b85aaabdb6fcba71fce3a9a9636cc0eeb8a4846bb5cde6f9d94",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/needle2-reference.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/protocol.json",
+      "sha256": "e217271e4ae358ee8839d40629be5186999b1177a5eaf6fdb6affe3b51bc7fee",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/protocol.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/request-v2.schema.json",
+      "sha256": "e5536d8d2496bf91d61ca11fd6c0a9707648fd3249ab4d551e6ba93eca720bb7",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/request-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/request.schema.json",
+      "sha256": "d4731ef01555145f5c9c440efaeb62bc0932134d1bdca85d23f0c56fdf682f1b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/request.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/resource-measurement-receipt-v1.schema.json",
+      "sha256": "eaa1af6d803676a43ab307cd3d337d2bf3a25e8115bfef8fcc3b851a32999299",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/resource-measurement-receipt-v1.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/schemas.json",
+      "sha256": "378750a74524855d9b4a058e7d73d552f8d3cede6ea3b66d181d6e767231b258",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/schemas.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/tool-index-v2.schema.json",
+      "sha256": "819dc30bbd81fd3ed7565319f5ab4f8a0b96df337375fa3950fd33467d12f396",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/tool-index-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/tool-result-v2.schema.json",
+      "sha256": "6c4f4518b7b453555593ef8d7cdf47e360114b764f886397e282c6199c42c751",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/tool-result-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/training-receipt-v2.schema.json",
+      "sha256": "12075566366684fc3c30b4895e7bbfe1db8215a656e5c777caebff2534a377b5",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/training-receipt-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/turn-result-v2.schema.json",
+      "sha256": "55ce228711e5c704f422cab5b60d4cf055672fb564e2b47fe090093faa45e542",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/turn-result-v2.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/turn-result.schema.json",
+      "sha256": "e77986580d152b604a33bb9e12f43b4281750c605e3f1494ff9d363f6f1e899e",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/turn-result.schema.json"
+      ]
+    },
+    {
+      "historical_path": "sdk/spec/versions.json",
+      "sha256": "15feccf30f4fce17ff8d0016c19df9e99ecbadf829700542af249838d8807b65",
+      "recovery_method": "current_tree",
+      "matches": [
+        "platform/_shared/spec/versions.json"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/_repo.py",
+      "sha256": "3396f93f3bff5af5e406d4c7db3d2b32249436aa382c18cfefcc901295d5967b",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/_repo.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/adaptive_tool_context_51m.py",
+      "sha256": "5725e42e27f78adb3b8e71c3131c715a2ba7fd581e768f61a13c607b9309310b",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/adopt_productization_upstream_51m.py",
+      "sha256": "5a2c9265438c952ea26f286bb1092b10638433a0f22439a3d6a8d585b8cfd9b5",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/adopt_productization_upstream_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/audit_cpt_synthetic_diversity_51m.py",
+      "sha256": "b6fef5cdbe66ad7d63e963cc3528ae7dcba98cb543db27f810d8351c45121190",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/training/cpt/audit_cpt_synthetic_diversity_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/base_candidate_51m.py",
+      "sha256": "ec98f51600e68c49750a5e306cd8017d26e1df2b82288b9c754dfff9fd490326",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/bench_pretrain_layout.py",
+      "sha256": "d94a6ab86898dda8e238f0b9b68d27dcf822a081a6508e6ffe4e2557aa372534",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/bench_pretrain_layout.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/benchmark_mlx_runtime_51m.py",
+      "sha256": "17be2dfa91193a60a4460e6672adac364f3d00833d5fbba906e3dc8f56e0bdbf",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/benchmark_mlx_runtime_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/check_cpt_readiness.py",
+      "sha256": "080a69138bde199986f2be7089d4a13c16c54787ac3c0dc246ac80a524647715",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/check_cpt_readiness.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/check_pretrain_readiness.py",
+      "sha256": "d64bcd7853cea0547b751807f6ef15dc95cf88d0b83468de9d5738745ec074e3",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/check_pretrain_readiness.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/check_qat_pilot_readiness.py",
+      "sha256": "131df7cb9bc41fca6ba429f8123c167d81ff7217c59b5c69714cc0539fc248f1",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/check_qat_pilot_readiness.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/checkpoint.py",
+      "sha256": "948dfc1251f4d011b8b21b05370e8be7478c05fe4959340726ba9a5428403f6f",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/checkpoint.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/clarify_base_eligibility_51m.py",
+      "sha256": "44e9616ce829d7c6ffa8bff2ecd50f4ef9810962b92c7de3ac7bdbe6bc2fd428",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/clarify_base_eligibility_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/compare_longitudinal_products_51m.py",
+      "sha256": "7578f6c6e458c610074f9bd2a11ad8b45d10b7ca2a263693702905238a302101",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/compare_portable_heads_51m.py",
+      "sha256": "5fbef7dd3ded81f933bf912a98f1c3e5b0780a3b2398c128c8fe7574ee3a7b4d",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/compare_portable_heads_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/cpt_gates.py",
+      "sha256": "71e356cad7e303b026816561bb1b6cb86963abaaf505b2cb0ebee1d7472ceb05",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/cpt_gates.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/cpt_service.py",
+      "sha256": "0337cc1f47ebce5631b56ac3acde6b808a87ad5b3d394be91a26c2791d5e2c45",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/cpt_service.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/cq2_policy_51m.py",
+      "sha256": "471d1e5c07095c512f6f2eac1fbfced141d082024a9bba3bda9376529314c1b7",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/training/qat/cq2_policy_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/cq2_qat_51m.py",
+      "sha256": "08f829d9af5254ce77716699f3b1c866a00d7a7dd483b27c8883f94702a576d7",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/cq2_qat_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/data.py",
+      "sha256": "25de17295619fef03400011ef826323b3e1e593a69be82d7119599662e2f97ce",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/data.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/eval_lock_v2_51m.py",
+      "sha256": "b33f508b337e31c77605f2a885e2865bdc2fb7184667da782996dc2acacf3b65",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/eval_lock_v2_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/eval_q4_parity_51m.py",
+      "sha256": "03759c0da619e9d9c881d9ccb03cb70877ffafe66a4c8409288af7b7984d56c1",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/eval_q4_parity_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/evaluate_narration_adapter_51m.py",
+      "sha256": "626d3a322e56db6f5a09277b9a50d25ab668fdbdc231dda0a72ec6f85ac4c2ca",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/evaluate_narration_adapter_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/export_mlx_qat_golden_51m.py",
+      "sha256": "2e96660abf608d36347d52060922206d23263495705a8c3b3eb259a86631ad97",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/export_mlx_qat_golden_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/final_audit_51m.py",
+      "sha256": "68b45ef7721063129931bddb6beaf8ac6a14a02130c15e2a6eba72055d871e36",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/final_audit_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_agent_sft_release_51m.py",
+      "sha256": "663d05b20af24b1b9e532728d3748c4f3f7372fdcae4539a8ed61dc8582f292e",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_agent_sft_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_float_baseline_51m.py",
+      "sha256": "ec6303500da428eb0b462d73d6b12a30bfafa269d97ae8389480c966dc5ee6e8",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_float_baseline_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_longitudinal_eval_51m.py",
+      "sha256": "fea5d6202c264d2c1b39116eec7775530014740bed7a1110a061978a557868e1",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_longitudinal_eval_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_longitudinal_eval_v7_51m.py",
+      "sha256": "92c68bcef7c028b2f4838f93d22d2a408c793798d93a138890da27326b1e081f",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/freeze_longitudinal_eval_v7_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_narration_sft_release_51m.py",
+      "sha256": "8125778a9664d093888c120cc0c3f89bf6bb23762bffddccae018e79abd6faf9",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_narration_sft_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_narration_sft_release_v2_51m.py",
+      "sha256": "bd723658dd6f49ffafa17490bb74705d0e4e1f4ae6afe01831cfb533aeaa9bc4",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_narration_sft_release_v2_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_sft_linguistic_augmentation_v2_51m.py",
+      "sha256": "506f043bdc867912c9bccc154976bd2da38421c5f0f6b29656b8b5f578d05a06",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/freeze_sft_linguistic_augmentation_v2_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_sft_natural_augmentation_51m.py",
+      "sha256": "617a7f3b6e63183dc0651b15b25c0a9d85d7372a43fc3418c6a708857f4686bd",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/freeze_sft_natural_augmentation_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_sft_releases_51m.py",
+      "sha256": "7065442c22b0fa61734badd047cb62bd88aeb8ffe3fd57dcc7b3161f66bb6826",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_sft_releases_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_sft_v3_release_51m.py",
+      "sha256": "f54d3ffd54d099db1627c107730cef72cf33e5072956b793c1deb3b5af17190e",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_sft_v3_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/freeze_sft_v4_release_51m.py",
+      "sha256": "b686f535289c8a0c4e61b15af669e86be665a5adea97a2eb0490d36605511bc9",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/freeze_sft_v4_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/hard_gate_summary_51m.py",
+      "sha256": "b5b10bb7f1f9674524f004040149a1856e344cc1359c96ca92086714588d4430",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/hard_gate_summary_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/identity_51m.py",
+      "sha256": "96875e5f700f3f1c58e96d6457bd3e79bb50a1e1ce4a719c25643d911b53b7cd",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/identity_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/lifecycle_51m.py",
+      "sha256": "fabe809792e1b3689c2bc2a3fd2469eedc708547afa73369eb72c824f6ccae0a",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/lifecycle_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/longitudinal_eval_metrics_51m.py",
+      "sha256": "18598af220723fe62fbbcd8a167b8ad692828fe6a98c0faf0e9ee010337e9bee",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/longitudinal_eval_metrics_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/measure_resources_51m.py",
+      "sha256": "6315c924b3a7f2a39fa0c89c5abf9198d44282a638ef5a3b8ad2f0675d9d6b63",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/measure_resources_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/mlx_memory_policy_51m.py",
+      "sha256": "561e8dc756b5f98d02d20490a07a535224ea7a533e09754f9eee37544f14aa44",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/common/mlx_memory_policy_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/mtp_ablation_51m.py",
+      "sha256": "8409bab78e5b43257673346b5934cbd5281f55dba98d79b93838436b0662a780",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/mtp_ablation_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/needle2_alignment_51m.py",
+      "sha256": "56873707f468c1c02174e5362f2d06ae113bccf9d5921271165091d7cafadae1",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/needle2_alignment_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/pack_cq2_v2_51m.py",
+      "sha256": "9abf442b81e523ae085adbaa71b99b49108582110af55c3e8d559692bc440cb6",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/pack_q4_51m.py",
+      "sha256": "4fdb0285d35d36baeaf118fe236448a5778aff55edbe508ae8d792598c14e307",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/pack_q4_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/pack_qat_51m.py",
+      "sha256": "c72f7172416fce557758132ecde688d91d818bd8bb00536860c7f0cdb05a4840",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/pack_qat_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/preflight_sft_v3_51m.py",
+      "sha256": "c4191ac02456cfa6fef2926574b8c1c9e23fadf3af4ef4c7ffa95c074cd1b524",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/pretrain_gates.py",
+      "sha256": "308803a5a085861f74227c08ad696e6ffd968ccfea54a6a8c987880c2b47fd1f",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/pretrain_gates.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/productize_51m.py",
+      "sha256": "bde0d4167ac0f93f597793061f7d4200cc7a463385beac7700a348be23b97c22",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/productize_adaptive_v5_51m.py",
+      "sha256": "d6046ecbc991bf88ec37e4a4203cd2c0b45c5f601ccea92e751954a42ddd5488",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/productize_sft_v3_300m.py",
+      "sha256": "54de84e91a2b7f6bcb04c06813844605fae211ee6a70aac30bd03bbda897d099",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/promote_cpt1b_base.py",
+      "sha256": "b048587e5b509f9d57c1d7c92224867ebbb07ee194da0c745becb8277dc39ac8",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/compatibility/promote_cpt1b_base.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/promote_scratch_base.py",
+      "sha256": "688e9979096e249a0a5cb1db3ff98a7f8b51c251d8c60f6edf00f6143ef66bc2",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/compatibility/promote_scratch_base.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/promote_scratch_base_51m.py",
+      "sha256": "ec9e1d97e76615bccfae97bd7a643f857f584417258b674ff11e85cf20f71cb9",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/compatibility/promote_scratch_base_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/qat_51m.py",
+      "sha256": "cef5fcd4312e43bc5b54ace6c8ddebbc5cb82296ba7ef49edd9ec822d6357f80",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/qat_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/qat_cq2_replay_51m.py",
+      "sha256": "6120d9a87ce98bcedc048b1f95e9fd907b5156550126278d3dc040e63fd1d67f",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/qat_cq2_replay_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/qat_cq2_v2_51m.py",
+      "sha256": "7f2c98b40fd9d7192480faf1251c3c77699c249e34813f6d5b1f484af9693265",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/qat_q4_three_runtime_parity_51m.py",
+      "sha256": "12078c338c759c996d0acc8bcdd709635acb6065117a9ff55eade6aa18c895bf",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/qat_q4_three_runtime_parity_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/qat_replay_51m.py",
+      "sha256": "5ac85d3934aab28cb8d4ff4389b7822db52de6a561d5d536fa9bb4bd42541ba0",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/qat_replay_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/quant_ops_51m.py",
+      "sha256": "e94cf975835386659ed8468c7be4cfb0c055693376c69cb79f9ee181d507ccec",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/quant_ops_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/quant_pack_51m.py",
+      "sha256": "983e7b964013a160d93721e219ab8af19872f77f740bae0ed6b02f14bee6d549",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/release/quant_pack_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/resource_baseline_51m.py",
+      "sha256": "3ac3009eb0eca3279a6aaa9221b51e1089d1b7fe1afaf993288b75b4b6482c1e",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/resource_baseline_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_downstream_final_audit_51m.py",
+      "sha256": "0e1ad62bc14b18f5d937afc354257665f5d8d83fa5ac99b19a4472d252c8ebc4",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/run_downstream_final_audit_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_downstream_mtp_ablation_51m.py",
+      "sha256": "8b2d0e1c82cd92c543ec7d7f932aa9dabbd7372c3511f2f91856fd5c7580e500",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/run_downstream_mtp_ablation_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_downstream_needle2_alignment_51m.py",
+      "sha256": "6fa5911c4dee032614ea66e2243de802a856352080c054b8463b192723b5eb4e",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/run_downstream_needle2_alignment_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_downstream_portable_gates_51m.py",
+      "sha256": "5ead76dc0b3da9431fa08116fdb3633c03b634b2225f805a747e153db8ac7097",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/run_downstream_portable_gates_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_downstream_resource_gates_51m.py",
+      "sha256": "606ee8d26f9eaa7e37679d0e4312cf6bd2bee636d73bdb1ad6d5ee1d39670ebd",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_lock.py",
+      "sha256": "29d5210d7c8212facc8675d8e42028bc9ff320655dbf21af8bb1bcaa5f9bbd98",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/run_lock.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_paired_product_runtime_gates_51m.py",
+      "sha256": "e934da545711dff22425f284dce61c1298e1ea110a77b4fc0e7a15e4f2f69e49",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_scratch_curriculum.py",
+      "sha256": "bd2e0b9b63d31719d66bd6deb3cb52ffbca1b18e00b08ba7ad4dd9452136e039",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/run_scratch_curriculum.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_scratch_curriculum_51m.py",
+      "sha256": "e5b781392eda11848c9f0bf0b9dfd844d7e96d2bdb76ce298c7f0b45a6a740a9",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/run_scratch_curriculum_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_sft_gap_delta_ab_51m.py",
+      "sha256": "dbd044e8146e6a53c046cac41e16b1c0278419bcf49409e790c6f3f6a38ccd62",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/diagnostics/run_sft_gap_delta_ab_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/run_three_runtime_parity_51m.py",
+      "sha256": "a683097a622cc4581cff687d76930e18fe189eed01868cd9555ae49e447db1b8",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/run_three_runtime_parity_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/scan_pack_budget_51m.py",
+      "sha256": "2369c40f005fa509147640e1c8aee141f5cde2b26841c1218029494954941caa",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/scan_pack_budget_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/scan_ptq_51m.py",
+      "sha256": "0003e7ba8ae0fcf98d97f277b0a0e2c32aebdd687e90a885cddd135fb62f6468",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/scan_ptq_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/sft_v3_contract_51m.py",
+      "sha256": "9fd37e0482cc075361678320eaa0057851041bf807aa05f2bda23a84fb42788c",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/sft_v3_contract_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/sft_v3_eval_51m.py",
+      "sha256": "8628fa266384628effa9f73ffbea490a127266fa8737369f67d864a30036ec96",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/sft_v3_training_51m.py",
+      "sha256": "aaa6fb75c63e0434c904415b41832f8850a74ee6404bc221545d2867d5e03da3",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/sft_v3_training_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/sft_v4_contract_51m.py",
+      "sha256": "85eabe261030420642f9e1610784d79cd47a3dd5db29b4bbb2c1d81f05a9fd31",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/sft_v4_contract_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/smoke_apple_q4_51m.py",
+      "sha256": "e9e3371559dcf4d0634c063a07b53b05e6950f9a4513bdbeb3b597871b5e227d",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/smoke_apple_q4_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/smoke_wasm_q4_51m.py",
+      "sha256": "6bc8b21475d7dcf1f0deb961e6c734fc15e6194db7aa121c4e64f373231ea7e7",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/smoke_wasm_q4_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/supervise_paired_adaptive_v5_51m.py",
+      "sha256": "1ac33face76f5d39602346de86be00989917462d1948bfba5f2f04591df8bee0",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/supervise_paired_sft_v4_51m.py",
+      "sha256": "6b02516aadc1e94084f3a442d23ca741f8655cf315d9c04067117e457b6a7fed",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/supervise_paired_sft_v4_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_adaptive_tool_context_51m.py",
+      "sha256": "7e07bfcab8c9b39a34766e987e217370bc0f42d0b92fb0d960b4b2be5aa544d3",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_agent_sft_release_51m.py",
+      "sha256": "a3eaf2da34115e329bcb71c43f87f1446a55c86151c2fdcddce0e0d7d9ed7682",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_agent_sft_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_arch_51m_readiness.py",
+      "sha256": "85c03e041f13d6afa88b8460faa3fa04d428f444efb5b2474a7479df48c97d1f",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_arch_51m_readiness.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_architecture_contract_51m.py",
+      "sha256": "bdb6923a3d2e60c3deb006b5da0e68b1ed769d41033f40a1330f2c5a5fce4fc6",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_audit_cpt_synthetic_diversity_51m.py",
+      "sha256": "dde4e6f165c14c85070cca808f5104690363b3424ef8d40888e00c54f3c9712f",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_audit_cpt_synthetic_diversity_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_base_candidate_51m.py",
+      "sha256": "db82122c6b1c76ab66a7a74b156f1c1f172d4c786178a699dc9b14c22fb68dc2",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_clarify_base_eligibility_51m.py",
+      "sha256": "5fe304226e41c9bf3c40d3932c412eceab3860987835f221217d347e1def3851",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_clarify_base_eligibility_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_compare_longitudinal_products_51m.py",
+      "sha256": "01a2941ce35b9a310c4f31e8eba6896efad7995324f4564cf874a52ea6da6e4e",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_cpt_continuation.py",
+      "sha256": "ed2fa3698345c06bb8b82154020785fd6d0b238b185426116e844a7672114978",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_cpt_continuation.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_cpt_ledger.py",
+      "sha256": "6d3f354286515c3a84bfa19c3565fe8564b87a572802818fdbf2d373a459d3ad",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_cpt_ledger.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_cpt_service.py",
+      "sha256": "67f9f087e457db50b5724c6d39ee6a901b73157175950bde01c15d2fc633a49c",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_cpt_service.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_cq2_qat_51m.py",
+      "sha256": "b57baf677e453a6a0850de81f234da29438650ba9c22f61058bda64fa71ea0eb",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_cq2_qat_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_curriculum_resume.py",
+      "sha256": "c1a1f9896b7d6eae910e9d95f66c450365a4a8f903224b6443c47cc70088737d",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_curriculum_resume.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_evaluate_narration_adapter_51m.py",
+      "sha256": "94f73fd05c8e678cb60d7477e5ff70648089cb9a8b0228b13285355dc15f32fc",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_evaluate_narration_adapter_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_lifecycle_51m.py",
+      "sha256": "ad42e6e1e693e10a4d31cb2320c81ac314b71f11278192d8f317f32f225b73d0",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_lifecycle_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_longitudinal_eval_metrics_51m.py",
+      "sha256": "e7c6753a95fd4980a30b81e002814e97044f316a2cb63170e0999612114d1bf8",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_longitudinal_eval_metrics_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_measure_resources_51m.py",
+      "sha256": "48fafffcffddeb52d55b43fc91dfb8b8b7b6ea4dcd5c05d72e4600fb92ea3d92",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_measure_resources_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_narration_sft_release_51m.py",
+      "sha256": "d4ba958a4442cfc5be3346fce7ee927214471027ea0ede2d018c09a20e6ec4b4",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_narration_sft_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_narration_sft_release_v2_51m.py",
+      "sha256": "a2071ef2564e86db7b7286bac2b5decd5434f249b9a2ea7acbd77f36885c14cf",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_narration_sft_release_v2_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_preflight_sft_v3_51m.py",
+      "sha256": "2778af84a48e1090fdd457da94640982444bc6a1dbf8d4f7e7740ca0b01a98d3",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_preflight_sft_v3_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_pretrain_readiness.py",
+      "sha256": "d76441296ba5ef30f4b2e3ea5f7abbd6b5e3ef50bd56ec08cfba6ed4f5f28fe6",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_product_gates_51m.py",
+      "sha256": "7e1dd00ec382e8c66dae75c7629663652f43510ea961d2bd8320512c026cefe1",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_product_gates_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_product_heads_51m.py",
+      "sha256": "940e7c3af32984824a10c1d89d1857653f0fd00c0c58372be3f588db0d16aa7f",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_product_heads_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_productize_51m.py",
+      "sha256": "f95ffe97b0554244ce425fccbf4c3250b096330e620f0a6f33a407c305ef0a5d",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_productize_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_productize_adaptive_v5_51m.py",
+      "sha256": "685763950574c4bda9e8476b6aa2954fb105d0fe03489ff18020495b6ad2c057",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_productize_sft_v3_300m.py",
+      "sha256": "8015e2e1d26c78f54f391e8b15722d89b1686b5fbc6d3138199f87b45c591af1",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_productize_sft_v3_300m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_ptq_51m_scan.py",
+      "sha256": "5f75bdcbbb390a4607c34db4063f141c4775205888e5b6571612f1c0a48d1ae9",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_ptq_51m_scan.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_qat_ste_51m.py",
+      "sha256": "1f71206235e8b06d67d2852da519ca8773d6cfa994c5845a0c8df41b56048116",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_qat_ste_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_quant_pack_51m.py",
+      "sha256": "41f570ceb67a4dbcbeb8f13d2d4aa02b26a48f8a9b795ce0b91ad96c4b416606",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_quant_pack_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_quota_sampler.py",
+      "sha256": "8b9dce185d10e499a332a7b36717b96c5928c4361eb535bd0b06e9672d65be50",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_quota_sampler.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_run_downstream_portable_gates_51m.py",
+      "sha256": "9c1b5dbc08f234b8a316c1c6292fe19e1f3a3fd4011d7882a94c700e7dc6f894",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_run_downstream_portable_gates_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_run_paired_product_runtime_gates_51m.py",
+      "sha256": "e6ece5ad27e6386b43c4dd91cbb134c774afd39dff7b5d10587456bfd5f332c2",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_run_paired_product_runtime_gates_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_natural_augmentation_51m.py",
+      "sha256": "650fdb9464adfaa113f799b23b1d4a83405403d4058ef47d59cd96b19176ab21",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_natural_augmentation_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v3_contract_51m.py",
+      "sha256": "cebdbfc4fbddf90080e93c7dd6069c69ead62eb888a0af0b3899af681d920383",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_v3_contract_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v3_eval_51m.py",
+      "sha256": "dde92069e3cac72a81061a99867a22dac2e3962ea8f17d2aba22a458a3ea0c38",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_v3_eval_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v3_training_51m.py",
+      "sha256": "4ff28fd9c0e57db3aaa97819004d926e38494649160a0eff7a482bf4eb400969",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_v3_training_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v4_contract_51m.py",
+      "sha256": "aac885493aa65673b7d9aa8a08ddf405b898abd2f7e56e335a643bac4b6a4c4e",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/test_sft_v4_contract_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v4_eval_51m.py",
+      "sha256": "dfba27d0e2146ada77ddbbeb8691647205af0182c24daf612bc25b2ed0e8f9d4",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_v4_eval_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v4_linguistic_51m.py",
+      "sha256": "8b6ad3a578c17b6afa551d8aa1929142e3dd6745fbbe54963703679e148278b0",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_v4_linguistic_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_sft_v4_release_51m.py",
+      "sha256": "59e6cb31c68e4f2b5b8e40c38af56ee3d02e98f4b7e97f687a5a543882e96f1b",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_sft_v4_release_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_supervise_paired_adaptive_v5_51m.py",
+      "sha256": "ca5af6462f30007d703bcaf71109a90f6b4f7d2a89071a06d8c6eaa2e39f6ee9",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_supervise_paired_sft_v4_51m.py",
+      "sha256": "7cbc7b13793b3298a865391023b30d44759b73000d95565f2dffe6aa28b2eb4a",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_supervise_paired_sft_v4_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/test_verify_downstream_package_51m.py",
+      "sha256": "0e8d1bbaea7bfccb033e8771918d9622e57d9efb22ad709d260e19931a903d9b",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/test_verify_downstream_package_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_common.py",
+      "sha256": "e9809a7688643a493663a4ad2ebce1c546e4fa281c412842cd8a89f318a241c2",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/common/train_common.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_confidence_51m.py",
+      "sha256": "9090c4501b7f5d6fbbe699b7f86fb5686bf8a8b213eb012b5dfa0ea7d3285f69",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/train_confidence_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_contrastive_51m.py",
+      "sha256": "11b6f95cc6cff64e7985980ea83cab259d068b7890a1eeea3d1ad3e00a516fc0",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/train_contrastive_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_pretrain.py",
+      "sha256": "3b6d06829fab704d02fc42f7c8434708ce7e64bc17275008f50cf922b8533bdb",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/train_pretrain.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_sft.py",
+      "sha256": "61a8f733cf740c1cc3281965765ba5b8cb249d2a19c70f3533180169e5d09e64",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/train_sft.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_sft_51m.py",
+      "sha256": "e5d822a22549c53ad5c0f6974d3288907d5cb2163ed4ebff2759a037a6e750a6",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/train_sft_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/train_sft_ondisk_51m.py",
+      "sha256": "6d8eab4d79d9d55addddb0ba2a14194c554737692efd985c4f0f0634b7bbefdd",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/train_sft_ondisk_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/validate_product_chain_51m.py",
+      "sha256": "c5594e5696562becd73e74683a2107443d0bd68d4501c810acce36abcedc3646",
+      "recovery_method": "recovery_archive",
+      "matches": [
+        ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz!/.internal/src/mei_llm/training/pipelines/validate_product_chain_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/verify_arbitrary_base_entry_51m.py",
+      "sha256": "9ef9995f8cb4648f80034ef754a3a8381bd170f23b19acc350b219654adbb422",
+      "recovery_method": "git_head",
+      "matches": [
+        "training/mei-1.0-51m-train-v1/verify_arbitrary_base_entry_51m.py"
+      ]
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/verify_downstream_package_51m.py",
+      "sha256": "4dafb2eea2436dbaeaecbee70647655082cae5c6dae76a551617ada0b0d06c19",
+      "recovery_method": "unavailable",
+      "matches": []
+    },
+    {
+      "historical_path": "training/mei-1.0-51m-train-v1/watch_lock_v2_mem.py",
+      "sha256": "93e396af93a7e00cc887d5266cc454a9d0443911ba35d0267b9b2077d694ae4b",
+      "recovery_method": "current_tree",
+      "matches": [
+        "model-factory/diagnostics/watch_lock_v2_mem.py"
+      ]
+    }
+  ],
+  "claim": "recoverable means exact bytes exist locally; unavailable means the run retains only the recorded hash and is not exactly source-reproducible"
+}

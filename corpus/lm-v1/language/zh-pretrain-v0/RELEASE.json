@@ -1,9 +1,0 @@
-{
-  "id": "zh-pretrain-v0",
-  "status": "active",
-  "role": "wiki",
-  "tokenizer": "zh-24k-v1",
-  "n_train_tokens": 649904474,
-  "n_valid_tokens": 34610229,
-  "n_unique_train_tokens": 649904474
-}

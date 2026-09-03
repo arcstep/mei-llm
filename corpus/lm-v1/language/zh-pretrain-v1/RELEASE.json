@@ -1,8 +1,0 @@
-{
-  "id": "zh-pretrain-v1",
-  "status": "inactive",
-  "role": "language-1b-sidecar",
-  "tokenizer": "zh-24k-v1",
-  "n_train_tokens": 1039713595,
-  "note": "Frozen 1B sidecar. Not an active source in corpus/lm-v1 mix.json."
-}

@@ -1,1 +1,0 @@
-{"families":["agent_travel","agent_finance","agent_virtual_card","agent_medical","agent_logistics"],"network":false,"result_statuses":["ok"],"schema":"mei-deterministic-host-simulator-v1","semantics":"pure deterministic call arguments to ToolResultV2 payload fixtures","side_effects":false,"simulator_id":"mei-agent-host-simulator-v1","wire_version":"mei-runtime-wire-v2"}

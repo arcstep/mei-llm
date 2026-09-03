@@ -1,0 +1,81 @@
+{
+  "schema": "mei-llm-shallow-root-cleanup-receipt-v1",
+  "cleanup_id": "2026-09-shallow-root",
+  "completed_on": "2026-09-03",
+  "status": "passed",
+  "source_git_revision": "17513c4da11bec8ccf07f43eba92756a08450848",
+  "scope": "shallow_navigation_and_support_layer_relocation",
+  "visible_business_directories": [
+    "corpus-factory",
+    "cycles",
+    "models",
+    "platform"
+  ],
+  "hidden_support_directories": {
+    ".internal": [
+      "src",
+      "tests",
+      "registry",
+      "experiments"
+    ],
+    ".local": [
+      "artifacts",
+      "dist"
+    ]
+  },
+  "relocated_entries": {
+    "src": ".internal/src",
+    "tests": ".internal/tests",
+    "registry": ".internal/registry",
+    "experiments": ".internal/experiments",
+    "artifacts": ".local/artifacts",
+    "dist": ".local/dist",
+    "platform/sdk/target": ".local/cache/cargo-sdk-target",
+    "platform/sdk/target-check": ".local/cache/cargo-sdk-target-check",
+    "docs/mei-1.0-51m-work-guide.md": "cycles/mei-1.0-51m/LIFECYCLE.md",
+    "releases/mei-1.0-51m/README.md": "cycles/mei-1.0-51m/RELEASES.md"
+  },
+  "removed_obsolete_root_directories": [
+    "artifacts",
+    "docs",
+    "experiments",
+    "registry",
+    "releases",
+    "src",
+    "tests",
+    "dist"
+  ],
+  "current_json": {
+    "sha256_before": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607",
+    "sha256_after": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607",
+    "mutated": false
+  },
+  "artifact_move": {
+    "method": "same_filesystem_atomic_rename",
+    "base_hashes_revalidated": true,
+    "historical_receipts_rewritten": false,
+    "legacy_paths_resolved_by": ".internal/registry/migrations/2026-09-four-domain.json"
+  },
+  "validation": {
+    "visible_root_contract_tests": "passed",
+    "lifecycle_and_training_pipeline_tests": 209,
+    "support_and_corpus_factory_tests": 27,
+    "python_sdk_tests": 106,
+    "javascript_sdk_tests": 27,
+    "rust_tests_passed": 55,
+    "rust_tests_ignored": 1,
+    "architecture_direct_check": "passed",
+    "cargo_hidden_target_resolution": "passed",
+    "registry_cli_smoke": "passed",
+    "canonical_cursor_skill_sha_parity": "passed",
+    "active_docs_relative_links": "passed",
+    "json_syntax": "passed",
+    "git_diff_check": "passed"
+  },
+  "boundaries": {
+    "training_started": false,
+    "git_commit_created": false,
+    "git_push_performed": false,
+    "public_release_performed": false
+  }
+}

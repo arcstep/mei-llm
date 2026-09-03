@@ -1,9 +1,0 @@
-{
-  "colloquial": {
-    "license": "synthetic; internal generators; no third-party web scrape",
-    "generator": "offline-frame-renderer",
-    "admitted_for_engineering": true,
-    "admitted_for_formal_cpt": false,
-    "cwt2": "excluded"
-  }
-}

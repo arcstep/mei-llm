@@ -1,7 +1,0 @@
-{
-  "kind": "qat-q4-logit-threshold-preregister",
-  "registered_from": "notebook/evaluation/jobs/mei-1.0-51m/q4-dequant-parity.json",
-  "max_abs_logit_delta": 2.7,
-  "note": "Ceiling is the frozen PTQ vs-float max_abs (2.61) plus margin. Not tuned on the QAT three-runtime run.",
-  "not_from_this_qat_run": true
-}

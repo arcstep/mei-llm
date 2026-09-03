@@ -1,0 +1,1 @@
+"""Corpus-factory integration tests."""

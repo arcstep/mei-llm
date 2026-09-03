@@ -1,5 +1,0 @@
-{
-  "status": "invalid_for_publish",
-  "packs": ["mei-tool-sft-v1-2k.jsonl", "mei-tool-sft-v1-10k.jsonl"],
-  "reason": "meta stems, no per-argument provenance, body near-dup with eval, open-string gold without source chain"
-}

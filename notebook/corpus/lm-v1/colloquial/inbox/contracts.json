@@ -1,9 +1,0 @@
-{
-  "topic": "colloquial-cpt",
-  "contract": "notebook/base/pretrain-v1/spec/colloquial-synth-v1.json",
-  "prompt_version": "colloquial-synth-v1",
-  "frozen_snapshot": "qwen-plus-2025-12-01",
-  "formal_requires_generator": "qwen-plus",
-  "pooled_unique_target": 30000000,
-  "note": "Mixed-generator packs may be stored under corpus/lm-v1/colloquial/ without mix admission. CPT stays fail-closed until the frozen qwen-plus contract is met."
-}

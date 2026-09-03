@@ -1,0 +1,73 @@
+{
+  "schema": "mei-platform-model-assets-migration-receipt-v1",
+  "migration_id": "2026-09-platform-model-assets",
+  "completed_at_utc": "2026-09-03T04:52:00Z",
+  "source_git_revision": "17513c4da11bec8ccf07f43eba92756a08450848",
+  "status": "passed",
+  "current_json": {
+    "mutated": false,
+    "sha256": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+  },
+  "platform": {
+    "public_entries": [
+      "platform/python-sdk",
+      "platform/browser-sdk"
+    ],
+    "shared_implementation": "platform/_shared",
+    "experimental_implementation": "platform/_experimental",
+    "removed_active_roots": [
+      "platform/runtime",
+      "platform/sdk",
+      "platform/packaging"
+    ],
+    "history_source": "git_revision_and_cycle_source_manifest"
+  },
+  "model_assets": {
+    "canonical_root": "models/mei-1.0-51m/releases",
+    "cycles": [
+      "exp-000300m",
+      "exp-000600m"
+    ],
+    "asset_manifests": [
+      "models/mei-1.0-51m/releases/exp-000300m/ASSETS.json",
+      "models/mei-1.0-51m/releases/exp-000600m/ASSETS.json"
+    ],
+    "promotion_method": "independent_apfs_clone_copy_then_sha256_verify",
+    "binary_files_read_only": true,
+    "historical_run_evidence_preserved": true,
+    "off_device_backup_status": "open"
+  },
+  "verification": {
+    "canonical_asset_inventory": "passed",
+    "canonical_packages_protocol_load": "passed",
+    "artifact_uri_hash_verification": "passed",
+    "python_tests": {
+      "passed": 105,
+      "failed": 0
+    },
+    "rust_core_tests": {
+      "passed": 54,
+      "ignored": 1,
+      "failed": 0
+    },
+    "browser_wrapper_tests": {
+      "passed": 27,
+      "failed": 0
+    },
+    "lifecycle_pipeline_tests": {
+      "passed": 209,
+      "failed": 0
+    },
+    "layout_and_corpus_factory_tests": {
+      "passed": 29,
+      "failed": 0
+    },
+    "skill_mirror_byte_exact": true
+  },
+  "boundaries": [
+    "No CPT, QAT, or SFT training was started by this migration.",
+    "No Git commit or push was performed.",
+    "No public release was performed.",
+    "A second local copy is not an off-device disaster-recovery backup."
+  ]
+}

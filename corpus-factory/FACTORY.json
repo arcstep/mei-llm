@@ -1,0 +1,22 @@
+{
+  "schema": "mei-llm-corpus-factory-v1",
+  "factory_id": "mei-51m-corpus-factory",
+  "status": "active",
+  "implementation_history": "git",
+  "outputs_are_cycle_bound": true,
+  "domains": ["cpt", "sft", "eval"],
+  "sft_capabilities": [
+    "retrieval",
+    "no_match",
+    "fixed_five_cross_batch_scan",
+    "full_call",
+    "argument_filling",
+    "agent_1_to_4_step",
+    "mw_disposition_20_class",
+    "runtime_outcome",
+    "confidence_calibration",
+    "terminal_narration_zh"
+  ],
+  "release_states": ["candidate", "reviewed", "frozen", "rejected"],
+  "reuse_actions": ["reuse", "replace", "retire"]
+}

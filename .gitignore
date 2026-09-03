@@ -4,100 +4,24 @@ __pycache__/
 .venv/
 .env
 *.egg-info/
+.pytest_cache/
+.ruff_cache/
 
-# Published tokenizer: keep v1 model + sidecar
-!tokenizer/zh-24k-v1/zh-24k-v1.model
-!tokenizer/zh-24k-v1/zh-24k-v1.vocab
-!tokenizer/zh-24k-v1/*.json
-!tokenizer/zh-24k-v1/*.md
-!tokenizer/zh-24k-v1/vocab.txt
+# Large, cycle-bound evidence and release exports are local-only.
+.local/artifacts/**
+!.local/artifacts/.gitkeep
+.local/dist/**
+!.local/dist/README.md
+.local/cache/**
 
-# Published corpus: atlas/json/md only; never tokens/raw/shards/bin or process leftovers
-corpus/**
-!corpus/README.md
-!corpus/lm-v1/
-!corpus/lm-v1/**
-corpus/lm-v1/**/tokens/
-corpus/lm-v1/**/raw/
-corpus/lm-v1/**/shards/
-corpus/lm-v1/**/reviews/
-corpus/lm-v1/**/hashes/
-corpus/lm-v1/**/*.bin
-corpus/lm-v1/**/*.parquet
-corpus/lm-v1/**/*.jsonl
-corpus/lm-v1/**/*.sha256
-corpus/lm-v1/**/extract-manifest.json
-corpus/lm-v1/**/ingest-cursor.json
-corpus/lm-v1/**/ingest-stats.json
-corpus/lm-v1/**/recipe-lock.json
-corpus/lm-v1/**/parents.json
-corpus/lm-v1/**/unique-ledger.json
-corpus/lm-v1/**/source-role.json
-corpus/lm-v1/**/approved-colloquial.json
-base/**
-!base/README.md
-sft/**
-!sft/README.md
+# Local Rust/WASM build caches.
+platform/_shared/target/
+platform/_shared/target-check/
 
-# Formal training runs (checkpoints / logs)
-training/runs/**
-!training/runs/.gitkeep
-
-
-# Notebook process artifacts
-notebook/**/*.parquet
-notebook/**/*.bin
-notebook/**/*.model
-notebook/**/*.vocab
-notebook/**/*.safetensors
-notebook/**/*.npz
-notebook/**/*.sqlite
-notebook/**/*.xml*
-notebook/**/*.bz2
-notebook/**/*.gz
-notebook/**/*.zst
-notebook/**/*.7z
-notebook/**/state/
-notebook/**/shards/
-notebook/**/raw/
-notebook/**/dumps/
-notebook/**/tokens/
-notebook/**/hashes/
-notebook/archive/runs/**
-notebook/archive/base/**
-!notebook/archive/base/**/registry/
-!notebook/archive/base/**/registry/**
-notebook/**/*.jsonl
-!notebook/evaluation/banks/**/*.jsonl
-!notebook/sft/mei-1.0-51m/train/packs/home-sft-2k.jsonl
-!notebook/sft/mei-1.0-51m/train/packs/mw-sft-v0-2k.jsonl
-!notebook/sft/mei-1.0-51m/train/packs/mei-toolcall-v2-smoke.jsonl
-!notebook/sft/mei-1.0-51m/train/seed/*.jsonl
-notebook/archive/corpus/_probe/cache/
-notebook/archive/corpus/_probe/samples/
-notebook/archive/corpus/_probe/wiki-hashes/
-notebook/archive/corpus/_probe/licenses/
-!notebook/evaluation/banks/**/*.json
-!notebook/evaluation/banks/**/README.md
-!notebook/evaluation/shared/**
-!notebook/_tooling/scripts/**
-notebook/_tooling/scripts/__pycache__/
-!notebook/_tooling/model/**
-!notebook/_tooling/skills/**
-!notebook/_tooling/requirements/**
-!notebook/_tooling/model/**/*.py
-!notebook/base/pretrain-v1/spec/**
-!notebook/base/pretrain-v1/*.md
-!notebook/base/pretrain-v1/*.json
-!notebook/sft/**/*.md
-!notebook/sft/**/*.json
-!notebook/corpus/**/*.md
-!notebook/corpus/**/*.json
-!notebook/_migration/**
-!notebook/**/README.md
-!notebook/**/job.json
-!notebook/**/receipt.json
-!notebook/**/seeds/**
-
-# Job scratch
-notebook/**/_/
+# Canonical model releases are first-class local assets, not rebuild outputs.
+# Keep their human/machine-readable inventories in Git; keep weight/package
+# payloads out of the public repository and back them up separately.
+models/*/releases/*/base/
+models/*/releases/*/qat/
+models/*/releases/*/sft/
+models/*/releases/*/package/

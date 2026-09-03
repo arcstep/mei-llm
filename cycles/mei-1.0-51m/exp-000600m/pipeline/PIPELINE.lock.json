@@ -1,0 +1,80 @@
+{
+  "schema": "mei-cycle-pipeline-lock-v1",
+  "model_id": "mei-1.0-51m",
+  "cycle_id": "exp-000600m",
+  "pipeline_id": "mei-51m-adaptive-productization-v5",
+  "pipeline_registry": "model-factory/contracts/PIPELINES.json",
+  "source_capture_mode": "reconstructed",
+  "exact_reproducible": false,
+  "reconstruction_note": "The Base launch captured a source manifest with hybrid-recovery lineage. Productization receipts are hash-bound, but the weakest component audit has 29 of 242 entries without locally recoverable exact bytes. Downstream closure used a separate packaged-run adoption.",
+  "current_entrypoint": "orchestration.productize_adaptive_v5_51m",
+  "historical_entrypoint_root": "training/mei-1.0-51m-train-v1",
+  "base_training": {
+    "historical_method": "continued pretraining from the frozen 300M parent",
+    "current_equivalent_entrypoint": "orchestration.lifecycle_51m",
+    "source_run": "training/runs/mei-1.0-51m/20260902-cpt-600m-clean-source-v3",
+    "source_capture_mode": "launch",
+    "lineage_assurance": "hybrid_recovery",
+    "release_evidence": "models/mei-1.0-51m/releases/exp-000600m/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/RELEASE.json",
+    "note": "The checkpoint is numerically continuation-eligible, but the lineage/corpus confounds prohibit automatic parent promotion."
+  },
+  "stages": [
+    "adopt_training_prefix_v4",
+    "seed_adaptive_views_v5",
+    "fullcall_alignment_replay_v5",
+    "agent_alignment_replay_v5",
+    "retrieval_r2_v5",
+    "final_adaptive_artifacts_v5",
+    "adopt_adaptive_prefix_v5",
+    "adaptive_generation_eval_v5",
+    "mw_disposition_v5",
+    "confidence_harvest_v5",
+    "confidence_head_v5",
+    "narration_adapter_v5",
+    "sidecar_runtime_eval_v5",
+    "package_v2_cq2_v5",
+    "adopt_packaged_run_v5",
+    "python_runtime_gate_v5",
+    "browser_wasm_gate_v5",
+    "final_audit_v5"
+  ],
+  "run_components": [
+    {
+      "role": "adaptive_training_prefix",
+      "run_id": "productize-cpt600m-adaptive-v5-cq2-v2-6c3da768deef",
+      "run_fingerprint_sha256": "6c3da768deef44d83905699c15a4b4177c596b81cd00e5282b81dc64926f9283",
+      "evidence_scope": "training-prefix adoption through final adaptive artifacts",
+      "plan_sha256": "d0f34052bbf40db275db02538d45960ddfe427043232938c7712a06aea321b4a",
+      "source_manifest_sha256": "60b7323c0ff7d761d791f8e75283f3588c73d23d535633bf0c7f8bab7ecae090"
+    },
+    {
+      "role": "heads_and_package",
+      "run_id": "productize-cpt600m-adaptive-v5-cq2-v2-43bdca400ac1",
+      "run_fingerprint_sha256": "43bdca400ac1fd63504418b3de95d5104f7dcd08a91c73f8f5faa6085bfc4270",
+      "evidence_scope": "adaptive evaluation, MW, confidence, narration and CQ2 package",
+      "plan_sha256": "8eba952ddfa3fb19202d3ef862f9e47826697fa8c5b46d47696349611d9817a0",
+      "source_manifest_sha256": "ffdae530360b64079b42ea0aa2faf5c6f09a795103dea13e01ad5dcf9a023ba5"
+    },
+    {
+      "role": "downstream_runtime_closure",
+      "run_id": "productize-cpt600m-adaptive-v5-cq2-v2-12f9799bc945",
+      "run_fingerprint_sha256": "12f9799bc945c515839c306354fddc077a80dac4c73c428a90956ea0d2b13c53",
+      "evidence_scope": "packaged-run adoption, Python gate, Browser-WASM gate and final audit",
+      "plan_sha256": "76716925df9d291016563844a88f435809a9e5c7a0f5b5adfbe7b6818517cc51",
+      "source_manifest_sha256": "9b7f3648bbb77437b31e2992477d1dedab6af2ee2eec24f854e1aefe23cdb415"
+    }
+  ],
+  "source_recovery": {
+    "audits": [
+      "cycles/mei-1.0-51m/exp-000600m/pipeline/SOURCE_RECOVERY.prefix.json",
+      "cycles/mei-1.0-51m/exp-000600m/pipeline/SOURCE_RECOVERY.json",
+      "cycles/mei-1.0-51m/exp-000600m/pipeline/SOURCE_RECOVERY.downstream.json"
+    ],
+    "manifest_entries": 242,
+    "exact_recoverable": 213,
+    "exact_unavailable": 29,
+    "coverage_basis": "weakest 242-entry productization component audit; downstream audit separately covers 244 entries with the same 29 unavailable"
+  },
+  "future_run_requirement": "Freeze Git revision, dirty-tree patch or source bundle, complete source manifest and per-stage source closure before execution."
+}
+

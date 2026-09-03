@@ -1,1 +1,5 @@
--r notebook/_tooling/requirements/requirements.txt
+# Optional; install what the runner you use needs.
+# MLX local (Apple Silicon student + evaluation oracle).
+mlx>=0.20
+openai>=1.40
+python-dotenv>=1.0

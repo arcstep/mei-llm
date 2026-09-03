@@ -1,0 +1,47 @@
+{
+  "schema": "mei-llm-path-migration-v1",
+  "migration_id": "2026-09-four-domain",
+  "source_git_revision": "17513c4da11bec8ccf07f43eba92756a08450848",
+  "current_json_sha256": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607",
+  "current_json_mutated": false,
+  "old_receipts_are_immutable": true,
+  "exact": {
+    "architecture/mei-1.0-51m-arch-v1": "models/mei-1.0-51m/architecture",
+    "tokenizer/zh-24k-v1": "models/mei-1.0-51m/tokenizer",
+    "base/mei-1.0-51m-base-scratch300m-v1": "models/mei-1.0-51m/releases/exp-000300m/base/mei-1.0-51m-base-scratch300m-v1",
+    "base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1": "models/mei-1.0-51m/releases/exp-000600m/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
+    "runtime": "platform/_shared/runtime",
+    "runtime/_shared": "platform/_shared/runtime",
+    "sdk/python": "platform/python-sdk",
+    "sdk/js": "platform/browser-sdk",
+    "sdk/spec": "platform/_shared/spec",
+    "sdk/fixtures": "platform/_shared/fixtures",
+    "sdk/tools": "platform/_shared/tools",
+    "sdk/rust": "platform/_shared/rust",
+    "sdk/Cargo.toml": "platform/_shared/Cargo.toml",
+    "sdk/Cargo.lock": "platform/_shared/Cargo.lock",
+    "sdk/.cargo": "platform/_shared/.cargo",
+    "sdk/c": "platform/_experimental/c",
+    "corpus/lm-v1": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1",
+    "corpus/lm-v2-cpt-600m": ".local/artifacts/mei-1.0-51m/exp-000600m/corpus/cpt-delta/lm-v2-cpt-600m"
+  },
+  "prefix": {
+    "runtime/": "platform/_shared/runtime/",
+    "runtime/_shared/": "platform/_shared/runtime/",
+    "sdk/python/": "platform/python-sdk/",
+    "sdk/js/": "platform/browser-sdk/",
+    "sdk/spec/": "platform/_shared/spec/",
+    "sdk/fixtures/": "platform/_shared/fixtures/",
+    "sdk/tools/": "platform/_shared/tools/",
+    "sdk/rust/": "platform/_shared/rust/",
+    "sdk/.cargo/": "platform/_shared/.cargo/",
+    "sdk/c/": "platform/_experimental/c/",
+    "notebook/sft/mei-1.0-51m/releases/": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/",
+    "notebook/": ".local/artifacts/_legacy/notebook/"
+  },
+  "notes": [
+    "Historical receipts retain their original path strings and hashes.",
+    "CURRENT.json retains its original bytes; consumers resolve paths through this registry.",
+    "Legacy flat training paths moved again to categorized model-factory paths and are resolved by model-factory/contracts/LEGACY_PATH_MAP.json."
+  ]
+}

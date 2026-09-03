@@ -1,7 +1,0 @@
-{
-  "n": 2000,
-  "n_train": 1806,
-  "n_valid": 194,
-  "cf_cross_split": {},
-  "ok": true
-}

@@ -1,0 +1,24 @@
+{
+  "id": "mei-1.0-51m-arch-v1",
+  "kind": "architecture",
+  "product": "mei-1.0-51m",
+  "status": "active_weight_architecture",
+  "parent_architecture": null,
+  "lineage": "git_history_before_mei-1.0-51m-arch-v1",
+  "tokenizer": "models/mei-1.0-51m/tokenizer",
+  "spec": "spec/model.json",
+  "params": 51463797,
+  "legacy_architecture_sha256": "84568ca0ecccab4316a39a8ec6d7e31901ea17218c084ac2e1140eafa05c9c41",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "runtime_profile_sha256": "f3a4ab1151e82299fee0214c5f78a18c20d83367d24a9dc073bbcd56312fa512",
+  "runtime_profile_compatibility_receipt": "spec/runtime-profile-compatibility.json",
+  "training_aux_sha256": "83849db3926693e49c0896a58c172ae15e4b203550cee0ef12a4c37a8c1d48ac",
+  "legacy_alias_receipt": "spec/legacy-architecture-aliases.json",
+  "fixed_non_parameters": [
+    "walsh_hadamard_transform",
+    "mhc_pre_off",
+    "mhc_post_off"
+  ],
+  "sinkhorn_iters": 20,
+  "engram_history_tokens": 12
+}

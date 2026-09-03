@@ -1,0 +1,12 @@
+{
+  "schema": "mei-llm-cycle-freeze-proposal-v1",
+  "cycle_id": "exp-000600m",
+  "process_complete": true,
+  "release_eligible": false,
+  "continuation_checkpoint_eligible": true,
+  "automatic_parent_promotion_eligible": false,
+  "corpus_reuse_eligible": false,
+  "proposal_is_not_promotion": true,
+  "current_mutated": false,
+  "current_baseline_sha256": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+}

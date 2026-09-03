@@ -1,0 +1,19 @@
+{
+  "schema": "mei-llm-model-registry-v1",
+  "models": [
+    {
+      "model_id": "mei-1.0-51m",
+      "status": "active_primary",
+      "deployed_lm_parameters": 51463797,
+      "tokenizer_id": "zh-24k-v1",
+      "model_contract": "models/mei-1.0-51m/MODEL.json",
+      "canonical_releases": "models/mei-1.0-51m/releases",
+      "cycle_index": "cycles/mei-1.0-51m/INDEX.md",
+      "current_pointer": "CURRENT.json"
+    }
+  ],
+  "future_families": {
+    "policy": "create_only_when_a_concrete_architecture_contract_exists",
+    "examples": ["multimodal", "realtime-voice"]
+  }
+}

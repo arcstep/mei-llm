@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mei-model-factory-pipeline-lock-v1",
+  "title": "MEI model cycle pipeline lock",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "model_id",
+    "cycle_id",
+    "pipeline_id",
+    "source_capture_mode",
+    "exact_reproducible",
+    "current_entrypoint",
+    "stages",
+    "run_components",
+    "source_recovery"
+  ],
+  "properties": {
+    "schema": {"const": "mei-cycle-pipeline-lock-v1"},
+    "model_id": {"type": "string", "minLength": 1},
+    "cycle_id": {"type": "string", "pattern": "^exp-[0-9]{6,}m$"},
+    "pipeline_id": {"type": "string", "minLength": 1},
+    "pipeline_registry": {"type": "string", "minLength": 1},
+    "source_capture_mode": {"enum": ["pre_run_frozen", "reconstructed"]},
+    "exact_reproducible": {"type": "boolean"},
+    "reconstruction_note": {"type": "string"},
+    "current_entrypoint": {"type": "string", "minLength": 1},
+    "historical_entrypoint_root": {"type": "string"},
+    "base_training": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["historical_method", "source_run", "source_capture_mode", "release_evidence"],
+      "properties": {
+        "historical_method": {"type": "string", "minLength": 1},
+        "current_equivalent_entrypoint": {"type": "string", "minLength": 1},
+        "source_run": {"type": "string", "minLength": 1},
+        "source_capture_mode": {"type": "string", "minLength": 1},
+        "lineage_assurance": {"type": "string", "minLength": 1},
+        "release_evidence": {"type": "string", "minLength": 1},
+        "note": {"type": "string"}
+      }
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "run_components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "run_id", "run_fingerprint_sha256", "evidence_scope"],
+        "properties": {
+          "role": {"type": "string", "minLength": 1},
+          "run_id": {"type": "string", "minLength": 1},
+          "run_fingerprint_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "evidence_scope": {"type": "string", "minLength": 1},
+          "plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "source_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "source_recovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audits", "manifest_entries", "exact_recoverable", "exact_unavailable"],
+      "properties": {
+        "audits": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "manifest_entries": {"type": "integer", "minimum": 0},
+        "exact_recoverable": {"type": "integer", "minimum": 0},
+        "exact_unavailable": {"type": "integer", "minimum": 0},
+        "coverage_basis": {"type": "string"}
+      }
+    },
+    "future_run_requirement": {"type": "string"}
+  }
+}

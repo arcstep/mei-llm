@@ -1,0 +1,80 @@
+{
+  "schema": "mei-cycle-pipeline-lock-v1",
+  "model_id": "mei-1.0-51m",
+  "cycle_id": "exp-000300m",
+  "pipeline_id": "mei-51m-adaptive-productization-v5",
+  "pipeline_registry": "model-factory/contracts/PIPELINES.json",
+  "source_capture_mode": "reconstructed",
+  "exact_reproducible": false,
+  "reconstruction_note": "The model and stage receipts are hash-bound, but 29 of 242 source-manifest entries have no locally recoverable exact bytes. Later downstream closure came from a separately fingerprinted packaged-run adoption.",
+  "current_entrypoint": "orchestration.productize_adaptive_v5_51m",
+  "historical_entrypoint_root": "training/mei-1.0-51m-train-v1",
+  "base_training": {
+    "historical_method": "scratch curriculum pretraining",
+    "current_equivalent_entrypoint": "orchestration.lifecycle_51m",
+    "source_run": "training/runs/pretrain-mei-1.0-51m-base-scratch300m-v1",
+    "source_capture_mode": "legacy_unspecified",
+    "lineage_assurance": "legacy_unspecified",
+    "release_evidence": "models/mei-1.0-51m/releases/exp-000300m/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json",
+    "note": "The current lifecycle entrypoint is the supported future equivalent; it is not claimed to be the exact historical source."
+  },
+  "stages": [
+    "adopt_training_prefix_v4",
+    "seed_adaptive_views_v5",
+    "fullcall_alignment_replay_v5",
+    "agent_alignment_replay_v5",
+    "retrieval_r2_v5",
+    "final_adaptive_artifacts_v5",
+    "adopt_adaptive_prefix_v5",
+    "adaptive_generation_eval_v5",
+    "mw_disposition_v5",
+    "confidence_harvest_v5",
+    "confidence_head_v5",
+    "narration_adapter_v5",
+    "sidecar_runtime_eval_v5",
+    "package_v2_cq2_v5",
+    "adopt_packaged_run_v5",
+    "python_runtime_gate_v5",
+    "browser_wasm_gate_v5",
+    "final_audit_v5"
+  ],
+  "run_components": [
+    {
+      "role": "adaptive_training_prefix",
+      "run_id": "productize-scratch300m-adaptive-v5-cq2-v2-164574857928",
+      "run_fingerprint_sha256": "1645748579287d16c7fbd1c2233f71052e01abd18a6fc51a18c75c3f4500802b",
+      "evidence_scope": "training-prefix adoption through final adaptive artifacts",
+      "plan_sha256": "062d9d7a252a914070417ec18fefe7e90fecfb342c46b5791fc78e9ef47c9742",
+      "source_manifest_sha256": "60b7323c0ff7d761d791f8e75283f3588c73d23d535633bf0c7f8bab7ecae090"
+    },
+    {
+      "role": "heads_and_package",
+      "run_id": "productize-scratch300m-adaptive-v5-cq2-v2-40ba9754076e",
+      "run_fingerprint_sha256": "40ba9754076e3b16116c53303682d98a722bab504c036a5747e7c662cda9f0ff",
+      "evidence_scope": "adaptive evaluation, MW, confidence, narration and CQ2 package",
+      "plan_sha256": "e3dbfafef9d177d383dda826726aa443b62574effdb27757437db1be460cfb1a",
+      "source_manifest_sha256": "30ba92a5db658d037c008ce5f8a213db893cfda8d000d4cc23f205dad4c8333c"
+    },
+    {
+      "role": "downstream_runtime_closure",
+      "run_id": "productize-scratch300m-adaptive-v5-cq2-v2-5bff9f523787",
+      "run_fingerprint_sha256": "5bff9f52378769ee4549f0fb72466ecfa63e9ac57942c1782c9a16c9c809ea59",
+      "evidence_scope": "packaged-run adoption, Python gate, Browser-WASM gate and final audit",
+      "plan_sha256": "46f96e81f2b7a4d6c03cbab231dd43614daacba9bc7db65cc152df20240aa8b5",
+      "source_manifest_sha256": "9b7f3648bbb77437b31e2992477d1dedab6af2ee2eec24f854e1aefe23cdb415"
+    }
+  ],
+  "source_recovery": {
+    "audits": [
+      "cycles/mei-1.0-51m/exp-000300m/pipeline/SOURCE_RECOVERY.prefix.json",
+      "cycles/mei-1.0-51m/exp-000300m/pipeline/SOURCE_RECOVERY.json",
+      "cycles/mei-1.0-51m/exp-000300m/pipeline/SOURCE_RECOVERY.downstream.json"
+    ],
+    "manifest_entries": 242,
+    "exact_recoverable": 213,
+    "exact_unavailable": 29,
+    "coverage_basis": "weakest 242-entry productization component audit; downstream audit separately covers 244 entries with the same 29 unavailable"
+  },
+  "future_run_requirement": "Freeze Git revision, dirty-tree patch or source bundle, complete source manifest and per-stage source closure before execution."
+}
+

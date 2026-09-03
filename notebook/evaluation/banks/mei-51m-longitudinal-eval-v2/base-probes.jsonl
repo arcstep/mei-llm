@@ -1,7 +1,0 @@
-{"probe_id": "PROBE-UTF-001", "family": "utf8_roundtrip", "input": "把「龙」字原样输出", "target": "龙"}
-{"probe_id": "PROBE-COPY-001", "family": "copy", "input": "原样抄写：厨房灯打开", "target": "厨房灯打开"}
-{"probe_id": "PROBE-NUM-001", "family": "number", "input": "三千五百写成阿拉伯数字", "target": "3500"}
-{"probe_id": "PROBE-DATE-001", "family": "date", "input": "二零二六年八月二十四日写成 ISO 日期", "target": "2026-08-24"}
-{"probe_id": "PROBE-JSON-001", "family": "json", "input": "空工具列表", "target": "[]"}
-{"probe_id": "PROBE-JSON-002", "family": "json", "input": "点头的 JSON", "target": "{\"name\":\"nod\",\"arguments\":{}}"}
-{"probe_id": "PROBE-INSTR-001", "family": "instruction", "input": "只回答：收到", "target": "收到"}

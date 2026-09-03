@@ -1,0 +1,9 @@
+{
+  "schema": "mei-llm-eval-lock-binding-v1",
+  "cycle_id": "exp-000300m",
+  "lock_id": "mei-51m-longitudinal-eval-v7",
+  "status": "frozen_consumed",
+  "locked_test_used_for_threshold_tuning": false,
+  "comparison_peer": "exp-000600m",
+  "source": "adaptive-v5 paired final receipts"
+}

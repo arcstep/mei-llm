@@ -1,6 +1,0 @@
-{
-  "status": "legacy_diagnostic_only",
-  "invalid_for_v2_publish": true,
-  "kind": "construction_pool",
-  "note": "universe-pool-v0 is a Route-ID construction pool, not a frozen EVAL bank. Excluded from cpt-v2/sft-v2 isolation scopes. Do not rewrite hash."
-}

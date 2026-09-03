@@ -1,0 +1,15 @@
+{
+  "schema": "mei-model-factory-pre-refactor-source-snapshot-v1",
+  "created_utc": "2026-09-03T05:30:00Z",
+  "artifact": ".local/recovery/model-factory-source-pre-refactor-20260903T053000Z.tar.gz",
+  "bytes": 1668451,
+  "sha256": "bccc7d0cb28700fb8046ea51c2bf10fb56a360b1266653109aca7dd0119b9e94",
+  "mode": "0444",
+  "contents": [
+    "pre-refactor hidden training and evaluation source",
+    "pre-refactor CLI and registry source"
+  ],
+  "purpose": "local recovery safety net for the visibility refactor; not a formal historical run source bundle",
+  "git_commit_at_capture": "17513c4da11bec8ccf07f43eba92756a08450848"
+}
+

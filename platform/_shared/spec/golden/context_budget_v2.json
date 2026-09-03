@@ -1,0 +1,38 @@
+{
+  "case_id": "fixed-five-compact-joint-budget-v1",
+  "recipe": {
+    "tool_count": 5,
+    "tool_description_unit": "用于执行中文设备控制并返回可信状态。",
+    "tool_description_repeat": 90,
+    "parameter_description_unit": "这是必须保持参数名类型枚举范围不变的中文说明。",
+    "parameter_description_repeat": 55,
+    "history_unit": "这是较早的会话历史，预算紧张时应从最旧记录开始淘汰。",
+    "history_repeat": 90,
+    "query_unit": "请根据最新可信结果完成设备操作，同时保留问题的开头和结尾。",
+    "query_repeat": 180
+  },
+  "profile": "compact",
+  "output_reserve": 128,
+  "expected": {
+    "selected_tools": [
+      "device.action_0",
+      "device.action_1",
+      "device.action_2",
+      "device.action_3",
+      "device.action_4"
+    ],
+    "schema_projection_sha256": "f7c3827c8f0d1340a6f7d9eab430015f53e1f0e39d4e2c97f3baf678aad907ee",
+    "prompt_tokens": 1920,
+    "schema_tokens": 1024,
+    "schema_compression_level": "descriptions",
+    "omitted_description_tokens": 20557,
+    "input_compression_level": "query",
+    "dropped_history": 3,
+    "compacted_tool_results": ["old-call", "latest-call"],
+    "dropped_evidence": 2,
+    "dropped_context_keys": ["low", "high"],
+    "query_clipped": true,
+    "visible_query_tokens": 608,
+    "assistant_suffix": true
+  }
+}

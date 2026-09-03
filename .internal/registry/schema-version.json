@@ -1,0 +1,7 @@
+{
+  "schema": "mei-llm-registry-version-v1",
+  "version": 1,
+  "artifact_uri_scheme": "mei-artifact",
+  "cycle_schema": "mei-llm-cycle-v1",
+  "corpus_schema": "mei-llm-cycle-corpus-v1"
+}

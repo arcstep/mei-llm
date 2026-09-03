@@ -1,0 +1,166 @@
+{
+  "schema": "mei-model-factory-code-catalog-v1",
+  "status_definitions": {
+    "current": "May be selected as a formal entrypoint for a new cycle.",
+    "active_support": "Used by a current pipeline but not selected directly by users.",
+    "verification": "Tests contracts or implementations and does not produce model lineage.",
+    "diagnostic_only": "May emit measurements but must not produce a formal model release.",
+    "maintained_compatibility": "Kept to read or reproduce named historical receipts; not a default new-cycle entrypoint.",
+    "retired": "Read-only historical evidence; must not be invoked for a new cycle."
+  },
+  "directory_contracts": [
+    {
+      "path": "model-factory/common",
+      "status": "active_support",
+      "role": "shared identity, paths, checkpoint, data, memory and run-lock primitives"
+    },
+    {
+      "path": "model-factory/contracts",
+      "status": "active_support",
+      "role": "machine-readable and executable lifecycle contracts"
+    },
+    {
+      "path": "model-factory/training",
+      "status": "active_support",
+      "role": "weight-changing CPT, QAT, tool-use and head training implementations"
+    },
+    {
+      "path": "model-factory/training/cpt",
+      "status": "active_support",
+      "role": "Base scratch/continued pretraining workers, readiness and corpus diversity gates"
+    },
+    {
+      "path": "model-factory/training/qat",
+      "status": "active_support",
+      "role": "CQ2 mainline and Q4 diagnostic quantization-aware training"
+    },
+    {
+      "path": "model-factory/training/tool_use",
+      "status": "active_support",
+      "role": "fixed-five adaptive context, full-call, Agent continuation and tool-use SFT primitives"
+    },
+    {
+      "path": "model-factory/training/heads",
+      "status": "active_support",
+      "role": "retrieval, confidence and training-only MTP head workers; MW remains a distinct productization stage"
+    },
+    {
+      "path": "model-factory/evaluation",
+      "status": "active_support",
+      "role": "non-mutating base, tool-use, head, resource and alignment evaluation"
+    },
+    {
+      "path": "model-factory/evaluation/base",
+      "status": "active_support",
+      "role": "Float Base anchors, language loss and pretraining probes"
+    },
+    {
+      "path": "model-factory/evaluation/tool_use",
+      "status": "active_support",
+      "role": "locked retrieval, full-call, parameter and Agent evaluation"
+    },
+    {
+      "path": "model-factory/evaluation/heads",
+      "status": "active_support",
+      "role": "independent auxiliary-head and narration evaluation"
+    },
+    {
+      "path": "model-factory/evaluation/resources",
+      "status": "active_support",
+      "role": "Python/MLX and Browser-WASM parity, throughput, package and memory gates"
+    },
+    {
+      "path": "model-factory/evaluation/alignment",
+      "status": "active_support",
+      "role": "cross-cycle causal eligibility and Needle2 mechanism alignment"
+    },
+    {
+      "path": "model-factory/orchestration",
+      "status": "active_support",
+      "role": "stage DAG, lifecycle, recovery and supervisor implementations"
+    },
+    {
+      "path": "model-factory/release",
+      "status": "active_support",
+      "role": "candidate registration, freeze proposal, packaging and release audit"
+    },
+    {
+      "path": "model-factory/recipes",
+      "status": "active_support",
+      "role": "versioned parameters consumed by registered pipelines"
+    },
+    {
+      "path": "model-factory/tests",
+      "status": "verification",
+      "role": "unit, integration, layout and historical-source recovery gates"
+    },
+    {
+      "path": "model-factory/diagnostics",
+      "status": "diagnostic_only",
+      "role": "benchmarks, scans, A/B experiments and operational observation"
+    },
+    {
+      "path": "model-factory/compatibility",
+      "status": "retired",
+      "role": "legacy entrypoints and migration evidence"
+    }
+  ],
+  "entrypoint_overrides": [
+    {
+      "module": "orchestration.lifecycle_51m",
+      "status": "current",
+      "role": "arbitrary cumulative-exposure CPT lifecycle"
+    },
+    {
+      "module": "orchestration.productize_adaptive_v5_51m",
+      "status": "current",
+      "role": "adaptive fixed-five batched tool-use productization"
+    },
+    {
+      "module": "orchestration.supervise_paired_adaptive_v5_51m",
+      "status": "current",
+      "role": "paired-cycle unattended productization and comparison"
+    },
+    {
+      "module": "orchestration.productize_51m",
+      "status": "active_support",
+      "role": "generic fingerprinted productization primitives"
+    },
+    {
+      "module": "orchestration.productize_sft_v3_300m",
+      "status": "maintained_compatibility",
+      "role": "historical 300M SFT-v3 pipeline"
+    },
+    {
+      "module": "orchestration.supervise_paired_sft_v4_51m",
+      "status": "maintained_compatibility",
+      "role": "historical paired SFT-v4 supervisor"
+    },
+    {
+      "module": "training.qat.qat_cq2_v2_51m",
+      "status": "active_support",
+      "role": "current CQ2 QAT coordinator"
+    },
+    {
+      "module": "training.qat.cq2_qat_51m",
+      "status": "active_support",
+      "role": "current CQ2 QAT worker"
+    },
+    {
+      "module": "training.tool_use.sft_v3_training_51m",
+      "status": "active_support",
+      "role": "current reusable tool-use training primitives; basename retained for receipt compatibility"
+    },
+    {
+      "module": "training.tool_use.train_sft",
+      "status": "maintained_compatibility",
+      "role": "legacy generic SFT entrypoint"
+    },
+    {
+      "module": "training.tool_use.train_sft_51m",
+      "status": "maintained_compatibility",
+      "role": "legacy 51M SFT entrypoint"
+    }
+  ],
+  "selection_rule": "A filename version suffix never selects a pipeline. Only a current entry in PIPELINES.json plus a cycle pipeline lock may do so."
+}

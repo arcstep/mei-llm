@@ -1,0 +1,12 @@
+[build]
+target-dir = "../../../.local/cache/cargo-sdk-target"
+
+[target.wasm32-unknown-unknown]
+rustflags = [
+  "-C", "panic=abort",
+  "-C", "target-feature=+simd128",
+  # Keep the declared baseline below the 96 MiB product gate. Linear memory
+  # remains growable; the resource probe records the actual high-water mark.
+  "-C", "link-arg=--initial-memory=33554432",
+  "-C", "link-arg=--max-memory=536870912",
+]

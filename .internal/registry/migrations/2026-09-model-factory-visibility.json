@@ -1,0 +1,49 @@
+{
+  "schema": "mei-model-factory-visibility-migration-receipt-v1",
+  "migration_id": "2026-09-model-factory-visibility",
+  "completed_at_utc": "2026-09-03T05:30:00Z",
+  "source_git_revision": "17513c4da11bec8ccf07f43eba92756a08450848",
+  "status": "passed",
+  "result": {
+    "visible_domain": "model-factory",
+    "thin_cli_source": "src/mei_llm",
+    "hidden_python_source_count": 0,
+    "legacy_training_paths_mapped": 131,
+    "intermediate_hidden_paths_mapped": 12,
+    "legacy_path_map": "model-factory/contracts/LEGACY_PATH_MAP.json",
+    "current_pipeline_registry": "model-factory/contracts/PIPELINES.json",
+    "code_catalog": "model-factory/contracts/CODE_CATALOG.json"
+  },
+  "cycle_bindings": [
+    "cycles/mei-1.0-51m/exp-000300m/pipeline/PIPELINE.lock.json",
+    "cycles/mei-1.0-51m/exp-000600m/pipeline/PIPELINE.lock.json"
+  ],
+  "historical_source_recovery": {
+    "source_capture_mode": "reconstructed",
+    "exact_reproducible": false,
+    "weakest_manifest_entries": 242,
+    "weakest_exact_recoverable": 213,
+    "weakest_exact_unavailable": 29,
+    "pre_refactor_archive_receipt": "model-factory/compatibility/PRE_REFACTOR_SOURCE_SNAPSHOT.json"
+  },
+  "validation": {
+    "model_factory_tests_passed": 233,
+    "corpus_factory_tests_passed": 15,
+    "python_sdk_tests_passed": 105,
+    "rust_core_tests_passed": 54,
+    "rust_core_tests_ignored": 1,
+    "browser_wrapper_tests_passed": 27,
+    "python_browser_wasm_gate": "passed",
+    "skill_mirror": "byte_exact"
+  },
+  "current_json": {
+    "mutated": false,
+    "sha256": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+  },
+  "boundaries": [
+    "No CPT, QAT, or SFT training was started.",
+    "No historical receipt was rewritten.",
+    "No Git commit or push was performed.",
+    "No public release was performed."
+  ]
+}

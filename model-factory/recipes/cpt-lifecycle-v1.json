@@ -1,0 +1,116 @@
+{
+  "schema_version": 2,
+  "id": "mei-1.0-51m-cpt-lifecycle-v2",
+  "product": "mei-1.0-51m",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "params": 51463797,
+  "offline_required": true,
+  "current_policy": "read_only_until_explicit_user_freeze",
+  "exposure_milestones": [300000000, 600000000, 1000000000, 2000000000],
+  "exposure_policy": "any positive cumulative target with an immutable matching schedule",
+  "rung_names": {
+    "300000000": "300m",
+    "600000000": "600m",
+    "1000000000": "1b",
+    "2000000000": "2b"
+  },
+  "stage_order": [
+    "corpus_freeze",
+    "cpt_readiness",
+    "cpt",
+    "cpt_gate",
+    "float_anchor",
+    "qat_q4",
+    "pack_q4",
+    "runtime_parity",
+    "cq2",
+    "quant_aware_sft",
+    "lock_v2",
+    "resource",
+    "hard_gate"
+  ],
+  "tracks": {
+    "cpt": ["corpus_freeze", "cpt_readiness", "cpt", "cpt_gate"],
+    "product": ["float_anchor", "qat_q4", "pack_q4", "runtime_parity", "cq2", "quant_aware_sft", "lock_v2", "resource", "hard_gate"]
+  },
+  "stages": {
+    "corpus_freeze": {
+      "kind": "internal",
+      "requires": [],
+      "gate": "immutable local manifests, hashes, licence, dedup and contamination evidence"
+    },
+    "cpt_readiness": {
+      "kind": "command",
+      "requires": ["corpus_freeze"],
+      "command": ["{python}", "{model_factory}/training/cpt/check_cpt_readiness.py", "--corpus-dir", "{corpus_dir}", "--target-exposure", "{target_exposure}", "--receipt", "{jobs}/cpt-readiness.json"]
+    },
+    "cpt": {
+      "kind": "command",
+      "requires": ["cpt_readiness"],
+      "command": ["{python}", "{model_factory}/training/cpt/train_pretrain.py", "--rung", "{rung}", "--schedule-kind", "cpt", "--corpus-dir", "{corpus_dir}", "--target-tokens", "{target_exposure}", "--parent", "{parent_state}", "--resume-mode", "continuation", "--out-dir", "{checkpoints}/cpt"]
+    },
+    "cpt_gate": {
+      "kind": "internal",
+      "requires": ["cpt"],
+      "gate": "summary complete, params and architecture immutable, valid/probe/holdout/repeat gates pass"
+    },
+    "float_anchor": {
+      "kind": "command",
+      "requires": ["cpt_gate"],
+      "command": ["{python}", "{model_factory}/evaluation/base/freeze_float_baseline_51m.py", "--out-dir", "{jobs}", "--weights", "{cpt_weights}"]
+    },
+    "qat_q4": {
+      "kind": "command",
+      "requires": ["float_anchor"],
+      "command": ["{python}", "{model_factory}/training/qat/qat_replay_51m.py", "--jobs-dir", "{jobs}", "--init-weights", "{cpt_weights}", "--parent-model-id", "{cpt_model_id}", "--checkpoint-dir", "{checkpoints}/qat-q4", "--resume", "--save-master", "--master-out", "{qat_master}", "--model-id", "{qat_model_id}"]
+    },
+    "pack_q4": {
+      "kind": "command",
+      "requires": ["qat_q4"],
+      "command": ["{python}", "{model_factory}/release/pack_qat_51m.py", "--master", "{qat_master}", "--out-dir", "{packages}/qat-q4", "--package-id", "{qat_package_id}", "--parent-id", "{cpt_model_id}", "--parent-weights-sha256", "{cpt_weights_sha256}", "--jobs-dir", "{jobs}", "--scheme", "q4"]
+    },
+    "runtime_parity": {
+      "kind": "command",
+      "requires": ["pack_q4"],
+      "command": ["{python}", "{model_factory}/evaluation/resources/run_three_runtime_parity_51m.py", "--jobs-dir", "{jobs}", "--package-dir", "{packages}/qat-q4"]
+    },
+    "cq2": {
+      "kind": "command_or_degrade",
+      "requires": ["runtime_parity"],
+      "command": ["{python}", "{model_factory}/training/qat/qat_cq2_replay_51m.py", "--jobs-dir", "{jobs}", "--checkpoint-dir", "{checkpoints}/qat-cq2", "--q4-master", "{qat_master}", "--q4-package-dir", "{packages}/qat-q4", "--cq2-package-dir", "{packages}/cq2"],
+      "degrade_receipt": "qat-cq2-blocked.json",
+      "degrade_key": "quality_blocked",
+      "failure_branch": "q4_only"
+    },
+    "quant_aware_sft": {
+      "kind": "command",
+      "requires": ["cq2"],
+      "command": ["{python}", "{model_factory}/training/tool_use/train_sft_ondisk_51m.py", "--package-dir", "{selected_package}", "--parent-master", "{selected_master}", "--bit-map", "{selected_bit_map}", "--jobs-dir", "{jobs}", "--checkpoint-dir", "{checkpoints}/sft", "--resume", "--out-package-dir", "{sft_package}", "--master-out", "{sft_master}", "--model-id", "{sft_model_id}"]
+    },
+    "lock_v2": {
+      "kind": "command",
+      "requires": ["quant_aware_sft"],
+      "command": ["{python}", "{model_factory}/evaluation/tool_use/eval_lock_v2_51m.py", "--package-dir", "{sft_package}", "--jobs-dir", "{jobs}", "--shard-dir", "{shards}/lock-v2", "--resume", "--max-workers", "1"]
+    },
+    "resource": {
+      "kind": "command",
+      "requires": ["lock_v2"],
+      "command": ["{python}", "{model_factory}/evaluation/resources/resource_baseline_51m.py", "--package-dir", "{sft_package}", "--jobs-dir", "{jobs}"]
+    },
+    "hard_gate": {
+      "kind": "command",
+      "requires": ["resource"],
+      "command": ["{python}", "{model_factory}/orchestration/hard_gate_summary_51m.py", "--jobs-dir", "{jobs}"],
+      "output": "freeze proposal only"
+    }
+  },
+  "hard_rules": {
+    "cq2_failure": "write quality_blocked and continue with QAT Q4",
+    "parity": "same package, tokenizer, prompt and request; Apple/Rust/WASM logits, top-k and generated token IDs must agree",
+    "qat_selection": "retain the product-passing checkpoint with the lowest pre-registered selection_score; later regression cannot overwrite it",
+    "sft": "QAT weight STE and activation/KV int8 STE stay active during full-call SFT; freeze LM before heads",
+    "lock": "threshold files are immutable and pre-registered; a completed lock receipt continues to resource even if scores fail; hard_gate records eligible=false",
+    "current": "never mutate CURRENT.json without an explicit user freeze command"
+  }
+}

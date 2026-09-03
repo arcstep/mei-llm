@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mei-llm-release-v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "release_id",
+    "model_id",
+    "cycle_id",
+    "package_uri",
+    "package_sha256",
+    "status",
+    "clearance"
+  ],
+  "properties": {
+    "schema": {"const": "mei-llm-release-v1"},
+    "release_id": {"type": "string", "minLength": 1},
+    "model_id": {"type": "string", "minLength": 1},
+    "cycle_id": {"pattern": "^exp-[0-9]{6}m$"},
+    "package_uri": {"pattern": "^mei-artifact://"},
+    "package_sha256": {"pattern": "^[0-9a-f]{64}$"},
+    "status": {
+      "enum": ["candidate", "technically_verified", "clearance_pending", "publishable", "published"]
+    },
+    "clearance": {"type": "boolean"},
+    "model_card": {"type": "string"},
+    "evaluation_card": {"type": "string"},
+    "safety_digest": {"type": "string"},
+    "license": {"type": "string"}
+  },
+  "additionalProperties": true
+}

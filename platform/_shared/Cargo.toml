@@ -1,0 +1,35 @@
+[workspace]
+resolver = "2"
+members = [
+  "rust/mei-sdk-core",
+  "rust/mei-sdk-ffi",
+  "rust/mei-sdk-cli",
+  "rust/mei-sdk-wasm",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[workspace.dependencies]
+mei-sdk-core = { path = "rust/mei-sdk-core" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+sha2 = "0.10"
+thiserror = "2"
+hex = "0.4"
+regex = "1.13"
+unicode-normalization = "0.1.25"
+
+# The browser artifact is a single portable inference image.  Cross-crate LTO
+# is important here: otherwise the hot CQ2 row kernels sit behind workspace
+# crate boundaries and LLVM cannot fuse their bounds checks or specialize the
+# fixed 51M geometry.  Keep this as a portable release profile (no host CPU
+# feature assumptions); wasm SIMD is declared separately in `.cargo/config`.
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"

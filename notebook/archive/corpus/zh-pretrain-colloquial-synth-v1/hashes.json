@@ -1,9 +1,0 @@
-{
-  "RELEASE.json": "9b5360e30fd7534c082cfb49c6925751ea9851606c48ddcb8079745baa84fe1b",
-  "unique-ledger.json": "ac4ad95e6c6fed87e875eb45b7e99f537542bce0accc360b11b8645b2b59294c",
-  "manifest.json": "8538f6f1c10dbe23ef7e8e5db0410626662fb6052957e650d5034aaeb028f06d",
-  "recipe-lock.json": "afaf9cb6880200bfc80819e6c0fc294884ae029823fc062ddc13e594764ece9e",
-  "source-license.json": "4e52c35b614d88cc54526ce6d467b8702bacbc5e1f71ea217fa285e4d8613107",
-  "ACCOUNTING.json": "959e9901fdd62610b2481b0832880f5ea2c31119808fb2f39b98e9bb0173c4dd",
-  "ENGINEERING_ONLY.json": "277db0ce3a29c469b0a8268ce891eb03565eb320dc0d41b15254bf09b01b4ce5"
-}

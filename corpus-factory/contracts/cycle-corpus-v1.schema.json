@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mei-cycle-corpus-v1",
+  "type": "object",
+  "required": [
+    "schema", "cycle_id", "model_id", "cpt", "sft", "eval",
+    "reuse_decisions", "quality_gates"
+  ],
+  "properties": {
+    "schema": {"const": "mei-llm-cycle-corpus-v1"},
+    "cycle_id": {"type": "string", "pattern": "^exp-[0-9]{6}m$"},
+    "model_id": {"const": "mei-1.0-51m"},
+    "cpt": {"type": "object"},
+    "sft": {"type": "object"},
+    "eval": {"type": "object"},
+    "reuse_decisions": {"type": "array"},
+    "quality_gates": {"type": "object"}
+  },
+  "additionalProperties": true
+}

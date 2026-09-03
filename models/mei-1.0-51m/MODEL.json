@@ -1,0 +1,17 @@
+{
+  "schema": "mei-llm-model-contract-v1",
+  "model_id": "mei-1.0-51m",
+  "status": "active_primary",
+  "deployed_lm_parameters": 51463797,
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "tokenizer_id": "zh-24k-v1",
+  "max_context_tokens": 2048,
+  "product_goal": "Chinese tool retrieval, constrained calling, multi-step continuation, execution disposition/confidence, and terminal narration",
+  "sidecars_are_outside_lm_parameter_identity": true,
+  "needle2_mechanism_reference_only": true,
+  "cactus_abi_compatible": false,
+  "architecture_path": "models/mei-1.0-51m/architecture",
+  "tokenizer_path": "models/mei-1.0-51m/tokenizer",
+  "canonical_releases_path": "models/mei-1.0-51m/releases",
+  "weight_asset_policy": "immutable_hash_locked_not_rebuildable"
+}

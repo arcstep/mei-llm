@@ -1,0 +1,40 @@
+{
+  "schema": "mei-llm-sft-suite-binding-v1",
+  "cycle_id": "exp-000600m",
+  "suite_id": "mei-1.0-51m-tool-sft-v4-300m-v4+adaptive-v5",
+  "release_id": "mei-1.0-51m-tool-sft-v4-300m-v4",
+  "status": "consumed_reused_from_exp-000300m",
+  "release_manifest_sha256": "5ff8357389aa48559334a15af2a3b76fd517f374e75ac69510f0a1f24054f95b",
+  "tool_universe": {"deploy_tools": 147, "deploy_families": 14, "training_tools": 211, "training_families": 22},
+  "splits": {
+    "retrieval": {"train": 2352, "valid": 588},
+    "linguistic_retrieval": {"train": 1179, "valid": 294},
+    "full_call": {"train": 3528, "valid": 1176},
+    "linguistic_full_call": {"train": 1471, "valid": 588},
+    "agent_continuation": {"train": 3736, "valid": 294},
+    "mw_disposition": {"train": 13763, "valid": 2705},
+    "confidence_harvest_candidates": {"train": 5255, "valid": 2020},
+    "schema_retrieval": {"train": 256, "valid": 256},
+    "schema_full_call": {"train": 256, "valid": 256}
+  },
+  "capabilities": {
+    "retrieval_and_no_match": "trained_and_evaluated_degraded_calibration",
+    "fixed_five_cross_batch_scan": "trained_and_evaluated",
+    "full_call_and_arguments": "trained_and_evaluated",
+    "agent_1_to_4_step": "trained_mechanism_validated_quality_score_open",
+    "mw_disposition_20_class": "trained_degraded",
+    "runtime_outcome": "harvested_balanced",
+    "confidence_calibration": "trained_degraded_ece",
+    "terminal_narration_zh": "trained_with_deterministic_fallback"
+  },
+  "provenance": "manifest_and_stage_receipt_bound",
+  "permission_status": "source_manifest_bound_not_public_clearance",
+  "leakage_status": "passed_for_frozen_release",
+  "shared_comparison_contract": true,
+  "relative_to_parent": {"added_ratio": 0.0, "reused_ratio": 1.0, "retired_ratio": 0.0, "adaptive_views_regenerated_for_final_r2": true},
+  "reuse_action_for_next_cycle": "replace_or_expand",
+  "candidate_factory_release": "mei-1.0-51m-sft-gap-pilot-v1",
+  "candidate_factory_release_status": "training_eligible_not_consumed",
+  "candidate_consumed": false,
+  "reason": "the reused suite closed the mechanism loop but did not establish production quality"
+}

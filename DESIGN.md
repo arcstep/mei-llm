@@ -1,32 +1,78 @@
-# mei-llm 布局
+# mei-llm 五域布局合同
 
-仓根是正式模型产品主路径。`notebook/` 只承担外围准备与治理。
+## 1. 五个域
 
-```text
-CURRENT.json
-tokenizer/zh-24k-v1/                    # 正式词表
-corpus/lm-v1/                            # 已接收语料
-architecture/mei-1.0-51m-arch-v1/      # 现行 51M 主干 + 几何合同
-training/mei-1.0-51m-train-v1/          # 正式 trainer / data / recipes
-training/runs/                           # 正式训练状态与中间 checkpoint
-runtime/mei-1.0-51m-route-v1/           # frozen Route-ID runtime
-runtime/mei-1.0-51m-needle2-v2/         # 历史 Python+MLX 参考实现（非 SDK 产品名）
-sdk/                                     # 实验性 MEI Runtime 嵌入式 SDK（先协议/ABI，后拆仓）
-base/                                    # immutable pretrain/CPT 权重
-sft/                                     # 正式 SFT 权重
-notebook/                                # 语料生产、研究、测试、验证、评测、归档
-```
+| 域 | 事实 | 历史 |
+|---|---|---|
+| `models/` | 模型身份、架构、tokenizer 和通用 recipe | Git |
+| `corpus-factory/` | 数据生产、验证和 release 方法 | Git |
+| `model-factory/` | 训练、评估、编排和发布方法 | Git + cycle pipeline lock/source capture |
+| `cycles/` | 每轮实际使用的语料、模型、指标与决策 | 永久 cycle 记录 |
+| `platform/` | 当前唯一 Runtime/SDK/Packaging 实现 | Git |
 
-约定：
+`models`、`corpus-factory` 与 `model-factory` 分别保存模型身份、数据生产能力和模型生产
+能力；`cycles` 是三者每轮汇合的地方。源码目录不得保存权重，cycle 人类入口不得堆放
+checkpoint，`platform` 不得复制 exposure 历史版本。
 
-1. **Pretrain** = 随机初始化；**CPT** = 从已有 base 续训。二者发布目标都是 `base/`，不是 `cpt/`。
-2. 正式训练从 `training/` 执行，只消费根 `tokenizer/` `corpus/` `architecture/`。不得把 trainer 实现留在 notebook。
-3. `CURRENT.json` 是人读入口。禁止再维护根目录 `corpora/index.json` 或 `tasks/` 双入口。
-4. 已发布 `corpus/lm-v1/` 是冻结消费面：只保留发布合同与 `tokens/*.bin`。加工态（raw、idx、审计、游标、账本）在 `notebook/corpus/lm-v1/`。口语 30.1M mixed-fleet 包已准入内部从零预训练（`roles_complete=true`，`public_distribution_clearance_asserted=false`）。从零四角色混训只使用 `schedule-scratch.json`（`sampler=quota_plan`，300M 精确配额，512→1024→2048 课程）。旧 300M 后续 CPT 计划在 `notebook/archive/plans/20260827-cpt-after-300m/`。
-5. Needle 主干与 runtime 是正式成果：`architecture/` 与 `runtime/`。`notebook/_tooling/model` 仅为兼容 symlink。
-6. `CURRENT.runtime` 未与正式权重组成可部署 release 前可为 `null`；这不否定历史参考实现，也不等于 `sdk/` 已是产品 Runtime。
-7. 隔离门禁：`notebook/_tooling/scripts/check_train_eval_isolation.py --scope cpt-v2|sft-v2`。
-8. 现行产品只登记 `mei-1.0-51m`；immutable base 是 `mei-1.0-51m-base-scratch300m-v1`。51M runtime/heads 与 0.8B 专家线只作迁移参考或外部实验。
-9. 嵌入式 SDK 入口是 `sdk/`。公共名是 MEI Runtime；`CURRENT.runtime=null` 期间只标 experimental。
-10. 场景目标是工具调用后基于已验证结果生成用户可读解说。NarrationProvider 后端无关、无执行权限；任何 51M tool/narration 后训使用新 model ID，禁止覆盖 base。当前 tied LM head 不等于已具备 head-only/adapter 能力。
-11. PTQ 扫描是诊断，不是产品 bit-map。QAT 强制。短 QAT pilot 入口在 `training/mei-1.0-51m-train-v1/check_qat_pilot_readiness.py`，未实现 STE 前禁止开训。Float/PTQ 账本在 `notebook/evaluation/jobs/mei-1.0-51m/`。
+根目录的五个业务目录是唯一人类主导航。`src/` 只提供轻量 CLI/registry 门面；
+`.internal/` 只保存派生 registry、迁移映射和非主线说明，不得隐藏唯一算法源码。本机
+大文件、run 与恢复包统一进入 `.local/`；不得再新增与五域平级的工程辅助目录。
+
+## 2. Cycle 合同
+
+每个已执行 cycle 固定包含 `README.md`、`CYCLE.json`、`corpus/`、`pipeline/`、`model/`、
+`evaluation/` 和 `decision/`。`CYCLE.json` 必须绑定 parent、目标/实际/增量 exposure、
+工厂 revision、CPT delta、累计 corpus lineage、SFT suite、eval lock、Base/Product URI、
+训练/评估 pipeline lock、质量指标和三个 eligibility 轴。
+
+实际大文件进入 `.local/artifacts/mei-1.0-51m/<cycle>/`。人类结论只在 cycle 页面出现，机器通过
+`mei-artifact://` URI 和 registry 定位。历史 receipt 保持原字节；旧路径由 migration map
+解释。
+
+## 3. Corpus 合同
+
+- CPT delta 只表示本轮新增 consumption；累计 lineage 展开所有父轮来源。
+- SFT suite 必须逐轮绑定 retrieval/no-match、fixed-five scan、full-call、Agent、MW、
+  outcome/confidence 和 narration，不能写成一个模糊的 “SFT”。
+- Eval release 独立冻结；locked test 不能参与阈值或语料生成。
+- 每个旧 slice 进入下一轮前必须决定 `reuse`、`replace` 或 `retire`。
+- 完整性、去重、污染和质量是不同门；合成语料必须额外检查多样性与语义一致性。
+
+## 4. Platform 合同
+
+Runtime、SDK、Packaging 各只有当前一份。每个 cycle 通过 Git revision、source manifest 和
+runtime profile hash 记录其使用版本。要复现历史实现，应 checkout 相应 Git revision，
+不得创建 `runtime/300m`、`runtime/600m` 或 `old-sdk`。
+
+当前主要交付范围是 Python/MLX 与 Browser-WASM；Rust core 可作为 WASM 内部实现。独立
+Rust、Node、C/FFI 在扩展 profile 明确启用前保持 deferred。
+
+## 5. Model Factory 合同
+
+`model-factory/` 只维护当前实现，并按 `contracts / training / evaluation / orchestration /
+release / recipes / common / tests / diagnostics / compatibility` 分类。正式入口来自
+`contracts/PIPELINES.json`，不能凭文件版本后缀猜测。
+
+每个执行过的 cycle 必须冻结 `pipeline/PIPELINE.lock.json`，记录 Base 方法、产品化阶段、
+实际 run 指纹、plan/source manifest hash 和源码可恢复性。未来正式 run 启动前必须冻结
+完整 source bundle 与逐 stage 源码闭包；历史缺失字节应标记为 reconstructed，不得补写。
+
+## 6. 语音集成边界
+
+`mei-1.0-51m` 是文本到可信工具行为及终态文字解说的核心，不包含声学编码器、ASR head、
+TTS head、麦克风或音频播放。`mei-agent` 可组合 ASR/TTS provider、Tool Host、会话确认与取消；
+`mei-avatar` 可进一步管理实时打断、声音和视觉呈现。上游转写文本可以进入 51M，原始音频和
+ASR/TTS 权重不进入 51M package 或 cycle。
+
+“中文口语理解”只表示口语化文本能力。mei-llm 的语料工厂可以维护带来源的 ASR 噪声文本
+slice，但声学训练属于独立模型/上层项目。未来原生音频模型必须使用新的 model ID、架构与
+cycle，不得作为 51M 的普通 head。
+
+## 7. 不变量
+
+- `CURRENT.json` 只读，只有另行授权的 CAS `finalize_current` 可改变。
+- Base、release 和历史 receipt 不可覆盖。
+- `process_complete` 与 `release_eligible` 分开。
+- 300M/600M 等是累计 exposure，51M 是部署 LM 参数身份。
+- Needle2 仅是机制参考，不声明 `.cact`、`libneedle` 或 Cactus ABI 兼容。
+- 未获授权时不下载、公开发布、部署、commit、push 或补写 distribution clearance。

@@ -1,0 +1,83 @@
+{
+  "schema": "mei-llm-artifact-registry-v1",
+  "entries": [
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/corpus/cpt/lm-v1-scratch-four-role-v1",
+      "kind": "cpt_delta_release",
+      "cycle_id": "exp-000300m",
+      "path": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000600m/corpus/cpt/lm-v2-cpt-600m",
+      "kind": "cpt_delta_release",
+      "cycle_id": "exp-000600m",
+      "path": ".local/artifacts/mei-1.0-51m/exp-000600m/corpus/cpt-delta/lm-v2-cpt-600m"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/model/base/mei-1.0-51m-base-scratch300m-v1",
+      "kind": "base",
+      "cycle_id": "exp-000300m",
+      "path": "models/mei-1.0-51m/releases/exp-000300m/base/mei-1.0-51m-base-scratch300m-v1"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000600m/model/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
+      "kind": "base_candidate",
+      "cycle_id": "exp-000600m",
+      "path": "models/mei-1.0-51m/releases/exp-000600m/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/model/product/mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5",
+      "kind": "product_package",
+      "cycle_id": "exp-000300m",
+      "path": "models/mei-1.0-51m/releases/exp-000300m/package/mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000600m/model/product/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5",
+      "kind": "product_package",
+      "cycle_id": "exp-000600m",
+      "path": "models/mei-1.0-51m/releases/exp-000600m/package/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/model/qat/mei-1.0-51m-base-scratch300m-qat-q4-v1",
+      "kind": "qat_checkpoint",
+      "cycle_id": "exp-000300m",
+      "path": "models/mei-1.0-51m/releases/exp-000300m/qat/mei-1.0-51m-base-scratch300m-qat-q4-v1"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/model/qat/mei-1.0-51m-base-scratch300m-qat-cq2-v1",
+      "kind": "qat_checkpoint",
+      "cycle_id": "exp-000300m",
+      "path": "models/mei-1.0-51m/releases/exp-000300m/qat/mei-1.0-51m-base-scratch300m-qat-cq2-v1"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/corpus/sft/adaptive-v5-historical-suite",
+      "kind": "sft_suite_release",
+      "cycle_id": "exp-000300m",
+      "path": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000600m/corpus/sft/factory-v3",
+      "kind": "sft_suite_candidate",
+      "cycle_id": "exp-000600m",
+      "path": ".local/artifacts/mei-1.0-51m/exp-000600m/corpus/sft-suite/factory-v3"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000600m/model/qat/adaptive-v5-seed",
+      "kind": "qat_checkpoint",
+      "cycle_id": "exp-000600m",
+      "path": "models/mei-1.0-51m/releases/exp-000600m/qat/mei-1.0-51m-base-cpt600m-qat-cq2-adaptive-v5"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000300m/model/sft/mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5",
+      "kind": "sft_model",
+      "cycle_id": "exp-000300m",
+      "path": "models/mei-1.0-51m/releases/exp-000300m/sft/mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5"
+    },
+    {
+      "uri": "mei-artifact://mei-1.0-51m/exp-000600m/model/sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5",
+      "kind": "sft_model",
+      "cycle_id": "exp-000600m",
+      "path": "models/mei-1.0-51m/releases/exp-000600m/sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5"
+    }
+  ]
+}
