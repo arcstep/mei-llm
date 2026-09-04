@@ -348,6 +348,8 @@ def audit_structured(
                         digest_by_key.setdefault(str(record["key"]), set()).add(
                             hashlib.sha256(record["canonical_bytes"]).hexdigest()
                         )
+                        if wanted <= set(digest_by_key):
+                            break  # all sampled keys re-found; skip the rest
                 except module.StructuredError as error:
                     errors.append(f"re-hash failed: {source_path}: {error}")
             for row in sampled:
