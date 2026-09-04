@@ -15,6 +15,12 @@ import contracts.sft_v4_contract_51m as contract
 
 
 class SftV4ProductizerTests(unittest.TestCase):
+    def test_phase_boundary_is_an_explicit_stage(self) -> None:
+        args = productizer.parse_args(
+            ["--stop-after-stage", "narration_adapter_v4", "--dry-run"]
+        )
+        self.assertEqual(args.stop_after_stage, "narration_adapter_v4")
+
     def _verified_prefix_fixture(self, root: Path, plan: dict) -> Path:
         prefix = root / "prefix"
         prefix.mkdir(parents=True)

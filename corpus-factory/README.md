@@ -13,6 +13,13 @@
          → human review → immutable cycle-bound release
 ```
 
+正式入口：
+
+- `sources/source_manager.py`：天然池盘点、mix、授权下载、入池与 pool release；
+- `generators/`：CPT/SFT/Eval 合成和编译；
+- `quality/audit.py`：独立质量 receipt 与复用裁决；
+- `verifiers/`：冻结设计和 release 的只读校验。
+
 硬边界：
 
 - CPT、SFT、Eval 分别冻结，不能用同一份 release 混淆职责。

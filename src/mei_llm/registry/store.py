@@ -70,9 +70,13 @@ class Registry:
         if candidate.is_absolute():
             if candidate.exists():
                 return candidate
-            try:
-                value = candidate.relative_to(self.root).as_posix()
-            except ValueError:
+            for historical_root in (self.root, self.root.parent):
+                try:
+                    value = candidate.relative_to(historical_root).as_posix()
+                    break
+                except ValueError:
+                    continue
+            else:
                 return candidate
 
         source_migration = self.model_factory_legacy_paths()

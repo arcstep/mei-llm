@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "id": "mei-1.0-51m-cpt-training-v1",
+  "product": "mei-1.0-51m",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "params": 51463797,
+  "offline_required": true,
+  "current_policy": "read_only_until_explicit_user_freeze",
+  "exposure_milestones": [
+    300000000,
+    600000000,
+    1000000000,
+    2000000000
+  ],
+  "exposure_policy": "any positive cumulative target with an immutable matching schedule",
+  "rung_names": {
+    "300000000": "300m",
+    "600000000": "600m",
+    "1000000000": "1b",
+    "2000000000": "2b"
+  },
+  "stage_order": [
+    "corpus_freeze",
+    "cpt_readiness",
+    "cpt",
+    "cpt_gate"
+  ],
+  "tracks": {
+    "cpt": [
+      "corpus_freeze",
+      "cpt_readiness",
+      "cpt",
+      "cpt_gate"
+    ]
+  },
+  "stages": {
+    "corpus_freeze": {
+      "kind": "internal",
+      "requires": [],
+      "gate": "immutable local manifests, source quality receipts, hashes, licence, document dedup, contamination and unseen-first evidence"
+    },
+    "cpt_readiness": {
+      "kind": "command",
+      "requires": [
+        "corpus_freeze"
+      ],
+      "command": [
+        "{python}",
+        "{model_factory}/training/cpt/check_cpt_readiness.py",
+        "--corpus-dir",
+        "{corpus_dir}",
+        "--target-exposure",
+        "{target_exposure}",
+        "--receipt",
+        "{jobs}/cpt-readiness.json"
+      ]
+    },
+    "cpt": {
+      "kind": "command",
+      "requires": [
+        "cpt_readiness"
+      ],
+      "command": [
+        "{python}",
+        "{model_factory}/training/cpt/train_pretrain.py",
+        "--rung",
+        "{rung}",
+        "--schedule-kind",
+        "cpt",
+        "--corpus-dir",
+        "{corpus_dir}",
+        "--target-tokens",
+        "{target_exposure}",
+        "--parent",
+        "{parent_state}",
+        "--resume-mode",
+        "continuation",
+        "--out-dir",
+        "{checkpoints}/cpt"
+      ]
+    },
+    "cpt_gate": {
+      "kind": "internal",
+      "requires": [
+        "cpt"
+      ],
+      "gate": "summary complete, params and architecture immutable, valid/probe/natural-holdout/repeat gates pass; continuation, promotion and corpus reuse eligibility are independent"
+    }
+  },
+  "hard_rules": {
+    "source_quality": "all bound corpus quality receipts must pass before training starts",
+    "resume": "weights, optimizer, sampler/cursor, run fingerprint and source closure must reconcile",
+    "oom": "microbatch and accumulation may change only if effective batch and exposure remain invariant",
+    "promotion": "continuation_checkpoint_eligible, automatic_parent_promotion_eligible and corpus_reuse_eligible are separate booleans",
+    "current": "never mutate CURRENT.json without an explicit user freeze command"
+  }
+}

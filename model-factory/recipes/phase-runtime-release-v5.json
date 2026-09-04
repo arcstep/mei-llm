@@ -1,0 +1,80 @@
+{
+  "schema": "mei-51m-bound-phase-recipe-v1",
+  "id": "mei-51m-runtime-release-v5",
+  "phase": "runtime_release",
+  "entrypoint": "orchestration.productize_adaptive_v5_51m",
+  "required_inputs": [
+    "architecture_contract",
+    "base_release",
+    "base_weights",
+    "qat_import_receipt",
+    "sft_bootstrap_run",
+    "adaptive_run",
+    "data_release",
+    "linguistic_augmentation",
+    "eval_lock",
+    "narration_release"
+  ],
+  "pass_ref_inputs": [
+    "sft_bootstrap_run",
+    "adaptive_run",
+    "data_release",
+    "linguistic_augmentation",
+    "eval_lock",
+    "narration_release"
+  ],
+  "argument_bindings": {
+    "--base-release": "input:base_release",
+    "--base-weights": "input:base_weights",
+    "--qat-import-receipt": "input:qat_import_receipt",
+    "--seed-run": "input:sft_bootstrap_run",
+    "--data-release": "input:data_release",
+    "--linguistic-augmentation": "input:linguistic_augmentation",
+    "--eval-lock": "input:eval_lock",
+    "--narration-release": "input:narration_release",
+    "--run-dir": "output:run_dir",
+    "--package-id": "parameter:package_id",
+    "--expected-data-release-id": "parameter:data_release_id",
+    "--expected-eval-lock-id": "parameter:eval_lock_id",
+    "--expected-linguistic-release-id": "parameter:linguistic_release_id",
+    "--fullcall-alignment-steps": "parameter:fullcall_alignment_steps",
+    "--agent-alignment-steps": "parameter:agent_alignment_steps",
+    "--retrieval-r2-steps": "parameter:retrieval_r2_steps",
+    "--mw-steps": "parameter:mw_steps",
+    "--confidence-train-limit": "parameter:confidence_train_limit",
+    "--confidence-valid-limit": "parameter:confidence_valid_limit",
+    "--confidence-steps": "parameter:confidence_steps",
+    "--narration-steps": "parameter:narration_steps",
+    "--eval-limit": "parameter:eval_limit",
+    "--mw-eval-limit": "parameter:mw_eval_limit",
+    "--narration-eval-limit": "parameter:narration_eval_limit"
+  },
+  "fixed_arguments": [
+    "--resume",
+    "--phase-scope",
+    "runtime-release"
+  ],
+  "resume_flag": "--resume",
+  "dry_run_flag": "--dry-run",
+  "output_contract": "CQ2 package, Python gate, Browser-WASM gate, resource evidence and final audit",
+  "requires_existing_stages": [
+    "adopt_training_prefix_v4",
+    "seed_adaptive_views_v5",
+    "fullcall_alignment_replay_v5",
+    "agent_alignment_replay_v5",
+    "retrieval_r2_v5",
+    "final_adaptive_artifacts_v5",
+    "adaptive_generation_eval_v5",
+    "mw_disposition_v5",
+    "confidence_harvest_v5",
+    "confidence_head_v5",
+    "narration_adapter_v5",
+    "sidecar_runtime_eval_v5"
+  ],
+  "resume_run_input": "adaptive_run",
+  "hard_rules": [
+    "reuses the hash-identical evaluated run and never changes weights",
+    "package max is 18 MiB and Browser-WASM heap max is 96 MiB",
+    "runtime acceptance cannot change model-quality receipts"
+  ]
+}

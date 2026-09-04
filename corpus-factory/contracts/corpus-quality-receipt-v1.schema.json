@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mei-51m-corpus-quality-receipt-v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "kind",
+    "status",
+    "corpus_reuse_eligible"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mei-51m-corpus-quality-receipt-v1"
+    },
+    "kind": {
+      "enum": [
+        "natural_source",
+        "synthetic",
+        "sft_release"
+      ]
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "blocked"
+      ]
+    },
+    "corpus_reuse_eligible": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}

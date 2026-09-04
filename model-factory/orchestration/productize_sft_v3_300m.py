@@ -26,6 +26,7 @@ from common._repo import (
     ROOT,
     TOKENIZER_ZH_V1,
     architecture_contracts,
+    phase_binding_identity,
     resolve_repo_path,
 )
 
@@ -71,6 +72,13 @@ STAGES = (
     "locked_test_eval_v4",
     "package_v2_cq2_v4",
 )
+
+
+class PhaseBoundaryReached(RuntimeError):
+    def __init__(self, stage_id: str, receipts: dict[str, dict[str, Any]]):
+        super().__init__(stage_id)
+        self.stage_id = stage_id
+        self.receipts = dict(receipts)
 
 
 def _qat_worker_contracts_compatible(
@@ -519,13 +527,24 @@ def _validate_inputs(
         raise RuntimeError("selected Base lacks a positive cumulative exposure")
     data = training.verify_release_contract(args.data_release)
     lock = longitudinal_metrics.verify_lock(args.eval_lock)
+    expected_data_release_id = getattr(
+        args, "expected_data_release_id", contract.RELEASE_ID
+    )
+    expected_eval_lock_id = getattr(
+        args, "expected_eval_lock_id", contract.EVAL_ID
+    )
+    expected_linguistic_release_id = getattr(
+        args,
+        "expected_linguistic_release_id",
+        contract.LINGUISTIC_AUGMENTATION_ID,
+    )
     if (
         data.get("schema") != "mei-sft-data-release-v4"
-        or data.get("release_id") != contract.RELEASE_ID
+        or data.get("release_id") != expected_data_release_id
         or lock.get("schema") != "mei-51m-longitudinal-eval-lock-v4"
-        or lock.get("id") != contract.EVAL_ID
+        or lock.get("id") != expected_eval_lock_id
     ):
-        raise RuntimeError("productizer requires SFT-v4-v3 and eval-v7")
+        raise RuntimeError("SFT release or eval lock disagrees with the phase binding")
     if (data.get("evaluation") or {}).get("evaluation_fingerprint") != lock.get(
         "evaluation_fingerprint"
     ):
@@ -534,7 +553,7 @@ def _validate_inputs(
     if (
         linguistic.get("schema") != "mei-sft-linguistic-augmentation-v2"
         or linguistic.get("status") != "frozen"
-        or linguistic.get("release_id") != contract.LINGUISTIC_AUGMENTATION_ID
+        or linguistic.get("release_id") != expected_linguistic_release_id
         or (linguistic.get("evaluation") or {}).get("id") != lock.get("id")
         or ((data.get("sources") or {}).get("linguistic_release_manifest") or {}).get(
             "sha256"
@@ -657,6 +676,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
     live = lifecycle.live_cpt_workers()
     contracts_raw = architecture_contracts()
     base_identity = inputs["base_identity"]
+    binding_identity = phase_binding_identity()
     immutable = {
         "runner_id": RUNNER_ID,
         "product": contract.PRODUCT_ID,
@@ -773,6 +793,8 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
             "deferred_bindings": ["c", "node", "rust-public-sdk"],
         },
     }
+    if binding_identity is not None:
+        immutable["phase_binding"] = binding_identity
     active_stages: tuple[str, ...] = STAGES
     if args.adopt_productization_prefix_run is not None:
         immutable["productization_prefix_adoption"] = _verify_productization_prefix_run(
@@ -1099,6 +1121,8 @@ def execute(
             resume=args.resume,
         )
         receipts[name] = receipt
+        if getattr(args, "stop_after_stage", None) == name:
+            raise PhaseBoundaryReached(name, receipts)
         return receipt
 
     if productization_adoption is not None:
@@ -2171,6 +2195,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
     parser.add_argument("--package-id", default=DEFAULT_PACKAGE_ID)
+    parser.add_argument(
+        "--expected-data-release-id", default=contract.RELEASE_ID
+    )
+    parser.add_argument("--expected-eval-lock-id", default=contract.EVAL_ID)
+    parser.add_argument(
+        "--expected-linguistic-release-id",
+        default=contract.LINGUISTIC_AUGMENTATION_ID,
+    )
     parser.add_argument("--preflight-receipt", type=Path)
     parser.add_argument(
         "--adopt-training-prefix-run",
@@ -2202,6 +2234,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--eval-limit", type=int, default=1_176)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--stop-after-stage", choices=STAGES)
     args = parser.parse_args(argv)
     for name, value in vars(args).items():
         if name.endswith("steps") or name.endswith("limit"):
@@ -2235,7 +2268,22 @@ def main(argv: list[str] | None = None) -> int:
     run_dir = lifecycle.choose_run_dir(args.run_dir, plan, resume=args.resume)
     run_dir.mkdir(parents=True, exist_ok=True)
     lifecycle.write_json(run_dir / "plan.json", plan)
-    progress = execute(args, plan, run_dir)
+    try:
+        progress = execute(args, plan, run_dir)
+    except PhaseBoundaryReached as boundary:
+        progress = {
+            "schema": "mei-51m-sft-v4-phase-progress-v1",
+            "run_fingerprint_sha256": plan["run_fingerprint_sha256"],
+            "run_dir": str(run_dir),
+            "phase_complete": True,
+            "stopped_after_stage": boundary.stage_id,
+            "stages": {
+                name: receipt["terminal_status"]
+                for name, receipt in boundary.receipts.items()
+            },
+            "process_complete": False,
+            "release_eligible": False,
+        }
     lifecycle.write_json(run_dir / "progress.json", progress)
     print(json.dumps(progress, ensure_ascii=False, sort_keys=True))
     return 0

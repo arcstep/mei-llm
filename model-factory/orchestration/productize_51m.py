@@ -143,8 +143,8 @@ def live_cpt_workers(now: float | None = None) -> list[dict[str, Any]]:
 
     current = time.time() if now is None else float(now)
     rows: list[dict[str, Any]] = []
-    root = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/mei-1.0-51m"
-    for heartbeat_path in root.glob("*/checkpoints/*/heartbeat.json"):
+    root = ROOT / ".local/artifacts/mei-1.0-51m"
+    for heartbeat_path in root.glob("exp-*/runs/**/checkpoints/*/heartbeat.json"):
         try:
             heartbeat = load_json(heartbeat_path)
         except RuntimeError:

@@ -45,6 +45,7 @@ from common._repo import (  # noqa: E402
     ROOT,
     TOKENIZER_ZH_V1,
     architecture_contracts,
+    phase_binding_identity,
     resolve_repo_path,
 )
 
@@ -107,6 +108,46 @@ STAGES = (
     "browser_wasm_gate_v5",
     "final_audit_v5",
 )
+
+PHASE_SCOPE_STAGES = {
+    "sft-alignment": {
+        "adopt_training_prefix_v4",
+        "seed_adaptive_views_v5",
+        "fullcall_alignment_replay_v5",
+        "agent_alignment_replay_v5",
+        "retrieval_r2_v5",
+        "final_adaptive_artifacts_v5",
+        "mw_disposition_v5",
+        "confidence_harvest_v5",
+        "confidence_head_v5",
+        "narration_adapter_v5",
+    },
+    "model-evaluation": {
+        "adaptive_generation_eval_v5",
+        "sidecar_runtime_eval_v5",
+    },
+    "runtime-release": {
+        "package_v2_cq2_v5",
+        "python_runtime_gate_v5",
+        "browser_wasm_gate_v5",
+        "final_audit_v5",
+    },
+}
+
+
+def phase_stage_mode(phase_scope: str | None, stage_id: str) -> str:
+    if phase_scope is None or stage_id in PHASE_SCOPE_STAGES[phase_scope]:
+        return "execute"
+    if phase_scope == "sft-alignment" and stage_id == "adaptive_generation_eval_v5":
+        return "skip"
+    return "reuse_only"
+
+
+class PhaseBoundaryReached(RuntimeError):
+    def __init__(self, stage_id: str, receipts: dict[str, dict[str, Any]]):
+        super().__init__(stage_id)
+        self.stage_id = stage_id
+        self.receipts = dict(receipts)
 
 ADAPTIVE_PREFIX_ADOPTION_STAGE = "adopt_adaptive_prefix_v5"
 ADAPTIVE_PREFIX_STAGES = STAGES[:6]
@@ -840,6 +881,7 @@ def _validated_inputs(args: argparse.Namespace) -> dict[str, Any]:
 def build_plan(args: argparse.Namespace) -> dict[str, Any]:
     inputs = _validated_inputs(args)
     base = inputs["base_identity"]
+    execution_binding = phase_binding_identity()
     immutable = {
         "runner_id": RUNNER_ID,
         "product": contract.PRODUCT_ID,
@@ -925,6 +967,8 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         },
         "failure_policy": "complete-independent-stages-and-mark-release-ineligible",
     }
+    if execution_binding is not None:
+        immutable["cycle_id"] = execution_binding["cycle_id"]
     if inputs["packaged_v5_run"] is not None:
         immutable["packaged_run_adoption"] = inputs["packaged_v5_run"]
         immutable["stage_graph_mode"] = "adopt-verified-packaged-run"
@@ -970,7 +1014,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         )
         predecessor = fingerprint
     live = lifecycle.live_cpt_workers()
-    return {
+    plan = {
         "schema": PLAN_SCHEMA,
         "run_fingerprint_sha256": run_fingerprint,
         "immutable": immutable,
@@ -980,6 +1024,9 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         "process_complete": False,
         "release_eligible": False,
     }
+    if execution_binding is not None:
+        plan["execution_binding"] = execution_binding
+    return plan
 
 
 def _with_training_bank(
@@ -1439,6 +1486,48 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     receipts: dict[str, dict[str, Any]] = {}
 
     def run(name: str, action: Any) -> dict[str, Any]:
+        phase_scope = getattr(args, "phase_scope", None)
+        mode = phase_stage_mode(phase_scope, name)
+        execution_binding = plan.get("execution_binding")
+        stage_binding_path = run_dir / "stages" / name / "phase-binding.json"
+        expected_stage_binding = (
+            {"schema": "mei-51m-stage-phase-binding-v1", **execution_binding}
+            if phase_scope and execution_binding is not None and mode == "execute"
+            else None
+        )
+        if mode == "skip":
+            _emit("stage_skipped", stage=name, phase_scope=phase_scope)
+            return {
+                "stage_id": name,
+                "terminal_status": "skipped_by_phase_scope",
+            }
+        if mode == "reuse_only":
+            receipt_path = run_dir / "stages" / name / "receipt.json"
+            if not receipt_path.is_file():
+                raise RuntimeError(
+                    f"{phase_scope} cannot execute non-phase stage {name}; "
+                    f"reusable receipt missing: {receipt_path}"
+                )
+
+            def forbidden_action(_: Path):
+                raise RuntimeError(
+                    f"{phase_scope} cannot execute non-phase stage {name}; "
+                    "a reusable upstream receipt is required"
+                )
+
+            action = forbidden_action
+        if (
+            expected_stage_binding is not None
+            and (run_dir / "stages" / name / "receipt.json").is_file()
+        ):
+            if not stage_binding_path.is_file():
+                raise RuntimeError(
+                    f"phase-bound stage lacks binding evidence: {stage_binding_path}"
+                )
+            if contract.load_json(stage_binding_path) != expected_stage_binding:
+                raise RuntimeError(
+                    f"phase-bound stage binding changed: {stage_binding_path}"
+                )
         if _source_manifest() != plan["immutable"]["source_manifest"]:
             raise RuntimeError("adaptive v5 source drifted during execution")
         if lifecycle.live_cpt_workers():
@@ -1461,12 +1550,16 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
             )
             raise
         receipts[name] = receipt
+        if expected_stage_binding is not None and not stage_binding_path.is_file():
+            _write_json(stage_binding_path, expected_stage_binding)
         _emit(
             "stage_complete",
             stage=name,
             terminal_status=receipt["terminal_status"],
             reused=bool(receipt.get("reused")),
         )
+        if getattr(args, "stop_after_stage", None) == name:
+            raise PhaseBoundaryReached(name, receipts)
         return receipt
 
     def adoption_action(directory: Path):
@@ -2726,6 +2819,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
     parser.add_argument("--package-id", default=DEFAULT_PACKAGE_ID)
+    parser.add_argument(
+        "--expected-data-release-id", default=contract.RELEASE_ID
+    )
+    parser.add_argument("--expected-eval-lock-id", default=contract.EVAL_ID)
+    parser.add_argument(
+        "--expected-linguistic-release-id",
+        default=contract.LINGUISTIC_AUGMENTATION_ID,
+    )
     parser.add_argument("--fullcall-alignment-steps", type=int, default=2_000)
     parser.add_argument("--agent-alignment-steps", type=int, default=1_000)
     parser.add_argument("--retrieval-r2-steps", type=int, default=1_600)
@@ -2739,7 +2840,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--narration-eval-limit", type=int, default=600)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--stop-after-stage", choices=STAGES)
+    parser.add_argument("--phase-scope", choices=sorted(PHASE_SCOPE_STAGES))
     args = parser.parse_args(argv)
+    if (
+        args.phase_scope
+        and args.stop_after_stage
+        and args.stop_after_stage not in PHASE_SCOPE_STAGES[args.phase_scope]
+    ):
+        parser.error(
+            f"--stop-after-stage {args.stop_after_stage} is outside "
+            f"--phase-scope {args.phase_scope}"
+        )
     for name, value in vars(args).items():
         if (name.endswith("steps") or name.endswith("limit")) and int(value) <= 0:
             parser.error(f"--{name.replace('_', '-')} must be positive")
@@ -2777,7 +2889,22 @@ def main(argv: list[str] | None = None) -> int:
         run_dir=str(run_dir),
         run_fingerprint_sha256=plan["run_fingerprint_sha256"],
     )
-    progress = execute(args, plan, run_dir)
+    try:
+        progress = execute(args, plan, run_dir)
+    except PhaseBoundaryReached as boundary:
+        progress = {
+            "schema": "mei-51m-adaptive-v5-phase-progress-v1",
+            "run_fingerprint_sha256": plan["run_fingerprint_sha256"],
+            "run_dir": str(run_dir),
+            "phase_complete": True,
+            "stopped_after_stage": boundary.stage_id,
+            "stages": {
+                name: receipt["terminal_status"]
+                for name, receipt in boundary.receipts.items()
+            },
+            "process_complete": False,
+            "release_eligible": False,
+        }
     _write_json(run_dir / "progress.json", progress)
     _emit(
         "run_complete",

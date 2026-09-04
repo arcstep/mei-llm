@@ -7,14 +7,70 @@
       "entrypoint": "orchestration.lifecycle_51m",
       "changes_weights": true,
       "purpose": "plan, run, resume, register and propose freeze for arbitrary cumulative CPT exposure",
-      "recipe": "model-factory/recipes/cpt-lifecycle-v1.json"
+      "recipe": "model-factory/recipes/cpt-training-v1.json",
+      "track": "cpt",
+      "stages": ["corpus_freeze", "cpt_readiness", "cpt", "cpt_gate"]
+    },
+    {
+      "pipeline_id": "mei-51m-qat-cq2-v1",
+      "status": "current",
+      "phase": "qat",
+      "entrypoint": "training.qat.qat_cq2_v2_51m",
+      "changes_weights": true,
+      "purpose": "cycle-bound Float anchor input and primary CQ2 QAT",
+      "recipe": "model-factory/recipes/phase-qat-cq2-v1.json"
+    },
+    {
+      "pipeline_id": "mei-51m-sft-bootstrap-v4",
+      "status": "current",
+      "phase": "sft_alignment",
+      "entrypoint": "orchestration.productize_sft_v3_300m",
+      "changes_weights": true,
+      "purpose": "base-parameterized initial SFT alignment seed through Agent R1 and tool index",
+      "recipe": "model-factory/recipes/phase-sft-bootstrap-v4.json"
+    },
+    {
+      "pipeline_id": "mei-51m-sft-adaptive-v5",
+      "status": "current",
+      "phase": "sft_alignment",
+      "entrypoint": "orchestration.productize_adaptive_v5_51m",
+      "changes_weights": true,
+      "purpose": "adaptive full-call and Agent alignment, retrieval R2, MW, confidence and narration",
+      "recipe": "model-factory/recipes/phase-sft-adaptive-v5.json"
+    },
+    {
+      "pipeline_id": "mei-51m-model-evaluation-v5",
+      "status": "current",
+      "phase": "model_evaluation",
+      "entrypoint": "orchestration.productize_adaptive_v5_51m",
+      "changes_weights": false,
+      "purpose": "resume a hash-identical adaptive run and close locked model-quality evaluation",
+      "recipe": "model-factory/recipes/phase-model-evaluation-v5.json"
+    },
+    {
+      "pipeline_id": "mei-51m-runtime-release-v5",
+      "status": "current",
+      "phase": "runtime_release",
+      "entrypoint": "orchestration.productize_adaptive_v5_51m",
+      "changes_weights": false,
+      "purpose": "resume an evaluated run for package, Python, Browser-WASM, resource and final audit gates",
+      "recipe": "model-factory/recipes/phase-runtime-release-v5.json"
     },
     {
       "pipeline_id": "mei-51m-adaptive-productization-v5",
       "status": "current",
       "entrypoint": "orchestration.productize_adaptive_v5_51m",
-      "changes_weights": true,
-      "purpose": "fixed-five batched retrieval, joint-budget alignment, R2, MW, confidence, narration and CQ2 packaging",
+      "changes_weights": false,
+      "legacy_direct_changes_weights": true,
+      "purpose": "top-level compatibility orchestrator over cycle-bound QAT, SFT, evaluation and runtime/release phases",
+      "recipe": "model-factory/recipes/productization-adaptive-v5.json",
+      "children": [
+        "mei-51m-qat-cq2-v1",
+        "mei-51m-sft-bootstrap-v4",
+        "mei-51m-sft-adaptive-v5",
+        "mei-51m-model-evaluation-v5",
+        "mei-51m-runtime-release-v5"
+      ],
       "stages": [
         "adopt_training_prefix_v4",
         "seed_adaptive_views_v5",
@@ -36,10 +92,10 @@
     },
     {
       "pipeline_id": "mei-51m-paired-adaptive-v5",
-      "status": "current",
+      "status": "maintained_compatibility",
       "entrypoint": "orchestration.supervise_paired_adaptive_v5_51m",
       "changes_weights": true,
-      "purpose": "run equivalent productization contracts for two frozen bases and emit paired comparison evidence",
+      "purpose": "historical 300M/600M paired comparison; new cycles use explicit phase bindings",
       "child_pipeline": "mei-51m-adaptive-productization-v5"
     },
     {

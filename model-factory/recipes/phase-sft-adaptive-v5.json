@@ -1,0 +1,64 @@
+{
+  "schema": "mei-51m-bound-phase-recipe-v1",
+  "id": "mei-51m-sft-adaptive-v5",
+  "phase": "sft_alignment",
+  "entrypoint": "orchestration.productize_adaptive_v5_51m",
+  "required_inputs": [
+    "architecture_contract",
+    "base_release",
+    "base_weights",
+    "qat_import_receipt",
+    "sft_bootstrap_run",
+    "data_release",
+    "linguistic_augmentation",
+    "eval_lock",
+    "narration_release"
+  ],
+  "pass_ref_inputs": [
+    "sft_bootstrap_run",
+    "data_release",
+    "linguistic_augmentation",
+    "eval_lock",
+    "narration_release"
+  ],
+  "argument_bindings": {
+    "--base-release": "input:base_release",
+    "--base-weights": "input:base_weights",
+    "--qat-import-receipt": "input:qat_import_receipt",
+    "--seed-run": "input:sft_bootstrap_run",
+    "--data-release": "input:data_release",
+    "--linguistic-augmentation": "input:linguistic_augmentation",
+    "--eval-lock": "input:eval_lock",
+    "--narration-release": "input:narration_release",
+    "--run-dir": "output:run_dir",
+    "--package-id": "parameter:package_id",
+    "--expected-data-release-id": "parameter:data_release_id",
+    "--expected-eval-lock-id": "parameter:eval_lock_id",
+    "--expected-linguistic-release-id": "parameter:linguistic_release_id",
+    "--fullcall-alignment-steps": "parameter:fullcall_alignment_steps",
+    "--agent-alignment-steps": "parameter:agent_alignment_steps",
+    "--retrieval-r2-steps": "parameter:retrieval_r2_steps",
+    "--mw-steps": "parameter:mw_steps",
+    "--confidence-train-limit": "parameter:confidence_train_limit",
+    "--confidence-valid-limit": "parameter:confidence_valid_limit",
+    "--confidence-steps": "parameter:confidence_steps",
+    "--narration-steps": "parameter:narration_steps",
+    "--eval-limit": "parameter:eval_limit",
+    "--mw-eval-limit": "parameter:mw_eval_limit",
+    "--narration-eval-limit": "parameter:narration_eval_limit"
+  },
+  "fixed_arguments": [
+    "--phase-scope",
+    "sft-alignment",
+    "--stop-after-stage",
+    "narration_adapter_v5"
+  ],
+  "resume_flag": "--resume",
+  "dry_run_flag": "--dry-run",
+  "output_contract": "adaptive LM alignment, retrieval R2/index, MW, confidence and narration heads",
+  "hard_rules": [
+    "the bootstrap run is immutable and hash-bound",
+    "all train and validation budgets are explicit binding parameters",
+    "adaptive generation, sidecar evaluation, package and runtime gates are excluded from this phase"
+  ]
+}

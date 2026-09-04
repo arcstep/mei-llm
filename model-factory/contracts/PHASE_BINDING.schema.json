@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mei-51m-phase-binding-v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "binding_id",
+    "model_id",
+    "cycle_id",
+    "phase",
+    "pipeline_id",
+    "pipeline_recipe_sha256",
+    "source",
+    "inputs",
+    "outputs",
+    "parameters",
+    "current_sha256"
+  ],
+  "properties": {
+    "schema": {
+      "const": "mei-51m-phase-binding-v1"
+    },
+    "binding_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_id": {
+      "const": "mei-1.0-51m"
+    },
+    "cycle_id": {
+      "type": "string",
+      "pattern": "^exp-[0-9]{6}m$"
+    },
+    "phase": {
+      "enum": [
+        "qat",
+        "sft_alignment",
+        "model_evaluation",
+        "runtime_release"
+      ]
+    },
+    "pipeline_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pipeline_recipe_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "git_revision",
+        "source_manifest",
+        "stage_source_closure"
+      ],
+      "properties": {
+        "git_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dirty_patch_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_bundle": {
+          "$ref": "#/$defs/artifact"
+        },
+        "source_manifest": {
+          "$ref": "#/$defs/artifact"
+        },
+        "stage_source_closure": {
+          "$ref": "#/$defs/artifact"
+        }
+      },
+      "additionalProperties": true
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "current_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": [
+        "ref",
+        "sha256"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pass_ref": {
+          "type": "boolean"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "kind": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

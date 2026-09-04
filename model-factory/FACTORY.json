@@ -19,8 +19,9 @@
   "pipeline_lock_schema": "model-factory/contracts/pipeline-lock.schema.json",
   "current_entrypoints": {
     "cpt_lifecycle": "orchestration.lifecycle_51m",
+    "qat_phase": "training.qat.qat_cq2_v2_51m",
+    "sft_bootstrap_phase": "orchestration.productize_sft_v3_300m",
     "productization": "orchestration.productize_adaptive_v5_51m",
-    "paired_supervisor": "orchestration.supervise_paired_adaptive_v5_51m",
     "source_recovery_audit": "orchestration.audit_source_recovery"
   },
   "active_source_roots": [

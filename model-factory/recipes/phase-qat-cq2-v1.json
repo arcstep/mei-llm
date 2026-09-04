@@ -1,0 +1,38 @@
+{
+  "schema": "mei-51m-bound-phase-recipe-v1",
+  "id": "mei-51m-qat-cq2-v1",
+  "phase": "qat",
+  "entrypoint": "training.qat.qat_cq2_v2_51m",
+  "required_inputs": [
+    "architecture_contract",
+    "base_release",
+    "base_weights",
+    "float_anchor",
+    "replay_corpus"
+  ],
+  "pass_ref_inputs": [
+    "replay_corpus"
+  ],
+  "argument_bindings": {
+    "--base-release": "input:base_release",
+    "--base-weights": "input:base_weights",
+    "--float-anchor": "input:float_anchor",
+    "--replay-corpus": "input:replay_corpus",
+    "--run-dir": "output:run_dir",
+    "--target-tokens": "parameter:target_tokens",
+    "--seq-len": "parameter:seq_len",
+    "--batch-size": "parameter:batch_size",
+    "--grad-accum": "parameter:grad_accum",
+    "--lr": "parameter:lr",
+    "--checkpoint-every-steps": "parameter:checkpoint_every_steps"
+  },
+  "fixed_arguments": [],
+  "resume_flag": "--resume",
+  "dry_run_flag": "--dry-run",
+  "output_contract": "CQ2 master, bit map, checkpoint state and QAT import receipt",
+  "hard_rules": [
+    "all inputs are cycle-bound and hash-verified",
+    "Q4 is diagnostic; CQ2 is the product branch",
+    "resume preserves effective batch and target tokens"
+  ]
+}

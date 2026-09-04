@@ -42,7 +42,7 @@
     "ready": false
   },
   "continuation": {
-    "lifecycle_recipe": "model-factory/recipes/cpt-lifecycle-v1.json",
+    "lifecycle_recipe": "model-factory/recipes/cpt-training-v1.json",
     "frozen_300m_may_be_used_as_parent": true,
     "legacy_1b_schedule_requires_migration": true
   }

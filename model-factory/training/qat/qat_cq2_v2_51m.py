@@ -22,7 +22,12 @@ import mlx.core as mx
 import mlx.optimizers as optim
 import mlx.utils as xu
 
-from common._repo import ROOT, architecture_contracts, legacy_weight_contract_sha256
+from common._repo import (
+    ROOT,
+    architecture_contracts,
+    legacy_weight_contract_sha256,
+    phase_binding_identity,
+)
 from common.checkpoint import flatten_params, load_params, load_train_state, save_params, save_train_state
 from training.qat.cq2_policy_51m import GROUP_SIZE, QUANT_MATH_ID, lm_storage_dtype, uniform_group_bits
 from training.qat.cq2_qat_51m import explicit_group_map, group_map_receipt, quantize_tree
@@ -76,9 +81,8 @@ def live_cpt_workers() -> list[dict[str, Any]]:
     """Use a live PID plus recent heartbeat, never a ledger alone."""
 
     rows = []
-    for path in (ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/mei-1.0-51m").glob(
-        "*/checkpoints/*/heartbeat.json"
-    ):
+    run_root = ROOT / ".local/artifacts/mei-1.0-51m"
+    for path in run_root.glob("exp-*/runs/**/checkpoints/*/heartbeat.json"):
         try:
             heartbeat = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
@@ -174,6 +178,7 @@ def validate_base(release_path: Path, weights_path: Path) -> dict[str, Any]:
         "base_weights_sha256": weights_sha,
         "tokens_seen_exposure": int(release.get("tokens_seen_exposure") or 0),
         "tokenizer_sha256": str(release.get("tokenizer_sha256") or ""),
+        "numeric_integrity": release.get("numeric_integrity"),
     }
 
 
@@ -225,6 +230,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         ARCHITECTURE_DIR / "architecture.py",
         ARCHITECTURE_DIR / "config.py",
     ]
+    binding_identity = phase_binding_identity()
     immutable = {
         "base": base,
         "contracts": {
@@ -260,11 +266,67 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         },
         "group_policy": static_group_policy(),
     }
+    if binding_identity is not None:
+        immutable["phase_binding"] = binding_identity
     return {
         "kind": "mei-51m-cq2-qat-v2-plan",
         "stage_fingerprint_sha256": _sha_bytes(_canonical(immutable)),
         **immutable,
     }
+
+
+def write_import_candidate(
+    args: argparse.Namespace,
+    plan: dict[str, Any],
+    receipt_path: Path,
+    receipt: dict[str, Any],
+) -> Path | None:
+    if receipt.get("terminal_status") != "passed":
+        return None
+    master_path = ROOT / str((receipt.get("outputs") or {}).get("master") or "")
+    if (
+        not master_path.is_file()
+        or _sha_file(master_path)
+        != (receipt.get("outputs") or {}).get("master_sha256")
+    ):
+        raise RuntimeError("CQ2 QAT master is missing or hash-drifted")
+    base = plan["base"]
+    candidate = {
+        "schema": "mei-cq2-qat-import-candidate-receipt-v1",
+        "status": "passed",
+        "base": {
+            "model_id": base["base_id"],
+            "tokens_seen_exposure": base["tokens_seen_exposure"],
+            "weights_sha256": base["base_weights_sha256"],
+            "numeric_integrity": base.get("numeric_integrity"),
+        },
+        "quant_math_id": receipt["quant_math_id"],
+        "master": {
+            "path": str(master_path.relative_to(ROOT)),
+            "sha256": _sha_file(master_path),
+            "bytes": master_path.stat().st_size,
+        },
+        "worker_receipt": {
+            "path": str(receipt_path.resolve().relative_to(ROOT)),
+            "sha256": _sha_file(receipt_path),
+        },
+        "tokens_seen_qat": int((receipt.get("metrics") or {}).get("tokens_seen_qat") or 0),
+        "valid_loss": (receipt.get("metrics") or {}).get("valid_loss"),
+        "phase_binding": plan.get("phase_binding"),
+        "reuse_policy": (
+            "candidate only; SFT must revalidate Base, corpus, quant math, "
+            "contracts, stage fingerprint and output SHA before import"
+        ),
+        "later_base_policy": "each immutable Base requires its own CQ2-QAT stage",
+    }
+    candidate_path = args.run_dir / "qat-import-candidate-receipt.json"
+    payload = _canonical(candidate) + b"\n"
+    if candidate_path.is_file():
+        if candidate_path.read_bytes() != payload:
+            raise RuntimeError("existing QAT import candidate disagrees with worker receipt")
+    else:
+        _write_json(candidate_path, candidate)
+    return candidate_path
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
@@ -285,7 +347,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             and master.is_file()
             and existing.get("outputs", {}).get("master_sha256") == _sha_file(master)
         ):
-            return {"ok": True, "reused": True, **existing}
+            candidate = write_import_candidate(args, plan, receipt_path, existing)
+            return {
+                "ok": True,
+                "reused": True,
+                "qat_import_candidate": str(candidate) if candidate else None,
+                **existing,
+            }
         raise RuntimeError("existing CQ2 QAT stage is not safely reusable; choose a new run ID")
     if stage_dir.exists() and any(stage_dir.iterdir()) and not args.resume:
         raise RuntimeError("CQ2 QAT stage directory is non-empty; use --resume or a new run ID")
@@ -468,7 +536,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "not_a_claim": "CQ2 QAT mechanics and receipts do not claim final model usefulness.",
     }
     _write_json(receipt_path, receipt)
-    return {"ok": True, **receipt}
+    candidate = write_import_candidate(args, plan, receipt_path, receipt)
+    return {
+        "ok": True,
+        "qat_import_candidate": str(candidate) if candidate else None,
+        **receipt,
+    }
 
 
 def main() -> int:

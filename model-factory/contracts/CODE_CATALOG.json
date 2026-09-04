@@ -118,8 +118,8 @@
     },
     {
       "module": "orchestration.supervise_paired_adaptive_v5_51m",
-      "status": "current",
-      "role": "paired-cycle unattended productization and comparison"
+      "status": "maintained_compatibility",
+      "role": "historical 300M/600M paired productization comparison"
     },
     {
       "module": "orchestration.productize_51m",
@@ -128,8 +128,8 @@
     },
     {
       "module": "orchestration.productize_sft_v3_300m",
-      "status": "maintained_compatibility",
-      "role": "historical 300M SFT-v3 pipeline"
+      "status": "current",
+      "role": "base-parameterized SFT-v4 bootstrap phase implementation; filename retained for compatibility"
     },
     {
       "module": "orchestration.supervise_paired_sft_v4_51m",
@@ -138,8 +138,8 @@
     },
     {
       "module": "training.qat.qat_cq2_v2_51m",
-      "status": "active_support",
-      "role": "current CQ2 QAT coordinator"
+      "status": "current",
+      "role": "cycle-bound CQ2 QAT phase implementation"
     },
     {
       "module": "training.qat.cq2_qat_51m",
@@ -160,6 +160,53 @@
       "module": "training.tool_use.train_sft_51m",
       "status": "maintained_compatibility",
       "role": "legacy 51M SFT entrypoint"
+    }
+  ],
+  "control_plane_entrypoints": [
+    {
+      "path": "src/mei_llm/cycle_control.py",
+      "status": "current",
+      "role": "read-only cycle planning, status, resume disposition and registry verification"
+    },
+    {
+      "path": "corpus-factory/sources/source_manager.py",
+      "status": "current",
+      "role": "natural source inventory, authorized download, admission and immutable pool release"
+    },
+    {
+      "path": "corpus-factory/quality/audit.py",
+      "status": "current",
+      "role": "independent source/synthetic/SFT quality receipts and reuse decisions"
+    },
+    {
+      "path": "src/mei_llm/phase_binding.py",
+      "status": "current",
+      "role": "cycle-bound phase input/hash/source/recipe verification and invocation construction"
+    },
+    {
+      "path": "skills/mei-51m-qat-training",
+      "status": "current",
+      "role": "QAT phase control surface"
+    },
+    {
+      "path": "skills/mei-51m-sft-alignment",
+      "status": "current",
+      "role": "bootstrap and adaptive SFT alignment phase control surface"
+    },
+    {
+      "path": "skills/mei-51m-model-evaluation",
+      "status": "current",
+      "role": "model-quality evaluation phase control surface"
+    },
+    {
+      "path": "skills/mei-51m-runtime-release",
+      "status": "current",
+      "role": "package, SDK, Browser-WASM, resource and final audit control surface"
+    },
+    {
+      "path": "skills/mei-51m-cpt-lifecycle",
+      "status": "maintained_compatibility",
+      "role": "routing only; contains no training or corpus implementation"
     }
   ],
   "selection_rule": "A filename version suffix never selects a pipeline. Only a current entry in PIPELINES.json plus a cycle pipeline lock may do so."

@@ -157,6 +157,32 @@ for the detailed productization contract.
 After each immutable Base registration, productization, or frozen reevaluation,
 append a hash-bound record to its longitudinal history; never rewrite an older
 record or carry an unmeasured value forward.
-Use the workspace skill `mei-51m-cpt-lifecycle` for status, continuation,
-productization, receipts, gates, and freeze proposals. Keep this file concise;
-put run-specific commands and recovery details in the skill references.
+Use these repo-owned Skills; `.cursor/skills` and `.agents/skills` are
+projections only:
+
+- [`mei-51m-cycle-orchestrator`](skills/mei-51m-cycle-orchestrator/SKILL.md):
+  cycle plan/status/verification and terminal projection;
+- [`mei-51m-corpus-sourcing`](skills/mei-51m-corpus-sourcing/SKILL.md):
+  natural-pool inventory, authorized HQ download, admission and pool release;
+- [`mei-51m-corpus-factory`](skills/mei-51m-corpus-factory/SKILL.md):
+  taxonomy, generators, pilot/scale and immutable SFT/Eval artifacts;
+- [`mei-51m-corpus-quality`](skills/mei-51m-corpus-quality/SKILL.md):
+  independent integrity, diversity, semantic and reuse decisions;
+- [`mei-51m-cpt-training`](skills/mei-51m-cpt-training/SKILL.md):
+  CPT plan/start/resume/gate/Base candidate;
+- [`mei-51m-productization`](skills/mei-51m-productization/SKILL.md):
+  cross-phase planning and compatibility orchestration only;
+- [`mei-51m-qat-training`](skills/mei-51m-qat-training/SKILL.md):
+  cycle-bound CQ2 QAT;
+- [`mei-51m-sft-alignment`](skills/mei-51m-sft-alignment/SKILL.md):
+  bootstrap and adaptive SFT/head alignment;
+- [`mei-51m-model-evaluation`](skills/mei-51m-model-evaluation/SKILL.md):
+  locked model-quality evaluation;
+- [`mei-51m-runtime-release`](skills/mei-51m-runtime-release/SKILL.md):
+  package, Python/Browser-WASM/resource gates and final audit.
+
+`mei-51m-cpt-lifecycle` remains a deprecated routing-only compatibility Skill.
+Scripts prefer the stable `python -m mei_llm` control plane and must not
+reconstruct a pipeline from filenames. New product phases require
+`mei-51m-phase-binding-v1`; exposure-specific script defaults are compatibility
+only and must not select inputs for a new cycle.

@@ -35,7 +35,7 @@ from common.run_lock import lock_is_held, pid_alive_from_meta, read_lock_meta
 
 
 HERE = Path(__file__).resolve().parent
-RECIPE_PATH = RECIPES_DIR / "cpt-lifecycle-v1.json"
+RECIPE_PATH = RECIPES_DIR / "cpt-training-v1.json"
 RUN_ROOT = TRAIN_RUNS / "mei-1.0-51m"
 EXPECTED_PARAMS = 51_463_797
 RUN_ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]{2,79}$")
@@ -1121,7 +1121,7 @@ def run_stage(
     return ok or degraded, receipt
 
 
-def execute(run_id: str, *, dry_run: bool, until: str | None, track: str = "full") -> int:
+def execute(run_id: str, *, dry_run: bool, until: str | None, track: str = "cpt") -> int:
     directory, config = load_run(run_id)
     data = recipe()
     if current_hash() != config["current_sha256_at_init"]:
@@ -1323,7 +1323,7 @@ def main() -> int:
         child.add_argument("--run-id", required=True)
         if name in {"run", "resume", "plan"}:
             child.add_argument("--until", choices=recipe()["stage_order"])
-            child.add_argument("--track", choices=("cpt", "product", "full"), default="full")
+            child.add_argument("--track", choices=("cpt",), default="cpt")
     sub.add_parser("verify")
     sub.add_parser("baseline")
     args = parser.parse_args()

@@ -1,0 +1,60 @@
+{
+  "schema": "mei-51m-bound-phase-recipe-v1",
+  "id": "mei-51m-sft-bootstrap-v4",
+  "phase": "sft_alignment",
+  "entrypoint": "orchestration.productize_sft_v3_300m",
+  "required_inputs": [
+    "architecture_contract",
+    "base_release",
+    "base_weights",
+    "qat_import_receipt",
+    "data_release",
+    "linguistic_augmentation",
+    "eval_lock",
+    "narration_release"
+  ],
+  "pass_ref_inputs": [
+    "data_release",
+    "linguistic_augmentation",
+    "eval_lock",
+    "narration_release"
+  ],
+  "argument_bindings": {
+    "--base-release": "input:base_release",
+    "--base-weights": "input:base_weights",
+    "--qat-import-receipt": "input:qat_import_receipt",
+    "--data-release": "input:data_release",
+    "--linguistic-augmentation": "input:linguistic_augmentation",
+    "--eval-lock": "input:eval_lock",
+    "--narration-release": "input:narration_release",
+    "--run-dir": "output:run_dir",
+    "--package-id": "parameter:package_id",
+    "--expected-data-release-id": "parameter:data_release_id",
+    "--expected-eval-lock-id": "parameter:eval_lock_id",
+    "--expected-linguistic-release-id": "parameter:linguistic_release_id",
+    "--float-control-steps": "parameter:float_control_steps",
+    "--retrieval-r0-steps": "parameter:retrieval_r0_steps",
+    "--fullcall-steps": "parameter:fullcall_steps",
+    "--agent-steps": "parameter:agent_steps",
+    "--retrieval-r1-steps": "parameter:retrieval_r1_steps",
+    "--mw-steps": "parameter:mw_steps",
+    "--confidence-train-limit": "parameter:confidence_train_limit",
+    "--confidence-valid-limit": "parameter:confidence_valid_limit",
+    "--confidence-steps": "parameter:confidence_steps",
+    "--narration-steps": "parameter:narration_steps",
+    "--narration-eval-limit": "parameter:narration_eval_limit",
+    "--eval-limit": "parameter:eval_limit"
+  },
+  "fixed_arguments": [
+    "--stop-after-stage",
+    "tool_index_v4"
+  ],
+  "resume_flag": "--resume",
+  "dry_run_flag": "--dry-run",
+  "output_contract": "immutable SFT-v4 alignment prefix through tool_index_v4",
+  "hard_rules": [
+    "imports one explicitly bound CQ2-QAT receipt",
+    "exposure labels never select the stage graph",
+    "evaluation tail and packaging are excluded from this phase"
+  ]
+}

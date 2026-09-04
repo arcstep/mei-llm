@@ -39,7 +39,15 @@ class FiveDomainLayoutTest(unittest.TestCase):
             if path.is_dir() and not path.name.startswith(".")
         )
         self.assertEqual(
-            ["corpus-factory", "cycles", "model-factory", "models", "platform", "src"],
+            [
+                "corpus-factory",
+                "cycles",
+                "model-factory",
+                "models",
+                "platform",
+                "skills",
+                "src",
+            ],
             visible,
         )
 

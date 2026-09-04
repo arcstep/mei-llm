@@ -134,9 +134,11 @@ class Lifecycle51MTest(unittest.TestCase):
         self.assertEqual(data["architecture_id"], "mei-1.0-51m-arch-v1")
         self.assertEqual(data["params"], 51_463_797)
         self.assertEqual(data["current_policy"], "read_only_until_explicit_user_freeze")
-        lock_cmd = data["stages"]["lock_v2"]["command"]
-        self.assertIn("--max-workers", lock_cmd)
-        self.assertEqual(lock_cmd[lock_cmd.index("--max-workers") + 1], "1")
+        self.assertEqual(
+            ["corpus_freeze", "cpt_readiness", "cpt", "cpt_gate"],
+            data["tracks"]["cpt"],
+        )
+        self.assertIn("source quality receipts", data["stages"]["corpus_freeze"]["gate"])
         self.assertIsNone(assert_51m_architecture_id(ARCHITECTURE_ID))
         self.assertIsNotNone(assert_51m_architecture_id("other-architecture"))
 
@@ -304,15 +306,6 @@ class Lifecycle51MTest(unittest.TestCase):
                 "cpt_readiness",
                 "cpt",
                 "cpt_gate",
-                "float_anchor",
-                "qat_q4",
-                "pack_q4",
-                "runtime_parity",
-                "cq2",
-                "quant_aware_sft",
-                "lock_v2",
-                "resource",
-                "hard_gate",
             ],
         )
         self.assertIn("--resume-mode", data["stages"]["cpt"]["command"])
@@ -320,8 +313,11 @@ class Lifecycle51MTest(unittest.TestCase):
             data["stages"]["cpt"]["command"][data["stages"]["cpt"]["command"].index("--resume-mode") + 1],
             "continuation",
         )
-        self.assertIn("lowest pre-registered selection_score", data["hard_rules"]["qat_selection"])
-        self.assertIn("continues to resource", data["hard_rules"]["lock"])
+        self.assertIn("sampler/cursor", data["hard_rules"]["resume"])
+        self.assertIn(
+            "separate booleans",
+            data["hard_rules"]["promotion"],
+        )
 
     def test_arbitrary_cumulative_exposure_has_deterministic_rung(self) -> None:
         target = 900_000_000
@@ -409,21 +405,26 @@ class Lifecycle51MTest(unittest.TestCase):
             code = lc.execute("test-plan", dry_run=True, until=None)
         self.assertEqual(code, 0)
 
-    def test_skill_declares_corpus_and_exposure_triggers(self) -> None:
-        skill = (
-            next(
-                parent
-                for parent in Path(__file__).resolve().parents
-                if (parent / ".cursor").is_dir()
-            )
-            / ".cursor"
-            / "skills"
-            / "mei-51m-cpt-lifecycle"
-            / "SKILL.md"
+    def test_lifecycle_skill_is_split_and_compatibility_is_routing_only(self) -> None:
+        skills = lc.ROOT / "skills"
+        for name in (
+            "mei-51m-cycle-orchestrator",
+            "mei-51m-corpus-sourcing",
+            "mei-51m-corpus-factory",
+            "mei-51m-corpus-quality",
+            "mei-51m-cpt-training",
+            "mei-51m-productization",
+            "mei-51m-qat-training",
+            "mei-51m-sft-alignment",
+            "mei-51m-model-evaluation",
+            "mei-51m-runtime-release",
+        ):
+            self.assertTrue((skills / name / "SKILL.md").is_file(), name)
+        compatibility = (skills / "mei-51m-cpt-lifecycle/SKILL.md").read_text(
+            encoding="utf-8"
         )
-        text = skill.read_text(encoding="utf-8")
-        for token in ("补语料", "CPT", "continued pretraining", "300M", "600M", "1B", "2B", "重新量化"):
-            self.assertIn(token, text)
+        self.assertIn("兼容路由", compatibility)
+        self.assertIn("不再拥有执行逻辑", compatibility)
 
 
 if __name__ == "__main__":

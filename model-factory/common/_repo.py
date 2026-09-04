@@ -63,6 +63,34 @@ def cycle_runs(cycle_id: str) -> Path:
     return cycle_artifacts(cycle_id) / "runs"
 
 
+def phase_binding_identity() -> dict[str, str] | None:
+    path_value = os.environ.get("MEI_PHASE_BINDING")
+    names = {
+        "binding_sha256": os.environ.get("MEI_PHASE_BINDING_SHA256"),
+        "binding_id": os.environ.get("MEI_PHASE_BINDING_ID"),
+        "cycle_id": os.environ.get("MEI_PHASE_CYCLE_ID"),
+        "phase": os.environ.get("MEI_PHASE"),
+        "pipeline_id": os.environ.get("MEI_PHASE_PIPELINE_ID"),
+    }
+    if path_value is None:
+        if any(value is not None for value in names.values()):
+            raise RuntimeError("partial MEI phase binding environment")
+        return None
+    if any(not value for value in names.values()):
+        raise RuntimeError("incomplete MEI phase binding environment")
+    path = Path(path_value).resolve()
+    if not path.is_file():
+        raise RuntimeError(f"phase binding is missing: {path}")
+    actual_sha = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual_sha != names["binding_sha256"]:
+        raise RuntimeError("phase binding changed after control-plane verification")
+    binding = json.loads(path.read_text(encoding="utf-8"))
+    for key in ("binding_id", "cycle_id", "phase", "pipeline_id"):
+        if binding.get(key) != names[key]:
+            raise RuntimeError(f"phase binding environment disagrees on {key}")
+    return {key: str(value) for key, value in names.items()}
+
+
 def resolve_repo_path(value: str | Path) -> Path:
     """Resolve a current path or an immutable pre-migration receipt path."""
 
@@ -70,9 +98,13 @@ def resolve_repo_path(value: str | Path) -> Path:
     if candidate.is_absolute():
         if candidate.exists():
             return candidate
-        try:
-            candidate = candidate.relative_to(ROOT)
-        except ValueError:
+        for historical_root in (ROOT, ROOT.parent):
+            try:
+                candidate = candidate.relative_to(historical_root)
+                break
+            except ValueError:
+                continue
+        else:
             return candidate
     direct = ROOT / candidate
     if direct.exists():

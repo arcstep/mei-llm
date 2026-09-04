@@ -28,6 +28,39 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
         self.assertEqual(policy["default_output_reserve"], 128)
         self.assertEqual(policy["profiles"], {"compact": 1024, "standard": 1536})
 
+    def test_phase_boundary_is_an_explicit_stage(self) -> None:
+        args = productizer.parse_args(
+            [
+                "--phase-scope",
+                "model-evaluation",
+                "--stop-after-stage",
+                "sidecar_runtime_eval_v5",
+                "--dry-run",
+            ]
+        )
+        self.assertEqual(args.stop_after_stage, "sidecar_runtime_eval_v5")
+        self.assertEqual(args.phase_scope, "model-evaluation")
+
+    def test_phase_scope_never_executes_another_phase(self) -> None:
+        self.assertEqual(
+            productizer.phase_stage_mode(
+                "sft-alignment", "adaptive_generation_eval_v5"
+            ),
+            "skip",
+        )
+        self.assertEqual(
+            productizer.phase_stage_mode(
+                "model-evaluation", "confidence_head_v5"
+            ),
+            "reuse_only",
+        )
+        self.assertEqual(
+            productizer.phase_stage_mode(
+                "runtime-release", "python_runtime_gate_v5"
+            ),
+            "execute",
+        )
+
     def test_stage_graph_reuses_cpt_qat_and_retrains_mw_from_zero(self) -> None:
         stage_ids = [row["stage_id"] for row in self.plan["stages"]]
         self.assertEqual(tuple(stage_ids), productizer.STAGES)
