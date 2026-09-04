@@ -85,14 +85,15 @@
       "source_id": "en-wiki-dump",
       "role": "wiki_en",
       "band": "B",
+      "repository": "wikimedia/wikipedia",
       "manifest_source": {
-        "type": "direct_urls",
-        "base_url": "https://dumps.wikimedia.org/enwiki/"
+        "type": "hf_api",
+        "repo_type": "dataset",
+        "patterns": ["20231101.en/*.parquet"]
       },
       "license": {"license_id": "CC BY-SA 3.0/4.0 + GFDL", "reviewed": false},
       "admit": {"dedup_mode": "text"},
-      "urls": [],
-      "note": "配额克制（≤10M/轮）"
+      "note": "配额克制（≤10M/轮）；20231101 快照 41 片，按需少量拉取"
     },
     {
       "source_id": "opensubtitles-zh",
