@@ -68,6 +68,20 @@
       "note": "具体 dump 文件在授权时逐条钉扎；旧 zh-pretrain-v0 池 316.6M 剩余可滚入"
     },
     {
+      "source_id": "zh-wiki-hf-20231101",
+      "role": "wiki_zh",
+      "band": "B",
+      "repository": "wikimedia/wikipedia",
+      "manifest_source": {
+        "type": "hf_api",
+        "repo_type": "dataset",
+        "patterns": ["20231101.zh/*.parquet"]
+      },
+      "license": {"license_id": "CC BY-SA 3.0/4.0 + GFDL", "reviewed": false},
+      "admit": {"dedup_mode": "text"},
+      "note": "HF 成品 parquet（text 列），20231101 快照 6 片；legacy shards 52.5M 之外的 wiki 配额主力"
+    },
+    {
       "source_id": "en-wiki-dump",
       "role": "wiki_en",
       "band": "B",
