@@ -310,7 +310,10 @@ def audit_structured(
             errors.append("tokens.bin size mismatch")
         sampled = [row for row in rows[:sample] if row.get("record_key")]
         if sampled:
-            digest_by_key: dict[str, str] = {}
+            # One key may be shared by several records (e.g. two README.md from
+            # different repos); keep the SET of source digests per key and verify
+            # membership — tampering still detected, duplicate keys allowed.
+            digest_by_key: dict[str, set[str]] = {}
             module = _sibling_module(
                 Path(__file__).parent.parent / "sources/structured.py",
                 "mei_51m_source_structured",
@@ -342,16 +345,16 @@ def audit_structured(
                     ):
                         if not record["valid"] or record["key"] not in wanted:
                             continue
-                        digest_by_key[str(record["key"])] = hashlib.sha256(
-                            record["canonical_bytes"]
-                        ).hexdigest()
+                        digest_by_key.setdefault(str(record["key"]), set()).add(
+                            hashlib.sha256(record["canonical_bytes"]).hexdigest()
+                        )
                 except module.StructuredError as error:
                     errors.append(f"re-hash failed: {source_path}: {error}")
             for row in sampled:
                 key = str(row["record_key"])
                 if key not in digest_by_key:
                     errors.append(f"record not re-found in source: {key}")
-                elif digest_by_key[key] != row.get("record_sha256"):
+                elif row.get("record_sha256") not in digest_by_key[key]:
                     errors.append(f"record_sha256 mismatch: {key}")
     return {
         "schema": "mei-51m-corpus-quality-receipt-v1",
