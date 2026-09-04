@@ -1,0 +1,186 @@
+{
+  "schema": "mei-51m-source-license-reviews-v1",
+  "note": "逐源 license 审核证据表。human_reviewer 与 reviewed_at 为空 = 未签字；注册表 reviewed 字段须与此表签字同步翻转。改表 = commit 事件。",
+  "sources": [
+    {
+      "source_id": "fineweb2-hq-cmn-hani",
+      "band": "B",
+      "license_id": "ODC-By-1.0 + Common Crawl ToU",
+      "evidence": "epfml/FineWeb2-HQ 模型卡；HuggingFace 数据集页 license 字段",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "存量矿 975 片；每批下载 receipt 恒 distribution_clearance_asserted=false"
+    },
+    {
+      "source_id": "zh-wiki-dump",
+      "band": "B",
+      "license_id": "CC BY-SA 3.0/4.0 + GFDL",
+      "evidence": "https://dumps.wikimedia.org/legal.html",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "旧 zh-pretrain-v0 池沿用同一来源，v1 已审"
+    },
+    {
+      "source_id": "en-wiki-dump",
+      "band": "B",
+      "license_id": "CC BY-SA 3.0/4.0 + GFDL",
+      "evidence": "https://dumps.wikimedia.org/legal.html",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "配额克制（≤10M/轮）"
+    },
+    {
+      "source_id": "opensubtitles-zh",
+      "band": "C",
+      "license_id": "subtitle-rights-uncleared",
+      "evidence": "OPUS OpenSubtitles 页（opus.nlpl.eu/OpenSubtitles.php）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "字幕版权未清算；仅研究/内部使用（已拍板）；每批附 clearance receipt；翻译腔需质量过滤"
+    },
+    {
+      "source_id": "ted2020-zh",
+      "band": "C",
+      "license_id": "CC BY-NC-ND 4.0",
+      "evidence": "https://www.ted.com/about/our-organisation/our-policies-terms/ted-talks-usage-policy",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "非商用且禁演绎；仅研究/内部使用（已拍板）；不可进入公开分发产物"
+    },
+    {
+      "source_id": "lccc-base",
+      "band": "C",
+      "license_id": "weibo-conversations-uncleared",
+      "evidence": "https://github.com/thu-coai/CDial-GPT（数据集 README）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "微博对话研究用途；强过滤（垃圾/广告/低质）；每批附 clearance receipt"
+    },
+    {
+      "source_id": "coig-pc",
+      "band": "C",
+      "license_id": "CC BY-NC 4.0",
+      "evidence": "https://huggingface.co/datasets/BAAI/COIG-PC 模型卡",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "非商用；仅研究/内部使用（已拍板）"
+    },
+    {
+      "source_id": "moss-003-sft-data",
+      "band": "C",
+      "license_id": "to-be-reviewed",
+      "evidence": "https://huggingface.co/datasets/fnlp/moss-003-sft-data 模型卡",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "复旦 MOSS 对话数据；license 字段待核对"
+    },
+    {
+      "source_id": "douban-conversation",
+      "band": "C",
+      "license_id": "to-be-reviewed",
+      "evidence": "https://github.com/MarkWuNLP/MultiTurnResponseSelection",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "小组闲聊数据；研究用途待核对"
+    },
+    {
+      "source_id": "wikidata-json",
+      "band": "A",
+      "license_id": "CC0-1.0",
+      "evidence": "https://www.wikidata.org/wiki/Wikidata:Data_dumps",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "零风险；流式解析必须（单文件数十 GB）"
+    },
+    {
+      "source_id": "dblp-xml",
+      "band": "A",
+      "license_id": "ODC-By-1.0",
+      "evidence": "https://dblp.org/faq/1474523.html（license 页）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "文献元数据"
+    },
+    {
+      "source_id": "pubmed-oa-xml",
+      "band": "A",
+      "license_id": "to-be-reviewed",
+      "evidence": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/README.txt",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "摘要公共领域；OA 子集边界需确认"
+    },
+    {
+      "source_id": "json-schema-store",
+      "band": "A",
+      "license_id": "Apache-2.0",
+      "evidence": "https://github.com/SchemaStore/schemastore/blob/master/LICENSE",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": ""
+    },
+    {
+      "source_id": "openapi-directory",
+      "band": "A",
+      "license_id": "directory CC0-1.0 / specs per-API",
+      "evidence": "https://github.com/APIs-guru/openapi-directory/blob/main/LICENSE",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "单个 spec 各自 license，逐 spec 审核后收录"
+    },
+    {
+      "source_id": "spider-sql",
+      "band": "A",
+      "license_id": "CC BY-SA 4.0",
+      "evidence": "https://github.com/taoyds/spider（数据集 license 声明）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": ""
+    },
+    {
+      "source_id": "wikisql",
+      "band": "A",
+      "license_id": "to-be-reviewed",
+      "evidence": "https://github.com/salesforce/WikiSQL",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": ""
+    },
+    {
+      "source_id": "sqllogictest",
+      "band": "A",
+      "license_id": "public domain",
+      "evidence": "https://sqlite.org/copyright.html",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "SQLite 测试套件公有领域"
+    },
+    {
+      "source_id": "github-actions-yaml",
+      "band": "C",
+      "license_id": "per-file",
+      "evidence": "GitHub 公开仓库逐仓库 license（授权时钉扎 repo 清单）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "repo 清单在授权时钉扎；每批附 clearance receipt"
+    },
+    {
+      "source_id": "github-code-regex",
+      "band": "C",
+      "license_id": "per-file",
+      "evidence": "GitHub 公开仓库逐仓库 license（授权时钉扎 repo 清单）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "正则密集代码切片"
+    },
+    {
+      "source_id": "github-code-sql",
+      "band": "C",
+      "license_id": "per-file",
+      "evidence": "GitHub 公开仓库逐仓库 license（授权时钉扎 repo 清单）",
+      "human_reviewer": null,
+      "reviewed_at": null,
+      "notes": "真实业务 SQL 模式"
+    }
+  ]
+}

@@ -48,11 +48,11 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["data/cmn_Hani/*.parquet"]
+        "patterns": ["cmn_Hani/*.parquet"]
       },
       "license": {"license_id": "ODC-By-1.0", "reviewed": false},
       "admit": {"dedup_mode": "text"},
-      "note": "存量矿：已下载 49 片，另有约 100 片未拉取（≈733M token）"
+      "note": "全量 975 片，每片 ~1.2GB / 数千万 token；存量矿远超 7 轮 hq 配额 875M。国内网络用 HF_ENDPOINT=https://hf-mirror.com"
     },
     {
       "source_id": "zh-wiki-dump",
