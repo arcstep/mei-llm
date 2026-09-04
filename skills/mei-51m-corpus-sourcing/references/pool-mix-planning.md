@@ -77,3 +77,21 @@
 - 调比例必须带 reason 写成 supersede，不在旧记录上改；
 - 语料统计（片数/tokens/池余额）≠ 模型质量证据；天然角色质量看 run-time loss 与下游诊断，
   合成角色另加一道铸币前模板审计（见 audit-and-repair.md）。
+
+## sourcing v2 增补（2026-09-04，从零重建）
+
+- **role 体系**：v2 起 role 来自注册表 `corpus-factory/sources/source_registry.json`
+  （fineweb2_hq / wiki_zh / wiki_en / dialogue / structured / code）；旧
+  wiki/fineweb2_hq 仅作 v1 产物读取。新池 release schema `...-pool-release-v2`，
+  绑定单一 tokenizer 代际（混合代际禁止铸池）。
+- **plan-mix v2**：`--fraction role=0.xx`（Σ=1，floor_last_role 兜底取余）或
+  `--quota role=N` 显式配额；`--hq-fraction` 为弃用别名（= fineweb2_hq F /
+  wiki_zh 1−F，容量键 wiki 自动映射 wiki_zh）。比例变更 = supersede 事件 +
+  书面 `--reason`（缺 reason 时 candidate 标 `policy.needs_reason`，技能层拦截）。
+- **账本快照**：上表 wiki/hq 余额是 v1 记账；v2 池以新 admit 的 manifest v2 与
+  新 RELEASE.json 为锚点，余额推导式不变（池总量 − Σ cpt.json quotas）。
+  旧池 wiki 316.6M / hq 186.9M 作为干净天然存量滚入 v2 池时，须对原始下载按
+  v2 词表重新 admit（seen-ledger 跨代复用去重）。
+- **新来源下载**：两段式授权（dry-run 出令牌 → 令牌匹配才联网），详见
+  download-and-admission.md；band/license 政策裁决见
+  `corpus-factory/quality/policy/source-policy-v1.json`。

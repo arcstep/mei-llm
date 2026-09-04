@@ -1,0 +1,50 @@
+{
+  "schema": "mei-51m-source-quality-policy-v1",
+  "version": 1,
+  "roles": {
+    "fineweb2_hq": {
+      "allowed_bands": ["B"],
+      "license_reviewed_required": true,
+      "clearance_required": false,
+      "structure_check": null
+    },
+    "wiki_zh": {
+      "allowed_bands": ["A", "B"],
+      "license_reviewed_required": true,
+      "clearance_required": false,
+      "structure_check": null
+    },
+    "wiki_en": {
+      "allowed_bands": ["A", "B"],
+      "license_reviewed_required": true,
+      "clearance_required": false,
+      "structure_check": null
+    },
+    "dialogue": {
+      "allowed_bands": ["C"],
+      "license_reviewed_required": true,
+      "clearance_required": true,
+      "structure_check": null
+    },
+    "structured": {
+      "allowed_bands": ["A"],
+      "license_reviewed_required": true,
+      "clearance_required": false,
+      "structure_check": {
+        "max_invalid_ratio": 0.001,
+        "re_validate_sample": 100
+      }
+    },
+    "code": {
+      "allowed_bands": ["C"],
+      "license_reviewed_required": true,
+      "clearance_required": true,
+      "per_file_license": true,
+      "structure_check": {
+        "max_invalid_ratio": 0.001,
+        "re_validate_sample": 100
+      }
+    }
+  },
+  "note": "band A = 许可宽松（CC0/PD/MIT/Apache/BSD）；band B = 署名/共享/ToU 约束；band C = 逐条权利未清算，必须附 clearance receipt。改政策 = commit 事件。"
+}

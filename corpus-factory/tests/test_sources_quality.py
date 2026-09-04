@@ -28,6 +28,7 @@ quality = load_module("mei_51m_corpus_quality", "corpus-factory/quality/audit.py
 
 class FakeTokenizer:
     model_sha256 = "a" * 64
+    tokenizer_id = "zh-24k-v1"
 
     def encode_document(self, text: str) -> list[int]:
         return [2, *[ord(character) % 1000 for character in text], 1]
@@ -117,6 +118,152 @@ class SourceManagerTests(unittest.TestCase):
             sources.freeze_pool([admitted], root / "pool", "pool-v1")
             with self.assertRaises(FileExistsError):
                 sources.freeze_pool([admitted], root / "pool", "pool-v2")
+
+
+class ProvenanceV2Tests(unittest.TestCase):
+    def write_dialogue_source(self, root: Path) -> Path:
+        source = root / "dialogue.jsonl"
+        source.write_text(
+            "\n".join(
+                [
+                    json.dumps({"text": "把客厅的灯打开"}, ensure_ascii=False),
+                    json.dumps({"text": "帮我查一下明天北京的天气"}, ensure_ascii=False),
+                ]
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        return source
+
+    def test_admit_v2_records_provenance_and_passes_audit(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            source = self.write_dialogue_source(root)
+            clearance = root / "clearance.json"
+            clearance.write_text(json.dumps({"reviewed": "2026-09-04"}), encoding="utf-8")
+            with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
+                result = sources.admit(
+                    [source],
+                    root / "admitted",
+                    role="dialogue",
+                    license_id="subtitle-rights-uncleared",
+                    license_reviewed=True,
+                    seen_ledger=None,
+                    source_id="opensubtitles-zh",
+                    source_url="https://opus.nlpl.eu/OpenSubtitles.php",
+                    dataset_version="v2018",
+                    clearance_receipt=clearance,
+                )
+            self.assertEqual("mei-51m-admitted-natural-source-v2", result["schema"])
+            self.assertEqual(2, result["provenance_version"])
+            self.assertEqual("opensubtitles-zh", result["source_id"])
+            self.assertEqual("text", result["dedup_mode"])
+            self.assertIsNotNone(result["registry_entry_sha256"])
+            self.assertIsNotNone(result["acquired_at"])
+            self.assertEqual("subtitle-rights-uncleared", result["license_id"])
+            self.assertIsNotNone(result["clearance_receipt"])
+            rows = [
+                json.loads(line)
+                for line in (root / "admitted/documents.jsonl").read_text(
+                    encoding="utf-8"
+                ).splitlines()
+            ]
+            self.assertTrue(all(row["source_id"] == "opensubtitles-zh" for row in rows))
+            self.assertTrue(all(row["record_key"] is None for row in rows))
+            receipt = quality.audit_source(root / "admitted/manifest.json")
+            self.assertEqual("passed", receipt["status"])
+
+    def test_admit_v2_rejects_unknown_or_mismatched_source_id(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            source = self.write_dialogue_source(root)
+            with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
+                with self.assertRaisesRegex(sources.SourceError, "unknown source_id"):
+                    sources.admit(
+                        [source],
+                        root / "blocked-1",
+                        role="dialogue",
+                        license_id="x",
+                        license_reviewed=True,
+                        seen_ledger=None,
+                        source_id="not-a-source",
+                    )
+                with self.assertRaisesRegex(sources.SourceError, "registered as"):
+                    sources.admit(
+                        [source],
+                        root / "blocked-2",
+                        role="dialogue",
+                        license_id="x",
+                        license_reviewed=True,
+                        seen_ledger=None,
+                        source_id="wikidata-json",
+                    )
+
+    def test_admit_v2_requires_clearance_receipt_file(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            source = self.write_dialogue_source(root)
+            with self.assertRaisesRegex(sources.SourceError, "missing clearance receipt"):
+                sources.admit(
+                    [source],
+                    root / "blocked",
+                    role="dialogue",
+                    license_id="x",
+                    license_reviewed=True,
+                    seen_ledger=None,
+                    source_id="opensubtitles-zh",
+                    clearance_receipt=root / "does-not-exist.json",
+                )
+            self.assertFalse((root / "blocked").exists())
+
+    def test_admit_without_source_id_keeps_v1_schema(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            source = root / "wiki.jsonl"
+            source.write_text(
+                json.dumps({"text": "维基百科条目正文"}, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
+                result = sources.admit(
+                    [source],
+                    root / "admitted",
+                    role="wiki",
+                    license_id="CC BY-SA 3.0",
+                    license_reviewed=True,
+                    seen_ledger=None,
+                )
+            self.assertEqual("mei-51m-admitted-natural-source-v1", result["schema"])
+            receipt = quality.audit_source(root / "admitted/manifest.json")
+            self.assertEqual("passed", receipt["status"])
+
+    def test_audit_blocks_v2_manifest_without_source_id(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            (root / "tokens.bin").write_bytes(b"\x00")
+            documents = root / "documents.jsonl"
+            documents.write_text("{}\n", encoding="utf-8")
+            manifest = {
+                "schema": "mei-51m-admitted-natural-source-v2",
+                "provenance_version": 2,
+                "source_role": "dialogue",
+                "license_id": "x",
+                "license_reviewed": True,
+                "dedup_mode": "text",
+                "registry_entry_sha256": "a" * 64,
+                "documents": 1,
+                "tokens": 1,
+                "artifacts": {
+                    "documents.jsonl": quality.sha256_file(documents),
+                    "tokens.bin": quality.sha256_file(root / "tokens.bin"),
+                },
+            }
+            (root / "manifest.json").write_text(
+                json.dumps(manifest), encoding="utf-8"
+            )
+            receipt = quality.audit_source(root / "manifest.json")
+            self.assertEqual("blocked", receipt["status"])
+            self.assertIn("source_id missing", receipt["errors"])
 
 
 class CorpusQualityTests(unittest.TestCase):

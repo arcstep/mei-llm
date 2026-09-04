@@ -166,10 +166,94 @@ def audit_synthetic(
     }
 
 
+def _sibling_module(path: Path, module_name: str) -> Any:
+    import functools
+    import importlib.util
+
+    @functools.lru_cache(maxsize=8)
+    def load(target: Path):
+        spec = importlib.util.spec_from_file_location(module_name, target)
+        if spec is None or spec.loader is None:
+            raise QualityError(f"cannot load module: {target}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    return load(path.resolve())
+
+
+def _policy() -> dict[str, Any]:
+    path = Path(__file__).parent / "policy/source-policy-v1.json"
+    if not path.is_file():
+        raise QualityError(f"quality policy not found: {path}")
+    return load_json(path)
+
+
+def _registry_entry(source_id: str) -> dict[str, Any]:
+    module = _sibling_module(
+        Path(__file__).parent.parent / "sources/registry.py",
+        "mei_51m_source_registry",
+    )
+    try:
+        return module.entry_for(source_id)
+    except module.RegistryError as error:
+        raise QualityError(str(error)) from error
+
+
+def _policy_errors(manifest: dict[str, Any]) -> list[str]:
+    """Band/license/clearance/structure policy checks for v2 manifests."""
+    errors: list[str] = []
+    entry = _registry_entry(manifest["source_id"])
+    policy = _policy()
+    role_policy = policy.get("roles", {}).get(entry["role"])
+    if not role_policy:
+        return [f"no quality policy for role {entry['role']!r}"]
+    if entry.get("band") not in role_policy.get("allowed_bands", []):
+        errors.append(
+            f"band {entry.get('band')!r} not allowed for role {entry['role']!r}"
+        )
+    if role_policy.get("clearance_required") and manifest.get(
+        "clearance_receipt"
+    ) is None:
+        errors.append("clearance receipt required by policy")
+    check = role_policy.get("structure_check")
+    if check:
+        stats = manifest.get("structure_check") or {}
+        if stats.get("invalid_ratio", 1.0) > check["max_invalid_ratio"]:
+            errors.append("structure check exceeds policy threshold")
+    return errors
+
+
 def audit_source(manifest_path: Path) -> dict[str, Any]:
     manifest = load_json(manifest_path)
     errors = []
-    if manifest.get("schema") != "mei-51m-admitted-natural-source-v1":
+    schema = manifest.get("schema")
+    if schema == "mei-51m-admitted-natural-source-v1":
+        pass
+    elif schema == "mei-51m-admitted-natural-source-v2":
+        if manifest.get("provenance_version") != 2:
+            errors.append("provenance_version must be 2")
+        if not manifest.get("source_id"):
+            errors.append("source_id missing")
+        if manifest.get("dedup_mode") not in ("text", "record"):
+            errors.append("dedup_mode must be text or record")
+        if manifest.get("registry_entry_sha256") is None:
+            errors.append("registry_entry_sha256 missing")
+        if not manifest.get("tokenizer_id"):
+            errors.append("tokenizer_id missing")
+        clearance = manifest.get("clearance_receipt")
+        if clearance is not None:
+            receipt_path = Path(str(clearance.get("path") or ""))
+            if not receipt_path.is_file():
+                errors.append("clearance receipt file missing")
+            elif sha256_file(receipt_path) != clearance.get("sha256"):
+                errors.append("clearance receipt hash mismatch")
+        if manifest.get("source_id"):
+            try:
+                errors.extend(_policy_errors(manifest))
+            except QualityError as error:
+                errors.append(f"policy lookup failed: {error}")
+    else:
         errors.append("schema mismatch")
     if manifest.get("license_reviewed") is not True:
         errors.append("license not reviewed")
@@ -184,6 +268,94 @@ def audit_source(manifest_path: Path) -> dict[str, Any]:
     return {
         "schema": "mei-51m-corpus-quality-receipt-v1",
         "kind": "natural_source",
+        "status": "passed" if not errors else "blocked",
+        "corpus_reuse_eligible": not errors,
+        "manifest": str(manifest_path.resolve()),
+        "manifest_sha256": sha256_file(manifest_path),
+        "errors": errors,
+    }
+
+
+def audit_structured(
+    manifest_path: Path, *, sample: int = 100
+) -> dict[str, Any]:
+    """Second gate for record-mode admissions: token layout + re-hash samples."""
+    base = audit_source(manifest_path)
+    errors = list(base["errors"])
+    manifest = load_json(manifest_path)
+    rows = []
+    documents_path = manifest_path.parent / "documents.jsonl"
+    if documents_path.is_file():
+        for line_number, line in enumerate(
+            documents_path.read_text(encoding="utf-8").splitlines(), 1
+        ):
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError as error:
+                errors.append(f"documents.jsonl:{line_number}: {error}")
+    if manifest.get("dedup_mode") == "record":
+        offsets = [int(row.get("token_offset") or 0) for row in rows]
+        tokens = [int(row.get("tokens") or 0) for row in rows]
+        running = 0
+        layout_broken = False
+        for offset, count in zip(offsets, tokens):
+            if offset != running:
+                layout_broken = True
+                break
+            running += count
+        if layout_broken:
+            errors.append("token_offset layout broken")
+        tokens_path = manifest_path.parent / "tokens.bin"
+        if tokens_path.is_file() and tokens_path.stat().st_size != 2 * running:
+            errors.append("tokens.bin size mismatch")
+        sampled = [row for row in rows[:sample] if row.get("record_key")]
+        if sampled:
+            digest_by_key: dict[str, str] = {}
+            module = _sibling_module(
+                Path(__file__).parent.parent / "sources/structured.py",
+                "mei_51m_source_structured",
+            )
+            wanted = {str(row["record_key"]) for row in sampled}
+            record_elements = ()
+            key_field = None
+            try:
+                entry = _registry_entry(manifest["source_id"])
+                admission = entry.get("admit") or {}
+                record_elements = tuple(
+                    part
+                    for part in (admission.get("record_element") or "").split("|")
+                    if part
+                )
+                key_field = admission.get("record_key")
+            except QualityError:
+                pass
+            for row in sampled:
+                source_path = Path(str(row["source_path"]))
+                if not source_path.is_file():
+                    errors.append(f"source file missing: {source_path}")
+                    continue
+                try:
+                    for record in module.iter_records(
+                        source_path,
+                        record_elements=record_elements,
+                        key_field=key_field,
+                    ):
+                        if not record["valid"] or record["key"] not in wanted:
+                            continue
+                        digest_by_key[str(record["key"])] = hashlib.sha256(
+                            record["canonical_bytes"]
+                        ).hexdigest()
+                except module.StructuredError as error:
+                    errors.append(f"re-hash failed: {source_path}: {error}")
+            for row in sampled:
+                key = str(row["record_key"])
+                if key not in digest_by_key:
+                    errors.append(f"record not re-found in source: {key}")
+                elif digest_by_key[key] != row.get("record_sha256"):
+                    errors.append(f"record_sha256 mismatch: {key}")
+    return {
+        "schema": "mei-51m-corpus-quality-receipt-v1",
+        "kind": "structured_source",
         "status": "passed" if not errors else "blocked",
         "corpus_reuse_eligible": not errors,
         "manifest": str(manifest_path.resolve()),
@@ -273,6 +445,11 @@ def build_parser() -> argparse.ArgumentParser:
     command.add_argument("--manifest", type=Path, required=True)
     command.add_argument("--out", type=Path, required=True)
 
+    command = sub.add_parser("audit-structured")
+    command.add_argument("--manifest", type=Path, required=True)
+    command.add_argument("--sample", type=int, default=100)
+    command.add_argument("--out", type=Path, required=True)
+
     command = sub.add_parser("audit-synthetic")
     command.add_argument("--input", action="append", type=Path, required=True)
     command.add_argument("--human-review", type=Path, required=True)
@@ -300,6 +477,8 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "audit-source":
         result = audit_source(args.manifest)
+    elif args.command == "audit-structured":
+        result = audit_structured(args.manifest, sample=args.sample)
     elif args.command == "audit-synthetic":
         result = audit_synthetic(
             args.input,

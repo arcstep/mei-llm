@@ -550,11 +550,18 @@ def build_parser() -> argparse.ArgumentParser:
     for family, actions in (
         (
             "source",
-            ("inventory", "plan-mix", "download-hq", "admit", "freeze-pool"),
+            ("inventory", "plan-mix", "download-hq", "download", "admit", "freeze-pool"),
         ),
         (
             "evaluate",
-            ("audit-source", "audit-synthetic", "audit-sft", "decide-reuse", "compare"),
+            (
+                "audit-source",
+                "audit-structured",
+                "audit-synthetic",
+                "audit-sft",
+                "decide-reuse",
+                "compare",
+            ),
         ),
     ):
         command = corpus_sub.add_parser(family)
