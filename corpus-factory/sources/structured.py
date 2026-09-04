@@ -78,7 +78,9 @@ def _iter_json_documents(path: Path, key_field: str | None) -> Iterator[dict[str
 def _iter_xml_records(path: Path, record_elements: tuple[str, ...]) -> Iterator[dict[str, Any]]:
     index = 0
     try:
-        for _event, element in ET.iterparse(path, events=("end",)):
+        for _event, element in ET.iterparse(
+            _EntityResolvingFile(path), events=("end",)
+        ):
             if element.tag in record_elements:
                 index += 1
                 payload = ET.tostring(element, encoding="unicode")
@@ -86,6 +88,71 @@ def _iter_xml_records(path: Path, record_elements: tuple[str, ...]) -> Iterator[
                 element.clear()
     except ET.ParseError:
         yield _record(None, b"invalid-xml", "", valid=False)
+
+
+class _EntityResolvingFile:
+    """Streaming reader that resolves named entities (DBLP-style DTD entities)
+    before the stdlib XML parser sees them; chunk carry protects entity spans."""
+
+    def __init__(self, path: Path):
+        import re
+        from html.entities import html5
+
+        # XML built-ins (lt/gt/amp/apos/quot) must survive verbatim; everything
+        # else named gets resolved to its character via the html5 table.
+        self._pattern = re.compile(
+            r"&(?!lt;|gt;|amp;|apos;|quot;)([A-Za-z][A-Za-z0-9]*);"
+        )
+        self._controls = re.compile(r"[\x00-\x08\x0B\x0C\x0E-\x1F]")
+        # Stray ampersands (DBLP has raw '&' in fields) and named entities the
+        # html5 table does not know: escape them; numeric entities stay.
+        self._stray_amp = re.compile(r"&(?!#\d+;|#x[0-9A-Fa-f]+;)")
+        self._table = html5
+        self._path = path
+        self._iterator = self._stream()
+        self._buffer = ""
+
+    def _resolve(self, text: str) -> str:
+        def replace(match: "re.Match[str]") -> str:
+            # html.entities.html5 keys carry no leading '&' and map to the
+            # character itself ('uuml;' -> 'ü').
+            character = self._table.get(match.group(1) + ";")
+            return character if character else match.group(0)
+
+        # Raw control bytes (seen in DBLP fields) are not well-formed XML.
+        text = self._controls.sub(" ", text)
+        text = self._pattern.sub(replace, text)
+        return self._stray_amp.sub("&amp;", text)
+
+    def _stream(self) -> Iterator[str]:
+        carry = ""
+        with self._path.open("r", encoding="latin-1", errors="replace") as handle:
+            while True:
+                chunk = handle.read(8 << 20)
+                if not chunk:
+                    if carry:
+                        yield self._resolve(carry)
+                    return
+                text = carry + chunk
+                cut = text.rfind("&")
+                if cut != -1 and len(text) - cut < 64:
+                    carry = text[cut:]
+                    text = text[:cut]
+                else:
+                    carry = ""
+                yield self._resolve(text)
+
+    def read(self, size: int = -1) -> str:
+        while size < 0 or len(self._buffer) < size:
+            try:
+                self._buffer += next(self._iterator)
+            except StopIteration:
+                break
+        if size < 0:
+            result, self._buffer = self._buffer, ""
+        else:
+            result, self._buffer = self._buffer[:size], self._buffer[size:]
+        return result
 
 
 def _iter_yaml_documents(path: Path, max_record_bytes: int) -> Iterator[dict[str, Any]]:
