@@ -223,8 +223,13 @@
         "record_element": "article|inproceedings|incollection|phdthesis|mastersthesis|www",
         "max_invalid_ratio": 0.001
       },
-      "urls": [],
-      "note": "文献元数据 XML"
+      "urls": [
+        {
+          "filename": "dblp.xml.gz",
+          "url": "https://dblp.org/xml/dblp.xml.gz"
+        }
+      ],
+      "note": "文献元数据 XML；下载后 gunzip 再 admit（recordizer 读 .xml）"
     },
     {
       "source_id": "pubmed-oa-xml",
