@@ -1,12 +1,11 @@
 {
+  "current": "tokenizer/zh-32k-v2.model",
+  "frozen_at": "2026-09-04T16:08:43.676248+00:00",
+  "manifest": "tokenizer-v2-manifest.json",
+  "model_sha256": "9871e718d91dc1fb0f0d2989c7f1ebe82afecb8ba8f9bd8c2cb94e49e91494cf",
   "schema": "mei-51m-tokenizer-pointer-v1",
-  "current": "tokenizer/zh-24k-v1.model",
-  "tokenizer_id": "zh-24k-v1",
-  "manifest": "tokenizer-v1-manifest.json",
-  "model_sha256": "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629",
-  "vocab_size": 24000,
   "status": "frozen",
-  "frozen_at": "2026-09-04",
-  "supersedes": null,
-  "note": "admit 以本指针 + --expected-tokenizer-id 双重绑定当前冻结词表；词表 v2 训练冻结后以 supersede 事件更新本文件。"
+  "supersedes": "zh-24k-v1",
+  "tokenizer_id": "zh-32k-v2",
+  "vocab_size": 32000
 }

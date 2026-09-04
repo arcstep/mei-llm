@@ -294,9 +294,9 @@ def freeze_pointer(model_path: Path, manifest: dict[str, Any], pointer_path: Pat
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--sources", type=Path, required=True, help="JSON: [{path, kind, weight, glob}]")
+    parser.add_argument("--sources", type=Path, help="JSON: [{path, kind, weight, glob}]")
     parser.add_argument("--sample-chars", type=int, default=400_000_000)
-    parser.add_argument("--out-sample", type=Path, required=True)
+    parser.add_argument("--out-sample", type=Path)
     parser.add_argument("--vocab-size", type=int, default=32000)
     parser.add_argument("--tokenizer-id", default="zh-32k-v2")
     parser.add_argument("--tool-universe", action="append", type=Path, default=[])
@@ -318,6 +318,8 @@ def main(argv: list[str] | None = None) -> int:
         pointer = freeze_pointer(final_model, manifest, args.pointer_path)
         print("pointer:", json.dumps(pointer, ensure_ascii=False, indent=2))
         return 0
+    if not args.sources or not args.out_sample:
+        raise VocabError("--sources and --out-sample are required unless --freeze-only")
     value = json.loads(args.sources.read_text(encoding="utf-8"))
     sources = value["sources"] if isinstance(value, dict) else value
     counters = sample(sources, args.out_sample, args.sample_chars)
