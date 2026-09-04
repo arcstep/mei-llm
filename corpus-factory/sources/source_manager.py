@@ -333,6 +333,8 @@ def load_tokenizer() -> Any:
 def load_seen_hashes(path: Path | None) -> set[str]:
     if path is None:
         return set()
+    if not path.is_file():
+        return set()  # fresh ledger: first admit of a new pool
     result: set[str] = set()
     with path.open("r", encoding="utf-8") as handle:
         for line in handle:
@@ -348,6 +350,21 @@ def load_seen_hashes(path: Path | None) -> set[str]:
             if digest:
                 result.add(digest)
     return result
+
+
+def append_seen_ledger(path: Path | None, digests: Iterable[str]) -> None:
+    """Accumulate admitted digests into the pool ledger (append-only)."""
+    if path is None or not digests:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        for digest in digests:
+            handle.write(
+                json.dumps(
+                    {"normalized_sha256": digest}, ensure_ascii=False, sort_keys=True
+                )
+                + "\n"
+            )
 
 
 def admit(
@@ -576,6 +593,9 @@ def admit(
             }
         write_once_json(temporary / "manifest.json", manifest)
         temporary.replace(out)
+        # Append AFTER the artifacts are durable: a crash here can only cause
+        # duplicate documents on a retry, never silently skipped documents.
+        append_seen_ledger(seen_ledger, (digest for _, digest, _, _ in accepted))
         return manifest
     except Exception:
         shutil.rmtree(temporary, ignore_errors=True)

@@ -216,6 +216,36 @@ class ProvenanceV2Tests(unittest.TestCase):
                 )
             self.assertFalse((root / "blocked").exists())
 
+    def test_admit_appends_to_seen_ledger_and_missing_ledger_is_fresh(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            ledger = root / "ledger.jsonl"
+            source = self.write_dialogue_source(root)
+            with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
+                first = sources.admit(
+                    [source],
+                    root / "admitted-1",
+                    role="dialogue",
+                    license_id="x",
+                    license_reviewed=True,
+                    seen_ledger=ledger,
+                    source_id="opensubtitles-zh",
+                )
+            self.assertEqual(2, first["documents"])
+            self.assertEqual(2, len(ledger.read_text(encoding="utf-8").splitlines()))
+            # A second admit of the same raw sees the ledger and finds no unseen docs.
+            with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
+                with self.assertRaisesRegex(sources.SourceError, "no unseen documents"):
+                    sources.admit(
+                        [source],
+                        root / "admitted-2",
+                        role="dialogue",
+                        license_id="x",
+                        license_reviewed=True,
+                        seen_ledger=ledger,
+                        source_id="opensubtitles-zh",
+                    )
+
     def test_admit_without_source_id_keeps_v1_schema(self) -> None:
         with tempfile.TemporaryDirectory() as raw:
             root = Path(raw)
