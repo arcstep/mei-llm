@@ -104,6 +104,8 @@ def _resolve_cpt_schedule(corpus_dir: Path, rung: str | None = None) -> Path | N
 
 
 def refuse_cpt_parent(parent_dir: Path | None = None, schedule: dict | None = None) -> str | None:
+    if schedule and str(schedule.get("kind") or "") == "scratch":
+        return None  # 从零 scratch：无 parent 要求（corpus_snapshot 已验 parent=0）
     parent_dir = Path(parent_dir or BASE_SCRATCH300M)
     if parent_dir.is_file():
         state = parent_dir
@@ -189,8 +191,12 @@ def refuse_cpt_source(corpus_dir: Path, rung: str) -> str | None:
         return "cpt refuses .local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1; continuation consumes .local/artifacts/_legacy/corpus/planned-exp-001000m-lm-v2"
     if (corpus_dir / "schedule.json").is_file():
         return "cpt refuses archived schedule.json name; use schedule-cpt-<rung>.json"
-    if (corpus_dir / "schedule-scratch.json").is_file():
-        return "cpt corpus must not carry schedule-scratch.json"
+    scratch_path = corpus_dir / "schedule-scratch.json"
+    if scratch_path.is_file():
+        scratch = _load(scratch_path)
+        if str(scratch.get("kind") or "") != "scratch":
+            return "cpt corpus must not carry a non-scratch schedule-scratch.json"
+        return None  # scratch 布局：合同由 lifecycle corpus_snapshot 把关
     release = _load(corpus_dir / "RELEASE.json")
     schedule_path = _resolve_cpt_schedule(corpus_dir, rung)
     if schedule_path is None:

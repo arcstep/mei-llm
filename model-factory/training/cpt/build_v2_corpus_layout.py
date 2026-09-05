@@ -52,11 +52,19 @@ def split_bin(
     """Split a uint16 token shard at a token boundary; returns (train, valid)."""
     total = source.stat().st_size // 2
     valid = min(valid_tokens, total)
+    train_bytes = (total - valid) * 2
     with source.open("rb") as src, train_out.open("wb") as train, valid_out.open(
         "wb"
     ) as valid_handle:
-        shutil.copyfileobj(src, train, (total - valid) * 2)
-        shutil.copyfileobj(src, valid_handle, valid * 2)
+        # copyfileobj 的第三参数是缓冲区大小而非拷贝量，手动分块拷贝。
+        remaining = train_bytes
+        while remaining:
+            chunk = src.read(min(remaining, 1 << 20))
+            if not chunk:
+                break
+            train.write(chunk)
+            remaining -= len(chunk)
+        shutil.copyfileobj(src, valid_handle)  # 剩余到 EOF
     return total - valid, valid
 
 

@@ -66,7 +66,22 @@ try:
 except ImportError:
     eval_probes = None  # type: ignore[assignment]
     load_probes = None  # type: ignore[assignment]
-from tokenizer import ZhTokenizerV1  # noqa: E402
+from tokenizer import ZhTokenizerV1, ZhTokenizerV2  # noqa: E402
+
+
+def _frozen_tokenizer():
+    """按 TOKENIZER.json 指针实例化当前冻结词表（v1 或 v2 系）。"""
+    from common._repo import frozen_tokenizer_path
+
+    path = frozen_tokenizer_path()
+    tokenizer_id = path.name.replace(".model", "")
+    if tokenizer_id == "zh-24k-v1":
+        return ZhTokenizerV1()
+    return ZhTokenizerV2(
+        tokenizer_id=tokenizer_id,
+        vocab_size=None,  # 由模型文件自校验
+        manifest_path=path.parent / f"tokenizer-{tokenizer_id}-manifest.json",
+    )
 from common.train_common import eval_lm_loss, peak_bytes, segment_throughput, train_lm_steps  # noqa: E402
 
 RECIPE_PATH = RECIPES_DIR / "pretrain-rungs.json"
@@ -342,7 +357,7 @@ def main() -> int:
         )
         return 0 if ok else 1
 
-    tok = ZhTokenizerV1()
+    tok = _frozen_tokenizer()
     if requested_cpt and args.corpus_dir == CORPUS_LM_V1:
         args.corpus_dir = CORPUS_LM_V2
     corpus_dir = CORPUS_ZH_PRETRAIN if args.smoke else args.corpus_dir
