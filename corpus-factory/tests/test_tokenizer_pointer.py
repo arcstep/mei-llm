@@ -27,7 +27,7 @@ sources = load_module(
 
 class FakeTokenizer:
     model_sha256 = "a" * 64
-    tokenizer_id = "zh-32k-v2"
+    tokenizer_id = "zh-24k-v3"
 
     def encode_document(self, text: str) -> list[int]:
         return [2, 3, 1]
@@ -38,8 +38,8 @@ class PointerTests(unittest.TestCase):
         pointer = sources.tokenizer_pointer()
         self.assertEqual("mei-51m-tokenizer-pointer-v1", pointer["schema"])
         self.assertEqual("frozen", pointer["status"])
-        self.assertEqual("zh-32k-v2", pointer["tokenizer_id"])
-        self.assertEqual("zh-24k-v1", pointer["supersedes"])
+        self.assertEqual("zh-24k-v3", pointer["tokenizer_id"])
+        self.assertEqual("zh-32k-v2", pointer["supersedes"])
 
     def test_missing_pointer_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as raw:
@@ -63,10 +63,10 @@ class PointerTests(unittest.TestCase):
             with self.assertRaisesRegex(sources.SourceError, "not frozen"):
                 sources.tokenizer_pointer(draft)
 
-    def test_load_tokenizer_returns_frozen_v2_with_id(self) -> None:
+    def test_load_tokenizer_returns_frozen_v3_with_id(self) -> None:
         tokenizer = sources.load_tokenizer()
-        self.assertEqual("zh-32k-v2", tokenizer.tokenizer_id)
-        self.assertEqual(32000, tokenizer.vocab_size)
+        self.assertEqual("zh-24k-v3", tokenizer.tokenizer_id)
+        self.assertEqual(24000, tokenizer.vocab_size)
 
 
 class ExpectedTokenizerBindingTests(unittest.TestCase):
@@ -91,7 +91,7 @@ class ExpectedTokenizerBindingTests(unittest.TestCase):
                         license_reviewed=True,
                         seen_ledger=None,
                         source_id="opensubtitles-zh",
-                        expected_tokenizer_id="zh-24k-v1",
+                        expected_tokenizer_id="zh-32k-v2",
                     )
 
     def test_matching_expected_tokenizer_admits(self) -> None:
@@ -106,9 +106,9 @@ class ExpectedTokenizerBindingTests(unittest.TestCase):
                     license_reviewed=True,
                     seen_ledger=None,
                     source_id="opensubtitles-zh",
-                    expected_tokenizer_id="zh-32k-v2",
+                    expected_tokenizer_id="zh-24k-v3",
                 )
-            self.assertEqual("zh-32k-v2", result["tokenizer_id"])
+            self.assertEqual("zh-24k-v3", result["tokenizer_id"])
 
 
 if __name__ == "__main__":

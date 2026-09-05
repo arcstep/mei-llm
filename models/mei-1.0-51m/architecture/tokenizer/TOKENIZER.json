@@ -1,11 +1,11 @@
 {
-  "current": "tokenizer/zh-32k-v2.model",
-  "frozen_at": "2026-09-04T16:08:43.676248+00:00",
-  "manifest": "tokenizer-v2-manifest.json",
-  "model_sha256": "9871e718d91dc1fb0f0d2989c7f1ebe82afecb8ba8f9bd8c2cb94e49e91494cf",
+  "current": "tokenizer/zh-24k-v3.model",
+  "frozen_at": "2026-09-05T01:45:34.525854+00:00",
+  "manifest": "tokenizer-zh-24k-v3-manifest.json",
+  "model_sha256": "5aa8bb7b426db8e3c6327066568b37e194090af3900d4c2ead09144756124945",
   "schema": "mei-51m-tokenizer-pointer-v1",
   "status": "frozen",
-  "supersedes": "zh-24k-v1",
-  "tokenizer_id": "zh-32k-v2",
-  "vocab_size": 32000
+  "supersedes": "zh-32k-v2",
+  "tokenizer_id": "zh-24k-v3",
+  "vocab_size": 24000
 }

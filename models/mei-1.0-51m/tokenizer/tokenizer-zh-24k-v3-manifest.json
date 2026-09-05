@@ -1,0 +1,28 @@
+{
+  "bos_id": 2,
+  "declared_vocab_size": 24000,
+  "eos_id": 1,
+  "frozen_at": "2026-09-05T01:45:34.525854+00:00",
+  "model_sha256": "5aa8bb7b426db8e3c6327066568b37e194090af3900d4c2ead09144756124945",
+  "model_type": "unigram",
+  "pad_id": 0,
+  "sample_chars": 400000000,
+  "sample_sha256": "18744f95d23ea75c552b7960fa1340b44ef6751cb4bee9df987441a0603199a3",
+  "schema": "mei-51m-tokenizer-manifest-v1",
+  "spm_vocab_size": 24000,
+  "supersedes": "zh-24k-v1",
+  "tokenizer_id": "zh-24k-v3",
+  "unk_id": 3,
+  "user_defined_symbols_n": 227,
+  "validation": {
+    "errors": [],
+    "probes": {
+      "hanzi_level1_covered": 6956,
+      "piece_size": 24000,
+      "piece_size_no_byte_fallback": 23744,
+      "tokens:SELECT * FROM t WHER": 15,
+      "tokens:{\"name\":\"nod\",\"argum": 13,
+      "tokens:北京现在天气怎么样": 5
+    }
+  }
+}
