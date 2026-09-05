@@ -1,6 +1,6 @@
 # CPT 天然池盘点与每轮 mix 规划
 
-## 角色与池子（v2 现役，词表 zh-32k-v2）
+## 角色与池子（v2 现役，词表 zh-24k-v3）
 
 - **v2 天然角色**（来自注册表 `corpus-factory/sources/source_registry.json`）：
   fineweb2_hq / wiki_zh / wiki_en / dialogue / structured / code。
@@ -27,24 +27,25 @@
   v2 的 structured/dialogue 天然角色顶替（不复活合成）。
 - v1 逐文档账本已丢失（只剩 token 片），v2 池以新账本起步——跨代去重无从执行。
 
-### v2 现役账本（从零重建，词表 zh-32k-v2）
+### v2 现役账本（从零重建，词表 zh-24k-v3）
 
-权威锚点：池 release `zh-v2-pool-natural-v3`（.local/artifacts/mei-1.0-51m/
+权威锚点：池 release `zh-v2-pool-natural-v4`（v3 为 32K 代，已被 24K v3 代 supersede）（.local/artifacts/mei-1.0-51m/
 zh-v2-pool/pools/）与各 admitted manifest；余额推导式不变。
 
-| role | 池总量（v3） | 7 轮配额（每轮×7） | 覆盖 |
+| role | 池总量（v4，zh-24k-v3 代） | 7 轮配额（每轮×7） | 覆盖 |
 |---|---|---|---|
-| fineweb2_hq | 1,078,580,964 | 131M×7=917M | ✅ |
-| wiki_zh | 770,616,111 | 80M×7=560M | ✅ |
-| dialogue | 224,030,734 | 30M×7=210M | ✅（用户拍板封顶） |
-| structured | 416,534,512 | 25M×7=175M | ✅ |
-| code | 578,940,669 | 23M×7=161M | ✅ |
-| wiki_en | 277,971,697 | 11M×7=77M | ✅ |
+| fineweb2_hq | 1,109,428,850 | 131M×7=917M | ✅ |
+| wiki_zh | 805,350,781 | 80M×7=560M | ✅ |
+| dialogue | 230,520,439 | 30M×7=210M | ✅（用户拍板封顶） |
+| structured | 433,451,965 | 25M×7=175M | ✅ |
+| code | 627,361,740 | 23M×7=161M | ✅ |
+| wiki_en | 295,783,980 | 11M×7=77M | ✅ |
 
-首轮 candidate `mix-zhv2-300m-c01-v2`（passed）：hq 135M / wiki_zh 81M /
-dialogue 39M / structured 16.2M / code 21M / wiki_en 7.8M。
-**structured 首轮配额按当时池容量收窄（0.055→0.054，supersede 登记）；
-DBLP 入池后第 2 轮起恢复 25M/轮。**每轮重跑 plan_mix，比例调整 = supersede + reason。
+首轮 candidate `mix-zhv2-300m-c01-v3`（passed，zh-24k-v3 代）：hq 135M /
+wiki_zh 81M / dialogue 39M / structured 16.2M / code 21M / wiki_en 7.8M。
+**词表代际：24K v3（参数契约 51,463,797 保持；32K v2 代作废为证据）。**
+structured 首轮配额按池容量收窄（0.055→0.054，supersede 登记）；DBLP 已入池，
+第 2 轮起可恢复 25M/轮。每轮重跑 plan_mix，比例调整 = supersede + reason。
 
 ## 每轮 300M mix 规划流程（rung 开工前）
 
