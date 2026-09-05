@@ -68,8 +68,9 @@ V3_SAMPLE = {
     "mw_disposition": 500,
     "narration": 300,
     "confidence": 300,
+    "trajectory": 300,
 }
-FAMILIES = tuple(DEFAULT_SAMPLE)
+FAMILIES = tuple(DEFAULT_SAMPLE) + ("trajectory",)
 
 VALUE_RE = re.compile(r"值\d+")
 # 注意：Python re 的 \w 匹配中文，不能用 \w 做数字边界——否则中文相邻的

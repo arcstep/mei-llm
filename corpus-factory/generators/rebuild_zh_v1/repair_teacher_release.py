@@ -26,7 +26,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from rebuild_zh_v1 import common as C
 
-FAMILIES = ("retrieval", "full_call", "agent", "mw_disposition", "narration", "confidence")
+FAMILIES = ("retrieval", "full_call", "agent", "mw_disposition", "narration", "confidence", "trajectory")
 VALUE_RE = re.compile(r"值\d+")
 NUMBER_RE = re.compile(r"(?<![A-Za-z0-9_.])\d+(?:\.\d+)?(?!\.\d)(?![A-Za-z0-9_])")
 

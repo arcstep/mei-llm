@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Orchestrator for mei-1.0-51m-exp-000600m-sft-zh-rebuild-v1.
 
-Runs all six family generators, audits (dedup/leakage/budget/coverage),
+Runs all seven family generators, audits (dedup/leakage/budget/coverage),
 writes cycle-bound immutable artifacts under
 .local/artifacts/mei-1.0-51m/exp-000600m/corpus/sft-suite/<release-id>/, and
 reports gate status. Never touches CURRENT.json, an existing release, or any
@@ -25,6 +25,7 @@ from rebuild_zh_v1 import agent as AG
 from rebuild_zh_v1 import mw as MW
 from rebuild_zh_v1 import narration as NARR
 from rebuild_zh_v1 import confidence as CONF
+from rebuild_zh_v1 import trajectory as TRAJ
 
 RELEASE_ID = "mei-1.0-51m-exp-000600m-sft-zh-rebuild-v2"
 RELEASE_DIR = C.RELEASE_ROOT / RELEASE_ID
@@ -61,6 +62,7 @@ AGENT_TARGETS = dict(per_kind_count=333)
 MW_TARGETS = dict(per_class_count=200, visibility_pair_count=400, neighbor_pair_count=500)
 NARRATION_TARGETS = dict(max_rows=2000)
 CONFIDENCE_TARGETS = dict(fullcall_n=600, agent_n=400, retrieval_n=500)
+TRAJECTORY_TARGETS = dict(per_kind_count=400)
 
 
 def log(msg: str) -> None:
@@ -217,6 +219,26 @@ def compute_confidence_gates(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any
     }
 
 
+def compute_trajectory_gates(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    kinds = ("direct_execute", "ask_then_execute", "tool_fill_execute", "unfillable_fail", "execute_fail")
+    routes: dict[str, int] = {}
+    for r in rows:
+        for step in r["steps"]:
+            if step.get("role") == "mw" and step.get("route"):
+                routes[step["route"]] = routes.get(step["route"], 0) + 1
+    terminals = [(r["final_outcome"], r["final_confidence"]) for r in rows]
+    return {
+        "total_rows": len(rows),
+        "by_kind": {k: sum(1 for r in rows if r["trajectory_kind"] == k) for k in kinds},
+        "route_counts": routes,
+        "success_with_confidence": sum(1 for o, c in terminals if o == "success" and c in ("high", "mid")),
+        "failure_with_reason": sum(1 for r in rows if r["final_outcome"] == "failure" and r["final_mw_reason"]),
+        "narration_present": sum(1 for r in rows if r.get("narration")),
+        "mw_route_model_measurement": "pending_sft",
+        "end_to_end_completion_model_measurement": "pending_sft",
+    }
+
+
 def compute_narration_gates(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     grounded = 0
     for r in rows:
@@ -308,6 +330,9 @@ def main() -> int:
     log("freezing confidence candidates (label=null)")
     confidence_rows, confidence_cov = CONF.generate(fullcall_rows, agent_rows, retrieval_rows, **CONFIDENCE_TARGETS)
 
+    log("generating trajectory (integrated head-collaboration)")
+    trajectory_rows, trajectory_cov = TRAJ.generate(deploy, **TRAJECTORY_TARGETS)
+
     families = {
         "retrieval": retrieval_rows,
         "full_call": fullcall_rows,
@@ -315,6 +340,7 @@ def main() -> int:
         "mw_disposition": mw_rows,
         "narration": narration_rows,
         "confidence": confidence_rows,
+        "trajectory": trajectory_rows,
     }
 
     log("auditing dedup/leakage/budget")
@@ -329,6 +355,7 @@ def main() -> int:
 
     log("computing gates")
     gates = {
+        "trajectory": compute_trajectory_gates(trajectory_rows),
         "retrieval": compute_retrieval_gates(retrieval_rows),
         "mw_disposition": compute_mw_gates(mw_rows),
         "agent": compute_agent_gates(agent_rows),
@@ -351,6 +378,7 @@ def main() -> int:
     coverage = {
         "retrieval": retrieval_cov, "full_call": fullcall_cov, "agent": agent_cov,
         "mw_disposition": mw_cov, "narration": narration_cov, "confidence": confidence_cov,
+        "trajectory": trajectory_cov,
     }
 
     governance_dir = RELEASE_DIR / "governance"

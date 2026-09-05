@@ -31,7 +31,7 @@ SFT_RELEASE_DIR = C.RELEASE_ROOT / SFT_RELEASE_ID
 EVAL_LOCK_ID = "mei-51m-longitudinal-eval-v8-retrieval-depth-v2"
 EVAL_LOCK_DIR = C.EVAL_LOCK_ROOT / EVAL_LOCK_ID
 
-BANKS = ("retrieval", "mw_disposition", "full_call", "agent", "confidence", "narration")
+BANKS = ("retrieval", "mw_disposition", "full_call", "agent", "confidence", "narration", "trajectory")
 
 
 def main() -> int:
