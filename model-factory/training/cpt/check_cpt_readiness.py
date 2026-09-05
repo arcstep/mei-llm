@@ -82,18 +82,26 @@ def report(corpus_dir: Path, target_exposure: int) -> dict:
         snapshot = {}
         snapshot_error = str(exc)
     coverage_ok = all(coverage.get(name, 0) >= quota for name, quota in quotas.items())
+    schedule_kind = classify_schedule(schedule)
+    if schedule_kind == "scratch":
+        exposure_ok = (
+            int(schedule.get("exposure_tokens") or 0) == target_exposure
+            and int(schedule.get("parent_tokens_seen") or 0) == 0
+        )
+    else:
+        exposure_ok = (
+            int(schedule.get("cumulative_exposure_tokens") or 0) == target_exposure
+            and not (corpus_dir / "schedule-scratch.json").exists()
+        )
     ready = (
         parent_err is None
         and source_err is None
         and tok_ok
         and snapshot_error is None
-        and classify_schedule(schedule) == "cpt"
-        and int(schedule.get("cumulative_exposure_tokens") or 0) == target_exposure
         and coverage_ok
         and all(hash_ok.values())
         and not (corpus_dir / "schedule.json").exists()
-        and not (corpus_dir / "schedule-scratch.json").exists()
-        and mix.get("training_mode") == "cpt"
+        and exposure_ok
     )
     return {
         "kind": "cpt-readiness",
