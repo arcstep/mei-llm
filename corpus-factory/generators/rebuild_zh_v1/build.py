@@ -10,6 +10,7 @@ training run. Offline only -- no provider calls.
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import time
@@ -27,6 +28,11 @@ from rebuild_zh_v1 import confidence as CONF
 
 RELEASE_ID = "mei-1.0-51m-exp-000600m-sft-zh-rebuild-v2"
 RELEASE_DIR = C.RELEASE_ROOT / RELEASE_ID
+CYCLE_ID = C.CYCLE_ID
+BASE_BINDING = {
+    "base_id": "mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
+    "base_weights_sha256": C.BASE_WEIGHTS_SHA256,
+}
 SPLIT_NAMES = C.SPLIT_NAMES
 
 # v2 vs v1: MW scaled up ~3.6x (140->500/class) after auditing the old
@@ -255,6 +261,21 @@ def build_manifest(base_dir: Path) -> dict[str, Any]:
 
 
 def main() -> int:
+    global RELEASE_ID, RELEASE_DIR, CYCLE_ID, BASE_BINDING
+    ap = argparse.ArgumentParser(description="rebuild-zh-v1 six-family SFT release builder")
+    ap.add_argument("--release-id", default=RELEASE_ID)
+    ap.add_argument("--release-dir", type=Path, default=RELEASE_DIR)
+    ap.add_argument("--cycle-id", default=CYCLE_ID)
+    ap.add_argument("--base-id", default=BASE_BINDING["base_id"])
+    ap.add_argument("--base-weights-sha256", default=BASE_BINDING["base_weights_sha256"])
+    args = ap.parse_args()
+    if args.release_dir.exists():
+        raise SystemExit(f"write-once refusal: release dir already exists: {args.release_dir}")
+    RELEASE_ID = args.release_id
+    RELEASE_DIR = args.release_dir
+    CYCLE_ID = args.cycle_id
+    BASE_BINDING = {"base_id": args.base_id, "base_weights_sha256": args.base_weights_sha256}
+
     t0 = time.time()
     log("loading registries + tokenizer")
     deploy = C.load_deploy_tools()
@@ -333,15 +354,12 @@ def main() -> int:
     release_manifest = {
         "schema": "mei-51m-sft-zh-rebuild-release-v1",
         "release_id": RELEASE_ID,
-        "cycle_id": C.CYCLE_ID,
+        "cycle_id": CYCLE_ID,
         "product": C.PRODUCT,
         "params": C.PARAMS,
         "generator_id": C.GENERATOR_ID,
         "generator_version": C.GENERATOR_VERSION,
-        "base_binding": {
-            "base_id": "mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
-            "base_weights_sha256": C.BASE_WEIGHTS_SHA256,
-        },
+        "base_binding": BASE_BINDING,
         "tool_registry": {
             "deploy_tools": deploy.n_tools, "deploy_families": len(deploy.families),
             "training_tools": training.n_tools, "training_families": len(training.families),
