@@ -1037,6 +1037,19 @@ SCRATCH_STAGE_COMMAND = [
 ]
 
 
+def _scratch_stage_command(directory: Path) -> list[str]:
+    """run 内已有完整 checkpoint 时加 --resume-existing（原地续跑）。"""
+    command = list(SCRATCH_STAGE_COMMAND)
+    state = (
+        directory
+        / "checkpoints/cpt/pretrain-mei-1.0-51m-base-scratch300m-v1"
+        / "pretrain-mei-1.0-51m-base-scratch300m-v1-state.npz"
+    )
+    if state.is_file():
+        command.append("--resume-existing")
+    return command
+
+
 def run_stage(
     directory: Path,
     config: dict,
@@ -1101,7 +1114,7 @@ def run_stage(
         if row.get("kind") != "internal":
             if stage == "cpt" and load_json(ROOT / config["corpus"]["schedule"]).get("kind") == "scratch":
                 planned["command"] = render_command(
-                    SCRATCH_STAGE_COMMAND, render_context(directory, config)
+                    _scratch_stage_command(directory), render_context(directory, config)
                 )
             else:
                 planned["command"] = render_command(row["command"], render_context(directory, config))
@@ -1126,7 +1139,9 @@ def run_stage(
         )
         return ok, receipt
     if stage == "cpt" and load_json(ROOT / config["corpus"]["schedule"]).get("kind") == "scratch":
-        command = render_command(SCRATCH_STAGE_COMMAND, render_context(directory, config))
+        command = render_command(
+            _scratch_stage_command(directory), render_context(directory, config)
+        )
     else:
         command = render_command(row["command"], render_context(directory, config))
     if dry_run:
