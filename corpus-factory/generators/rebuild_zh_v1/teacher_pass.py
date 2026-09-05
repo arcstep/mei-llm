@@ -203,8 +203,15 @@ def sample_train_rows(release_dir: Path, sample: dict[str, int], seed: int) -> d
     picked: dict[str, list[dict[str, Any]]] = {}
     for family in FAMILIES:
         rows = read_jsonl(release_dir / "compiled" / family / "train.jsonl")
-        n = min(sample.get(family, 0), len(rows))
-        picked[family] = rng.sample(rows, n)
+        # 留出改写余量：prompt_tokens 已近 cap 的行跳过（教师改写通常会变长，
+        # 近上限的行改写后必然触发预算 fail-closed，白花 API 钱）。
+        margin = 120
+        pool = [
+            r for r in rows
+            if int((r.get("budget") or {}).get("prompt_tokens") or 0) <= int((r.get("budget") or {}).get("cap") or 0) - margin
+        ]
+        n = min(sample.get(family, 0), len(pool))
+        picked[family] = rng.sample(pool, n)
     return picked
 
 
