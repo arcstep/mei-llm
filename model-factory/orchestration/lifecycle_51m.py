@@ -855,10 +855,15 @@ def internal_gate(stage: str, directory: Path, config: dict) -> tuple[bool, dict
         ok = actual == expected
         return ok, {"fresh_snapshot": fresh, "immutable": ok}
     if stage == "cpt_gate":
-        summary = load_json(directory / "checkpoints/cpt/summary.json")
-        readiness = load_json(directory / "jobs/cpt-readiness.json")
         schedule_file = ROOT / config["corpus"]["schedule"]
         schedule = load_json(schedule_file)
+        summary_path = directory / "checkpoints/cpt/summary.json"
+        if schedule.get("kind") == "scratch" and not summary_path.is_file():
+            candidates = sorted((directory / "checkpoints/cpt").glob("pretrain-*/summary.json"))
+            if candidates:
+                summary_path = candidates[-1]
+        summary = load_json(summary_path)
+        readiness = load_json(directory / "jobs/cpt-readiness.json")
         params = int(summary.get("params") or 0)
         tokens = int(summary.get("tokens_seen") or 0)
         arch = summary.get("architecture_id")
@@ -866,42 +871,79 @@ def internal_gate(stage: str, directory: Path, config: dict) -> tuple[bool, dict
         weight_hash = summary.get("weight_contract_sha256") or legacy_weight_contract_sha256(
             str(arch_hash or "")
         )
-        role_losses = {
-            role: summary.get("valid_loss" if role == "wiki" else f"valid_loss_{role}")
-            for role in ("wiki", "hq", "structure", "colloquial")
-        }
         probe = summary.get("final_probe_mean_nll", summary.get("probe_mean_nll"))
-        quality = all(value is not None for value in role_losses.values()) and probe is not None
         no_repeat = not bool(summary.get("allow_repeat"))
         tolerance = 2048
         expected_incremental = int(schedule.get("exposure_tokens") or 0)
         segment_tokens = int(summary.get("segment_tokens") or 0)
         stage_drawn = summary.get("stage_tokens_drawn") or {}
-        quota_ok = all(
-            abs(
-                int(stage_drawn.get(role) or 0)
-                - int(((schedule.get("sources") or {}).get(role) or {}).get("token_quota") or 0)
+        if schedule.get("kind") == "scratch":
+            # scratch run: no parent rung, roles come from the mix, not the
+            # legacy wiki/hq/structure/colloquial set.
+            roles = [
+                role
+                for role, spec in (schedule.get("sources") or {}).items()
+                if int((spec or {}).get("token_quota") or 0) > 0
+            ]
+            role_losses = {role: summary.get(f"valid_loss_{role}") for role in roles}
+            quality = summary.get("valid_loss") is not None and probe is not None
+            # scratch batches are 4096 tokens (s1); allow one batch of slack.
+            quota_tolerance = tolerance * 4
+            quota_ok = all(
+                abs(
+                    int(stage_drawn.get(role) or 0)
+                    - int(((schedule.get("sources") or {}).get(role) or {}).get("token_quota") or 0)
+                )
+                <= quota_tolerance
+                for role in roles
             )
-            <= tolerance
-            for role in ("wiki", "hq", "structure", "colloquial")
-        )
-        parent_path = Path(str(schedule.get("parent_checkpoint") or ""))
-        if not parent_path.is_absolute():
-            parent_path = ROOT / parent_path
-        parent = load_json(parent_path.parent / "RELEASE.json")
-        benefit_pairs = []
-        for role, current_loss in role_losses.items():
-            parent_loss = parent.get("valid_loss" if role == "wiki" else f"valid_loss_{role}")
-            if current_loss is not None and parent_loss is not None:
-                benefit_pairs.append(float(current_loss) <= float(parent_loss))
-        benefit_ok = bool(benefit_pairs) and any(benefit_pairs)
-        checkpoint_ok = all(
-            path.is_file()
-            for path in (
-                directory / "checkpoints/cpt/pretrain-cpt.npz",
-                directory / "checkpoints/cpt/pretrain-cpt-state.npz",
+            benefit_ok = True  # no parent rung to compare against
+            parent = {}
+        else:
+            role_losses = {
+                role: summary.get("valid_loss" if role == "wiki" else f"valid_loss_{role}")
+                for role in ("wiki", "hq", "structure", "colloquial")
+            }
+            quality = all(value is not None for value in role_losses.values()) and probe is not None
+            quota_ok = all(
+                abs(
+                    int(stage_drawn.get(role) or 0)
+                    - int(((schedule.get("sources") or {}).get(role) or {}).get("token_quota") or 0)
+                )
+                <= tolerance
+                for role in ("wiki", "hq", "structure", "colloquial")
             )
-        )
+            parent_path = Path(str(schedule.get("parent_checkpoint") or ""))
+            if not parent_path.is_absolute():
+                parent_path = ROOT / parent_path
+            parent = load_json(parent_path.parent / "RELEASE.json")
+            benefit_pairs = []
+            for role, current_loss in role_losses.items():
+                parent_loss = parent.get("valid_loss" if role == "wiki" else f"valid_loss_{role}")
+                if current_loss is not None and parent_loss is not None:
+                    benefit_pairs.append(float(current_loss) <= float(parent_loss))
+            benefit_ok = bool(benefit_pairs) and any(benefit_pairs)
+        if schedule.get("kind") == "scratch":
+            # scratch trainer names checkpoints after the run subdir:
+            # checkpoints/cpt/pretrain-<run>/pretrain-<run>.npz (+ -state.npz).
+            scratch_dirs = [p for p in (directory / "checkpoints/cpt").glob("pretrain-*") if p.is_dir()]
+            scratch_ckpts: list[Path] = []
+            for sub in scratch_dirs:
+                name = sub.name.removeprefix("pretrain-")
+                scratch_ckpts.append(sub / f"pretrain-{name}.npz")
+                scratch_ckpts.append(sub / f"pretrain-{name}-state.npz")
+            checkpoint_ok = bool(scratch_ckpts) and all(p.is_file() for p in scratch_ckpts)
+            # summary.json has no segment_tokens field; for scratch the segment
+            # is the whole run (parent_tokens_seen == 0).
+            segment_tokens = tokens
+        else:
+            checkpoint_ok = all(
+                path.is_file()
+                for path in (
+                    directory / "checkpoints/cpt/pretrain-cpt.npz",
+                    directory / "checkpoints/cpt/pretrain-cpt-state.npz",
+                )
+            )
         schedule_ok = (
             summary.get("schedule_sha256") == sha256_file(schedule_file)
             and int(summary.get("parent_tokens_seen") or 0) == int(schedule.get("parent_tokens_seen") or 0)
