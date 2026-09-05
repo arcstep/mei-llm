@@ -12,7 +12,13 @@ _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
-from common._repo import CORPUS_LM_V2, ROOT, TOKENIZER_ZH_V1, ensure_formal_on_path
+from common._repo import (
+    CORPUS_LM_V2,
+    ROOT,
+    TOKENIZER_ZH_V1,
+    ensure_formal_on_path,
+    frozen_tokenizer_path,
+)
 
 ensure_formal_on_path()
 from training.cpt.cpt_gates import (
@@ -63,7 +69,12 @@ def report(corpus_dir: Path, target_exposure: int) -> dict:
         parent = ROOT / parent
     parent_err = refuse_cpt_parent(parent, schedule)
     source_err = refuse_cpt_source(corpus_dir, rung)
-    tok_ok = TOKENIZER_ZH_V1.is_file() and file_sha256(TOKENIZER_ZH_V1) == FROZEN_TOK_SHA
+    frozen = frozen_tokenizer_path()
+    tok_ok = (
+        (TOKENIZER_ZH_V1.is_file() and file_sha256(TOKENIZER_ZH_V1) == FROZEN_TOK_SHA)
+        if frozen == TOKENIZER_ZH_V1
+        else frozen.is_file()
+    )
     try:
         snapshot = corpus_snapshot(corpus_dir, target_exposure)
         snapshot_error = None
