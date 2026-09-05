@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""QAT replay for the zh-v2 rebuild lineage (fake-quant Q4 STE).
+"""QAT stage for the zh-v2 rebuild lineage (fake-quant Q4 STE).
 
-Loads the float SFT master, replaces every ndim==2 parameter with its
-4-bit fake-quantized version inside the forward (STE backward flows to the
-float master), trains a short replay on the SFT corpus, then writes:
-  - sft-qat-master.npz  (float master, QAT-tuned)
+Order (user-confirmed, matches the legacy chain): QAT BEFORE SFT. This stage
+loads the float CPT base, replaces every ndim==2 parameter with its 4-bit
+fake-quantized version inside the forward (STE backward flows to the float
+master, which is restored before the optimizer update), and replays a short
+window on the task-domain corpus so the base becomes quantization-tolerant
+before SFT. Writes:
+  - sft-qat-master.npz  (float master, QAT-tuned -- the SFT stage input)
   - sft-qat-q4.npz      (per-tensor Q4 pack: <name>.q4 (uint8, 2 elems/byte)
                          + <name>.scale (float32))
 The pack layout is simple enough for the python runtime and wasm to consume.
@@ -44,17 +47,34 @@ def collect_quant_pairs(model: Any) -> list[str]:
     return names
 
 
-def quantize_inplace(model: Any, names: list[str], bits: int = 4) -> None:
+def _leaf_of(model: Any, name: str) -> tuple[Any, str]:
+    parts = name.split(".")
+    param: Any = model
+    for part in parts[:-1]:
+        if part.isdigit():
+            param = param[int(part)]
+        else:
+            param = getattr(param, part)
+    return param, parts[-1]
+
+
+def quantize_inplace(model: Any, names: list[str], bits: int = 4) -> dict[str, mx.array]:
+    """Replace each named weight with its fake-quantized value (STE).
+    Returns the saved float masters, which the caller MUST restore after the
+    backward pass so the optimizer updates the float master, not the
+    quantized copy."""
+    originals: dict[str, mx.array] = {}
     for name in names:
-        param: Any = model
-        parts = name.split(".")
-        for part in parts[:-1]:
-            if part.isdigit():
-                param = param[int(part)]
-            else:
-                param = getattr(param, part)
-        leaf = parts[-1]
-        setattr(param, leaf, ste_quantize(getattr(param, leaf), bits=bits))
+        param, leaf = _leaf_of(model, name)
+        originals[name] = getattr(param, leaf)
+        setattr(param, leaf, ste_quantize(originals[name], bits=bits))
+    return originals
+
+
+def restore_inplace(model: Any, originals: dict[str, mx.array]) -> None:
+    for name, value in originals.items():
+        param, leaf = _leaf_of(model, name)
+        setattr(param, leaf, value)
 
 
 def ce_loss(model: Any, ids: mx.array, labels: mx.array) -> mx.array:
@@ -96,7 +116,7 @@ def pack_q4(model: Any, names: list[str], out_path: Path) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--release-dir", type=Path, required=True)
-    ap.add_argument("--sft-master", type=Path, required=True, help="float SFT master npz")
+    ap.add_argument("--base-master", type=Path, required=True, help="float base/SFT master npz to quantize")
     ap.add_argument("--out-dir", type=Path, required=True)
     ap.add_argument("--steps", type=int, default=300)
     ap.add_argument("--batch-size", type=int, default=4)
@@ -126,8 +146,8 @@ def main() -> int:
     tok = _frozen_tokenizer()
     model = NeedleZh(NeedleZhConfig().tiny() if args.smoke else NeedleZhConfig.from_spec())
     mx.eval(model.parameters())
-    log(f"loading SFT master {args.sft_master}")
-    load_params(model, args.sft_master, strict=False, allow_missing_prefixes=(), return_report=True)
+    log(f"loading SFT master {args.base_master}")
+    load_params(model, args.base_master, strict=False, allow_missing_prefixes=(), return_report=True)
 
     deploy = DeployIndex()
     rows: list[dict[str, Any]] = []
@@ -150,11 +170,18 @@ def main() -> int:
     optimizer = optim.AdamW(learning_rate=lr_schedule)
 
     def step_fn(ids, labels):
+        # 每步先抓当前 float 主副本，前向用量化值（STE），反向后恢复主副本再更新
+        originals: dict[str, mx.array] = {}
+        for name in quant_names:
+            param, leaf = _leaf_of(model, name)
+            originals[name] = getattr(param, leaf)
+
         def loss_fn(model):
             quantize_inplace(model, quant_names)
             return ce_loss(model, ids, labels)
         loss_and_grads = nn.value_and_grad(model, loss_fn)
         loss, grads = loss_and_grads(model)
+        restore_inplace(model, originals)
         optimizer.update(model, grads)
         return loss
 
@@ -189,7 +216,7 @@ def main() -> int:
     (args.out_dir / "summary.json").write_text(json.dumps({
         "steps": steps, "final_loss": float(loss), "quantized_tensors": len(quant_names),
         "pack_layout": "per-tensor int4 (2 elems/byte, low nibble first) + float32 scale",
-        "sft_master": str(args.sft_master),
+        "sft_master": str(args.base_master),
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     log(f"done in {time.time() - t0:.0f}s")
     return 0

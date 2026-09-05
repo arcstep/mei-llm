@@ -232,6 +232,8 @@ def main() -> int:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-compile", action="store_true")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--quant-aware", action="store_true",
+                    help="fake-quant Q4 STE in every forward (SFT on the quantized model; requires a QAT-tuned base)")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -273,8 +275,30 @@ def main() -> int:
     )
     optimizer = optim.AdamW(learning_rate=lr_schedule)
     state = [model.state, optimizer.state]
+    quant_names: list[str] = []
+    if args.quant_aware:
+        from training.qat.qat_newlineage import (  # noqa: E402
+            _leaf_of, collect_quant_pairs, pack_q4, quantize_inplace, restore_inplace,
+        )
+        quant_names = collect_quant_pairs(model)
+        log(f"quant-aware SFT: {len(quant_names)} weight tensors fake-quantized per step")
 
     def step_fn(batch_ids, batch_labels):
+        if args.quant_aware:
+            originals = {}
+            for name in quant_names:
+                param, leaf = _leaf_of(model, name)
+                originals[name] = getattr(param, leaf)
+
+            def loss_fn(model):
+                quantize_inplace(model, quant_names)
+                return ce_loss(model, batch_ids, batch_labels)[0]
+            loss_and_grads = nn.value_and_grad(model, loss_fn)
+            loss, grads = loss_and_grads(model)
+            restore_inplace(model, originals)
+            optimizer.update(model, grads)
+            return loss
+
         def loss_fn(model):
             return ce_loss(model, batch_ids, batch_labels)[0]
         loss_and_grads = nn.value_and_grad(model, loss_fn)
@@ -348,6 +372,9 @@ def main() -> int:
             save_params(model, args.out_dir / "sft-last.npz")
 
     save_params(model, args.out_dir / "sft-final.npz")
+    if args.quant_aware:
+        from training.qat.qat_newlineage import pack_q4  # noqa: E402
+        pack_q4(model, quant_names, args.out_dir / "sft-qat-q4.npz")
     log(f"done in {time.time() - t0:.0f}s; best valid {best_loss}")
     return 0
 
