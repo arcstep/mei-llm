@@ -57,14 +57,51 @@ def generate(model, tok, prompt: str, *, max_new: int = 128, temperature: float 
     return tok.decode(generated) if hasattr(tok, "decode") else "".join(map(str, generated))
 
 
+def _extract_json_objects(text: str) -> list[str]:
+    """括号配平提取 JSON 对象（支持嵌套 arguments）。"""
+    objects: list[str] = []
+    i = 0
+    while i < len(text):
+        start = text.find("{", i)
+        if start < 0:
+            break
+        depth = 0
+        in_str = False
+        escaped = False
+        for j in range(start, len(text)):
+            ch = text[j]
+            if in_str:
+                if escaped:
+                    escaped = False
+                elif ch == "\\":
+                    escaped = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    objects.append(text[start : j + 1])
+                    i = j + 1
+                    break
+        else:
+            break
+    return objects
+
+
 def parse_tool_call(text: str) -> dict[str, Any] | None:
-    match = re.search(r"\{[^{}]*\"tool\"[^{}]*\}", text, re.S)
-    if not match:
-        return None
-    try:
-        return json.loads(match.group())
-    except json.JSONDecodeError:
-        return None
+    for candidate in _extract_json_objects(text):
+        try:
+            parsed = json.loads(candidate)
+            if isinstance(parsed, dict) and ("tool" in parsed or "refuse" in parsed):
+                return parsed
+        except json.JSONDecodeError:
+            continue
+    return None
 
 
 def parse_mw(text: str) -> dict[str, Any] | None:

@@ -112,8 +112,8 @@ def eval_generation(runtime: Any, rows: list[dict[str, Any]], family: str, limit
         prompt, _gold = RENDERERS[family](row, deploy)
         out = generate(runtime.model, runtime.tokenizer, prompt, max_new=96)
         total += 1
-        if family == "trajectory":
-            gold_names = [s["call"]["name"] for s in row["steps"] if s.get("role") == "call"]
+        if family in ("trajectory", "agent"):
+            gold_names = [s["call"]["name"] for s in row.get("steps") or [] if s.get("role") == "call"]
         else:
             gold_names = [row.get("gold_name") or ""]
         if any(n and n in out for n in gold_names):
