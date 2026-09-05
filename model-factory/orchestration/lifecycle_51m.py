@@ -1034,6 +1034,7 @@ SCRATCH_STAGE_COMMAND = [
     "{corpus_dir}",
     "--out-dir",
     "{checkpoints}/cpt",
+    "--no-compile",
 ]
 
 
