@@ -1032,8 +1032,6 @@ SCRATCH_STAGE_COMMAND = [
     "{model_factory}/training/cpt/run_scratch_curriculum_51m.py",
     "--corpus-dir",
     "{corpus_dir}",
-    "--schedule-kind",
-    "scratch",
     "--out-dir",
     "{checkpoints}/cpt",
 ]
