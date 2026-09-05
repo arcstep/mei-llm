@@ -382,8 +382,10 @@ def corpus_snapshot(corpus_dir: Path, target: int) -> dict:
     if cumulative != target or parent + incremental != target:
         raise RuntimeError("parent + incremental exposure must equal the requested cumulative target")
     sources = sched.get("sources") or {}
-    mix_sources = (mix.get("sources") or {}) if mix else {}
-    if set(sources) != set(mix_sources):
+    mix_document = load_json(corpus_dir / "mix.json")
+    mix_sources = mix_document.get("sources")
+    if mix_sources and set(sources) != set(mix_sources):
+        # 旧布局 mix 不声明 sources（仅 schedule 四角色）；v2 布局必须两者一致。
         raise RuntimeError("CPT schedule roles must match the mix sources exactly")
     if sum(int((row or {}).get("token_quota") or 0) for row in sources.values()) != incremental:
         raise RuntimeError("CPT source quotas must sum to incremental exposure")

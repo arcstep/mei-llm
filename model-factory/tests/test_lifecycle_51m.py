@@ -105,7 +105,14 @@ class Lifecycle51MTest(unittest.TestCase):
             self.corpus / "mix.json",
             {
                 "training_mode": "cpt",
-                "sources": {"wiki": {"train_shards": [str(shard)], "valid_shards": []}},
+                "sources": {
+                    name: (
+                        {"train_shards": [str(shard)], "valid_shards": []}
+                        if name == "wiki"
+                        else {"train_shards": [], "valid_shards": []}
+                    )
+                    for name in ("wiki", "hq", "structure", "colloquial")
+                },
             },
         )
         before = lc.corpus_snapshot(self.corpus, 600_000_000)
