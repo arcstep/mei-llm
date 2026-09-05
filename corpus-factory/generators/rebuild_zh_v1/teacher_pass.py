@@ -208,6 +208,12 @@ def main() -> int:
     )
     ap.add_argument("--seed", type=int, default=20260905)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument(
+        "--resume-file",
+        type=Path,
+        default=None,
+        help="JSONL scratch of already-accepted batches; rows present here are skipped on rerun",
+    )
     args = ap.parse_args()
 
     source_dir = args.release_root / args.release_id
@@ -245,10 +251,26 @@ def main() -> int:
     stats = {"calls": 0, "ok_calls": 0, "variants_requested": 0, "variants_accepted": 0}
     failures: dict[str, int] = {}
 
+    resume_path: Path | None = None
+    if args.resume_file is not None:
+        resume_path = args.resume_file if args.resume_file.is_absolute() else Path.cwd() / args.resume_file
+        if resume_path.is_file():
+            for line in resume_path.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                entry = json.loads(line)
+                per_row[entry["case_id"]] = {
+                    key: entry[key] for key in ("before_query", "kept_variant", "after_query", "verification")
+                    if key in entry
+                }
+            log(f"resume file loaded: {len(per_row)} rows already processed")
+
     batch_items: list[tuple[str, str]] = []  # (case_id, query)
     for family in FAMILIES:
         for row in picked[family]:
-            batch_items.append((str(row["case_id"]), str(row["query"])))
+            case_id = str(row["case_id"])
+            if case_id not in per_row:  # skip rows already processed in a prior run
+                batch_items.append((case_id, str(row["query"])))
 
     def flush_batch(items: list[tuple[str, str]], call_index: int) -> None:
         stats["calls"] += 1
@@ -277,6 +299,12 @@ def main() -> int:
                 "case_ids": [cid for cid, _ in items], "rows_covered": len(items),
                 "ok": False, "error": last_error, **usage,
             })
+            for case_id, original in items:
+                per_row[case_id].update({
+                    "kept_variant": None,
+                    "after_query": original,
+                    "verification": {},
+                })
             return  # rows stay untouched
         ledger.append({
             "call_index": call_index, "provider": PROVIDER, "model": MODEL,
@@ -331,6 +359,17 @@ def main() -> int:
         batch = batch_items[i : i + BATCH_ROWS]
         per_row.update({cid: {"before_query": q} for cid, q in batch})
         flush_batch(batch, i // BATCH_ROWS + 1)
+        if resume_path is not None:
+            with resume_path.open("a", encoding="utf-8") as handle:
+                for case_id, _ in batch:
+                    record = per_row[case_id]
+                    handle.write(json.dumps({
+                        "case_id": case_id,
+                        "before_query": record["before_query"],
+                        "kept_variant": record.get("kept_variant"),
+                        "after_query": record.get("after_query"),
+                        "verification": record.get("verification") or {},
+                    }, ensure_ascii=False) + "\n")
         time.sleep(0.15)
         if i and i % 100 == 0:
             log(f"processed {i}/{len(batch_items)} rows, {stats['variants_accepted']} variants accepted")
@@ -347,62 +386,50 @@ def main() -> int:
         log("verification failure reasons: " + ", ".join(f"{k}×{v}" for k, v in sorted(failures.items())))
 
     # apply accepted variants (copy-on-write into the new release)
-    log("copying release and applying query replacements")
-    shutil.copytree(source_dir, out_dir)
-
+    # Phase A: pure compute — resolve final query/budget per polished row
+    # before touching the new release dir (fail closed on budget overflow).
+    replacements: dict[str, dict[str, str]] = {family: {} for family in FAMILIES}
     applied = 0
     for family in FAMILIES:
-        replacements = {
-            case_id: rec["after_query"]
-            for case_id, rec in per_row.items()
-            if rec["kept_variant"] and case_id.startswith(f"{family}:")
-        }
-        if not replacements:
+        for row in read_jsonl(source_dir / "semantic" / f"{family}.jsonl"):
+            case_id = str(row["case_id"])
+            rec = per_row.get(case_id)
+            if not rec or not rec.get("kept_variant"):
+                continue
+            new_query = rec["after_query"]
+            if new_query == row["query"]:
+                continue
+            budget = dict(row.get("budget") or {})
+            if "prompt_tokens" in budget:
+                delta = C.count_tokens(new_query) - C.count_tokens(str(row["query"]))
+                new_total = int(budget["prompt_tokens"]) + delta
+                if new_total > int(budget["cap"]):
+                    rec["after_query"] = str(row["query"])
+                    rec["kept_variant"] = None
+                    rec["budget_note"] = "variant over budget cap — original kept"
+                    continue
+                budget["prompt_tokens"] = new_total
+                budget["fits"] = new_total <= int(budget["cap"])
+            replacements[family][case_id] = new_query
+            rec["after_sha256"] = C.sha256_text(new_query)
+            rec["new_budget"] = budget
+            applied += 1
+
+    # Phase B: copy-on-write the release, apply replacements, add envelopes.
+    log(f"applying {applied} polished queries into {args.out_id}")
+    shutil.copytree(source_dir, out_dir)
+    for family in FAMILIES:
+        if not replacements[family]:
             continue
         semantic_path = out_dir / "semantic" / f"{family}.jsonl"
         rows = read_jsonl(semantic_path)
         for row in rows:
-            new_query = replacements.get(str(row["case_id"]))
-            if new_query is None or new_query == row["query"]:
-                continue
-            old_query = str(row["query"])
-            row["query"] = new_query
-            budget = dict(row.get("budget") or {})
-            if "prompt_tokens" in budget:
-                delta = C.count_tokens(new_query) - C.count_tokens(old_query)
-                new_total = int(budget["prompt_tokens"]) + delta
-                if new_total <= int(budget["cap"]):  # else fail closed below
-                    budget["prompt_tokens"] = new_total
-                    budget["fits"] = new_total <= int(budget["cap"])
-                    row["budget"] = budget
-                else:
-                    row["query"] = old_query
-                    rec = per_row[str(row["case_id"])]
-                    rec["after_query"] = old_query
-                    rec["kept_variant"] = None
-                    rec["budget_note"] = "variant over budget cap — original kept"
-                    continue
-            applied += 1
-            per_row[str(row["case_id"])]["after_sha256"] = C.sha256_text(new_query)
-        write_jsonl(semantic_path, rows)
-        # mirror the semantic rows' final state (query + budget) by case_id
-        semantic_by_id = {str(r["case_id"]): r for r in rows if str(r["case_id"]) in replacements}
-        train_path = out_dir / "compiled" / family / "train.jsonl"
-        train_rows = read_jsonl(train_path)
-        for row in train_rows:
-            if str(row["case_id"]) in semantic_by_id:
-                row["query"] = semantic_by_id[str(row["case_id"])]["query"]
-                row["budget"] = semantic_by_id[str(row["case_id"])].get("budget", row.get("budget"))
-        write_jsonl(train_path, train_rows)
-
-    # add teacher envelope evidence to rows that kept a variant
-    for family in FAMILIES:
-        semantic_path = out_dir / "semantic" / f"{family}.jsonl"
-        rows = read_jsonl(semantic_path)
-        for row in rows:
             case_id = str(row["case_id"])
-            rec = per_row.get(case_id)
-            if rec and rec.get("kept_variant"):
+            if case_id in replacements[family]:
+                rec = per_row[case_id]
+                row["query"] = replacements[family][case_id]
+                if "new_budget" in rec:
+                    row["budget"] = rec["new_budget"]
                 row["teacher"] = {
                     "teacher_id": TEACHER_ID,
                     "provider": PROVIDER,
@@ -412,17 +439,18 @@ def main() -> int:
                     "kept_variant": rec["kept_variant"],
                 }
         write_jsonl(semantic_path, rows)
-    for family in FAMILIES:
+        # mirror the semantic rows' final state (query + budget + teacher)
+        semantic_by_id = {str(r["case_id"]): r for r in rows}
         train_path = out_dir / "compiled" / family / "train.jsonl"
-        rows = read_jsonl(train_path)
-        semantic_by_id = {
-            str(r["case_id"]): r for r in read_jsonl(out_dir / "semantic" / f"{family}.jsonl")
-        }
-        for row in rows:
+        train_rows = read_jsonl(train_path)
+        for row in train_rows:
             source = semantic_by_id.get(str(row["case_id"]))
-            if source and "teacher" in source:
-                row["teacher"] = source["teacher"]
-        write_jsonl(train_path, rows)
+            if source is None or str(row["case_id"]) not in replacements[family]:
+                continue
+            row["query"] = source["query"]
+            row["budget"] = source.get("budget", row.get("budget"))
+            row["teacher"] = source["teacher"]
+        write_jsonl(train_path, train_rows)
 
     log(f"applied {applied} polished queries")
 
