@@ -887,11 +887,14 @@ def internal_gate(stage: str, directory: Path, config: dict) -> tuple[bool, dict
             ]
             role_losses = {role: summary.get(f"valid_loss_{role}") for role in roles}
             quality = summary.get("valid_loss") is not None and probe is not None
+            # source_tokens_drawn 是跨 curriculum 阶段的累计值；stage_tokens_drawn
+            # 仅含最后一个阶段（s3），不能对总配额做账。
+            cumulative_drawn = summary.get("source_tokens_drawn") or stage_drawn
             # scratch batches are 4096 tokens (s1); allow one batch of slack.
             quota_tolerance = tolerance * 4
             quota_ok = all(
                 abs(
-                    int(stage_drawn.get(role) or 0)
+                    int(cumulative_drawn.get(role) or 0)
                     - int(((schedule.get("sources") or {}).get(role) or {}).get("token_quota") or 0)
                 )
                 <= quota_tolerance
