@@ -59,9 +59,9 @@ class PhaseBindingTest(unittest.TestCase):
         recipe = ROOT / "model-factory/recipes/phase-qat-cq2-v1.json"
         return {
             "schema": "mei-51m-phase-binding-v1",
-            "binding_id": "test-exp-000900m-qat-v1",
+            "binding_id": "test-exp-000900m-v2-qat-v1",
             "model_id": "mei-1.0-51m",
-            "cycle_id": "exp-000900m",
+            "cycle_id": "exp-000900m-v2",
             "phase": "qat",
             "pipeline_id": "mei-51m-qat-cq2-v1",
             "pipeline_recipe_sha256": sha(recipe),
@@ -102,7 +102,7 @@ class PhaseBindingTest(unittest.TestCase):
                 },
             },
             "outputs": {
-                "run_dir": ".local/artifacts/mei-1.0-51m/exp-000900m/runs/test-qat"
+                "run_dir": ".local/artifacts/mei-1.0-51m/exp-000900m-v2/runs/test-qat"
             },
             "parameters": {
                 "target_tokens": 5000000,
@@ -131,7 +131,7 @@ class PhaseBindingTest(unittest.TestCase):
         self.assertIn("--target-tokens", command)
         self.assertIn("--dry-run", command)
         self.assertEqual(
-            plan["environment"]["MEI_PHASE_CYCLE_ID"], "exp-000900m"
+            plan["environment"]["MEI_PHASE_CYCLE_ID"], "exp-000900m-v2"
         )
         self.assertEqual(
             plan["environment"]["MEI_PHASE_BINDING_SHA256"],
@@ -140,8 +140,8 @@ class PhaseBindingTest(unittest.TestCase):
         self.assertFalse(plan["binding_verification"]["errors"])
         with mock.patch.dict(os.environ, plan["environment"], clear=False):
             identity = phase_binding_identity()
-        self.assertEqual(identity["binding_id"], "test-exp-000900m-qat-v1")
-        self.assertEqual(identity["cycle_id"], "exp-000900m")
+        self.assertEqual(identity["binding_id"], "test-exp-000900m-v2-qat-v1")
+        self.assertEqual(identity["cycle_id"], "exp-000900m-v2")
 
     def test_input_hash_drift_is_rejected(self) -> None:
         binding = self.binding()
@@ -205,7 +205,7 @@ class PhaseBindingTest(unittest.TestCase):
     def test_template_derives_inputs_and_recipe_hash_from_registry(self) -> None:
         value = phase_binding.template(
             self.registry,
-            cycle_id="exp-000900m",
+            cycle_id="exp-000900m-v2",
             pipeline_id="mei-51m-qat-cq2-v1",
         )
         self.assertEqual(value["phase"], "qat")

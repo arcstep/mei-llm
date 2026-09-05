@@ -62,11 +62,14 @@ def _entry(registry: Registry, cycle_id: str) -> dict[str, Any]:
     return rows[0]
 
 
-def _previous(registry: Registry, target: int) -> dict[str, Any] | None:
+def _previous(
+    registry: Registry, target: int, lineage: str | None = None
+) -> dict[str, Any] | None:
     rows = [
         row
         for row in registry.cycles().get("cycles", [])
         if int(row.get("target_exposure_tokens") or 0) < target
+        and (lineage is None or row.get("lineage") == lineage)
     ]
     return max(rows, key=lambda row: int(row["target_exposure_tokens"])) if rows else None
 
@@ -74,7 +77,7 @@ def _previous(registry: Registry, target: int) -> dict[str, Any] | None:
 def plan(registry: Registry, cycle_id: str) -> dict[str, Any]:
     row = _entry(registry, cycle_id)
     target = int(row["target_exposure_tokens"])
-    parent = _previous(registry, target)
+    parent = _previous(registry, target, row.get("lineage"))
     parent_actual = int(
         (parent or {}).get("actual_exposure_tokens")
         or (parent or {}).get("target_exposure_tokens")
@@ -150,16 +153,18 @@ def status(registry: Registry, cycle_id: str) -> dict[str, Any]:
 def verify(registry: Registry) -> dict[str, Any]:
     errors: list[str] = []
     cycle_ids: set[str] = set()
-    targets: set[int] = set()
+    targets_by_lineage: dict[str, set[int]] = {}
     for row in registry.cycles().get("cycles", []):
         cycle_id = str(row.get("cycle_id") or "")
         target = int(row.get("target_exposure_tokens") or 0)
         if cycle_id in cycle_ids:
             errors.append(f"duplicate cycle id: {cycle_id}")
+        lineage = str(row.get("lineage") or "legacy")
+        targets = targets_by_lineage.setdefault(lineage, set())
         if target in targets:
-            errors.append(f"duplicate target exposure: {target}")
-        cycle_ids.add(cycle_id)
+            errors.append(f"duplicate target exposure in lineage {lineage}: {target}")
         targets.add(target)
+        cycle_ids.add(cycle_id)
         if target <= 0:
             errors.append(f"invalid target exposure: {cycle_id}")
         if "path" not in row:

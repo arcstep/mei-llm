@@ -38,8 +38,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--cycle-id",
-        default="exp-000600m",
-        help="产物所属累计 exposure cycle（默认：exp-000600m）",
+        required=True,
+        help="产物所属累计 exposure cycle；新链自 exp-000300m-v2 起，禁止旧默认",
     )
     parser.add_argument(
         "--pilot",
@@ -119,8 +119,8 @@ def apply_registered_targets(module: ModuleType, path: Path) -> None:
 def main() -> int:
     args = parse_args()
     validate_release_id(args.release_id)
-    if not re.fullmatch(r"exp-\d{6}m", args.cycle_id):
-        raise SystemExit("--cycle-id 必须形如 exp-000900m")
+    if not re.fullmatch(r"exp-\d{6}m(-v\d+)?", args.cycle_id):
+        raise SystemExit("--cycle-id 必须形如 exp-000300m 或 exp-000300m-v2")
     root = find_repo_root()
     builder = load_builder(root)
     cycle_root = root / ".local/artifacts/mei-1.0-51m" / args.cycle_id / "corpus"

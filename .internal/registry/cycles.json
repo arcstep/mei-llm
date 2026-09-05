@@ -1,30 +1,72 @@
 {
-  "schema": "mei-llm-cycle-registry-v1",
-  "model_id": "mei-1.0-51m",
-  "rung_unit": "cumulative_exposure_tokens",
   "cycles": [
     {
-      "cycle_id": "exp-000300m",
-      "target_exposure_tokens": 300000000,
       "actual_exposure_tokens": 300000485,
+      "cycle_id": "exp-000300m",
+      "lineage": "legacy",
+      "path": "cycles/mei-1.0-51m/exp-000300m/CYCLE.json",
       "status": "completed_release_ineligible_product",
-      "path": "cycles/mei-1.0-51m/exp-000300m/CYCLE.json"
+      "target_exposure_tokens": 300000000
     },
     {
-      "cycle_id": "exp-000600m",
-      "target_exposure_tokens": 600000000,
       "actual_exposure_tokens": 600001765,
+      "cycle_id": "exp-000600m",
+      "lineage": "legacy",
+      "path": "cycles/mei-1.0-51m/exp-000600m/CYCLE.json",
       "status": "completed_release_ineligible_product",
-      "path": "cycles/mei-1.0-51m/exp-000600m/CYCLE.json"
+      "target_exposure_tokens": 600000000
     },
-    {"cycle_id": "exp-000900m", "target_exposure_tokens": 900000000, "status": "planned"},
-    {"cycle_id": "exp-001200m", "target_exposure_tokens": 1200000000, "status": "planned"},
-    {"cycle_id": "exp-001500m", "target_exposure_tokens": 1500000000, "status": "planned"},
-    {"cycle_id": "exp-001800m", "target_exposure_tokens": 1800000000, "status": "planned"},
-    {"cycle_id": "exp-002100m", "target_exposure_tokens": 2100000000, "status": "planned"},
-    {"cycle_id": "exp-002400m", "target_exposure_tokens": 2400000000, "status": "planned"},
-    {"cycle_id": "exp-002700m", "target_exposure_tokens": 2700000000, "status": "planned"},
-    {"cycle_id": "exp-003000m", "target_exposure_tokens": 3000000000, "status": "planned"},
-    {"cycle_id": "exp-012000m", "target_exposure_tokens": 12000000000, "status": "planned_milestone"}
-  ]
+    {
+      "cycle_id": "exp-000300m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 300000000,
+      "tokenizer_id": "zh-32k-v2"
+    },
+    {
+      "cycle_id": "exp-000600m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 600000000,
+      "tokenizer_id": "zh-32k-v2"
+    },
+    {
+      "cycle_id": "exp-000900m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 900000000,
+      "tokenizer_id": "zh-32k-v2"
+    },
+    {
+      "cycle_id": "exp-001200m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 1200000000,
+      "tokenizer_id": "zh-32k-v2"
+    },
+    {
+      "cycle_id": "exp-001500m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 1500000000,
+      "tokenizer_id": "zh-32k-v2"
+    },
+    {
+      "cycle_id": "exp-001800m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 1800000000,
+      "tokenizer_id": "zh-32k-v2"
+    },
+    {
+      "cycle_id": "exp-002100m-v2",
+      "lineage": "zh-v2-rebuild",
+      "status": "planned",
+      "target_exposure_tokens": 2100000000,
+      "tokenizer_id": "zh-32k-v2"
+    }
+  ],
+  "model_id": "mei-1.0-51m",
+  "rung_unit": "cumulative_exposure_tokens",
+  "schema": "mei-llm-cycle-registry-v1"
 }

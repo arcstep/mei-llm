@@ -131,21 +131,21 @@ class SkillControlPlaneTests(unittest.TestCase):
             _product_action(self.registry, "run", [])
 
     def test_cycle_plan_does_not_materialize_planned_cycle(self) -> None:
-        path = ROOT / "cycles/mei-1.0-51m/exp-000900m"
+        path = ROOT / "cycles/mei-1.0-51m/exp-000900m-v2"
         self.assertFalse(path.exists())
-        result = cycle_control.plan(self.registry, "exp-000900m")
+        result = cycle_control.plan(self.registry, "exp-000900m-v2")
         self.assertFalse(result["materialize_cycle_directory"])
-        self.assertEqual(299_998_235, result["required_increment_tokens"])
+        self.assertEqual(300_000_000, result["required_increment_tokens"])
         self.assertFalse(path.exists())
 
     def test_cycle_init_proposal_is_write_once_outside_cycle_tree(self) -> None:
         with tempfile.TemporaryDirectory() as raw:
             out = Path(raw) / "proposal.json"
             first = cycle_control.init_proposal(
-                self.registry, "exp-000900m", out=out
+                self.registry, "exp-000900m-v2", out=out
             )
             second = cycle_control.init_proposal(
-                self.registry, "exp-000900m", out=out
+                self.registry, "exp-000900m-v2", out=out
             )
             self.assertEqual(first, second)
             self.assertEqual("ready_for_sourcing", first["status"])
@@ -156,9 +156,9 @@ class SkillControlPlaneTests(unittest.TestCase):
 
     def test_cli_exposes_required_control_surfaces(self) -> None:
         cases = (
-            ["cycle", "init", "--cycle-id", "exp-000900m"],
+            ["cycle", "init", "--cycle-id", "exp-000900m-v2"],
             ["cycle", "status", "--cycle-id", "exp-000600m"],
-            ["cycle", "resume", "--cycle-id", "exp-000900m"],
+            ["cycle", "resume", "--cycle-id", "exp-000900m-v2"],
             ["cycle", "verify"],
             ["corpus", "source", "inventory", "--role", "wiki"],
             ["corpus", "evaluate", "audit-source", "--manifest", "x"],

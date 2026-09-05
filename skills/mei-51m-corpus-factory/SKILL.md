@@ -114,10 +114,14 @@ python scripts/validate.py --release-id mei-1.0-51m-<new-release-id>
    直接比较，旧基线只作 reference。
 8. **新 ID 铸币**：语料 release 与 eval-lock 同步推进（`-v<n+1>` ↔ `-v<n+1>`），
    supersede 链写清 reason；verifier 校验新旧双版本与 CURRENT.json 不变。
-9. **登记回周期**：release/eval-lock/known_quality_gaps/状态字面量写回
-   `cycles/mei-1.0-51m/exp-000600m/corpus/{sft.json,eval.json}`，叙事追加到
-   `CORPUS.md`（不重写旧记录）；`corpus_release_eligible`/`ready_for_600m_sft`
-   等字面量一致；真实模型指标未测前一律 `pending_sft`，不用语料统计冒充。
+9. **登记回周期 + 跨 cycle 复用**：release/eval-lock/known_quality_gaps/状态
+   字面量写回铸币当轮 cycle 的 `corpus/{sft.json,eval.json}`，叙事追加到
+   `CORPUS.md`（不重写旧记录）。**SFT release 是一次铸造、跨 cycle 复用**——
+   每个 300M 增量**不**重新准备 SFT 语料；后续 cycle 通过 binding 引用同一冻结
+   release，由 corpus-quality 每轮重裁 reuse/replace/retire，仅当新 Base 评测
+   出现能力缺口时才铸造新 family（新 release ID）。`corpus_release_eligible`/
+   `ready_for_<cycle>_sft` 等字面量一致；真实模型指标未测前一律 `pending_sft`，
+   不用语料统计冒充。
 10. **边界与授权**：默认离线（无付费教师模型、外部 provider、新下载）。不发布、
     不 commit/push、不修改 CURRENT.json、不启动 CPT/SFT/QAT——训练类动作分别交回
     `mei-51m-cpt-training` / `mei-51m-qat-training` /

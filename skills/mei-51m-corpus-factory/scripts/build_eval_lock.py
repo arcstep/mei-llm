@@ -35,8 +35,8 @@ def load_builder(path: Path):
 
 def main() -> int:
     args = parse_args()
-    if not re.fullmatch(r"exp-\d{6}m", args.cycle_id):
-        raise SystemExit("--cycle-id must look like exp-000900m")
+    if not re.fullmatch(r"exp-\d{6}m(-v\d+)?", args.cycle_id):
+        raise SystemExit("--cycle-id must look like exp-000300m or exp-000300m-v2")
     root = find_repo_root()
     path = root / "corpus-factory/generators/rebuild_zh_v1/build_eval_lock.py"
     builder = load_builder(path)

@@ -1,38 +1,50 @@
 # CPT 天然池盘点与每轮 mix 规划
 
-## 角色与池子（mei-1.0-51m，zh-24k-v1）
+## 角色与池子（v2 现役，词表 zh-32k-v2）
 
-- **天然角色**（第一类资源，可靠、可耗尽）：
-  - `wiki` = `zh-pretrain-v0`，lm-v1 基线目录 `exp-000300m/corpus/cpt-delta/lm-v1/language/zh-pretrain-v0/tokens/`，100 片在盘；
-  - `hq` = FineWeb2-HQ `cmn_Hani`，`language/hq/tokens/`，49 片在盘（license ODC-By-1.0 + Common Crawl ToU；hardlinks 自
-    `notebook/archive/corpus/zh-pretrain-v2/tokens/hq-*`，raw 未丢、provenance 完好）。
-- **合成角色**（gap-fill 语义，默认不放大）：`structure`（曾 1.6%/轮）、`colloquial`（曾 10%/轮）。
-  审计结论（2026-09-03，见 `.local/artifacts/mei-1.0-51m/synthetic-cpt-audit-v1/`）：structure lm-v1 与 lm-v2
-  均坍缩、colloquial lm-v2 坍缩 → 600M 增量已 `retire_for_future_reuse`。合成份额默认回填天然；
-  重建须先过铸币前模板审计 + 用户政策决定，才谈放回 mix。
-- **权威锚点**（余额一律**即时推导**，不另建静态账本防漂移）：
-  - 池总量：`exp-000300m/corpus/cpt-delta/lm-v1/mix.json`（`n_wiki_train_tokens=649,904,474`、
-    `n_hq_train_tokens=383,617,452`）；
-  - 每轮消耗：`cycles/mei-1.0-51m/exp-000300m/corpus/cpt.json`（`cpt.source_quotas`）与
-    `exp-000600m/...`（`cpt.incremental_quotas`）；
-  - 片级选择记账：`lm-v1/schedule-scratch.json`、`exp-000600m/corpus/cpt-delta/lm-v2-cpt-600m/schedule-cpt-600m.json`
-    （`sampler=quota_plan`、`allow_repeat=false`、`skip_seen_*`、`max_epochs` = 配额/池总量）。
-- **余额推导式**：`剩余(role) = mix.json n_<role>_train_tokens − Σ(各轮 cpt.json quotas[role])`。
+- **v2 天然角色**（来自注册表 `corpus-factory/sources/source_registry.json`）：
+  fineweb2_hq / wiki_zh / wiki_en / dialogue / structured / code。
+  池实物：`.local/artifacts/mei-1.0-51m/zh-v2-pool/`（raw → admitted → pools），
+  权威锚点 = 各 admitted manifest v2 + 池 release `zh-v2-pool-natural-v3`。
+- **旧 v1 角色**（wiki/fineweb2_hq/structure/colloquial，词表 zh-24k-v1）只作
+  回归证据，不进入新链消费。structure/colloquial 合成角色已 retire，其语义位置
+  由 v2 的 structured/dialogue 天然角色顶替（不复活合成）。
+- **余额推导式**：`剩余(role) = 池 release tokens_by_role − Σ(各轮 cpt.json quotas[role])`。
 
-## 账本快照（as-of 2026-09-03，600M 记账后）
+## 账本快照
 
-| 角色 | 池总量 | 300M 消耗 | 600M 增量 | 累计消耗 | 剩余（≈轮数 @记账速率） |
+### v1 历史账本（旧链 300M/600M 记账，仅作回归证据，不再消费）
+
+| 角色 | 池总量 | 300M 消耗 | 600M 增量 | 累计消耗 | 剩余 |
 |---|---|---|---|---|---|
-| wiki | 649,904,474 | 166,657,644 | 166,657,317 | 333,314,961 | 316,589,513（≈1.9 轮 @166.66M） |
-| hq | 383,617,452 | 98,372,582 | 98,372,261 | 196,744,843 | 186,872,609（≈1.9 轮 @98.37M） |
+| wiki | 649,904,474 | 166,657,644 | 166,657,317 | 333,314,961 | 316,589,513 |
+| hq | 383,617,452 | 98,372,582 | 98,372,261 | 196,744,843 | 186,872,609 |
 | 天然合计 | 1,033,521,926 | 265,030,226 | 265,029,578 | 530,059,804 | 503,462,122 |
 
-- 记账固定比例（两轮先例，300M 内）：wiki 55.6% / hq 32.8% / structure 1.6% / colloquial 10.0%
-  （natural 每轮 265.03M = 88.4%）。factory-v3 `cpt_policy` 默认（hq 65 / wiki 35）只是政策参照，
-  **不一致时以 cycle 记账为准**；采用工厂默认意味着比例调整事件。
-- 轮次推演：按记账比例 900M 整轮足额，**1.2B 前必缺**（天然只够 ~1.9 轮）；纯天然 65/35 同样 1.2B 前告急
-  （hq 是"短"的一侧：@195M/轮 ≈0.96 轮）。**结论：1.2B 之前必须开下载门（hq 尚有 ~100 片可拉）或调比例，两者都是需登记的显式决策。**
-- 合成池不跨轮复用：每轮新铸（300M 轮 lm-v1 合成池 max_epochs=1.0 吃满；600M 增量新铸 lm-v2 版已 retire）。
+- 旧链记账比例（两轮先例）：wiki 55.6% / hq 32.8% / structure 1.6% / colloquial 10.0%。
+  新链比例**不沿用旧链**，以 v2 candidate（下表）为准。
+- 合成池不跨轮复用：每轮新铸；structure/colloquial 已 retire，其语义位置由
+  v2 的 structured/dialogue 天然角色顶替（不复活合成）。
+- v1 逐文档账本已丢失（只剩 token 片），v2 池以新账本起步——跨代去重无从执行。
+
+### v2 现役账本（从零重建，词表 zh-32k-v2）
+
+权威锚点：池 release `zh-v2-pool-natural-v3`（.local/artifacts/mei-1.0-51m/
+zh-v2-pool/pools/）与各 admitted manifest；余额推导式不变。
+
+| role | 池总量（v3） | 7 轮配额（每轮×7） | 覆盖 |
+|---|---|---|---|
+| fineweb2_hq | 1,078,580,964 | 131M×7=917M | ✅ |
+| wiki_zh | 770,616,111 | 80M×7=560M | ✅ |
+| dialogue | 224,030,734 | 30M×7=210M | ✅（用户拍板封顶） |
+| structured | 416,534,512 | 25M×7=175M | ✅ |
+| code | 578,940,669 | 23M×7=161M | ✅ |
+| wiki_en | 277,971,697 | 11M×7=77M | ✅ |
+
+首轮 candidate `mix-zhv2-300m-c01-v2`（passed）：hq 135M / wiki_zh 81M /
+dialogue 39M / structured 16.2M / code 21M / wiki_en 7.8M。
+**structured 首轮配额按当时池容量收窄（0.055→0.054，supersede 登记）；
+DBLP 入池后第 2 轮起恢复 25M/轮。**每轮重跑 plan_mix，比例调整 = supersede + reason。
 
 ## 每轮 300M mix 规划流程（rung 开工前）
 
@@ -53,8 +65,8 @@
 
 | 触发输入 | 信号 | 动作 |
 |---|---|---|
-| rung-n receipt 坍缩（structure/colloquial） | 该角色低损窗口 100% 低于阈值 | 下一轮该角色配额 = 0 并 retire；余额回填天然 |
-| 池余额 < 下一轮 natural 配额 | 按推演 1.2B 前必然出现 | 授权下载（见协议）或降该角色比例 + supersede 登记 |
+| rung-n receipt 坍缩（structure/colloquial） | 该角色低损窗口 100% 低于阈值 | 下一轮该角色配额 = 0 并 retire；余额回填天然（v1 教训，v2 天然角色无此门） |
+| 池余额 < 下一轮 natural 配额 | 余额推导即时可见 | 授权下载（见协议）或降该角色比例 + supersede 登记 |
 | 新片下载入池 | 池总量变化 | 账本快照追加一行；下一轮 candidate 重算 |
 | 天然角色 run-time loss 异常坍缩 | natural 无需模板审计 | 先查管线/schedule/去重（bug 信号），不调比例掩盖 |
 | 天然角色长期单调重复 | 低损但文档级重复 | 查 document-level dedup 与 skip_seen 是否失效 |
@@ -63,11 +75,11 @@
 
 1. **触发**：余额 < 下一轮 natural 配额，或用户点名某批片集。
 2. **前置**：用户显式授权一次 = 一批片集（离线默认不下载，见 SKILL 原则 10；付费/新下载均属需授权动作）。
-3. **步骤**：记录来源与 license（hq：FineWeb2-HQ `cmn_Hani`，ODC-By-1.0 + CC ToU；
-   `public_distribution_clearance_asserted` 保持 false）→ sha256 校验 → zh-24k-v1 tokenize →
-   document-level dedup vs 已消费（unseen-first，参照 schedule `skip_seen`/`allow_repeat=false`）→
-   铸**新池 release ID**（如 `zh-pretrain-hq-v2`，不覆盖旧 `zh-pretrain-hq`，supersede 链 + reason）→
-   更新池目录 RELEASE.json / SOURCES.md / hashes → 本表追加快照行。
+3. **步骤**：记录来源与 license（band A/B/C 政策裁决见
+   `corpus-factory/quality/policy/source-policy-v1.json`）→ sha256 校验 → 冻结词表
+   （当前 zh-32k-v2，`TOKENIZER.json` 指针 + `--expected-tokenizer-id` 双绑）encode →
+   document-level dedup vs 已消费（unseen-first，seen-ledger 追加式）→
+   铸**新池 release ID**（supersede 链 + reason，不覆盖旧 release）→ 本表追加快照行。
 4. 红线：不下则预算收窄，不硬凑超池；下载后未过校验/去重不得进 schedule；旧池不删不改。
 
 ## 红线汇总
@@ -78,20 +90,13 @@
 - 语料统计（片数/tokens/池余额）≠ 模型质量证据；天然角色质量看 run-time loss 与下游诊断，
   合成角色另加一道铸币前模板审计（见 audit-and-repair.md）。
 
-## sourcing v2 增补（2026-09-04，从零重建）
+## v2 操作要点（从零重建）
 
-- **role 体系**：v2 起 role 来自注册表 `corpus-factory/sources/source_registry.json`
-  （fineweb2_hq / wiki_zh / wiki_en / dialogue / structured / code）；旧
-  wiki/fineweb2_hq 仅作 v1 产物读取。新池 release schema `...-pool-release-v2`，
-  绑定单一 tokenizer 代际（混合代际禁止铸池）。
 - **plan-mix v2**：`--fraction role=0.xx`（Σ=1，floor_last_role 兜底取余）或
   `--quota role=N` 显式配额；`--hq-fraction` 为弃用别名（= fineweb2_hq F /
   wiki_zh 1−F，容量键 wiki 自动映射 wiki_zh）。比例变更 = supersede 事件 +
   书面 `--reason`（缺 reason 时 candidate 标 `policy.needs_reason`，技能层拦截）。
-- **账本快照**：上表 wiki/hq 余额是 v1 记账；v2 池以新 admit 的 manifest v2 与
-  新 RELEASE.json 为锚点，余额推导式不变（池总量 − Σ cpt.json quotas）。
-  旧池 wiki 316.6M / hq 186.9M 作为干净天然存量滚入 v2 池时，须对原始下载按
-  v2 词表重新 admit（seen-ledger 跨代复用去重）。
 - **新来源下载**：两段式授权（dry-run 出令牌 → 令牌匹配才联网），详见
-  download-and-admission.md；band/license 政策裁决见
-  `corpus-factory/quality/policy/source-policy-v1.json`。
+  download-and-admission.md。
+- **池 release v2**：绑定单一 tokenizer 代际（混合代际禁止铸池）；
+  大源（>1B tokens）必须分批 admit（单批驻留内存上限约 1B tokens）。

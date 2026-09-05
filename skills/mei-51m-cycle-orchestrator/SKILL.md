@@ -30,8 +30,8 @@ description: >-
 
 ```bash
 python scripts/doctor.py
-python scripts/plan.py --cycle-id exp-000900m
-python scripts/status.py --cycle-id exp-000900m
+python scripts/plan.py --cycle-id exp-000300m-v2   # 新链（从零重建）自 v2 后缀起
+python scripts/status.py --cycle-id exp-000300m-v2
 python scripts/verify.py
 ```
 
