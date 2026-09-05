@@ -270,7 +270,7 @@ def freeze_pointer(model_path: Path, manifest: dict[str, Any], pointer_path: Pat
         "schema": "mei-51m-tokenizer-pointer-v1",
         "current": f"tokenizer/{model_path.name}",
         "tokenizer_id": manifest["tokenizer_id"],
-        "manifest": f"tokenizer-v2-manifest.json",
+        "manifest": f"tokenizer-{manifest['tokenizer_id']}-manifest.json",
         "model_sha256": manifest["model_sha256"],
         "vocab_size": manifest["spm_vocab_size"],
         "status": "frozen",
@@ -311,7 +311,9 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.freeze_only:
         final_model = args.out_model_dir / f"{args.tokenizer_id}.model"
-        manifest_path = args.out_model_dir / "tokenizer-v2-manifest.json"
+        manifest_path = (
+            args.out_model_dir / f"tokenizer-{args.tokenizer_id}-manifest.json"
+        )
         if not final_model.is_file() or not manifest_path.is_file():
             raise VocabError("--freeze-only requires an existing model + manifest")
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -346,7 +348,7 @@ def main(argv: list[str] | None = None) -> int:
         frozen_at = datetime.now(timezone.utc).isoformat()
         manifest = write_manifest(
             final_model,
-            args.out_model_dir / "tokenizer-v2-manifest.json",
+            args.out_model_dir / f"tokenizer-{args.tokenizer_id}-manifest.json",
             tokenizer_id=args.tokenizer_id,
             declared_vocab_size=args.vocab_size,
             model_type="unigram",

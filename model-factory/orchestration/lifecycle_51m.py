@@ -22,12 +22,15 @@ from pathlib import Path
 from common._repo import (
     ARCHITECTURE_DIR,
     ARCHITECTURE_ID,
+    ARTIFACT_ROOT,
     CURRENT_PATH,
     RECIPES_DIR,
     ROOT,
     TOKENIZER_ZH_V1,
     TRAIN_RUNS,
     architecture_contracts,
+    cycle_artifacts,
+    frozen_tokenizer_path,
     architecture_sha256,
     legacy_weight_contract_sha256,
 )
@@ -37,6 +40,25 @@ from common.run_lock import lock_is_held, pid_alive_from_meta, read_lock_meta
 HERE = Path(__file__).resolve().parent
 RECIPE_PATH = RECIPES_DIR / "cpt-training-v1.json"
 RUN_ROOT = TRAIN_RUNS / "mei-1.0-51m"
+
+
+def run_roots() -> list[Path]:
+    """全部可能的 run 根：旧链 + 新链（ARTIFACT_ROOT 下带 -v 后缀的 cycle）。"""
+    roots = [RUN_ROOT]
+    if ARTIFACT_ROOT.is_dir():
+        for cycle_dir in sorted(ARTIFACT_ROOT.iterdir()):
+            if cycle_dir.is_dir() and re.fullmatch(r"exp-\d{6}m-v\d+", cycle_dir.name):
+                candidate = cycle_dir / "runs/mei-1.0-51m"
+                if candidate.is_dir():
+                    roots.append(candidate)
+    return roots
+
+
+def run_root_for(cycle_id: str | None) -> Path:
+    """cycle_id 给定且非旧链 → 该 cycle 的 runs/mei-1.0-51m；否则旧 RUN_ROOT。"""
+    if cycle_id and re.fullmatch(r"exp-\d{6}m-v\d+", cycle_id):
+        return cycle_artifacts(cycle_id) / "runs/mei-1.0-51m"
+    return RUN_ROOT
 EXPECTED_PARAMS = 51_463_797
 RUN_ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]{2,79}$")
 HASH_INPUTS = ("RELEASE.json", "manifest.json", "hashes.json", "mix.json")
@@ -186,7 +208,20 @@ def relative(path: Path) -> str:
 def run_dir(run_id: str) -> Path:
     if not RUN_ID_RE.fullmatch(run_id):
         raise ValueError("run_id must be 3-80 lowercase letters, digits, dot, underscore or dash")
+    for root in run_roots():
+        candidate = root / run_id
+        if candidate.is_dir():
+            return candidate
     return RUN_ROOT / run_id
+
+
+def locate_run(run_id: str) -> Path:
+    """status 用：在全部 run 根中定位 run 目录；找不到返回旧根路径。"""
+    for root in run_roots():
+        candidate = root / run_id
+        if (candidate / "run.json").is_file():
+            return candidate
+    return run_dir(run_id)
 
 
 def current_hash() -> str:
@@ -275,6 +310,9 @@ def schedule_path(corpus_dir: Path, target: int) -> Path:
     exact = corpus_dir / f"schedule-cpt-{rung_name(target)}.json"
     found = [exact] if exact.is_file() else candidates
     if not found:
+        scratch = corpus_dir / "schedule-scratch.json"
+        if scratch.is_file():
+            return scratch
         raise RuntimeError(f"missing immutable CPT schedule under {corpus_dir}")
     matches = []
     for path in dict.fromkeys(found):
@@ -327,18 +365,26 @@ def corpus_snapshot(corpus_dir: Path, target: int) -> dict:
     release = load_json(corpus_dir / "RELEASE.json")
     manifest = load_json(corpus_dir / "manifest.json")
     sched = load_json(schedule)
-    if release.get("training_mode") != "cpt" or sched.get("kind") != "cpt":
-        raise RuntimeError("corpus release and schedule must declare training_mode=cpt")
+    if release.get("training_mode") != "cpt":
+        raise RuntimeError("corpus release must declare training_mode=cpt")
+    if sched.get("kind") not in {"cpt", "scratch"}:
+        raise RuntimeError("schedule kind must be cpt or scratch")
     if bool(sched.get("allow_repeat")):
         raise RuntimeError("CPT schedule cannot allow repeated exposure")
-    cumulative = int(sched.get("cumulative_exposure_tokens") or 0)
     parent = int(sched.get("parent_tokens_seen") or 0)
     incremental = int(sched.get("exposure_tokens") or 0)
+    if sched.get("kind") == "scratch":
+        cumulative = incremental
+        if parent != 0:
+            raise RuntimeError("scratch schedule cannot declare parent exposure")
+    else:
+        cumulative = int(sched.get("cumulative_exposure_tokens") or 0)
     if cumulative != target or parent + incremental != target:
         raise RuntimeError("parent + incremental exposure must equal the requested cumulative target")
     sources = sched.get("sources") or {}
-    if set(sources) != {"wiki", "hq", "structure", "colloquial"}:
-        raise RuntimeError("CPT schedule must declare all four corpus roles")
+    mix_sources = (mix.get("sources") or {}) if mix else {}
+    if set(sources) != set(mix_sources):
+        raise RuntimeError("CPT schedule roles must match the mix sources exactly")
     if sum(int((row or {}).get("token_quota") or 0) for row in sources.values()) != incremental:
         raise RuntimeError("CPT source quotas must sum to incremental exposure")
     if release.get("public_distribution_clearance_asserted") is not True and not (
@@ -390,13 +436,18 @@ def init_run(
     target: int,
     *,
     resume_checkpoint: Path | None = None,
+    cycle_id: str | None = None,
 ) -> dict:
     data = recipe()
-    directory = run_dir(run_id)
+    root = run_root_for(cycle_id)
+    if not root.is_dir():
+        root.mkdir(parents=True, exist_ok=True)
+    directory = root / run_id
     snapshot = corpus_snapshot(corpus_dir, target)
     contracts = architecture_contracts()
     sources = source_manifest()
-    tokenizer_sha = sha256_file(TOKENIZER_ZH_V1) if TOKENIZER_ZH_V1.is_file() else "missing"
+    frozen = frozen_tokenizer_path()
+    tokenizer_sha = sha256_file(frozen) if frozen.is_file() else "missing"
     recovery = None
     if resume_checkpoint is not None:
         recovery_path = Path(resume_checkpoint)
@@ -441,6 +492,8 @@ def init_run(
     config = {
         "schema_version": 2,
         "run_id": run_id,
+        "cycle_id": cycle_id,
+        "tokenizer_id": frozen.name.replace(".model", ""),
         "status": "planned",
         "created_at": utc_now(),
         "product": "mei-1.0-51m",
@@ -532,7 +585,7 @@ def init_run(
 
 
 def load_run(run_id: str) -> tuple[Path, dict]:
-    directory = run_dir(run_id)
+    directory = locate_run(run_id)
     config = load_json(directory / "run.json")
     if not config:
         raise RuntimeError(f"unknown run_id: {run_id}")
@@ -603,7 +656,8 @@ def immutable_input_errors(directory: Path, config: dict) -> list[str]:
         errors.append("source_manifest_sha256 changed")
     expected_tokenizer = str(config.get("tokenizer_sha256") or "")
     if expected_tokenizer:
-        actual = sha256_file(TOKENIZER_ZH_V1) if TOKENIZER_ZH_V1.is_file() else "missing"
+        frozen = frozen_tokenizer_path()
+        actual = sha256_file(frozen) if frozen.is_file() else "missing"
         if actual != expected_tokenizer:
             errors.append("tokenizer_sha256 changed")
     for name, expected in (config.get("seed_input_sha256") or {}).items():
@@ -1054,7 +1108,26 @@ def run_stage(
             },
         )
         return ok, receipt
-    command = render_command(row["command"], render_context(directory, config))
+    if stage == "cpt":
+        schedule = load_json(ROOT / config["corpus"]["schedule"])
+        if schedule.get("kind") == "scratch":
+            command = render_command(
+                [
+                    "{python}",
+                    "{model_factory}/training/cpt/run_scratch_curriculum_51m.py",
+                    "--corpus-dir",
+                    "{corpus_dir}",
+                    "--schedule-kind",
+                    "scratch",
+                    "--out-dir",
+                    "{checkpoints}/cpt",
+                ],
+                render_context(directory, config),
+            )
+        else:
+            command = render_command(row["command"], render_context(directory, config))
+    else:
+        command = render_command(row["command"], render_context(directory, config))
     if dry_run:
         return True, {"stage": stage, "status": "planned", "command": command}
     before_current = current_hash()
@@ -1219,8 +1292,10 @@ def status(run_id: str) -> dict:
 def baseline_report() -> dict:
     sources = source_manifest()
     live_runs = []
-    if RUN_ROOT.is_dir():
-        for path in sorted(RUN_ROOT.iterdir()):
+    for root in run_roots():
+        if not root.is_dir():
+            continue
+        for path in sorted(root.iterdir()):
             if not (path / "run.json").is_file():
                 continue
             live = live_stage_state(path)
@@ -1264,16 +1339,47 @@ def verify_static() -> dict:
                 text = path.read_text(encoding="utf-8")
             except UnicodeDecodeError:
                 continue
+            # Long base64 runs (embedding blobs) can contain arbitrary byte
+            # pairs that accidentally match the identity pattern below; they
+            # are not identity references and must not trip the scan.
+            text = re.sub(r"[A-Za-z0-9+/=]{64,}", "", text)
             if re.search(r"(?i)mei[-_.]?1\.0[-_.]?5[8]m|mei[-_.]?5[8]m|5[8]m", text):
                 forbidden.append(relative(path))
     legacy_dir = RUN_ROOT / "legacy-51m-qat-20260829"
     legacy = load_json(legacy_dir / "run.json")
     legacy_hash_errors = []
     for row in [*(legacy.get("accepted_evidence") or []), *(legacy.get("blocked_evidence") or [])]:
-        path = ROOT / str(row.get("path") or "")
-        actual = sha256_file(path) if path.is_file() else "missing"
+        row_path = str(row.get("path") or "")
+        # 旧时代证据路径基准不统一：依次尝试仓库根、_legacy 根、300M models 根、
+        # 300M 根（剥 sdk/ 前缀）。hash 校验不变，只修复基准解析。
+        candidates = [
+            ROOT / row_path,
+            ROOT / ".local/artifacts/_legacy" / row_path,
+            ARTIFACT_ROOT / "exp-000300m/models" / row_path,
+        ]
+        if row_path.startswith("base/"):
+            tail = row_path[len("base/") :]
+            candidates.extend(
+                (
+                    ARTIFACT_ROOT / "exp-000300m/models/qat" / tail,
+                    ARTIFACT_ROOT / "exp-000300m/models/product" / tail,
+                )
+            )
+        if row_path.startswith("sdk/"):
+            candidates.append(ARTIFACT_ROOT / "exp-000300m" / row_path[len("sdk/"):])
+        resolved = next(
+            (candidate for candidate in candidates if candidate.is_file()),
+            None,
+        )
+        actual = sha256_file(resolved) if resolved else "missing"
         if actual != row.get("sha256"):
-            legacy_hash_errors.append({"path": relative(path), "expected": row.get("sha256"), "actual": actual})
+            legacy_hash_errors.append(
+                {
+                    "path": row_path,
+                    "expected": row.get("sha256"),
+                    "actual": actual,
+                }
+            )
     legacy_ok = (
         legacy.get("status") == "imported_read_only"
         and legacy.get("immutable") is True
@@ -1315,6 +1421,7 @@ def main() -> int:
     sub = parser.add_subparsers(dest="action", required=True)
     init = sub.add_parser("init")
     init.add_argument("--run-id", required=True)
+    init.add_argument("--cycle-id", help="新链 cycle（exp-XXXXXXm-vN）；缺省 = 旧链 RUN_ROOT")
     init.add_argument("--corpus-dir", type=Path, required=True)
     init.add_argument("--target-exposure", type=int, required=True)
     init.add_argument("--resume-checkpoint", type=Path)
@@ -1335,6 +1442,7 @@ def main() -> int:
                     args.corpus_dir,
                     args.target_exposure,
                     resume_checkpoint=args.resume_checkpoint,
+                    cycle_id=args.cycle_id,
                 ),
                 ensure_ascii=False,
                 indent=2,

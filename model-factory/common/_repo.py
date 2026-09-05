@@ -24,6 +24,16 @@ ROOT = find_root()
 CURRENT_PATH = ROOT / "CURRENT.json"
 TOKENIZER_DIR = ROOT / "models/mei-1.0-51m/tokenizer"
 TOKENIZER_ZH_V1 = TOKENIZER_DIR / "zh-24k-v1.model"
+
+
+def frozen_tokenizer_path() -> Path:
+    """当前冻结词表模型路径（TOKENIZER.json 指针；默认 zh-24k-v1）。"""
+    pointer = ARCHITECTURE_DIR / "tokenizer/TOKENIZER.json"
+    if pointer.is_file():
+        data = json.loads(pointer.read_text(encoding="utf-8"))
+        if data.get("status") == "frozen" and data.get("tokenizer_id"):
+            return TOKENIZER_DIR / f"{data['tokenizer_id']}.model"
+    return TOKENIZER_ZH_V1
 TOKENIZER_MANIFEST = TOKENIZER_DIR / "tokenizer-v1-manifest.json"
 
 _ARCHITECTURE_ID_RE = re.compile(r"^mei-1\.0-51m-arch-v\d+$")
@@ -54,7 +64,7 @@ EVAL_SHARED_ROOT = ROOT / ".local/artifacts/_legacy/notebook/evaluation/shared"
 
 
 def cycle_artifacts(cycle_id: str) -> Path:
-    if not re.fullmatch(r"exp-[0-9]{6}m", cycle_id):
+    if not re.fullmatch(r"exp-[0-9]{6}m(-v[0-9]+)?", cycle_id):
         raise ValueError(f"invalid cycle id: {cycle_id}")
     return ARTIFACT_ROOT / cycle_id
 

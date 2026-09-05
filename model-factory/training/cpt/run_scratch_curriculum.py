@@ -66,6 +66,18 @@ def main() -> int:
         action="store_true",
         help="Resume pretrain-300m-scratch (or pilot) from the current state instead of restarting S1",
     )
+    ap.add_argument(
+        "--corpus-dir",
+        type=Path,
+        default=ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1",
+        help="scratch corpus layout root（新链 v2 布局时显式传入）",
+    )
+    ap.add_argument(
+        "--out-dir",
+        type=Path,
+        default=TRAIN_RUNS,
+        help="run 输出根（新链传入 cycle runs 目录）",
+    )
     args = ap.parse_args()
 
     profile = SCRATCH_PROFILES.get(ARCHITECTURE_ID)
@@ -73,7 +85,7 @@ def main() -> int:
         print(f"no scratch curriculum profile for {ARCHITECTURE_ID}", file=sys.stderr)
         return 2
     recipe = load_json(RECIPES_DIR / profile["recipe"])
-    blocked = refuse_non_scratch_source(ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1", "pilot-5m" if args.pilot_5m else "300m")
+    blocked = refuse_non_scratch_source(args.corpus_dir, "pilot-5m" if args.pilot_5m else "300m")
     if blocked:
         print(blocked, file=sys.stderr)
         return 4
@@ -91,7 +103,7 @@ def main() -> int:
         return 2
 
     trainer = _HERE / "train_pretrain.py"
-    out_dir = TRAIN_RUNS / run_name
+    out_dir = Path(args.out_dir) / run_name
     last_state = out_dir / f"{run_name}-state.npz"
     compile_train = (not args.no_compile) and (args.compile or bool(recipe.get("compile_train")))
     start_index = 0
@@ -129,7 +141,7 @@ def main() -> int:
             "--rung",
             rung,
             "--corpus-dir",
-            ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1",
+            str(args.corpus_dir.relative_to(ROOT)) if args.corpus_dir.is_absolute() else str(args.corpus_dir),
             "--schedule-kind",
             "scratch",
             "--curriculum-stage",

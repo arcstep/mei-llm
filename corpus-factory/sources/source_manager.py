@@ -320,9 +320,16 @@ def load_tokenizer() -> Any:
     if tokenizer_id == "zh-24k-v1":
         tokenizer = ZhTokenizerV1()
     else:
+        manifest_name = str(pointer.get("manifest") or "")
+        manifest_path = (
+            (ROOT / "models/mei-1.0-51m/tokenizer" / manifest_name)
+            if manifest_name
+            else None
+        )
         tokenizer = ZhTokenizerV2(
             tokenizer_id=tokenizer_id,
             vocab_size=int(pointer.get("vocab_size") or 0),
+            manifest_path=manifest_path,
         )
     if tokenizer.model_sha256 != pointer.get("model_sha256"):
         raise SourceError("tokenizer hash mismatch vs pointer")

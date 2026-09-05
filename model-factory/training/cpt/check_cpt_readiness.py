@@ -52,7 +52,7 @@ def report(corpus_dir: Path, target_exposure: int) -> dict:
     }
     coverage = {
         name: token_count(list_source_shards(corpus_dir, name, "train"))
-        for name in ("wiki", "hq", "structure", "colloquial")
+        for name in (mix.get("sources") or {})
     }
     quotas = {
         name: int((row or {}).get("token_quota") or 0)
