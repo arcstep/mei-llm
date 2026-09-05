@@ -62,7 +62,9 @@ DEFAULT_SAMPLE = {
 FAMILIES = tuple(DEFAULT_SAMPLE)
 
 VALUE_RE = re.compile(r"值\d+")
-NUMBER_RE = re.compile(r"(?<![\w.])\d+(?:\.\d+)?(?![\w.])")
+# 注意：Python re 的 \w 匹配中文，不能用 \w 做数字边界——否则中文相邻的
+# 数字（"份数是3"）会漏保护。边界用 ASCII 集合；句尾 "10." 的句点允许。
+NUMBER_RE = re.compile(r"(?<![A-Za-z0-9_.])\d+(?:\.\d+)?(?!\.\d)(?![A-Za-z0-9_])")
 CJK_RE = re.compile(r"[一-鿿]")
 
 SYSTEM_PROMPT = (
