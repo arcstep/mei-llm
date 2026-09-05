@@ -28,7 +28,6 @@ import numpy as np
 from mlx.utils import tree_flatten
 
 from common.checkpoint import load_params, save_params  # noqa: E402
-from training.qat.quant_ops_51m import ste_quantize  # noqa: E402
 
 IGNORE_ID = -100
 SEQ_CAP = 2048
@@ -38,14 +37,37 @@ def log(msg: str) -> None:
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-def collect_quant_pairs(model: Any) -> list[str]:
+def storage_policy(name: str) -> str:
+    """旧链 cq2_policy 的逐张量存储策略：f16 / cq4 / cq2。"""
+    safe = (
+        name.endswith(".scale")
+        or name.endswith(".bias")
+        or name.endswith("attn_gate")
+        or (name.startswith("engrams.") and name.endswith(".taps"))
+        or name.endswith((".mlp.d1", ".mlp.d2", ".mlp.d3"))
+        or name.startswith("conf_")
+    )
+    if safe:
+        return "f16"
+    if name == "embed.weight" or name.startswith("mhc_"):
+        return "cq4"
+    return "cq2"
+
+
+def collect_quant_pairs(model: Any) -> tuple[list[str], dict[str, int]]:
+    """量化张量清单 + 每张量位宽（对齐旧链 lm_storage_dtype 策略）。"""
     flat = dict(tree_flatten(model.parameters()))
-    names = []
+    names: list[str] = []
+    bits_by_name: dict[str, int] = {}
     for key, value in flat.items():
-        # 词嵌入保持 float32：检索/嵌入类操作对嵌入量化敏感
-        if getattr(value, "ndim", 0) == 2 and key.endswith(".weight") and key != "embed.weight":
-            names.append(key)
-    return names
+        if getattr(value, "ndim", 0) != 2 or not key.endswith(".weight"):
+            continue
+        policy = storage_policy(key)
+        if policy == "f16":
+            continue
+        names.append(key)
+        bits_by_name[key] = 4 if policy == "cq4" else 2
+    return names, bits_by_name
 
 
 def _leaf_of(model: Any, name: str) -> tuple[Any, str]:
@@ -59,16 +81,30 @@ def _leaf_of(model: Any, name: str) -> tuple[Any, str]:
     return param, parts[-1]
 
 
-def quantize_inplace(model: Any, names: list[str], bits: int = 4) -> dict[str, mx.array]:
-    """Replace each named weight with its fake-quantized value (STE).
-    Returns the saved float masters, which the caller MUST restore after the
-    backward pass so the optimizer updates the float master, not the
-    quantized copy."""
+def ste_cq2(weight: mx.array, name: str, bits_by_name: dict[str, int]) -> mx.array:
+    """STE 量化：前向用旧链 cq2 的 g128-WHT-codebook 语义（与 runtime
+    编码器一致），反向直通。group_bits 由 cq2_policy.uniform_group_bits
+    按张量策略生成（每 128 一组，cq2=2 / cq4=4）。"""
+    from training.qat import cq2_qat_51m as cq2  # noqa: E402
+    from training.qat.cq2_policy_51m import GROUP_SIZE  # noqa: E402
+
+    n_values = int(weight.size)
+    groups = (n_values + GROUP_SIZE - 1) // GROUP_SIZE
+    width = bits_by_name.get(name, 2)
+    group_bits = (width,) * groups
+    return cq2.fake_quant_weight(weight, group_bits, ste=True)
+
+
+def quantize_inplace(model: Any, names: list[str], bits_by_name: dict[str, int]) -> dict[str, mx.array]:
+    """Replace each named weight with its fake-quantized value (STE, cq2
+    WHT-codebook semantics). Returns the saved float masters, which the
+    caller MUST restore after the backward pass so the optimizer updates the
+    float master, not the quantized copy."""
     originals: dict[str, mx.array] = {}
     for name in names:
         param, leaf = _leaf_of(model, name)
         originals[name] = getattr(param, leaf)
-        setattr(param, leaf, ste_quantize(originals[name], bits=bits))
+        setattr(param, leaf, ste_cq2(originals[name], name, bits_by_name))
     return originals
 
 
@@ -91,9 +127,11 @@ def ce_loss(model: Any, ids: mx.array, labels: mx.array) -> mx.array:
     return (loss * mask).sum() / n
 
 
-def pack_model(model: Any, names: list[str], bits: int, out_path: Path) -> None:
+def pack_model(model: Any, names: list[str], bits_by_name: dict[str, int], out_path: Path) -> None:
     """按 release.quant_pack_51m 的规范格式打包（wasm 可消费）：
-    量化张量按 bits 打包，其余（偏置/范数/嵌入）保持 float32。"""
+    量化张量按逐张量策略位宽，其余（f16 策略张量）保持 float32。
+    注意：pack 编码器仍是 block64 均匀量化，与 runtime 的 g128-WHT-codebook
+    编码器不一致——仅供 python 侧加载/体积参考；wasm 导出待对齐 cq2 编码器。"""
     from release.quant_pack_51m import build_pack_bytes  # noqa: E402
 
     flat_params = dict(tree_flatten(model.parameters()))
@@ -104,12 +142,11 @@ def pack_model(model: Any, names: list[str], bits: int, out_path: Path) -> None:
         if np.all(np.array(arr.shape) == 0):  # scalar gate 等零维张量
             continue
         tensors[name] = arr
-        bit_map[name] = bits if name in names else 32
+        bit_map[name] = bits_by_name.get(name, 32)
     blob, header = build_pack_bytes(tensors, bit_map)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(blob)
-    log(f"packed {len(tensors)} tensors ({len(names)}x{bits}bit, 其余 f32) -> {out_path} "
-        f"({len(blob) / 1e6:.2f} MB)")
+    log(f"packed {len(tensors)} tensors -> {out_path} ({len(blob) / 1e6:.2f} MB)")
 
 
 def main() -> int:
@@ -122,7 +159,7 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=2e-5)
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-compile", action="store_true")
-    ap.add_argument("--bits", type=int, default=4, help="量化位宽：4（Q4 基准）或 2（Q2 目标）")
+    ap.add_argument("--bits", type=int, default=2, help="默认位宽（未命中策略的特殊张量）；旧链策略：f16 头/小张量、cq4 嵌入+mhc、cq2 主体")
     args = ap.parse_args()
 
     if args.out_dir.exists():
@@ -163,8 +200,8 @@ def main() -> int:
         rows = rows[:64]
     log(f"replay dataset: {len(rows)} rows")
 
-    quant_names = collect_quant_pairs(model)
-    log(f"quantizing {len(quant_names)} ndim==2 weight tensors")
+    quant_names, bits_by_name = collect_quant_pairs(model)
+    log(f"quantizing {len(quant_names)} ndim==2 weight tensors (policy: f16/cq4/cq2 per legacy lm_storage_dtype)")
 
     lr_schedule = optim.cosine_decay(args.lr, max(args.steps, 1), args.lr * 0.1)
     optimizer = optim.AdamW(learning_rate=lr_schedule)
@@ -177,7 +214,7 @@ def main() -> int:
             originals[name] = getattr(param, leaf)
 
         def loss_fn(model):
-            quantize_inplace(model, quant_names, bits=args.bits)
+            quantize_inplace(model, quant_names, bits_by_name)
             return ce_loss(model, ids, labels)
         loss_and_grads = nn.value_and_grad(model, loss_fn)
         loss, grads = loss_and_grads(model)
@@ -212,7 +249,7 @@ def main() -> int:
             log(f"qat step={step}/{steps} loss={float(loss):.4f} elapsed={time.time() - t0:.0f}s")
 
     save_params(model, args.out_dir / "sft-qat-master.npz")
-    pack_model(model, quant_names, args.bits, args.out_dir / f"sft-qat-q{args.bits}.pack")
+    pack_model(model, quant_names, bits_by_name, args.out_dir / "sft-qat-cq.pack")
     (args.out_dir / "summary.json").write_text(json.dumps({
         "steps": steps, "final_loss": float(loss), "quantized_tensors": len(quant_names),
         "pack_layout": "per-tensor int4 (2 elems/byte, low nibble first) + float32 scale",

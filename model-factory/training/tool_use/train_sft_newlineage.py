@@ -277,12 +277,13 @@ def main() -> int:
     optimizer = optim.AdamW(learning_rate=lr_schedule)
     state = [model.state, optimizer.state]
     quant_names: list[str] = []
+    bits_by_name: dict[str, int] = {}
     if args.quant_aware:
         from training.qat.qat_newlineage import (  # noqa: E402
             _leaf_of, collect_quant_pairs, pack_model, quantize_inplace, restore_inplace,
         )
-        quant_names = collect_quant_pairs(model)
-        log(f"quant-aware SFT: {len(quant_names)} weight tensors fake-quantized per step")
+        quant_names, bits_by_name = collect_quant_pairs(model)
+        log(f"quant-aware SFT: {len(quant_names)} weight tensors fake-quantized per step (legacy f16/cq4/cq2 policy)")
 
     def step_fn(batch_ids, batch_labels):
         if args.quant_aware:
@@ -292,7 +293,7 @@ def main() -> int:
                 originals[name] = getattr(param, leaf)
 
             def loss_fn(model):
-                quantize_inplace(model, quant_names, bits=args.quant_bits)
+                quantize_inplace(model, quant_names, bits_by_name)
                 return ce_loss(model, batch_ids, batch_labels)[0]
             loss_and_grads = nn.value_and_grad(model, loss_fn)
             loss, grads = loss_and_grads(model)
@@ -375,7 +376,7 @@ def main() -> int:
     save_params(model, args.out_dir / "sft-final.npz")
     if args.quant_aware:
         from training.qat.qat_newlineage import pack_model  # noqa: E402
-        pack_model(model, quant_names, args.quant_bits, args.out_dir / f"sft-qat-q{args.quant_bits}.pack")
+        pack_model(model, quant_names, bits_by_name, args.out_dir / "sft-qat-cq.pack")
     log(f"done in {time.time() - t0:.0f}s; best valid {best_loss}")
     return 0
 
