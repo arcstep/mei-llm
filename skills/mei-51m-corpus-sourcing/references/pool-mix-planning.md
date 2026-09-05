@@ -5,7 +5,7 @@
 - **v2 天然角色**（来自注册表 `corpus-factory/sources/source_registry.json`）：
   fineweb2_hq / wiki_zh / wiki_en / dialogue / structured / code。
   池实物：`.local/artifacts/mei-1.0-51m/zh-v2-pool/`（raw → admitted → pools），
-  权威锚点 = 各 admitted manifest v2 + 池 release `zh-v2-pool-natural-v3`。
+  权威锚点 = 各 admitted manifest v2 + 池 release `zh-v2-pool-natural-v4`。
 - **旧 v1 角色**（wiki/fineweb2_hq/structure/colloquial，词表 zh-24k-v1）只作
   回归证据，不进入新链消费。structure/colloquial 合成角色已 retire，其语义位置
   由 v2 的 structured/dialogue 天然角色顶替（不复活合成）。
@@ -78,7 +78,7 @@ structured 首轮配额按池容量收窄（0.055→0.054，supersede 登记）�
 2. **前置**：用户显式授权一次 = 一批片集（离线默认不下载，见 SKILL 原则 10；付费/新下载均属需授权动作）。
 3. **步骤**：记录来源与 license（band A/B/C 政策裁决见
    `corpus-factory/quality/policy/source-policy-v1.json`）→ sha256 校验 → 冻结词表
-   （当前 zh-32k-v2，`TOKENIZER.json` 指针 + `--expected-tokenizer-id` 双绑）encode →
+   （当前 zh-24k-v3，`TOKENIZER.json` 指针 + `--expected-tokenizer-id` 双绑）encode →
    document-level dedup vs 已消费（unseen-first，seen-ledger 追加式）→
    铸**新池 release ID**（supersede 链 + reason，不覆盖旧 release）→ 本表追加快照行。
 4. 红线：不下则预算收窄，不硬凑超池；下载后未过校验/去重不得进 schedule；旧池不删不改。
