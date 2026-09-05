@@ -59,6 +59,16 @@ DEFAULT_SAMPLE = {
     "narration": 300,
     "confidence": 300,
 }
+# v3 rebalanced sampling: full_call covers 12 scenarios (6 arg_norm_*), so it
+# gets a larger share; MW shrank (500/class -> 200/class).
+V3_SAMPLE = {
+    "retrieval": 300,
+    "full_call": 400,
+    "agent": 200,
+    "mw_disposition": 500,
+    "narration": 300,
+    "confidence": 300,
+}
 FAMILIES = tuple(DEFAULT_SAMPLE)
 
 VALUE_RE = re.compile(r"值\d+")
@@ -216,7 +226,14 @@ def main() -> int:
         default=None,
         help="JSONL scratch of already-accepted batches; rows present here are skipped on rerun",
     )
+    ap.add_argument(
+        "--sample",
+        choices=("v2", "v3"),
+        default="v2",
+        help="sampling profile: v2 (original) or v3 (rebalanced)",
+    )
     args = ap.parse_args()
+    sample_profile = DEFAULT_SAMPLE if args.sample == "v2" else V3_SAMPLE
 
     source_dir = args.release_root / args.release_id
     out_dir = args.release_root / args.out_id
@@ -239,7 +256,7 @@ def main() -> int:
             query_index.setdefault(C.normalize_text(str(row["query"])), set()).add(str(row["case_id"]))
 
     log("sampling train rows (stratified, seeded)")
-    picked = sample_train_rows(source_dir, DEFAULT_SAMPLE, args.seed)
+    picked = sample_train_rows(source_dir, sample_profile, args.seed)
     total = sum(len(rows) for rows in picked.values())
     log(f"sampled {total} rows: " + ", ".join(f"{f}:{len(picked[f])}" for f in FAMILIES))
 

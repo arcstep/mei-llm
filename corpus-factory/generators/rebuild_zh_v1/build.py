@@ -42,17 +42,25 @@ SPLIT_NAMES = C.SPLIT_NAMES
 # old 13,763-row corpus was not viable and v1's 140/class was thin relative
 # to the old corpus's 294-3263/class range. Every v2 MW row carries a
 # concrete, grounded candidate_tool by construction (see mw_scenarios.py).
-# All other families are unchanged from v1 (regenerated deterministically).
+#
+# v3 (2026-09-05, user-approved rebalance): v2's 500/class MW was
+# over-compensation (59% of the release) and parameter filling lacked the
+# hard normalization skills a tool agent needs. v3 quotas rebalance toward
+# retrieval (throughput-critical gate) and full_call, and full_call gains
+# six arg_norm_* scenarios (clock/ISO time, enum aliases, duration
+# conversion, large/decimal Chinese numerals, entity resolution) whose gold
+# is locally compiled deterministic normalization. MW keeps full 20-class
+# coverage at 200/class.
 RETRIEVAL_TARGETS = dict(
-    rank_1_5=450, rank_6_10=400, rank_11_15=220, rank_16_20=220,
-    no_match=550, cross_batch_exhausted=220, stop_before_scan=420,
-    hard_negative_discrimination=280,
+    rank_1_5=700, rank_6_10=700, rank_11_15=450, rank_16_20=450,
+    no_match=1000, cross_batch_exhausted=500, stop_before_scan=700,
+    hard_negative_discrimination=500,
 )
-FULLCALL_TARGETS = dict(per_scenario_count=300, per_refusal_count=180)
-AGENT_TARGETS = dict(per_kind_count=180)
-MW_TARGETS = dict(per_class_count=500, visibility_pair_count=400, neighbor_pair_count=500)
-NARRATION_TARGETS = dict(max_rows=900)
-CONFIDENCE_TARGETS = dict(fullcall_n=400, agent_n=250, retrieval_n=500)
+FULLCALL_TARGETS = dict(per_scenario_count=400, per_refusal_count=180)
+AGENT_TARGETS = dict(per_kind_count=333)
+MW_TARGETS = dict(per_class_count=200, visibility_pair_count=400, neighbor_pair_count=500)
+NARRATION_TARGETS = dict(max_rows=2000)
+CONFIDENCE_TARGETS = dict(fullcall_n=600, agent_n=400, retrieval_n=500)
 
 
 def log(msg: str) -> None:
