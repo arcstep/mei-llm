@@ -42,7 +42,8 @@ def collect_quant_pairs(model: Any) -> list[str]:
     flat = dict(tree_flatten(model.parameters()))
     names = []
     for key, value in flat.items():
-        if getattr(value, "ndim", 0) == 2 and key.endswith(".weight"):
+        # 词嵌入保持 float32：检索/嵌入类操作对嵌入量化敏感
+        if getattr(value, "ndim", 0) == 2 and key.endswith(".weight") and key != "embed.weight":
             names.append(key)
     return names
 
@@ -90,27 +91,25 @@ def ce_loss(model: Any, ids: mx.array, labels: mx.array) -> mx.array:
     return (loss * mask).sum() / n
 
 
-def pack_q4(model: Any, names: list[str], out_path: Path) -> None:
+def pack_model(model: Any, names: list[str], bits: int, out_path: Path) -> None:
+    """按 release.quant_pack_51m 的规范格式打包（wasm 可消费）：
+    量化张量按 bits 打包，其余（偏置/范数/嵌入）保持 float32。"""
+    from release.quant_pack_51m import build_pack_bytes  # noqa: E402
+
     flat_params = dict(tree_flatten(model.parameters()))
-    arrays: dict[str, Any] = {}
-    for name in names:
-        value = flat_params[name]
-        w = mx.array(value)
-        w32 = w.astype(mx.float32)
-        flat_w = w32.reshape(-1)
-        scale = mx.max(mx.abs(flat_w), keepdims=False) / 7.5
-        scale = mx.maximum(scale, mx.array(1e-6))
-        q = mx.clip(mx.round(w32 / scale), -8, 7).astype(mx.int8)
-        n = q.size
-        if n % 2:
-            q = mx.concatenate([q, mx.array([0], dtype=mx.int8)])
-        pairs = q.reshape(-1, 2)
-        packed = (pairs[:, 0].astype(mx.uint8) & 0xF) | ((pairs[:, 1].astype(mx.uint8) & 0xF) << 4)
-        arrays[f"{name}.q4"] = np.asarray(packed)
-        arrays[f"{name}.scale"] = np.asarray(scale)
+    tensors: dict[str, np.ndarray] = {}
+    bit_map: dict[str, int] = {}
+    for name, value in flat_params.items():
+        arr = np.asarray(mx.array(value).astype(mx.float32))
+        if np.all(np.array(arr.shape) == 0):  # scalar gate 等零维张量
+            continue
+        tensors[name] = arr
+        bit_map[name] = bits if name in names else 32
+    blob, header = build_pack_bytes(tensors, bit_map)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    mx.savez(str(out_path), **{name: mx.array(value) for name, value in arrays.items()})
-    log(f"packed {len(names)} tensors -> {out_path}")
+    out_path.write_bytes(blob)
+    log(f"packed {len(tensors)} tensors ({len(names)}x{bits}bit, 其余 f32) -> {out_path} "
+        f"({len(blob) / 1e6:.2f} MB)")
 
 
 def main() -> int:
@@ -123,6 +122,7 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=2e-5)
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-compile", action="store_true")
+    ap.add_argument("--bits", type=int, default=4, help="量化位宽：4（Q4 基准）或 2（Q2 目标）")
     args = ap.parse_args()
 
     if args.out_dir.exists():
@@ -177,7 +177,7 @@ def main() -> int:
             originals[name] = getattr(param, leaf)
 
         def loss_fn(model):
-            quantize_inplace(model, quant_names)
+            quantize_inplace(model, quant_names, bits=args.bits)
             return ce_loss(model, ids, labels)
         loss_and_grads = nn.value_and_grad(model, loss_fn)
         loss, grads = loss_and_grads(model)
@@ -212,7 +212,7 @@ def main() -> int:
             log(f"qat step={step}/{steps} loss={float(loss):.4f} elapsed={time.time() - t0:.0f}s")
 
     save_params(model, args.out_dir / "sft-qat-master.npz")
-    pack_q4(model, quant_names, args.out_dir / "sft-qat-q4.npz")
+    pack_model(model, quant_names, args.bits, args.out_dir / f"sft-qat-q{args.bits}.pack")
     (args.out_dir / "summary.json").write_text(json.dumps({
         "steps": steps, "final_loss": float(loss), "quantized_tensors": len(quant_names),
         "pack_layout": "per-tensor int4 (2 elems/byte, low nibble first) + float32 scale",

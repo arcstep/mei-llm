@@ -233,7 +233,8 @@ def main() -> int:
     ap.add_argument("--no-compile", action="store_true")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--quant-aware", action="store_true",
-                    help="fake-quant Q4 STE in every forward (SFT on the quantized model; requires a QAT-tuned base)")
+                    help="fake-quant STE in every forward (SFT on the quantized model; requires a QAT-tuned base)")
+    ap.add_argument("--quant-bits", type=int, default=4, help="quant-aware 位宽：4（Q4 基准）或 2（Q2 目标）")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -278,7 +279,7 @@ def main() -> int:
     quant_names: list[str] = []
     if args.quant_aware:
         from training.qat.qat_newlineage import (  # noqa: E402
-            _leaf_of, collect_quant_pairs, pack_q4, quantize_inplace, restore_inplace,
+            _leaf_of, collect_quant_pairs, pack_model, quantize_inplace, restore_inplace,
         )
         quant_names = collect_quant_pairs(model)
         log(f"quant-aware SFT: {len(quant_names)} weight tensors fake-quantized per step")
@@ -291,7 +292,7 @@ def main() -> int:
                 originals[name] = getattr(param, leaf)
 
             def loss_fn(model):
-                quantize_inplace(model, quant_names)
+                quantize_inplace(model, quant_names, bits=args.quant_bits)
                 return ce_loss(model, batch_ids, batch_labels)[0]
             loss_and_grads = nn.value_and_grad(model, loss_fn)
             loss, grads = loss_and_grads(model)
@@ -373,8 +374,8 @@ def main() -> int:
 
     save_params(model, args.out_dir / "sft-final.npz")
     if args.quant_aware:
-        from training.qat.qat_newlineage import pack_q4  # noqa: E402
-        pack_q4(model, quant_names, args.out_dir / "sft-qat-q4.npz")
+        from training.qat.qat_newlineage import pack_model  # noqa: E402
+        pack_model(model, quant_names, args.quant_bits, args.out_dir / f"sft-qat-q{args.quant_bits}.pack")
     log(f"done in {time.time() - t0:.0f}s; best valid {best_loss}")
     return 0
 
