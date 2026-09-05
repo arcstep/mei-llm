@@ -1027,6 +1027,18 @@ def live_stage_state(directory: Path) -> dict:
     }
 
 
+SCRATCH_STAGE_COMMAND = [
+    "{python}",
+    "{model_factory}/training/cpt/run_scratch_curriculum_51m.py",
+    "--corpus-dir",
+    "{corpus_dir}",
+    "--schedule-kind",
+    "scratch",
+    "--out-dir",
+    "{checkpoints}/cpt",
+]
+
+
 def run_stage(
     directory: Path,
     config: dict,
@@ -1089,7 +1101,12 @@ def run_stage(
     if dry_run:
         planned = {"stage": stage, "status": "planned", "kind": row.get("kind")}
         if row.get("kind") != "internal":
-            planned["command"] = render_command(row["command"], render_context(directory, config))
+            if stage == "cpt" and load_json(ROOT / config["corpus"]["schedule"]).get("kind") == "scratch":
+                planned["command"] = render_command(
+                    SCRATCH_STAGE_COMMAND, render_context(directory, config)
+                )
+            else:
+                planned["command"] = render_command(row["command"], render_context(directory, config))
         return True, planned
     started = utc_now()
     if row.get("kind") == "internal":
@@ -1110,24 +1127,8 @@ def run_stage(
             },
         )
         return ok, receipt
-    if stage == "cpt":
-        schedule = load_json(ROOT / config["corpus"]["schedule"])
-        if schedule.get("kind") == "scratch":
-            command = render_command(
-                [
-                    "{python}",
-                    "{model_factory}/training/cpt/run_scratch_curriculum_51m.py",
-                    "--corpus-dir",
-                    "{corpus_dir}",
-                    "--schedule-kind",
-                    "scratch",
-                    "--out-dir",
-                    "{checkpoints}/cpt",
-                ],
-                render_context(directory, config),
-            )
-        else:
-            command = render_command(row["command"], render_context(directory, config))
+    if stage == "cpt" and load_json(ROOT / config["corpus"]["schedule"]).get("kind") == "scratch":
+        command = render_command(SCRATCH_STAGE_COMMAND, render_context(directory, config))
     else:
         command = render_command(row["command"], render_context(directory, config))
     if dry_run:

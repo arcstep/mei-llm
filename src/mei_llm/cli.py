@@ -573,6 +573,12 @@ def build_parser() -> argparse.ArgumentParser:
     cpt = top.add_parser("cpt")
     cpt_sub = cpt.add_subparsers(dest="action", required=True)
     cpt_sub.add_parser("doctor")
+    init = cpt_sub.add_parser("init")
+    init.add_argument("--run-id", required=True)
+    init.add_argument("--cycle-id")
+    init.add_argument("--corpus-dir", type=Path, required=True)
+    init.add_argument("--target-exposure", type=int, required=True)
+    init.add_argument("--resume-checkpoint", type=Path)
     for action in ("plan", "run", "resume", "status"):
         command = cpt_sub.add_parser(action)
         command.add_argument("--run-id", required=True)
@@ -700,6 +706,18 @@ def main(argv: list[str] | None = None) -> int:
     if args.domain == "cpt":
         if args.action == "doctor":
             return _cpt_action(registry, "verify", None, [])
+        if args.action == "init":
+            init_args = [
+                "init",
+                "--run-id", args.run_id,
+                "--corpus-dir", str(args.corpus_dir),
+                "--target-exposure", str(args.target_exposure),
+            ]
+            if getattr(args, "cycle_id", None):
+                init_args.extend(["--cycle-id", args.cycle_id])
+            if getattr(args, "resume_checkpoint", None):
+                init_args.extend(["--resume-checkpoint", str(args.resume_checkpoint)])
+            return _forward_module(registry, "orchestration.lifecycle_51m", init_args)
         rest = []
         if getattr(args, "until", None):
             rest.extend(["--until", args.until])
