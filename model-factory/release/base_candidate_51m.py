@@ -103,19 +103,29 @@ def _numeric_integrity(
             "p." + name
         ):
             raise RuntimeError(f"CPT train-state parameter shape differs: {name}")
-    metrics = {
+    required_metrics = {
         "valid_loss": summary.get("valid_loss"),
-        "valid_loss_hq": summary.get("valid_loss_hq"),
-        "valid_loss_structure": summary.get("valid_loss_structure"),
-        "valid_loss_colloquial": summary.get("valid_loss_colloquial"),
         "final_probe_mean_nll": summary.get(
             "final_probe_mean_nll", summary.get("probe_mean_nll")
         ),
     }
+    optional_metrics = {
+        "valid_loss_hq": summary.get("valid_loss_hq"),
+        "valid_loss_structure": summary.get("valid_loss_structure"),
+        "valid_loss_colloquial": summary.get("valid_loss_colloquial"),
+    }
+    metrics = {**required_metrics, **optional_metrics}
     if any(
-        value is None or not math.isfinite(float(value)) for value in metrics.values()
+        value is None or not math.isfinite(float(value))
+        for value in required_metrics.values()
     ):
         raise RuntimeError("CPT terminal validation metrics are missing or non-finite")
+    # 旧链 hq/structure/colloquial 角色损失可选（scratch 六角色血缘无此字段）
+    if any(
+        value is not None and not math.isfinite(float(value))
+        for value in optional_metrics.values()
+    ):
+        raise RuntimeError("CPT terminal validation metrics are non-finite")
     meta = load_json(train_state_meta)
     expected_contract = str(
         config.get("weight_contract_sha256")
@@ -158,7 +168,10 @@ def _base_root(config: dict) -> Path:
     millions = target // 1_000_000
     if millions <= 0:
         raise ValueError("target exposure must identify a positive cycle")
-    return ARTIFACT_ROOT / f"exp-{millions:06d}m/models/base"
+    # zh-v2-rebuild 血缘（cycle_id 带 -v2 后缀）用 -v2 目录，与旧链 exp-XXXm 隔离
+    cycle_id = str(config.get("cycle_id") or "")
+    suffix = "-v2" if cycle_id.endswith("-v2") else ""
+    return ARTIFACT_ROOT / f"exp-{millions:06d}m{suffix}/models/base"
 
 
 def _verified_inputs(run_id: str) -> tuple[Path, dict, dict]:
@@ -182,7 +195,13 @@ def _verified_inputs(run_id: str) -> tuple[Path, dict, dict]:
         or live.get("pid_alive") is True
     ):
         raise RuntimeError("register requires a current, hash-valid terminal cpt_gate")
-    summary = load_json(directory / "checkpoints/cpt/summary.json")
+    summary_path = directory / "checkpoints/cpt/summary.json"
+    if not summary_path.is_file():
+        # scratch 训练器把 summary 写在 run 子目录里（checkpoints/cpt/pretrain-*/）
+        candidates = sorted((directory / "checkpoints/cpt").glob("pretrain-*/summary.json"))
+        if candidates:
+            summary_path = candidates[-1]
+    summary = load_json(summary_path)
     errors = identity_errors(summary, config)
     if errors:
         raise RuntimeError(f"CPT identity gate failed: {errors}")
@@ -200,9 +219,8 @@ def _formal_parent(config: dict, summary: dict) -> dict:
     schedule = load_json(schedule_path)
     checkpoint_rel = str(schedule.get("parent_checkpoint") or "")
     if not checkpoint_rel:
-        raise RuntimeError(
-            "continued CPT registration requires a formal parent checkpoint"
-        )
+        # scratch run：无父 rung（parent_exposure == 0），无正式父检查点可引用
+        return {}
     checkpoint = ROOT / checkpoint_rel
     release_path = checkpoint.parent / "RELEASE.json"
     release = load_json(release_path)
@@ -367,12 +385,26 @@ def register_base_candidate(run_id: str, candidate_id: str | None = None) -> dic
             f"refusing to overwrite existing base candidate: {destination}"
         )
     source_dir = directory / "checkpoints/cpt"
-    source_files = {
-        "weights": source_dir / "pretrain-cpt.npz",
-        "train_state": source_dir / "pretrain-cpt-state.npz",
-        "train_state_meta": source_dir / "pretrain-cpt-state.meta.json",
-        "summary": source_dir / "summary.json",
-    }
+    if (source_dir / "pretrain-cpt.npz").is_file():
+        source_files = {
+            "weights": source_dir / "pretrain-cpt.npz",
+            "train_state": source_dir / "pretrain-cpt-state.npz",
+            "train_state_meta": source_dir / "pretrain-cpt-state.meta.json",
+            "summary": source_dir / "summary.json",
+        }
+    else:
+        # scratch 训练器：run 子目录命名（checkpoints/cpt/pretrain-<run>/）
+        subdirs = [p for p in source_dir.glob("pretrain-*") if p.is_dir()]
+        if not subdirs:
+            raise RuntimeError("missing CPT candidate artifacts: no scratch run subdir")
+        sub = subdirs[-1]
+        name = sub.name.removeprefix("pretrain-")
+        source_files = {
+            "weights": sub / f"pretrain-{name}.npz",
+            "train_state": sub / f"pretrain-{name}-state.npz",
+            "train_state_meta": sub / f"pretrain-{name}-state.meta.json",
+            "summary": sub / "summary.json",
+        }
     missing = [name for name, path in source_files.items() if not path.is_file()]
     if missing:
         raise RuntimeError(f"missing CPT candidate artifacts: {missing}")
