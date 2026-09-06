@@ -604,7 +604,7 @@ class SchemaAndGrammarTests(unittest.TestCase):
             import sentencepiece as sentencepiece
         except ImportError:
             self.skipTest("sentencepiece is unavailable")
-        model = SDK_ROOT.parents[1] / "models/mei-1.2-51m/tokenizer/zh-24k-v1.model"
+        model = SDK_ROOT.parents[2] / "models/mei-1.1-51m/tokenizer/zh-24k-v1.model"
         processor = sentencepiece.SentencePieceProcessor(model_file=str(model))
 
         class LockedTokenizer:

@@ -147,6 +147,22 @@ def resolve_repo_path(value: str | Path) -> Path:
         return direct
 
     raw = candidate.as_posix()
+    # 旧扁平训练管线 → 现 factory 布局（LEGACY_PATH_MAP，唯一实现）
+    legacy_map_path = ROOT / "src/model-factory/contracts/LEGACY_PATH_MAP.json"
+    if legacy_map_path.is_file():
+        legacy_map = json.loads(legacy_map_path.read_text(encoding="utf-8"))
+        if raw in legacy_map.get("intermediate_hidden_exact", {}):
+            return ROOT / str(legacy_map["intermediate_hidden_exact"][raw])
+        if raw.rstrip("/") == str(legacy_map.get("old_root") or "").rstrip("/"):
+            return ROOT / str(legacy_map["new_root"])
+        for alias_root in legacy_map.get("alias_roots") or []:
+            alias_prefix = str(alias_root).rstrip("/") + "/"
+            if raw.startswith(alias_prefix):
+                raw = str(legacy_map["old_root"]).rstrip("/") + "/" + raw[len(alias_prefix):]
+                break
+        if raw in legacy_map.get("exact", {}):
+            return ROOT / str(legacy_map["exact"][raw])
+
     old_run_prefix = "training/runs/mei-1.0-51m/"
     if raw.startswith(old_run_prefix):
         suffix = raw[len(old_run_prefix) :]

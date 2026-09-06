@@ -61,67 +61,26 @@ class Registry:
         return _load(self.root / match["path"])
 
     def resolve(self, value: str) -> Path:
+        """URI 查 artifacts 表，其余路径解析统一委托
+        model-factory/common/_repo.resolve_repo_path（唯一实现）。"""
         artifacts = self.artifacts()["entries"]
         match = next((item for item in artifacts if item["uri"] == value), None)
         if match is not None:
             return (self.root / match["path"]).resolve()
 
-        candidate = Path(value)
-        if candidate.is_absolute():
-            if candidate.exists():
-                return candidate
-            for historical_root in (self.root, self.root.parent, self.root / "mei-llm"):
-                try:
-                    value = candidate.relative_to(historical_root).as_posix()
-                    break
-                except ValueError:
-                    continue
-            else:
-                return candidate
+        import sys
 
-        source_migration = self.model_factory_legacy_paths()
-        if value in source_migration.get("intermediate_hidden_exact", {}):
-            return (
-                self.root / source_migration["intermediate_hidden_exact"][value]
-            ).resolve()
-        if value.rstrip("/") == source_migration["old_root"].rstrip("/"):
-            return (self.root / source_migration["new_root"]).resolve()
-        for alias_root in source_migration.get("alias_roots", []):
-            alias_prefix = alias_root.rstrip("/") + "/"
-            if value.startswith(alias_prefix):
-                value = (
-                    source_migration["old_root"].rstrip("/")
-                    + "/"
-                    + value[len(alias_prefix) :]
-                )
-                break
-        if value in source_migration["exact"]:
-            return (self.root / source_migration["exact"][value]).resolve()
-        migration = self.migration()
-        old_run_prefix = "training/runs/mei-1.0-51m/"
-        if value.startswith(old_run_prefix):
-            suffix = value[len(old_run_prefix) :]
-            candidates = [
-                *self.root.glob(f"cycles/mei-*/exp-*/runs/{suffix}"),
-                self.root / "cycles/mei-1.1-51m/comparisons/runs" / suffix,
-            ]
-            matches = sorted(path for path in candidates if path.exists())
-            if len(matches) == 1:
-                return matches[0].resolve()
-            if len(matches) > 1:
-                raise RuntimeError(f"ambiguous migrated run path: {value}")
-        if value in migration["exact"]:
-            return (self.root / migration["exact"][value]).resolve()
-        for old, new in sorted(
-            migration["exact"].items(), key=lambda item: -len(item[0])
-        ):
-            prefix = old.rstrip("/") + "/"
-            if value.startswith(prefix):
-                return (self.root / new / value[len(prefix) :]).resolve()
-        for old, new in sorted(migration["prefix"].items(), key=lambda item: -len(item[0])):
-            if value.startswith(old):
-                return (self.root / new / value[len(old):]).resolve()
-        return (self.root / value).resolve()
+        factory = str(self.root / "src/model-factory")
+        added = factory not in sys.path
+        if added:
+            sys.path.insert(0, factory)
+        try:
+            from common._repo import resolve_repo_path
+
+            return resolve_repo_path(value).resolve()
+        finally:
+            if added:
+                sys.path.remove(factory)
 
     def current_sha256(self) -> str:
         return hashlib.sha256((self.root / "CURRENT.json").read_bytes()).hexdigest()

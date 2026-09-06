@@ -73,7 +73,7 @@ class FiveDomainLayoutTest(unittest.TestCase):
             "sdk/python/mei_sdk/engine.py": "src/platform/python-sdk/mei_sdk/engine.py",
             "sdk/js/index.mjs": "src/platform/browser-sdk/index.mjs",
             "sdk/Cargo.toml": "src/platform/_shared/Cargo.toml",
-            "sdk/c/mei_sdk.h": "src/platform/_experimental/c/mei_sdk.h",
+            "sdk/c/mei_sdk.h": "cycles/mei-1.1-51m/_legacy/platform-experimental-c/c/mei_sdk.h",
         }
         for old, new in cases.items():
             self.assertEqual(self.registry.resolve(old), (ROOT / new).resolve())

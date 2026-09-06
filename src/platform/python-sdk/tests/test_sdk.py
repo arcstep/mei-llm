@@ -20,7 +20,7 @@ class VersionTests(unittest.TestCase):
         self.assertTrue(v["sdk_semver"].endswith("experimental"))
         blob = json.dumps(v)
         self.assertNotIn("needle", blob.lower())
-        self.assertEqual(v["product"], "mei-1.0-51m Runtime")
+        self.assertEqual(v["product"], "mei-1.2-51m Runtime")
         self.assertEqual(v["sdk_semver"], "0.2.0-experimental")
         self.assertEqual(v["wire_version"], "mei-runtime-wire-v2")
         self.assertEqual(v["model_package_version"], "mei-model-package-v2")

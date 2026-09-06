@@ -21,7 +21,7 @@
     "sdk/Cargo.toml": "src/platform/_shared/Cargo.toml",
     "sdk/Cargo.lock": "src/platform/_shared/Cargo.lock",
     "sdk/.cargo": "src/platform/_shared/.cargo",
-    "sdk/c": "src/platform/_experimental/c",
+    "sdk/c": "cycles/mei-1.1-51m/_legacy/platform-experimental-c/c",
     "corpus/lm-v1": "cycles/mei-1.1-51m/exp-00300m/corpus/cpt-delta/lm-v1",
     "corpus/lm-v2-cpt-600m": "cycles/mei-1.1-51m/exp-00600m/corpus/cpt-delta/lm-v2-cpt-600m"
   },
@@ -35,7 +35,7 @@
     "sdk/tools/": "src/platform/_shared/tools/",
     "sdk/rust/": "src/platform/_shared/rust/",
     "sdk/.cargo/": "src/platform/_shared/.cargo/",
-    "sdk/c/": "src/platform/_experimental/c/",
+    "sdk/c/": "cycles/mei-1.1-51m/_legacy/platform-experimental-c/c/",
     "notebook/sft/mei-1.0-51m/releases/": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/",
     "notebook/": "cycles/mei-1.1-51m/_legacy/notebook/",
     ".local/artifacts/": "cycles/mei-1.1-51m/",

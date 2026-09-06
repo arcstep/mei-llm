@@ -48,7 +48,7 @@ def _lib_candidates() -> list[Path]:
     roots = [
         SDK_ROOT / "target" / "release",
         SDK_ROOT / "target" / "debug",
-        SDK_ROOT.parent / "_experimental" / "c",
+        SDK_ROOT.parents[2] / "cycles/mei-1.1-51m/_legacy/platform-experimental-c/c",
     ]
     extra = os.environ.get("MEI_SDK_LIB")
     out: list[Path] = []

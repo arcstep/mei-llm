@@ -16,7 +16,7 @@ class BackendRevisionTests(unittest.TestCase):
         files = backend_file_fingerprints()
         self.assertTrue(files)
         self.assertTrue(all(len(v) == 64 or v == "missing" for v in files.values()))
-        arch = SDK_ROOT.parents[1] / "src/architecture/mei-1.2-51m/architecture.py"
+        arch = SDK_ROOT.parents[2] / "src/architecture/mei-1.2-51m/architecture.py"
         self.assertTrue(arch.is_file())
 
     def test_fused_revision_is_distinct_and_includes_fused_ops(self):
