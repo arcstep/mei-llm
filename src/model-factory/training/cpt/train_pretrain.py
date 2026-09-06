@@ -431,12 +431,24 @@ def main() -> int:
     grad_accum = args.grad_accum or (
         1 if args.smoke else int(stage.get("grad_accum") or rung_row.get("grad_accum") or layout_ga or 1)
     )
-    lr = float(args.lr if args.lr is not None else (recipe.get("lr") or 3e-4))
-    lr_final = args.lr_final if args.lr_final is not None else recipe.get("lr_final")
+    sched_lr = schedule_doc.get("lr") or {}
+    sched_declares_cycle_lr = schedule_kind == "cpt" and sched_lr.get("token_offset") is not None
+    lr = float(
+        args.lr
+        if args.lr is not None
+        else (sched_lr.get("base") if sched_declares_cycle_lr else (recipe.get("lr") or 3e-4))
+    )
+    lr_final = args.lr_final if args.lr_final is not None else (
+        sched_lr.get("final") if sched_declares_cycle_lr else recipe.get("lr_final")
+    )
     lr_token_offset = (
         args.lr_token_offset
         if args.lr_token_offset is not None
-        else int(recipe.get("lr_token_offset") or ((schedule_doc.get("lr") or {}).get("token_offset") or 0))
+        else int(
+            sched_lr.get("token_offset")
+            if sched_declares_cycle_lr
+            else (recipe.get("lr_token_offset") or 0)
+        )
     )
     eval_every = args.eval_every_tokens or (10**18 if args.smoke else int(rung_row.get("eval_every") or dft["eval_every"]))
     save_every = args.save_every_tokens or (10**18 if args.smoke else int(rung_row.get("save_every") or dft["save_every"]))

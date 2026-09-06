@@ -83,6 +83,7 @@ def build(
     kind: str = "scratch",
     parent_tokens_seen: int = 0,
     parent_checkpoint: str | None = None,
+    cpt_batch_size: int = 1,
 ) -> dict:
     if out.exists():
         raise FileExistsError(f"refusing to overwrite corpus layout: {out}")
@@ -179,7 +180,7 @@ def build(
                 "seq_len": 2048,
                 "stage_tokens": total_target,
                 "stop_at_tokens": cumulative,
-                "batch_size": 1,
+                "batch_size": cpt_batch_size,
                 "grad_accum": 1,
                 "sources": {role: {"token_quota": q} for role, q in stage_quotas.items()},
             }
@@ -201,6 +202,7 @@ def build(
                 "base": 0.0003,
                 "final": 3e-05,
                 "horizon_tokens": total_target,
+                "token_offset": parent_tokens_seen,
             },
             "sources": {
                 role: {
@@ -252,6 +254,7 @@ def build(
                 "base": 0.0003,
                 "final": 3e-05,
                 "horizon_tokens": total_target,
+                "token_offset": parent_tokens_seen,
             },
             "sources": {
                 role: {
@@ -345,6 +348,7 @@ def main() -> int:
     parser.add_argument("--kind", choices=("scratch", "cpt"), default="scratch")
     parser.add_argument("--parent-tokens-seen", type=int, default=0)
     parser.add_argument("--parent-checkpoint", type=str, default=None)
+    parser.add_argument("--cpt-batch-size", type=int, default=1)
     args = parser.parse_args()
     pool = json.loads(args.pool_release.read_text(encoding="utf-8"))
     pool["quality_dir"] = str(args.pool_release.parent.parent / "quality")
@@ -362,6 +366,7 @@ def main() -> int:
         kind=args.kind,
         parent_tokens_seen=args.parent_tokens_seen,
         parent_checkpoint=args.parent_checkpoint,
+        cpt_batch_size=args.cpt_batch_size,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
