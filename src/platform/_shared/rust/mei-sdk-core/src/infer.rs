@@ -1102,10 +1102,15 @@ fn mask_grammar(
         }
     }
     if allowed.is_empty() {
-        return Err(SdkError::new(
-            "protocol_violation",
-            "constrained decoder has no legal UTF-8 grammar transition",
-        ));
+        // 死胡同回退：无合法 UTF-8 转移时终止生成（强制 EOS）。已生成的
+        // 前缀交给后续 gate 校验走确定性拒绝路径，产出正常 refuse turn
+        // （保留 selected_tools/confidence/mw），而不是抛协议违规丢掉整轮。
+        for (i, v) in logits.iter_mut().enumerate() {
+            if i as u32 != vocab.eos_id {
+                *v = f32::NEG_INFINITY;
+            }
+        }
+        return Ok(());
     }
     let mut keep = vec![false; logits.len()];
     for i in allowed {
