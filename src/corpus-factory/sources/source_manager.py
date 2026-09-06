@@ -296,7 +296,7 @@ def plan_mix(
 
 def tokenizer_pointer(path: Path | None = None) -> dict[str, Any]:
     pointer_path = path or (
-        ROOT / "src/architecture/mei-1.2-51m/tokenizer/TOKENIZER.json"
+        ROOT / "models/mei-1.2-51m/tokenizer/TOKENIZER.json"
     )
     if not pointer_path.is_file():
         raise SourceError(

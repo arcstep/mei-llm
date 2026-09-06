@@ -36,3 +36,9 @@ models/*/exp-*/products/.*.staging/
 
 # runtime 构建产物不入 git（manifest 保留，wasm 可由 cargo 9 秒重建）
 models/*/runtime/wasm/*.wasm
+
+# docs/ 由独立文档仓（docs/.git）管理，产品仓不跟踪
+docs/
+# 本机 Claude/Cursor 工作区配置（信封遗留）
+.claude/
+.cursor/

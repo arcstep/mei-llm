@@ -134,7 +134,7 @@ def resolve_repo_path(value: str | Path) -> Path:
     if candidate.is_absolute():
         if candidate.exists():
             return candidate
-        for historical_root in (ROOT, ROOT.parent):
+        for historical_root in (ROOT, ROOT.parent, ROOT / "mei-llm"):
             try:
                 candidate = candidate.relative_to(historical_root)
                 break

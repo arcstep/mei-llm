@@ -70,7 +70,7 @@ class Registry:
         if candidate.is_absolute():
             if candidate.exists():
                 return candidate
-            for historical_root in (self.root, self.root.parent):
+            for historical_root in (self.root, self.root.parent, self.root / "mei-llm"):
                 try:
                     value = candidate.relative_to(historical_root).as_posix()
                     break
