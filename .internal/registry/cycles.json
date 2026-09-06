@@ -21,7 +21,9 @@
       "lineage": "zh-v2-rebuild",
       "status": "completed_release_eligible",
       "target_exposure_tokens": 300000000,
-      "tokenizer_id": "zh-24k-v3"
+      "tokenizer_id": "zh-24k-v3",
+      "path": "cycles/mei-1.2-51m/exp-00300m/CYCLE.json",
+      "actual_exposure_tokens": 300000768
     },
     {
       "cycle_id": "exp-000600m-v2",

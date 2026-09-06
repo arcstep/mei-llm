@@ -78,6 +78,16 @@
       "kind": "sft_model",
       "cycle_id": "exp-000600m",
       "path": "models/mei-1.1-51m/exp-00600m/sft/mei-1.0-51m-cpt600m-tool-sft-cq2-v2-adaptive-v5"
+    },
+    {
+      "uri": "mei-artifact://mei-1.2-51m/exp-00300m/model/base/mei-1.2-51m-base-cpt300m-v1",
+      "path": "models/mei-1.2-51m/exp-00300m/base/mei-1.2-51m-base-cpt300m-v1",
+      "cycle_id": "exp-000300m-v2"
+    },
+    {
+      "uri": "mei-artifact://mei-1.2-51m/exp-00300m/model/product/mei-1.2-51m-cpt300m-tool-sft-cq2-v1",
+      "path": "models/mei-1.2-51m/exp-00300m/products/mei-1.2-51m-cpt300m-tool-sft-cq2-v1",
+      "cycle_id": "exp-000300m-v2"
     }
   ]
 }
