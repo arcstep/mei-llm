@@ -938,12 +938,40 @@ def internal_gate(stage: str, directory: Path, config: dict) -> tuple[bool, dict
             # is the whole run (parent_tokens_seen == 0).
             segment_tokens = tokens
         else:
+            # cpt 续训（新链 6 角色）：角色取自 schedule.sources（非旧四角色），
+            # checkpoint 沿用 trainer 命名（out-dir 名为 cpt → pretrain-cpt*.npz）
             checkpoint_ok = all(
                 path.is_file()
                 for path in (
                     directory / "checkpoints/cpt/pretrain-cpt.npz",
                     directory / "checkpoints/cpt/pretrain-cpt-state.npz",
                 )
+            )
+            roles = [
+                role
+                for role, spec in (schedule.get("sources") or {}).items()
+                if int((spec or {}).get("token_quota") or 0) > 0
+            ]
+            role_losses = {role: summary.get(f"valid_loss_{role}") for role in roles}
+            quality = summary.get("valid_loss") is not None and probe is not None
+            cumulative_drawn = summary.get("source_tokens_drawn") or stage_drawn
+            quota_tolerance = tolerance * 4
+            quota_ok = all(
+                abs(
+                    int(cumulative_drawn.get(role) or 0)
+                    - int(((schedule.get("sources") or {}).get(role) or {}).get("token_quota") or 0)
+                )
+                <= quota_tolerance
+                for role in roles
+            )
+            parent_path = Path(str(schedule.get("parent_checkpoint") or ""))
+            if not parent_path.is_absolute():
+                parent_path = ROOT / parent_path
+            parent_release = load_json(parent_path.parent / "RELEASE.json")
+            parent_loss = parent_release.get("valid_loss")
+            benefit_ok = (
+                parent_loss is None
+                or (quality and float(summary["valid_loss"]) <= float(parent_loss))
             )
         schedule_ok = (
             summary.get("schedule_sha256") == sha256_file(schedule_file)

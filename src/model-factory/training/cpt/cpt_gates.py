@@ -227,10 +227,15 @@ def refuse_cpt_source(corpus_dir: Path, rung: str) -> str | None:
     if rung in target_by_rung and cumulative != target_by_rung[rung]:
         return f"cpt schedule cumulative exposure does not match rung {rung}"
     sources = schedule.get("sources") or {}
-    if set(sources) != set(REQUIRED_ROLES):
-        return "cpt schedule must contain wiki/hq/structure/colloquial"
+    NEW_CHAIN_ROLES = {"code", "dialogue", "fineweb2_hq", "structured", "wiki_en", "wiki_zh"}
+    if set(sources) == NEW_CHAIN_ROLES:
+        roles = sorted(NEW_CHAIN_ROLES)
+    elif set(sources) == set(REQUIRED_ROLES):
+        roles = list(REQUIRED_ROLES)
+    else:
+        return "cpt schedule roles must be the zh-v2 six-role set or the legacy wiki/hq/structure/colloquial"
     quota_sum = 0
-    for name in REQUIRED_ROLES:
+    for name in roles:
         got = int((sources.get(name) or {}).get("token_quota") or 0)
         if got <= 0:
             return f"cpt source {name} token_quota must be positive"

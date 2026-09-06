@@ -17,6 +17,10 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[4]
+if str(ROOT / "src/model-factory") not in __import__("sys").path:
+    __import__("sys").path.insert(0, str(ROOT / "src/model-factory"))
+from common.paths import resolve_repo_path  # noqa: E402
+
 SEQUENCE = [150_000_000, 100_000_000, 50_000_000]  # s1 512 / s2 1024 / s3 2048
 SEQ_LENS = [512, 1024, 2048]
 BATCHES = [8, 2, 1]
@@ -76,6 +80,9 @@ def build(
     tokenizer_id: str,
     valid_fraction: float,
     cycle_id: str,
+    kind: str = "scratch",
+    parent_tokens_seen: int = 0,
+    parent_checkpoint: str | None = None,
 ) -> dict:
     if out.exists():
         raise FileExistsError(f"refusing to overwrite corpus layout: {out}")
@@ -102,7 +109,8 @@ def build(
         train_tokens = 0
         valid_tokens = 0
         for index, row in enumerate(sorted(rows, key=lambda r: r["path"])):
-            source_bin = Path(row["path"]) / "tokens.bin"
+            # 池 release 内为历史路径，读取时经迁移路由解析（证据不改）
+            source_bin = resolve_repo_path(str(row["path"])) / "tokens.bin"
             if not source_bin.is_file():
                 raise RuntimeError(f"missing admitted tokens.bin: {source_bin}")
             is_last = index == len(rows) - 1
@@ -162,56 +170,102 @@ def build(
     stage_quotas = {role: int(quotas.get(role, 0)) for role in mix_sources}
     stage_quotas = {role: q for role, q in stage_quotas.items() if q > 0}
     scale = sum(stage_quotas.values())
-    curriculum = []
-    stop = 0
-    for stage_index, (stage_tokens, seq_len, batch) in enumerate(
-        zip(SEQUENCE, SEQ_LENS, BATCHES), 1
-    ):
-        stop += stage_tokens
-        curriculum.append(
+    if kind == "cpt":
+        # 续训：单一 2048 阶段（长度已爬坡完成），延续父轮 token 计数
+        cumulative = parent_tokens_seen + total_target
+        curriculum = [
             {
-                "id": f"s{stage_index}",
-                "seq_len": seq_len,
-                "stage_tokens": stage_tokens,
-                "stop_at_tokens": stop,
-                "batch_size": batch,
+                "id": "cpt1",
+                "seq_len": 2048,
+                "stage_tokens": total_target,
+                "stop_at_tokens": cumulative,
+                "batch_size": 1,
                 "grad_accum": 1,
-                "sources": {
-                    role: {"token_quota": round(stage_tokens * q / scale)}
-                    for role, q in stage_quotas.items()
-                },
+                "sources": {role: {"token_quota": q} for role, q in stage_quotas.items()},
             }
+        ]
+        schedule = {
+            "stage_id": f"zh-v2-cpt-{cumulative // 1_000_000}m-v1",
+            "kind": "cpt",
+            "parent_rung": "300m",
+            "parent_tokens_seen": parent_tokens_seen,
+            "parent_checkpoint": parent_checkpoint,
+            "cumulative_exposure_tokens": cumulative,
+            "sampler": "quota_plan",
+            "sampler_seed": 0,
+            "skip_seen_wiki": False,
+            "allow_repeat": False,
+            "exposure_tokens": total_target,
+            "lr": {
+                "kind": "cosine_tokens",
+                "base": 0.0003,
+                "final": 3e-05,
+                "horizon_tokens": total_target,
+            },
+            "sources": {
+                role: {
+                    "token_quota": q,
+                    "skip_tokens": 0,
+                    "max_epochs": round(q / max(mix_sources[role]["n_train_tokens"], 1), 6),
+                }
+                for role, q in stage_quotas.items()
+            },
+            "curriculum": curriculum,
+        }
+        (out / f"schedule-cpt-{cumulative // 1_000_000}m.json").write_text(
+            json.dumps(schedule, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
-    schedule = {
-        "stage_id": f"zh-v2-scratch-{total_target // 1_000_000}m-v1",
-        "kind": "scratch",
-        "parent_rung": None,
-        "parent_tokens_seen": 0,
-        "parent_checkpoint": None,
-        "sampler": "quota_plan",
-        "sampler_seed": 0,
-        "skip_seen_wiki": False,
-        "allow_repeat": False,
-        "exposure_tokens": total_target,
-        "lr": {
-            "kind": "cosine_tokens",
-            "base": 0.0003,
-            "final": 3e-05,
-            "horizon_tokens": total_target,
-        },
-        "sources": {
-            role: {
-                "token_quota": q,
-                "skip_tokens": 0,
-                "max_epochs": round(q / max(mix_sources[role]["n_train_tokens"], 1), 6),
-            }
-            for role, q in stage_quotas.items()
-        },
-        "curriculum": curriculum,
-    }
-    (out / "schedule-scratch.json").write_text(
-        json.dumps(schedule, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
+    else:
+        curriculum = []
+        stop = 0
+        for stage_index, (stage_tokens, seq_len, batch) in enumerate(
+            zip(SEQUENCE, SEQ_LENS, BATCHES), 1
+        ):
+            stop += stage_tokens
+            curriculum.append(
+                {
+                    "id": f"s{stage_index}",
+                    "seq_len": seq_len,
+                    "stage_tokens": stage_tokens,
+                    "stop_at_tokens": stop,
+                    "batch_size": batch,
+                    "grad_accum": 1,
+                    "sources": {
+                        role: {"token_quota": round(stage_tokens * q / scale)}
+                        for role, q in stage_quotas.items()
+                    },
+                }
+            )
+        schedule = {
+            "stage_id": f"zh-v2-scratch-{total_target // 1_000_000}m-v1",
+            "kind": "scratch",
+            "parent_rung": None,
+            "parent_tokens_seen": 0,
+            "parent_checkpoint": None,
+            "sampler": "quota_plan",
+            "sampler_seed": 0,
+            "skip_seen_wiki": False,
+            "allow_repeat": False,
+            "exposure_tokens": total_target,
+            "lr": {
+                "kind": "cosine_tokens",
+                "base": 0.0003,
+                "final": 3e-05,
+                "horizon_tokens": total_target,
+            },
+            "sources": {
+                role: {
+                    "token_quota": q,
+                    "skip_tokens": 0,
+                    "max_epochs": round(q / max(mix_sources[role]["n_train_tokens"], 1), 6),
+                }
+                for role, q in stage_quotas.items()
+            },
+            "curriculum": curriculum,
+        }
+        (out / "schedule-scratch.json").write_text(
+            json.dumps(schedule, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
 
     quality_dir = Path(str(pool_release.get("quality_dir") or ""))
     if quality_dir.is_dir():
@@ -225,7 +279,8 @@ def build(
         "release_id": f"zh-v2-layout-{cycle_id}-v1",
         "training_mode": "cpt",
         "roles_complete": True,
-        "parent_checkpoint": None,
+        "parent_checkpoint": parent_checkpoint,
+        "cumulative_exposure_tokens": (parent_tokens_seen + total_target) if kind == "cpt" else total_target,
         "tokenizer_id": tokenizer_id,
         "pool_release_id": pool_release.get("release_id"),
         "license": sorted({item for row in mix_sources.values() for item in row["license"]}),
@@ -268,9 +323,10 @@ def build(
         "\n".join(f"- {role}: {mix_sources[role]['n_train_tokens']} train / {mix_sources[role]['n_valid_tokens']} valid" for role in sorted(mix_sources)) + "\n", encoding="utf-8"
     )
 
+    schedule_name = f"schedule-cpt-{(parent_tokens_seen + total_target) // 1_000_000}m.json" if kind == "cpt" else "schedule-scratch.json"
     hashes = {
         name: sha256_file(out / name)
-        for name in ("RELEASE.json", "manifest.json", "mix.json", "schedule-scratch.json")
+        for name in ("RELEASE.json", "manifest.json", "mix.json", schedule_name)
     }
     (out / "hashes.json").write_text(
         json.dumps(hashes, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -286,6 +342,9 @@ def main() -> int:
     parser.add_argument("--cycle-id", default="exp-000300m-v2")
     parser.add_argument("--tokenizer-id", default="zh-24k-v3")
     parser.add_argument("--valid-fraction", type=float, default=0.004)
+    parser.add_argument("--kind", choices=("scratch", "cpt"), default="scratch")
+    parser.add_argument("--parent-tokens-seen", type=int, default=0)
+    parser.add_argument("--parent-checkpoint", type=str, default=None)
     args = parser.parse_args()
     pool = json.loads(args.pool_release.read_text(encoding="utf-8"))
     pool["quality_dir"] = str(args.pool_release.parent.parent / "quality")
@@ -300,6 +359,9 @@ def main() -> int:
         tokenizer_id=args.tokenizer_id,
         valid_fraction=args.valid_fraction,
         cycle_id=args.cycle_id,
+        kind=args.kind,
+        parent_tokens_seen=args.parent_tokens_seen,
+        parent_checkpoint=args.parent_checkpoint,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
