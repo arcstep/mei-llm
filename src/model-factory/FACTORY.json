@@ -1,0 +1,38 @@
+{
+  "schema": "mei-model-factory-v1",
+  "factory_id": "mei-51m-model-factory",
+  "status": "current",
+  "model_scope": [
+    "mei-1.0-51m"
+  ],
+  "source_policy": {
+    "current_implementation_count": 1,
+    "history_provider": "git_plus_cycle_source_capture",
+    "hidden_unique_source_allowed": false,
+    "formal_cycle_requires_pipeline_lock": true,
+    "formal_cycle_requires_pre_run_source_capture": true,
+    "diagnostics_may_enter_formal_lineage": false
+  },
+  "catalog": "src/model-factory/contracts/CODE_CATALOG.json",
+  "pipelines": "src/model-factory/contracts/PIPELINES.json",
+  "legacy_path_map": "src/model-factory/contracts/LEGACY_PATH_MAP.json",
+  "pipeline_lock_schema": "src/model-factory/contracts/pipeline-lock.schema.json",
+  "current_entrypoints": {
+    "cpt_lifecycle": "orchestration.lifecycle_51m",
+    "qat_phase": "training.qat.qat_cq2_v2_51m",
+    "sft_bootstrap_phase": "orchestration.productize_sft_v3_300m",
+    "productization": "orchestration.productize_adaptive_v5_51m",
+    "source_recovery_audit": "orchestration.audit_source_recovery"
+  },
+  "active_source_roots": [
+    "model-factory",
+    "src/architecture/mei-1.2-51m",
+    "platform",
+    "src/mei_llm"
+  ],
+  "artifact_roots": {
+    "canonical_models": "models/mei-1.2-51m/releases",
+    "cycle_records": "cycles/mei-1.0-51m",
+    "large_local_evidence": "cycles/mei-1.1-51m"
+  }
+}

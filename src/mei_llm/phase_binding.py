@@ -29,7 +29,7 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def pipeline(registry: Registry, pipeline_id: str) -> dict[str, Any]:
-    value = load_json(registry.root / "model-factory/contracts/PIPELINES.json")
+    value = load_json(registry.root / "src/model-factory/contracts/PIPELINES.json")
     matches = [
         row for row in value["pipelines"] if row.get("pipeline_id") == pipeline_id
     ]
@@ -113,7 +113,7 @@ def template(
         },
         "outputs": {
             name: (
-                f".local/artifacts/mei-1.0-51m/{cycle_id}/runs/REPLACE_ME"
+                f"cycles/mei-1.1-51m/{cycle_id}/runs/REPLACE_ME"
                 if name == "run_dir"
                 else "REPLACE_ME"
             )
@@ -190,7 +190,7 @@ def output_path(registry: Registry, cycle_id: str, value: str) -> Path:
     resolved = candidate.resolve()
     allowed = (
         registry.root
-        / ".local/artifacts/mei-1.0-51m"
+        / "cycles/mei-1.1-51m"
         / cycle_id
     ).resolve()
     try:
@@ -408,8 +408,8 @@ def invocation(
     env = os.environ.copy()
     roots = [
         str(registry.root / "src"),
-        str(registry.root / "model-factory"),
-        str(registry.root / "platform/python-sdk"),
+        str(registry.root / "src/model-factory"),
+        str(registry.root / "src/platform/python-sdk"),
     ]
     if env.get("PYTHONPATH"):
         roots.append(env["PYTHONPATH"])

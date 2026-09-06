@@ -4,7 +4,7 @@
       "actual_exposure_tokens": 300000485,
       "cycle_id": "exp-000300m",
       "lineage": "legacy",
-      "path": "cycles/mei-1.0-51m/exp-000300m/CYCLE.json",
+      "path": "cycles/mei-1.1-51m/exp-00300m/CYCLE.json",
       "status": "completed_release_ineligible_product",
       "target_exposure_tokens": 300000000
     },
@@ -12,14 +12,14 @@
       "actual_exposure_tokens": 600001765,
       "cycle_id": "exp-000600m",
       "lineage": "legacy",
-      "path": "cycles/mei-1.0-51m/exp-000600m/CYCLE.json",
+      "path": "cycles/mei-1.1-51m/exp-00600m/CYCLE.json",
       "status": "completed_release_ineligible_product",
       "target_exposure_tokens": 600000000
     },
     {
       "cycle_id": "exp-000300m-v2",
       "lineage": "zh-v2-rebuild",
-      "status": "planned",
+      "status": "completed_release_eligible",
       "target_exposure_tokens": 300000000,
       "tokenizer_id": "zh-24k-v3"
     },

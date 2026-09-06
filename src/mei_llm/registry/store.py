@@ -47,7 +47,7 @@ class Registry:
     def model_factory_legacy_paths(self) -> dict:
         return _load(
             self.root
-            / "model-factory"
+            / "src/model-factory"
             / "contracts"
             / "LEGACY_PATH_MAP.json"
         )
@@ -102,8 +102,8 @@ class Registry:
         if value.startswith(old_run_prefix):
             suffix = value[len(old_run_prefix) :]
             candidates = [
-                *self.root.glob(f".local/artifacts/mei-1.0-51m/exp-*/runs/{suffix}"),
-                self.root / ".local/artifacts/mei-1.0-51m/comparisons/runs" / suffix,
+                *self.root.glob(f"cycles/mei-*/exp-*/runs/{suffix}"),
+                self.root / "cycles/mei-1.1-51m/comparisons/runs" / suffix,
             ]
             matches = sorted(path for path in candidates if path.exists())
             if len(matches) == 1:

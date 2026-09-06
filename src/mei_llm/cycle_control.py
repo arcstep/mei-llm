@@ -11,34 +11,28 @@ from .registry import Registry
 PHASES = [
     {
         "id": "sourcing",
-        "skill": "mei-51m-corpus-sourcing",
         "requires": ["parent exposure", "natural pool inventory"],
     },
     {
         "id": "corpus_factory",
-        "skill": "mei-51m-corpus-factory",
         "requires": ["candidate mix", "registered family targets"],
     },
     {
         "id": "corpus_quality",
-        "skill": "mei-51m-corpus-quality",
         "requires": ["source/synthetic/SFT receipts", "reuse decision"],
     },
     {
         "id": "cpt",
-        "skill": "mei-51m-cpt-training",
         "pipeline": "mei-51m-cpt-lifecycle-v1",
         "requires": ["frozen CPT delta", "quality passed", "parent Base"],
     },
     {
         "id": "productization",
-        "skill": "mei-51m-productization",
         "pipeline": "mei-51m-adaptive-productization-v5",
         "requires": ["frozen Base candidate", "SFT release", "eval lock"],
     },
     {
         "id": "finalize",
-        "skill": "mei-51m-cycle-orchestrator",
         "requires": ["final audit", "independent eligibility axes"],
     },
 ]

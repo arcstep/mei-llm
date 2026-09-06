@@ -1,0 +1,12 @@
+{
+  "schema": "mei-runtime-artifact-v1",
+  "product": "mei-1.2-51m",
+  "artifact": "mei_sdk_wasm-v1.wasm",
+  "engine": "rust-wasm-portable",
+  "target": "wasm32-unknown-unknown",
+  "profile": "release",
+  "bytes": 2382817,
+  "sha256": "8255ddf213f2ef85916eaf3e8330177c3cd8a8283e5e96806cb9cf537db0e8d3",
+  "source_workspace": "src/platform/_shared/rust",
+  "note": "构建产物；源码与重建步骤见 src/platform/_shared/rust/mei-sdk-wasm，缓存目录 .local/cache/cargo-sdk-target"
+}

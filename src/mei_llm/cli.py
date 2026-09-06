@@ -31,7 +31,7 @@ def _model_status(registry: Registry) -> int:
     current = json.loads((registry.root / "CURRENT.json").read_text(encoding="utf-8"))
     model = registry.models()["models"][0]
     model_factory = json.loads(
-        (registry.root / "model-factory" / "FACTORY.json").read_text(encoding="utf-8")
+        (registry.root / "src/model-factory" / "FACTORY.json").read_text(encoding="utf-8")
     )
     resolved_current = {
         key: str(registry.resolve(value)) if isinstance(value, str) else None
@@ -137,8 +137,8 @@ def _forward_module(registry: Registry, module: str, arguments: list[str]) -> in
     env = os.environ.copy()
     roots = [
         str(registry.root / "src"),
-        str(registry.root / "model-factory"),
-        str(registry.root / "platform/python-sdk"),
+        str(registry.root / "src/model-factory"),
+        str(registry.root / "src/platform/python-sdk"),
     ]
     if env.get("PYTHONPATH"):
         roots.append(env["PYTHONPATH"])
@@ -167,7 +167,7 @@ def _corpus_action(registry: Registry, action: str, rest: list[str]) -> int:
     }[action]
     return _forward(
         registry,
-        "corpus-factory/generators/factory_51m.py",
+        "src/corpus-factory/generators/factory_51m.py",
         [command, *rest],
     )
 
@@ -176,15 +176,15 @@ def _corpus_control(
     registry: Registry, family: str, action: str, rest: list[str]
 ) -> int:
     if family == "source":
-        script = "corpus-factory/sources/source_manager.py"
+        script = "src/corpus-factory/sources/source_manager.py"
     else:
-        script = "corpus-factory/quality/audit.py"
+        script = "src/corpus-factory/quality/audit.py"
     return _forward(registry, script, [action, *rest])
 
 
 def _pipeline(registry: Registry, pipeline_id: str) -> dict:
     value = json.loads(
-        (registry.root / "model-factory/contracts/PIPELINES.json").read_text(
+        (registry.root / "src/model-factory/contracts/PIPELINES.json").read_text(
             encoding="utf-8"
         )
     )
@@ -215,7 +215,7 @@ def _product_doctor(registry: Registry) -> int:
     recipe = json.loads(recipe_path.read_text(encoding="utf-8"))
     entrypoint = (
         registry.root
-        / "model-factory"
+        / "src/model-factory"
         / f"{pipeline['entrypoint'].replace('.', '/')}.py"
     )
     errors = []
@@ -764,9 +764,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.domain == "artifact":
         return _artifact_resolve(registry, args.value, args.action == "verify")
     if (args.domain, args.action) == ("platform", "test"):
-        return _forward(registry, "platform/_shared/tools/run_gates.py", ["--scope", args.scope])
+        return _forward(registry, "src/platform/_shared/tools/run_gates.py", ["--scope", args.scope])
     if (args.domain, args.action) == ("platform", "benchmark"):
-        return _forward(registry, "platform/_shared/tools/bench_mlx_complete.py", args.arguments)
+        return _forward(registry, "src/platform/_shared/tools/bench_mlx_complete.py", args.arguments)
     if (args.domain, args.action) == ("release", "prepare"):
         return _release_prepare(args)
     if (args.domain, args.action) == ("release", "verify"):

@@ -7,36 +7,32 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# Large, cycle-bound evidence and release exports are local-only.
-artifacts/**
-!artifacts/README.md
+# 语料/过程为大体积本地资产，不进 git（哈希证据绑定于 receipts/CYCLE.json）。
+corpus/**
+cycles/**
 .local/artifacts/**
 !.local/artifacts/.gitkeep
 .local/dist/**
 !.local/dist/README.md
 .local/cache/**
+.local/recovery/**
 
 # Local Rust/WASM build caches.
-platform/_shared/target/
-platform/_shared/target-check/
+src/platform/_shared/target/
+src/platform/_shared/target-check/
 
-# Canonical model releases are first-class local assets, not rebuild outputs.
-# Keep their human/machine-readable inventories in Git; keep weight/package
-# payloads out of the public repository and back them up separately.
-models/*/releases/*/base/
-models/*/releases/*/qat/
-models/*/releases/*/sft/
-models/*/releases/*/package/
-
-# 训练产物二进制不进 git（哈希证据绑定于 receipts/RELEASE.json）
-models/*/releases/**/*.npz
-models/*/releases/**/*.bin
-models/*/releases/**/tokenizer.model
-models/*/releases/**/heads/**/*.npz
-
-# 恢复辅助产物（本地备份）
-.local/recovery/**
-skills/skills
+# 权重/包载荷不进 git（人类可读清单与 receipt 保留；权重另行备份）。
+models/*/exp-*/base/
+models/*/exp-*/qat/
+models/*/exp-*/sft/
+models/*/exp-*/package/
+models/*/exp-*/**/*.npz
+models/*/exp-*/**/*.bin
+models/*/exp-*/**/tokenizer.model
+models/*/exp-*/**/heads/**/*.npz
 
 # 导出 staging 临时目录（证据已进包内 receipts）
-models/*/releases/*/products/.*.staging/
+models/*/exp-*/products/.*.staging/
+
+# runtime 构建产物不入 git（manifest 保留，wasm 可由 cargo 9 秒重建）
+models/*/runtime/wasm/*.wasm
