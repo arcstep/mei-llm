@@ -1,0 +1,203 @@
+{
+  "agent": {
+    "by_split": {
+      "dev": 90,
+      "test": 92,
+      "train": 769,
+      "valid": 129
+    },
+    "by_step_count": {
+      "1": 180,
+      "2": 540,
+      "3": 180,
+      "4": 180
+    },
+    "by_trajectory_kind": {
+      "act_then_verify": 180,
+      "failure_then_alternate": 180,
+      "query_then_act": 180,
+      "single_step_direct": 180,
+      "state_change_3step": 180,
+      "state_change_multistep": 180
+    },
+    "non_empty_verified_results": 1080,
+    "total_rows": 1080
+  },
+  "confidence": {
+    "by_expected_kind": {
+      "capability_insufficient": 325,
+      "execute": 475,
+      "no_match": 50,
+      "refuse": 300
+    },
+    "by_source_family": {
+      "agent": 250,
+      "full_call": 400,
+      "retrieval": 500
+    },
+    "by_split": {
+      "dev": 77,
+      "test": 123,
+      "train": 824,
+      "valid": 126
+    },
+    "negative_class_present": true,
+    "positive_class_present": true,
+    "total_rows": 1150
+  },
+  "full_call": {
+    "by_scenario": {
+      "boundary_values": 300,
+      "chinese_numeral": 300,
+      "context_completion": 300,
+      "refuse_conflicting_params": 180,
+      "refuse_missing_slot": 180,
+      "refuse_unsupported_param": 180,
+      "required_only": 300,
+      "required_plus_optional": 300,
+      "unit_conversion": 300
+    },
+    "by_split": {
+      "dev": 210,
+      "test": 221,
+      "train": 1643,
+      "valid": 266
+    },
+    "distinct_gold_tools": 136,
+    "total_rows": 2340
+  },
+  "mw_disposition": {
+    "by_effective_class": {
+      "ambiguous_scope": 559,
+      "authority_required": 575,
+      "capability_insufficient": 933,
+      "correction_incomplete": 525,
+      "deixis_unresolved": 558,
+      "illegal_pair": 600,
+      "injection_rejected": 525,
+      "missing_external_fact": 533,
+      "missing_permission_token": 525,
+      "missing_slot": 584,
+      "mixed_intent": 550,
+      "negation_cancels": 525,
+      "offtopic": 525,
+      "partial_sequence_blocked": 550,
+      "ready_to_execute": 925,
+      "safety_judgment": 550,
+      "scene_conflict": 608,
+      "unknown_slot_value": 525,
+      "unknown_tool": 525,
+      "unsupported_scope": 600
+    },
+    "by_raw_class": {
+      "ambiguous_scope": 559,
+      "authority_required": 575,
+      "capability_insufficient": 533,
+      "correction_incomplete": 525,
+      "deixis_unresolved": 558,
+      "illegal_pair": 600,
+      "injection_rejected": 525,
+      "missing_external_fact": 533,
+      "missing_permission_token": 525,
+      "missing_slot": 584,
+      "mixed_intent": 550,
+      "negation_cancels": 525,
+      "offtopic": 525,
+      "partial_sequence_blocked": 550,
+      "ready_to_execute": 1325,
+      "safety_judgment": 550,
+      "scene_conflict": 608,
+      "unknown_slot_value": 525,
+      "unknown_tool": 525,
+      "unsupported_scope": 600
+    },
+    "by_split": {
+      "dev": 989,
+      "test": 1028,
+      "train": 8367,
+      "valid": 1416
+    },
+    "minimal_pairs": 1800,
+    "total_rows": 11800
+  },
+  "narration": {
+    "by_outcome_kind": {
+      "multi_step_success": 300,
+      "partial_then_success": 75,
+      "refused": 337,
+      "success": 188
+    },
+    "by_source_family": {
+      "agent": 450,
+      "full_call": 450
+    },
+    "by_split": {
+      "dev": 84,
+      "test": 85,
+      "train": 607,
+      "valid": 124
+    },
+    "total_rows": 900
+  },
+  "retrieval": {
+    "by_catalog_size": {
+      "10": 748,
+      "20": 1186,
+      "50": 826
+    },
+    "by_found_batch_index": {
+      "0": 730,
+      "1": 400,
+      "2": 220,
+      "3": 220,
+      "None": 1190
+    },
+    "by_scenario": {
+      "cross_batch_exhausted": 220,
+      "hard_negative_discrimination": 280,
+      "no_match_near_miss": 275,
+      "no_match_offtopic": 275,
+      "rank_11_15": 220,
+      "rank_16_20": 220,
+      "rank_1_5": 450,
+      "rank_6_10": 400,
+      "stop_authority_required": 35,
+      "stop_illegal_pair": 35,
+      "stop_injection_rejected": 35,
+      "stop_missing_permission_token": 35,
+      "stop_negation_cancels": 35,
+      "stop_offtopic": 35,
+      "stop_partial_sequence_blocked": 35,
+      "stop_safety_judgment": 35,
+      "stop_scene_conflict": 35,
+      "stop_unknown_slot_value": 35,
+      "stop_unknown_tool": 35,
+      "stop_unsupported_scope": 35
+    },
+    "by_split": {
+      "dev": 195,
+      "test": 192,
+      "train": 2096,
+      "valid": 277
+    },
+    "by_terminal_reason": {
+      "candidate_exhausted": 110,
+      "candidate_scan_limit_reached": 110,
+      "found": 1570,
+      "retrieval_no_match": 550,
+      "stop_authority_required": 35,
+      "stop_illegal_pair": 35,
+      "stop_injection_rejected": 35,
+      "stop_missing_permission_token": 35,
+      "stop_negation_cancels": 35,
+      "stop_offtopic": 35,
+      "stop_partial_sequence_blocked": 35,
+      "stop_safety_judgment": 35,
+      "stop_scene_conflict": 35,
+      "stop_unknown_slot_value": 35,
+      "stop_unknown_tool": 35,
+      "stop_unsupported_scope": 35
+    },
+    "total_rows": 2760
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "artifact_merkle_root": "24b47c93fc0741d3824b916a10269d08805b829358fa8fe757232a1a864c102b",
+  "base_binding": {
+    "base_id": "mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
+    "base_weights_sha256": "6d55a61773cdd0a6713c43fa7565f8c2fa64414c3e4a1beadfb6507e0d91752a"
+  },
+  "current_mutated": false,
+  "cycle_id": "exp-000300m-v2",
+  "families": {
+    "agent": {
+      "semantic_path": "semantic/agent.jsonl",
+      "split_counts": {
+        "dev": 9,
+        "test": 12,
+        "train": 88,
+        "valid": 11
+      },
+      "total": 120
+    },
+    "confidence": {
+      "semantic_path": "semantic/confidence.jsonl",
+      "split_counts": {
+        "dev": 3,
+        "test": 4,
+        "train": 43,
+        "valid": 10
+      },
+      "total": 60
+    },
+    "full_call": {
+      "semantic_path": "semantic/full_call.jsonl",
+      "split_counts": {
+        "dev": 12,
+        "test": 17,
+        "train": 127,
+        "valid": 24
+      },
+      "total": 180
+    },
+    "mw_disposition": {
+      "semantic_path": "semantic/mw_disposition.jsonl",
+      "split_counts": {
+        "dev": 43,
+        "test": 41,
+        "train": 331,
+        "valid": 65
+      },
+      "total": 480
+    },
+    "narration": {
+      "semantic_path": "semantic/narration.jsonl",
+      "split_counts": {
+        "dev": 1,
+        "test": 1,
+        "train": 16,
+        "valid": 2
+      },
+      "total": 20
+    },
+    "retrieval": {
+      "semantic_path": "semantic/retrieval.jsonl",
+      "split_counts": {
+        "dev": 6,
+        "test": 14,
+        "train": 120,
+        "valid": 20
+      },
+      "total": 160
+    }
+  },
+  "generated_at": "2026-09-05T07:15:46Z",
+  "generator_id": "mei-51m-sft-zh-rebuild-v1",
+  "generator_version": "rebuild-zh-v1.0",
+  "human_review": {
+    "human_review_performed_by_named_reviewer": false,
+    "method": "automated_multi_gate_audit_plus_agent_sampled_review",
+    "note": "Unlike mei-1.0-51m-sft-gap-pilot-v1 (100% human-reviewed by a named reviewer), this release relies on automated schema/dedup/leakage/budget/coverage gates plus a documented agent-sampled audit -- not a claim of full human review."
+  },
+  "paid_cny": 0,
+  "params": 51463797,
+  "process_complete": true,
+  "product": "mei-1.0-51m",
+  "provider_calls": 0,
+  "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1",
+  "schema": "mei-51m-sft-zh-rebuild-release-v1",
+  "tokenizer_fallback_used": false,
+  "tool_registry": {
+    "deploy_families": 14,
+    "deploy_sha256": "fd9562e27086eecda0ee9cd819c3e688d7116de880b7ea8e2953fea61a1d71d7",
+    "deploy_tools": 147,
+    "training_families": 22,
+    "training_sha256": "106e14076396c60f51b8c4c30553e3f27ff2548bf01ca2409ca3c39b512f3fe6",
+    "training_tools": 211
+  },
+  "training_started": false,
+  "wall_clock_seconds": 0.93
+}

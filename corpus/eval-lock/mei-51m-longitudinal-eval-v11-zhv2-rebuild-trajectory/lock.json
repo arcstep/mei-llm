@@ -1,0 +1,55 @@
+{
+  "artifact_merkle_root": "7e03206deb4403a73533aa1535f357036dc7d8fa56984eb42fba7d32ec00c1d0",
+  "banks": {
+    "agent": {
+      "dev": 183,
+      "test": 194
+    },
+    "confidence": {
+      "dev": 118,
+      "test": 136
+    },
+    "full_call": {
+      "dev": 447,
+      "test": 481
+    },
+    "mw_disposition": {
+      "dev": 519,
+      "test": 518
+    },
+    "narration": {
+      "dev": 186,
+      "test": 191
+    },
+    "retrieval": {
+      "dev": 350,
+      "test": 343
+    },
+    "trajectory": {
+      "dev": 186,
+      "test": 150
+    }
+  },
+  "cycle_id": "exp-000300m-v2",
+  "extends": "mei-51m-longitudinal-eval-v10-zhv2-rebuild-argnorm",
+  "extends_relationship": "v11 adds the trajectory banks (end-to-end head-collaboration: route accuracy + completion); v9/v10 banks remain valid and are not duplicated",
+  "frozen_at": "2026-09-05T09:53:43Z",
+  "gate_targets": {
+    "confidence_min_class_rows": {
+      "negative": 100,
+      "positive": 100
+    },
+    "mw_macro_f1_min": null,
+    "retrieval_batches_2_3_4_must_be_covered": true,
+    "retrieval_eligible_gold_recall_drop_max_pp": 0.5,
+    "retrieval_no_match_false_selection_rate_max": 0.05,
+    "retrieval_rank_gt5_gold_retention_min": 0.99
+  },
+  "isolation_mechanism": "cf_group sha256 hash bucketing (same mechanism separating SFT train/valid); dev+test partitions were never included in the SFT release's train/valid compiled splits",
+  "lock_id": "mei-51m-longitudinal-eval-v11-zhv2-rebuild-trajectory",
+  "locked_test_used_for_threshold_tuning": false,
+  "process_complete": true,
+  "schema": "mei-51m-longitudinal-eval-lock-v9",
+  "source_sft_release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4",
+  "source_sft_release_merkle_root": "2cefae6994d4a6a74ea4b752a5002135f88f9ea49d8d44fa71fe2352b9e5dcb4"
+}

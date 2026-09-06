@@ -1,0 +1,112 @@
+{
+  "agent": {
+    "budget": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 1080,
+      "total_rows": 1080
+    },
+    "dedup": {
+      "exact_duplicate_rows": 164,
+      "near_duplicate_rows": 90,
+      "total_rows": 1080,
+      "undesigned_exact_duplicate_rate": 0.1519,
+      "undesigned_exact_duplicate_rows": 164
+    },
+    "leakage": {
+      "examples": [],
+      "rows_with_leakage_markers": 0,
+      "total_rows": 1080
+    }
+  },
+  "confidence": {
+    "budget": null,
+    "dedup": {
+      "exact_duplicate_rows": 74,
+      "near_duplicate_rows": 16,
+      "total_rows": 1150,
+      "undesigned_exact_duplicate_rate": 0.0643,
+      "undesigned_exact_duplicate_rows": 74
+    },
+    "leakage": {
+      "examples": [],
+      "rows_with_leakage_markers": 0,
+      "total_rows": 1150
+    }
+  },
+  "full_call": {
+    "budget": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 2340,
+      "total_rows": 2340
+    },
+    "dedup": {
+      "exact_duplicate_rows": 298,
+      "near_duplicate_rows": 2,
+      "total_rows": 2340,
+      "undesigned_exact_duplicate_rate": 0.1274,
+      "undesigned_exact_duplicate_rows": 298
+    },
+    "leakage": {
+      "examples": [],
+      "rows_with_leakage_markers": 0,
+      "total_rows": 2340
+    }
+  },
+  "mw_disposition": {
+    "budget": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.9989,
+      "fits": 11787,
+      "total_rows": 11800
+    },
+    "dedup": {
+      "exact_duplicate_rows": 2658,
+      "near_duplicate_rows": 387,
+      "total_rows": 11800,
+      "undesigned_exact_duplicate_rate": 0.1636,
+      "undesigned_exact_duplicate_rows": 1931
+    },
+    "leakage": {
+      "examples": [],
+      "rows_with_leakage_markers": 0,
+      "total_rows": 11800
+    }
+  },
+  "narration": {
+    "budget": null,
+    "dedup": {
+      "exact_duplicate_rows": 33,
+      "near_duplicate_rows": 27,
+      "total_rows": 900,
+      "undesigned_exact_duplicate_rate": 0.0367,
+      "undesigned_exact_duplicate_rows": 33
+    },
+    "leakage": {
+      "examples": [],
+      "rows_with_leakage_markers": 0,
+      "total_rows": 900
+    }
+  },
+  "retrieval": {
+    "budget": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 2760,
+      "total_rows": 2760
+    },
+    "dedup": {
+      "exact_duplicate_rows": 522,
+      "near_duplicate_rows": 19,
+      "total_rows": 2760,
+      "undesigned_exact_duplicate_rate": 0.1891,
+      "undesigned_exact_duplicate_rows": 522
+    },
+    "leakage": {
+      "examples": [],
+      "rows_with_leakage_markers": 0,
+      "total_rows": 2760
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "agent": {
+    "by_step_count": {
+      "1": 180,
+      "2": 540,
+      "3": 180,
+      "4": 180
+    },
+    "non_empty_verified_result_rate": 1.0,
+    "total_rows": 1080
+  },
+  "budget_2048_joint_contract": {
+    "agent": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 1080,
+      "total_rows": 1080
+    },
+    "full_call": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 2340,
+      "total_rows": 2340
+    },
+    "mw_disposition": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.9989,
+      "fits": 11787,
+      "total_rows": 11800
+    },
+    "retrieval": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 2760,
+      "total_rows": 2760
+    }
+  },
+  "confidence": {
+    "all_labels_null_pre_harvest": true,
+    "negative_class_present": true,
+    "positive_class_present": true,
+    "total_rows": 1150
+  },
+  "full_call": {
+    "execute_rows": 1800,
+    "full_schema_valid_rate": 1.0,
+    "refusal_rows": 540
+  },
+  "leakage": {
+    "agent": 0,
+    "confidence": 0,
+    "full_call": 0,
+    "mw_disposition": 0,
+    "narration": 0,
+    "retrieval": 0
+  },
+  "mw_disposition": {
+    "classes_expected": 20,
+    "classes_missing_a_split": [],
+    "classes_missing_entirely": [],
+    "classes_present": 20,
+    "min_rows_per_class_per_split": 31
+  },
+  "narration": {
+    "by_outcome_kind": {
+      "multi_step_success": 300,
+      "partial_then_success": 75,
+      "refused": 337,
+      "success": 188
+    },
+    "grounded_in_verified_terminal_result_rate": 1.0,
+    "total_rows": 900
+  },
+  "retrieval": {
+    "batch_2_3_4_covered": true,
+    "batch_hit_counts": {
+      "batch_0": 730,
+      "batch_1": 400,
+      "batch_2": 220,
+      "batch_3": 220
+    },
+    "no_match_correctly_labeled_rate": 1.0,
+    "no_match_false_selection_rate_model_measurement": "pending_sft",
+    "no_match_rows": 550,
+    "rank_gt5_corpus_side_retention": 1.0,
+    "rank_gt5_retention_model_measurement": "pending_sft",
+    "rank_gt5_rows": 840,
+    "scan_stop_classes_covered": [
+      "stop_authority_required",
+      "stop_illegal_pair",
+      "stop_injection_rejected",
+      "stop_missing_permission_token",
+      "stop_negation_cancels",
+      "stop_offtopic",
+      "stop_partial_sequence_blocked",
+      "stop_safety_judgment",
+      "stop_scene_conflict",
+      "stop_unknown_slot_value",
+      "stop_unknown_tool",
+      "stop_unsupported_scope"
+    ],
+    "scan_stop_rows": 420
+  }
+}

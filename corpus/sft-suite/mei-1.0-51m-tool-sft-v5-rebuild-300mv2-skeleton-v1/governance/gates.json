@@ -1,0 +1,107 @@
+{
+  "agent": {
+    "by_step_count": {
+      "1": 20,
+      "2": 60,
+      "3": 20,
+      "4": 20
+    },
+    "non_empty_verified_result_rate": 1.0,
+    "total_rows": 120
+  },
+  "budget_2048_joint_contract": {
+    "agent": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 120,
+      "total_rows": 120
+    },
+    "full_call": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 180,
+      "total_rows": 180
+    },
+    "mw_disposition": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 480,
+      "total_rows": 480
+    },
+    "retrieval": {
+      "context_unrepresentable": 0,
+      "fit_rate": 1.0,
+      "fits": 160,
+      "total_rows": 160
+    }
+  },
+  "confidence": {
+    "all_labels_null_pre_harvest": true,
+    "negative_class_present": true,
+    "positive_class_present": true,
+    "total_rows": 60
+  },
+  "full_call": {
+    "execute_rows": 120,
+    "full_schema_valid_rate": 1.0,
+    "refusal_rows": 60
+  },
+  "leakage": {
+    "agent": 0,
+    "confidence": 0,
+    "full_call": 0,
+    "mw_disposition": 0,
+    "narration": 0,
+    "retrieval": 0
+  },
+  "mw_disposition": {
+    "classes_expected": 20,
+    "classes_missing_a_split": [
+      "injection_rejected",
+      "unknown_slot_value"
+    ],
+    "classes_missing_entirely": [],
+    "classes_present": 20,
+    "min_rows_per_class_per_split": 0
+  },
+  "narration": {
+    "by_outcome_kind": {
+      "multi_step_success": 6,
+      "partial_then_success": 2,
+      "refused": 7,
+      "success": 5
+    },
+    "grounded_in_verified_terminal_result_rate": 1.0,
+    "total_rows": 20
+  },
+  "retrieval": {
+    "batch_2_3_4_covered": true,
+    "batch_hit_counts": {
+      "batch_0": 40,
+      "batch_1": 20,
+      "batch_2": 20,
+      "batch_3": 20
+    },
+    "no_match_correctly_labeled_rate": 1.0,
+    "no_match_false_selection_rate_model_measurement": "pending_sft",
+    "no_match_rows": 20,
+    "rank_gt5_corpus_side_retention": 1.0,
+    "rank_gt5_retention_model_measurement": "pending_sft",
+    "rank_gt5_rows": 60,
+    "scan_stop_classes_covered": [
+      "stop_authority_required",
+      "stop_illegal_pair",
+      "stop_injection_rejected",
+      "stop_missing_permission_token",
+      "stop_negation_cancels",
+      "stop_offtopic",
+      "stop_partial_sequence_blocked",
+      "stop_safety_judgment",
+      "stop_scene_conflict",
+      "stop_unknown_slot_value",
+      "stop_unknown_tool",
+      "stop_unsupported_scope"
+    ],
+    "scan_stop_rows": 20
+  }
+}

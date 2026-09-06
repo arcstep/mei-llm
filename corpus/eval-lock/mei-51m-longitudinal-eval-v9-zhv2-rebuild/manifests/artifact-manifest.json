@@ -1,0 +1,65 @@
+{
+  "artifact_merkle_root": "b5ecb22b7e411c08784e996a9f9a2f61823ec7a11b10489c2ae94f22cb19b48e",
+  "artifacts": {
+    "banks/agent.dev.jsonl": {
+      "bytes": 140190,
+      "rows": 90,
+      "sha256": "bc74b4d05d0aafa2f75c2f1f0775e98660eeb37d48fd26067a768994d750700c"
+    },
+    "banks/agent.test.jsonl": {
+      "bytes": 152999,
+      "rows": 92,
+      "sha256": "0be40ca0f7c7ccb996d9627e7c9b2bd18bc7a6b39f779767c939f39fe2dc9020"
+    },
+    "banks/confidence.dev.jsonl": {
+      "bytes": 61915,
+      "rows": 77,
+      "sha256": "e63ee5c6ec5584991a8b178cba98e6ed9bfa4ad17eff2a83cc5c67b09a310f0a"
+    },
+    "banks/confidence.test.jsonl": {
+      "bytes": 100177,
+      "rows": 123,
+      "sha256": "6241b9407a3e09354a12f351c5a9df2a8062316c6f819fcfc54ded24012fd6b2"
+    },
+    "banks/full_call.dev.jsonl": {
+      "bytes": 174401,
+      "rows": 210,
+      "sha256": "fa8e08805cd8596eccafcdfe7be884a925c6ae1aca8601d4826aeb4200d5f030"
+    },
+    "banks/full_call.test.jsonl": {
+      "bytes": 182817,
+      "rows": 221,
+      "sha256": "10446032e8853c05406d9517edabbf7d34f9bfd829ac65679cee17f1a106fb38"
+    },
+    "banks/mw_disposition.dev.jsonl": {
+      "bytes": 851885,
+      "rows": 989,
+      "sha256": "dcb55339324b17538f2b6f2e2359934983c5716cbc5f06eff796b9ec9fedfe35"
+    },
+    "banks/mw_disposition.test.jsonl": {
+      "bytes": 890468,
+      "rows": 1028,
+      "sha256": "39adfeb9c4ba912bde0fe7bed0d354232f89464c0207be5b3c1365ca61f89775"
+    },
+    "banks/narration.dev.jsonl": {
+      "bytes": 58017,
+      "rows": 84,
+      "sha256": "85c8f1fca2d4ec3626c038ed5758058491ba95731e648aceeea4b8a826455004"
+    },
+    "banks/narration.test.jsonl": {
+      "bytes": 61965,
+      "rows": 85,
+      "sha256": "0a38c1dee033b285f853eea7a8e55387442763684852d5b6bd31900270917db1"
+    },
+    "banks/retrieval.dev.jsonl": {
+      "bytes": 321203,
+      "rows": 195,
+      "sha256": "620c0c230640e111395ffc5f72bd176b4159e20a3b65cf2b13e9bb1e530a2ac0"
+    },
+    "banks/retrieval.test.jsonl": {
+      "bytes": 326257,
+      "rows": 192,
+      "sha256": "9e99b4efbcee4e94e3090c2ee2cca706aa15b826183331df59a2f5ff5dacf4ee"
+    }
+  }
+}

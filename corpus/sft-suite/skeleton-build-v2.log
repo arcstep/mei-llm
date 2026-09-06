@@ -1,0 +1,64 @@
+{
+  "execution_plan": {
+    "repo_root": "/Users/xuehongwei/codeup/mei-projects/mei-llm/mei-llm",
+    "cycle_id": "exp-000300m-v2",
+    "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
+    "release_dir": "/Users/xuehongwei/codeup/mei-projects/mei-llm/mei-llm/.local/artifacts/mei-1.0-51m/exp-000300m-v2/corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
+    "mode": "scale",
+    "targets": {
+      "RETRIEVAL_TARGETS": {
+        "rank_1_5": 450,
+        "rank_6_10": 400,
+        "rank_11_15": 220,
+        "rank_16_20": 220,
+        "no_match": 550,
+        "cross_batch_exhausted": 220,
+        "stop_before_scan": 420,
+        "hard_negative_discrimination": 280
+      },
+      "FULLCALL_TARGETS": {
+        "per_scenario_count": 300,
+        "per_refusal_count": 180
+      },
+      "AGENT_TARGETS": {
+        "per_kind_count": 180
+      },
+      "MW_TARGETS": {
+        "per_class_count": 500,
+        "visibility_pair_count": 400,
+        "neighbor_pair_count": 500
+      },
+      "NARRATION_TARGETS": {
+        "max_rows": 900
+      },
+      "CONFIDENCE_TARGETS": {
+        "fullcall_n": 400,
+        "agent_n": 250,
+        "retrieval_n": 500
+      }
+    }
+  }
+}
+[15:19:44] loading registries + tokenizer
+[15:19:44] generating retrieval (2760 target rows)
+[15:19:47] generating full_call
+[15:19:49] generating agent
+[15:19:50] generating mw_disposition
+[15:20:04] generating narration (terminal only)
+[15:20:04] freezing confidence candidates (label=null)
+[15:20:04] auditing dedup/leakage/budget
+[15:21:26] computing gates
+[15:21:26] writing family artifacts
+[15:21:27] done in 102.4s; total rows = 20030
+{
+  "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
+  "merkle_root": "40f5ed5d8b148f2fc6da0785156051efbacf4f0f5bfe159a02943ed1a1975169",
+  "row_totals": {
+    "retrieval": 2760,
+    "full_call": 2340,
+    "agent": 1080,
+    "mw_disposition": 11800,
+    "narration": 900,
+    "confidence": 1150
+  }
+}

@@ -8,7 +8,12 @@ __pycache__/
 .ruff_cache/
 
 # 语料/过程为大体积本地资产，不进 git（哈希证据绑定于 receipts/CYCLE.json）。
+# 例外：合成语料与评测锁不可复现且体量可控，必须入仓。
 corpus/**
+!corpus/eval-lock/
+!corpus/eval-lock/**
+!corpus/sft-suite/
+!corpus/sft-suite/**
 cycles/**
 .local/artifacts/**
 !.local/artifacts/.gitkeep

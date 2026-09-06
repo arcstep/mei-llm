@@ -1,0 +1,203 @@
+{
+  "agent": {
+    "by_split": {
+      "dev": 9,
+      "test": 12,
+      "train": 88,
+      "valid": 11
+    },
+    "by_step_count": {
+      "1": 20,
+      "2": 60,
+      "3": 20,
+      "4": 20
+    },
+    "by_trajectory_kind": {
+      "act_then_verify": 20,
+      "failure_then_alternate": 20,
+      "query_then_act": 20,
+      "single_step_direct": 20,
+      "state_change_3step": 20,
+      "state_change_multistep": 20
+    },
+    "non_empty_verified_results": 120,
+    "total_rows": 120
+  },
+  "confidence": {
+    "by_expected_kind": {
+      "capability_insufficient": 13,
+      "execute": 30,
+      "no_match": 2,
+      "refuse": 15
+    },
+    "by_source_family": {
+      "agent": 20,
+      "full_call": 20,
+      "retrieval": 20
+    },
+    "by_split": {
+      "dev": 3,
+      "test": 4,
+      "train": 43,
+      "valid": 10
+    },
+    "negative_class_present": true,
+    "positive_class_present": true,
+    "total_rows": 60
+  },
+  "full_call": {
+    "by_scenario": {
+      "boundary_values": 20,
+      "chinese_numeral": 20,
+      "context_completion": 20,
+      "refuse_conflicting_params": 20,
+      "refuse_missing_slot": 20,
+      "refuse_unsupported_param": 20,
+      "required_only": 20,
+      "required_plus_optional": 20,
+      "unit_conversion": 20
+    },
+    "by_split": {
+      "dev": 12,
+      "test": 17,
+      "train": 127,
+      "valid": 24
+    },
+    "distinct_gold_tools": 81,
+    "total_rows": 180
+  },
+  "mw_disposition": {
+    "by_effective_class": {
+      "ambiguous_scope": 23,
+      "authority_required": 23,
+      "capability_insufficient": 41,
+      "correction_incomplete": 21,
+      "deixis_unresolved": 22,
+      "illegal_pair": 24,
+      "injection_rejected": 21,
+      "missing_external_fact": 21,
+      "missing_permission_token": 21,
+      "missing_slot": 24,
+      "mixed_intent": 22,
+      "negation_cancels": 21,
+      "offtopic": 21,
+      "partial_sequence_blocked": 22,
+      "ready_to_execute": 41,
+      "safety_judgment": 22,
+      "scene_conflict": 24,
+      "unknown_slot_value": 21,
+      "unknown_tool": 21,
+      "unsupported_scope": 24
+    },
+    "by_raw_class": {
+      "ambiguous_scope": 23,
+      "authority_required": 23,
+      "capability_insufficient": 21,
+      "correction_incomplete": 21,
+      "deixis_unresolved": 22,
+      "illegal_pair": 24,
+      "injection_rejected": 21,
+      "missing_external_fact": 21,
+      "missing_permission_token": 21,
+      "missing_slot": 24,
+      "mixed_intent": 22,
+      "negation_cancels": 21,
+      "offtopic": 21,
+      "partial_sequence_blocked": 22,
+      "ready_to_execute": 61,
+      "safety_judgment": 22,
+      "scene_conflict": 24,
+      "unknown_slot_value": 21,
+      "unknown_tool": 21,
+      "unsupported_scope": 24
+    },
+    "by_split": {
+      "dev": 43,
+      "test": 41,
+      "train": 331,
+      "valid": 65
+    },
+    "minimal_pairs": 80,
+    "total_rows": 480
+  },
+  "narration": {
+    "by_outcome_kind": {
+      "multi_step_success": 6,
+      "partial_then_success": 2,
+      "refused": 7,
+      "success": 5
+    },
+    "by_source_family": {
+      "agent": 10,
+      "full_call": 10
+    },
+    "by_split": {
+      "dev": 1,
+      "test": 1,
+      "train": 16,
+      "valid": 2
+    },
+    "total_rows": 20
+  },
+  "retrieval": {
+    "by_catalog_size": {
+      "10": 38,
+      "20": 78,
+      "50": 44
+    },
+    "by_found_batch_index": {
+      "0": 40,
+      "1": 20,
+      "2": 20,
+      "3": 20,
+      "None": 60
+    },
+    "by_scenario": {
+      "cross_batch_exhausted": 20,
+      "hard_negative_discrimination": 20,
+      "no_match_near_miss": 10,
+      "no_match_offtopic": 10,
+      "rank_11_15": 20,
+      "rank_16_20": 20,
+      "rank_1_5": 20,
+      "rank_6_10": 20,
+      "stop_authority_required": 2,
+      "stop_illegal_pair": 2,
+      "stop_injection_rejected": 2,
+      "stop_missing_permission_token": 2,
+      "stop_negation_cancels": 1,
+      "stop_offtopic": 1,
+      "stop_partial_sequence_blocked": 1,
+      "stop_safety_judgment": 2,
+      "stop_scene_conflict": 2,
+      "stop_unknown_slot_value": 1,
+      "stop_unknown_tool": 2,
+      "stop_unsupported_scope": 2
+    },
+    "by_split": {
+      "dev": 6,
+      "test": 14,
+      "train": 120,
+      "valid": 20
+    },
+    "by_terminal_reason": {
+      "candidate_exhausted": 10,
+      "candidate_scan_limit_reached": 10,
+      "found": 100,
+      "retrieval_no_match": 20,
+      "stop_authority_required": 2,
+      "stop_illegal_pair": 2,
+      "stop_injection_rejected": 2,
+      "stop_missing_permission_token": 2,
+      "stop_negation_cancels": 1,
+      "stop_offtopic": 1,
+      "stop_partial_sequence_blocked": 1,
+      "stop_safety_judgment": 2,
+      "stop_scene_conflict": 2,
+      "stop_unknown_slot_value": 1,
+      "stop_unknown_tool": 2,
+      "stop_unsupported_scope": 2
+    },
+    "total_rows": 160
+  }
+}

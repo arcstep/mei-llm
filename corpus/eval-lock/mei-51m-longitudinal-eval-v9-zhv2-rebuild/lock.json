@@ -1,0 +1,51 @@
+{
+  "artifact_merkle_root": "b5ecb22b7e411c08784e996a9f9a2f61823ec7a11b10489c2ae94f22cb19b48e",
+  "banks": {
+    "agent": {
+      "dev": 90,
+      "test": 92
+    },
+    "confidence": {
+      "dev": 77,
+      "test": 123
+    },
+    "full_call": {
+      "dev": 210,
+      "test": 221
+    },
+    "mw_disposition": {
+      "dev": 989,
+      "test": 1028
+    },
+    "narration": {
+      "dev": 84,
+      "test": 85
+    },
+    "retrieval": {
+      "dev": 195,
+      "test": 192
+    }
+  },
+  "cycle_id": "exp-000300m-v2",
+  "extends": "mei-51m-longitudinal-eval-v8-retrieval-depth-v2",
+  "extends_relationship": "same six-family dev/test banks frozen for the zh-v2-rebuild lineage; v7/v8 banks remain authoritative for the legacy lineage and are not duplicated here",
+  "frozen_at": "2026-09-05T07:36:21Z",
+  "gate_targets": {
+    "confidence_min_class_rows": {
+      "negative": 100,
+      "positive": 100
+    },
+    "mw_macro_f1_min": null,
+    "retrieval_batches_2_3_4_must_be_covered": true,
+    "retrieval_eligible_gold_recall_drop_max_pp": 0.5,
+    "retrieval_no_match_false_selection_rate_max": 0.05,
+    "retrieval_rank_gt5_gold_retention_min": 0.99
+  },
+  "isolation_mechanism": "cf_group sha256 hash bucketing (same mechanism separating SFT train/valid); dev+test partitions were never included in the SFT release's train/valid compiled splits",
+  "lock_id": "mei-51m-longitudinal-eval-v9-zhv2-rebuild",
+  "locked_test_used_for_threshold_tuning": false,
+  "process_complete": true,
+  "schema": "mei-51m-longitudinal-eval-lock-v9",
+  "source_sft_release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
+  "source_sft_release_merkle_root": "40f5ed5d8b148f2fc6da0785156051efbacf4f0f5bfe159a02943ed1a1975169"
+}

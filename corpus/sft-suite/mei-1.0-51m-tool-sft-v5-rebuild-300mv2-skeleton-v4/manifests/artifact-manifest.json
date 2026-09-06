@@ -1,0 +1,180 @@
+{
+  "artifact_merkle_root": "2cefae6994d4a6a74ea4b752a5002135f88f9ea49d8d44fa71fe2352b9e5dcb4",
+  "artifacts": {
+    "compiled/agent/dev.jsonl": {
+      "bytes": 295326,
+      "rows": 183,
+      "sha256": "098162cf35b94672ec2fc6062306f38267d4fe568fccc972ca66fd5a8b0c0ec3"
+    },
+    "compiled/agent/test.jsonl": {
+      "bytes": 315646,
+      "rows": 194,
+      "sha256": "1b733e452c4d144bcc6f9aa5aee86d8ad245a39095b8b199e0693974ca91fc44"
+    },
+    "compiled/agent/train.jsonl": {
+      "bytes": 2298732,
+      "rows": 1392,
+      "sha256": "896ee2dc054782691b6d8f7d59836ab06f76430b0132db8aee32de6116fcf8a0"
+    },
+    "compiled/agent/valid.jsonl": {
+      "bytes": 376675,
+      "rows": 229,
+      "sha256": "efbf5c2cff0583480d2ab77e7bb3686a8ad08211a38a07d473e29382752aaff1"
+    },
+    "compiled/confidence/dev.jsonl": {
+      "bytes": 95760,
+      "rows": 118,
+      "sha256": "df068803a36567c7b8281a4d613229a5e969de8b963e53f735a9840b4643f4cd"
+    },
+    "compiled/confidence/test.jsonl": {
+      "bytes": 110667,
+      "rows": 136,
+      "sha256": "38b1cbee4d460ee880536b747675c327dfead623ac46ea31b49d24a4cb26b81c"
+    },
+    "compiled/confidence/train.jsonl": {
+      "bytes": 861161,
+      "rows": 1066,
+      "sha256": "6102c79a2ec42ba416c35e952d8d1b2f9c14ab3d58b39ff51d354b20b67b73d8"
+    },
+    "compiled/confidence/valid.jsonl": {
+      "bytes": 145911,
+      "rows": 180,
+      "sha256": "39418abdadfc37ef0e65d53b209724673dfbcf72a8de6137461d17c643246249"
+    },
+    "compiled/full_call/dev.jsonl": {
+      "bytes": 377447,
+      "rows": 447,
+      "sha256": "947357f4f66eda024de13a473e62a1620fab881dbda14e20149f2c3f3d24f94b"
+    },
+    "compiled/full_call/test.jsonl": {
+      "bytes": 406908,
+      "rows": 481,
+      "sha256": "512a950ec1e83a6cf6a870a7d1036f7491c9ae612faa4de39c6908dead34e388"
+    },
+    "compiled/full_call/train.jsonl": {
+      "bytes": 3207352,
+      "rows": 3768,
+      "sha256": "c96c6d7f94a73a2ccdf36ad5562fd6d546ad395b1e50469ad15e6bc5e414af5f"
+    },
+    "compiled/full_call/valid.jsonl": {
+      "bytes": 548264,
+      "rows": 644,
+      "sha256": "a1609dd7def033e453455051169b85d49505a4a03b4de147cf73a917a16bce8d"
+    },
+    "compiled/mw_disposition/dev.jsonl": {
+      "bytes": 448842,
+      "rows": 519,
+      "sha256": "bfdad5e50d7d3bc6a3eddc9dc4edcaa974152b6c415c9b93b13a8c2944d54a09"
+    },
+    "compiled/mw_disposition/test.jsonl": {
+      "bytes": 450727,
+      "rows": 518,
+      "sha256": "b6536aaedae6516fb39104da96552207f70b99410a7b7d53cad3d195d4062005"
+    },
+    "compiled/mw_disposition/train.jsonl": {
+      "bytes": 3551667,
+      "rows": 4077,
+      "sha256": "04e5ea1b437439c2401b6bac26b07eba8c56b5525e8ffb9b490c8ad802a40477"
+    },
+    "compiled/mw_disposition/valid.jsonl": {
+      "bytes": 596785,
+      "rows": 686,
+      "sha256": "75bf6e6018e6e930a00e81066c1be37d95048102d7d264d03c4ff4388d559b1c"
+    },
+    "compiled/narration/dev.jsonl": {
+      "bytes": 139408,
+      "rows": 186,
+      "sha256": "4bcd581926e84c1a7033c22f63442d704a61535d4cbd8b1ab64e88f67fe4b9df"
+    },
+    "compiled/narration/test.jsonl": {
+      "bytes": 143332,
+      "rows": 191,
+      "sha256": "8f79f656d3aece9e35b4df266162d906b531dc01e9d9e58405d074d36d3bb1ee"
+    },
+    "compiled/narration/train.jsonl": {
+      "bytes": 1033984,
+      "rows": 1365,
+      "sha256": "4d197bd1182e8b7ea8a78530e263453651ba4d83f5fdc3a59bbba8fddade8483"
+    },
+    "compiled/narration/valid.jsonl": {
+      "bytes": 198730,
+      "rows": 258,
+      "sha256": "b791861c836502bfcae0c7b43e4a5ad8751dfaab1679984962d9667734bfb9a8"
+    },
+    "compiled/retrieval/dev.jsonl": {
+      "bytes": 591141,
+      "rows": 350,
+      "sha256": "a8197ef29b9fbbc8be7e2ffb8ae93fffbd3d7f19502e21452316d05749c9d2be"
+    },
+    "compiled/retrieval/test.jsonl": {
+      "bytes": 590380,
+      "rows": 343,
+      "sha256": "c6bf0b8a68fa20af195be2ccc959258de8845734bd315d84c0595ba1ec516e3e"
+    },
+    "compiled/retrieval/train.jsonl": {
+      "bytes": 7092272,
+      "rows": 3811,
+      "sha256": "db12a870cf7c25d72c40215c36e65cb6ed81d29f4c9c27e13c0415ebb14adc2a"
+    },
+    "compiled/retrieval/valid.jsonl": {
+      "bytes": 851614,
+      "rows": 496,
+      "sha256": "77992f73d122d538c0390d404aad04ccd6c694c82efe9064e937afc1d56db749"
+    },
+    "compiled/trajectory/dev.jsonl": {
+      "bytes": 318029,
+      "rows": 186,
+      "sha256": "e750846093c01096196cc0dea3880b58662c765c5d91605daaf8e9bf1044decf"
+    },
+    "compiled/trajectory/test.jsonl": {
+      "bytes": 256029,
+      "rows": 150,
+      "sha256": "f5828eb787b76f37c9a0c305511d48ee77df43e817e246464360292eac3584d1"
+    },
+    "compiled/trajectory/train.jsonl": {
+      "bytes": 2495574,
+      "rows": 1447,
+      "sha256": "001a1f6d795dc5fa28cdd57c19bddcc7f5e41a621fed40b18c421cec7ea58e9d"
+    },
+    "compiled/trajectory/valid.jsonl": {
+      "bytes": 372000,
+      "rows": 217,
+      "sha256": "ab9e692e81c4ceea4f15af4767caf3b31bec8d9ed9e7231c232052b6a0c9ca65"
+    },
+    "semantic/agent.jsonl": {
+      "bytes": 3286379,
+      "rows": 1998,
+      "sha256": "ce17417036b361b790624487852a039f3b52c9df8f2879105313977a3f208539"
+    },
+    "semantic/confidence.jsonl": {
+      "bytes": 1213499,
+      "rows": 1500,
+      "sha256": "ff575f8e0a5c4f5faa67495e30bdd22b787ff779b7f1698de9375aadcafd5273"
+    },
+    "semantic/full_call.jsonl": {
+      "bytes": 4539971,
+      "rows": 5340,
+      "sha256": "034b576ba99cf47c00f03b35707250eb7f90f528414c59805fcd8e11813fe87e"
+    },
+    "semantic/mw_disposition.jsonl": {
+      "bytes": 5048021,
+      "rows": 5800,
+      "sha256": "d031a1509c495e32cc0d2cc43ff6e60ca9e2416c2a3f32d06d2d6904d4f7a0cd"
+    },
+    "semantic/narration.jsonl": {
+      "bytes": 1515454,
+      "rows": 2000,
+      "sha256": "ce27e928d33d584aae36b9eceb3b0bd990158e14ef6611e3833d9c1be9d240ff"
+    },
+    "semantic/retrieval.jsonl": {
+      "bytes": 9125407,
+      "rows": 5000,
+      "sha256": "895cb534195026b6527564827ed22b2e74405520d795227329d4c7d5f9cc0384"
+    },
+    "semantic/trajectory.jsonl": {
+      "bytes": 3441632,
+      "rows": 2000,
+      "sha256": "2441ee0bab674434ea2341acaddd3bdfb585e7e23cc3d5657100ca18c70078b9"
+    }
+  }
+}

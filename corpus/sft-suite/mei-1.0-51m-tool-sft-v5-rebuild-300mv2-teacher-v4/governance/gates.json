@@ -1,0 +1,131 @@
+{
+  "agent": {
+    "by_step_count": {
+      "1": 333,
+      "2": 999,
+      "3": 333,
+      "4": 333
+    },
+    "non_empty_verified_result_rate": 1.0,
+    "total_rows": 1998
+  },
+  "budget_2048_joint_contract": {
+    "agent": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.2392,
+      "fits": 478,
+      "total_rows": 1998
+    },
+    "full_call": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.1768,
+      "fits": 944,
+      "total_rows": 5340
+    },
+    "mw_disposition": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.1722,
+      "fits": 999,
+      "total_rows": 5800
+    },
+    "retrieval": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.2222,
+      "fits": 1111,
+      "total_rows": 5000
+    },
+    "trajectory": {
+      "context_unrepresentable": 0,
+      "fit_rate": 0.763,
+      "fits": 1526,
+      "total_rows": 2000
+    }
+  },
+  "confidence": {
+    "all_labels_null_pre_harvest": true,
+    "negative_class_present": true,
+    "positive_class_present": true,
+    "total_rows": 1500
+  },
+  "full_call": {
+    "execute_rows": 4800,
+    "full_schema_valid_rate": 1.0,
+    "refusal_rows": 540
+  },
+  "leakage": {
+    "agent": 0,
+    "confidence": 0,
+    "full_call": 0,
+    "mw_disposition": 0,
+    "narration": 0,
+    "retrieval": 0,
+    "trajectory": 0
+  },
+  "mw_disposition": {
+    "classes_expected": 20,
+    "classes_missing_a_split": [],
+    "classes_missing_entirely": [],
+    "classes_present": 20,
+    "min_rows_per_class_per_split": 13
+  },
+  "narration": {
+    "by_outcome_kind": {
+      "multi_step_success": 666,
+      "partial_then_success": 167,
+      "refused": 540,
+      "success": 627
+    },
+    "grounded_in_verified_terminal_result_rate": 1.0,
+    "total_rows": 2000
+  },
+  "retrieval": {
+    "batch_2_3_4_covered": true,
+    "batch_hit_counts": {
+      "batch_0": 1200,
+      "batch_1": 700,
+      "batch_2": 450,
+      "batch_3": 450
+    },
+    "no_match_correctly_labeled_rate": 1.0,
+    "no_match_false_selection_rate_model_measurement": "pending_sft",
+    "no_match_rows": 1000,
+    "rank_gt5_corpus_side_retention": 1.0,
+    "rank_gt5_retention_model_measurement": "pending_sft",
+    "rank_gt5_rows": 1600,
+    "scan_stop_classes_covered": [
+      "stop_authority_required",
+      "stop_illegal_pair",
+      "stop_injection_rejected",
+      "stop_missing_permission_token",
+      "stop_negation_cancels",
+      "stop_offtopic",
+      "stop_partial_sequence_blocked",
+      "stop_safety_judgment",
+      "stop_scene_conflict",
+      "stop_unknown_slot_value",
+      "stop_unknown_tool",
+      "stop_unsupported_scope"
+    ],
+    "scan_stop_rows": 700
+  },
+  "trajectory": {
+    "by_kind": {
+      "ask_then_execute": 400,
+      "direct_execute": 400,
+      "execute_fail": 400,
+      "tool_fill_execute": 400,
+      "unfillable_fail": 400
+    },
+    "end_to_end_completion_model_measurement": "pending_sft",
+    "failure_with_reason": 800,
+    "mw_route_model_measurement": "pending_sft",
+    "narration_present": 2000,
+    "route_counts": {
+      "ask": 800,
+      "execute": 1600,
+      "fill": 400
+    },
+    "success_with_confidence": 1200,
+    "total_rows": 2000
+  }
+}

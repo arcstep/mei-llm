@@ -1,0 +1,75 @@
+{
+  "artifact_merkle_root": "7e03206deb4403a73533aa1535f357036dc7d8fa56984eb42fba7d32ec00c1d0",
+  "artifacts": {
+    "banks/agent.dev.jsonl": {
+      "bytes": 295326,
+      "rows": 183,
+      "sha256": "098162cf35b94672ec2fc6062306f38267d4fe568fccc972ca66fd5a8b0c0ec3"
+    },
+    "banks/agent.test.jsonl": {
+      "bytes": 315646,
+      "rows": 194,
+      "sha256": "1b733e452c4d144bcc6f9aa5aee86d8ad245a39095b8b199e0693974ca91fc44"
+    },
+    "banks/confidence.dev.jsonl": {
+      "bytes": 95760,
+      "rows": 118,
+      "sha256": "df068803a36567c7b8281a4d613229a5e969de8b963e53f735a9840b4643f4cd"
+    },
+    "banks/confidence.test.jsonl": {
+      "bytes": 110667,
+      "rows": 136,
+      "sha256": "38b1cbee4d460ee880536b747675c327dfead623ac46ea31b49d24a4cb26b81c"
+    },
+    "banks/full_call.dev.jsonl": {
+      "bytes": 377447,
+      "rows": 447,
+      "sha256": "947357f4f66eda024de13a473e62a1620fab881dbda14e20149f2c3f3d24f94b"
+    },
+    "banks/full_call.test.jsonl": {
+      "bytes": 406908,
+      "rows": 481,
+      "sha256": "512a950ec1e83a6cf6a870a7d1036f7491c9ae612faa4de39c6908dead34e388"
+    },
+    "banks/mw_disposition.dev.jsonl": {
+      "bytes": 448842,
+      "rows": 519,
+      "sha256": "bfdad5e50d7d3bc6a3eddc9dc4edcaa974152b6c415c9b93b13a8c2944d54a09"
+    },
+    "banks/mw_disposition.test.jsonl": {
+      "bytes": 450727,
+      "rows": 518,
+      "sha256": "b6536aaedae6516fb39104da96552207f70b99410a7b7d53cad3d195d4062005"
+    },
+    "banks/narration.dev.jsonl": {
+      "bytes": 139408,
+      "rows": 186,
+      "sha256": "4bcd581926e84c1a7033c22f63442d704a61535d4cbd8b1ab64e88f67fe4b9df"
+    },
+    "banks/narration.test.jsonl": {
+      "bytes": 143332,
+      "rows": 191,
+      "sha256": "8f79f656d3aece9e35b4df266162d906b531dc01e9d9e58405d074d36d3bb1ee"
+    },
+    "banks/retrieval.dev.jsonl": {
+      "bytes": 591141,
+      "rows": 350,
+      "sha256": "a8197ef29b9fbbc8be7e2ffb8ae93fffbd3d7f19502e21452316d05749c9d2be"
+    },
+    "banks/retrieval.test.jsonl": {
+      "bytes": 590380,
+      "rows": 343,
+      "sha256": "c6bf0b8a68fa20af195be2ccc959258de8845734bd315d84c0595ba1ec516e3e"
+    },
+    "banks/trajectory.dev.jsonl": {
+      "bytes": 318029,
+      "rows": 186,
+      "sha256": "e750846093c01096196cc0dea3880b58662c765c5d91605daaf8e9bf1044decf"
+    },
+    "banks/trajectory.test.jsonl": {
+      "bytes": 256029,
+      "rows": 150,
+      "sha256": "f5828eb787b76f37c9a0c305511d48ee77df43e817e246464360292eac3584d1"
+    }
+  }
+}

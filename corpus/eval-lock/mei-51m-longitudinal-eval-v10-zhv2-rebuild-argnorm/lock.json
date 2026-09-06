@@ -1,0 +1,51 @@
+{
+  "artifact_merkle_root": "369bee152abbce557005f406fec3eebd29807a02f23fb76dac61011255191dea",
+  "banks": {
+    "agent": {
+      "dev": 167,
+      "test": 216
+    },
+    "confidence": {
+      "dev": 119,
+      "test": 162
+    },
+    "full_call": {
+      "dev": 468,
+      "test": 518
+    },
+    "mw_disposition": {
+      "dev": 515,
+      "test": 521
+    },
+    "narration": {
+      "dev": 185,
+      "test": 190
+    },
+    "retrieval": {
+      "dev": 350,
+      "test": 343
+    }
+  },
+  "cycle_id": "exp-000300m-v2",
+  "extends": "mei-51m-longitudinal-eval-v9-zhv2-rebuild",
+  "extends_relationship": "v10 adds the arg_norm_* parameter-normalization banks (clock/ISO/enum/duration/numeral/entity) on top of v9; v9 banks remain valid and are not duplicated",
+  "frozen_at": "2026-09-05T09:18:12Z",
+  "gate_targets": {
+    "confidence_min_class_rows": {
+      "negative": 100,
+      "positive": 100
+    },
+    "mw_macro_f1_min": null,
+    "retrieval_batches_2_3_4_must_be_covered": true,
+    "retrieval_eligible_gold_recall_drop_max_pp": 0.5,
+    "retrieval_no_match_false_selection_rate_max": 0.05,
+    "retrieval_rank_gt5_gold_retention_min": 0.99
+  },
+  "isolation_mechanism": "cf_group sha256 hash bucketing (same mechanism separating SFT train/valid); dev+test partitions were never included in the SFT release's train/valid compiled splits",
+  "lock_id": "mei-51m-longitudinal-eval-v10-zhv2-rebuild-argnorm",
+  "locked_test_used_for_threshold_tuning": false,
+  "process_complete": true,
+  "schema": "mei-51m-longitudinal-eval-lock-v9",
+  "source_sft_release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3",
+  "source_sft_release_merkle_root": "a3ac175e9c988c6ed906bb3940e226c3e412dc59dbc1bed45a4c4c42fd49a4a6"
+}

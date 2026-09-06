@@ -1,0 +1,125 @@
+{
+  "artifact_merkle_root": "8dcf8b2220bd4c994d968d058d7b9977d0efe7fd8eab5f0a5a0c53acd6a7d2d0",
+  "base_binding": {
+    "base_id": "mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
+    "base_weights_sha256": "6d55a61773cdd0a6713c43fa7565f8c2fa64414c3e4a1beadfb6507e0d91752a"
+  },
+  "current_mutated": false,
+  "cycle_id": "exp-000300m-v2",
+  "families": {
+    "agent": {
+      "semantic_path": "semantic/agent.jsonl",
+      "split_counts": {
+        "dev": 183,
+        "test": 194,
+        "train": 1392,
+        "valid": 229
+      },
+      "total": 1998
+    },
+    "confidence": {
+      "semantic_path": "semantic/confidence.jsonl",
+      "split_counts": {
+        "dev": 118,
+        "test": 136,
+        "train": 1066,
+        "valid": 180
+      },
+      "total": 1500
+    },
+    "full_call": {
+      "semantic_path": "semantic/full_call.jsonl",
+      "split_counts": {
+        "dev": 447,
+        "test": 481,
+        "train": 3768,
+        "valid": 644
+      },
+      "total": 5340
+    },
+    "mw_disposition": {
+      "semantic_path": "semantic/mw_disposition.jsonl",
+      "split_counts": {
+        "dev": 519,
+        "test": 518,
+        "train": 4077,
+        "valid": 686
+      },
+      "total": 5800
+    },
+    "narration": {
+      "semantic_path": "semantic/narration.jsonl",
+      "split_counts": {
+        "dev": 186,
+        "test": 191,
+        "train": 1365,
+        "valid": 258
+      },
+      "total": 2000
+    },
+    "retrieval": {
+      "semantic_path": "semantic/retrieval.jsonl",
+      "split_counts": {
+        "dev": 350,
+        "test": 343,
+        "train": 3811,
+        "valid": 496
+      },
+      "total": 5000
+    },
+    "trajectory": {
+      "semantic_path": "semantic/trajectory.jsonl",
+      "split_counts": {
+        "dev": 186,
+        "test": 150,
+        "train": 1447,
+        "valid": 217
+      },
+      "total": 2000
+    }
+  },
+  "generated_at": "2026-09-05T10:03:24Z",
+  "generator_id": "mei-51m-sft-zh-rebuild-v1",
+  "generator_version": "rebuild-zh-v1.0",
+  "human_review": {
+    "human_review_performed_by_named_reviewer": false,
+    "method": "automated_multi_gate_audit_plus_agent_sampled_review",
+    "note": "Unlike mei-1.0-51m-sft-gap-pilot-v1 (100% human-reviewed by a named reviewer), this release relies on automated schema/dedup/leakage/budget/coverage gates plus a documented agent-sampled audit -- not a claim of full human review. Teacher pass (deepseek-chat) polished query phrasing on a stratified train sample; protected values verified verbatim per row; ledger in governance/teacher-pass-v1.json."
+  },
+  "paid_cny": 0.4832,
+  "params": 51463797,
+  "process_complete": true,
+  "product": "mei-1.0-51m",
+  "provider_calls": 244,
+  "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4",
+  "schema": "mei-51m-sft-zh-rebuild-release-v1",
+  "supersedes": {
+    "artifact_merkle_root": "2cefae6994d4a6a74ea4b752a5002135f88f9ea49d8d44fa71fe2352b9e5dcb4",
+    "reason": "query-only teacher paraphrase (visible-chinese-query-only-v1); gold untouched; train split only",
+    "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4"
+  },
+  "teacher": {
+    "calls": 244,
+    "model": "deepseek-chat",
+    "note": "only train-split rows sampled; dev/test/valid pristine",
+    "pricing_cny_per_mtok": {
+      "completion": 8.0,
+      "note": "assumption: deepseek-chat ¥2/M input, ¥8/M output; ledger records real token usage per call",
+      "prompt": 2.0
+    },
+    "provider": "deepseek",
+    "rows_polished": 944,
+    "teacher_id": "deepseek-deepseek-chat-20260905"
+  },
+  "tokenizer_fallback_used": true,
+  "tool_registry": {
+    "deploy_families": 14,
+    "deploy_sha256": "fd9562e27086eecda0ee9cd819c3e688d7116de880b7ea8e2953fea61a1d71d7",
+    "deploy_tools": 147,
+    "training_families": 22,
+    "training_sha256": "106e14076396c60f51b8c4c30553e3f27ff2548bf01ca2409ca3c39b512f3fe6",
+    "training_tools": 211
+  },
+  "training_started": false,
+  "wall_clock_seconds": 591.43
+}

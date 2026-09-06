@@ -1,0 +1,58 @@
+{
+  "defect": "teacher-pass protected-number regex used \\w boundaries which match CJK in Python re, so numbers adjacent to Chinese were not enforced verbatim; 7 polished rows converted protected numbers to hanzi and were reverted to the original query",
+  "repaired_at": "2026-09-05T08:27:48Z",
+  "reverted_count": 7,
+  "reverted_rows": {
+    "confidence:260099a1484647d6a871": {
+      "before_query": "请批准并申请成绩单，份数是3，这次金额比较大。",
+      "reasons": [
+        "protected-lost:3"
+      ],
+      "rejected_query": "麻烦批一下成绩单申请，就弄三份，这次钱花得挺多。"
+    },
+    "full_call:05c8299a7aaed1d73433": {
+      "before_query": "请帮我申请成绩单，份数是1。",
+      "reasons": [
+        "protected-lost:1"
+      ],
+      "rejected_query": "帮我办一份成绩单呗。"
+    },
+    "full_call:5316f83f81d89c2ad117": {
+      "before_query": "请帮我租车，城市是值4690，天数是3。",
+      "reasons": [
+        "protected-lost:3"
+      ],
+      "rejected_query": "在值4690租辆车，租三天。"
+    },
+    "full_call:d9bc2a7ede0ae325f6cf": {
+      "before_query": "请帮我租车，城市是值1390，天数是2。",
+      "reasons": [
+        "protected-lost:2"
+      ],
+      "rejected_query": "帮我租辆车，地点是值1390，租期两天。"
+    },
+    "full_call:d9c1de17e8bb2840848f": {
+      "before_query": "请帮我申请成绩单，份数是2。",
+      "reasons": [
+        "protected-lost:2"
+      ],
+      "rejected_query": "我要申请成绩单，要两份。"
+    },
+    "retrieval:488fb21fa4620d58d103": {
+      "before_query": "那个东西，请帮我预订酒店房间，城市是值5358，晚数是1。",
+      "reasons": [
+        "protected-lost:1"
+      ],
+      "rejected_query": "帮我订个酒店，就值5358这个城市，住一晚就行。"
+    },
+    "retrieval:881ab36c8ceeb1d83619": {
+      "before_query": "申请成绩单，份数是3。",
+      "reasons": [
+        "protected-lost:3"
+      ],
+      "rejected_query": "申请三份成绩单。"
+    }
+  },
+  "schema": "mei-51m-sft-teacher-repair-report-v1",
+  "verification": "all polished rows re-verified against fixed regex (ASCII boundaries); 0 remaining violations"
+}
