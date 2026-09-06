@@ -44,7 +44,9 @@
     "artifacts/mei-1.2-51m/exp-00300m/corpus/sft-suite": "corpus/sft-suite",
     "artifacts/mei-1.2-51m/exp-00300m/corpus/eval-lock": "corpus/eval-lock",
     "artifacts/mei-1.2-51m/": "cycles/mei-1.2-51m/",
-    "mei-llm/": ""
+    "mei-llm/": "",
+    ".local/artifacts/mei-1.0-51m/zh-v2-pool/": "corpus/pools/zh-v2-pool/",
+    "artifacts/mei-1.2-51m/pools/zh-v2-pool/": "corpus/pools/zh-v2-pool/"
   },
   "notes": [
     "Historical receipts retain their original path strings and hashes.",
