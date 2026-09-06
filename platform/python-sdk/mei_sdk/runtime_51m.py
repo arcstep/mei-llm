@@ -547,7 +547,7 @@ def load_51m_runtime(package: ModelPackage, *, backend: str = "mlx-reference"):
     _ensure(_MODEL_FACTORY)
     from architecture import NeedleZh, count_params
     from config import NeedleZhConfig
-    from tokenizer import ZhTokenizerV1
+    from tokenizer import ZhTokenizerV1, ZhTokenizerV2
 
     from release.quant_pack_51m import load_pack_file
 
@@ -561,7 +561,20 @@ def load_51m_runtime(package: ModelPackage, *, backend: str = "mlx-reference"):
     tokenizer_path = (package.path / str(package.manifest["tokenizer"]["file"])).resolve()
     if not weights.is_file():
         raise SdkError("file_not_found", f"missing weights: {weights}")
-    tok = ZhTokenizerV1(tokenizer_path)
+    # 产品内 tokenizer.model 与仓库冻结指针文件做字节同一校验，再用仓库
+    # 指针的 tokenizer_id 实例化（V1 类只对应 zh-24k-v1）
+    from common._repo import frozen_tokenizer_path
+    from common.data import file_sha256 as sha256_file
+
+    repo_tok_path = frozen_tokenizer_path()
+    if sha256_file(tokenizer_path) != sha256_file(repo_tok_path):
+        raise SdkError("package_invalid", "product tokenizer differs from the frozen pointer")
+    tokenizer_id = repo_tok_path.name.replace(".model", "")
+    if tokenizer_id == "zh-24k-v1":
+        tok = ZhTokenizerV1(repo_tok_path)
+    else:
+        manifest_path = repo_tok_path.parent / f"tokenizer-{tokenizer_id}-manifest.json"
+        tok = ZhTokenizerV2(tokenizer_id=tokenizer_id, vocab_size=None, manifest_path=manifest_path)
     arch = package.manifest.get("architecture") or {}
     cfg = NeedleZhConfig.from_spec(_ARCH_51 / "spec" / "model.json")
     if str(arch.get("id") or cfg.architecture_id) != cfg.architecture_id:

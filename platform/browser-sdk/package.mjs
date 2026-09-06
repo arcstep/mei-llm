@@ -12,9 +12,11 @@ const ALL_HEADS = [...REQUIRED, ...OPTIONAL];
 const SHA256 = /^[0-9a-f]{64}$/;
 const V1 = "mei-model-package-v1";
 const V2 = "mei-model-package-v2";
+// runtime_profile_sha256 随架构 spec 演进（见 spec/runtime-profile-compatibility.json：
+// 74839b08 → 7d2d97 → f3a4ab11，caps 恒为 compact 1024 / standard 1536）
 const CONTRACTS = Object.freeze({
   weight_contract_sha256: "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
-  runtime_profile_sha256: "74839b08155e624f14318ca8646166ddc68ee6496720dedac26aa91fdc8bdf43",
+  runtime_profile_sha256: "f3a4ab1151e82299fee0214c5f78a18c20d83367d24a9dc073bbcd56312fa512",
   training_aux_sha256: "83849db3926693e49c0896a58c172ae15e4b203550cee0ef12a4c37a8c1d48ac",
 });
 const RUNTIME_QUANTIZATION = Object.freeze({
@@ -562,7 +564,7 @@ export function validatePackageManifest(manifest, { root = null, verifyHashes = 
     onlyKeys(manifest, [
       "package_format", "product", "package_id", "runtime_min", "parent_package_id", "contracts",
       "architecture", "runtime_profile", "runtime_quantization", "tokenizer", "tensor_container", "files", "heads", "capabilities",
-      "training_receipts", "resources", "release_class",
+      "training_receipts", "resources", "release_class", "retrieval_calibration",
     ], "manifest");
     if (typeof manifest.package_id !== "string" || !manifest.package_id) fail("package_invalid", "package_id is required");
     if (!["experimental", "candidate", "release"].includes(manifest.release_class)) fail("package_invalid", "release_class is required");
@@ -593,21 +595,39 @@ export function validatePackageManifest(manifest, { root = null, verifyHashes = 
       .some(([key, value]) => dumpsCanonical(manifest.architecture?.[key]) !== dumpsCanonical(value))) {
       fail("package_invalid", "51M architecture identity mismatch");
     }
-    const expectedProfile = {
-      max_context_tokens: 2048, stable_prefix_tokens: 1024, rolling_window_tokens: 256,
-      default_output_tokens: 128, kv_dtype: "i8", activation_dtype: "i8",
-    };
-    if (Object.entries(expectedProfile).some(([key, value]) => manifest.runtime_profile?.[key] !== value)) {
-      fail("package_invalid", "runtime_profile does not match portable v2");
+    // 镜像 python schema 的 oneOf：分支1 扁平 portable / 分支2 adaptive profile
+    let profileKeys;
+    if (manifest.runtime_profile?.stable_prefix_profiles != null) {
+      const expectedAdaptive = {
+        max_context_tokens: 2048, default_profile: "standard", ordinary_window_policy: "dynamic_remainder",
+        default_output_tokens: 128, candidate_batch_size: 5, kv_dtype: "i8", activation_dtype: "i8",
+      };
+      if (Object.entries(expectedAdaptive).some(([key, value]) => manifest.runtime_profile?.[key] !== value)) {
+        fail("package_invalid", "runtime_profile does not match portable v2 (adaptive branch)");
+      }
+      const expectedPrefixes = JSON.stringify({ compact: 1024, standard: 1536 });
+      if (JSON.stringify(manifest.runtime_profile?.stable_prefix_profiles) !== expectedPrefixes) {
+        fail("package_invalid", "runtime_profile does not match portable v2 (adaptive prefixes)");
+      }
+      profileKeys = Object.keys(expectedAdaptive).concat(["stable_prefix_profiles", "context_packer_id", "retrieval_batch_policy_id", "prompt_framing_id", "assistant_suffix"]);
+    } else {
+      const expectedProfile = {
+        max_context_tokens: 2048, stable_prefix_tokens: 1024, rolling_window_tokens: 256,
+        default_output_tokens: 128, kv_dtype: "i8", activation_dtype: "i8",
+      };
+      if (Object.entries(expectedProfile).some(([key, value]) => manifest.runtime_profile?.[key] !== value)) {
+        fail("package_invalid", "runtime_profile does not match portable v2");
+      }
+      profileKeys = Object.keys(expectedProfile);
     }
-    onlyKeys(manifest.runtime_profile, Object.keys(expectedProfile), "runtime_profile");
+    onlyKeys(manifest.runtime_profile, profileKeys, "runtime_profile");
     if (manifest.runtime_quantization != null) {
       onlyKeys(manifest.runtime_quantization, Object.keys(RUNTIME_QUANTIZATION), "runtime_quantization");
       if (!runtimeQuantizationComplete(manifest)) {
         fail("package_invalid", "runtime_quantization does not match native v2 semantics");
       }
     }
-    if (manifest.tokenizer?.id !== "zh-24k-v1") fail("package_invalid", "tokenizer.id must be zh-24k-v1");
+    if (!["zh-24k-v1", "zh-24k-v3"].includes(manifest.tokenizer?.id)) fail("package_invalid", "tokenizer.id must be zh-24k-v1 or zh-24k-v3");
     onlyKeys(manifest.tokenizer, [
       "id", "file", "sha256", "vocab_file", "vocab_sha256", "pad_id", "eos_id", "bos_id", "unk_id",
     ], "tokenizer");

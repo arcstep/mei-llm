@@ -41,19 +41,31 @@ def load_model(weights_path: Path, *, smoke: bool = False):
 
 
 def generate(model, tok, prompt: str, *, max_new: int = 128, temperature: float = 0.0) -> str:
-    ids = mx.array(tok.encode(prompt), dtype=mx.int32)[None]
+    """有界 KV-cache 生成（与 portable runtime 同款协议：sink 1024 + ordinary
+    环形 + 单 token decode，_decode_forward 带缓存位置写入）。"""
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parents[3] / "platform/_shared/runtime"))
+    from kv_manager import KVManager  # noqa: E402
+
+    prompt_ids = tok.encode(prompt, add_bos=True, add_eos=False)
+    sink_ids = prompt_ids[: min(1024, len(prompt_ids))]
+    ordinary_ids = prompt_ids[len(sink_ids):]
+    kv = KVManager(output_reserve=max_new)
+    out = kv.prefill_forward(model, list(sink_ids), list(ordinary_ids), reserve_tokens=max_new)
     generated: list[int] = []
+    eos_id = getattr(tok, "eos_id", 0)
     for _ in range(max_new):
-        logits = model(ids)["logits"][0, -1, :]
+        logits = out["logits"][:, -1, :]
         if temperature <= 0:
-            next_id = int(mx.argmax(logits, axis=-1).item())
+            next_id = int(mx.argmax(logits[0], axis=-1).item())
         else:
-            probs = mx.softmax(logits / temperature)
+            probs = mx.softmax(logits[0] / temperature)
             next_id = int(mx.random.categorical(probs).item())
-        if next_id == tok.eos_id if hasattr(tok, "eos_id") else next_id == 0:
+        if next_id == eos_id:
             break
         generated.append(next_id)
-        ids = mx.concatenate([ids, mx.array([[next_id]], dtype=mx.int32)], axis=-1)
+        out = kv.decode_step(model, next_id)
     return tok.decode(generated) if hasattr(tok, "decode") else "".join(map(str, generated))
 
 
