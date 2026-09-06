@@ -168,10 +168,12 @@ def _base_root(config: dict) -> Path:
     millions = target // 1_000_000
     if millions <= 0:
         raise ValueError("target exposure must identify a positive cycle")
-    # zh-v2-rebuild 血缘（cycle_id 带 -v2 后缀）用 -v2 目录，与旧链 exp-XXXm 隔离
+    # 新链 base 候选归入 models/releases/zhv2/base（runtime 与产品同源可见）；
+    # 旧链（legacy 血缘）归档至 artifacts legacy 区
     cycle_id = str(config.get("cycle_id") or "")
-    suffix = "-v2" if cycle_id.endswith("-v2") else ""
-    return ARTIFACT_ROOT / f"exp-{millions:06d}m{suffix}/models/base"
+    if cycle_id.endswith("-v2"):
+        return ROOT / "models/mei-1.0-51m/releases/zhv2/base"
+    return ARTIFACT_ROOT / "legacy" / f"exp-{millions:06d}m/models/base"
 
 
 def _verified_inputs(run_id: str) -> tuple[Path, dict, dict]:
