@@ -276,7 +276,7 @@ def _balanced_mw_rows(
 
     codebook_path = (
         contract.ROOT
-        / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+        / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
     )
     codebook = contract.load_json(codebook_path)
     class_ids = {
@@ -396,7 +396,7 @@ def build_payloads(args: argparse.Namespace) -> tuple[dict[str, bytes], dict[str
         "narration.test.jsonl": narration / "narration.eval.jsonl",
         "base-probes.jsonl": (
             contract.ROOT
-            / ".local/artifacts/_legacy/notebook/evaluation/banks/needle-pretrain-probes-v0/probes-v0.jsonl"
+            / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/needle-pretrain-probes-v0/probes-v0.jsonl"
         ),
     }
     source_rows: dict[str, list[dict[str, Any]]] = {}

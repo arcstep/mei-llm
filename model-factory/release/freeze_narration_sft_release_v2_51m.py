@@ -32,7 +32,7 @@ PARENT_NARRATION_ID = "mei-1.0-51m-narration-sft-agent300m-v1"
 # renderer parity check existed.  Preserve it and emit the corrected revision
 # under a new immutable release id.
 RELEASE_ID = "mei-1.0-51m-narration-sft-agent300m-v3"
-RELEASE_ROOT = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
 PROVIDER_ID = "mei-zh-narration-adapter-r16-v2"
 PROMPT_ID = "mei-verified-result-narration-prompt-v2"
 WIRE = "mei-runtime-wire-v2"

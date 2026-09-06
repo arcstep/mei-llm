@@ -279,7 +279,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--package-receipt", type=Path, required=True)
     parser.add_argument("--master", type=Path, required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--replay-corpus", type=Path, default=ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1")
+    parser.add_argument("--replay-corpus", type=Path, default=ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1")
     parser.add_argument("--steps", type=int, default=32)
     parser.add_argument("--seq-len", type=int, default=256)
     parser.add_argument("--batch-size", type=int, default=1)

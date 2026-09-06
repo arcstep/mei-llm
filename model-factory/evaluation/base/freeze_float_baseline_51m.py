@@ -194,7 +194,7 @@ def main() -> int:
         probe_rep = load_json(RUN_PROBES_PATH)
         if not probe_rep:
             return fail(f"missing run probes: {RUN_PROBES_PATH}")
-        probe_source = ".local/artifacts/mei-1.0-51m/exp-000300m/runs summary probes.json (transcribed; hashes verified)"
+        probe_source = "artifacts/mei-1.0-51m/legacy/exp-000300m/runs summary probes.json (transcribed; hashes verified)"
     else:
         from tokenizer import ZhTokenizerV1
 

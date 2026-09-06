@@ -79,7 +79,7 @@ def test_missing_sampler_keys_are_trainer_contract() -> None:
 
 
 def test_old_cpt_paths_refused() -> None:
-    dirty = ROOT / ".local/artifacts/_legacy/notebook/archive/corpus/zh-pretrain-v2"
+    dirty = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/archive/corpus/zh-pretrain-v2"
     msg = refuse_non_scratch_source(dirty, "300m")
     assert msg and "zh-pretrain-v2" in msg
     assert refuse_non_scratch_source(CORPUS_LM_V1, "300m") is None

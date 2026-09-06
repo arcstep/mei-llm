@@ -62,7 +62,7 @@ class RebuildError(RuntimeError):
 # ---------------------------------------------------------------------------
 _V4_300M_RELEASE_DIR = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite"
     / "historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4"
 )
 DEPLOY_TOOLS_PATH = _V4_300M_RELEASE_DIR / "tool-universe.json"
@@ -70,7 +70,7 @@ TRAINING_TOOLS_PATH = _V4_300M_RELEASE_DIR / "training-tool-universe.json"
 MW_CODEBOOK_PATH = _V4_300M_RELEASE_DIR / "mw-disposition-codebook-v1.json"
 MW_DEFINITIONS_PATH = _V4_300M_RELEASE_DIR / "mw-reason-definitions-v2-20class.json"
 
-EVAL_V7_BANK_DIR = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/mei-51m-longitudinal-eval-v7"
+EVAL_V7_BANK_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/mei-51m-longitudinal-eval-v7"
 
 BASE_RELEASE_PATH = (
     ROOT
@@ -82,8 +82,8 @@ CURRENT_JSON_PATH = ROOT / "CURRENT.json"
 
 TOKENIZER_DIR = ROOT / "models/mei-1.0-51m/architecture"
 
-RELEASE_ROOT = ROOT / ".local/artifacts/mei-1.0-51m/exp-000600m/corpus/sft-suite"
-EVAL_LOCK_ROOT = ROOT / ".local/artifacts/mei-1.0-51m/exp-000600m/corpus/eval-lock"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite"
+EVAL_LOCK_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/eval-lock"
 
 
 def sha256_bytes(data: bytes) -> str:

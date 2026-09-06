@@ -2,7 +2,7 @@
 """51M Q4 (or mixed) STE replay against the frozen float Base-LM Anchor.
 
 Does not re-run the float LM suite. Scores QAT weights only vs
-.local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json and the
+artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json and the
 already-stored greedy_float strings in q4-dequant-parity.json.
 """
 

@@ -27,7 +27,7 @@ LINGUISTIC_RELEASE = (
     contract.DEFAULT_RELEASE_ROOT / contract.LINGUISTIC_AUGMENTATION_ID
 )
 EVAL_DIR = contract.DEFAULT_EVAL_ROOT / contract.EVAL_ID
-BASE_RELEASE = contract.ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json"
+BASE_RELEASE = contract.ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json"
 NARRATION_RELEASE = (
     contract.DEFAULT_RELEASE_ROOT / "mei-1.0-51m-narration-sft-agent300m-v3"
 )

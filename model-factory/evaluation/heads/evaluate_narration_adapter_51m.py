@@ -31,7 +31,7 @@ from common._repo import CURRENT_PATH, ROOT
 
 DEFAULT_RELEASE = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
     / "mei-1.0-51m-narration-sft-agent300m-v3"
 )
 MAX_NEW = 48

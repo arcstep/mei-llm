@@ -1,0 +1,1 @@
+{"backbone_frozen":true,"can_execute_tools":false,"grounding_gate":"exact-deterministic-template-else-fallback","last_loss":0.44450411200523376,"n_train":4800,"n_valid":600,"parameter_count":392192,"rank":16,"resumed_from_step":0,"status":"passed","steps":1200,"terminal_only":true,"valid_loss":0.6393523178994656,"verified_result_only":true}

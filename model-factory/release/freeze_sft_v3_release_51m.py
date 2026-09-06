@@ -27,11 +27,11 @@ import contracts.sft_v3_contract_51m as contract
 
 
 BASE_RELEASE_PATH = (
-    contract.ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json"
+    contract.ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json"
 )
 QAT_STAGE_DIR = (
     contract.ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/productize-scratch300m-agent-cq2-v2-ff204182428e"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/productize-scratch300m-agent-cq2-v2-ff204182428e"
     / "stages/cq2_qat_v2"
 )
 QAT_MASTER_PATH = QAT_STAGE_DIR / "worker/stages/cq2_qat_v2/final-master.npz"
@@ -521,7 +521,7 @@ def build_payloads(args: argparse.Namespace) -> tuple[dict[str, bytes], dict[str
         "mw-reason-definitions-v2-20class.json": parent / "mw-reason-definitions-v2-20class.json",
         "mw-disposition-codebook-v1.json": (
             contract.ROOT
-            / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+            / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
         ),
     }
     payloads: dict[str, bytes] = {

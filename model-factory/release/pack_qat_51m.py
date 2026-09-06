@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pack a 51M QAT FP32 master into a new quantized package.
 
-Never overwrites .local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1 or the PTQ q4-v1 package.
+Never overwrites artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1 or the PTQ q4-v1 package.
 """
 
 from __future__ import annotations

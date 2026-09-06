@@ -42,7 +42,7 @@ from common._repo import frozen_tokenizer_path  # noqa: E402
 _FROZEN_TOK = frozen_tokenizer_path()
 TOKENIZER_MODEL = _FROZEN_TOK
 TOKENIZER_MANIFEST = _FROZEN_TOK.parent / f"tokenizer-{_FROZEN_TOK.name.removesuffix('.model')}-manifest.json"
-MW_CODEBOOK = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+MW_CODEBOOK = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
 EXPECTED_HEADS: dict[str, dict[str, tuple[int, ...]]] = {
     "contrastive": {
         "heads.contrastive.tok_probes": (4, 512),

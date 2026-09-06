@@ -23,7 +23,7 @@ def find_root(start: Path | None = None) -> Path:
 ROOT = find_root()
 CURRENT_PATH = ROOT / "CURRENT.json"
 TOKENIZER_DIR = ROOT / "models/mei-1.0-51m/tokenizer"
-TOKENIZER_ZH_V1 = TOKENIZER_DIR / "zh-24k-v1.model"
+TOKENIZER_ZH_V1 = TOKENIZER_DIR / "legacy/zh-24k-v1.model"
 
 
 def frozen_tokenizer_path() -> Path:
@@ -51,22 +51,42 @@ RECIPES_DIR = MODEL_FACTORY_DIR / "recipes"
 # Compatibility name used by older pipeline code. It now points at the visible
 # model-factory package root, not at a hidden flat scripts directory.
 TRAINING_DIR = MODEL_FACTORY_DIR
-ARTIFACT_ROOT = ROOT / ".local/artifacts/mei-1.0-51m"
-TRAIN_RUNS = ARTIFACT_ROOT / "exp-000300m/runs"
+# 一等公民训练产物根：artifacts/（非 .local——训练成果不是临时文件）。
+# 布局：legacy/ 全部旧链归档；cycles/exp-XXXm 新链正式序列；pools/ 现役语料池。
+ARTIFACT_ROOT = ROOT / "artifacts/mei-1.0-51m"
+LEGACY_ARTIFACT_ROOT = ARTIFACT_ROOT / "legacy"
+TRAIN_RUNS = LEGACY_ARTIFACT_ROOT / "exp-000300m/runs"
 RUNTIME_SHARED = ROOT / "platform/_shared/runtime"
-CORPUS_LM_V1 = ARTIFACT_ROOT / "exp-000300m/corpus/cpt-delta/lm-v1"
-CORPUS_LM_V2 = ROOT / ".local/artifacts/_legacy/corpus/planned-exp-001000m-lm-v2"
+CORPUS_LM_V1 = LEGACY_ARTIFACT_ROOT / "exp-000300m/corpus/cpt-delta/lm-v1"
+CORPUS_LM_V2 = LEGACY_ARTIFACT_ROOT / "_legacy/corpus/planned-exp-001000m-lm-v2"
 CORPUS_ZH_PRETRAIN = CORPUS_LM_V1 / "language/zh-pretrain-v0"
-BASE_SCRATCH300M = ARTIFACT_ROOT / "exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
-BASE_CPT1B = ARTIFACT_ROOT / "exp-001000m/models/base/mei-1.0-51m-base-cpt1b-v1"
+BASE_SCRATCH300M = LEGACY_ARTIFACT_ROOT / "exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+BASE_CPT1B = LEGACY_ARTIFACT_ROOT / "exp-001000m/models/base/mei-1.0-51m-base-cpt1b-v1"
 CPT_1B_RUN = TRAIN_RUNS / "pretrain-1b-cpt-from-scratch300m"
-EVAL_SHARED_ROOT = ROOT / ".local/artifacts/_legacy/notebook/evaluation/shared"
+EVAL_SHARED_ROOT = LEGACY_ARTIFACT_ROOT / "_legacy/notebook/evaluation/shared"
+
+
+def _cycle_lineage(cycle_id: str) -> str:
+    """registry 里的血缘：zh-v2-rebuild 走 cycles/ 正式序列，legacy 走归档区。"""
+    registry = ROOT / ".internal/registry/cycles.json"
+    try:
+        data = json.loads(registry.read_text(encoding="utf-8"))
+        rows = data.get("cycles") if isinstance(data, dict) else data
+        for row in rows or []:
+            if str(row.get("cycle_id")) == cycle_id:
+                return str(row.get("lineage") or "legacy")
+    except (OSError, ValueError):
+        pass
+    return "zh-v2-rebuild" if re.search(r"-v[0-9]+$", cycle_id) else "legacy"
 
 
 def cycle_artifacts(cycle_id: str) -> Path:
     if not re.fullmatch(r"exp-[0-9]{6}m(-v[0-9]+)?", cycle_id):
         raise ValueError(f"invalid cycle id: {cycle_id}")
-    return ARTIFACT_ROOT / cycle_id
+    if _cycle_lineage(cycle_id) == "zh-v2-rebuild":
+        # 新链正式序列：cycles/exp-XXXm（目录名不带 -vN 后缀）
+        return ARTIFACT_ROOT / "cycles" / re.sub(r"-v[0-9]+$", "", cycle_id)
+    return LEGACY_ARTIFACT_ROOT / cycle_id
 
 
 def cycle_runs(cycle_id: str) -> Path:

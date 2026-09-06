@@ -23,13 +23,13 @@ from common._repo import ROOT
 
 RELEASE_ID = "mei-1.0-51m-tool-sft-v2-300m-v1"
 EVAL_ID = "sft-v2-eval-lock-v3-20class"
-PACK_ROOT = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/train/packs"
-RELEASE_ROOT = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
-EVAL_V2 = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v2"
-EVAL_ROOT = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks"
-CODEBOOK_PATH = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
-DEFINITIONS_V1 = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-reason-definitions-v1.json"
-TOOLSET_PATH = ROOT / ".local/artifacts/_legacy/notebook/evaluation/shared/toolsets/needle-vrm-agent-v0.json"
+PACK_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/train/packs"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+EVAL_V2 = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v2"
+EVAL_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks"
+CODEBOOK_PATH = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+DEFINITIONS_V1 = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-reason-definitions-v1.json"
+TOOLSET_PATH = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/shared/toolsets/needle-vrm-agent-v0.json"
 SOURCE_PATHS = {
     "retrieval": PACK_ROOT / "mei-retrieval-v2-10k.clean.v2.candidates.jsonl",
     "full_call": PACK_ROOT / "mei-toolcall-v2-oracle-10k.clean.v2.candidates.jsonl",

@@ -26,7 +26,7 @@ ensure_formal_on_path()
 from training.cpt.cpt_gates import refuse_cpt_parent, refuse_cpt_source
 from common.run_lock import lock_is_held, other_held_runs, pid_alive_from_meta, read_lock_meta
 
-PARENT_STATE = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1-state.npz"
+PARENT_STATE = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1-state.npz"
 DEFAULT_RUN = TRAIN_RUNS / "pretrain-1b-cpt-from-scratch300m"
 TRAINER = _HERE / "train_pretrain.py"
 

@@ -201,7 +201,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--master", type=Path, required=True)
-    parser.add_argument("--replay-corpus", type=Path, default=ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1")
+    parser.add_argument("--replay-corpus", type=Path, default=ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=32)
     parser.add_argument("--seq-len", type=int, default=256)

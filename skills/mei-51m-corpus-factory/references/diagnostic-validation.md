@@ -26,7 +26,7 @@ macro-F1 0.3403，test 0.7075 / 0.3464（旧正式管线 reference：0.226 /
    steps=600, checkpoint_dir=…)`。
 5. **评估**：`evaluation.evaluate_frozen_mw_batches(runtime, dev_views,
    limit=…)` / test。
-6. **输出**：run_dir 只写 `.local/artifacts/mei-1.0-51m/exp-000600m/runs/
+6. **输出**：run_dir 只写 `artifacts/mei-1.0-51m/legacy/exp-000600m/runs/
    <run-id>/`（STATUS.json running→complete、run.log、oracle views jsonl、
    predictions jsonl、diagnostic-report.json）。不碰 CURRENT.json、不写 release、
    不写 cycle receipt。

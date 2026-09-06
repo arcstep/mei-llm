@@ -40,7 +40,7 @@ def test_schedules_split() -> None:
         assert int(scratch["sources"][name]["token_quota"]) == quota
     assert refuse_quota_contract(scratch) is None
     mix = json.loads((CORPUS_LM_V1 / "mix.json").read_text(encoding="utf-8"))
-    assert mix["schedule_scratch"] == ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json"
+    assert mix["schedule_scratch"] == "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json"
     assert mix["roles_complete"] is True
     assert resolve_schedule_file(CORPUS_LM_V1, "scratch") == CORPUS_LM_V1 / "schedule-scratch.json"
     assert resolve_schedule_file(CORPUS_LM_V1, "cpt") is None
@@ -79,7 +79,7 @@ def test_structure_ledger_not_in_published_tokens() -> None:
     )
     ledger = ROOT / rel["unique_ledger"]
     assert ledger.is_file()
-    assert ".local/artifacts/_legacy/notebook/corpus" in rel["unique_ledger"]
+    assert "artifacts/mei-1.0-51m/legacy/_legacy/notebook/corpus" in rel["unique_ledger"]
     assert not (CORPUS_LM_V1 / "structure/zh-pretrain-v3/unique-ledger.json").exists()
 
 

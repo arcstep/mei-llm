@@ -3330,7 +3330,7 @@ def _fullcall_scale_rows(deploy_tools: Mapping[str, Mapping[str, Any]], target_t
         split = _scale_split(index % 40)
         rows.append({
             "candidate_id": f"scale-full-call-{target_total}-{index:03d}", "cell_id": "sft.full_call.boundary", "stage": "sft", "capability": "full_call", "data_action": "synthesize", "family_id": tool["family"], "route_mode": "access", "task_type": f"contrastive_execute_vs_{reason}", "tool_name": tool["name"], "reason_code": reason,
-            "cluster_id": f"scale-full-call-{target_total}-{reason}-{index // len(tools):03d}", "world_id": f"scale-full-call-world-{target_total}-{index:03d}", "schema_family": f"deploy-{tool['name']}", "template_id": f"scale-full-call-{target_total}-{reason}-{index:03d}", "split": split, "source_paths": _worklist_source_paths(Path(deploy_tools[tool['name']].get('_source_path', '')) if False else ROOT / '.local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4/tool-universe.json'), "verification_mode": "local_schema_compile"
+            "cluster_id": f"scale-full-call-{target_total}-{reason}-{index // len(tools):03d}", "world_id": f"scale-full-call-world-{target_total}-{index:03d}", "schema_family": f"deploy-{tool['name']}", "template_id": f"scale-full-call-{target_total}-{reason}-{index:03d}", "split": split, "source_paths": _worklist_source_paths(Path(deploy_tools[tool['name']].get('_source_path', '')) if False else ROOT / 'artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4/tool-universe.json'), "verification_mode": "local_schema_compile"
         })
     return rows
 

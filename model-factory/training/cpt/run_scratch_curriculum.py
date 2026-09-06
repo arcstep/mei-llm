@@ -69,7 +69,7 @@ def main() -> int:
     ap.add_argument(
         "--corpus-dir",
         type=Path,
-        default=ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1",
+        default=ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
         help="scratch corpus layout root（新链 v2 布局时显式传入）",
     )
     ap.add_argument(

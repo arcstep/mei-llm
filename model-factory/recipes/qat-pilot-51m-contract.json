@@ -10,7 +10,7 @@
   "eval_policy": {
     "quantized_vs_frozen_float_anchor": true,
     "do_not_rerun_float_eval_suite": true,
-    "float_anchor": ".local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json",
+    "float_anchor": "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json",
     "note": "Quality is the Q4/QAT delta against the frozen float Base-LM Anchor. Do not run a second float probe/valid-loss suite."
   },
   "wasm": {
@@ -18,8 +18,8 @@
     "refuse_float_npz": true
   },
   "replay": {
-    "corpus": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1",
-    "schedule": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
+    "corpus": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
+    "schedule": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
     "note": "Short LM replay from the frozen scratch schedule hashes. This is not a new 300M from-scratch run."
   },
   "fake_quant": {
@@ -38,8 +38,8 @@
     "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4"
   },
   "bit_map": {
-    "q4_baseline": ".local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m/q4-baseline-bit-map.json",
-    "cq2_candidate": ".local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m/q2q4-product-candidate-bit-map.json",
+    "q4_baseline": "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/q4-baseline-bit-map.json",
+    "cq2_candidate": "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/q2q4-product-candidate-bit-map.json",
     "candidate_only": true,
     "product_final": false,
     "quality_blocked_until": "QAT recovers probe/loss vs float-base-lm-anchor and three-runtime Q4 parity"
@@ -54,7 +54,7 @@
   "qat_mandatory": true,
   "ptq_is_diagnostic_only": true,
   "forbidden_until_ready": [
-    "overwriting .local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1",
+    "overwriting artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1",
     "writing CURRENT.sft or CURRENT.runtime before full-chain gates",
     "WASM loading of float npz"
   ],

@@ -34,12 +34,12 @@ EXPECTED_STAGE_STEPS = {
 }
 DEFAULT_PAIRED_ROOT = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
     "adaptive-v5-paired-final-gates-v4"
 )
 DEFAULT_OUT_DIR = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
     "adaptive-v5-goal-completion-audit-v1"
 )
 DEFAULT_GUIDE = ROOT / "docs/mei-1.0-51m-work-guide.md"

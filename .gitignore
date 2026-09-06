@@ -8,6 +8,8 @@ __pycache__/
 .ruff_cache/
 
 # Large, cycle-bound evidence and release exports are local-only.
+artifacts/**
+!artifacts/README.md
 .local/artifacts/**
 !.local/artifacts/.gitkeep
 .local/dist/**
@@ -25,3 +27,9 @@ models/*/releases/*/base/
 models/*/releases/*/qat/
 models/*/releases/*/sft/
 models/*/releases/*/package/
+
+# 训练产物二进制不进 git（哈希证据绑定于 receipts/RELEASE.json）
+models/mei-1.0-51m/releases/**/*.npz
+models/mei-1.0-51m/releases/**/*.bin
+models/mei-1.0-51m/releases/**/tokenizer.model
+models/mei-1.0-51m/releases/**/heads/**/*.npz

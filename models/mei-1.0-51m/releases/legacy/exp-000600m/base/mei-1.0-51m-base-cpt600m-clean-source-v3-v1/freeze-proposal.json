@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "base-freeze-proposal",
+  "candidate": "base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1",
+  "process_complete": true,
+  "release_eligible": false,
+  "eligible": false,
+  "productization_experiment_eligible": true,
+  "future_parent_eligible": false,
+  "unmet_gates": [
+    "corpus_diversity_degraded"
+  ],
+  "proposed_at": "2026-09-02T03:41:59.245684+00:00",
+  "current_sha256_observed": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607",
+  "current_mutated": false,
+  "requires_explicit_finalize": true,
+  "finalize_confirmation": "freeze mei-1.0-51m base"
+}

@@ -23,7 +23,7 @@ PREFLIGHT_ID = "mei-51m-sft-v4-exhaustive-preflight-v1-quality-schema"
 CURRENT_BASELINE_SHA256 = (
     "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
 )
-DEFAULT_OUT_ROOT = ROOT / ".local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m"
+DEFAULT_OUT_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m"
 
 
 def _quantiles(values: Sequence[int]) -> dict[str, int]:

@@ -12,8 +12,8 @@
   "v2_heads_in_default_pretrain": false,
   "implemented_in_code_is_not_publishable": true,
   "tokenizer": "models/mei-1.0-51m/tokenizer",
-  "corpus": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1",
-  "schedule": ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
+  "corpus": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
+  "schedule": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
   "parent_checkpoint": null,
   "init_mode": "scratch",
   "roles": [

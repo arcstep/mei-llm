@@ -2,7 +2,7 @@
 """Short 51M QAT smoke. STE math matches the packed Q4 kernel.
 
 Does not re-run the float eval suite. Quality is the Q4/QAT delta against
-.local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json.
+artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json.
 """
 
 from __future__ import annotations

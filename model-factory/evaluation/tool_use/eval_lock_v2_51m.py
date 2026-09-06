@@ -28,7 +28,7 @@ from common.identity_51m import (
 )
 from tokenizer import ASSISTANT_PREFIX, TURN_END
 
-LOCK_DIR = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v2"
+LOCK_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v2"
 THRESHOLDS = JOBS_DIR / "sft-v2-51m-thresholds-preregister.json"
 
 

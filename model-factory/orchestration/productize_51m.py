@@ -49,23 +49,23 @@ from common.mlx_memory_policy_51m import (
 
 PRODUCT_ID = "mei-1.0-51m"
 EXPECTED_PARAMS = 51_463_797
-DEFAULT_BASE_DIR = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 DEFAULT_BASE_RELEASE = DEFAULT_BASE_DIR / "RELEASE.json"
 DEFAULT_BASE_WEIGHTS = DEFAULT_BASE_DIR / "mei-1.0-51m-base-scratch300m-v1.npz"
 DEFAULT_DATA_RELEASE = (
-    ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v3-300m-v2"
+    ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v3-300m-v2"
 )
-DEFAULT_EVAL_LOCK = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class"
+DEFAULT_EVAL_LOCK = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class"
 DEFAULT_NARRATION_RELEASE = (
-    ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3"
+    ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3"
 )
-DEFAULT_REPLAY_CORPUS = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/cpt-delta/lm-v1"
+DEFAULT_REPLAY_CORPUS = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1"
 DEFAULT_QUALITY_THRESHOLDS = (
-    ROOT / ".local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m/sft-v2-51m-thresholds-preregister.json"
+    ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/sft-v2-51m-thresholds-preregister.json"
 )
 DEFAULT_PACKAGE_ID = "mei-1.0-51m-scratch300m-tool-sft-v3-cq2-v2"
 DEFAULT_RUN_DIR = (
-    ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/productize-scratch300m-sft-v3-cq2-v2"
+    ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/productize-scratch300m-sft-v3-cq2-v2"
 )
 LOCKED_EVAL_PROGRESS_INTERVAL = 25
 
@@ -538,7 +538,7 @@ def validate_eval_lock(path: Path, data: dict[str, Any]) -> dict[str, Any]:
     files[universe.name] = sha_file(universe)
     if files[universe.name] != lock.get("universe_sha256"):
         raise RuntimeError("eval lock tool universe drifted")
-    parent_lock = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v2/lock.json"
+    parent_lock = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v2/lock.json"
     if (
         lock.get("parent_lock") != "sft-v2-eval-lock-v2"
         or lock.get("v2_preserved") is not True

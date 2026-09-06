@@ -1,0 +1,16 @@
+{
+  "kind": "qat-fp32-master",
+  "model_id": "mei-1.0-51m-base-scratch300m-qat-q4-v1",
+  "parent_model_id": "mei-1.0-51m-base-scratch300m-v1",
+  "parent_weights_sha256": "97f4b537f2869ab315245fd8769eff8a61117b112eb7dce40ebfbd39e2afbd48",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "params": 51463797,
+  "weights_sha256": "032d23fef5c6159c534ae262b01fb3d03c53d7d4d5009a9e30cc30dcc4a3fbbe",
+  "quant_math_id": "mei-qpack-v1-block64-q4s7-q2u4",
+  "bit_map": "notebook/evaluation/jobs/mei-1.0-51m/q4-baseline-bit-map.json",
+  "bit_map_sha256": "6f2cdca36aa7ef64ad353f5db598a6837b689c1b711fa91b357b5043d9f438c4",
+  "tokens_seen_qat_replay": 503808,
+  "immutable_parent": true,
+  "qat_mandatory": true,
+  "note": "CQ2-first mixed Q2/Q4 QAT is mandatory for the on-device 51M core. PTQ is diagnostic only."
+}

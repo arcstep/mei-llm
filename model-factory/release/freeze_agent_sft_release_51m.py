@@ -26,10 +26,10 @@ from common._repo import ROOT
 PARENT_ID = "mei-1.0-51m-tool-sft-v2-300m-v1"
 RELEASE_ID = "mei-1.0-51m-tool-sft-v2-agent300m-v1"
 SIMULATOR_ID = "mei-agent-host-simulator-v1"
-RELEASE_ROOT = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
 PARENT_DIR = RELEASE_ROOT / PARENT_ID
 UNIVERSE_PATH = (
-    ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class/tool-universe-v1.json"
+    ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class/tool-universe-v1.json"
 )
 CALL_ID = re.compile(r"^call-s[0-9a-f]{8}-[1-8]-[0-9a-f]{12}$")
 
@@ -319,7 +319,7 @@ def freeze(args: argparse.Namespace) -> dict[str, Any]:
     isolation = validate_rows(rows, tool_names)
 
     old_eval_queries: set[str] = set()
-    eval_dir = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class"
+    eval_dir = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class"
     for path in eval_dir.glob("eval-*.jsonl"):
         old_eval_queries.update(str(row.get("query") or "") for row in load_jsonl(path))
     train_queries = {str(row["query"]) for row in rows["train"] + rows["valid"]}

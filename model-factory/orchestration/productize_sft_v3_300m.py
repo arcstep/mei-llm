@@ -32,7 +32,7 @@ from common._repo import (
 
 
 RUNNER_ID = "mei-51m-sft-v4-productizer-v1-quality-schema"
-DEFAULT_BASE_DIR = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 DEFAULT_BASE_RELEASE = DEFAULT_BASE_DIR / "RELEASE.json"
 DEFAULT_BASE_WEIGHTS = DEFAULT_BASE_DIR / "mei-1.0-51m-base-scratch300m-v1.npz"
 DEFAULT_DATA_RELEASE = contract.DEFAULT_RELEASE_ROOT / contract.RELEASE_ID
@@ -44,7 +44,7 @@ DEFAULT_QAT_IMPORT_RECEIPT = DEFAULT_DATA_RELEASE / "qat-import-candidate-receip
 DEFAULT_NARRATION_RELEASE = contract.NARRATION_RELEASE_DIR
 DEFAULT_RUN_DIR = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/productize-scratch300m-sft-v4-quality-schema-cq2-v2"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/productize-scratch300m-sft-v4-quality-schema-cq2-v2"
 )
 DEFAULT_PACKAGE_ID = "mei-1.0-51m-scratch300m-tool-sft-cq2-v2-sftv4-quality-schema"
 RUNTIME_PROFILE_COMPATIBILITY = (
@@ -856,7 +856,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
 def _validated_preflight(
     args: argparse.Namespace, plan: dict[str, Any]
 ) -> tuple[Path, dict[str, Any]]:
-    root = ROOT / ".local/artifacts/_legacy/notebook/evaluation/jobs/mei-1.0-51m"
+    root = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m"
     candidates = (
         [args.preflight_receipt]
         if args.preflight_receipt is not None

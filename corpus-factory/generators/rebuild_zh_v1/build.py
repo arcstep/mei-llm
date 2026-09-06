@@ -3,7 +3,7 @@
 
 Runs all seven family generators, audits (dedup/leakage/budget/coverage),
 writes cycle-bound immutable artifacts under
-.local/artifacts/mei-1.0-51m/exp-000600m/corpus/sft-suite/<release-id>/, and
+artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite/<release-id>/, and
 reports gate status. Never touches CURRENT.json, an existing release, or any
 training run. Offline only -- no provider calls.
 """

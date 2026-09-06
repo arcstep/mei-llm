@@ -13,9 +13,9 @@ from pathlib import Path
 
 MODEL_ROOT = Path(__file__).resolve().parent.parent
 TOKENIZER_DIR = MODEL_ROOT / "tokenizer"
-TOKENIZER_ZH_V1 = TOKENIZER_DIR / "zh-24k-v1.model"
+TOKENIZER_ZH_V1 = TOKENIZER_DIR / "legacy/zh-24k-v1.model"
 
-MANIFEST_PATH = TOKENIZER_DIR / "tokenizer-v1-manifest.json"
+MANIFEST_PATH = TOKENIZER_DIR / "legacy/tokenizer-v1-manifest.json"
 USER_PREFIX = "<|im_start|>user\n"
 ASSISTANT_PREFIX = "<|im_end|>\n<|im_start|>assistant\n"
 TURN_END = "<|im_end|>"

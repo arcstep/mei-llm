@@ -26,7 +26,7 @@ from training.cpt.pretrain_gates import (
 )
 
 FROZEN_TOK_SHA = "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629"
-LEDGER = ROOT / ".local/artifacts/_legacy/notebook/corpus/lm-v1/structure/work/zh-pretrain-v3/unique-ledger.json"
+LEDGER = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/corpus/lm-v1/structure/work/zh-pretrain-v3/unique-ledger.json"
 EXPECTED_PARAMS = 51_463_797
 
 

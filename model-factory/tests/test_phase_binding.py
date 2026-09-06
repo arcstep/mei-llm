@@ -154,7 +154,7 @@ class PhaseBindingTest(unittest.TestCase):
 
     def test_output_cannot_escape_cycle_root(self) -> None:
         binding = self.binding()
-        binding["outputs"]["run_dir"] = ".local/artifacts/mei-1.0-51m/exp-000600m/runs/wrong"
+        binding["outputs"]["run_dir"] = "artifacts/mei-1.0-51m/legacy/exp-000600m/runs/wrong"
         report = phase_binding.verify(
             self.registry, self.write_binding(binding), require_inputs=True
         )

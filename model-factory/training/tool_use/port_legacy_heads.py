@@ -58,7 +58,7 @@ class LegacyRuntime:
 def _deploy_tools() -> dict[str, dict[str, Any]]:
     root = Path(__file__).resolve().parents[3]
     tools_path = (
-        root / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite"
+        root / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite"
         / "historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4/tool-universe.json"
     )
     raw = json.loads(tools_path.read_text(encoding="utf-8"))

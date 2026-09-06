@@ -29,17 +29,17 @@ SUPERVISOR_ID = "mei-51m-paired-adaptive-v5-supervisor-v1"
 HERE = Path(__file__).resolve().parent
 PRODUCTIZER = HERE / "productize_adaptive_v5_51m.py"
 DEFAULT_OUT_ROOT = (
-    ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/adaptive-v5-paired-supervisor"
+    ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/adaptive-v5-paired-supervisor"
 )
 PACKAGED_300_RUN = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
     "productize-scratch300m-adaptive-v5-cq2-v2-40ba9754076e"
 )
 NEEDLE2_REFERENCE = ROOT / "platform/_shared/spec/needle2-reference.json"
 HISTORICAL_MTP_RECEIPT = (
     ROOT
-    / ".local/artifacts/mei-1.0-51m/exp-000300m/runs/"
+    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
     "productize-scratch300m-agent-cq2-v2-ff204182428e/"
     "stages/mtp_ablation/receipt.json"
 )
@@ -102,10 +102,10 @@ def _specs(
     packaged_300m_run: Path | None = None,
     packaged_600m_run: Path | None = None,
 ) -> list[dict[str, Any]]:
-    run_root_300 = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/runs"
-    run_root_600 = ROOT / ".local/artifacts/mei-1.0-51m/exp-000600m/runs"
-    base_300 = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
-    base_600 = ROOT / ".local/artifacts/mei-1.0-51m/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1"
+    run_root_300 = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs"
+    run_root_600 = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/runs"
+    base_300 = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+    base_600 = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1"
     specs = [
         {
             "label": "300m",

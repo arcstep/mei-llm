@@ -43,13 +43,13 @@ from training.qat.cq2_qat_51m import QUANT_MATH_ID, explicit_group_map, quantize
 from tokenizer import ASSISTANT_PREFIX, TURN_END, USER_PREFIX
 
 
-DATA_RELEASE_DIR = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v2-300m-v1"
+DATA_RELEASE_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v2-300m-v1"
 RET_PATH = DATA_RELEASE_DIR / "retrieval.train.jsonl"
 FC_PATH = DATA_RELEASE_DIR / "full-call.train.jsonl"
 MW_PATH = DATA_RELEASE_DIR / "mw-disposition.train.jsonl"
-MW_CODEBOOK_PATH = ROOT / ".local/artifacts/mei-1.0-51m/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
-UNIVERSE_PATH = ROOT / ".local/artifacts/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class/tool-universe-v1.json"
-ISOLATION = ROOT / ".local/artifacts/_legacy/notebook/_tooling/scripts/check_train_eval_isolation.py"
+MW_CODEBOOK_PATH = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+UNIVERSE_PATH = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class/tool-universe-v1.json"
+ISOLATION = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/_tooling/scripts/check_train_eval_isolation.py"
 
 
 def load_jsonl(path: Path, limit: int | None = None) -> list[dict]:

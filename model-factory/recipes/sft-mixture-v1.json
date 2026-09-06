@@ -8,7 +8,7 @@
   "teacher_role": "query-scene-variants-only",
   "generator_version": "sft-pack-v1",
   "prompt_version": "sft-teacher-v1",
-  "eval_lock": ".local/artifacts/_legacy/notebook/evaluation/banks/needle-vrm-agent-v0/holdout-v1.lock.json",
+  "eval_lock": "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/needle-vrm-agent-v0/holdout-v1.lock.json",
   "eval_sha256": "d12d8030a490698799712f7daea4fae057f3ff81315baa44e809fa1b6ced7ffb",
   "tiers": {
     "2k": 2000,
