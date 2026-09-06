@@ -180,7 +180,7 @@ def main() -> int:
     args.out_dir.mkdir(parents=True)
 
     import mlx.core as mx
-    from common._repo import ARCHITECTURE_DIR
+    from common.paths import ARCHITECTURE_DIR
     sys.path.insert(0, str(ARCHITECTURE_DIR))
     sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "src/platform/python-sdk"))
     from architecture import NeedleZh
@@ -256,7 +256,7 @@ def main() -> int:
     # 4) 检索索引导出（runtime ToolIndex 负载）
     log("phase 4/4: tool index export")
     import hashlib
-    from common._repo import frozen_tokenizer_path
+    from common.paths import frozen_tokenizer_path
 
     def _sha(path: Path) -> str:
         digest = hashlib.sha256()

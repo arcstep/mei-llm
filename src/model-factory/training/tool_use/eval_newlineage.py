@@ -29,7 +29,7 @@ def log(msg: str) -> None:
 
 
 def _load_model(weights: Path, smoke: bool):
-    from common._repo import ARCHITECTURE_DIR
+    from common.paths import ARCHITECTURE_DIR
     sys.path.insert(0, str(ARCHITECTURE_DIR))
     sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "src/platform/python-sdk"))
     from architecture import NeedleZh
@@ -182,7 +182,7 @@ def main() -> int:
         raise SystemExit(f"write-once refusal: {args.out}")
     args.out.mkdir(parents=True)
 
-    from common._repo import ARCHITECTURE_DIR
+    from common.paths import ARCHITECTURE_DIR
     sys.path.insert(0, str(ARCHITECTURE_DIR))
     from heads import ContrastiveHead, MWDispositionHead, ConfidenceV2Head
     from common.checkpoint import load_train_state

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from evaluation.heads import evaluate_narration_adapter_51m as evaluator
+from evaluation.head_eval import evaluate_narration_adapter_51m as evaluator
 
 
 class NarrationGenerationEvaluationTest(unittest.TestCase):

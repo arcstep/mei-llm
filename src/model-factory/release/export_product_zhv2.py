@@ -23,7 +23,7 @@ import numpy as np  # noqa: E402
 
 def build_heads_npz(heads_dir: Path, out_path: Path) -> dict[str, Any]:
     from common.checkpoint import load_train_state  # noqa: E402
-    from common._repo import ARCHITECTURE_DIR  # noqa: E402
+    from common.paths import ARCHITECTURE_DIR  # noqa: E402
     sys.path.insert(0, str(ARCHITECTURE_DIR))
     import mlx.core as mx  # noqa: E402
     from mlx.utils import tree_flatten  # noqa: E402

@@ -1,11 +1,13 @@
+from __future__ import annotations
+
 """Product heads outside the frozen 51,463,797-parameter LM contract.
+（头定义：只含结构与前向，不含训练循环；训练见 model-factory/training/head_training/。）
 
 These heads are trained only after the final LM is frozen and live in the
 portable v2 tensor container.  They therefore never change the canonical
 backbone parameter count.
 """
 
-from __future__ import annotations
 
 import math
 from typing import Sequence

@@ -18,7 +18,7 @@ from typing import Any
 
 import numpy as np
 
-from common._repo import ARCHITECTURE_DIR, ROOT, TOKENIZER_DIR, architecture_contracts
+from common.paths import ARCHITECTURE_DIR, ROOT, TOKENIZER_DIR, architecture_contracts
 from training.qat.cq2_policy_51m import lm_storage_dtype, uniform_group_bits
 
 sys.path.insert(0, str(ROOT / "src/platform/python-sdk"))
@@ -37,7 +37,7 @@ from mei_sdk.shared import ToolIndex, index_fingerprint  # noqa: E402
 
 PACKAGE_LIMIT = 18 * 1024 * 1024
 # 词表随冻结指针（新链 zh-24k-v3；旧链重打包时同样遵循当前指针——指针即权威）
-from common._repo import frozen_tokenizer_path  # noqa: E402
+from common.paths import frozen_tokenizer_path  # noqa: E402
 
 _FROZEN_TOK = frozen_tokenizer_path()
 TOKENIZER_MODEL = _FROZEN_TOK

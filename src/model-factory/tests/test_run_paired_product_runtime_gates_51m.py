@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-import evaluation.heads.evaluate_narration_adapter_51m as narration
+import evaluation.head_eval.evaluate_narration_adapter_51m as narration
 import orchestration.run_downstream_mtp_ablation_51m as mtp
 import orchestration.run_downstream_portable_gates_51m as portable
 import orchestration.run_downstream_resource_gates_51m as resources

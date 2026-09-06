@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from common._repo import ARCHITECTURE_ID, architecture_contracts
+from common.paths import ARCHITECTURE_ID, architecture_contracts
 from common.checkpoint import validate_expected_meta
 from training.cpt.run_scratch_curriculum import SCRATCH_PROFILES
 

@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from common._repo import phase_binding_identity
-from mei_llm import phase_binding
+from common.paths import phase_binding_identity
+from orchestration import phase_binding
 from mei_llm.registry import Registry
 
 

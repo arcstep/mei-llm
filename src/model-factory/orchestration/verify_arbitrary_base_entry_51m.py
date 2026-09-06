@@ -18,7 +18,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT, architecture_contracts
+from common.paths import CURRENT_PATH, ROOT, architecture_contracts
 from orchestration.productize_51m import build_plan, parse_args as parse_productize_args, validate_base
 
 

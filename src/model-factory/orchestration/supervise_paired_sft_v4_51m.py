@@ -18,7 +18,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT
+from common.paths import CURRENT_PATH, ROOT
 
 
 HERE = Path(__file__).resolve().parent

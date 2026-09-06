@@ -18,7 +18,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 RELEASE_ID = "mei-1.0-51m-tool-sft-v2-300m-v1"

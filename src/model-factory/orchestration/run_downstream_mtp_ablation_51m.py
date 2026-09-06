@@ -19,13 +19,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT
-from training.heads.mtp_ablation_51m import build_plan, run as run_ablation
+from common.paths import CURRENT_PATH, ROOT
+from training.head_training.mtp_ablation_51m import build_plan, run as run_ablation
 
 
 SOURCE_FILES = (
     "src/model-factory/orchestration/run_downstream_mtp_ablation_51m.py",
-    "src/model-factory/training/heads/mtp_ablation_51m.py",
+    "src/model-factory/training/head_training/mtp_ablation_51m.py",
     "src/architecture/mei-1.2-51m/architecture.py",
     "src/architecture/mei-1.2-51m/architecture_contract.py",
     "src/model-factory/common/mlx_memory_policy_51m.py",

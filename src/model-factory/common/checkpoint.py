@@ -9,7 +9,7 @@ from typing import Any
 import mlx.core as mx
 import mlx.utils as xu
 
-from common._repo import legacy_weight_contract_sha256
+from common.paths import legacy_weight_contract_sha256
 
 
 def flatten_tree(tree) -> dict[str, mx.array]:

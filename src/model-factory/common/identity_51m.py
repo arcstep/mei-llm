@@ -12,7 +12,7 @@ os.environ["MEI_ARCHITECTURE_ID"] = "mei-1.0-51m-arch-v1"
 
 _HERE = Path(__file__).resolve().parent
 
-from common._repo import ROOT, TRAIN_RUNS, ensure_formal_on_path
+from common.paths import ROOT, TRAIN_RUNS, ensure_formal_on_path
 
 _ARCH = ROOT / "src/architecture/mei-1.2-51m"
 for path in (_ARCH, ROOT / "src/model-factory"):

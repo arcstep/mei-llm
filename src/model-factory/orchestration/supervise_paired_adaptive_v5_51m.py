@@ -22,7 +22,7 @@ from typing import Any, Iterable, Mapping
 
 import orchestration.productize_51m as lifecycle
 import orchestration.productize_adaptive_v5_51m as productizer
-from common._repo import CURRENT_PATH, ROOT, resolve_repo_path
+from common.paths import CURRENT_PATH, ROOT, resolve_repo_path
 
 
 SUPERVISOR_ID = "mei-51m-paired-adaptive-v5-supervisor-v1"

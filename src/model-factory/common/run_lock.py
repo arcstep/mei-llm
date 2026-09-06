@@ -9,7 +9,7 @@ import socket
 import time
 from pathlib import Path
 
-from common._repo import TRAIN_RUNS
+from common.paths import TRAIN_RUNS
 
 
 def lock_file(run_dir: Path) -> Path:

@@ -16,7 +16,7 @@ _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
-from common._repo import (
+from common.paths import (
     ARCHITECTURE_DIR,
     ARCHITECTURE_ID,
     CORPUS_LM_V1,
@@ -71,7 +71,7 @@ from tokenizer import ZhTokenizerV1, ZhTokenizerV2  # noqa: E402
 
 def _frozen_tokenizer():
     """按 TOKENIZER.json 指针实例化当前冻结词表（v1 或 v2 系）。"""
-    from common._repo import frozen_tokenizer_path
+    from common.paths import frozen_tokenizer_path
 
     path = frozen_tokenizer_path()
     tokenizer_id = path.name.replace(".model", "")

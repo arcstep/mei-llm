@@ -29,7 +29,7 @@ import time
 from pathlib import Path
 from typing import Any, Callable
 
-from common._repo import (
+from common.paths import (
     CURRENT_PATH,
     ROOT,
     TOKENIZER_ZH_V1,
@@ -604,13 +604,13 @@ def source_manifest() -> dict[str, str]:
         "src/model-factory/release/freeze_narration_sft_release_51m.py",
         "src/model-factory/release/freeze_narration_sft_release_v2_51m.py",
         "src/model-factory/release/pack_cq2_v2_51m.py",
-        "src/model-factory/training/heads/mtp_ablation_51m.py",
+        "src/model-factory/training/head_training/mtp_ablation_51m.py",
         "src/model-factory/evaluation/resources/measure_resources_51m.py",
         "src/model-factory/orchestration/run_downstream_resource_gates_51m.py",
         "src/model-factory/tests/test_measure_resources_51m.py",
         "src/model-factory/evaluation/alignment/needle2_alignment_51m.py",
         "src/model-factory/release/final_audit_51m.py",
-        "src/model-factory/evaluation/heads/compare_portable_heads_51m.py",
+        "src/model-factory/evaluation/head_eval/compare_portable_heads_51m.py",
         "src/platform/_shared/rust/mei-sdk-core/examples/resource_51m.rs",
         "src/architecture/mei-1.2-51m/architecture.py",
         "src/architecture/mei-1.2-51m/architecture_contract.py",
@@ -1836,7 +1836,7 @@ def _portable_gate_report(package_dir: Path, directory: Path) -> dict[str, Any]:
     head_parity = _subprocess_json(
         [
             sys.executable,
-            str(ROOT / "src/model-factory/evaluation/heads/compare_portable_heads_51m.py"),
+            str(ROOT / "src/model-factory/evaluation/head_eval/compare_portable_heads_51m.py"),
             "--package",
             str(package_dir),
             "--rust-cli",
@@ -2292,7 +2292,7 @@ def _training_and_package_stages(
     )
 
     def mtp_action(directory: Path):
-        from training.heads.mtp_ablation_51m import run as run_mtp
+        from training.head_training.mtp_ablation_51m import run as run_mtp
         from mei_sdk.package import load_package
 
         output = directory / "mtp-ablation.json"

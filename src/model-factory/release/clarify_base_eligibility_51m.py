@@ -13,7 +13,7 @@ from typing import Any
 
 import numpy as np
 
-from common._repo import CURRENT_PATH
+from common.paths import CURRENT_PATH
 
 
 EXPECTED_PARAMS = 51_463_797

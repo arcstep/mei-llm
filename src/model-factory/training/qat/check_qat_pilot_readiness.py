@@ -16,7 +16,7 @@ from common.identity_51m import (
     fail,
     load_json,
 )
-from common._repo import RECIPES_DIR
+from common.paths import RECIPES_DIR
 from training.qat.quant_ops_51m import KERNEL_FEASIBILITY_RECORDED, STE_IMPLEMENTED, fake_quant_4bit
 
 CONTRACT_PATH = RECIPES_DIR / "qat-pilot-51m-contract.json"

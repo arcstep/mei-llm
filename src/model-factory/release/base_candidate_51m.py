@@ -16,7 +16,7 @@ import shutil
 import tempfile
 from pathlib import Path
 
-from common._repo import (
+from common.paths import (
     CYCLES_ROOT,
     LEGACY_CYCLES_ROOT,
     CURRENT_PATH,

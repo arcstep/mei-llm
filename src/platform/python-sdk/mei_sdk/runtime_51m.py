@@ -563,7 +563,7 @@ def load_51m_runtime(package: ModelPackage, *, backend: str = "mlx-reference"):
         raise SdkError("file_not_found", f"missing weights: {weights}")
     # 产品内 tokenizer.model 与仓库冻结指针文件做字节同一校验，再用仓库
     # 指针的 tokenizer_id 实例化（V1 类只对应 zh-24k-v1）
-    from common._repo import frozen_tokenizer_path
+    from common.paths import frozen_tokenizer_path
     from common.data import file_sha256 as sha256_file
 
     repo_tok_path = frozen_tokenizer_path()

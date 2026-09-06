@@ -18,7 +18,7 @@ import subprocess
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from common._repo import CURRENT_PATH, ROOT
+from common.paths import CURRENT_PATH, ROOT
 
 
 SCHEMA = "mei-51m-adaptive-v5-goal-completion-audit-v1"

@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT, architecture_contracts
+from common.paths import CURRENT_PATH, ROOT, architecture_contracts
 
 
 PREVIOUS_STAGES = (

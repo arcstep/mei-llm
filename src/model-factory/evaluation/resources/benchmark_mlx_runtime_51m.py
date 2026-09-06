@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 SDK_PYTHON = ROOT / "src/platform/python-sdk"

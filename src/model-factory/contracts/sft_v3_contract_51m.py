@@ -26,7 +26,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 PRODUCT_ID = "mei-1.0-51m"

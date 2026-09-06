@@ -167,7 +167,7 @@ def main() -> int:
     args.out_dir.mkdir(parents=True)
 
     import sys as _sys
-    from common._repo import ARCHITECTURE_DIR  # noqa: E402
+    from common.paths import ARCHITECTURE_DIR  # noqa: E402
     _sys.path.insert(0, str(ARCHITECTURE_DIR))
     from architecture import NeedleZh  # noqa: E402
     from config import NeedleZhConfig  # noqa: E402

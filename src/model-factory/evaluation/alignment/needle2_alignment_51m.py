@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT, architecture_contracts
+from common.paths import ROOT, architecture_contracts
 
 
 REFERENCE = ROOT / "src/platform/_shared/spec/needle2-reference.json"

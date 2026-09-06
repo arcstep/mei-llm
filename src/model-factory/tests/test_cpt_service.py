@@ -17,7 +17,7 @@ _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
-from common._repo import ROOT, ensure_formal_on_path
+from common.paths import ROOT, ensure_formal_on_path
 
 ensure_formal_on_path()
 from common.run_lock import acquire_run_lock, lock_is_held, other_held_runs, write_heartbeat

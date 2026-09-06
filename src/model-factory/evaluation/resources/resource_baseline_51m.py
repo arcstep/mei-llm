@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 
 from common.identity_51m import JOBS_DIR, Q4_PACKAGE_DIR, QAT_Q4_PACKAGE_DIR, ROOT, fail, load_json, write_json
-from common._repo import RECIPES_DIR
+from common.paths import RECIPES_DIR
 
 RESOURCE_GATES = RECIPES_DIR / "resource-gates-51m.json"
 CARGO_WORKSPACE = ROOT / "src/platform/_shared"

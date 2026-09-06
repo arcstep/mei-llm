@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .registry import Registry
+from mei_llm.registry import Registry
 
 
 PHASES = [

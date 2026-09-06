@@ -20,7 +20,7 @@ import tempfile
 from pathlib import Path
 from typing import Any, Callable
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 PARENT_ID = "mei-1.0-51m-tool-sft-v2-300m-v1"

@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT
+from common.paths import CURRENT_PATH, ROOT
 
 
 PACKAGE_LIMIT = 18 * 1024 * 1024

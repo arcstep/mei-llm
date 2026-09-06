@@ -6,7 +6,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from common._repo import CORPUS_LM_V1, ROOT
+from common.paths import CORPUS_LM_V1, ROOT
 
 DIRTY_V2 = ROOT / "cycles/mei-1.1-51m/_legacy/notebook/archive/corpus/zh-pretrain-v2"
 REQUIRED_ROLES = ("wiki", "hq", "structure", "colloquial")

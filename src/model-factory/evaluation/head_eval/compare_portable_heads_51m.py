@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 sys.path.insert(0, str(ROOT / "src/platform/python-sdk"))

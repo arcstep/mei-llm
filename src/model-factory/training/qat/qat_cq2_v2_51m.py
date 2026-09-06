@@ -22,7 +22,7 @@ import mlx.core as mx
 import mlx.optimizers as optim
 import mlx.utils as xu
 
-from common._repo import (
+from common.paths import (
     ROOT,
     architecture_contracts,
     legacy_weight_contract_sha256,

@@ -8,9 +8,15 @@ import subprocess
 import sys
 from pathlib import Path
 
-from . import cycle_control
-from . import phase_binding
+# 控制面调用工厂：先把 model-factory 挂上 sys.path，再 import 编排模块
+_FACTORY = Path(__file__).resolve().parents[2] / "src/model-factory"
+if str(_FACTORY) not in sys.path:
+    sys.path.insert(0, str(_FACTORY))
+
+import orchestration.cycle_control as cycle_control
+import orchestration.phase_binding as phase_binding
 from .registry import Registry
+
 
 
 def _print_json(value: object) -> None:

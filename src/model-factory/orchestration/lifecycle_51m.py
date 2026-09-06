@@ -19,7 +19,7 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-from common._repo import (
+from common.paths import (
     ARCHITECTURE_DIR,
     ARCHITECTURE_ID,
     CYCLES_ROOT,

@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT, architecture_contracts
+from common.paths import CURRENT_PATH, ROOT, architecture_contracts
 from orchestration.run_downstream_needle2_alignment_51m import (
     UPSTREAM_REQUIRED,
     load_json,

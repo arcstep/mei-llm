@@ -398,7 +398,7 @@ def main() -> int:
     if blocked:
         return fail(blocked)
 
-    from common._repo import CORPUS_LM_V1
+    from common.paths import CORPUS_LM_V1
     from common.data import list_valid_set, load_scheduled_train, PackedTokenSource
     from tokenizer import ZhTokenizerV1
 

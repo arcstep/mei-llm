@@ -24,10 +24,10 @@ class ModelFactoryContractTest(unittest.TestCase):
             "src/model-factory/training/cpt",
             "src/model-factory/training/qat",
             "src/model-factory/training/tool_use",
-            "src/model-factory/training/heads",
+            "src/model-factory/training/head_training",
             "src/model-factory/evaluation/base",
             "src/model-factory/evaluation/tool_use",
-            "src/model-factory/evaluation/heads",
+            "src/model-factory/evaluation/head_eval",
             "src/model-factory/evaluation/resources",
             "src/model-factory/evaluation/alignment",
         }

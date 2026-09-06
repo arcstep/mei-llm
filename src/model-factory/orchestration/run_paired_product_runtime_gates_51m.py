@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import CURRENT_PATH, ROOT
+from common.paths import CURRENT_PATH, ROOT
 
 
 HERE = Path(__file__).resolve().parent
@@ -28,7 +28,7 @@ DEFAULT_REPLAY_CORPUS = ROOT / "cycles/mei-1.1-51m/exp-00300m/corpus/cpt-delta/l
 CHILD_SCRIPTS = {
     "package": HERE / "verify_downstream_package_51m.py",
     "portable": HERE / "run_downstream_portable_gates_51m.py",
-    "narration": ROOT / "src/model-factory/evaluation/heads/evaluate_narration_adapter_51m.py",
+    "narration": ROOT / "src/model-factory/evaluation/head_eval/evaluate_narration_adapter_51m.py",
     "mtp": HERE / "run_downstream_mtp_ablation_51m.py",
     "resources": HERE / "run_downstream_resource_gates_51m.py",
     "base_entry": HERE / "verify_arbitrary_base_entry_51m.py",

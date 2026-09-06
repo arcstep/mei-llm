@@ -16,7 +16,7 @@ import evaluation.tool_use.longitudinal_eval_metrics_51m as longitudinal
 import orchestration.productize_sft_v3_300m as productizer
 import contracts.sft_v4_contract_51m as contract
 import training.tool_use.sft_v3_training_51m as training
-from common._repo import CURRENT_PATH, ROOT
+from common.paths import CURRENT_PATH, ROOT
 
 
 PREFLIGHT_ID = "mei-51m-sft-v4-exhaustive-preflight-v1-quality-schema"

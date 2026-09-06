@@ -507,7 +507,7 @@ def list_token_shards(root: Path, split: str) -> list[Path]:
     if mix_path.is_file():
         mix = json.loads(mix_path.read_text(encoding="utf-8"))
         rels = mix.get(f"{split}_shards") or []
-        from common._repo import ROOT as REPO_ROOT
+        from common.paths import ROOT as REPO_ROOT
 
         out: list[Path] = []
         for rel in rels:
@@ -548,7 +548,7 @@ def _resolve_repo_path(rel: str | Path) -> Path:
     path = Path(rel)
     if path.is_absolute():
         return path
-    from common._repo import ROOT as REPO_ROOT
+    from common.paths import ROOT as REPO_ROOT
 
     return (REPO_ROOT / rel).resolve()
 

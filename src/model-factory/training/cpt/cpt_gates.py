@@ -8,7 +8,7 @@ import json
 import re
 from pathlib import Path
 
-from common._repo import (
+from common.paths import (
     CORPUS_LM_V1,
     RECIPES_DIR,
     ROOT,

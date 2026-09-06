@@ -40,7 +40,7 @@ import evaluation.tool_use.sft_v3_eval_51m as evaluation  # noqa: E402
 import training.tool_use.sft_v3_training_51m as training  # noqa: E402
 import contracts.sft_v4_contract_51m as contract  # noqa: E402
 from release import freeze_sft_v3_release_51m as freeze_sft_v3_release  # noqa: E402
-from common._repo import (  # noqa: E402
+from common.paths import (  # noqa: E402
     CURRENT_PATH,
     ROOT,
     TOKENIZER_ZH_V1,

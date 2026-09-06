@@ -24,13 +24,13 @@ from common.checkpoint import load_params  # noqa: E402
 
 
 def _frozen_tokenizer():
-    from common._repo import frozen_tokenizer_path
+    from common.paths import frozen_tokenizer_path
     from training.cpt.train_pretrain import _frozen_tokenizer as _ft
     return _ft()
 
 
 def load_model(weights_path: Path, *, smoke: bool = False):
-    from common._repo import ARCHITECTURE_DIR
+    from common.paths import ARCHITECTURE_DIR
     sys.path.insert(0, str(ARCHITECTURE_DIR))
     from architecture import NeedleZh
     from config import NeedleZhConfig

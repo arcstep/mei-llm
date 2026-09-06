@@ -18,7 +18,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Iterable, Mapping
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 SKIP_DIRECTORIES = {

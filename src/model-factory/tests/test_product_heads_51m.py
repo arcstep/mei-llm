@@ -8,7 +8,7 @@ import mlx.core as mx
 
 
 ROOT = next(parent for parent in Path(__file__).resolve().parents if (parent / "CURRENT.json").is_file())
-ARCH = ROOT / "architecture" / "mei-1.0-51m-arch-v1"
+ARCH = ROOT / "src/architecture/mei-1.2-51m"
 sys.path.insert(0, str(ARCH))
 
 from heads import (  # noqa: E402

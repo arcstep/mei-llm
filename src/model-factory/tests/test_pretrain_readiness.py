@@ -11,7 +11,7 @@ _HERE = Path(__file__).resolve().parent
 if str(_HERE) not in sys.path:
     sys.path.insert(0, str(_HERE))
 
-from common._repo import CORPUS_LM_V1, CORPUS_LM_V2, ROOT, ensure_formal_on_path
+from common.paths import CORPUS_LM_V1, CORPUS_LM_V2, ROOT, ensure_formal_on_path
 
 ensure_formal_on_path()
 from training.cpt.cpt_gates import refuse_cpt_source

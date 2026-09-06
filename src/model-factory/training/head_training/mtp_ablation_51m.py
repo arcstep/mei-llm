@@ -17,7 +17,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT, architecture_contracts
+from common.paths import ROOT, architecture_contracts
 
 
 def _canonical(value: Any) -> bytes:

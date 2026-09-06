@@ -21,7 +21,7 @@ import orchestration.productize_51m as lifecycle
 import contracts.sft_v4_contract_51m as contract
 import evaluation.tool_use.sft_v3_eval_51m as evaluation
 import training.tool_use.sft_v3_training_51m as training
-from common._repo import (
+from common.paths import (
     CURRENT_PATH,
     ROOT,
     TOKENIZER_ZH_V1,

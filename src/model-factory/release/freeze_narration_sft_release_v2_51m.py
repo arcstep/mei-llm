@@ -18,7 +18,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 import sys
 

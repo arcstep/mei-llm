@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from common._repo import ROOT
+from common.paths import ROOT
 
 
 CARGO_WORKSPACE = ROOT / "src/platform/_shared"

@@ -26,7 +26,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable
 
-from common._repo import CURRENT_PATH, ROOT
+from common.paths import CURRENT_PATH, ROOT
 
 
 DEFAULT_RELEASE = (
@@ -36,7 +36,7 @@ DEFAULT_RELEASE = (
 )
 MAX_NEW = 48
 SOURCE_FILES = (
-    "src/model-factory/evaluation/heads/evaluate_narration_adapter_51m.py",
+    "src/model-factory/evaluation/head_eval/evaluate_narration_adapter_51m.py",
     "platform/python-sdk/mei_sdk/runtime_51m.py",
     "platform/python-sdk/mei_sdk/package.py",
     "platform/_shared/runtime/narration.py",

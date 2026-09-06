@@ -75,7 +75,7 @@ class Registry:
         if added:
             sys.path.insert(0, factory)
         try:
-            from common._repo import resolve_repo_path
+            from common.paths import resolve_repo_path
 
             return resolve_repo_path(value).resolve()
         finally:

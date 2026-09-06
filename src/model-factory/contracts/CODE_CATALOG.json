@@ -78,7 +78,7 @@
       "status": "active_support"
     },
     {
-      "path": "src/model-factory/training/heads",
+      "path": "src/model-factory/training/head_training",
       "role": "retrieval, confidence and training-only MTP head workers; MW remains a distinct productization stage",
       "status": "active_support"
     },
@@ -98,7 +98,7 @@
       "status": "active_support"
     },
     {
-      "path": "src/model-factory/evaluation/heads",
+      "path": "src/model-factory/evaluation/head_eval",
       "role": "independent auxiliary-head and narration evaluation",
       "status": "active_support"
     },
