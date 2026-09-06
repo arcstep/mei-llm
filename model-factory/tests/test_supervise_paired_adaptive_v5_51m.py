@@ -168,7 +168,7 @@ class PairedAdaptiveV5SupervisorTests(unittest.TestCase):
         run_300 = supervisor.PACKAGED_300_RUN
         run_600 = (
             supervisor.ROOT
-            / "artifacts/mei-1.0-51m/legacy/exp-000600m/runs/"
+            / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/runs/"
             "productize-cpt600m-adaptive-v5-cq2-v2-43bdca400ac1"
         )
         args = supervisor.parse_args(

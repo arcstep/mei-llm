@@ -11,7 +11,7 @@
 
 Platform 只保留当前实现。历史版本由 Git revision 和 cycle receipt 的 source manifest
 定位，不复制 `300m/600m/v1-old` 分支。模型权重不在 Platform；它们是
-[`../models/mei-1.0-51m/releases/`](../models/mei-1.0-51m/releases/) 下的一等资产。
+[`../models/mei-1.2-51m/releases/`](../models/mei-1.2-51m/releases/) 下的一等资产。
 
 当前 Platform 只接受文本请求并返回结构化工具结果或终态文字解说，不管理麦克风、PCM、
 ASR、TTS 或音频播放。上层 `mei-agent` / `mei-avatar` 可通过 provider 组合语音链路；这些

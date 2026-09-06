@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 
-ARCH = next(parent for parent in Path(__file__).resolve().parents if (parent / "CURRENT.json").is_file()) / "models/mei-1.0-51m/architecture"
+ARCH = next(parent for parent in Path(__file__).resolve().parents if (parent / "CURRENT.json").is_file()) / "models/mei-1.2-51m/architecture"
 if str(ARCH) not in sys.path:
     sys.path.insert(0, str(ARCH))
 
@@ -50,7 +50,7 @@ class ArchitectureContract51MTest(unittest.TestCase):
         self.assertIsNone(resolve_legacy_weight_contract("0" * 64))
 
     def test_frozen_300m_npz_headers_match_the_canonical_geometry(self) -> None:
-        base = ARCH.parents[2] / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+        base = ARCH.parents[2] / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
         weights = base / "mei-1.0-51m-base-scratch300m-v1.npz"
         report = validate_npz_weight_geometry(weights)
         self.assertTrue(report["ok"], report)

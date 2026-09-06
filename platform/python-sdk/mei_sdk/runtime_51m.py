@@ -35,7 +35,7 @@ from .shared import (
 from .version import SDK_ROOT
 
 _MEI_LLM = SDK_ROOT.parents[1]
-_ARCH_51 = _MEI_LLM / "models/mei-1.0-51m/architecture"
+_ARCH_51 = _MEI_LLM / "models/mei-1.2-51m/architecture"
 _MODEL_FACTORY = _MEI_LLM / "model-factory"
 _RUNTIME_SHARED = _MEI_LLM / "platform/_shared/runtime"
 
@@ -846,7 +846,7 @@ def load_51m_runtime(package: ModelPackage, *, backend: str = "mlx-reference"):
         "tokenizer": str(tokenizer_path),
         "package_id": package.package_id,
         "backend": backend,
-        "product": "mei-1.0-51m",
+        "product": "mei-1.2-51m",
         "inference": True,
         "mw_disposition_head": mw_disposition is not None,
         "narration_adapter": narration_adapter is not None,

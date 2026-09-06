@@ -22,11 +22,11 @@ from common._repo import CURRENT_PATH, ROOT, architecture_contracts
 from orchestration.productize_51m import build_plan, parse_args as parse_productize_args, validate_base
 
 
-DEFAULT_BASE = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+DEFAULT_BASE = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 SOURCE_FILES = (
     "model-factory/orchestration/verify_arbitrary_base_entry_51m.py",
     "model-factory/orchestration/productize_51m.py",
-    "models/mei-1.0-51m/architecture/architecture_contract.py",
+    "models/mei-1.2-51m/architecture/architecture_contract.py",
 )
 FIXTURE_EXPOSURES = (600_000_000, 900_000_000)
 

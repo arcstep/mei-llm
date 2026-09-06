@@ -4,7 +4,7 @@
 
 - **v2 天然角色**（来自注册表 `corpus-factory/sources/source_registry.json`）：
   fineweb2_hq / wiki_zh / wiki_en / dialogue / structured / code。
-  池实物：`artifacts/mei-1.0-51m/pools/zh-v2-pool/`（raw → admitted → pools），
+  池实物：`artifacts/mei-1.2-51m/pools/zh-v2-pool/`（raw → admitted → pools），
   权威锚点 = 各 admitted manifest v2 + 池 release `zh-v2-pool-natural-v4`。
 - **旧 v1 角色**（wiki/fineweb2_hq/structure/colloquial，词表 zh-24k-v1）只作
   回归证据，不进入新链消费。structure/colloquial 合成角色已 retire，其语义位置

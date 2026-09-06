@@ -142,7 +142,7 @@ METRIC_CONTRACT = {
 
 
 def _load_tokenizer() -> Any:
-    architecture_dir = contract.ROOT / "models/mei-1.0-51m/architecture"
+    architecture_dir = contract.ROOT / "models/mei-1.2-51m/architecture"
     text = str(architecture_dir)
     added = text not in sys.path
     if added:
@@ -276,7 +276,7 @@ def _balanced_mw_rows(
 
     codebook_path = (
         contract.ROOT
-        / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+        / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
     )
     codebook = contract.load_json(codebook_path)
     class_ids = {

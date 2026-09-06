@@ -1,14 +1,14 @@
 {
   "id": "mei-1.0-51m-scratch-pretrain-v1",
   "mode": "scratch",
-  "architecture": "models/mei-1.0-51m/architecture",
+  "architecture": "models/mei-1.2-51m/architecture",
   "config_loader": "NeedleZhConfig.from_spec",
-  "spec": "models/mei-1.0-51m/architecture/spec/model.json",
+  "spec": "models/mei-1.2-51m/architecture/spec/model.json",
   "v2_heads_in_default_pretrain": false,
   "implemented_in_code_is_not_publishable": true,
-  "tokenizer": "models/mei-1.0-51m/tokenizer",
-  "corpus": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
-  "schedule": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
+  "tokenizer": "models/mei-1.2-51m/tokenizer",
+  "corpus": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1",
+  "schedule": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
   "parent_checkpoint": null,
   "init_mode": "scratch",
   "run": "pretrain-mei-1.0-51m-base-scratch300m-v1",
@@ -43,9 +43,9 @@
     "parent_architecture": "mei-1.0-51m-arch-v1",
     "may_be_used_as_parent": false,
     "do_not_resume": [
-      "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/pretrain-300m-scratch",
-      "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/pretrain-pilot-5m-scratch-v2",
-      "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/pretrain-1b-cpt-from-scratch300m"
+      "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/pretrain-300m-scratch",
+      "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/pretrain-pilot-5m-scratch-v2",
+      "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/pretrain-1b-cpt-from-scratch300m"
     ]
   }
 }

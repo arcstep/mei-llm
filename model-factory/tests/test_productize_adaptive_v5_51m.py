@@ -143,7 +143,7 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
     def test_recovery_plan_adopts_hash_bound_prefix_and_starts_at_eval(self) -> None:
         source = (
             productizer.ROOT
-            / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
+            / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/"
             "productize-scratch300m-adaptive-v5-cq2-v2-164574857928"
         )
         args = productizer.parse_args(
@@ -168,7 +168,7 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
     def test_packaged_recovery_starts_at_python_gate_without_retraining(self) -> None:
         source = (
             productizer.ROOT
-            / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
+            / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/"
             "productize-scratch300m-adaptive-v5-cq2-v2-40ba9754076e"
         )
         args = productizer.parse_args(["--adopt-packaged-run", str(source)])
@@ -201,12 +201,12 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
     def test_two_adoption_boundaries_are_mutually_exclusive(self) -> None:
         prefix = (
             productizer.ROOT
-            / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
+            / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/"
             "productize-scratch300m-adaptive-v5-cq2-v2-164574857928"
         )
         packaged = (
             productizer.ROOT
-            / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
+            / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/"
             "productize-scratch300m-adaptive-v5-cq2-v2-40ba9754076e"
         )
         args = productizer.parse_args(

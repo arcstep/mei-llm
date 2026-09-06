@@ -14,7 +14,7 @@ _HERE = Path(__file__).resolve().parent
 
 from common._repo import ROOT, TRAIN_RUNS, ensure_formal_on_path
 
-_ARCH = ROOT / "models/mei-1.0-51m/architecture"
+_ARCH = ROOT / "models/mei-1.2-51m/architecture"
 for path in (_ARCH, ROOT / "model-factory"):
     text = str(path)
     if text not in sys.path:
@@ -26,9 +26,9 @@ ARCHITECTURE_ID = "mei-1.0-51m-arch-v1"
 MODEL_ID = "mei-1.0-51m-base-scratch300m-v1"
 RUN_NAME = "pretrain-mei-1.0-51m-base-scratch300m-v1"
 EXPECTED_PARAMS = 51_463_797
-ARCHITECTURE_DIR = ROOT / "models/mei-1.0-51m/architecture"
+ARCHITECTURE_DIR = ROOT / "models/mei-1.2-51m/architecture"
 ARCHITECTURE_SPEC = ARCHITECTURE_DIR / "spec" / "model.json"
-ARTIFACT_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m"
+ARTIFACT_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m"
 BASE_DIR = ARTIFACT_ROOT / "models/base" / MODEL_ID
 WEIGHTS_PATH = BASE_DIR / f"{MODEL_ID}.npz"
 RELEASE_PATH = BASE_DIR / "RELEASE.json"

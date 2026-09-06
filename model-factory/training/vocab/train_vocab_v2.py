@@ -20,8 +20,8 @@ from pathlib import Path
 from typing import Any, Iterator
 
 ROOT = Path(__file__).resolve().parents[3]
-TOKENIZER_DIR = ROOT / "models/mei-1.0-51m/tokenizer"
-POINTER_PATH = ROOT / "models/mei-1.0-51m/architecture/tokenizer/TOKENIZER.json"
+TOKENIZER_DIR = ROOT / "models/mei-1.2-51m/tokenizer"
+POINTER_PATH = ROOT / "models/mei-1.2-51m/architecture/tokenizer/TOKENIZER.json"
 V1_MODEL = TOKENIZER_DIR / "zh-24k-v1.model"
 
 # Markers frozen in the v1 vocabulary; carried into v2 verbatim.

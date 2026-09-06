@@ -188,7 +188,7 @@ def refuse_cpt_source(corpus_dir: Path, rung: str) -> str | None:
     if not corpus_dir.is_absolute():
         corpus_dir = ROOT / corpus_dir
     if corpus_dir.resolve() == CORPUS_LM_V1.resolve():
-        return "cpt refuses artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1; continuation consumes artifacts/mei-1.0-51m/legacy/_legacy/corpus/planned-exp-001000m-lm-v2"
+        return "cpt refuses artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1; continuation consumes artifacts/mei-1.0-51m/legacy/_legacy/corpus/planned-exp-001000m-lm-v2"
     if (corpus_dir / "schedule.json").is_file():
         return "cpt refuses archived schedule.json name; use schedule-cpt-<rung>.json"
     scratch_path = corpus_dir / "schedule-scratch.json"

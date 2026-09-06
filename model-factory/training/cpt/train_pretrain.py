@@ -87,7 +87,7 @@ from common.train_common import eval_lm_loss, peak_bytes, segment_throughput, tr
 RECIPE_PATH = RECIPES_DIR / "pretrain-rungs.json"
 RECIPE_51M_PATH = RECIPES_DIR / "pretrain-51m-rungs.json"
 CPT_RECIPE_PATH = RECIPES_DIR / "cpt-1b-rungs.json"
-PARENT_STATE = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1-state.npz"
+PARENT_STATE = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1-state.npz"
 DEFAULTS = {
     "pilot-1m": {"target": 1_000_000, "horizon": 300_000_000, "eval_every": 250_000, "save_every": 250_000},
     "pilot-5m": {"target": 5_000_000, "horizon": 300_000_000, "eval_every": 500_000, "save_every": 500_000},
@@ -229,7 +229,7 @@ def refuse_schedule_mismatch(kind: str, schedule: dict) -> str | None:
         return (
             "scratch refuses an archived continuation schedule "
             "(parent_tokens_seen/skip_tokens/parent_checkpoint). "
-            "Use artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json."
+            "Use artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1/schedule-scratch.json."
         )
     if kind == "cpt" and actual != "cpt":
         return "cpt schedule kind must classify as cpt"
@@ -305,7 +305,7 @@ def main() -> int:
         "--corpus-dir",
         type=Path,
         default=CORPUS_LM_V1,
-        help="pretrain pack root (default artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1 four-role scratch mix)",
+        help="pretrain pack root (default artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1 four-role scratch mix)",
     )
     ap.add_argument("--exclude-source", action="append", default=[], help="Drop a scheduled mix source (ablation)")
     ap.add_argument("--run-suffix", default="", help="Append to run/ckpt name, e.g. no-colloquial")

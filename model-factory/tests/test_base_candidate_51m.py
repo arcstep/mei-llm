@@ -134,7 +134,7 @@ class BaseCandidateBoundaryTest(unittest.TestCase):
                 patch.object(
                     candidate,
                     "BASE_ROOT",
-                    root / "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base",
+                    root / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base",
                 ),
                 patch.object(candidate, "TOKENIZER_ZH_V1", tokenizer),
                 patch.object(candidate, "current_hash", return_value="unchanged"),
@@ -168,7 +168,7 @@ class BaseCandidateBoundaryTest(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, "terminal cpt_gate"):
                     candidate._verified_inputs("run-600m")
                 registered = candidate.register_base_candidate("run-600m")
-                dest = root / "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-v1"
+                dest = root / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base/mei-1.0-51m-base-cpt600m-v1"
                 self.assertTrue((dest / "RELEASE.json").is_file())
                 self.assertTrue(registered["current_unchanged"])
                 release = json.loads((dest / "RELEASE.json").read_text())
@@ -447,7 +447,7 @@ class BaseCandidateBoundaryTest(unittest.TestCase):
         ):
             with self.assertRaises(PermissionError):
                 candidate.finalize_current(
-                    Path("artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-v1"),
+                    Path("artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base/mei-1.0-51m-base-cpt600m-v1"),
                     expected_current_sha256="unused",
                     confirmation="not authorized",
                 )

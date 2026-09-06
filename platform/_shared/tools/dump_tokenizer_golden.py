@@ -11,7 +11,7 @@ import sentencepiece as spm
 
 
 ROOT = Path(__file__).resolve().parents[3]
-MODEL = ROOT / "models/mei-1.0-51m/tokenizer/zh-24k-v1.model"
+MODEL = ROOT / "models/mei-1.2-51m/tokenizer/zh-24k-v1.model"
 OUTPUT = ROOT / "platform/_shared/spec/golden/tokenizer_v2.json"
 
 

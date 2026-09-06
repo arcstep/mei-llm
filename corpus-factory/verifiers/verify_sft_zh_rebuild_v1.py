@@ -57,7 +57,7 @@ def verify_current_json_untouched() -> list[str]:
 def verify_base_weights_untouched() -> list[str]:
     errors = []
     actual = C.sha256_file(
-        ROOT / "models/mei-1.0-51m/releases/exp-000600m/base"
+        ROOT / "models/mei-1.2-51m/releases/exp-000600m/base"
         / "mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1.npz"
     )
     if actual != C.BASE_WEIGHTS_SHA256:

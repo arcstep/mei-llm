@@ -32,7 +32,7 @@ from common._repo import (
 
 
 RUNNER_ID = "mei-51m-sft-v4-productizer-v1-quality-schema"
-DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 DEFAULT_BASE_RELEASE = DEFAULT_BASE_DIR / "RELEASE.json"
 DEFAULT_BASE_WEIGHTS = DEFAULT_BASE_DIR / "mei-1.0-51m-base-scratch300m-v1.npz"
 DEFAULT_DATA_RELEASE = contract.DEFAULT_RELEASE_ROOT / contract.RELEASE_ID
@@ -44,12 +44,12 @@ DEFAULT_QAT_IMPORT_RECEIPT = DEFAULT_DATA_RELEASE / "qat-import-candidate-receip
 DEFAULT_NARRATION_RELEASE = contract.NARRATION_RELEASE_DIR
 DEFAULT_RUN_DIR = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/productize-scratch300m-sft-v4-quality-schema-cq2-v2"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/productize-scratch300m-sft-v4-quality-schema-cq2-v2"
 )
 DEFAULT_PACKAGE_ID = "mei-1.0-51m-scratch300m-tool-sft-cq2-v2-sftv4-quality-schema"
 RUNTIME_PROFILE_COMPATIBILITY = (
     ROOT
-    / "models/mei-1.0-51m/architecture/spec/runtime-profile-compatibility.json"
+    / "models/mei-1.2-51m/architecture/spec/runtime-profile-compatibility.json"
 )
 
 STAGES = (
@@ -508,7 +508,7 @@ def _source_manifest() -> dict[str, str]:
         ROOT / "model-factory/orchestration/productize_51m.py",
         ROOT / "model-factory/training/qat/cq2_qat_51m.py",
         ROOT / "model-factory/release/pack_cq2_v2_51m.py",
-        ROOT / "models/mei-1.0-51m/architecture/heads.py",
+        ROOT / "models/mei-1.2-51m/architecture/heads.py",
         ROOT / "platform/python-sdk/mei_sdk/runtime_51m.py",
         ROOT / "platform/_shared/runtime/kv_manager.py",
         ROOT / "platform/_shared/runtime/tool_index.py",

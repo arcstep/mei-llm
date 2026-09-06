@@ -163,7 +163,7 @@ class DeployIndex:
         sys_path = Path(__file__).resolve()
         root = sys_path.parents[3]
         tools_path = (
-            root / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite"
+            root / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite"
             / "historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4/tool-universe.json"
         )
         raw = json.loads(tools_path.read_text(encoding="utf-8"))

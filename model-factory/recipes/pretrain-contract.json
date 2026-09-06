@@ -1,19 +1,19 @@
 {
   "id": "mei-1.0-51m-scratch-pretrain-v1",
   "mode": "scratch",
-  "architecture": "models/mei-1.0-51m/architecture",
+  "architecture": "models/mei-1.2-51m/architecture",
   "config_loader": "NeedleZhConfig.from_spec",
-  "spec": "models/mei-1.0-51m/architecture/spec/model.json",
+  "spec": "models/mei-1.2-51m/architecture/spec/model.json",
   "contracts": {
-    "weight_geometry": "models/mei-1.0-51m/architecture/spec/model.json#architecture",
-    "runtime_profile": "models/mei-1.0-51m/architecture/spec/model.json#runtime_profile",
-    "training_aux": "models/mei-1.0-51m/architecture/spec/model.json#training_aux"
+    "weight_geometry": "models/mei-1.2-51m/architecture/spec/model.json#architecture",
+    "runtime_profile": "models/mei-1.2-51m/architecture/spec/model.json#runtime_profile",
+    "training_aux": "models/mei-1.2-51m/architecture/spec/model.json#training_aux"
   },
   "v2_heads_in_default_pretrain": false,
   "implemented_in_code_is_not_publishable": true,
-  "tokenizer": "models/mei-1.0-51m/tokenizer",
-  "corpus": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
-  "schedule": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
+  "tokenizer": "models/mei-1.2-51m/tokenizer",
+  "corpus": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1",
+  "schedule": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
   "parent_checkpoint": null,
   "init_mode": "scratch",
   "roles": [

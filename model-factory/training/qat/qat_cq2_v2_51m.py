@@ -34,12 +34,12 @@ from training.qat.cq2_qat_51m import explicit_group_map, group_map_receipt, quan
 from common.train_common import clip_grads, eval_lm_loss, masked_lm_loss, stack_windows
 
 
-DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 DEFAULT_BASE_RELEASE = DEFAULT_BASE_DIR / "RELEASE.json"
 DEFAULT_BASE_WEIGHTS = DEFAULT_BASE_DIR / "mei-1.0-51m-base-scratch300m-v1.npz"
-DEFAULT_CORPUS = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1"
+DEFAULT_CORPUS = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1"
 DEFAULT_ANCHOR = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json"
-ARCHITECTURE_DIR = ROOT / "models/mei-1.0-51m/architecture"
+ARCHITECTURE_DIR = ROOT / "models/mei-1.2-51m/architecture"
 
 
 def _canonical(value: Any) -> bytes:

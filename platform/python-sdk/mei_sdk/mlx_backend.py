@@ -16,7 +16,7 @@ from .package import ModelPackage
 from .version import PYTHON_SDK_ROOT, SDK_ROOT
 
 _MEI_LLM = SDK_ROOT.parents[1]
-_ARCH = _MEI_LLM / "models/mei-1.0-51m/architecture"
+_ARCH = _MEI_LLM / "models/mei-1.2-51m/architecture"
 _RUNTIME_SHARED = _MEI_LLM / "platform/_shared/runtime"
 
 _REFERENCE_REVISION_FILES = (

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PYTHON_SDK = ROOT.parent / "python-sdk"
 sys.path.insert(0, str(PYTHON_SDK))
 
-PACKAGE = ROOT.parents[1] / "models/mei-1.0-51m/releases/exp-000300m/package/mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5"
+PACKAGE = ROOT.parents[1] / "models/mei-1.2-51m/releases/exp-000300m/package/mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5"
 WEATHER = {
     "name": "get_weather",
     "description": "Get the current weather for a city.",

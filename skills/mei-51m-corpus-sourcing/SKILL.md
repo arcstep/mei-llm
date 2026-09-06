@@ -87,7 +87,7 @@ python -m mei_llm corpus source admit \
 - 带 `--source-id` = provenance v2（manifest `...-v2`，记录 source_id/source_url/
   subset/dataset_version/acquired_at + registry_entry_sha256 + tokenizer_id）；
   不带 = 旧 v1 兼容路径。
-- `--expected-tokenizer-id` 与冻结指针（`models/mei-1.0-51m/architecture/
+- `--expected-tokenizer-id` 与冻结指针（`models/mei-1.2-51m/architecture/
   tokenizer/TOKENIZER.json`）双绑；指针缺失/status≠frozen/hash 漂移一律拒绝。
 - 结构化源加 `--mode structured`：记录级 sha256 去重、tokenize 保留结构、
   坏结构比例超阈值（注册表 admit.max_invalid_ratio，默认 0.001，只可调严）

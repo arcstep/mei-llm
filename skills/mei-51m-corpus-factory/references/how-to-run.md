@@ -73,7 +73,7 @@ python scripts/build.py \
 输出：
 
 ```text
-artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite/<RELEASE_ID>/
+artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/sft-suite/<RELEASE_ID>/
 ├── semantic/
 ├── compiled/
 ├── governance/

@@ -13,7 +13,7 @@ except ImportError:
     mx = nn = None
 
 MEI_LLM = Path(__file__).resolve().parents[3]
-ARCH = MEI_LLM / "models/mei-1.0-51m/architecture"
+ARCH = MEI_LLM / "models/mei-1.2-51m/architecture"
 RUNTIME_SHARED = MEI_LLM / "platform/_shared/runtime"
 SDK_PYTHON = MEI_LLM / "platform/python-sdk"
 for path in (ARCH, RUNTIME_SHARED, SDK_PYTHON):

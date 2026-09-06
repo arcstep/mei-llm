@@ -62,7 +62,7 @@ class RebuildError(RuntimeError):
 # ---------------------------------------------------------------------------
 _V4_300M_RELEASE_DIR = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite"
     / "historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4"
 )
 DEPLOY_TOOLS_PATH = _V4_300M_RELEASE_DIR / "tool-universe.json"
@@ -74,16 +74,16 @@ EVAL_V7_BANK_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluat
 
 BASE_RELEASE_PATH = (
     ROOT
-    / "models/mei-1.0-51m/releases/exp-000600m/base"
+    / "models/mei-1.2-51m/releases/exp-000600m/base"
     / "mei-1.0-51m-base-cpt600m-clean-source-v3-v1/RELEASE.json"
 )
 BASE_WEIGHTS_SHA256 = "6d55a61773cdd0a6713c43fa7565f8c2fa64414c3e4a1beadfb6507e0d91752a"
 CURRENT_JSON_PATH = ROOT / "CURRENT.json"
 
-TOKENIZER_DIR = ROOT / "models/mei-1.0-51m/architecture"
+TOKENIZER_DIR = ROOT / "models/mei-1.2-51m/architecture"
 
-RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite"
-EVAL_LOCK_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/eval-lock"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/sft-suite"
+EVAL_LOCK_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/eval-lock"
 
 
 def sha256_bytes(data: bytes) -> str:

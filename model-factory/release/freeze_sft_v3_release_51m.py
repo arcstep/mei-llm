@@ -27,11 +27,11 @@ import contracts.sft_v3_contract_51m as contract
 
 
 BASE_RELEASE_PATH = (
-    contract.ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json"
+    contract.ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json"
 )
 QAT_STAGE_DIR = (
     contract.ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/productize-scratch300m-agent-cq2-v2-ff204182428e"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/productize-scratch300m-agent-cq2-v2-ff204182428e"
     / "stages/cq2_qat_v2"
 )
 QAT_MASTER_PATH = QAT_STAGE_DIR / "worker/stages/cq2_qat_v2/final-master.npz"
@@ -74,7 +74,7 @@ def _copy_rows(path: Path) -> tuple[list[dict[str, Any]], bytes]:
 
 
 def _load_tokenizer() -> Any:
-    architecture_dir = contract.ROOT / "models/mei-1.0-51m/architecture"
+    architecture_dir = contract.ROOT / "models/mei-1.2-51m/architecture"
     text = str(architecture_dir)
     added = text not in sys.path
     if added:
@@ -521,7 +521,7 @@ def build_payloads(args: argparse.Namespace) -> tuple[dict[str, bytes], dict[str
         "mw-reason-definitions-v2-20class.json": parent / "mw-reason-definitions-v2-20class.json",
         "mw-disposition-codebook-v1.json": (
             contract.ROOT
-            / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+            / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
         ),
     }
     payloads: dict[str, bytes] = {

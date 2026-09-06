@@ -174,16 +174,16 @@ class FiveDomainLayoutTest(unittest.TestCase):
             (ROOT / ".internal/registry/migrations/2026-09-four-domain-baseline.json").read_text()
         )["immutable_artifacts"]
         cases = {
-            "scratch300m_weights_sha256": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1.npz",
-            "scratch300m_state_sha256": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1-state.npz",
-            "cpt600m_weights_sha256": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1.npz",
-            "cpt600m_state_sha256": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1-state.npz",
+            "scratch300m_weights_sha256": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1.npz",
+            "scratch300m_state_sha256": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/mei-1.0-51m-base-scratch300m-v1-state.npz",
+            "cpt600m_weights_sha256": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1.npz",
+            "cpt600m_state_sha256": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1-state.npz",
         }
         for key, path in cases.items():
             self.assertEqual(sha256_file(path), baseline[key])
 
     def test_canonical_model_assets_match_hash_locked_inventory(self) -> None:
-        releases = ROOT / "models/mei-1.0-51m/releases"
+        releases = ROOT / "models/mei-1.2-51m/releases"
         for cycle_id in ("exp-000300m", "exp-000600m"):
             cycle_root = releases / cycle_id
             manifest = json.loads((cycle_root / "ASSETS.json").read_text())

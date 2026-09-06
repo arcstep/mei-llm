@@ -844,7 +844,7 @@ def _require_sha(value: Any, *, label: str) -> str:
 
 
 def _validate_v2_manifest(root: Path, manifest: dict[str, Any], *, verify_hashes: bool) -> bool:
-    if manifest.get("product") != "mei-1.0-51m" or manifest.get("runtime_min") != "mei-runtime-abi-2":
+    if manifest.get("product") not in ("mei-1.0-51m", "mei-1.2-51m") or manifest.get("runtime_min") != "mei-runtime-abi-2":
         raise SdkError("package_invalid", "v2 package product/runtime_min mismatch")
     contracts = manifest.get("contracts") or {}
     if set(contracts) != {
@@ -1293,8 +1293,8 @@ def load_package(package_dir: str | Path, *, verify_hashes: bool = True) -> Mode
     if package_format not in {"mei-model-package-v1", "mei-model-package-v2"}:
         raise SdkError("package_invalid", "unsupported package_format")
     product = str(manifest.get("product") or "")
-    if product != "mei-1.0-51m":
-        raise SdkError("package_invalid", "product must be mei-1.0-51m")
+    if product not in ("mei-1.0-51m", "mei-1.2-51m"):
+        raise SdkError("package_invalid", "product must be mei-1.0-51m or mei-1.2-51m")
     if package_format == "mei-model-package-v2":
         _validate_against_v2_schema(manifest)
     heads_raw = manifest.get("heads")

@@ -4,7 +4,7 @@
 
 1. **build.py 编排**：每个 family 写 semantic + compiled
    `{train,valid,dev,test}.jsonl`，落
-   `artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite/<RELEASE_ID>/`；
+   `artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/sft-suite/<RELEASE_ID>/`；
    split 由 `cf_group` sha256 分桶决定（与 eval-lock 同机制隔离）。
 2. **release ID**：`mei-1.0-51m-exp-000600m-sft-zh-rebuild-<v<n>>`。已有同 ID
    产物 = 已是持久化发布 → 禁止覆盖，直接 bump 版本并写 supersede 链；

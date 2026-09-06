@@ -22,7 +22,7 @@ def find_root(start: Path | None = None) -> Path:
 
 ROOT = find_root()
 CURRENT_PATH = ROOT / "CURRENT.json"
-TOKENIZER_DIR = ROOT / "models/mei-1.0-51m/tokenizer"
+TOKENIZER_DIR = ROOT / "models/mei-1.2-51m/tokenizer"
 TOKENIZER_ZH_V1 = TOKENIZER_DIR / "legacy/zh-24k-v1.model"
 
 
@@ -40,7 +40,7 @@ _ARCHITECTURE_ID_RE = re.compile(r"^mei-1\.0-51m-arch-v\d+$")
 ARCHITECTURE_ID = os.environ.get("MEI_ARCHITECTURE_ID", "mei-1.0-51m-arch-v1")
 if "/" in ARCHITECTURE_ID or "\\" in ARCHITECTURE_ID or not _ARCHITECTURE_ID_RE.fullmatch(ARCHITECTURE_ID):
     raise RuntimeError(f"unsupported architecture identity: {ARCHITECTURE_ID}")
-ARCHITECTURE_DIR = ROOT / "models/mei-1.0-51m/architecture"
+ARCHITECTURE_DIR = ROOT / "models/mei-1.2-51m/architecture"
 if not (ARCHITECTURE_DIR / "spec/model.json").is_file():
     raise RuntimeError(f"missing architecture spec: {ARCHITECTURE_DIR / 'spec/model.json'}")
 ARCHITECTURE_SPEC = ARCHITECTURE_DIR / "spec"
@@ -52,22 +52,22 @@ RECIPES_DIR = MODEL_FACTORY_DIR / "recipes"
 # model-factory package root, not at a hidden flat scripts directory.
 TRAINING_DIR = MODEL_FACTORY_DIR
 # 一等公民训练产物根：artifacts/（非 .local——训练成果不是临时文件）。
-# 布局：legacy/ 全部旧链归档；cycles/exp-XXXm 新链正式序列；pools/ 现役语料池。
-ARTIFACT_ROOT = ROOT / "artifacts/mei-1.0-51m"
+# 布局：exp-XXXm 新链正式 cycle 序列；legacy/ 全部旧链归档；pools/ 现役语料池。
+ARTIFACT_ROOT = ROOT / "artifacts/mei-1.2-51m"
 LEGACY_ARTIFACT_ROOT = ARTIFACT_ROOT / "legacy"
-TRAIN_RUNS = LEGACY_ARTIFACT_ROOT / "exp-000300m/runs"
+TRAIN_RUNS = LEGACY_ARTIFACT_ROOT / "mei-1.0-51m/exp-00300m/runs"
 RUNTIME_SHARED = ROOT / "platform/_shared/runtime"
-CORPUS_LM_V1 = LEGACY_ARTIFACT_ROOT / "exp-000300m/corpus/cpt-delta/lm-v1"
-CORPUS_LM_V2 = LEGACY_ARTIFACT_ROOT / "_legacy/corpus/planned-exp-001000m-lm-v2"
+CORPUS_LM_V1 = LEGACY_ARTIFACT_ROOT / "mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1"
+CORPUS_LM_V2 = LEGACY_ARTIFACT_ROOT / "mei-1.0-51m/_legacy/corpus/planned-exp-001000m-lm-v2"
 CORPUS_ZH_PRETRAIN = CORPUS_LM_V1 / "language/zh-pretrain-v0"
-BASE_SCRATCH300M = LEGACY_ARTIFACT_ROOT / "exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
-BASE_CPT1B = LEGACY_ARTIFACT_ROOT / "exp-001000m/models/base/mei-1.0-51m-base-cpt1b-v1"
+BASE_SCRATCH300M = LEGACY_ARTIFACT_ROOT / "mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+BASE_CPT1B = LEGACY_ARTIFACT_ROOT / "mei-1.0-51m/exp-001000m/models/base/mei-1.0-51m-base-cpt1b-v1"
 CPT_1B_RUN = TRAIN_RUNS / "pretrain-1b-cpt-from-scratch300m"
-EVAL_SHARED_ROOT = LEGACY_ARTIFACT_ROOT / "_legacy/notebook/evaluation/shared"
+EVAL_SHARED_ROOT = LEGACY_ARTIFACT_ROOT / "mei-1.0-51m/_legacy/notebook/evaluation/shared"
 
 
-def _cycle_lineage(cycle_id: str) -> str:
-    """registry 里的血缘：zh-v2-rebuild 走 cycles/ 正式序列，legacy 走归档区。"""
+def cycle_lineage(cycle_id: str) -> str:
+    """registry 里的血缘：zh-v2-rebuild 走 exp-XXXm 正式序列，legacy 走归档区。"""
     registry = ROOT / ".internal/registry/cycles.json"
     try:
         data = json.loads(registry.read_text(encoding="utf-8"))
@@ -83,10 +83,14 @@ def _cycle_lineage(cycle_id: str) -> str:
 def cycle_artifacts(cycle_id: str) -> Path:
     if not re.fullmatch(r"exp-[0-9]{6}m(-v[0-9]+)?", cycle_id):
         raise ValueError(f"invalid cycle id: {cycle_id}")
-    if _cycle_lineage(cycle_id) == "zh-v2-rebuild":
-        # 新链正式序列：cycles/exp-XXXm（目录名不带 -vN 后缀）
-        return ARTIFACT_ROOT / "cycles" / re.sub(r"-v[0-9]+$", "", cycle_id)
-    return LEGACY_ARTIFACT_ROOT / cycle_id
+    base_id = re.sub(r"-v[0-9]+$", "", cycle_id)  # exp-000300m → exp-00300m
+    match = re.fullmatch(r"exp-([0-9]{6})m", base_id)
+    millions = int(match.group(1)) if match else 0
+    normalized = f"exp-{millions:05d}m"
+    if cycle_lineage(cycle_id) == "zh-v2-rebuild":
+        # 新链正式序列：mei-1.2-51m/exp-XXXm（大版本入产品名，cycle 直属根）
+        return ARTIFACT_ROOT / normalized
+    return LEGACY_ARTIFACT_ROOT / "mei-1.0-51m" / normalized
 
 
 def cycle_runs(cycle_id: str) -> Path:

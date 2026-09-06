@@ -207,7 +207,7 @@ def main() -> int:
     packed, header = build_pack_bytes(tensors, baseline["tensor_bits"])
     weights_path = dest / "weights.q4"
     weights_path.write_bytes(packed)
-    tok_src = next(parent for parent in Path(__file__).resolve().parents if (parent / "CURRENT.json").is_file()) / "models/mei-1.0-51m/tokenizer/zh-24k-v1.model"
+    tok_src = next(parent for parent in Path(__file__).resolve().parents if (parent / "CURRENT.json").is_file()) / "models/mei-1.2-51m/tokenizer/zh-24k-v1.model"
     tok_dest = dest / "tokenizer.model"
     shutil.copy2(tok_src, tok_dest)
     tok = ZhTokenizerV1(tok_dest)

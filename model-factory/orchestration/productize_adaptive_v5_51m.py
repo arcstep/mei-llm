@@ -69,18 +69,18 @@ DEFAULT_LINGUISTIC_AUGMENTATION = (
 )
 DEFAULT_EVAL_LOCK = contract.DEFAULT_EVAL_ROOT / contract.EVAL_ID
 DEFAULT_NARRATION_RELEASE = contract.NARRATION_RELEASE_DIR
-DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1"
+DEFAULT_BASE_DIR = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 DEFAULT_BASE_RELEASE = DEFAULT_BASE_DIR / "RELEASE.json"
 DEFAULT_BASE_WEIGHTS = DEFAULT_BASE_DIR / "mei-1.0-51m-base-scratch300m-v1.npz"
 DEFAULT_QAT_IMPORT = DEFAULT_DATA_RELEASE / "qat-import-candidate-receipt.json"
 DEFAULT_SEED_RUN = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/"
     "productize-scratch300m-sft-v4-quality-schema-cq2-v2-cbd960d8f4df"
 )
 DEFAULT_RUN_DIR = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/"
     "productize-scratch300m-adaptive-v5-cq2-v2"
 )
 DEFAULT_PACKAGE_ID = "mei-1.0-51m-scratch300m-tool-sft-cq2-v2-adaptive-v5"
@@ -299,7 +299,7 @@ def _source_manifest() -> dict[str, str]:
     # runtimes appear to share one run fingerprint.
     roots_and_suffixes = (
         (Path(__file__).parent, {".py"}),
-        (ROOT / "models/mei-1.0-51m/architecture", {".py", ".json"}),
+        (ROOT / "models/mei-1.2-51m/architecture", {".py", ".json"}),
         (ROOT / "platform/_shared/runtime", {".py", ".json"}),
         (ROOT / "platform/python-sdk/mei_sdk", {".py"}),
         (ROOT / "platform/_shared/rust/mei-sdk-core/src", {".rs"}),

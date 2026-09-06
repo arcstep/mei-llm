@@ -107,7 +107,7 @@ fn rust_budget_projection_matches_the_python_oracle_golden() {
     let fixture = load_fixture();
     let (tools, request) = fixture_inputs(&fixture);
     let vocab = Vocab::from_package_payload(
-        &std::fs::read(repo_root().join("models/mei-1.0-51m/tokenizer/zh-24k-v1.model"))
+        &std::fs::read(repo_root().join("models/mei-1.2-51m/tokenizer/zh-24k-v1.model"))
             .expect("zh tokenizer"),
     )
     .expect("portable tokenizer");
@@ -171,7 +171,7 @@ fn rust_budget_projection_matches_the_python_oracle_golden() {
 #[test]
 fn annotation_names_used_as_parameter_names_remain_structural() {
     let vocab = Vocab::from_package_payload(
-        &std::fs::read(repo_root().join("models/mei-1.0-51m/tokenizer/zh-24k-v1.model"))
+        &std::fs::read(repo_root().join("models/mei-1.2-51m/tokenizer/zh-24k-v1.model"))
             .expect("zh tokenizer"),
     )
     .expect("portable tokenizer");

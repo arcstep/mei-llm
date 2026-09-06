@@ -42,7 +42,7 @@ from common._repo import frozen_tokenizer_path  # noqa: E402
 _FROZEN_TOK = frozen_tokenizer_path()
 TOKENIZER_MODEL = _FROZEN_TOK
 TOKENIZER_MANIFEST = _FROZEN_TOK.parent / f"tokenizer-{_FROZEN_TOK.name.removesuffix('.model')}-manifest.json"
-MW_CODEBOOK = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
+MW_CODEBOOK = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/recipes/mw-disposition-codebook-v1.json"
 EXPECTED_HEADS: dict[str, dict[str, tuple[int, ...]]] = {
     "contrastive": {
         "heads.contrastive.tok_probes": (4, 512),
@@ -245,7 +245,7 @@ def _write_receipts(
             raise RuntimeError(f"{component} stage evidence is not passed and fingerprinted")
         receipt = {
             "schema": "mei-training-receipt-v2",
-            "product": "mei-1.0-51m",
+            "product": "mei-1.2-51m",
             "package_id": package_id,
             "component": component,
             "stage_id": str(row.get("stage_id") or component),
@@ -420,7 +420,7 @@ def export(args: argparse.Namespace) -> dict[str, Any]:
         }
         manifest = {
             "package_format": "mei-model-package-v2",
-            "product": "mei-1.0-51m",
+            "product": "mei-1.2-51m",
             "package_id": args.package_id,
             "runtime_min": "mei-runtime-abi-2",
             "parent_package_id": args.parent_package_id,

@@ -41,8 +41,8 @@ def test_quota_sums() -> None:
 
 
 def test_parent_release_matches_ledger() -> None:
-    release = json.loads((ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json").read_text(encoding="utf-8"))
-    summary = json.loads((ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/summary.json").read_text(encoding="utf-8"))
+    release = json.loads((ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json").read_text(encoding="utf-8"))
+    summary = json.loads((ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/summary.json").read_text(encoding="utf-8"))
     assert int(summary["tokens_seen"]) == PARENT_TOKENS_SEEN
     assert release["source_tokens_drawn"] == PARENT_SOURCE_TOKENS_DRAWN
     assert summary["source_tokens_drawn"] == PARENT_SOURCE_TOKENS_DRAWN
@@ -91,7 +91,7 @@ def test_cpt_source_gate() -> None:
     # The formal live lineage uses the immutable 600M slice.  The historical
     # lm-v2 1B schedule still names a retired parent filename and must not be
     # treated as the current source gate fixture.
-    corpus = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/cpt-delta/lm-v2-cpt-600m"
+    corpus = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/cpt-delta/lm-v2-cpt-600m"
     err = refuse_cpt_source(corpus, "600m")
     assert err is None, err
     assert refuse_cpt_source(CORPUS_LM_V1, "1b")

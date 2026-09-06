@@ -18,27 +18,27 @@ factory = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = factory
 SPEC.loader.exec_module(factory)
 
-SFT_RELEASE = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4"
+SFT_RELEASE = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4"
 DEPLOY_UNIVERSE = SFT_RELEASE / "tool-universe.json"
 TRAINING_UNIVERSE = SFT_RELEASE / "training-tool-universe.json"
 MW_CODEBOOK = SFT_RELEASE / "mw-disposition-codebook-v1.json"
 MW_DEFINITIONS = SFT_RELEASE / "mw-reason-definitions-v2-20class.json"
 EVAL_LOCK = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/corpus/mei-1.0-51m/factory-v1/eval/phase1-lock/lock.json"
-PILOT_RELEASE = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite/factory-v3/releases/mei-1.0-51m-sft-gap-pilot-v1/release-manifest.json"
-QAT_BINDING = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite/factory-v3/manifests/qat-base300-sft-v4-binding-v1.json"
+PILOT_RELEASE = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/sft-suite/factory-v3/releases/mei-1.0-51m-sft-gap-pilot-v1/release-manifest.json"
+QAT_BINDING = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/sft-suite/factory-v3/manifests/qat-base300-sft-v4-binding-v1.json"
 EVAL_V7_LOCK = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/mei-51m-longitudinal-eval-v7/lock.json"
 
 
 def baseline_roles() -> dict[str, Path]:
-    run = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/productize-scratch300m-sft-v4-quality-schema-cq2-v2-finalization-dcfa3bc208e0"
+    run = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/productize-scratch300m-sft-v4-quality-schema-cq2-v2-finalization-dcfa3bc208e0"
     return {
         "current": ROOT / "CURRENT.json",
-        "base_300": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json",
-        "base_600": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/RELEASE.json",
-        "lm_release": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/RELEASE.json",
+        "base_300": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1/RELEASE.json",
+        "base_600": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/RELEASE.json",
+        "lm_release": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1/RELEASE.json",
         "unique_ledger": ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/corpus/lm-v1/assemble/work/zh-pretrain-v4/unique-ledger.json",
         "sft_v4_manifest": SFT_RELEASE / "manifest.json",
-        "narration_manifest": ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3/manifest.json",
+        "narration_manifest": ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3/manifest.json",
         "qat_receipt": ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/jobs/mei-1.0-51m/qat-q4-rung-5m.json",
         "locked_eval_receipt": run / "stages/locked_test_eval_v4/receipt.json",
         "narration_eval_receipt": run / "downstream/narration-package-eval/receipt.json",
@@ -54,7 +54,7 @@ def baseline_roles() -> dict[str, Path]:
 class CorpusFactoryV3Test(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        temp_parent = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/corpus/sft-suite"
+        temp_parent = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/corpus/sft-suite"
         cls._temporary = tempfile.TemporaryDirectory(prefix="factory-v3-test-", dir=temp_parent)
         cls.temp = Path(cls._temporary.name)
         cls.baseline = cls.temp / "baseline.json"
@@ -278,7 +278,7 @@ class CorpusFactoryV3Test(unittest.TestCase):
         candidate_path = self.temp / "negative-600/candidates.jsonl"
         factory.create_worklist(self.ledger, cell_id, DEPLOY_UNIVERSE, TRAINING_UNIVERSE, MW_CODEBOOK, MW_DEFINITIONS, worklist_dir)
         factory.draft_candidates(worklist_dir / "worklist.jsonl", DEPLOY_UNIVERSE, TRAINING_UNIVERSE, MW_CODEBOOK, candidate_path)
-        forbidden = "artifacts/mei-1.0-51m/legacy/exp-000600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/RELEASE.json"
+        forbidden = "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/models/base/mei-1.0-51m-base-cpt600m-clean-source-v3-v1/RELEASE.json"
         work = factory.load_jsonl(worklist_dir / "worklist.jsonl")
         rows = factory.load_jsonl(candidate_path)
         work[0]["source_paths"] = [forbidden]

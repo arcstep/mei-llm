@@ -17,7 +17,7 @@ function fail(id, message) {
 }
 
 function defaultWasmPath() {
-  const cargoTarget = process.env.CARGO_TARGET_DIR || join(sdkRoot, "../../.local/cache/cargo-sdk-target");
+  const cargoTarget = process.env.CARGO_TARGET_DIR || join(sdkRoot, "../.local/cache/cargo-sdk-target");
   return [
     process.env.MEI_SDK_WASM_PATH,
     join(cargoTarget, "wasm32-unknown-unknown/release/mei_sdk_wasm.wasm"),

@@ -521,11 +521,14 @@ fn parse_manifest(manifest: &Value) -> Result<(PackageGeneration, HeadReport), S
             ))
         }
     };
-    if manifest.get("product").and_then(Value::as_str) != Some("mei-1.0-51m") {
-        return Err(SdkError::new(
-            "package_invalid",
-            "product must be mei-1.0-51m",
-        ));
+    match manifest.get("product").and_then(Value::as_str) {
+        Some("mei-1.0-51m") | Some("mei-1.2-51m") => {}
+        _ => {
+            return Err(SdkError::new(
+                "package_invalid",
+                "product must be mei-1.0-51m or mei-1.2-51m",
+            ))
+        }
     }
     if generation == PackageGeneration::V2 {
         if manifest.get("runtime_min").and_then(Value::as_str) != Some("mei-runtime-abi-2") {
@@ -1139,7 +1142,7 @@ fn validate_retrieval_calibration(manifest: &Value) -> Result<(), SdkError> {
 /// Canonical ordered geometry for the deployed mei-1.0-51m weight contract.
 ///
 /// Keep this expansion byte-for-byte equivalent to
-/// `models/mei-1.0-51m/architecture/architecture_contract.py`.  Runtime
+/// `models/mei-1.2-51m/architecture/architecture_contract.py`.  Runtime
 /// profiles and training-only auxiliaries deliberately do not appear here.
 fn canonical_lm_tensor_geometry() -> Vec<(String, Vec<u64>)> {
     let mut tensors = Vec::<(String, Vec<u64>)>::with_capacity(400);

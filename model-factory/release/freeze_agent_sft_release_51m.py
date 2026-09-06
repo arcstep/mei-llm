@@ -26,7 +26,7 @@ from common._repo import ROOT
 PARENT_ID = "mei-1.0-51m-tool-sft-v2-300m-v1"
 RELEASE_ID = "mei-1.0-51m-tool-sft-v2-agent300m-v1"
 SIMULATOR_ID = "mei-agent-host-simulator-v1"
-RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
 PARENT_DIR = RELEASE_ROOT / PARENT_ID
 UNIVERSE_PATH = (
     ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class/tool-universe-v1.json"

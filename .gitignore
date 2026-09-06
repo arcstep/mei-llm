@@ -29,7 +29,14 @@ models/*/releases/*/sft/
 models/*/releases/*/package/
 
 # 训练产物二进制不进 git（哈希证据绑定于 receipts/RELEASE.json）
-models/mei-1.0-51m/releases/**/*.npz
-models/mei-1.0-51m/releases/**/*.bin
-models/mei-1.0-51m/releases/**/tokenizer.model
-models/mei-1.0-51m/releases/**/heads/**/*.npz
+models/*/releases/**/*.npz
+models/*/releases/**/*.bin
+models/*/releases/**/tokenizer.model
+models/*/releases/**/heads/**/*.npz
+
+# 恢复辅助产物（本地备份）
+.local/recovery/**
+skills/skills
+
+# 导出 staging 临时目录（证据已进包内 receipts）
+models/*/releases/*/products/.*.staging/

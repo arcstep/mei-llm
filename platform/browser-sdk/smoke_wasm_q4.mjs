@@ -9,7 +9,7 @@ import { loadModel } from "./browser.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const sdkRoot = join(here, "..");
-const cargoTarget = process.env.CARGO_TARGET_DIR || join(sdkRoot, "../../.local/cache/cargo-sdk-target");
+const cargoTarget = process.env.CARGO_TARGET_DIR || join(sdkRoot, "../.local/cache/cargo-sdk-target");
 const wasmCandidates = [
   join(cargoTarget, "wasm32-unknown-unknown/release/mei_sdk_wasm.wasm"),
   join(cargoTarget, "wasm32-unknown-unknown/debug/mei_sdk_wasm.wasm"),

@@ -558,7 +558,7 @@ function verifyTrainingReceipts(root, manifest) {
 export function validatePackageManifest(manifest, { root = null, verifyHashes = false } = {}) {
   const generation = manifest?.package_format;
   if (![V1, V2].includes(generation)) fail("package_invalid", "unsupported package_format");
-  if (manifest.product !== "mei-1.0-51m") fail("package_invalid", "product must be mei-1.0-51m");
+  if (!["mei-1.0-51m", "mei-1.2-51m"].includes(manifest.product)) fail("package_invalid", "product must be mei-1.0-51m or mei-1.2-51m");
   let tensors = [];
   if (generation === V2) {
     onlyKeys(manifest, [

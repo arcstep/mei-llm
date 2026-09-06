@@ -18,10 +18,12 @@ from pathlib import Path
 
 from common._repo import (
     ARTIFACT_ROOT,
+    LEGACY_ARTIFACT_ROOT,
     CURRENT_PATH,
     ROOT,
     TOKENIZER_ZH_V1,
     architecture_contracts,
+    cycle_lineage,
 )
 from orchestration.lifecycle_51m import (
     EXPECTED_PARAMS,
@@ -44,7 +46,7 @@ from orchestration.lifecycle_51m import (
 # Tests and migration tooling may override this boundary.  Production writes
 # derive the cycle-local Base directory from cumulative exposure.
 BASE_ROOT: Path | None = None
-CANDIDATE_RE = re.compile(r"^mei-1\.0-51m-base-cpt[a-z0-9._-]+-v1$")
+CANDIDATE_RE = re.compile(r"^mei-1\.2-51m-base-cpt[a-z0-9._-]+-v1$")
 
 
 def _scan_numeric_npz(path: Path, *, label: str) -> dict:
@@ -155,9 +157,9 @@ def _numeric_integrity(
 
 
 def _candidate_id(config: dict, requested: str | None) -> str:
-    value = requested or f"mei-1.0-51m-base-cpt{config['rung']}-v1"
+    value = requested or f"mei-1.2-51m-base-cpt{config['rung']}-v1"
     if not CANDIDATE_RE.fullmatch(value):
-        raise ValueError("candidate id must be mei-1.0-51m-base-cpt<exposure>-v1")
+        raise ValueError("candidate id must be mei-1.2-51m-base-cpt<exposure>-v1")
     return value
 
 
@@ -168,12 +170,12 @@ def _base_root(config: dict) -> Path:
     millions = target // 1_000_000
     if millions <= 0:
         raise ValueError("target exposure must identify a positive cycle")
-    # 新链 base 候选归入 models/releases/zhv2/base（runtime 与产品同源可见）；
-    # 旧链（legacy 血缘）归档至 artifacts legacy 区
+    # 新链 base 候选归入 models/mei-1.2-51m/releases/exp-XXXm/base（runtime 与产品同源可见）；
+    # 旧链（legacy 血缘）归档至 artifacts legacy 区（registry 血缘路由，不猜后缀）
     cycle_id = str(config.get("cycle_id") or "")
-    if cycle_id.endswith("-v2"):
-        return ROOT / "models/mei-1.0-51m/releases/zhv2/base"
-    return ARTIFACT_ROOT / "legacy" / f"exp-{millions:06d}m/models/base"
+    if cycle_lineage(cycle_id) == "zh-v2-rebuild":
+        return ROOT / "models/mei-1.2-51m/releases" / f"exp-{millions:05d}m/base"
+    return LEGACY_ARTIFACT_ROOT / "mei-1.0-51m" / f"exp-{millions:05d}m/models/base"
 
 
 def _verified_inputs(run_id: str) -> tuple[Path, dict, dict]:
@@ -455,7 +457,7 @@ def register_base_candidate(run_id: str, candidate_id: str | None = None) -> dic
             "model_id": model_id,
             "kind": "base-cpt-candidate",
             "status": "registered_candidate",
-            "product": "mei-1.0-51m",
+            "product": "mei-1.2-51m",
             "architecture_id": config["architecture_id"],
             "weight_contract_sha256": contracts["weight_contract_sha256"],
             "runtime_profile_sha256": contracts["runtime_profile_sha256"],
@@ -592,7 +594,7 @@ def propose_freeze(candidate: Path) -> dict:
         "current_sha256_observed": current_hash(),
         "current_mutated": False,
         "requires_explicit_finalize": True,
-        "finalize_confirmation": "freeze mei-1.0-51m base",
+        "finalize_confirmation": "freeze mei-1.2-51m base",
     }
     atomic_json(destination / "freeze-proposal.json", proposal)
     return proposal
@@ -601,7 +603,7 @@ def propose_freeze(candidate: Path) -> dict:
 def finalize_current(
     candidate: Path, *, expected_current_sha256: str, confirmation: str
 ) -> dict:
-    if confirmation != "freeze mei-1.0-51m base":
+    if confirmation != "freeze mei-1.2-51m base":
         raise PermissionError("explicit user freeze confirmation is required")
     if current_hash() != expected_current_sha256:
         raise RuntimeError(

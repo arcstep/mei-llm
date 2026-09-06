@@ -15,7 +15,7 @@ import contracts.sft_v4_contract_51m as contract
 
 PARENT = (
     next(parent for parent in HERE.parents if (parent / "CURRENT.json").is_file())
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
     / "mei-1.0-51m-tool-sft-v3-300m-v7"
 )
 

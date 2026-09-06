@@ -77,7 +77,7 @@ def refuse_non_scratch_source(corpus_dir: Path, rung: str) -> str | None:
     release_path = corpus_dir / "RELEASE.json"
     schedule_path = corpus_dir / "schedule-scratch.json"
     if not release_path.is_file() or not schedule_path.is_file():
-        return "scratch pretraining requires artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1 RELEASE.json and schedule-scratch.json"
+        return "scratch pretraining requires artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1 RELEASE.json and schedule-scratch.json"
     if (corpus_dir / "schedule.json").is_file():
         return "scratch pretraining refuses active CPT schedule.json; keep continuation plans in archive"
     release = _load(release_path)
@@ -167,7 +167,7 @@ def write_v2_block() -> Path:
         "blocked_for": ["scratch", "1b", "2b", "10b", "cpt"],
         "reason": "archived dirty zh-pretrain-v2 is not a scratch or 1B source",
         "rewrite_release": False,
-        "successor": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
+        "successor": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1",
         "init_from": None,
         "init_mode": "scratch",
     }

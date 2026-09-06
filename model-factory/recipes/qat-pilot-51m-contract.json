@@ -18,8 +18,8 @@
     "refuse_float_npz": true
   },
   "replay": {
-    "corpus": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1",
-    "schedule": "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
+    "corpus": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1",
+    "schedule": "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1/schedule-scratch.json",
     "note": "Short LM replay from the frozen scratch schedule hashes. This is not a new 300M from-scratch run."
   },
   "fake_quant": {
@@ -54,7 +54,7 @@
   "qat_mandatory": true,
   "ptq_is_diagnostic_only": true,
   "forbidden_until_ready": [
-    "overwriting artifacts/mei-1.0-51m/legacy/exp-000300m/models/base/mei-1.0-51m-base-scratch300m-v1",
+    "overwriting artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1",
     "writing CURRENT.sft or CURRENT.runtime before full-chain gates",
     "WASM loading of float npz"
   ],

@@ -22,9 +22,9 @@ from common._repo import CURRENT_PATH, ROOT
 HERE = Path(__file__).resolve().parent
 DEFAULT_NARRATION_RELEASE = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3"
 )
-DEFAULT_REPLAY_CORPUS = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/cpt-delta/lm-v1"
+DEFAULT_REPLAY_CORPUS = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/cpt-delta/lm-v1"
 CHILD_SCRIPTS = {
     "package": HERE / "verify_downstream_package_51m.py",
     "portable": HERE / "run_downstream_portable_gates_51m.py",

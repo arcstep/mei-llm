@@ -6,7 +6,7 @@
 
 模型工厂不是模型权重目录，也不是历史 run 目录：
 
-- 正式模型二进制在 [`models/mei-1.0-51m/releases/`](../models/mei-1.0-51m/releases/)；
+- 正式模型二进制在 [`models/mei-1.2-51m/releases/`](../models/mei-1.2-51m/releases/)；
 - 300M、600M 每轮实际用了什么代码，由各 cycle 的 `pipeline/PIPELINE.lock.json` 固化；
 - 大型 checkpoint、日志和逐步 receipt 在 Gitignored `.local/artifacts/`；
 - 本目录只维护一套当前实现，旧实现通过 Git 和 cycle source capture 恢复。

@@ -59,15 +59,15 @@ HISTORICAL_EVAL_DIR = (
 TOOL_UNIVERSE_PATH = HISTORICAL_EVAL_DIR / "tool-universe-v1.json"
 PARENT_RELEASE_DIR = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
     / "mei-1.0-51m-tool-sft-v2-agent300m-v1"
 )
 NARRATION_RELEASE_DIR = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
     / "mei-1.0-51m-narration-sft-agent300m-v3"
 )
-DEFAULT_RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+DEFAULT_RELEASE_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
 DEFAULT_EVAL_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/_legacy/notebook/evaluation/banks"
 
 TRAIN_RETRIEVAL_PER_TOOL = 16

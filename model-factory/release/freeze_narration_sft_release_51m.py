@@ -17,7 +17,7 @@ from common._repo import ROOT
 
 PARENT_ID = "mei-1.0-51m-tool-sft-v2-agent300m-v1"
 RELEASE_ID = "mei-1.0-51m-narration-sft-agent300m-v1"
-RELEASE_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+RELEASE_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
 PARENT_DIR = RELEASE_ROOT / PARENT_ID
 PROVIDER_ID = "mei-zh-narration-adapter-r16-v1"
 PROMPT_ID = "mei-verified-result-narration-prompt-v1"

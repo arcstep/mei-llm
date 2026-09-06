@@ -31,7 +31,7 @@ from common._repo import CURRENT_PATH, ROOT
 
 DEFAULT_RELEASE = (
     ROOT
-    / "artifacts/mei-1.0-51m/legacy/exp-000300m/corpus/sft-suite/historical-notebook-releases/releases"
+    / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases"
     / "mei-1.0-51m-narration-sft-agent300m-v3"
 )
 MAX_NEW = 48
@@ -40,7 +40,7 @@ SOURCE_FILES = (
     "platform/python-sdk/mei_sdk/runtime_51m.py",
     "platform/python-sdk/mei_sdk/package.py",
     "platform/_shared/runtime/narration.py",
-    "models/mei-1.0-51m/architecture/heads.py",
+    "models/mei-1.2-51m/architecture/heads.py",
 )
 NUMBER_PATTERN = re.compile(r"[-+]?\d+(?:\.\d+)?")
 

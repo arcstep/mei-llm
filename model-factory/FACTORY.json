@@ -26,12 +26,12 @@
   },
   "active_source_roots": [
     "model-factory",
-    "models/mei-1.0-51m/architecture",
+    "models/mei-1.2-51m/architecture",
     "platform",
     "src/mei_llm"
   ],
   "artifact_roots": {
-    "canonical_models": "models/mei-1.0-51m/releases",
+    "canonical_models": "models/mei-1.2-51m/releases",
     "cycle_records": "cycles/mei-1.0-51m",
     "large_local_evidence": ".local/artifacts/mei-1.0-51m"
   }

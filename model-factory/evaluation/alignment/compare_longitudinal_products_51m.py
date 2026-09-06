@@ -26,7 +26,7 @@ EXPECTED_PLAN_SCHEMA = "mei-51m-sft-v4-productization-plan-v1"
 # receipt and eligibility fixes are reported separately and do not silently
 # count as semantic-source equality.
 SEMANTIC_SOURCE_SUFFIXES = {
-    "models/mei-1.0-51m/architecture/heads.py",
+    "models/mei-1.2-51m/architecture/heads.py",
     "platform/_shared/runtime/kv_manager.py",
     "platform/_shared/runtime/tool_index.py",
     "platform/python-sdk/mei_sdk/runtime_51m.py",

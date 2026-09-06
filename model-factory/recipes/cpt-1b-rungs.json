@@ -1,7 +1,7 @@
 {
   "id": "mei-1.0-51m-cpt-cumulative-exposure-v2",
   "mode": "cpt",
-  "architecture": "models/mei-1.0-51m/architecture",
+  "architecture": "models/mei-1.2-51m/architecture",
   "corpus": "artifacts/mei-1.0-51m/legacy/_legacy/corpus/planned-exp-001000m-lm-v2",
   "schedule": "declared_by_immutable_corpus_release",
   "parent_checkpoint": "declared_and_hashed_by_schedule",

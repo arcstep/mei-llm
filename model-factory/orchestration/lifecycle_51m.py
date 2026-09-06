@@ -45,10 +45,9 @@ RUN_ROOT = TRAIN_RUNS / "mei-1.0-51m"
 def run_roots() -> list[Path]:
     """全部可能的 run 根：旧链 + 新链（ARTIFACT_ROOT 下带 -v 后缀的 cycle）。"""
     roots = [RUN_ROOT]
-    cycles_root = ARTIFACT_ROOT / "cycles"
-    if cycles_root.is_dir():
-        for cycle_dir in sorted(cycles_root.iterdir()):
-            if cycle_dir.is_dir() and re.fullmatch(r"exp-\d{6}m", cycle_dir.name):
+    if ARTIFACT_ROOT.is_dir():
+        for cycle_dir in sorted(ARTIFACT_ROOT.iterdir()):
+            if cycle_dir.is_dir() and re.fullmatch(r"exp-\d{5}m", cycle_dir.name):
                 candidate = cycle_dir / "runs/mei-1.0-51m"
                 if candidate.is_dir():
                     roots.append(candidate)
@@ -1394,7 +1393,7 @@ def verify_static() -> dict:
                 continue
             if "archive" in path.parts:
                 continue
-            if "artifacts/mei-1.0-51m/legacy/exp-000300m/runs/mei-1.0-51m" in str(path):
+            if "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00300m/runs/mei-1.0-51m" in str(path):
                 continue
             if path.suffix.lower() not in {".py", ".json", ".md", ".rs", ".js", ".mjs", ".toml", ".yaml", ".yml"}:
                 continue

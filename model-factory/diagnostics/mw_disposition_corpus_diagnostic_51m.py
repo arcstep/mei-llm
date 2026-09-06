@@ -14,7 +14,7 @@ batches are used throughout (`_oracle_ranking` needs no retrieval head --
 only the `retrieved_tools` field already present in the corpus), since no
 trained retrieval head exists yet on this raw base.
 
-Writes only to a scoped `artifacts/mei-1.0-51m/legacy/exp-000600m/runs/`
+Writes only to a scoped `artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/runs/`
 diagnostic run directory. Never touches CURRENT.json, any release, or a
 formal cycle stage receipt. `model-factory/contracts/CODE_CATALOG.json`
 should classify this file `diagnostic_only`.
@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def _ensure_python_paths() -> None:
     for path in (
-        ROOT / "models/mei-1.0-51m/architecture",
+        ROOT / "models/mei-1.2-51m/architecture",
         ROOT / "model-factory",
         ROOT / "platform/python-sdk",
         ROOT / "platform/_shared/runtime",
@@ -54,12 +54,12 @@ import evaluation.tool_use.sft_v3_eval_51m as evaluation  # noqa: E402
 from rebuild_zh_v1 import common as C  # noqa: E402
 
 BASE_WEIGHTS = (
-    ROOT / "models/mei-1.0-51m/releases/exp-000600m/base"
+    ROOT / "models/mei-1.2-51m/releases/exp-000600m/base"
     / "mei-1.0-51m-base-cpt600m-clean-source-v3-v1/mei-1.0-51m-base-cpt600m-clean-source-v3-v1.npz"
 )
 RELEASE_ID = "mei-1.0-51m-exp-000600m-sft-zh-rebuild-v2"
 RELEASE_DIR = C.RELEASE_ROOT / RELEASE_ID
-RUNS_ROOT = ROOT / "artifacts/mei-1.0-51m/legacy/exp-000600m/runs"
+RUNS_ROOT = ROOT / "artifacts/mei-1.2-51m/legacy/mei-1.0-51m/exp-00600m/runs"
 
 
 def _write_json(path: Path, value: Any) -> None:

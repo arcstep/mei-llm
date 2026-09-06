@@ -296,7 +296,7 @@ def plan_mix(
 
 def tokenizer_pointer(path: Path | None = None) -> dict[str, Any]:
     pointer_path = path or (
-        ROOT / "models/mei-1.0-51m/architecture/tokenizer/TOKENIZER.json"
+        ROOT / "models/mei-1.2-51m/architecture/tokenizer/TOKENIZER.json"
     )
     if not pointer_path.is_file():
         raise SourceError(
@@ -312,7 +312,7 @@ def tokenizer_pointer(path: Path | None = None) -> dict[str, Any]:
 
 def load_tokenizer() -> Any:
     pointer = tokenizer_pointer()
-    architecture = ROOT / "models/mei-1.0-51m/architecture"
+    architecture = ROOT / "models/mei-1.2-51m/architecture"
     sys.path.insert(0, str(architecture))
     from tokenizer import ZhTokenizerV1, ZhTokenizerV2
 
@@ -322,7 +322,7 @@ def load_tokenizer() -> Any:
     else:
         manifest_name = str(pointer.get("manifest") or "")
         manifest_path = (
-            (ROOT / "models/mei-1.0-51m/tokenizer" / manifest_name)
+            (ROOT / "models/mei-1.2-51m/tokenizer" / manifest_name)
             if manifest_name
             else None
         )

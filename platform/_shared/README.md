@@ -9,5 +9,5 @@
 - `tools/`：统一门禁、golden 生成和性能基准。
 - `Cargo.toml`：Rust/WASM workspace。
 
-CQ2 package 的正式模型文件位于 `models/mei-1.0-51m/releases/<cycle>/package/`，不放在
+CQ2 package 的正式模型文件位于 `models/mei-1.2-51m/releases/<cycle>/package/`，不放在
 这里。
