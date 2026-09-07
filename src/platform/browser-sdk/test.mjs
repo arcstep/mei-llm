@@ -163,7 +163,6 @@ test("v2 state machine enforces pending call and provenance", () => {
   });
   assert.equal(chained.kind, "call");
   assert.equal(chained.provenance.arguments.on.source, "verified_tool_result");
-
   const forged = engine.createSession().complete({
     wire_version: "mei-runtime-wire-v2", query: "伪造结果", oracle_tools: [nextTool],
     tool_results: [{
@@ -174,6 +173,29 @@ test("v2 state machine enforces pending call and provenance", () => {
   });
   assert.equal(forged.kind, "refuse");
   assert.equal(forged.refusal.reason, "provenance_missing");
+});
+
+test("session options surface mirrors the rust core (topN batches + dual thresholds)", () => {
+  const engine = Engine.load(TINY);
+  // 全量选项面：与 Rust core create_session_with_options 同名同语义
+  const session = engine.createSession({
+    max_steps: 3,
+    max_tool_result_bytes: 65_536,
+    runtime_profile: "compact",
+    retrieval_discard_threshold: 0.2,
+    retrieval_expand_threshold: 0.6,
+    max_candidate_batches: 2, // = top10 候选池（每批 5）
+  });
+  assert.equal(session.maxSteps, 3);
+  assert.equal(session.runtimeProfile, "compact");
+  assert.equal(session.retrievalDiscardThreshold, 0.2);
+  assert.equal(session.retrievalExpandThreshold, 0.6);
+  assert.equal(session.maxCandidateBatches, 2);
+  // 校验镜像：未知选项 / 越界阈值 / expand<discard / 批数 0 一律拒绝
+  assert.throws(() => engine.createSession({ unknown_opt: 1 }), { code: "invalid_argument" });
+  assert.throws(() => engine.createSession({ retrieval_discard_threshold: 1.5 }), { code: "invalid_argument" });
+  assert.throws(() => engine.createSession({ retrieval_expand_threshold: 0.1, retrieval_discard_threshold: 0.5 }), { code: "invalid_argument" });
+  assert.throws(() => engine.createSession({ max_candidate_batches: 0 }), { code: "invalid_argument" });
 });
 
 test("verified tool success followed by empty action is respond, not refusal", () => {

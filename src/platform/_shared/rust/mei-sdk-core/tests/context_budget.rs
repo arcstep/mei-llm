@@ -103,6 +103,59 @@ fn fixed_five_batching_keeps_tail_order_and_applies_expand_threshold() {
 }
 
 #[test]
+fn discard_never_cuts_first_batch_below_five() {
+    // 回归（与 Python 侧同语义）：discard 砍进 rank 前 5（仅 4 个过闸）时首批仍必须为 5
+    let relevances = [0.90, 0.88, 0.86, 0.84, 0.70, 0.30, 0.28];
+    let rows = relevances
+        .iter()
+        .enumerate()
+        .map(|(index, relevance)| RankedCandidate {
+            tool_id: format!("tool.{index:02}"),
+            schema: json!({"name":format!("tool.{index:02}")}),
+            raw_score: 1.0 - index as f32 / 100.0,
+            relevance: *relevance,
+            rank: index + 1,
+        })
+        .collect();
+    let plan = plan_candidate_batches(rows, 0.80, 0.80, None).unwrap();
+    assert_eq!(plan.batches.iter().map(Vec::len).collect::<Vec<_>>(), [5]);
+    assert_eq!(
+        plan.batches[0]
+            .iter()
+            .map(|row| row.tool_id.as_str())
+            .collect::<Vec<_>>(),
+        ["tool.00", "tool.01", "tool.02", "tool.03", "tool.04"]
+    );
+    assert_eq!(
+        plan.discarded
+            .iter()
+            .map(|row| row.tool_id.as_str())
+            .collect::<Vec<_>>(),
+        ["tool.04", "tool.05", "tool.06"]
+    );
+    assert_eq!(plan.candidates.len(), 5);
+}
+
+#[test]
+fn all_below_discard_yields_no_batches() {
+    let relevances = [0.2, 0.1, 0.05];
+    let rows = relevances
+        .iter()
+        .enumerate()
+        .map(|(index, relevance)| RankedCandidate {
+            tool_id: format!("tool.{index:02}"),
+            schema: json!({"name":format!("tool.{index:02}")}),
+            raw_score: 1.0 - index as f32 / 100.0,
+            relevance: *relevance,
+            rank: index + 1,
+        })
+        .collect();
+    let plan = plan_candidate_batches(rows, 0.50, 0.60, None).unwrap();
+    assert!(plan.batches.is_empty());
+    assert_eq!(plan.discarded.len(), 3);
+}
+
+#[test]
 fn rust_budget_projection_matches_the_python_oracle_golden() {
     let fixture = load_fixture();
     let (tools, request) = fixture_inputs(&fixture);

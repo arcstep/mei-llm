@@ -178,7 +178,18 @@ export class Session {
     if (!options || typeof options !== "object" || Array.isArray(options)) {
       fail("invalid_argument", "session options must be an object");
     }
-    const unknownOption = Object.keys(options).find((key) => !["max_steps", "max_tool_result_bytes"].includes(key));
+    // 选项面与 Rust core create_session_with_options 对齐：
+    // 检索候选扫描的 topN 池上限（= 每批 5 × 批数）与双阈值随会话可配置
+    const unknownOption = Object.keys(options).find(
+      (key) => ![
+        "max_steps",
+        "max_tool_result_bytes",
+        "runtime_profile",
+        "retrieval_discard_threshold",
+        "retrieval_expand_threshold",
+        "max_candidate_batches",
+      ].includes(key),
+    );
     if (unknownOption) fail("invalid_argument", `unknown session option ${unknownOption}`);
     this.maxSteps = Number(options.max_steps ?? 4);
     if (!Number.isInteger(this.maxSteps) || this.maxSteps < 1 || this.maxSteps > 8) {
@@ -187,6 +198,33 @@ export class Session {
     this.maxToolResultBytes = Number(options.max_tool_result_bytes ?? 65_536);
     if (!Number.isInteger(this.maxToolResultBytes) || this.maxToolResultBytes < 1 || this.maxToolResultBytes > 1_048_576) {
       fail("invalid_argument", "max_tool_result_bytes must be between 1 and 1048576");
+    }
+    this.runtimeProfile = String(options.runtime_profile ?? "standard");
+    if (!["compact", "standard"].includes(this.runtimeProfile)) {
+      fail("invalid_argument", "runtime_profile must be compact or standard");
+    }
+    const threshold = (value, name) => {
+      const parsed = Number(value);
+      if (!Number.isFinite(parsed) || parsed < 0 || parsed > 1) {
+        fail("invalid_argument", `${name} must be a finite number in [0,1]`);
+      }
+      return parsed;
+    };
+    this.retrievalDiscardThreshold = options.retrieval_discard_threshold == null
+      ? 0
+      : threshold(options.retrieval_discard_threshold, "retrieval_discard_threshold");
+    this.retrievalExpandThreshold = options.retrieval_expand_threshold == null
+      ? 0
+      : threshold(options.retrieval_expand_threshold, "retrieval_expand_threshold");
+    if (this.retrievalExpandThreshold < this.retrievalDiscardThreshold) {
+      fail("invalid_argument", "retrieval_expand_threshold must be >= retrieval_discard_threshold");
+    }
+    this.maxCandidateBatches = options.max_candidate_batches == null
+      ? null
+      : Number(options.max_candidate_batches);
+    if (this.maxCandidateBatches != null
+        && (!Number.isInteger(this.maxCandidateBatches) || this.maxCandidateBatches < 1)) {
+      fail("invalid_argument", "max_candidate_batches must be >= 1 or null");
     }
   }
 

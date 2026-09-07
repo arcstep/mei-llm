@@ -91,35 +91,49 @@ pub fn plan_candidate_batches(
             .total_cmp(&left.raw_score)
             .then_with(|| left.tool_id.as_bytes().cmp(right.tool_id.as_bytes()))
     });
-    let candidates = ranked
-        .iter()
-        .filter(|row| row.relevance >= discard_threshold)
-        .cloned()
-        .collect::<Vec<_>>();
     let discarded = ranked
         .iter()
         .filter(|row| row.relevance < discard_threshold)
         .cloned()
         .collect::<Vec<_>>();
-    let first = candidates
+    // discard 只做 all-or-nothing 可用性闸门（AGENTS.md 候选扫描不变量）：
+    // 全灭 → 空批次（no_match 终端）；有任一过闸 → 首批恒为 rank 前 5
+    // （不得因阈值把首批砍到 1-2；目录不足 5 个时为实际数量）。
+    // 与 Python `_shared/runtime/context_budget.py` 语义逐条一致。
+    let eligible = ranked
         .iter()
-        .take(TOOL_BATCH_SIZE)
+        .filter(|row| row.relevance >= discard_threshold)
         .cloned()
         .collect::<Vec<_>>();
-    let tail = &candidates[first.len()..];
-    let expandable = tail
-        .iter()
-        .filter(|row| row.relevance >= expand_threshold)
-        .cloned()
-        .collect::<Vec<_>>();
-    let non_expandable = tail
-        .iter()
-        .filter(|row| row.relevance < expand_threshold)
-        .cloned()
-        .collect::<Vec<_>>();
+    let (first, expandable, non_expandable) = if eligible.is_empty() {
+        (Vec::new(), Vec::new(), Vec::new())
+    } else {
+        let first = ranked
+            .iter()
+            .take(TOOL_BATCH_SIZE)
+            .cloned()
+            .collect::<Vec<_>>();
+        let tail_eligible = ranked
+            .iter()
+            .skip(TOOL_BATCH_SIZE)
+            .filter(|row| row.relevance >= discard_threshold)
+            .cloned()
+            .collect::<Vec<_>>();
+        let expandable = tail_eligible
+            .iter()
+            .filter(|row| row.relevance >= expand_threshold)
+            .cloned()
+            .collect::<Vec<_>>();
+        let non_expandable = tail_eligible
+            .iter()
+            .filter(|row| row.relevance < expand_threshold)
+            .cloned()
+            .collect::<Vec<_>>();
+        (first, expandable, non_expandable)
+    };
     let mut all_batches = Vec::<Vec<RankedCandidate>>::new();
     if !first.is_empty() {
-        all_batches.push(first);
+        all_batches.push(first.clone());
     }
     all_batches.extend(expandable.chunks(TOOL_BATCH_SIZE).map(<[_]>::to_vec));
     let limit = max_candidate_batches.unwrap_or(all_batches.len());
@@ -130,7 +144,8 @@ pub fn plan_candidate_batches(
         .collect::<Vec<_>>();
     let batches = all_batches.into_iter().take(limit).collect::<Vec<_>>();
     Ok(CandidateBatchPlan {
-        candidates,
+        // candidates = 模型可见的主候选集 = 恒定的首批（rank 前 5；与 Python 同语义）
+        candidates: first,
         batches,
         discarded,
         non_expandable,
