@@ -1335,7 +1335,9 @@ def _evaluate_adaptive_generation(
         )
         queue = [candidate for batch in plan.batches for candidate in batch]
         retrieval_hits += int(
-            not gold_name or gold_name in {candidate.tool_id for candidate in plan.candidates}
+            not gold_name
+            # 命中口径 = gold 出现在模型可扫描的任一批次（首批恒 5 + expand 续批）
+            or gold_name in {c.tool_id for batch in plan.batches for c in batch}
         )
         final_calls: list[dict[str, Any]] = []
         terminal = "retrieval_no_match" if not queue else "candidate_exhausted"

@@ -313,10 +313,13 @@ def plan_candidate_batches(
 ) -> CandidateBatchPlan:
     """Plan a fixed-five first batch and threshold-gated continuation batches.
 
-    The first batch is selected from every candidate at or above ``discard``.
-    Only ranks after that first batch which also meet ``expand`` may be scanned.
-    This exactly separates initial candidate eligibility from the stronger
-    evidence needed to spend another internal inference pass.
+    First-batch invariant（AGENTS.md「工具上下文与候选扫描不变量」）：
+    retrieval 按 rank 稳定批次处理，每批至多 5；不得因阈值把首批砍到 1-2——
+    **首批恒为 rank 前 5**（仅当目录本身不足 5 个时短少）。
+
+    ``discard`` 的职责是 all-or-nothing 的可用性闸门：没有任何候选过 discard
+    时返回空批次（调用方走 retrieval_no_match 终端）；只要有一个过闸，
+    首批就无条件取 rank 前 5。``expand`` 仅控制 rank>5 的候选进入后续批次。
     """
 
     discard = float(discard_threshold)
@@ -331,12 +334,22 @@ def plan_candidate_batches(
         raise ValueError("max_candidate_batches must be >= 1 or null")
 
     ordered = tuple(sorted(ranked, key=lambda row: (-row.raw_score, row.tool_id)))
-    eligible = tuple(row for row in ordered if row.relevance >= discard)
     discarded = tuple(row for row in ordered if row.relevance < discard)
-    first = eligible[:TOOL_BATCH_SIZE]
-    tail = eligible[TOOL_BATCH_SIZE:]
-    expandable = tuple(row for row in tail if row.relevance >= expand)
-    non_expandable = tuple(row for row in tail if row.relevance < expand)
+    # discard 只做 all-or-nothing 可用性闸门：全灭 → 空批次（no_match 终端）；
+    # 有任一过闸 → 首批恒为 rank 前 5（不得砍到 1-2，目录不足 5 个时为实际数量）
+    eligible = tuple(row for row in ordered if row.relevance >= discard)
+    if not eligible:
+        first: tuple[RankedCandidate, ...] = ()
+        expandable: tuple[RankedCandidate, ...] = ()
+        non_expandable: tuple[RankedCandidate, ...] = ()
+    else:
+        first = ordered[:TOOL_BATCH_SIZE]
+        # 续批候选与旧语义一致：rank>5 且过 discard 才有资格；其中过 expand 的才可扫描
+        tail_eligible = tuple(
+            row for row in ordered[TOOL_BATCH_SIZE:] if row.relevance >= discard
+        )
+        expandable = tuple(row for row in tail_eligible if row.relevance >= expand)
+        non_expandable = tuple(row for row in tail_eligible if row.relevance < expand)
 
     all_batches: list[tuple[RankedCandidate, ...]] = []
     if first:
@@ -352,7 +365,9 @@ def plan_candidate_batches(
         used = tuple(all_batches[:limit])
         unscanned = tuple(row for batch in all_batches[limit:] for row in batch)
     return CandidateBatchPlan(
-        candidates=eligible,
+        # candidates = 模型可见的主候选集 = 恒定的首批（rank 前 5）；
+        # 后续批次在 batches/non_expandable 中单独呈现
+        candidates=first,
         batches=used,
         discarded=discarded,
         non_expandable=non_expandable,

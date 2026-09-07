@@ -172,6 +172,51 @@ class RetrievalBatchAndJointBudgetTests(unittest.TestCase):
         self.assertEqual([len(batch) for batch in plan.batches], [5, 5])
         self.assertEqual(len(plan.unscanned), 6)
 
+    def test_discard_never_cuts_first_batch_below_five(self):
+        # 回归：discard 阈值砍进 rank 前 5 时（只有 4 个过闸），首批仍必须是 5
+        # （AGENTS.md「工具上下文与候选扫描不变量」：不得因阈值把首批砍到 1-2）
+        rows = [
+            self._candidate(index, relevance)
+            for index, relevance in enumerate([0.90, 0.88, 0.86, 0.84, 0.70, 0.30, 0.28])
+        ]
+        plan = plan_candidate_batches(
+            rows,
+            discard_threshold=0.80,
+            expand_threshold=0.80,
+        )
+        self.assertEqual([len(batch) for batch in plan.batches], [5])
+        self.assertEqual(
+            [row.tool_id for row in plan.batches[0]],
+            [f"tool.{i:02d}" for i in range(5)],
+        )
+        # 首批中低于 discard 的 rank-5 候选（tool.04）仍出现在 discarded 报告里
+        self.assertEqual(
+            [row.tool_id for row in plan.discarded], ["tool.04", "tool.05", "tool.06"]
+        )
+        self.assertEqual(
+            [row.tool_id for row in plan.candidates], [f"tool.{i:02d}" for i in range(5)]
+        )
+
+    def test_all_below_discard_yields_no_batches(self):
+        # 全灭 → 空批次（调用方走 retrieval_no_match 终端）
+        rows = [self._candidate(index, relevance) for index, relevance in enumerate([0.2, 0.1, 0.05])]
+        plan = plan_candidate_batches(
+            rows,
+            discard_threshold=0.50,
+            expand_threshold=0.60,
+        )
+        self.assertEqual(plan.batches, ())
+        self.assertEqual(len(plan.discarded), 3)
+
+    def test_catalog_smaller_than_five_keeps_actual_size(self):
+        rows = [self._candidate(index, 0.9) for index in range(3)]
+        plan = plan_candidate_batches(
+            rows,
+            discard_threshold=0.50,
+            expand_threshold=0.60,
+        )
+        self.assertEqual([len(batch) for batch in plan.batches], [3])
+
     def test_projection_keeps_execution_constraints_and_fits(self):
         tokenizer = _CodepointTokenizer()
         tools = []
