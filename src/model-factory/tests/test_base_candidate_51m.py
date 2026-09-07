@@ -136,7 +136,7 @@ class BaseCandidateBoundaryTest(unittest.TestCase):
                     "BASE_ROOT",
                     root / "cycles/mei-1.1-51m/exp-00600m/models/base",
                 ),
-                patch.object(candidate, "TOKENIZER_ZH_V1", tokenizer),
+                patch.object(candidate, "frozen_tokenizer_path", return_value=tokenizer),
                 patch.object(candidate, "current_hash", return_value="unchanged"),
                 patch.object(
                     candidate,

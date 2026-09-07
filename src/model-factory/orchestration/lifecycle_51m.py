@@ -954,11 +954,13 @@ def internal_gate(stage: str, directory: Path, config: dict) -> tuple[bool, dict
             ]
             role_losses = {role: summary.get(f"valid_loss_{role}") for role in roles}
             quality = summary.get("valid_loss") is not None and probe is not None
-            cumulative_drawn = summary.get("source_tokens_drawn") or stage_drawn
+            # 续训轮配额只对当轮做账：source_tokens_drawn 跨轮累计（含父轮
+            # 已烧配额），stage_tokens_drawn 才是本轮的实耗。
+            drawn = stage_drawn or summary.get("source_tokens_drawn") or {}
             quota_tolerance = tolerance * 4
             quota_ok = all(
                 abs(
-                    int(cumulative_drawn.get(role) or 0)
+                    int(drawn.get(role) or 0)
                     - int(((schedule.get("sources") or {}).get(role) or {}).get("token_quota") or 0)
                 )
                 <= quota_tolerance

@@ -21,9 +21,9 @@ from common.paths import (
     LEGACY_CYCLES_ROOT,
     CURRENT_PATH,
     ROOT,
-    TOKENIZER_ZH_V1,
     architecture_contracts,
     cycle_lineage,
+    frozen_tokenizer_path,
 )
 from orchestration.lifecycle_51m import (
     EXPECTED_PARAMS,
@@ -238,11 +238,28 @@ def _formal_parent(config: dict, summary: dict) -> dict:
     tokenizer_sha = str(summary.get("tokenizer_sha256") or "")
     if not tokenizer_sha or tokenizer_sha != release.get("tokenizer_sha256"):
         raise RuntimeError("formal parent and child tokenizer identities differ")
-    if not TOKENIZER_ZH_V1.is_file() or sha256_file(TOKENIZER_ZH_V1) != tokenizer_sha:
+    # zhv2-rebuild 链冻结指针（v3）优先；legacy 链无指针回退 v1。
+    canonical_tokenizer = frozen_tokenizer_path()
+    if not canonical_tokenizer.is_file() or sha256_file(canonical_tokenizer) != tokenizer_sha:
         raise RuntimeError("CPT tokenizer SHA does not match the canonical tokenizer")
     weights_name = str(release.get("weights") or "")
-    weights = checkpoint.parent / weights_name
-    if not weights_name or not weights.is_file():
+    weights = checkpoint.parent / weights_name if weights_name else None
+    if weights is None or not weights.is_file():
+        # zhv2 注册件可能未回填文件名：按 weights_sha256 在同目录定位
+        expected_weights = str(release.get("weights_sha256") or "")
+        weights = next(
+            (
+                path
+                for path in sorted(checkpoint.parent.iterdir())
+                if path.is_file()
+                and path.name.endswith(".npz")
+                and path.name != checkpoint.name
+                and expected_weights
+                and sha256_file(path) == expected_weights
+            ),
+            None,
+        )
+    if not weights or not weights.is_file():
         raise RuntimeError("formal parent weights are missing")
     if release.get("weights_sha256") != sha256_file(weights):
         raise RuntimeError("formal parent weights SHA differs from RELEASE.json")

@@ -122,9 +122,9 @@ def ce_loss(model: Any, ids: mx.array, labels: mx.array) -> mx.array:
     loss = nn.losses.cross_entropy(logits, safe, reduction="none")
     mask = (targets != IGNORE_ID).astype(loss.dtype)
     n = mask.sum()
-    if float(n) == 0.0:
-        return mx.array(0.0)
-    return (loss * mask).sum() / n
+    # compile 内不允许对 traced 标量 eval：n==0 时分子必为 0，钳到 1 语义等价
+    n_safe = mx.maximum(n, 1.0)
+    return (loss * mask).sum() / n_safe
 
 
 def pack_model(model: Any, names: list[str], bits_by_name: dict[str, int], out_path: Path) -> None:
