@@ -39,6 +39,7 @@ models/*/exp-*/**/*.npz
 models/*/exp-*/**/*.bin
 models/*/exp-*/**/tokenizer.model
 models/*/exp-*/**/heads/**/*.npz
+models/*/releases/**/*.npz
 
 # 导出 staging 临时目录（证据已进包内 receipts）
 models/*/exp-*/products/.*.staging/
