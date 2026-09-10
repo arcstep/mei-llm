@@ -160,6 +160,8 @@ def main() -> int:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-compile", action="store_true")
     ap.add_argument("--bits", type=int, default=2, help="默认位宽（未命中策略的特殊张量）；旧链策略：f16 头/小张量、cq4 嵌入+mhc、cq2 主体")
+    ap.add_argument("--family-weights", action="append", default=[],
+                    help="replay 抽样权重 family=N（如 retrieval=3），未列出的族权重 1")
     args = ap.parse_args()
 
     if args.out_dir.exists():
@@ -188,6 +190,7 @@ def main() -> int:
 
     deploy = DeployIndex()
     rows: list[dict[str, Any]] = []
+    row_families: list[str] = []
     for family in TRAINABLE_FAMILIES:
         path = args.release_dir / "compiled" / family / "train.jsonl"
         for line in path.read_text(encoding="utf-8").splitlines():
@@ -196,8 +199,10 @@ def main() -> int:
             row = json.loads(line)
             prompt, gold = RENDERERS[family](row, deploy)
             rows.append(encode_pair(tok, prompt, gold))
+            row_families.append(family)
     if args.smoke:
         rows = rows[:64]
+        row_families = row_families[:64]
     log(f"replay dataset: {len(rows)} rows")
 
     quant_names, bits_by_name = collect_quant_pairs(model)
@@ -230,10 +235,22 @@ def main() -> int:
 
     import random as _random
     rng = _random.Random(20260905)
-    order = list(range(len(rows)))
-    rng.shuffle(order)
-    t0 = time.time()
     steps = min(args.steps, 30) if args.smoke else args.steps
+    family_weights: dict[str, float] = {}
+    for item in args.family_weights:
+        family, weight = item.split("=", 1)
+        family_weights[family] = float(weight)
+    if family_weights:
+        order = rng.choices(
+            range(len(rows)),
+            weights=[family_weights.get(fam, 1.0) for fam in row_families],
+            k=steps * args.batch_size,
+        )
+        log(f"weighted replay: {family_weights} ({len(order)} draws)")
+    else:
+        order = list(range(len(rows)))
+        rng.shuffle(order)
+    t0 = time.time()
     for step in range(steps):
         start = (step * args.batch_size) % len(rows)
         picks = order[start : start + args.batch_size]

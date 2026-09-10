@@ -232,6 +232,8 @@ def main() -> int:
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--no-compile", action="store_true")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--family-weights", action="append", default=[],
+                    help="训练抽样权重 family=N（如 retrieval=3），未列出的族权重 1")
     ap.add_argument("--quant-aware", action="store_true",
                     help="fake-quant STE in every forward (SFT on the quantized model; requires a QAT-tuned base)")
     ap.add_argument("--quant-bits", type=int, default=4, help="quant-aware 位宽：4（Q4 基准）或 2（Q2 目标）")
@@ -316,8 +318,20 @@ def main() -> int:
             step_fn = step_fn
 
     rng = __import__("random").Random(args.seed)
-    batch_idx = list(range(len(rows)))
-    rng.shuffle(batch_idx)
+    family_weights: dict[str, float] = {}
+    for item in args.family_weights:
+        family, weight = item.split("=", 1)
+        family_weights[family] = float(weight)
+    if family_weights:
+        batch_idx = rng.choices(
+            range(len(rows)),
+            weights=[family_weights.get(r["family"], 1.0) for r in rows],
+            k=steps * args.batch_size,
+        )
+        log(f"weighted train sampling: {family_weights} ({len(batch_idx)} draws)")
+    else:
+        batch_idx = list(range(len(rows)))
+        rng.shuffle(batch_idx)
 
     # eval split: reuse the release's valid rows
     valid_pairs = []

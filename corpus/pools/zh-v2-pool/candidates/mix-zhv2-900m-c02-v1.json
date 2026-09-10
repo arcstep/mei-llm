@@ -1,0 +1,52 @@
+{
+  "allow_repeat": false,
+  "candidate_id": "mix-zhv2-900m-c02-v1",
+  "capacity_tokens": {
+    "code": 606361740,
+    "dialogue": 191520439,
+    "fineweb2_hq": 974428850,
+    "structured": 417251965,
+    "wiki_en": 287983980,
+    "wiki_zh": 724350781
+  },
+  "consumed_tokens": {
+    "code": 41000768,
+    "dialogue": 79001536,
+    "fineweb2_hq": 259999680,
+    "structured": 41201984,
+    "wiki_en": 17800384,
+    "wiki_zh": 161001024
+  },
+  "deprecated_input": null,
+  "policy": {
+    "fractions": null,
+    "needs_reason": false,
+    "rounding": "explicit_quotas"
+  },
+  "quotas": {
+    "code": 20000000,
+    "dialogue": 40000000,
+    "fineweb2_hq": 124993856,
+    "structured": 25000000,
+    "wiki_en": 10000000,
+    "wiki_zh": 80000000
+  },
+  "reasons": [
+    "续训轮 3（900M）：六角色公式配额不变，hq 吸收父轮实际曝光差额（增量 299,993,856）"
+  ],
+  "remaining_tokens": {
+    "code": 565360972,
+    "dialogue": 112518903,
+    "fineweb2_hq": 714429170,
+    "structured": 376049981,
+    "wiki_en": 270183596,
+    "wiki_zh": 563349757
+  },
+  "schema": "mei-51m-cpt-natural-mix-candidate-v2",
+  "selection": "unseen_first",
+  "shortages": {},
+  "status": "passed",
+  "supersedes": null,
+  "synthetic_fraction": 0.0,
+  "target_increment_tokens": 299993856
+}

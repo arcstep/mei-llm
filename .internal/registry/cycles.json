@@ -17,41 +17,52 @@
       "target_exposure_tokens": 600000000
     },
     {
+      "actual_exposure_tokens": 300000768,
       "cycle_id": "exp-000300m-v2",
       "lineage": "zh-v2-rebuild",
+      "path": "cycles/mei-1.2-51m/exp-00300m/CYCLE.json",
       "status": "completed_release_eligible",
       "target_exposure_tokens": 300000000,
-      "tokenizer_id": "zh-24k-v3",
-      "path": "cycles/mei-1.2-51m/exp-00300m/CYCLE.json",
-      "actual_exposure_tokens": 300000768
+      "tokenizer_id": "zh-24k-v3"
     },
     {
+      "actual_exposure_tokens": 600006144,
+      "base_valid_loss": 1.6125211268663406,
       "cycle_id": "exp-000600m-v2",
       "lineage": "zh-v2-rebuild",
-      "status": "planned",
+      "path": "cycles/mei-1.2-51m/exp-00600m",
+      "status": "completed",
       "target_exposure_tokens": 600000000,
       "tokenizer_id": "zh-24k-v3"
     },
     {
+      "actual_exposure_tokens": 900007424,
+      "base_valid_loss": 1.5537,
       "cycle_id": "exp-000900m-v2",
       "lineage": "zh-v2-rebuild",
-      "status": "planned",
+      "status": "completed",
       "target_exposure_tokens": 900000000,
-      "tokenizer_id": "zh-24k-v3"
+      "tokenizer_id": "zh-24k-v3",
+      "verdict": "paused_for_diagnosis"
     },
     {
       "cycle_id": "exp-001200m-v2",
       "lineage": "zh-v2-rebuild",
-      "status": "planned",
+      "status": "completed",
       "target_exposure_tokens": 1200000000,
-      "tokenizer_id": "zh-24k-v3"
+      "tokenizer_id": "zh-24k-v3",
+      "actual_exposure_tokens": 1200006656,
+      "base_valid_loss": 1.4936,
+      "path": "cycles/mei-1.2-51m/exp-01200m",
+      "verdict": "continued"
     },
     {
       "cycle_id": "exp-001500m-v2",
       "lineage": "zh-v2-rebuild",
-      "status": "planned",
+      "status": "in_progress",
       "target_exposure_tokens": 1500000000,
-      "tokenizer_id": "zh-24k-v3"
+      "tokenizer_id": "zh-24k-v3",
+      "path": "cycles/mei-1.2-51m/exp-01500m"
     },
     {
       "cycle_id": "exp-001800m-v2",
