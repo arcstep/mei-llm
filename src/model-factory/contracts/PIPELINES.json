@@ -2,6 +2,42 @@
   "schema": "mei-model-factory-pipeline-registry-v1",
   "pipelines": [
     {
+      "pipeline_id": "mei-51m-cpt-batch-replay-v1",
+      "status": "current",
+      "entrypoint": "diagnostics.cpt_batch_replay",
+      "changes_weights": true,
+      "purpose": "explicit 1200M to 1500M same-slice retraining with effective batch 8, original cosine LR, automatic frozen comparison and two-hour local reports",
+      "track": "diagnostic",
+      "automatic_parent_promotion": false
+    },
+    {
+      "pipeline_id": "mei-51m-cpt-bounded-recovery-v1",
+      "status": "current",
+      "entrypoint": "diagnostics.bounded_cpt_recovery",
+      "changes_weights": true,
+      "purpose": "independent bounded recovery of a quality-blocked checkpoint with explicit configuration change and diagnostic corpus reuse; never promotes",
+      "track": "diagnostic",
+      "maximum_optimizer_updates": 611,
+      "automatic_parent_promotion": false
+    },
+    {
+      "pipeline_id": "mei-51m-cpt-accumulation-resource-v1",
+      "status": "current",
+      "entrypoint": "diagnostics.cpt_accumulation_resource",
+      "changes_weights": true,
+      "writes_weights": false,
+      "purpose": "bounded synthetic 51M accumulation resource probe; no corpus adoption, checkpoint or promotion",
+      "track": "diagnostic"
+    },
+    {
+      "pipeline_id": "mei-51m-cpt-paired-diagnostic-v1",
+      "status": "current",
+      "entrypoint": "evaluation.base.paired_cpt_diagnostic",
+      "changes_weights": false,
+      "purpose": "independent hash-bound paired CPT validation; never promotes or rewrites a lifecycle gate",
+      "track": "diagnostic"
+    },
+    {
       "pipeline_id": "mei-51m-cpt-lifecycle-v1",
       "status": "current",
       "entrypoint": "orchestration.lifecycle_51m",
@@ -115,4 +151,3 @@
   ],
   "rule": "New formal cycles may select only current pipelines and must freeze a conforming PIPELINE.lock.json before execution."
 }
-

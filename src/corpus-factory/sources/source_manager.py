@@ -260,6 +260,12 @@ def plan_mix(
     unknown = sorted(set(quotas) - valid_roles)
     if unknown:
         raise SourceError(f"unknown roles in plan: {unknown}")
+    if any(amount < 0 for amount in quotas.values()) or sum(quotas.values()) != target_tokens:
+        raise SourceError("nonnegative quotas must sum to target increment")
+    if any(amount < 0 for amount in capacities.values()) or any(amount < 0 for amount in consumed.values()):
+        raise SourceError("capacity and consumed tokens must be nonnegative")
+    if any(consumed.get(role, 0) > capacities.get(role, 0) for role in quotas):
+        raise SourceError("consumed tokens exceed physical capacity")
     remaining = {
         role: max(0, capacities.get(role, 0) - consumed.get(role, 0))
         for role in quotas
@@ -281,7 +287,9 @@ def plan_mix(
         "shortages": shortages,
         "allow_repeat": False,
         "selection": "unseen_first",
-        "synthetic_fraction": 0.0,
+        "synthetic_fraction": None,
+        "validation_scope": "quota_capacity_only",
+        "training_adoption_eligible": False,
         "policy": {
             "rounding": rounding,
             "fractions": fractions,
@@ -625,6 +633,10 @@ def freeze_pool(
         if not manifest_path.is_file():
             raise SourceError(f"missing admitted manifest: {manifest_path}")
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        revocations = _sibling_module("../quality/revocations.py", "mei_pool_revocations")
+        revoked = revocations.manifest_revocation_errors(manifest_path, manifest)
+        if revoked:
+            raise SourceError("; ".join(revoked))
         entry = {
             "path": str(directory.resolve()),
             "manifest_sha256": sha256_file(manifest_path),

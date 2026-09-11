@@ -1,6 +1,26 @@
 {
   "control_plane_entrypoints": [
     {
+      "path": "src/model-factory/diagnostics/cpt_batch_replay.py",
+      "role": "explicit same-slice 1200M to 1500M retraining and frozen comparison via mei_llm cpt replay",
+      "status": "diagnostic"
+    },
+    {
+      "path": "src/model-factory/diagnostics/bounded_cpt_recovery.py",
+      "role": "bounded diagnostic recovery through mei_llm cpt recover; explicit blocked-parent/configuration/reuse binding, no automatic promotion",
+      "status": "diagnostic"
+    },
+    {
+      "path": "src/model-factory/diagnostics/cpt_accumulation_resource.py",
+      "role": "bounded synthetic 51M accumulation resource probe through mei_llm cpt resource-probe; no saved weights or promotion",
+      "status": "diagnostic"
+    },
+    {
+      "path": "src/model-factory/evaluation/base/paired_cpt_diagnostic.py",
+      "role": "independent paired CPT diagnostic through mei_llm cpt diagnose; no training or promotion",
+      "status": "diagnostic"
+    },
+    {
       "path": "src/mei_llm/cycle_control.py",
       "role": "read-only cycle planning, status, resume disposition and registry verification",
       "status": "current"

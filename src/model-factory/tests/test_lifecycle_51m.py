@@ -66,6 +66,10 @@ class Lifecycle51MTest(unittest.TestCase):
         self.assertEqual(first["params"], 51_463_797)
         self.assertTrue((self.runs / "test-600m/jobs").is_dir())
         self.assertTrue((self.runs / "test-600m/checkpoints").is_dir())
+        self.assertEqual(first["source_manifest_schema_version"], 2)
+        self.assertTrue(lc.source_capture_status(first)["unchanged"])
+        Path(first["source_capture"]["source_archive"]).write_bytes(b"corrupted")
+        self.assertFalse(lc.source_capture_status(first)["unchanged"])
 
     def test_changed_input_invalidates_existing_run(self) -> None:
         with patch.object(lc, "RUN_ROOT", self.runs):

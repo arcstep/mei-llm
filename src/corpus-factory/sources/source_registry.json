@@ -144,8 +144,27 @@
         "note": "微博对话，研究用途；须强过滤（垃圾/广告/低质）"
       },
       "admit": {"dedup_mode": "text"},
-      "urls": [],
-      "note": "量大但脏，配额让字幕分担"
+      "urls": [
+        {
+          "filename": "lccc_base_train.jsonl.gz",
+          "url": "https://huggingface.co/datasets/silver/lccc/resolve/5bd582fa28cd7143f2f9c852e08e23089d677c44/lccc_base_train.jsonl.gz",
+          "bytes": 369854377,
+          "sha256": "2162e0ed923fba62329cabf7e1493fbe59248afc94a62508e4abdea61e624627"
+        },
+        {
+          "filename": "lccc_base_valid.jsonl.gz",
+          "url": "https://huggingface.co/datasets/silver/lccc/resolve/5bd582fa28cd7143f2f9c852e08e23089d677c44/lccc_base_valid.jsonl.gz",
+          "bytes": 1071594,
+          "sha256": "5cc27e7ac3447c5a31386178f82ff01cab56e27827445ef8d429809301491759"
+        },
+        {
+          "filename": "lccc_base_test.jsonl.gz",
+          "url": "https://huggingface.co/datasets/silver/lccc/resolve/5bd582fa28cd7143f2f9c852e08e23089d677c44/lccc_base_test.jsonl.gz",
+          "bytes": 549124,
+          "sha256": "cf8757587bdb8f360cc94fc38baadf9e185bad65a26155527a8430c048676016"
+        }
+      ],
+      "note": "官方 thu-coai/lccc 加载器指向 silver/lccc；固定 revision 5bd582fa28cd7143f2f9c852e08e23089d677c44 与 LFS SHA256。HF 标注 MIT 不替代微博原始内容权利审核；保留 band C。"
     },
     {
       "source_id": "coig-pc",

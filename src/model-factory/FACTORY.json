@@ -18,6 +18,10 @@
   "legacy_path_map": "src/model-factory/contracts/LEGACY_PATH_MAP.json",
   "pipeline_lock_schema": "src/model-factory/contracts/pipeline-lock.schema.json",
   "current_entrypoints": {
+    "cpt_batch_replay": "diagnostics.cpt_batch_replay",
+    "cpt_bounded_recovery": "diagnostics.bounded_cpt_recovery",
+    "cpt_accumulation_resource": "diagnostics.cpt_accumulation_resource",
+    "cpt_paired_diagnostic": "evaluation.base.paired_cpt_diagnostic",
     "cpt_lifecycle": "orchestration.lifecycle_51m",
     "qat_phase": "training.qat.qat_cq2_v2_51m",
     "sft_bootstrap_phase": "orchestration.productize_sft_v3_300m",

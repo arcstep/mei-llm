@@ -226,7 +226,8 @@ def _policy_errors(manifest: dict[str, Any]) -> list[str]:
 
 def audit_source(manifest_path: Path) -> dict[str, Any]:
     manifest = load_json(manifest_path)
-    errors = []
+    revocations = _sibling_module(Path(__file__).with_name("revocations.py"), "mei_corpus_revocations")
+    errors = revocations.manifest_revocation_errors(manifest_path, manifest)
     schema = manifest.get("schema")
     if schema == "mei-51m-admitted-natural-source-v1":
         pass
@@ -248,6 +249,14 @@ def audit_source(manifest_path: Path) -> dict[str, Any]:
                 errors.append("clearance receipt file missing")
             elif sha256_file(receipt_path) != clearance.get("sha256"):
                 errors.append("clearance receipt hash mismatch")
+            else:
+                reviewed = load_json(receipt_path)
+                if reviewed.get("source_id") != manifest.get("source_id"):
+                    errors.append("clearance source_id mismatch")
+                if reviewed.get("status") != "passed":
+                    errors.append("clearance review not passed")
+                if not str(reviewed.get("reviewer") or "").strip() or not reviewed.get("reviewed_at"):
+                    errors.append("clearance named review missing")
         if manifest.get("source_id"):
             try:
                 errors.extend(_policy_errors(manifest))
@@ -448,6 +457,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     command = sub.add_parser("audit-source")
     command.add_argument("--manifest", type=Path, required=True)
+    mode = command.add_mutually_exclusive_group()
+    mode.add_argument("--dialogue-config", type=Path)
+    mode.add_argument("--lccc-config", type=Path)
+    mode.add_argument("--dialogue-split-config", type=Path)
+    mode.add_argument("--dialogue-content-config", type=Path)
     command.add_argument("--out", type=Path, required=True)
 
     command = sub.add_parser("audit-structured")
@@ -481,7 +495,21 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "audit-source":
-        result = audit_source(args.manifest)
+        if args.dialogue_content_config:
+            module = _sibling_module(Path(__file__).with_name("dialogue_content_filter.py"), "mei_dialogue_content_filter")
+            result = module.filter_candidate(args.manifest, args.dialogue_content_config)
+        elif args.dialogue_split_config:
+            module = _sibling_module(Path(__file__).with_name("dialogue_split_audit.py"), "mei_dialogue_split_audit")
+            result = module.audit(args.manifest, args.dialogue_split_config)
+        elif args.lccc_config:
+            path = Path(__file__).resolve().parents[1] / "generators/prepare_lccc.py"
+            module = _sibling_module(path, "mei_prepare_lccc")
+            result = module.prepare(args.manifest, args.lccc_config)
+        elif args.dialogue_config:
+            module = _sibling_module(Path(__file__).with_name("dialogue_recovery.py"), "mei_dialogue_recovery")
+            result = module.audit(args.manifest, args.dialogue_config)
+        else:
+            result = audit_source(args.manifest)
     elif args.command == "audit-structured":
         result = audit_structured(args.manifest, sample=args.sample)
     elif args.command == "audit-synthetic":

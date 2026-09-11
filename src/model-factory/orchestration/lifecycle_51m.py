@@ -35,6 +35,7 @@ from common.paths import (
     legacy_weight_contract_sha256,
 )
 from common.run_lock import lock_is_held, pid_alive_from_meta, read_lock_meta
+from common import source_capture
 
 
 HERE = Path(__file__).resolve().parent
@@ -241,8 +242,12 @@ def code_revision() -> dict:
         return {"commit": None, "dirty": None}
 
 
-def source_manifest() -> dict:
+def source_manifest(schema_version: int = 2) -> dict:
     """Hash runnable source, excluding generated packages and training outputs."""
+    if schema_version == 2:
+        return source_capture.manifest(ROOT)
+    if schema_version != 1:
+        raise ValueError(f"unsupported source manifest version: {schema_version}")
     roots = (
         ARCHITECTURE_DIR,
         HERE,
@@ -512,6 +517,7 @@ def init_run(
         "recipe_sha256": sha256_file(RECIPE_PATH),
         "code_revision": code_revision(),
         "source_capture_mode": "launch",
+        "source_manifest_schema_version": 2,
         "source_manifest": relative(directory / "source-manifest.json"),
         "source_manifest_sha256": sources["manifest_sha256"],
         "tokenizer_sha256": tokenizer_sha,
@@ -578,6 +584,9 @@ def init_run(
         atomic_json(recovery_path, recovery)
         seed_hashes[recovery_path.name] = sha256_file(recovery_path)
     config["seed_input_sha256"] = seed_hashes
+    config["source_capture"] = source_capture.capture(
+        ROOT, directory / "source-capture", sources, data["tracks"]["cpt"]
+    )
     atomic_json(directory / "source-manifest.json", sources)
     atomic_json(path, config)
     atomic_json(directory / "recipe.snapshot.json", data)
@@ -604,8 +613,13 @@ def stage_fingerprint(directory: Path, config: dict, stage: str, row: dict) -> s
     dependencies = {
         dep: receipt_digest(stage_receipt(directory, dep)) for dep in (row.get("requires") or [])
     }
+    source_binding = {}
+    if config.get("source_manifest_schema_version") == 2:
+        source_binding = {"source_capture": config.get("source_capture"),
+                          "source_manifest_schema_version": 2}
     return sha256_json(
         {
+            **source_binding,
             "stage": stage,
             "recipe_sha256": config["recipe_sha256"],
             "corpus_snapshot_sha256": config["corpus"]["snapshot_sha256"],
@@ -639,13 +653,25 @@ def source_capture_status(config: dict) -> dict:
             "unchanged": None,
             "expected_sha256": expected or None,
         }
-    actual = source_manifest()["manifest_sha256"]
+    version = int(config.get("source_manifest_schema_version", 1))
+    actual = source_manifest(version)["manifest_sha256"]
+    archive_errors = []
+    if version == 2:
+        sources = load_json(ROOT / config["source_manifest"])
+        binding = config.get("source_capture") or {}
+        archive_errors = source_capture.verify(sources, binding)
+        phases = binding.get("phase_closures", {})
+        if set(phases) != set(recipe()["tracks"]["cpt"]) or any(
+            row.get("manifest_sha256") != expected for row in phases.values()
+        ):
+            archive_errors.append("phase source closure binding mismatch")
     return {
         "mode": "launch",
         "enforced": True,
-        "unchanged": actual == expected,
+        "unchanged": actual == expected and not archive_errors,
         "expected_sha256": expected,
         "actual_sha256": actual,
+        "recoverable_source_errors": archive_errors,
     }
 
 

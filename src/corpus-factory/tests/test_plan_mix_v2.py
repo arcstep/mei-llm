@@ -33,6 +33,20 @@ CONSUMED = {role: 0 for role in CAPACITIES}
 
 
 class PlanMixV2Tests(unittest.TestCase):
+    def test_quotas_must_match_actual_increment(self) -> None:
+        with self.assertRaisesRegex(sources.SourceError, "sum to target"):
+            sources.plan_mix(301, {"dialogue": 400}, {}, quotas={"dialogue": 300})
+
+    def test_consumption_cannot_exceed_physical_capacity(self) -> None:
+        with self.assertRaisesRegex(sources.SourceError, "physical capacity"):
+            sources.plan_mix(10, {"dialogue": 100}, {"dialogue": 110}, quotas={"dialogue": 10})
+
+    def test_capacity_pass_does_not_assert_naturalness_or_adoption(self) -> None:
+        result = sources.plan_mix(10, {"dialogue": 100}, {}, quotas={"dialogue": 10})
+        self.assertIsNone(result["synthetic_fraction"])
+        self.assertFalse(result["training_adoption_eligible"])
+        self.assertEqual(result["validation_scope"], "quota_capacity_only")
+
     def test_fraction_mode_assigns_quotas_with_floor_last_role(self) -> None:
         result = sources.plan_mix(
             300_000_000,

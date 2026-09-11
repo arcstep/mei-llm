@@ -367,6 +367,7 @@ def train_lm_steps(
             loss, grads = value_and_grad(model, stacked)
         grads = _scale_tree(grads, float(max(n_tok, 1)))
         acc_grads = grads if acc_grads is None else _add_trees(acc_grads, grads)
+        mx.eval(acc_grads)
         acc_loss += float(loss) * max(n_tok, 1)
         acc_tok += n_tok
         micro_in_accum += 1

@@ -579,6 +579,16 @@ def build_parser() -> argparse.ArgumentParser:
     cpt = top.add_parser("cpt")
     cpt_sub = cpt.add_subparsers(dest="action", required=True)
     cpt_sub.add_parser("doctor")
+    diagnose = cpt_sub.add_parser("diagnose")
+    diagnose.add_argument("--config", type=Path, required=True)
+    resource_probe = cpt_sub.add_parser("resource-probe")
+    resource_probe.add_argument("--config", type=Path, required=True)
+    recovery = cpt_sub.add_parser("recover")
+    recovery.add_argument("--config", type=Path, required=True)
+    recovery.add_argument("--confirm-training", action="store_true")
+    replay = cpt_sub.add_parser("replay")
+    replay.add_argument("--config", type=Path, required=True)
+    replay.add_argument("--confirm-training", action="store_true")
     init = cpt_sub.add_parser("init")
     init.add_argument("--run-id", required=True)
     init.add_argument("--cycle-id")
@@ -710,6 +720,24 @@ def main(argv: list[str] | None = None) -> int:
             args.arguments,
         )
     if args.domain == "cpt":
+        if args.action == "replay":
+            _training_arguments(["--confirm-training"] if args.confirm_training else [], action="cpt replay")
+            pipeline = _pipeline(registry, "mei-51m-cpt-batch-replay-v1")
+            return _forward_module(registry, pipeline["entrypoint"], ["--config", str(args.config)])
+        if args.action == "recover":
+            _training_arguments(["--confirm-training"] if args.confirm_training else [], action="cpt recover")
+            pipeline = _pipeline(registry, "mei-51m-cpt-bounded-recovery-v1")
+            return _forward_module(registry, pipeline["entrypoint"], ["--config", str(args.config)])
+        if args.action == "resource-probe":
+            pipeline = _pipeline(registry, "mei-51m-cpt-accumulation-resource-v1")
+            return _forward_module(
+                registry, pipeline["entrypoint"], ["--config", str(args.config)]
+            )
+        if args.action == "diagnose":
+            pipeline = _pipeline(registry, "mei-51m-cpt-paired-diagnostic-v1")
+            return _forward_module(
+                registry, pipeline["entrypoint"], ["--config", str(args.config)]
+            )
         if args.action == "doctor":
             return _cpt_action(registry, "verify", None, [])
         if args.action == "init":

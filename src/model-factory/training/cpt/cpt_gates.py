@@ -17,6 +17,7 @@ from common.paths import (
     legacy_weight_contract_sha256,
 )
 from training.cpt.pretrain_gates import REQUIRED_ROLES
+from training.cpt.effective_batch_contract import continuation_batch_error
 
 BASE_SCRATCH300M = ROOT / "base" / "mei-1.0-51m-base-scratch300m-v1"
 CORPUS_LM_V2 = ROOT / "corpus" / "lm-v2"
@@ -132,6 +133,11 @@ def refuse_cpt_parent(parent_dir: Path | None = None, schedule: dict | None = No
             return "cpt parent state hash does not match schedule"
         if not expected_hash:
             return "cpt parent state hash is not pinned by schedule or release"
+        if (schedule or {}).get("kind") == "cpt":
+            for stage in schedule.get("curriculum") or []:
+                batch_error = continuation_batch_error(meta, stage)
+                if batch_error:
+                    return batch_error
         return None
     release = _load(parent_dir / "RELEASE.json")
     summary = _load(parent_dir / "summary.json")

@@ -44,7 +44,8 @@ def admit_dialogue(root: Path, *, with_clearance: bool) -> Path:
     clearance = None
     if with_clearance:
         clearance = root / "clearance.json"
-        clearance.write_text(json.dumps({"reviewed": "2026-09-04"}), encoding="utf-8")
+        clearance.write_text(json.dumps({"source_id": "opensubtitles-zh", "status": "passed",
+                                         "reviewer": "fixture reviewer", "reviewed_at": "2026-09-04"}), encoding="utf-8")
     with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
         sources.admit(
             [source],
@@ -84,6 +85,21 @@ def admit_structured(root: Path) -> Path:
 
 
 class PolicyGateTests(unittest.TestCase):
+    def test_unsigned_or_wrong_source_clearance_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            admitted = admit_dialogue(root, with_clearance=True)
+            clearance = root / "clearance.json"
+            clearance.write_text(json.dumps({"source_id": "other-source", "status": "pending_named_review"}))
+            manifest_path = admitted / "manifest.json"
+            manifest = json.loads(manifest_path.read_text())
+            manifest["clearance_receipt"]["sha256"] = quality.sha256_file(clearance)
+            manifest_path.write_text(json.dumps(manifest))
+            receipt = quality.audit_source(manifest_path)
+            self.assertEqual(receipt["status"], "blocked")
+            self.assertIn("clearance source_id mismatch", receipt["errors"])
+            self.assertIn("clearance named review missing", receipt["errors"])
+
     def test_dialogue_without_clearance_is_blocked_by_policy(self) -> None:
         with tempfile.TemporaryDirectory() as raw:
             root = Path(raw)

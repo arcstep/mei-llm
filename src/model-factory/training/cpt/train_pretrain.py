@@ -647,6 +647,13 @@ def main() -> int:
             else:
                 resume_mode = "curriculum" if stage_changed else "strict"
         if schedule_kind == "cpt":
+            from training.cpt.effective_batch_contract import continuation_batch_error
+            batch_error = continuation_batch_error(
+                prev_meta, {"batch_size": batch_size, "grad_accum": grad_accum, "seq_len": seq}
+            )
+            if batch_error:
+                print(batch_error, file=sys.stderr)
+                return 4
             banned = refuse_weights_only_continuation(resume_mode)
             if banned:
                 print(banned, file=sys.stderr)

@@ -140,7 +140,8 @@ class ProvenanceV2Tests(unittest.TestCase):
             root = Path(raw)
             source = self.write_dialogue_source(root)
             clearance = root / "clearance.json"
-            clearance.write_text(json.dumps({"reviewed": "2026-09-04"}), encoding="utf-8")
+            clearance.write_text(json.dumps({"source_id": "opensubtitles-zh", "status": "passed",
+                                             "reviewer": "fixture reviewer", "reviewed_at": "2026-09-04"}), encoding="utf-8")
             with patch.object(sources, "load_tokenizer", return_value=FakeTokenizer()):
                 result = sources.admit(
                     [source],
