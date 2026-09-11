@@ -47,14 +47,13 @@
     "--narration-steps": "parameter:narration_steps",
     "--eval-limit": "parameter:eval_limit",
     "--mw-eval-limit": "parameter:mw_eval_limit",
-    "--narration-eval-limit": "parameter:narration_eval_limit"
+    "--narration-eval-limit": "parameter:narration_eval_limit",
+    "--stop-after-stage": "parameter:stop_after_stage"
   },
   "fixed_arguments": [
     "--resume",
     "--phase-scope",
-    "model-evaluation",
-    "--stop-after-stage",
-    "sidecar_runtime_eval_v5"
+    "model-evaluation"
   ],
   "resume_flag": "--resume",
   "dry_run_flag": "--dry-run",

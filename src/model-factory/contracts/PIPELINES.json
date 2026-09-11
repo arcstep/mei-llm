@@ -98,7 +98,7 @@
       "entrypoint": "orchestration.productize_adaptive_v5_51m",
       "changes_weights": false,
       "legacy_direct_changes_weights": true,
-      "purpose": "top-level compatibility orchestrator over cycle-bound QAT, SFT, evaluation and runtime/release phases",
+      "purpose": "下游唯一编排入口（方向 C 主线，2026-09-11）：phase-binding 串 QAT→SFT→eval→package→runtime parity→hard gate；能力 head 降 diagnostic；9-stage product track 退役。见 docs/draft/2026-09-11-下游产品化主线契约.md",
       "recipe": "src/model-factory/recipes/productization-adaptive-v5.json",
       "children": [
         "mei-51m-qat-cq2-v1",

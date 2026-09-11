@@ -45,13 +45,12 @@
     "--narration-steps": "parameter:narration_steps",
     "--eval-limit": "parameter:eval_limit",
     "--mw-eval-limit": "parameter:mw_eval_limit",
-    "--narration-eval-limit": "parameter:narration_eval_limit"
+    "--narration-eval-limit": "parameter:narration_eval_limit",
+    "--stop-after-stage": "parameter:stop_after_stage"
   },
   "fixed_arguments": [
     "--phase-scope",
-    "sft-alignment",
-    "--stop-after-stage",
-    "narration_adapter_v5"
+    "sft-alignment"
   ],
   "resume_flag": "--resume",
   "dry_run_flag": "--dry-run",
