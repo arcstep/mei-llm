@@ -83,6 +83,7 @@ def build(
     kind: str = "scratch",
     parent_tokens_seen: int = 0,
     parent_checkpoint: str | None = None,
+    parent_state_sha256: str | None = None,
     cpt_batch_size: int = 1,
 ) -> dict:
     if out.exists():
@@ -191,6 +192,7 @@ def build(
             "parent_rung": "300m",
             "parent_tokens_seen": parent_tokens_seen,
             "parent_checkpoint": parent_checkpoint,
+            **({"parent_state_sha256": parent_state_sha256} if parent_state_sha256 else {}),
             "cumulative_exposure_tokens": cumulative,
             "sampler": "quota_plan",
             "sampler_seed": 0,
@@ -356,6 +358,13 @@ def main() -> int:
     candidate = json.loads(args.candidate.read_text(encoding="utf-8"))
     if candidate.get("status") != "passed":
         raise RuntimeError(f"candidate mix did not pass: {candidate.get('status')}")
+    parent_state_sha256 = None
+    if args.parent_checkpoint:
+        checkpoint_path = Path(args.parent_checkpoint)
+        if not checkpoint_path.is_absolute():
+            checkpoint_path = ROOT / checkpoint_path
+        if checkpoint_path.is_file():
+            parent_state_sha256 = sha256_file(checkpoint_path)
     result = build(
         pool,
         candidate,
@@ -366,6 +375,7 @@ def main() -> int:
         kind=args.kind,
         parent_tokens_seen=args.parent_tokens_seen,
         parent_checkpoint=args.parent_checkpoint,
+        parent_state_sha256=parent_state_sha256,
         cpt_batch_size=args.cpt_batch_size,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))

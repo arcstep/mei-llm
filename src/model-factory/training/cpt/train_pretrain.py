@@ -10,6 +10,7 @@ import re
 import shutil
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 _HERE = Path(__file__).resolve().parent
@@ -194,20 +195,20 @@ def append_jsonl(path: Path, row: dict) -> None:
 
 
 def emit_progress(path: Path, row: dict) -> None:
-    extra = ""
-    if row.get("valid_loss") is not None:
-        extra = (
-            f" valid={row['valid_loss']:.4f}"
-            f" hq={row.get('valid_loss_hq')}"
-            f" col={row.get('valid_loss_colloquial')}"
-            f" st={row.get('valid_loss_structure')}"
-        )
+    completed = int(row.get("completed_steps") or 0)
+    total = int(row.get("total_steps") or 0)
+    progress = (completed / total * 100.0) if total else 0.0
+    peak_gib = float(row.get("peak_bytes") or 0) / (1 << 30)
     line = (
-        f"step={row.get('step')} tokens={row.get('tokens_seen')} "
-        f"stage={row.get('curriculum_stage')} seq={row.get('seq_len')} "
-        f"loss={float(row.get('loss') or 0):.4f} tok_s={float(row.get('tok_s') or 0):.1f} "
-        f"lr={row.get('lr')}{extra}"
+        f"{datetime.now().astimezone().isoformat(timespec='seconds')} TRAIN "
+        f"step={completed}/{total} progress={progress:.3f}% "
+        f"tokens={row.get('tokens_seen')} delta_tokens={row.get('segment_tokens')} "
+        f"loss={float(row.get('loss') or 0):.6f} grad_norm={float(row.get('grad_norm') or 0):.6f} "
+        f"lr={row.get('lr')} tok/s={float(row.get('tok_s') or 0):.1f} "
+        f"eta_h={float(row.get('eta_h') or 0):.2f} peak_GiB={peak_gib:.2f}"
     )
+    if row.get("valid_loss") is not None:
+        line += f" valid={row['valid_loss']:.4f}"
     print(line, flush=True)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as f:
@@ -883,13 +884,23 @@ def main() -> int:
         valid_loss, probe_rep, extra_losses = maybe_eval(info["tokens_seen"])
         seg_tok = int(info["tokens_seen"]) - int(start_tokens)
         tok_s = segment_throughput(info["tokens_seen"], start_tokens, elapsed)
+        completed_steps = int(state["steps"])
+        total_steps_val = int(state.get("total_steps") or total_steps or 0)
+        eta_h = (
+            (total_steps_val - completed_steps) / completed_steps * elapsed / 3600.0
+            if completed_steps > 0 and total_steps_val > completed_steps
+            else 0.0
+        )
         row = {
             "step": step,
+            "completed_steps": completed_steps,
+            "total_steps": total_steps_val,
             "tokens_seen": info["tokens_seen"],
             "loss": info["loss"],
             "grad_norm": info["grad_norm"],
             "lr": info["lr"],
             "tok_s": tok_s,
+            "eta_h": eta_h,
             "segment_tokens": seg_tok,
             "segment_tok_s": tok_s,
             "peak_bytes": info.get("peak_bytes") or peak_bytes(),
