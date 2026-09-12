@@ -1,6 +1,8 @@
 {
   "schema_version": 2,
   "id": "mei-1.0-51m-cpt-lifecycle-v2",
+  "deprecated": true,
+  "superseded_by": "cpt track -> recipes/cpt-training-v1.json; product track (9-stage) -> mei-51m-adaptive-productization-v5 (phase-binding), 2026-09-11",
   "product": "mei-1.0-51m",
   "architecture_id": "mei-1.0-51m-arch-v1",
   "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",

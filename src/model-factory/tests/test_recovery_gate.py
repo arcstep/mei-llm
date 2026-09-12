@@ -20,9 +20,13 @@ class RecoveryGateTests(unittest.TestCase):
         self.assertFalse(report["automatic_parent_promotion"])
         self.assertFalse(report["full_1800m_authorized"])
 
-    def test_aggregate_improvement_does_not_hide_probe_regression(self):
+    def test_probe_regression_is_recorded_but_does_not_gate(self):
+        # probe 已降级为「仅记录」信号：valid 改善时 probe 噪声退化不再 block gate，
+        # 但 probe_guard 仍记录退化事实供观察。
         self.candidate["probes"]["mean_nll"] = 4.2
-        self.assertEqual(compare(self.parent, self.candidate, self.policy)["status"], "hold_for_diagnosis")
+        report = compare(self.parent, self.candidate, self.policy)
+        self.assertEqual(report["status"], "continue_bounded_diagnostic")
+        self.assertFalse(report["checks"]["probe_guard"])
 
     def test_aggregate_improvement_does_not_hide_role_regression(self):
         self.candidate["roles"]["code"]["valid_loss"] = 2.03

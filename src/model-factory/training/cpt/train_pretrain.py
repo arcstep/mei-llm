@@ -675,7 +675,11 @@ def main() -> int:
         start_step = int(prev.get("step") or 0)
         start_tokens = int(prev.get("tokens_seen") or 0)
         start_window = int(prev.get("window_index") or 0)
-        total_steps = int(prev.get("total_steps") or total_steps or 1)
+        # continuation 从 parent 跳（is_parent_hop）时，total_steps 已在上面按本 rung 的
+        # horizon_tokens/toks_per 重算（= 300M/2048 = 146484），不能继承 parent 的历史
+        # total_steps（36622，按旧 seq 粒度算的遗留值），否则 progress/eta 低估 4 倍。
+        if not is_parent_hop:
+            total_steps = int(prev.get("total_steps") or total_steps or 1)
         sampler_state = prev.get("sampler_state")
         if not sampler_state:
             sampler_state = {
