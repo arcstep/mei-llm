@@ -131,11 +131,12 @@ def build_anchor(
     probe_source: str,
     weights_path: Path = WEIGHTS_PATH,
     release_path: Path = RELEASE_PATH,
+    stage: str = "M1.1",
 ) -> dict:
     release = load_json(release_path)
     summary = load_json(release_path.parent / "summary.json") or load_json(SUMMARY_PATH)
     return {
-        "stage": "M1.1",
+        "stage": stage,
         "kind": "float-base-lm-anchor",
         "model_id": release.get("model_id") or MODEL_ID,
         "architecture_id": ARCHITECTURE_ID,
@@ -180,6 +181,18 @@ def main() -> int:
         action="store_true",
         help="transcribe training-run probes.json instead of re-evaluating",
     )
+    parser.add_argument(
+        "--run-probes",
+        type=Path,
+        default=None,
+        help="path to the training-run probes.json to transcribe (default: scratch300m RUN_PROBES_PATH)",
+    )
+    parser.add_argument(
+        "--stage",
+        type=str,
+        default="M1.1",
+        help="stage label recorded in the anchor (default: M1.1 for scratch300m)",
+    )
     args = parser.parse_args()
     mx, mlx_memory_policy = configure_mlx_memory(reset_peak=True)
     release_path = args.release or (args.weights.parent / "RELEASE.json")
@@ -191,15 +204,16 @@ def main() -> int:
         return fail(f"missing 51M CPT weights: {args.weights}")
     dest = args.out_dir / FLOAT_ANCHOR_NAME
     if args.reuse_run_probes:
-        probe_rep = load_json(RUN_PROBES_PATH)
+        probe_path = args.run_probes or RUN_PROBES_PATH
+        probe_rep = load_json(probe_path)
         if not probe_rep:
-            return fail(f"missing run probes: {RUN_PROBES_PATH}")
-        probe_source = "cycles/mei-1.1-51m/exp-00300m/runs summary probes.json (transcribed; hashes verified)"
+            return fail(f"missing run probes: {probe_path}")
+        probe_source = f"{probe_path.resolve().relative_to(ROOT)} (transcribed; hashes verified)"
     else:
-        from tokenizer import ZhTokenizerV1
+        from training.cpt.train_pretrain import _frozen_tokenizer
 
         model = load_51m_model(args.weights)
-        tok = ZhTokenizerV1()
+        tok = _frozen_tokenizer()
         probes = load_probes(PROBE_BANK)
         probe_rep = eval_probes(model, tok, probes)
         probe_source = "re-evaluated on mei-1.0-51m-arch-v1 + immutable base weights"
@@ -208,6 +222,7 @@ def main() -> int:
         probe_source=probe_source,
         weights_path=args.weights,
         release_path=release_path,
+        stage=args.stage,
     )
     release_mlx_memory(mx, collect_python=True)
     anchor["mlx_memory_policy"] = {

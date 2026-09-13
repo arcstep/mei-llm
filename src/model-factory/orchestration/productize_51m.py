@@ -32,8 +32,8 @@ from typing import Any, Callable
 from common.paths import (
     CURRENT_PATH,
     ROOT,
-    TOKENIZER_ZH_V1,
     architecture_contracts,
+    frozen_tokenizer_path,
     legacy_weight_contract_sha256,
     resolve_repo_path,
 )
@@ -186,8 +186,8 @@ def validate_base(release_path: Path, weights_path: Path) -> dict[str, Any]:
     if declared != contracts["weight_contract_sha256"]:
         raise RuntimeError("base does not resolve to the canonical 51M weight contract")
     tokenizer_sha = str(release.get("tokenizer_sha256") or "")
-    if tokenizer_sha and tokenizer_sha != sha_file(TOKENIZER_ZH_V1):
-        raise RuntimeError("base tokenizer does not match frozen zh-24k-v1")
+    if tokenizer_sha and tokenizer_sha != sha_file(frozen_tokenizer_path()):
+        raise RuntimeError("base tokenizer does not match frozen tokenizer")
     productization_eligible = release.get("productization_experiment_eligible")
     if productization_eligible is False or (
         release.get("promotion_prohibited") is True
@@ -220,7 +220,7 @@ def validate_base(release_path: Path, weights_path: Path) -> dict[str, Any]:
         "tokens_seen_exposure": int(
             release.get("tokens_seen_exposure") or release.get("tokens_seen") or 0
         ),
-        "tokenizer_sha256": tokenizer_sha or sha_file(TOKENIZER_ZH_V1),
+        "tokenizer_sha256": tokenizer_sha or sha_file(frozen_tokenizer_path()),
         "base_release_eligible": release.get("release_eligible"),
         "productization_experiment_eligible": (
             True if productization_eligible is None else bool(productization_eligible)
@@ -321,7 +321,7 @@ def validate_data_release(path: Path) -> dict[str, Any]:
         compatibility = manifest.get("base_compatibility") or {}
         if (
             int(compatibility.get("deployed_parameter_count") or 0) != EXPECTED_PARAMS
-            or compatibility.get("tokenizer_id") != "zh-24k-v1"
+            or compatibility.get("tokenizer_id") != "zh-24k-v3"
             or compatibility.get("arbitrary_cumulative_exposure_supported") is not True
             or compatibility.get("exposure_allowlist") is not None
         ):
@@ -753,7 +753,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
             "semantic_rewrites": {r"^\d{2}:\d{2}$": r"^[0-9]{2}:[0-9]{2}$"},
         },
         "current_baseline_sha256": sha_file(CURRENT_PATH),
-        "tokenizer_sha256": sha_file(TOKENIZER_ZH_V1),
+        "tokenizer_sha256": sha_file(frozen_tokenizer_path()),
         "replay_corpus": {},
         "source_manifest": source_manifest(),
         "environment_manifest": environment_manifest(),
@@ -1079,7 +1079,7 @@ def _load_runtime(
     )
     from mei_sdk.runtime_51m import Runtime51M
     from mei_sdk.shared import ToolIndex
-    from tokenizer import ZhTokenizerV1
+    from training.cpt.train_pretrain import _frozen_tokenizer
 
     cfg = NeedleZhConfig.from_spec()
     model = NeedleZh(cfg)
@@ -1125,14 +1125,14 @@ def _load_runtime(
     )
     runtime = Runtime51M(
         model,
-        ZhTokenizerV1(),
+        _frozen_tokenizer(),
         contrastive=contrastive,
         mw_disposition=disposition,
         conf_v2=confidence,
         index=index,
         model_hash=sha_file(master),
         head_hash=sha_file(retrieval_head) if retrieval_head else "",
-        tokenizer_hash=sha_file(TOKENIZER_ZH_V1),
+        tokenizer_hash=sha_file(frozen_tokenizer_path()),
         mw_receipt_sha256=mw_receipt_sha256,
         release_class="experimental",
     )
@@ -2118,7 +2118,7 @@ def _training_and_package_stages(
             index_path,
             model_sha256=sha_file(final_master),
             head_sha256=sha_file(r1_path),
-            tokenizer_sha256=sha_file(TOKENIZER_ZH_V1),
+            tokenizer_sha256=sha_file(frozen_tokenizer_path()),
         )
         path = directory / "tool-index-final.json"
         write_json(path, report)

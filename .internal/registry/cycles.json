@@ -30,7 +30,7 @@
       "base_valid_loss": 1.6125211268663406,
       "cycle_id": "exp-000600m-v2",
       "lineage": "zh-v2-rebuild",
-      "path": "cycles/mei-1.2-51m/exp-00600m",
+      "path": "cycles/mei-1.2-51m/exp-00600m/CYCLE.json",
       "status": "completed",
       "target_exposure_tokens": 600000000,
       "tokenizer_id": "zh-24k-v3"
@@ -43,7 +43,8 @@
       "status": "completed",
       "target_exposure_tokens": 900000000,
       "tokenizer_id": "zh-24k-v3",
-      "verdict": "paused_for_diagnosis"
+      "verdict": "paused_for_diagnosis",
+      "path": "cycles/mei-1.2-51m/exp-00900m/CYCLE.json"
     },
     {
       "cycle_id": "exp-001200m-v2",
@@ -53,7 +54,7 @@
       "tokenizer_id": "zh-24k-v3",
       "actual_exposure_tokens": 1200006656,
       "base_valid_loss": 1.4936,
-      "path": "cycles/mei-1.2-51m/exp-01200m",
+      "path": "cycles/mei-1.2-51m/exp-01200m/CYCLE.json",
       "verdict": "continued"
     },
     {
@@ -65,18 +66,23 @@
       "actual_exposure_tokens": 1500001792,
       "base_valid_loss": 1.509,
       "probe_mean_nll": 4.4169,
-      "path": "cycles/mei-1.2-51m/exp-01500m",
+      "path": "cycles/mei-1.2-51m/exp-01500m/CYCLE.json",
       "verdict": "blocked_by_gate"
     },
     {
-      "cycle_id": "exp-001800m-v2",
+      "cycle_id": "exp-001800m-v1",
       "lineage": "zh-v2-rebuild",
-      "status": "planned",
+      "status": "completed",
       "target_exposure_tokens": 1800000000,
-      "tokenizer_id": "zh-24k-v3"
+      "tokenizer_id": "zh-24k-v3",
+      "actual_exposure_tokens": 1800001024,
+      "base_valid_loss": 1.394,
+      "probe_mean_nll": 3.5998,
+      "path": "cycles/mei-1.2-51m/exp-01800m/CYCLE.json",
+      "verdict": "continued"
     },
     {
-      "cycle_id": "exp-002100m-v2",
+      "cycle_id": "exp-002100m-v1",
       "lineage": "zh-v2-rebuild",
       "status": "planned",
       "target_exposure_tokens": 2100000000,

@@ -51,7 +51,7 @@ WIRE_ID = "mei-runtime-wire-v2"
 SCHEMA_SUBSET_ID = "mei-json-schema-subset-v2"
 GRAMMAR_ID = "mei-byte-grammar-v2"
 WEIGHT_CONTRACT_ID = "mei-1.0-51m-weight-contract-v1"
-TOKENIZER_ID = "zh-24k-v1"
+TOKENIZER_ID = "zh-24k-v3"
 
 HISTORICAL_EVAL_DIR = (
     ROOT / "cycles/mei-1.1-51m/_legacy/notebook/evaluation/banks/sft-v2-eval-lock-v3-20class"

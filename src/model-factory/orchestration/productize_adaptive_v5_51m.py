@@ -43,8 +43,8 @@ from release import freeze_sft_v3_release_51m as freeze_sft_v3_release  # noqa: 
 from common.paths import (  # noqa: E402
     CURRENT_PATH,
     ROOT,
-    TOKENIZER_ZH_V1,
     architecture_contracts,
+    frozen_tokenizer_path,
     phase_binding_identity,
     resolve_repo_path,
 )
@@ -931,7 +931,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         },
         "qat_seed": inputs["qat_v5"],
         "training_prefix_adoption": inputs["seed_v5"],
-        "tokenizer_sha256": contract.sha_file(TOKENIZER_ZH_V1),
+        "tokenizer_sha256": contract.sha_file(frozen_tokenizer_path()),
         "current_baseline_sha256": contract.sha_file(CURRENT_PATH),
         "source_manifest": _source_manifest(),
         "recipe": {
@@ -1701,7 +1701,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
             training_catalog,
             model_sha256=contract.sha_file(seed_agent),
             retrieval_head_sha256=contract.sha_file(seed_r1),
-            tokenizer_sha256=contract.sha_file(TOKENIZER_ZH_V1),
+            tokenizer_sha256=contract.sha_file(frozen_tokenizer_path()),
         )
         _set_retrieval_calibration(runtime, calibration)
         _write_json(paths["seed_calibration"], calibration)
@@ -1863,7 +1863,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
             training_catalog,
             model_sha256=contract.sha_file(paths["agent"]),
             retrieval_head_sha256=contract.sha_file(paths["r2"]),
-            tokenizer_sha256=contract.sha_file(TOKENIZER_ZH_V1),
+            tokenizer_sha256=contract.sha_file(frozen_tokenizer_path()),
         )
         _set_retrieval_calibration(runtime, calibration)
         _write_json(paths["calibration"], calibration)
@@ -1875,7 +1875,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
             paths["index"],
             model_sha256=contract.sha_file(paths["agent"]),
             head_sha256=contract.sha_file(paths["r2"]),
-            tokenizer_sha256=contract.sha_file(TOKENIZER_ZH_V1),
+            tokenizer_sha256=contract.sha_file(frozen_tokenizer_path()),
         )
         training_manifest = adaptive.freeze_mw_visible_batches(
             runtime,

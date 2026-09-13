@@ -9,6 +9,8 @@ from typing import Any
 
 from mei_llm.registry import Registry
 
+from common.paths import cycle_artifacts
+
 
 PHASES = {"qat", "sft_alignment", "model_evaluation", "runtime_release"}
 
@@ -113,7 +115,7 @@ def template(
         },
         "outputs": {
             name: (
-                f"cycles/mei-1.1-51m/{cycle_id}/runs/REPLACE_ME"
+                f"{cycle_artifacts(cycle_id).relative_to(registry.root)}/runs/REPLACE_ME"
                 if name == "run_dir"
                 else "REPLACE_ME"
             )
@@ -188,11 +190,7 @@ def output_path(registry: Registry, cycle_id: str, value: str) -> Path:
     if not candidate.is_absolute():
         candidate = registry.root / candidate
     resolved = candidate.resolve()
-    allowed = (
-        registry.root
-        / "cycles/mei-1.1-51m"
-        / cycle_id
-    ).resolve()
+    allowed = cycle_artifacts(cycle_id).resolve()
     try:
         resolved.relative_to(allowed)
     except ValueError as error:

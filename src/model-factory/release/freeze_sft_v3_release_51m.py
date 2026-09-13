@@ -80,9 +80,16 @@ def _load_tokenizer() -> Any:
     if added:
         sys.path.insert(0, text)
     try:
-        from tokenizer import ZhTokenizerV1
+        from common.paths import frozen_tokenizer_path
+        from tokenizer import ZhTokenizerV2
 
-        return ZhTokenizerV1()
+        path = frozen_tokenizer_path()
+        tokenizer_id = path.name.replace(".model", "")
+        return ZhTokenizerV2(
+            tokenizer_id=tokenizer_id,
+            vocab_size=None,
+            manifest_path=path.parent / f"tokenizer-{tokenizer_id}-manifest.json",
+        )
     finally:
         if added:
             sys.path.remove(text)

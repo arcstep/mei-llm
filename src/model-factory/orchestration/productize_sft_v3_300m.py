@@ -24,8 +24,8 @@ import training.tool_use.sft_v3_training_51m as training
 from common.paths import (
     CURRENT_PATH,
     ROOT,
-    TOKENIZER_ZH_V1,
     architecture_contracts,
+    frozen_tokenizer_path,
     phase_binding_identity,
     resolve_repo_path,
 )
@@ -764,7 +764,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
                 "training_aux_sha256",
             )
         },
-        "tokenizer_sha256": contract.sha_file(TOKENIZER_ZH_V1),
+        "tokenizer_sha256": contract.sha_file(frozen_tokenizer_path()),
         "current_baseline_sha256": contract.sha_file(CURRENT_PATH),
         "source_manifest": _source_manifest(),
         "recipe": {
@@ -1384,7 +1384,7 @@ def execute(
             paths["index"],
             model_sha256=contract.sha_file(paths["agent"]),
             head_sha256=contract.sha_file(paths["r1"]),
-            tokenizer_sha256=contract.sha_file(TOKENIZER_ZH_V1),
+            tokenizer_sha256=contract.sha_file(frozen_tokenizer_path()),
         )
         report_path = directory / "tool-index-v4.json"
         _write_json(report_path, report)

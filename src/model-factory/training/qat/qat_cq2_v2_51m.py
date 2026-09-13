@@ -363,7 +363,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     from architecture import NeedleZh, count_params
     from config import NeedleZhConfig
     from common.data import PackedTokenSource, list_valid_set, load_scheduled_train
-    from tokenizer import ZhTokenizerV1
+    from training.cpt.train_pretrain import _frozen_tokenizer
 
     cfg = NeedleZhConfig.from_spec()
     model = NeedleZh(cfg)
@@ -376,7 +376,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     map_receipt = group_map_receipt(model.parameters())
     _write_json(stage_dir / "group-map.json", map_receipt)
 
-    tokenizer = ZhTokenizerV1()
+    tokenizer = _frozen_tokenizer()
     source = load_scheduled_train(
         args.replay_corpus,
         args.seq_len,
