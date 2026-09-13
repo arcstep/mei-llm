@@ -9,7 +9,7 @@ from typing import Any
 
 from mei_llm.registry import Registry
 
-from common.paths import cycle_artifacts
+from common.paths import ARCHITECTURE_DIR, RUNTIME_SHARED, cycle_artifacts
 
 
 PHASES = {"qat", "sft_alignment", "model_evaluation", "runtime_release"}
@@ -408,6 +408,8 @@ def invocation(
         str(registry.root / "src"),
         str(registry.root / "src/model-factory"),
         str(registry.root / "src/platform/python-sdk"),
+        str(ARCHITECTURE_DIR),
+        str(RUNTIME_SHARED),
     ]
     if env.get("PYTHONPATH"):
         roots.append(env["PYTHONPATH"])
