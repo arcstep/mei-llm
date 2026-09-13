@@ -1,0 +1,551 @@
+{
+  "schema": "mei-data-check-validation-v1",
+  "date": "2026-09-13",
+  "scope": "synthetic browser data-check feasibility, not release gate",
+  "planner": {
+    "provider": "QWEN",
+    "model": "qwen3.6-plus",
+    "ms": 9009,
+    "usage": {
+      "prompt_tokens": 522,
+      "completion_tokens": 436,
+      "total_tokens": 958,
+      "completion_tokens_details": {
+        "text_tokens": 436
+      },
+      "prompt_tokens_details": {
+        "text_tokens": 522
+      }
+    }
+  },
+  "source_package": {
+    "id": "data-check-d919985609f9",
+    "source_package": "/Users/xuehongwei/codeup/mei-projects/mei-llm/models/mei-1.2-51m/exp-00900m/products/mei-1.2-51m-cpt900m-tool-sft-cq2-v1",
+    "source_manifest_sha256": "0294a433e222fb19c5c30ce35c84959e0b47861bf2cfc9baa28465781a550b30",
+    "tensor_sha256": "3da0427a5aa53226d9c77947831a96497f3131199cf0564dc981815affffa49c",
+    "wasm_sha256": "8255ddf213f2ef85916eaf3e8330177c3cd8a8283e5e96806cb9cf537db0e8d3",
+    "index_sha256": "406c0d8b5d2cccaa8ae91aa43b35f60fd4c2c73271bf1402e59730c6824f7549",
+    "catalog": [
+      {
+        "name": "check_required",
+        "description": "检查一列是否存在空值。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "column"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_unique",
+        "description": "检查一列是否有重复值。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "column"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_number",
+        "description": "检查一列是否为数字并在最小值与最大值之间（包含边界）。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "column",
+            "min",
+            "max"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_enum",
+        "description": "检查一列的值是否属于允许值，允许值用英文逗号分隔。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            },
+            "allowed": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "column",
+            "allowed"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_product",
+        "description": "检查数量乘单价是否等于金额，允许误差0.01。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "quantity": {
+              "type": "string"
+            },
+            "price": {
+              "type": "string"
+            },
+            "total": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "quantity",
+            "price",
+            "total"
+          ],
+          "additionalProperties": false
+        }
+      }
+    ],
+    "embedding_source": "same-package Rust/WASM contrastive head; offline preparation",
+    "release_eligible": false,
+    "weights_changed": false,
+    "created_at": "2026-09-13T03:13:52.162Z"
+  },
+  "strict_problem": [
+    {
+      "rule": {
+        "id": "r1",
+        "instruction": "检查订单号列是否存在空值",
+        "tool": "check_required",
+        "args": {
+          "column": "订单号"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 8782.799999952316,
+      "executor": null,
+      "raw_text": "[]",
+      "runtime_error_code": null,
+      "error": "Mei 未执行：model_refusal",
+      "mw_disposition": {
+        "decision": "stop",
+        "source": "mw-head",
+        "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+        "reason_code": 2,
+        "top_probability": 0.2591915726661682,
+        "margin": 0.15141922235488892,
+        "continue_min_probability": 0.7,
+        "continue_min_margin": 0.15
+      },
+      "confidence": {
+        "available": true,
+        "value": 0.46801596879959106,
+        "source": "mei-1.0-51m-q4",
+        "version": "conf-head-v1"
+      },
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r2",
+        "instruction": "检查订单号列是否有重复值",
+        "tool": "check_unique",
+        "args": {
+          "column": "订单号"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9306.200000047684,
+      "executor": null,
+      "raw_text": "[]",
+      "runtime_error_code": null,
+      "error": "Mei 未执行：model_refusal",
+      "mw_disposition": {
+        "decision": "stop",
+        "source": "mw-head",
+        "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+        "reason_code": 2,
+        "top_probability": 0.27122634649276733,
+        "margin": 0.15806585550308228,
+        "continue_min_probability": 0.7,
+        "continue_min_margin": 0.15
+      },
+      "confidence": {
+        "available": true,
+        "value": 0.5421645045280457,
+        "source": "mei-1.0-51m-q4",
+        "version": "conf-head-v1"
+      },
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r3",
+        "instruction": "检查数量列是否为数字且在1到1000之间",
+        "tool": "check_number",
+        "args": {
+          "column": "数量",
+          "min": 1,
+          "max": 1000
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9245.5,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r4",
+        "instruction": "检查单价列是否为数字且在0到100000之间",
+        "tool": "check_number",
+        "args": {
+          "column": "单价",
+          "min": 0,
+          "max": 100000
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9516,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r5",
+        "instruction": "检查数量乘单价是否等于金额，允许误差0.01",
+        "tool": "check_product",
+        "args": {
+          "quantity": "数量",
+          "price": "单价",
+          "total": "金额"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9275.900000095367,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r6",
+        "instruction": "检查状态列的值是否属于待付款,已付款,已取消",
+        "tool": "check_enum",
+        "args": {
+          "column": "状态",
+          "allowed": "待付款,已付款,已取消"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9332.700000047684,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    }
+  ],
+  "strict_clean": [
+    {
+      "rule": {
+        "id": "r1",
+        "instruction": "检查订单号列是否存在空值",
+        "tool": "check_required",
+        "args": {
+          "column": "订单号"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 8920.899999856949,
+      "executor": null,
+      "raw_text": "[]",
+      "runtime_error_code": null,
+      "error": "Mei 未执行：model_refusal",
+      "mw_disposition": {
+        "decision": "stop",
+        "source": "mw-head",
+        "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+        "reason_code": 2,
+        "top_probability": 0.2591915726661682,
+        "margin": 0.15141922235488892,
+        "continue_min_probability": 0.7,
+        "continue_min_margin": 0.15
+      },
+      "confidence": {
+        "available": true,
+        "value": 0.46801596879959106,
+        "source": "mei-1.0-51m-q4",
+        "version": "conf-head-v1"
+      },
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r2",
+        "instruction": "检查订单号列是否有重复值",
+        "tool": "check_unique",
+        "args": {
+          "column": "订单号"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9318.400000095367,
+      "executor": null,
+      "raw_text": "[]",
+      "runtime_error_code": null,
+      "error": "Mei 未执行：model_refusal",
+      "mw_disposition": {
+        "decision": "stop",
+        "source": "mw-head",
+        "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+        "reason_code": 2,
+        "top_probability": 0.27122634649276733,
+        "margin": 0.15806585550308228,
+        "continue_min_probability": 0.7,
+        "continue_min_margin": 0.15
+      },
+      "confidence": {
+        "available": true,
+        "value": 0.5421645045280457,
+        "source": "mei-1.0-51m-q4",
+        "version": "conf-head-v1"
+      },
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r3",
+        "instruction": "检查数量列是否为数字且在1到1000之间",
+        "tool": "check_number",
+        "args": {
+          "column": "数量",
+          "min": 1,
+          "max": 1000
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 10590.799999952316,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r4",
+        "instruction": "检查单价列是否为数字且在0到100000之间",
+        "tool": "check_number",
+        "args": {
+          "column": "单价",
+          "min": 0,
+          "max": 100000
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 10646.599999904633,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r5",
+        "instruction": "检查数量乘单价是否等于金额，允许误差0.01",
+        "tool": "check_product",
+        "args": {
+          "quantity": "数量",
+          "price": "单价",
+          "total": "金额"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9401.200000047684,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    },
+    {
+      "rule": {
+        "id": "r6",
+        "instruction": "检查状态列的值是否属于待付款,已付款,已取消",
+        "tool": "check_enum",
+        "args": {
+          "column": "状态",
+          "allowed": "待付款,已付款,已取消"
+        },
+        "severity": "block"
+      },
+      "attempted": true,
+      "elapsed_ms": 9744.299999952316,
+      "executor": null,
+      "raw_text": null,
+      "runtime_error_code": "protocol_violation",
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "mw_disposition": null,
+      "confidence": null,
+      "narration": null
+    }
+  ],
+  "assisted_problem_issue_count": 7,
+  "assisted_problem_issues": [
+    {
+      "sheet": "订单",
+      "row": 5,
+      "column": "订单号",
+      "value": "",
+      "message": "必填内容为空"
+    },
+    {
+      "sheet": "订单",
+      "row": 4,
+      "column": "订单号",
+      "value": "A002",
+      "message": "与第 3 行重复"
+    },
+    {
+      "sheet": "订单",
+      "row": 6,
+      "column": "数量",
+      "value": -1,
+      "message": "应为 1 至 1000 的数字"
+    },
+    {
+      "sheet": "订单",
+      "row": 9,
+      "column": "数量",
+      "value": "两件",
+      "message": "应为 1 至 1000 的数字"
+    },
+    {
+      "sheet": "订单",
+      "row": 7,
+      "column": "金额",
+      "value": 90,
+      "message": "数量 × 单价 = 80，与金额不符"
+    },
+    {
+      "sheet": "订单",
+      "row": 9,
+      "column": "金额",
+      "value": 40,
+      "message": "数量、单价或金额不是有效数字，无法核算"
+    },
+    {
+      "sheet": "订单",
+      "row": 8,
+      "column": "状态",
+      "value": "未知",
+      "message": "允许值：待付款,已付款,已取消"
+    }
+  ],
+  "e2e": {
+    "ok": true,
+    "errors": [],
+    "receipt": "回执 c8be7e1b48e9d2fa9f35；本机收集端已复检并保存文件。",
+    "offline_restore": true
+  },
+  "tests": {
+    "unit": 7,
+    "parser_formats": [
+      "xlsx",
+      "xls-biff8",
+      "csv"
+    ],
+    "collector_negative": [
+      "forged-pass",
+      "hash-mismatch",
+      "unknown-plan"
+    ],
+    "mobile_no_horizontal_overflow": true
+  },
+  "interpretation": {
+    "mei_autonomous_checks": 0,
+    "mei_total_attempts": 12,
+    "real_model_narration_verified": false,
+    "host_test_fake_session_is_not_model_evidence": true,
+    "source_weights_unchanged": true
+  },
+  "evidence_directory": ".local/cache/data-check/e2e-1789270289364",
+  "source_hashes": {
+    "probe.mjs": "3e43cc3844e04843b5e46a13db1569311dd71fe057a0c959a373a2c127b6f29a",
+    "browser-checks.cjs": "a6442fdc31b74673af8e9d9bb42d88509fe4aae82003312cc5847510ea2ac313",
+    "checks.mjs": "0ee14ff5915b64d3ae668224acfb2a8ccce6749665cc4f317a7e402018504797",
+    "index.html": "eec0b2e9a3c12c137b465a5e1ac9aa258c56b70cd92a2190fa6579dabf072a6f",
+    "storage.mjs": "ca5ffe700ec529f5585cb600600e0a51136445775badb38fecaef847080cddcb",
+    "mei-worker.mjs": "a2c95f52b2e21cb53ae1f59b3381919c599b8637c3a7c6f58739c5be3ed243d8",
+    "README.md": "72b27e1dae55ece1b1f597a8e9f2ea1683172f8716d37cb903ad4369d58663f1",
+    "catalog.mjs": "b1a818df0fc7ce5fa9f0372c5336680847dadef2c63ec2516a53cd9aa741772e",
+    "e2e.cjs": "a24c6cb1ed08837baaf362ea4b5284bc0593f6d0b6f6618ae06fa9fe22e2be92",
+    "style.css": "4beb2a3086088d73e8796e958e802bd3327c0681440f1541765c02e30d8456c5",
+    "app.mjs": "097f40f6b60e4398f5caa5c0b8bd9cd71264a049fe76ceb63074e673bb38ffdd",
+    "server.mjs": "530cbd51b4f07504d934733c4498c309882bbf635b35de2d4140362b2f8d70c3",
+    "node-task.mjs": "3e3aea750a39a5eb5546e98a48ddde104e944373440d49649030fc760a22271a",
+    "collector-checks.mjs": "895d33bb6478ae84e45bfe4ef197cb37c50742acfedcbcc1cab968da1aadc263",
+    "prepare.mjs": "81daae17151689f64b9d60c2febdc6b1a22b908001352ff422fc220a165874c7",
+    "checks.test.mjs": "fa54f1de49e73371b3c3fc1798199d137458d787aa0e7ed6a3f527fd70d89ede",
+    "parse-worker.js": "abf894c3dec9a5a99941cdaca74468abab0edaf86fb32c1a5e67343d043c0493",
+    "sw.js": "b7c5626fed7b492f364646975858f8114dc7d9df02528caa8d57176a5d0bf1e9",
+    "vendor/SheetJS-LICENSE": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64",
+    "vendor/xlsx.full.min.js": "cc015130aa8521e7f088f88898eba949ccdcbfb38df0bd129b44b7273c3a6f41"
+  }
+}

@@ -6,6 +6,10 @@ Formal entrypoint:
 PYTHONPATH=src .venv/bin/python -m mei_llm corpus evaluate audit-source --help
 ```
 
+Source-population surveys and coverage diagnostics are documented in
+[`../sources/PROFILING.md`](../sources/PROFILING.md). They precede selection of new
+training inputs and do not replace source clearance or semantic review.
+
 Quality receipts are write-once and separate:
 
 - natural-source integrity, provenance and license review;

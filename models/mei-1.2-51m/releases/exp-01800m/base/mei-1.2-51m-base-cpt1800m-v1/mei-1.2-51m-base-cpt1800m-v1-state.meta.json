@@ -1,0 +1,237 @@
+{
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "architecture_sha256": "73ebab9c7a21d6a33c36430c19232f5482875bc40eef3a600146cf1516ec337c",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "runtime_profile_sha256": "f3a4ab1151e82299fee0214c5f78a18c20d83367d24a9dc073bbcd56312fa512",
+  "training_aux_sha256": "83849db3926693e49c0896a58c172ae15e4b203550cee0ef12a4c37a8c1d48ac",
+  "rung": "cpt",
+  "requested_rung": "1800m",
+  "smoke": false,
+  "step": 402831,
+  "tokens_seen": 1800001024,
+  "window_index": 146484,
+  "seq_len": 2048,
+  "batch_size": 1,
+  "grad_accum": 1,
+  "target_tokens": 1800000000,
+  "total_steps": 146484,
+  "params": 51463797,
+  "tokenizer_sha256": "5aa8bb7b426db8e3c6327066568b37e194090af3900d4c2ead09144756124945",
+  "corpus_sha256": "108827a5b6543a8cec5df444e9fafb65eb7c2da7975e0838153a187148b8a527b67d8400251e45506dee4e7b4d8a3eecebabe34f87c500d19f65e1b92283046b1afca7734a8236d115fe78fcbd7a34d85867aebbd84dda351fcfb88275efe2ffbe0fede9fb03c757a98878878b6dea909729adc259fbe202809851b33292e1eb444410754143ef1633ea59ac35fdb9939cb7aa4e8f79b96b4da73f6320ed06cf851020bb005f70f11fc37dc7a7ccd8cece2e1296d339376206a4cc56e32bee039d2d2f746730b354b9b26faee666d0cb9b7d5fd6d0461179d2835b3d2a96fa737a08797e861c62c5cd6fd90740dce584e5e3be669fcaec0b5281c24e8ed25f623305c7097efbd117499785c387061001ae6c5db9f390baff48026d5517e1f3bcc5bd94bb430f370f42388a6aa7528cf9d77ce20533cfd67db6f4881b0f85cb3539eb4b52ef501372e37c13755ba1f0412b37d836068f01174b8b261848ccb579d1f0e8ed9de7305cc9c3576eface28429ef97fd8ff23d1c5a67c4969f92a04d64f540e7f42edc7349db924fbef0fbeb7a075de69647472ffe3010df438b31e16cba059398864567b1616a4aa7f39234cfffc2099179770fdbed43988930965e5227be1954450520a0c36d8a6abf7c7a6e286de60cb968e0b74f8869503e699d0ceaee8f99e5a506fd427c8bac6c5535af3be95b11b36605eead0c9b240732f3eb0d72a86175e5e2bcf5caa1ace99ef686d122d5d8c58980f3b7e40d2b1e86a13dbfe4a45645c2640ff74a706c09bca1f515130e601534c82ce206498dde9285a073d984157818fac0ea416a84133b2ce7308149d51c7b36de3758dd11cd2938b",
+  "manifest_sha256": "073d984157818fac0ea416a84133b2ce7308149d51c7b36de3758dd11cd2938b",
+  "tiny": false,
+  "last_loss": 3.9602015018463135,
+  "valid_loss": 1.3939882796257734,
+  "probe_mean_nll": 3.599808026425268,
+  "tag": "final",
+  "epoch": 0,
+  "shuffle_seed": 0,
+  "lr_horizon_tokens": 299998208,
+  "data_cursor": 146484,
+  "precision": "fp32",
+  "compile_train": true,
+  "allow_repeat": false,
+  "mmap": true,
+  "init_mode": "continuation",
+  "resume_mode": "continuation",
+  "schedule_kind": "cpt",
+  "curriculum_stage": "cpt1",
+  "config_source": "from_spec",
+  "parent_tokens_seen": 1500001792,
+  "parent_checkpoint": "cycles/mei-1.2-51m/exp-01500m/runs/mei-1.2-51m/cpt-1500m-v2-c01/checkpoints/cpt/pretrain-cpt-state.npz",
+  "schedule_sha256": "dbfe4a45645c2640ff74a706c09bca1f515130e601534c82ce206498dde9285a",
+  "n_unique_remaining": 3577439305,
+  "n_exposure_cap_tokens": 299998208,
+  "source_cursors": {
+    "code": 121000960,
+    "dialogue": 239008768,
+    "fineweb2_hq": 759976960,
+    "structured": 141212160,
+    "wiki_en": 57803776,
+    "wiki_zh": 480998400
+  },
+  "source_token_cursors": {
+    "code": 121000960,
+    "dialogue": 239008768,
+    "fineweb2_hq": 759976960,
+    "structured": 141212160,
+    "wiki_en": 57803776,
+    "wiki_zh": 480998400
+  },
+  "source_window_counts": {
+    "code": 9766,
+    "dialogue": 19532,
+    "fineweb2_hq": 61034,
+    "structured": 12208,
+    "wiki_en": 4883,
+    "wiki_zh": 39061
+  },
+  "source_tokens_drawn": {
+    "code": 121000960,
+    "dialogue": 239008768,
+    "fineweb2_hq": 759976960,
+    "structured": 141212160,
+    "wiki_en": 57803776,
+    "wiki_zh": 480998400
+  },
+  "stage_tokens_drawn": {
+    "code": 20000768,
+    "dialogue": 40001536,
+    "fineweb2_hq": 124997632,
+    "structured": 25001984,
+    "wiki_en": 10000384,
+    "wiki_zh": 79996928
+  },
+  "quota_remaining": {
+    "code": -768,
+    "dialogue": -1536,
+    "fineweb2_hq": 576,
+    "structured": -1984,
+    "wiki_en": -384,
+    "wiki_zh": 3072
+  },
+  "alignment_slack": {
+    "code": 768,
+    "dialogue": 1536,
+    "fineweb2_hq": -576,
+    "structured": 1984,
+    "wiki_en": 384,
+    "wiki_zh": -3072
+  },
+  "alignment_overshoot": {
+    "code": 768,
+    "dialogue": 1536,
+    "fineweb2_hq": 0,
+    "structured": 1984,
+    "wiki_en": 384,
+    "wiki_zh": 0
+  },
+  "sampler_state": {
+    "kind": "quota_plan",
+    "seed": 0,
+    "names": [
+      "code",
+      "dialogue",
+      "fineweb2_hq",
+      "structured",
+      "wiki_en",
+      "wiki_zh"
+    ],
+    "seq_len": 2048,
+    "stage_id": "cpt1",
+    "stage_index": 0,
+    "plan_index": 146484,
+    "token_cursors": {
+      "code": 121000960,
+      "dialogue": 239008768,
+      "fineweb2_hq": 759976960,
+      "structured": 141212160,
+      "wiki_en": 57803776,
+      "wiki_zh": 480998400
+    },
+    "cursor": {
+      "code": 121000960,
+      "dialogue": 239008768,
+      "fineweb2_hq": 759976960,
+      "structured": 141212160,
+      "wiki_en": 57803776,
+      "wiki_zh": 480998400
+    },
+    "window_counts": {
+      "code": 9766,
+      "dialogue": 19532,
+      "fineweb2_hq": 61034,
+      "structured": 12208,
+      "wiki_en": 4883,
+      "wiki_zh": 39061
+    },
+    "stage_tokens_drawn": {
+      "code": 20000768,
+      "dialogue": 40001536,
+      "fineweb2_hq": 124997632,
+      "structured": 25001984,
+      "wiki_en": 10000384,
+      "wiki_zh": 79996928
+    },
+    "source_tokens_drawn": {
+      "code": 121000960,
+      "dialogue": 239008768,
+      "fineweb2_hq": 759976960,
+      "structured": 141212160,
+      "wiki_en": 57803776,
+      "wiki_zh": 480998400
+    },
+    "incremental_drawn": {
+      "code": 20000768,
+      "dialogue": 40001536,
+      "fineweb2_hq": 124997632,
+      "structured": 25001984,
+      "wiki_en": 10000384,
+      "wiki_zh": 79996928
+    },
+    "cumulative_drawn": {
+      "code": 121000960,
+      "dialogue": 239008768,
+      "fineweb2_hq": 759976960,
+      "structured": 141212160,
+      "wiki_en": 57803776,
+      "wiki_zh": 480998400
+    },
+    "quota_remaining": {
+      "code": -768,
+      "dialogue": -1536,
+      "fineweb2_hq": 576,
+      "structured": -1984,
+      "wiki_en": -384,
+      "wiki_zh": 3072
+    },
+    "stage_quotas": {
+      "code": 20000000,
+      "dialogue": 40000000,
+      "fineweb2_hq": 124998208,
+      "structured": 25000000,
+      "wiki_en": 10000000,
+      "wiki_zh": 80000000
+    },
+    "alignment_overshoot": {
+      "code": 768,
+      "dialogue": 1536,
+      "fineweb2_hq": 0,
+      "structured": 1984,
+      "wiki_en": 384,
+      "wiki_zh": 0
+    },
+    "alignment_slack": {
+      "code": 768,
+      "dialogue": 1536,
+      "fineweb2_hq": -576,
+      "structured": 1984,
+      "wiki_en": 384,
+      "wiki_zh": -3072
+    },
+    "draw_count": 146484,
+    "exhausted": [],
+    "parent_ledger": {
+      "source_tokens_drawn": {
+        "code": 101000192,
+        "dialogue": 199007232,
+        "fineweb2_hq": 634979328,
+        "structured": 116210176,
+        "wiki_en": 47803392,
+        "wiki_zh": 401001472
+      },
+      "token_cursors": {
+        "code": 101000192,
+        "dialogue": 199007232,
+        "fineweb2_hq": 634979328,
+        "structured": 116210176,
+        "wiki_en": 47803392,
+        "wiki_zh": 401001472
+      },
+      "reset_sources": [
+        "colloquial",
+        "structure"
+      ]
+    }
+  }
+}

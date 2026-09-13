@@ -181,7 +181,9 @@ def _corpus_action(registry: Registry, action: str, rest: list[str]) -> int:
 def _corpus_control(
     registry: Registry, family: str, action: str, rest: list[str]
 ) -> int:
-    if family == "source":
+    if (family, action) in {("source", "profile"), ("evaluate", "audit-coverage")}:
+        script = "src/corpus-factory/sources/profiling.py"
+    elif family == "source":
         script = "src/corpus-factory/sources/source_manager.py"
     else:
         script = "src/corpus-factory/quality/audit.py"
@@ -556,12 +558,13 @@ def build_parser() -> argparse.ArgumentParser:
     for family, actions in (
         (
             "source",
-            ("inventory", "plan-mix", "download-hq", "download", "admit", "freeze-pool"),
+            ("inventory", "plan-mix", "download-hq", "download", "admit", "freeze-pool", "profile"),
         ),
         (
             "evaluate",
             (
                 "audit-source",
+                "audit-coverage",
                 "audit-structured",
                 "audit-synthetic",
                 "audit-sft",

@@ -1,0 +1,11 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {loadModel} from '../../platform/browser-sdk/browser.mjs';
+import {TOOLS} from './catalog.mjs';
+const p=process.argv[2];
+const {instance}=await WebAssembly.instantiate(await readFile(p+'/runtime.wasm'),{});
+const model=loadModel({manifest:JSON.parse(await readFile(p+'/mei-model.json')),weights:await readFile(p+'/tensors.bin'),vocab:await readFile(p+'/tokenizer.model'),toolIndex:await readFile(p+'/tool-index.json'),wasm:instance});
+model.registerTools(TOOLS);const s=model.createSession({max_steps:2,runtime_profile:'compact'});
+const t=Date.now();console.log('inference start');
+const r=s.complete({wire_version:'mei-runtime-wire-v2',query:'检查订单号是否为空，列名是订单号。',context:{},evidence:[],history:[],tool_results:[],permissions:{},state:{},decode_mode:'constrained',max_new:128});
+console.log(JSON.stringify({ms:Date.now()-t,result:r}));
+await writeFile(p+'/probe.json',JSON.stringify({ms:Date.now()-t,result:r},null,2));s.close();model.unload();

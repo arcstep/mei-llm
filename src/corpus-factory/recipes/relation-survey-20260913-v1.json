@@ -1,0 +1,35 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "records_per_shard": 200,
+  "shards_per_wave": 64,
+  "sources": [
+    {
+      "source_id": "crosswoz",
+      "role": "colloquial",
+      "github_repository": "thu-coai/CrossWOZ",
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/crosswoz/frame.json",
+      "catalog_frame_sha256": "77637a28f95b4497c69a78ce05d59f9071da8f6091035340b471389f41285d17",
+      "patterns": [
+        "data/crosswoz/train.json.zip"
+      ],
+      "format": "relation",
+      "relation_kind": "crosswoz",
+      "archive_member": "train.json",
+      "official_split": "train"
+    },
+    {
+      "source_id": "schema-tests",
+      "role": "structured",
+      "github_repository": "json-schema-org/JSON-Schema-Test-Suite",
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/schema-tests/frame.json",
+      "catalog_frame_sha256": "c0ff32d28cb3518b59374754936cb203119a9e87d1d5d5c4515dd5432d1dcbfd",
+      "patterns": [
+        "tests/draft7/*.json"
+      ],
+      "format": "relation",
+      "relation_kind": "json-schema-tests",
+      "official_split": "public-conformance-tests-not-assigned-to-mei-split"
+    }
+  ]
+}

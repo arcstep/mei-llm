@@ -1,0 +1,16 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 64,
+  "records_per_shard": 200,
+  "max_network_bytes": 107374182400,
+  "reserve_disk_bytes": 107374182400,
+  "cloud_budget_cny": 100,
+  "training_adoption_eligible": false,
+  "sources": [
+    {"source_id":"fineweb2-hq-cmn-hani","role":"fineweb2_hq","repository":"epfml/FineWeb2-HQ","patterns":["cmn_Hani/*.parquet"],"local_globs":["corpus/pools/zh-v2-pool/raw/fineweb2-hq*/*.parquet"],"survey_question":"时间、站点与主题是否局限于现有连续分片？"},
+    {"source_id":"wiki-en","role":"wiki_en","repository":"wikimedia/wikipedia","patterns":["20231101.en/*.parquet"],"local_globs":["corpus/pools/zh-v2-pool/raw/en-wiki-1/*.parquet"],"survey_question":"首片与整个快照分布是否不同？如何筛出必要英文？"},
+    {"source_id":"wiki-zh","role":"wiki_zh","repository":"wikimedia/wikipedia","patterns":["20231101.zh/*.parquet"],"local_globs":["corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/*.parquet"],"survey_question":"全快照缩选至目标量时有无文体、主题与长文集中？"},
+    {"source_id":"github-code","role":"code","repository":"codeparrot/github-code","patterns":["data/*.parquet"],"local_globs":["corpus/**/raw/github-code/data/*.parquet"],"survey_question":"前两片之外的项目和语言覆盖；依赖、生成代码和任务相关性。"}
+  ]
+}

@@ -1,0 +1,40 @@
+const {chromium}=require(process.env.PLAYWRIGHT_PATH||'/Users/xuehongwei/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const fs=require('node:fs/promises'),path=require('node:path'),assert=require('node:assert/strict');
+const out=path.resolve('.local/cache/data-check/e2e-'+Date.now());
+(async()=>{
+ await fs.mkdir(out,{recursive:true});const b=await chromium.launch({headless:true});
+ const context=await b.newContext({viewport:{width:1440,height:1080},acceptDownloads:true});const p=await context.newPage();
+ const errors=[],requests=[];p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{requests.push({method:r.method(),url:r.url(),...(r.method()==='POST'?{body:JSON.parse(r.postData()||'{}')}: {})});});
+ try{
+  await p.goto('http://127.0.0.1:8765');await p.waitForFunction(()=>document.querySelector('#connection').textContent.includes('缓存'),null,{timeout:30000});
+  const planning=p.waitForResponse(r=>r.url().endsWith('/api/plan'),{timeout:70000});await p.getByRole('button',{name:'生成检查安排',exact:true}).click();
+  const pr=await planning, payload=await pr.json();await fs.writeFile(path.join(out,'planner.json'),JSON.stringify(payload,null,2));if(!pr.ok())throw Error(payload.error);
+  await p.getByRole('button',{name:'确认安排',exact:true}).waitFor({timeout:70000});console.log('Real LLM plan ready');
+  await p.getByRole('button',{name:'确认安排',exact:true}).click();
+  const d=p.waitForEvent('download');await p.getByRole('button',{name:'下载问题示例 Excel',exact:true}).click();const dl=await d;const sample=path.join(out,'problem.xlsx');await dl.saveAs(sample);
+  await p.locator('#file').setInputFiles(sample);console.log('Browser WASM full run started');
+  await p.waitForFunction(()=>document.querySelectorAll('.result').length>=6&&!document.querySelector('#run').disabled,null,{timeout:240000});
+  await p.screenshot({path:path.join(out,'strict.png'),fullPage:true});
+  console.log('Strict:',await p.locator('#summary').innerText());
+  const de=p.waitForEvent('download');await p.locator('#export').click();await(await de).saveAs(path.join(out,'strict-report.json'));
+  const strict=JSON.parse(await fs.readFile(path.join(out,'strict-report.json')));assert.equal(strict.results.length,6);assert.equal(strict.results.every(r=>r.attempted===true),true,'all six rules must reach the real WASM session');
+  if(await p.locator('#assist').isVisible())await p.locator('#assist').click();
+  await p.waitForFunction(()=>document.querySelector('#summary').textContent.includes('需要修正'));
+  assert.equal(await p.locator('#submit').isVisible(),false);
+  await p.screenshot({path:path.join(out,'assisted.png'),fullPage:true});
+  const de2=p.waitForEvent('download');await p.locator('#export').click();await(await de2).saveAs(path.join(out,'assisted-report.json'));
+  console.log('Assisted:',await p.locator('#summary').innerText());
+  await context.setOffline(true);await p.reload();await p.waitForFunction(()=>document.querySelectorAll('.result').length>=6);assert.match(await p.locator('#summary').innerText(),/需要修正/);console.log('Offline restore passed');
+  await context.setOffline(false);
+  const cleanD=p.waitForEvent('download');await p.locator('#clean-sample').click();const clean=path.join(out,'clean.xlsx');await(await cleanD).saveAs(clean);
+  await p.locator('#file').setInputFiles(clean);
+  await p.waitForFunction(()=>document.querySelectorAll('.result').length>=6&&!document.querySelector('#run').disabled,null,{timeout:240000});
+  const dc=p.waitForEvent('download');await p.locator('#export').click();await(await dc).saveAs(path.join(out,'clean-strict-report.json'));
+  const cleanStrict=JSON.parse(await fs.readFile(path.join(out,'clean-strict-report.json')));assert.equal(cleanStrict.results.every(r=>r.attempted===true),true);
+  if(await p.locator('#assist').isVisible())await p.locator('#assist').click();
+  await p.locator('#submit').waitFor();await p.locator('#submit').click();await p.waitForFunction(()=>document.querySelector('#submit-info').textContent.includes('回执 '));console.log('Clean + receipt passed');
+  await p.screenshot({path:path.join(out,'clean.png'),fullPage:true});
+  assert.equal(errors.length,0);const planPosts=requests.filter(r=>r.url.endsWith('/api/plan'));assert.equal(planPosts.length,1);assert.deepEqual(Object.keys(planPosts[0].body),['requirement']);
+  await fs.writeFile(path.join(out,'verification.json'),JSON.stringify({ok:true,errors,requests,final:await p.locator('#summary').innerText(),receipt:await p.locator('#submit-info').innerText()},null,2));console.log(out);
+ }catch(e){await p.screenshot({path:path.join(out,'failure.png'),fullPage:true});await fs.writeFile(path.join(out,'failure.json'),JSON.stringify({error:e.message,errors,body:await p.locator('body').innerText()},null,2));console.error(out,e);process.exitCode=1;}finally{await b.close();}
+})();

@@ -1,0 +1,293 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 64,
+  "records_per_shard": 200,
+  "max_network_bytes": 107374182400,
+  "reserve_disk_bytes": 107374182400,
+  "sources": [
+    {
+      "source_id": "lccc",
+      "role": "colloquial",
+      "github_repository": "thu-coai/CDial-GPT",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dialogue",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "naturalconv",
+      "role": "colloquial",
+      "github_repository": "naturalconv/NaturalConvDataSet",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dialogue-topic",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "crosswoz",
+      "role": "colloquial",
+      "github_repository": "thu-coai/CrossWOZ",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dialogue-state",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "risawoz",
+      "role": "colloquial",
+      "github_repository": "terryqj0107/RiSAWOZ",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dialogue-state",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "massive",
+      "role": "colloquial",
+      "github_repository": "alexa/massive",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "base-utterance-locale",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "abcd",
+      "role": "scene",
+      "github_repository": "asappresearch/abcd",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dialogue-policy-action",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "schema-tests",
+      "role": "structured",
+      "github_repository": "json-schema-org/JSON-Schema-Test-Suite",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "constraint-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "schemastore",
+      "role": "structured",
+      "github_repository": "SchemaStore/schemastore",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "schema-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "rein",
+      "role": "structured",
+      "github_repository": "mohamedyd/rein-benchmark",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dataset-error-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "openapi",
+      "role": "structured",
+      "github_repository": "APIs-guru/openapi-directory",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "api-version-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "duckdb",
+      "role": "scene",
+      "github_repository": "duckdb/duckdb",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "project-rule-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "postgres",
+      "role": "scene",
+      "github_repository": "postgres/postgres",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "project-rule-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "pandas",
+      "role": "scene",
+      "github_repository": "pandas-dev/pandas",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "project-rule-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "arrow",
+      "role": "scene",
+      "github_repository": "apache/arrow",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "project-rule-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "frictionless",
+      "role": "structured",
+      "github_repository": "frictionlessdata/specs",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "constraint-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "great-expectations",
+      "role": "scene",
+      "github_repository": "great-expectations/great_expectations",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "project-rule-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "prometheus",
+      "role": "scene",
+      "github_repository": "prometheus/prometheus",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "alert-rule-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "alertmanager",
+      "role": "scene",
+      "github_repository": "prometheus/alertmanager",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "state-notification-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "home-assistant",
+      "role": "scene",
+      "github_repository": "home-assistant/core",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "integration-automation-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "celery",
+      "role": "scene",
+      "github_repository": "celery/celery",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "state-retry-test",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "coig-pc",
+      "role": "colloquial",
+      "repository": "BAAI/COIG-PC",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "subsource-task",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "moss",
+      "role": "colloquial",
+      "repository": "OpenMOSS-Team/moss-003-sft-data",
+      "patterns": [
+        "*"
+      ],
+      "sampling_unit": "dialogue-teacher-family",
+      "production_status": "hold_until_content_and_rights_review"
+    },
+    {
+      "source_id": "gittables",
+      "role": "structured",
+      "reference_urls": [
+        "https://gittables.github.io/"
+      ],
+      "sampling_unit": "table-project",
+      "production_status": "hold_until_fixed_data_manifest"
+    },
+    {
+      "source_id": "sotab",
+      "role": "structured",
+      "reference_urls": [
+        "https://webdatacommons.org/structureddata/sotab/v2/"
+      ],
+      "sampling_unit": "table-property-family",
+      "production_status": "hold_until_fixed_data_manifest"
+    },
+    {
+      "source_id": "dblp",
+      "role": "structured",
+      "reference_urls": [
+        "https://dblp.org/xml/"
+      ],
+      "sampling_unit": "publication-type-year",
+      "production_status": "hold_until_fixed_data_manifest"
+    },
+    {
+      "source_id": "opensubtitles",
+      "role": "colloquial",
+      "reference_urls": [
+        "https://opus.nlpl.eu/OpenSubtitles.php"
+      ],
+      "sampling_unit": "work-dialogue",
+      "production_status": "hold_until_fixed_data_manifest"
+    },
+    {
+      "source_id": "ted2020",
+      "role": "colloquial",
+      "reference_urls": [
+        "https://opus.nlpl.eu/TED2020.php"
+      ],
+      "sampling_unit": "talk",
+      "production_status": "hold_until_fixed_data_manifest"
+    },
+    {
+      "source_id": "magicdata-ramc",
+      "role": "colloquial",
+      "reference_urls": [
+        "https://www.openslr.org/123/"
+      ],
+      "sampling_unit": "conversation-speaker",
+      "production_status": "hold_until_fixed_data_manifest"
+    },
+    {
+      "source_id": "spokenwoz",
+      "role": "colloquial",
+      "reference_urls": [
+        "https://spokenwoz.github.io/"
+      ],
+      "sampling_unit": "dialogue-state",
+      "production_status": "hold_until_fixed_data_manifest"
+    }
+  ]
+}

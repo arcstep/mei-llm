@@ -1,0 +1,691 @@
+"""Reproducible, preparation-only source surveys. No admission or model calls.
+
+Invoke through ``python -m mei_llm corpus source profile`` or
+``python -m mei_llm corpus evaluate audit-coverage``.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter, defaultdict, OrderedDict
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
+import fnmatch
+import gzip
+import hashlib
+import io
+import json
+import math
+from pathlib import Path
+import random
+import shutil
+import threading
+import zipfile
+from typing import Any
+import urllib.parse
+import urllib.request
+
+ROOT = Path(__file__).resolve().parents[3]
+GIB = 1024 ** 3
+
+
+def canonical(value: Any) -> bytes:
+    return (json.dumps(value, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n").encode()
+
+
+def digest(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for block in iter(lambda: f.read(4 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def write_new(path: Path, value: Any) -> None:
+    data = canonical(value)
+    with path.open("xb") as f:
+        f.write(data)
+
+
+def seeded(seed: int, key: str) -> random.Random:
+    return random.Random(int.from_bytes(hashlib.sha256(f"{seed}:{key}".encode()).digest(), "big"))
+
+
+def select_shards(files: list[dict], seed: int, width: int = 64) -> list[dict]:
+    """Two disjoint draws per stratum; each wave has marginal pi=1/N_h.
+
+    The second draw is NOT statistically independent of the first. Small
+    singleton strata occur only in wave one. Pool using combined pi=k_h/N_h.
+    """
+    if width < 1:
+        raise ValueError("width must be positive")
+    ordered = sorted(files, key=lambda r: r["path"])
+    if len({r["path"] for r in ordered}) != len(ordered):
+        raise ValueError("duplicate frame paths")
+    n = len(ordered)
+    result = []
+    for i in range(min(width, n)):
+        lo, hi = i * n // min(width, n), (i + 1) * n // min(width, n)
+        group = ordered[lo:hi]
+        chosen = seeded(seed, f"shard:{i}").sample(group, min(2, len(group)))
+        for wave, row in enumerate(chosen, 1):
+            result.append({**row, "stratum": i, "wave": wave,
+                           "stratum_size": len(group), "shard_probability": len(chosen) / len(group),
+                           "wave_probability": 1 / len(group)})
+    return sorted(result, key=lambda row: (row["wave"], row["stratum"]))
+
+
+class Budget:
+    def __init__(self, directory: Path, max_bytes: int, reserve_bytes: int):
+        self.directory, self.max_bytes, self.reserve_bytes = directory, max_bytes, reserve_bytes
+        self.reserved = 0
+        self.lock = threading.Lock()
+
+    def reserve(self, size: int) -> None:
+        if size < 0:
+            raise ValueError("negative reservation")
+        with self.lock:
+            if self.reserved + size > self.max_bytes:
+                raise RuntimeError("network budget exhausted")
+            if shutil.disk_usage(self.directory).free < self.reserve_bytes:
+                raise RuntimeError("disk free-space reserve reached")
+            # Keep failed/uncertain requests charged conservatively.
+            self.reserved += size
+
+
+def fetch(url: str, budget: Budget, *, start: int | None = None, length: int = 8 << 20) -> tuple[bytes, dict]:
+    budget.reserve(length)
+    headers = {"User-Agent": "mei-source-profile/1", "Accept-Encoding": "identity"}
+    if start is not None:
+        headers["Range"] = f"bytes={start}-{start + length - 1}"
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=25) as r:
+        response_headers = dict(r.headers.items())
+        response_headers["X-Mei-Resolved-URL"] = r.geturl()
+        if start is not None:
+            expected = f"bytes {start}-{start + length - 1}/"
+            if r.status != 206 or not r.headers.get("Content-Range", "").startswith(expected):
+                raise RuntimeError("server did not honor exact byte range; full download refused")
+        data = r.read(length + 1)
+        if len(data) > length or (start is not None and len(data) != length):
+            raise RuntimeError("oversized or incomplete response")
+        return data, response_headers
+
+
+class RangeReader(io.RawIOBase):
+    """Bounded HTTP range reader; never silently downloads whole remote files."""
+    def __init__(self, url: str, budget: Budget):
+        super().__init__()
+        self.url, self.budget, self.position = url, budget, 0
+        self.cache = OrderedDict()
+        _, headers = fetch(url, budget, start=0, length=1)
+        # Resolve CDN redirects once. Signed transport URLs stay in memory only.
+        self.url = headers["X-Mei-Resolved-URL"]
+        content_range = next(v for k, v in headers.items() if k.lower() == "content-range")
+        self.size = int(content_range.rsplit("/", 1)[1])
+
+    def readable(self):
+        return True
+
+    def seekable(self):
+        return True
+
+    def tell(self):
+        return self.position
+
+    def seek(self, offset, whence=0):
+        position = offset if whence == 0 else self.position + offset if whence == 1 else self.size + offset
+        if position < 0:
+            raise ValueError("negative seek")
+        self.position = position
+        return position
+
+    def read(self, size=-1):
+        size = self.size - self.position if size < 0 else min(size, self.size - self.position)
+        if size <= 0:
+            return b""
+        if size > 64 << 20:
+            raise RuntimeError("single range exceeds 64 MiB survey limit")
+        # Adjacent tiny Parquet columns otherwise each incur a remote RTT.
+        # Bound the per-file cache to 16 MiB; never cache embeddings deliberately.
+        block_size = 1 << 20
+        if size <= block_size:
+            chunks = []
+            start, end = self.position, self.position + size
+            while start < end:
+                base = start // block_size * block_size
+                if base not in self.cache:
+                    block, _ = fetch(self.url, self.budget, start=base, length=min(block_size, self.size - base))
+                    self.cache[base] = block
+                    if len(self.cache) > 16:
+                        self.cache.popitem(last=False)
+                self.cache.move_to_end(base)
+                take = min(end - start, base + len(self.cache[base]) - start)
+                chunks.append(self.cache[base][start - base:start - base + take])
+                start += take
+            data = b"".join(chunks)
+        else:
+            data, _ = fetch(self.url, self.budget, start=self.position, length=size)
+        self.position += len(data)
+        return data
+
+
+def hf_frame(source: dict, budget: Budget, out: Path) -> dict:
+    repo = source["repository"]
+    revision = source.get("revision", "main")
+    url = f"https://huggingface.co/api/datasets/{repo}/revision/{urllib.parse.quote(revision, safe='')}"
+    raw, _ = fetch(url, budget)
+    info = json.loads(raw)
+    sha = info["sha"]
+    # Archive the API bytes, including unselected paths; do not infer size from names.
+    with (out / "upstream-api.json").open("xb") as f:
+        f.write(raw)
+    files = [{"path": r["rfilename"]} for r in info["siblings"]
+             if any(fnmatch.fnmatch(r["rfilename"], p) for p in source["patterns"])]
+    if not files:
+        raise ValueError("no files matched source patterns")
+    return {"kind": "hf_revision_listing", "repository": repo, "revision": sha,
+            "upstream_response_sha256": hashlib.sha256(raw).hexdigest(),
+            "complete_for_patterns": True, "patterns": source["patterns"], "files": files}
+
+
+def github_frame(source: dict, budget: Budget, out: Path) -> dict:
+    repo = source["github_repository"]
+    if source.get("catalog_frame"):
+        path = ROOT / source["catalog_frame"]
+        raw = path.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != source["catalog_frame_sha256"]:
+            raise ValueError("frozen catalog frame hash changed")
+        previous = json.loads(raw)
+        if previous["repository"] != repo or previous["kind"] != "github_tree_metadata":
+            raise ValueError("catalog repository or frame kind differs")
+        patterns = source["patterns"]
+        with (out / "adopted-catalog-frame.json").open("xb") as f:
+            f.write(raw)
+        return {**previous, "patterns": patterns,
+                "parent_frame_sha256": hashlib.sha256(raw).hexdigest(),
+                "files": [r for r in previous["files"] if any(fnmatch.fnmatch(r["path"], p) for p in patterns)]}
+    revision = urllib.parse.quote(source.get("revision", "HEAD"), safe="")
+    raw, _ = fetch(f"https://api.github.com/repos/{repo}/commits/{revision}", budget)
+    commit = json.loads(raw)
+    with (out / "upstream-commit.json").open("xb") as f:
+        f.write(raw)
+    tree_hash = commit["commit"]["tree"]["sha"]
+    raw, _ = fetch(f"https://api.github.com/repos/{repo}/git/trees/{tree_hash}?recursive=1", budget)
+    tree = json.loads(raw)
+    with (out / "upstream-tree.json").open("xb") as f:
+        f.write(raw)
+    patterns = source.get("patterns", ["*"])
+    files = [{"path": r["path"], "bytes": r.get("size"), "git_blob_sha": r["sha"]}
+             for r in tree["tree"] if r["type"] == "blob"
+             and any(fnmatch.fnmatch(r["path"], p) for p in patterns)]
+    return {"kind": "github_tree_metadata", "repository": repo, "revision": commit["sha"],
+            "tree_sha": tree_hash, "complete_for_patterns": not tree.get("truncated", False),
+            "patterns": patterns, "files": files,
+            "content_available_locally": False}
+
+
+def text_of(row: dict) -> str:
+    for key in ("text", "content", "code", "document"):
+        if isinstance(row.get(key), str):
+            return row[key]
+    return ""
+
+
+def metadata_of(row: dict) -> dict:
+    url = str(row.get("url") or "")
+    try:
+        host = urllib.parse.urlsplit(url).hostname or "unknown"
+    except ValueError:
+        host = "unknown"
+    path = str(row.get("path") or row.get("file_path") or "")
+    return {"host": host, "dump": str(row.get("dump") or "unknown"),
+            "language": str(row.get("language") or "unknown"),
+            "project": str(row.get("repo_name") or row.get("repository_name") or "unknown"),
+            "extension": Path(path).suffix.lower() or "unknown",
+            "dependency_path": "node_modules/" in path or "/vendor/" in path,
+            "topic": "unknown", "quality_score": row.get("quality_score")}
+
+
+def sample_parquet(handle: Any, shard: dict, seed: int, records: int = 200) -> dict:
+    import pyarrow.parquet as pq
+    if records < 1:
+        raise ValueError("records must be positive")
+    pf = pq.ParquetFile(handle, pre_buffer=True)
+    total_groups = pf.metadata.num_row_groups
+    nonempty = [g for g in range(total_groups) if pf.metadata.row_group(g).num_rows]
+    g_count = min(8, records, len(nonempty))
+    rng = seeded(seed, shard["path"])
+    groups = sorted(rng.sample(nonempty, g_count))
+    available = pf.schema_arrow.names
+    allowed = {"text", "content", "code", "document", "id", "url", "dump", "date", "title",
+               "language", "language_score", "quality_score", "minhash_cluster_size", "path",
+               "file_path", "repo_name", "repository_name", "license"}
+    columns = [c for c in available if c in allowed]
+    if not any(c in columns for c in ("text", "content", "code", "document")):
+        raise ValueError("no supported raw text column; relation adapter required")
+    offsets = [0]
+    for g in range(total_groups):
+        offsets.append(offsets[-1] + pf.metadata.row_group(g).num_rows)
+    samples = []
+    for index, group in enumerate(groups):
+        rows = pf.read_row_group(group, columns=columns, use_threads=False).to_pylist()
+        take = min(len(rows), records // g_count + (index < records % g_count))
+        for i in sorted(rng.sample(range(len(rows)), take)):
+            row = rows[i]
+            text = text_of(row)
+            p = shard["shard_probability"] * g_count / len(nonempty) * take / len(rows)
+            samples.append({"row_index": offsets[group] + i, "row_group": group,
+                            "inclusion_probability": p, "weight": 1 / p,
+                            "text": text, "text_sha256": hashlib.sha256(text.encode()).hexdigest(),
+                            "utf8_bytes": len(text.encode()), "characters": len(text),
+                            "metadata": metadata_of(row), "original": row,
+                            "purpose": "population", "semantic_review": "pending"})
+    return {"shard": shard, "rows": pf.metadata.num_rows, "row_groups": total_groups,
+            "sampled_row_groups": groups, "columns": columns, "samples": samples}
+
+
+def sample_jsonl(path: Path, shard: dict, seed: int, records: int = 200) -> dict:
+    """Full-stream reservoir over records, preserving entire dialogue objects."""
+    if records < 1:
+        raise ValueError("records must be positive")
+    rng = seeded(seed, shard["path"])
+    selected = []
+    count = 0
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as stream:
+        for line_number, line in enumerate(stream, 1):
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            count += 1
+            slot = count - 1 if count <= records else rng.randrange(count)
+            if slot < records:
+                item = (line_number, record)
+                if count <= records:
+                    selected.append(item)
+                else:
+                    selected[slot] = item
+    samples = []
+    for line, original in sorted(selected):
+        if isinstance(original, list) and all(isinstance(t, str) for t in original):
+            row = {"turns": original}
+            text = "\n".join(original)
+        elif isinstance(original, dict):
+            row = original
+            text = text_of(row)
+        else:
+            raise ValueError("unsupported JSONL record shape; explicit relation adapter required")
+        probability = shard["shard_probability"] * len(selected) / count
+        samples.append({"row_index": line - 1, "source_line": line,
+                        "inclusion_probability": probability, "weight": 1 / probability,
+                        "text": text, "text_sha256": hashlib.sha256(text.encode()).hexdigest(),
+                        "utf8_bytes": len(text.encode()), "characters": len(text),
+                        "metadata": {**metadata_of(row), "turn_count": len(row.get("turns", [])) or None},
+                        "original": original, "purpose": "population", "semantic_review": "pending"})
+    return {"shard": shard, "rows": count, "sampling": "full-stream record reservoir",
+            "local_sha256": digest(path), "samples": samples}
+
+
+def sample_relations(path: Path, shard: dict, source: dict, seed: int, records: int) -> dict:
+    from relations import relation_units
+    if source.get("archive_member"):
+        with zipfile.ZipFile(path) as archive:
+            member = archive.getinfo(source["archive_member"])
+            if member.file_size > 128 << 20:
+                raise ValueError("relation archive member exceeds survey memory bound")
+            raw = archive.read(member)
+    else:
+        if path.stat().st_size > 128 << 20:
+            raise ValueError("relation JSON requires a streaming adapter above 128 MiB")
+        raw = path.read_bytes()
+    units = list(relation_units(json.loads(raw), source["relation_kind"]))
+    rng = seeded(seed, shard["path"])
+    selected = sorted(rng.sample(range(len(units)), min(records, len(units))))
+    samples = []
+    for index in selected:
+        unit = units[index]
+        text = json.dumps(unit["input"], ensure_ascii=False, sort_keys=True)
+        probability = shard["shard_probability"] * len(selected) / len(units)
+        samples.append({"row_index": index, "unit_id": unit["unit_id"], "unit_kind": unit["unit_kind"],
+                        "inclusion_probability": probability, "weight": 1 / probability,
+                        "text": text, "text_sha256": hashlib.sha256(text.encode()).hexdigest(),
+                        "utf8_bytes": len(text.encode()), "characters": len(text),
+                        "metadata": metadata_of({}), "original": unit, "purpose": "population",
+                        "semantic_review": "pending", "serialization": "survey view; not CPT or SFT release"})
+    return {"shard": shard, "rows": len(units), "samples": samples,
+            "local_sha256": digest(path), "member_sha256": hashlib.sha256(raw).hexdigest()}
+
+
+def summarize(shards: list[dict], *, single_wave: bool = False) -> dict:
+    """HT totals/ratio descriptions over completed samples, never guessed net yield."""
+    hist = {key: Counter() for key in ("host", "dump", "language", "project", "extension", "topic")}
+    byte_hist = {key: Counter() for key in hist}
+    hashes = Counter()
+    seen_positions = set()
+    count = 0
+    weight_total = byte_total = 0.0
+    for shard in shards:
+        for row in shard["samples"]:
+            if row.get("purpose") != "population":
+                continue
+            pos = (shard["shard"]["path"], row["row_index"])
+            if pos in seen_positions:
+                raise ValueError("duplicate sample position")
+            seen_positions.add(pos)
+            p = row["inclusion_probability"]
+            if single_wave:
+                # Row probabilities are stored for the union of both waves.
+                # A wave alone uses its marginal shard probability instead.
+                design = shard["shard"]
+                p *= design["wave_probability"] / design["shard_probability"]
+            if not 0 < p <= 1:
+                raise ValueError("invalid inclusion probability")
+            w = 1 / p
+            count += 1
+            weight_total += w
+            byte_total += w * row["utf8_bytes"]
+            hashes[row["text_sha256"]] += 1
+            for key in hist:
+                value = str(row["metadata"].get(key, "unknown"))
+                hist[key][value] += w
+                byte_hist[key][value] += w * row["utf8_bytes"]
+    def distribution(values, total):
+        return {k: v / total for k, v in sorted(values.items())} if total else {}
+    return {"sample_records": count, "represented_record_total": weight_total,
+            "probability_basis": "single_wave_marginal" if single_wave else "combined_waves",
+            "represented_utf8_bytes": byte_total,
+            "document_distributions": {k: distribution(v, weight_total) for k, v in hist.items()},
+            "byte_distributions": {k: distribution(v, byte_total) for k, v in byte_hist.items()},
+            "observed_exact_duplicate_excess": sum(n - 1 for n in hashes.values()),
+            "audited_net_tokens": None, "topic_labels_verified": False,
+            "limitations": ["ratio estimates, not census counts", "no confidence interval computed",
+                            "sample duplicate rate is not whole-source dedup loss",
+                            "semantic suitability and naturalness require review",
+                            "UTF-8 bytes are not tokenizer tokens"]}
+
+
+def safe_id(value: str) -> str:
+    if not value or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_" for c in value):
+        raise ValueError("source_id must be a simple identifier")
+    return value
+
+
+def ledger_inventory(root: Path) -> dict:
+    """Census provenance without reading/replacing token arrays or old receipts."""
+    rows = []
+    for manifest in sorted(root.glob("*/manifest.json")):
+        data = json.loads(manifest.read_text())
+        ledger = manifest.parent / "documents.jsonl"
+        paths, extensions, splits = Counter(), Counter(), Counter()
+        count = dependency = 0
+        h = hashlib.sha256()
+        if ledger.exists():
+            with ledger.open("rb") as stream:
+                for line in stream:
+                    h.update(line)
+                    record = json.loads(line)
+                    paths[str(record.get("source_path") or "unknown")] += 1
+                    key = str(record.get("record_key") or "")
+                    extensions[Path(key).suffix.lower() or "unknown"] += 1
+                    dependency += int("node_modules/" in key or "/vendor/" in key)
+                    splits[str(record.get("split") or "unknown")] += 1
+                    count += 1
+        rows.append({"asset": manifest.parent.name, "source_id": data.get("source_id"),
+                     "manifest_path": str(manifest), "manifest_sha256": digest(manifest),
+                     "ledger_sha256": h.hexdigest() if ledger.exists() else None,
+                     "manifest_documents": data.get("documents"), "ledger_records": count,
+                     "declared_tokens": data.get("tokens"), "tokenizer_id": data.get("tokenizer_id"),
+                     "source_path_counts": dict(paths), "extension_counts": dict(extensions),
+                     "dependency_path_records": dependency, "split_counts": dict(splits),
+                     "clearance_receipt": data.get("clearance_receipt"),
+                     "license_reviewed_claim": data.get("license_reviewed"),
+                     "approved_for_new_recipe": False})
+        print(json.dumps({"inventory_asset": manifest.parent.name, "records": count}), flush=True)
+    return {"schema": "mei-source-ledger-census-v1", "root": str(root), "assets": rows,
+            "scope": "admitted ledger census; declarations are not new source review",
+            "cross_asset_counts_additive": False, "audited_net_tokens": None}
+
+
+def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bool = False,
+            resume_from: Path | None = None) -> dict:
+    if not 1 <= int(config.get("shards_per_wave", 64)) <= 64:
+        raise ValueError("survey plan permits 1..64 strata")
+    if not 1 <= int(config.get("records_per_shard", 200)) <= 200:
+        raise ValueError("survey plan permits 1..200 records per shard")
+    ids = [safe_id(s["source_id"]) for s in config["sources"]]
+    if len(ids) != len(set(ids)):
+        raise ValueError("duplicate source IDs")
+    out.mkdir(parents=True, exist_ok=False)
+    write_new(out / "config.json", config)
+    implementation = Path(__file__).read_bytes()
+    with (out / "implementation.py.snapshot").open("xb") as f:
+        f.write(implementation)
+    if any(s.get("format") == "relation" for s in config["sources"]):
+        with (out / "relations.py.snapshot").open("xb") as f:
+            f.write(Path(__file__).with_name("relations.py").read_bytes())
+    if resume_from:
+        old_config = json.loads((resume_from / "config.json").read_text())
+        if canonical(old_config) != canonical(config):
+            raise ValueError("resume requires identical frozen survey config")
+        with (out / "adopted-implementation.py.snapshot").open("xb") as f:
+            f.write((resume_from / "implementation.py.snapshot").read_bytes())
+    budget = Budget(out, min(int(config.get("max_network_bytes", 100 * GIB)), 100 * GIB),
+                    max(int(config.get("reserve_disk_bytes", 100 * GIB)), 100 * GIB))
+    seed = int(config.get("seed", 20260913))
+    reports = []
+    if config.get("ledger_root"):
+        write_new(out / "ledger-inventory.json", ledger_inventory(ROOT / config["ledger_root"]))
+    if config.get("local_diagnostics"):
+        from local_diagnostics import diagnostics
+        helper = Path(__file__).with_name("local_diagnostics.py")
+        with (out / "local_diagnostics.py.snapshot").open("xb") as f:
+            f.write(helper.read_bytes())
+        write_new(out / "local-diagnostics.json", diagnostics(ROOT, config["local_diagnostics"]))
+    for source in config["sources"]:
+        source_id = safe_id(source["source_id"])
+        directory = out / source_id
+        directory.mkdir()
+        report = {"source_id": source_id, "role": source.get("role"),
+                  "process_status": "pending", "m1_eligible": False, "training_adoption_eligible": False,
+                  "source": source, "errors": []}
+        local = []
+        for pattern in source.get("local_globs", []):
+            local.extend(ROOT.glob(pattern))
+        local = sorted(set(p.resolve() for p in local if p.is_file()))
+        try:
+            if source.get("repository") and network:
+                frame = hf_frame(source, budget, directory)
+            elif source.get("github_repository") and network:
+                frame = github_frame(source, budget, directory)
+            else:
+                frame = {"kind": "local_inventory", "complete_for_patterns": False,
+                         "files": [{"path": str(p), "bytes": p.stat().st_size} for p in local]}
+            write_new(directory / "frame.json", frame)
+            report["frame"] = {k: v for k, v in frame.items() if k != "files"}
+            report["frame_files"] = len(frame["files"])
+            report["local_files"] = len(local)
+            selected = select_shards(frame["files"], seed, int(config.get("shards_per_wave", 64)))
+            write_new(directory / "sampling-plan.json", selected)
+            report["planned_shards"] = len(selected)
+            results = []
+            if not metadata_only and (frame["kind"] != "github_tree_metadata" or source.get("format") == "relation"):
+                def work(shard):
+                    name = hashlib.sha256(shard["path"].encode()).hexdigest()[:20]
+                    try:
+                        if resume_from and frame["kind"] == "hf_revision_listing":
+                            previous = resume_from / source_id
+                            old_frame_path = previous / "frame.json"
+                            old_sample_path = previous / f"sample-{name}.json"
+                            if old_frame_path.exists() and old_sample_path.exists():
+                                old_frame = json.loads(old_frame_path.read_text())
+                                if old_frame.get("revision") == frame["revision"] and old_frame.get("files") == frame["files"]:
+                                    old_sample = json.loads(old_sample_path.read_text())
+                                    if old_sample["shard"] != shard:
+                                        raise ValueError("adopted shard sampling design differs")
+                                    result = {**old_sample, "adopted_sample": {
+                                        "path": str(old_sample_path), "sha256": digest(old_sample_path),
+                                        "source_code_sha256": digest(resume_from / "implementation.py.snapshot")}}
+                                    write_new(directory / f"sample-{name}.json", result)
+                                    return result, None
+                        if frame["kind"] == "github_tree_metadata":
+                            size = shard.get("bytes")
+                            if not isinstance(size, int) or not 0 < size <= 128 << 20:
+                                raise ValueError("GitHub relation survey requires known file size <=128 MiB")
+                            url = f"https://raw.githubusercontent.com/{source['github_repository']}/{frame['revision']}/{urllib.parse.quote(shard['path'], safe='/')}"
+                            raw, _ = fetch(url, budget, length=size)
+                            blob_sha = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+                            if len(raw) != size or blob_sha != shard["git_blob_sha"]:
+                                raise ValueError("GitHub source bytes do not match frozen blob")
+                            raw_path = directory / f"raw-{name}"
+                            with raw_path.open("xb") as f:
+                                f.write(raw)
+                            result = sample_relations(raw_path, shard, source, seed, int(config.get("records_per_shard", 200)))
+                            result["source_revision"] = frame["revision"]
+                            result["git_blob_sha"] = blob_sha
+                        elif frame["kind"] == "hf_revision_listing":
+                            url = f"https://huggingface.co/datasets/{source['repository']}/resolve/{frame['revision']}/{urllib.parse.quote(shard['path'], safe='/')}"
+                            with RangeReader(url, budget) as handle:
+                                result = sample_parquet(handle, shard, seed, int(config.get("records_per_shard", 200)))
+                        else:
+                            if source.get("format") == "jsonl":
+                                result = sample_jsonl(Path(shard["path"]), shard, seed, int(config.get("records_per_shard", 200)))
+                            elif source.get("format") == "relation":
+                                result = sample_relations(Path(shard["path"]), shard, source, seed, int(config.get("records_per_shard", 200)))
+                            else:
+                                result = sample_parquet(shard["path"], shard, seed, int(config.get("records_per_shard", 200)))
+                            result["local_sha256"] = digest(Path(shard["path"]))
+                        for row in result["samples"]:
+                            row["split"] = source.get("official_split", row.get("original", {}).get("split", "unknown") if isinstance(row.get("original"), dict) else "unknown")
+                        write_new(directory / f"sample-{name}.json", result)
+                        return result, None
+                    except Exception as exc:
+                        failure = {"path": shard["path"], "error": f"{type(exc).__name__}: {exc}"}
+                        write_new(directory / f"failure-{name}.json", failure)
+                        return None, failure
+                with ThreadPoolExecutor(max_workers=2) as executor:
+                    for result, error in executor.map(work, selected):
+                        if result is not None:
+                            results.append(result)
+                        if error:
+                            report["errors"].append(error)
+                        print(json.dumps({"source": source_id, "completed": len(results), "failed": len(report["errors"])}), flush=True)
+            report["sampled_shards"] = len(results)
+            report["statistics"] = summarize(results)
+            report["wave_statistics"] = {str(w): summarize([r for r in results if r["shard"]["wave"] == w], single_wave=True)
+                                         for w in (1, 2) if any(r["shard"]["wave"] == w for r in results)}
+            report["estimation_scope"] = ("complete_sampling_frame" if results and len(results) == len(selected)
+                                          else "completed_samples_only_no_population_extrapolation")
+            report["process_status"] = "surveyed_pending_review" if results else "metadata_only" if frame["files"] else "hold"
+            if report["errors"]:
+                report["process_status"] = "partial"
+            report["m1_gaps"] = ["target-suitability review", "net-yield and cross-source overlap review"]
+            if not results:
+                report["m1_gaps"].append("content survey missing")
+            if not frame["complete_for_patterns"]:
+                report["m1_gaps"].append("upstream population coverage not established")
+        except Exception as exc:
+            report["process_status"] = "hold"
+            report["errors"].append({"error": f"{type(exc).__name__}: {exc}"})
+        write_new(directory / "profile.json", report)
+        reports.append(report)
+    files = {str(p.relative_to(out)): digest(p) for p in sorted(out.rglob("*")) if p.is_file()}
+    summary = {"schema": "mei-source-survey-v1", "created_at": datetime.now(timezone.utc).isoformat(),
+               "seed": seed, "sources": [{k: v for k, v in r.items() if k in
+                   ("source_id", "process_status", "frame_files", "sampled_shards", "m1_eligible", "errors")} for r in reports],
+               "network_reserved_bytes": budget.reserved, "m1_passed": False,
+               "m2_passed": False, "training_adoption_eligible": False,
+               "source_code_sha256": hashlib.sha256(implementation).hexdigest(), "artifacts": files}
+    write_new(out / "survey.json", summary)
+    return summary
+
+
+def audit_coverage(paths: list[Path]) -> dict:
+    profiles = []
+    observed = defaultdict(list)
+    unique_positions = set()
+    wave_diagnostics = []
+    for path in paths:
+        manifest = json.loads((path / "survey.json").read_text())
+        for rel, expected in manifest["artifacts"].items():
+            p = (path / rel).resolve()
+            if not p.is_relative_to(path.resolve()) or digest(p) != expected:
+                raise ValueError(f"survey artifact integrity failure: {rel}")
+            if p.name.startswith("sample-"):
+                sample = json.loads(p.read_text())
+                source = Path(rel).parts[0]
+                for row in sample["samples"]:
+                    if not row.get("text"):
+                        continue
+                    observed[row["text_sha256"]].append({"survey": str(path), "source": source,
+                        "path": sample["shard"]["path"], "row_index": row["row_index"],
+                        "split": row.get("split", "unknown")})
+                    unique_positions.add((source, sample["shard"]["path"], row["row_index"], row["text_sha256"]))
+        for directory in sorted(p for p in path.iterdir() if p.is_dir()):
+            samples = [json.loads(p.read_text()) for p in sorted(directory.glob("sample-*.json"))]
+            if not samples or not all("wave_probability" in s["shard"] for s in samples):
+                continue
+            wave_diagnostics.append({"survey": str(path), "source_id": directory.name,
+                "wave_statistics": {str(w): summarize([s for s in samples if s["shard"]["wave"] == w], single_wave=True)
+                                    for w in (1, 2) if any(s["shard"]["wave"] == w for s in samples)},
+                "scope": "observed wave support; wave 2 excludes singleton strata; no extrapolation with failures"})
+        profiles.extend(json.loads(p.read_text()) for p in sorted(path.glob("*/profile.json")))
+    comparisons = []
+    for i, a in enumerate(profiles):
+        for b in profiles[i + 1:]:
+            if a["source_id"] != b["source_id"]:
+                continue
+            metrics = {}
+            for axis in ("dump", "host", "language", "project", "extension"):
+                x = a.get("statistics", {}).get("document_distributions", {}).get(axis, {})
+                y = b.get("statistics", {}).get("document_distributions", {}).get(axis, {})
+                metrics[axis] = sum(abs(x.get(k, 0) - y.get(k, 0)) for k in x.keys() | y.keys()) / 2 if x and y else None
+            comparisons.append({"source_id": a["source_id"], "total_variation_distance": metrics,
+                                "interpretation": "descriptive; sample size/design uncertainty not quantified"})
+    overlap = [rows for rows in observed.values() if len({r["source"] for r in rows}) > 1]
+    split_leaks = [rows for rows in observed.values()
+                   if "train" in {r["split"] for r in rows} and "test" in {r["split"] for r in rows}]
+    return {"schema": "mei-source-coverage-audit-v1", "integrity_passed": True,
+            "m1_passed": False, "m2_passed": False, "training_adoption_eligible": False,
+            "sources": [{"source_id": p["source_id"], "status": p["process_status"],
+                         "gaps": p.get("m1_gaps", ["source survey failed"])} for p in profiles],
+            "comparisons": comparisons,
+            "wave_diagnostics": wave_diagnostics,
+            "unique_observed_positions": len(unique_positions),
+            "observed_cross_source_exact_overlap_groups": len(overlap),
+            "observed_train_test_exact_leak_groups": len(split_leaks),
+            "overlap_examples": overlap[:20], "leak_examples": split_leaks[:20],
+            "limitations": ["coverage diagnostics cannot grant human review or training admission",
+                            "source topic and intended task coverage remain separate requirements",
+                            "exact overlap of samples only; zero does not prove whole-corpus isolation"]}
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest="action", required=True)
+    p = commands.add_parser("profile")
+    p.add_argument("--config", type=Path, required=True)
+    p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--allow-network", action="store_true")
+    p.add_argument("--metadata-only", action="store_true")
+    p.add_argument("--resume-from", type=Path, help="Adopt complete shard evidence into a NEW run; retry missing shards")
+    a = commands.add_parser("audit-coverage")
+    a.add_argument("--surveys", type=Path, nargs="+", required=True)
+    a.add_argument("--out", type=Path, required=True)
+    a.add_argument("--local-teacher-review", action="store_true",
+                   help="Annotate frozen survey snippets with the explicitly configured local Qwen; no cloud calls")
+    args = parser.parse_args(argv)
+    if args.action == "profile":
+        result = profile(json.loads(args.config.read_text()), args.out,
+                         network=args.allow_network, metadata_only=args.metadata_only, resume_from=args.resume_from)
+    else:
+        result = audit_coverage(args.surveys)
+        if args.local_teacher_review:
+            from semantic_survey import review
+            result = review(args.surveys, args.out)
+        else:
+            write_new(args.out, result)
+    print(json.dumps({k: v for k, v in result.items() if k != "artifacts"}, ensure_ascii=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

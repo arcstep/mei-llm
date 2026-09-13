@@ -1,0 +1,27 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "records_per_shard": 200,
+  "sources": [
+    {
+      "source_id": "lccc-raw-train",
+      "role": "colloquial",
+      "format": "jsonl",
+      "local_globs": [
+        "corpus/pools/zh-v2-pool/raw/lccc-base-5bd582fa-v1/lccc_base_train.jsonl.gz"
+      ],
+      "official_split": "train",
+      "sampling_unit": "whole-dialogue"
+    },
+    {
+      "source_id": "lccc-filtered-train",
+      "role": "colloquial",
+      "format": "jsonl",
+      "local_globs": [
+        "corpus/pools/zh-v2-pool/prepared/lccc-base-20260910-v3/train.jsonl"
+      ],
+      "official_split": "derived-train",
+      "sampling_unit": "whole-dialogue"
+    }
+  ]
+}
