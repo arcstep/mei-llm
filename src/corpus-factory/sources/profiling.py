@@ -603,6 +603,7 @@ def audit_coverage(paths: list[Path]) -> dict:
     observed = defaultdict(list)
     unique_positions = set()
     wave_diagnostics = []
+    dossiers = []
     for path in paths:
         manifest = json.loads((path / "survey.json").read_text())
         for rel, expected in manifest["artifacts"].items():
@@ -627,7 +628,31 @@ def audit_coverage(paths: list[Path]) -> dict:
                 "wave_statistics": {str(w): summarize([s for s in samples if s["shard"]["wave"] == w], single_wave=True)
                                     for w in (1, 2) if any(s["shard"]["wave"] == w for s in samples)},
                 "scope": "observed wave support; wave 2 excludes singleton strata; no extrapolation with failures"})
-        profiles.extend(json.loads(p.read_text()) for p in sorted(path.glob("*/profile.json")))
+        for p in sorted(path.glob("*/profile.json")):
+            entry = json.loads(p.read_text())
+            profiles.append(entry)
+            stats = entry.get("statistics", {})
+            complete = entry.get("estimation_scope") == "complete_sampling_frame"
+            dossiers.append({"source_id": entry["source_id"], "survey": str(path),
+                "evidence": {"profile_path": str(p), "profile_sha256": digest(p),
+                             "survey_manifest_sha256": digest(path / "survey.json")},
+                "population": {"frame": entry.get("frame"), "file_count": entry.get("frame_files"),
+                               "ordering_verified": None, "scope": entry.get("estimation_scope")},
+                "inventory": {"located_local_files": entry.get("local_files"),
+                              "admission_or_reuse_decision": False},
+                "intended_use": {"role": entry.get("role"), "question": entry.get("source", {}).get("survey_question"),
+                                 "semantic_suitability": "pending_review"},
+                "volume": {"published_records": None, "sampled_records": stats.get("sample_records"),
+                           "population_record_estimate": stats.get("represented_record_total") if complete else None,
+                           "population_utf8_byte_estimate": stats.get("represented_utf8_bytes") if complete else None,
+                           "audited_net_tokens": None, "cross_source_dedup_yield": None},
+                "bias": {"document_distributions": stats.get("document_distributions"),
+                         "byte_distributions": stats.get("byte_distributions"),
+                         "observed_sample_duplicate_excess": stats.get("observed_exact_duplicate_excess"),
+                         "sampling_failures": entry.get("errors"), "topic_verified": False},
+                "acquisition": {"next_action": "review_and_quantify_remaining_gaps" if complete else "extend_or_repair_source_survey",
+                                "independent_increment_estimate": None, "resource_estimate": None,
+                                "production_status": "hold_before_M1_M2"}})
     comparisons = []
     for i, a in enumerate(profiles):
         for b in profiles[i + 1:]:
@@ -649,6 +674,7 @@ def audit_coverage(paths: list[Path]) -> dict:
                          "gaps": p.get("m1_gaps", ["source survey failed"])} for p in profiles],
             "comparisons": comparisons,
             "wave_diagnostics": wave_diagnostics,
+            "source_dossiers": dossiers,
             "unique_observed_positions": len(unique_positions),
             "observed_cross_source_exact_overlap_groups": len(overlap),
             "observed_train_test_exact_leak_groups": len(split_leaks),

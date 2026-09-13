@@ -1,0 +1,155 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "records_per_shard": 200,
+  "sources": [
+    {
+      "source_id": "laoshe-drama-novel",
+      "role": "authored-dialogue",
+      "author": "老舍",
+      "candidate_works": [
+        "茶馆",
+        "骆驼祥子"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "liuzhenyun-dialogue-novel",
+      "role": "authored-dialogue",
+      "author": "刘震云",
+      "candidate_works": [
+        "一句顶一万句"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "wangshuo-dialogue-novel",
+      "role": "authored-dialogue",
+      "author": "王朔",
+      "candidate_works": [
+        "顽主",
+        "我是你爸爸",
+        "动物凶猛",
+        "一半是火焰一半是海水"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "yuhua-dialogue-novel",
+      "role": "authored-dialogue",
+      "author": "余华",
+      "candidate_works": [
+        "许三观卖血记"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "regional-modern-fiction",
+      "role": "authored-dialogue",
+      "author": "多作者",
+      "candidate_works": [
+        "秦腔",
+        "废都",
+        "白鹿原",
+        "檀香刑",
+        "红高粱家族"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "contemporary-literary-comparison",
+      "role": "authored-dialogue",
+      "author": "多作者",
+      "candidate_works": [
+        "平凡的世界",
+        "黄金时代",
+        "三重门"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "caoyu-drama",
+      "role": "authored-dialogue",
+      "author": "曹禺",
+      "candidate_works": [
+        "雷雨",
+        "日出"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    },
+    {
+      "source_id": "sitcom-script-subtitle",
+      "role": "authored-dialogue",
+      "author": "多作者",
+      "candidate_works": [
+        "我爱我家",
+        "编辑部的故事"
+      ],
+      "sampling_unit": "work-edition-scene",
+      "local_globs": [],
+      "reference_only": true,
+      "rights_status": "specific-edition-and-use-review-pending",
+      "natural_conversation": false,
+      "published_records": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_full_source_version_and_review",
+      "survey_question": "保留完整作品来源；按作者、作品、时代、地域、体裁与场景分层调查；区分叙述、直接对话和真实交流身份。"
+    }
+  ]
+}
