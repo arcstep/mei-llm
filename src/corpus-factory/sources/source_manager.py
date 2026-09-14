@@ -318,7 +318,36 @@ def tokenizer_pointer(path: Path | None = None) -> dict[str, Any]:
     return pointer
 
 
-def load_tokenizer() -> Any:
+def load_tokenizer(manifest_path: Path | None = None) -> Any:
+    if manifest_path is not None:
+        manifest_path = manifest_path.resolve()
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest.get("schema") != "mei-51m-tokenizer-release-v1":
+            raise SourceError("explicit tokenizer manifest schema mismatch")
+        if manifest.get("status") != "frozen":
+            raise SourceError(f"explicit tokenizer is not frozen: {manifest.get('status')}")
+        tokenizer_id = str(manifest.get("tokenizer_id") or "")
+        model_rel = manifest.get("model_file")
+        if not tokenizer_id or not model_rel:
+            raise SourceError("explicit tokenizer manifest lacks tokenizer_id/model_file")
+        model_path = (manifest_path.parent / model_rel).resolve()
+        if not model_path.is_relative_to(manifest_path.parent.resolve()):
+            raise SourceError("explicit tokenizer model escapes release directory")
+        architecture = ROOT / "src/architecture/mei-1.2-51m"
+        sys.path.insert(0, str(architecture))
+        from tokenizer import ZhTokenizerV2
+
+        tokenizer = ZhTokenizerV2(
+            tokenizer_id=tokenizer_id,
+            vocab_size=int(manifest.get("vocab_size") or 0),
+            manifest_path=manifest_path,
+            model_path=model_path,
+        )
+        if tokenizer.model_sha256 != manifest.get("model_sha256"):
+            raise SourceError("tokenizer hash mismatch vs explicit manifest")
+        tokenizer.tokenizer_id = tokenizer_id
+        tokenizer.release_manifest = manifest_path
+        return tokenizer
     pointer = tokenizer_pointer()
     architecture = ROOT / "src/architecture/mei-1.2-51m"
     sys.path.insert(0, str(architecture))
@@ -399,11 +428,16 @@ def admit(
     mode: str = "text",
     max_invalid_ratio: float | None = None,
     expected_tokenizer_id: str | None = None,
+    tokenizer_manifest: Path | None = None,
 ) -> dict[str, Any]:
     if role not in SOURCE_ROLES_LEGACY and role not in load_registry()["roles"]:
         raise SourceError(f"unsupported source role: {role}")
     if expected_tokenizer_id is not None:
-        frozen_id = tokenizer_pointer().get("tokenizer_id")
+        frozen_id = (
+            json.loads(tokenizer_manifest.read_text(encoding="utf-8")).get("tokenizer_id")
+            if tokenizer_manifest is not None
+            else tokenizer_pointer().get("tokenizer_id")
+        )
         if expected_tokenizer_id != frozen_id:
             raise SourceError(
                 f"expected tokenizer {expected_tokenizer_id!r}, "
@@ -453,7 +487,7 @@ def admit(
         record_elements = tuple(
             part for part in (admission.get("record_element") or "").split("|") if part
         )
-    tokenizer = load_tokenizer()
+    tokenizer = load_tokenizer(tokenizer_manifest)
     seen = load_seen_hashes(seen_ledger)
     accepted: list[tuple[str, str, list[int], dict[str, Any]]] = []
     duplicates = 0
@@ -803,6 +837,7 @@ def build_parser() -> argparse.ArgumentParser:
     command.add_argument("--mode", choices=("text", "structured"), default="text")
     command.add_argument("--max-invalid-ratio", type=float)
     command.add_argument("--expected-tokenizer-id")
+    command.add_argument("--tokenizer-manifest", type=Path)
     command.add_argument("--out", type=Path, required=True)
 
     command = sub.add_parser("freeze-pool")
@@ -864,6 +899,7 @@ def main(argv: list[str] | None = None) -> int:
             mode=args.mode,
             max_invalid_ratio=args.max_invalid_ratio,
             expected_tokenizer_id=args.expected_tokenizer_id,
+            tokenizer_manifest=args.tokenizer_manifest,
         )
     else:
         result = freeze_pool(

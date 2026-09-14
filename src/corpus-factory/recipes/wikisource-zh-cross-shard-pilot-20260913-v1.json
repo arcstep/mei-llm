@@ -1,0 +1,20 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260914,
+  "shards_per_wave": 11,
+  "records_per_shard": 20,
+  "max_network_bytes": 4294967296,
+  "reserve_disk_bytes": 107374182400,
+  "training_adoption_eligible": false,
+  "sources": [
+    {
+      "source_id": "wikisource-zh",
+      "role": "literature",
+      "repository": "wikimedia/wikisource",
+      "patterns": [
+        "20231201.zh/*.parquet"
+      ],
+      "survey_question": "逐片快速识别作品类型、章节集中与繁简字形。"
+    }
+  ]
+}

@@ -1,0 +1,4573 @@
+{
+  "mode": "gutenberg_cpt",
+  "catalog_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/gutenberg-catalog-acquisition-20260913-v1/catalog-gutenberg-pg-catalog-csv-gz.raw",
+  "catalog_sha256": "be459dc13eb58142320b7ba5fc2fb86c0ff0a761844a530c4d054bf7b26674d8",
+  "download_workers": 2,
+  "max_network_bytes": 4253024256,
+  "reserve_disk_bytes": 107374182400,
+  "works": [
+    {
+      "ebook_id": 4572,
+      "title": "粉妝樓1-10回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4572/pg4572.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4573,
+      "title": "粉妝樓11-20回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/4573/pg4573.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4574,
+      "title": "粉妝樓21-30回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4574/pg4574.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4575,
+      "title": "粉妝樓31-40回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4575/pg4575.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4576,
+      "title": "粉妝樓41-50回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4576/pg4576.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4577,
+      "title": "粉妝樓51-60回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/4577/pg4577.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4578,
+      "title": "粉妝樓61-70回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4578/pg4578.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4579,
+      "title": "粉妝樓71-80回",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4579/pg4579.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4580,
+      "title": "粉妝樓",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/4580/pg4580.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7468,
+      "title": "搜神後記. Selections. 1985",
+      "language": "zh",
+      "subjects": "Ghost stories, Chinese",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/7468/pg7468.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23818,
+      "title": "鏡花緣",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Fantasy fiction, Chinese",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23818/pg23818.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23822,
+      "title": "文心雕龍",
+      "language": "zh",
+      "subjects": "Chinese literature -- History and criticism",
+      "bookshelves": "Category: Literature - Other; Category: Essays, Letters & Speeches; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/23822/pg23822.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23824,
+      "title": "說唐",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23824/pg23824.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23825,
+      "title": "施公案",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Crime, Thrillers and Mystery",
+      "url": "https://www.gutenberg.org/cache/epub/23825/pg23825.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23827,
+      "title": "胡涂世界",
+      "language": "zh",
+      "subjects": "Chinese literature -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23827/pg23827.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23835,
+      "title": "隋唐演義",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction; China -- History -- Sui dynasty, 581-618 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23835/pg23835.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23838,
+      "title": "楊家將",
+      "language": "zh",
+      "subjects": "China -- History -- Song dynasty, 960-1279 -- Fiction",
+      "bookshelves": "Category: History - Other; Category: History - Royalty; Category: History - Warfare",
+      "url": "https://www.gutenberg.org/cache/epub/23838/pg23838.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23839,
+      "title": "論語",
+      "language": "zh",
+      "subjects": "Ethics -- China; Philosophy, Chinese",
+      "bookshelves": "Category: Classics of Literature; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/23839/pg23839.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23842,
+      "title": "楊家將",
+      "language": "zh",
+      "subjects": "China -- History -- Song dynasty, 960-1279 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/23842/pg23842.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23843,
+      "title": "明月台",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23843/pg23843.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23849,
+      "title": "牡丹亭",
+      "language": "zh",
+      "subjects": "Chinese drama -- Ming dynasty, 1368-1644; Dreams -- Drama",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Romance; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/23849/pg23849.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23850,
+      "title": "老殘遊記",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Tai Mountains (China) -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23850/pg23850.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23863,
+      "title": "水滸傳",
+      "language": "zh",
+      "subjects": "Robbers and outlaws -- Fiction; China -- History -- Song dynasty, 960-1279 -- Fiction; Heroes -- Fiction; China -- Social life and customs -- 960-1644 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23863/pg23863.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23867,
+      "title": "斬鬼傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23867/pg23867.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23877,
+      "title": "玉嬌梨",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23877/pg23877.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23878,
+      "title": "人間樂",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23878/pg23878.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23906,
+      "title": "西廂記",
+      "language": "zh",
+      "subjects": "Chinese drama -- Yuan dynasty, 1260-1368",
+      "bookshelves": "Category: Romance; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/23906/pg23906.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23907,
+      "title": "無聲戲",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23907/pg23907.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23908,
+      "title": "夢中緣",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644; Love stories, Chinese",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23908/pg23908.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23910,
+      "title": "封神演義",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23910/pg23910.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23914,
+      "title": "山水小牘",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23914/pg23914.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23915,
+      "title": "虬髯客傳",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23915/pg23915.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23938,
+      "title": "木蘭奇女傳",
+      "language": "zh",
+      "subjects": "Hua, Mulan (Legendary character) -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23938/pg23938.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23950,
+      "title": "三國志演義",
+      "language": "zh",
+      "subjects": "China -- History -- Three kingdoms, 220-265 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure; Category: Mythology, Legends & Folklore; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23950/pg23950.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23962,
+      "title": "西遊記",
+      "language": "zh",
+      "subjects": "Folklore -- China; Legends -- China; Xuanzang, approximately 596-664 -- Fiction; Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Adventure; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/23962/pg23962.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23983,
+      "title": "斷鴻零雁記",
+      "language": "zh",
+      "subjects": "Triangles (Interpersonal relations) -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/23983/pg23983.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24004,
+      "title": "竇娥寃",
+      "language": "zh",
+      "subjects": "Chinese drama (Tragedy)",
+      "bookshelves": "Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/24004/pg24004.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24021,
+      "title": "杜騙新書",
+      "language": "zh",
+      "subjects": "Fraud -- China -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Crime, Thrillers and Mystery; Category: Humour",
+      "url": "https://www.gutenberg.org/cache/epub/24021/pg24021.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24027,
+      "title": "醉醒石",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24027/pg24027.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24029,
+      "title": "冷眼观",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24029/pg24029.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24032,
+      "title": "儒林外史",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Scholars -- China -- Fiction; China -- Social life and customs -- 1644-1912 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24032/pg24032.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24042,
+      "title": "徬徨",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Best Books Ever Listings; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24042/pg24042.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24047,
+      "title": "世說新語",
+      "language": "zh",
+      "subjects": "China -- History -- Three kingdoms, 220-265 -- Anecdotes; China -- History -- Jin dynasty, 265-419 -- Anecdotes",
+      "bookshelves": "Category: Short Stories; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/24047/pg24047.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24051,
+      "title": "李娃傳",
+      "language": "zh",
+      "subjects": "Li, Shishi -- Fiction; Chinese fiction -- Tang dynasty, 618-907; Women -- China -- Literary collections",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24051/pg24051.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24068,
+      "title": "燕丹子",
+      "language": "zh",
+      "subjects": "China -- History -- Han dynasty, 202 B.C.-220 A.D. -- Anecdotes",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24068/pg24068.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24079,
+      "title": "商界現形記",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24079/pg24079.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24099,
+      "title": "二十年目睹之怪現狀",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Short stories, Chinese",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24099/pg24099.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24113,
+      "title": "九命奇冤",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Short stories, Chinese",
+      "bookshelves": "Category: Historical Novels; Category: Crime, Thrillers and Mystery",
+      "url": "https://www.gutenberg.org/cache/epub/24113/pg24113.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24138,
+      "title": "官場現形記",
+      "language": "zh",
+      "subjects": "China -- Social life and customs -- 1644-1912 -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24138/pg24138.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24139,
+      "title": "官場現形記",
+      "language": "zh",
+      "subjects": "China -- Social life and customs -- 1644-1912 -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24139/pg24139.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24141,
+      "title": "警世通言",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644; Short stories, Chinese",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24141/pg24141.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24142,
+      "title": "轟天雷",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24142/pg24142.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24154,
+      "title": "癡人說夢記",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Humour; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24154/pg24154.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24156,
+      "title": "中國十大禁書之國色天香",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644; Erotic literature, Chinese",
+      "bookshelves": "Erotic Fiction; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24156/pg24156.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24162,
+      "title": "二刻拍案惊奇",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Short Stories",
+      "url": "https://www.gutenberg.org/cache/epub/24162/pg24162.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24170,
+      "title": "常言道",
+      "language": "zh",
+      "subjects": "Chinese literature",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24170/pg24170.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24185,
+      "title": "比目魚",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24185/pg24185.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24193,
+      "title": "燕子箋",
+      "language": "zh",
+      "subjects": "Chinese drama",
+      "bookshelves": "Category: Historical Novels; Category: Romance",
+      "url": "https://www.gutenberg.org/cache/epub/24193/pg24193.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24224,
+      "title": "平山冷燕",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24224/pg24224.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24225,
+      "title": "戲中戲",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24225/pg24225.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24227,
+      "title": "情變",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24227/pg24227.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24230,
+      "title": "今古奇觀",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644; Short stories, Chinese",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24230/pg24230.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24231,
+      "title": "韓湘子全傳",
+      "language": "zh",
+      "subjects": "Han, Xiangzi -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24231/pg24231.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24233,
+      "title": "東度記",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/24233/pg24233.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24234,
+      "title": "桃花扇",
+      "language": "zh",
+      "subjects": "Chinese drama",
+      "bookshelves": "Category: Historical Novels; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/24234/pg24234.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24239,
+      "title": "醒世恆言",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24239/pg24239.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24264,
+      "title": "紅樓夢",
+      "language": "zh",
+      "subjects": "China -- History -- Qing dynasty, 1644-1912 -- Fiction; Upper class -- China -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24264/pg24264.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24273,
+      "title": "西湖佳話",
+      "language": "zh",
+      "subjects": "West Lake (China) -- History -- Fiction; Hangzhou (China) -- History -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24273/pg24273.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24294,
+      "title": "警悟鐘",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Humour; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24294/pg24294.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24295,
+      "title": "遊仙窟",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Tang dynasty, 618-907",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Romance; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24295/pg24295.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24327,
+      "title": "何典",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Humour; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/24327/pg24327.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24422,
+      "title": "定情人",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/24422/pg24422.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25124,
+      "title": "老殘遊記",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Tai Mountains (China) -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25124/pg25124.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25130,
+      "title": "夜雨秋燈錄",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25130/pg25130.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25134,
+      "title": "九尾狐",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25134/pg25134.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25137,
+      "title": "玉蟾記",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Science-Fiction & Fantasy; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25137/pg25137.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25146,
+      "title": "山水情",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25146/pg25146.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25147,
+      "title": "黃繡球",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25147/pg25147.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25187,
+      "title": "花月痕",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25187/pg25187.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25192,
+      "title": "浮生六記",
+      "language": "zh",
+      "subjects": "Authors, Chinese -- Biography; Shen, Fu, 1763-ca. 1808",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25192/pg25192.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25195,
+      "title": "風月鑒",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25195/pg25195.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25202,
+      "title": "補紅樓夢",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25202/pg25202.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25214,
+      "title": "劍俠傳",
+      "language": "zh",
+      "subjects": "Swordsmen -- China",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25214/pg25214.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25217,
+      "title": "水滸後傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25217/pg25217.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25219,
+      "title": "花月痕",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25219/pg25219.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25223,
+      "title": "俗話傾談",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25223/pg25223.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25225,
+      "title": "古文觀止",
+      "language": "zh",
+      "subjects": "Chinese prose literature",
+      "bookshelves": "Category: Essays, Letters & Speeches; Category: History - Ancient",
+      "url": "https://www.gutenberg.org/cache/epub/25225/pg25225.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25226,
+      "title": "負曝閒談",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25226/pg25226.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25229,
+      "title": "飛龍全傳",
+      "language": "zh",
+      "subjects": "Song Taizu, Emperor of China, 927-976 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25229/pg25229.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25231,
+      "title": "遊仙窟",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Tang dynasty, 618-907",
+      "bookshelves": "Category: Romance; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25231/pg25231.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25237,
+      "title": "快士傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25237/pg25237.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25242,
+      "title": "野草",
+      "language": "zh",
+      "subjects": "Chinese literature; Prose poems",
+      "bookshelves": "Category: Essays, Letters & Speeches",
+      "url": "https://www.gutenberg.org/cache/epub/25242/pg25242.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25243,
+      "title": "海遊記",
+      "language": "zh",
+      "subjects": "Folklore -- China; China -- Social life and customs; Folk drama, Chinese",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25243/pg25243.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25245,
+      "title": "子不語",
+      "language": "zh",
+      "subjects": "Ghost stories, Chinese; Fantasy fiction, Chinese",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25245/pg25245.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25246,
+      "title": "琵琶記",
+      "language": "zh",
+      "subjects": "Chinese drama",
+      "bookshelves": "Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/25246/pg25246.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25248,
+      "title": "平妖傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Historical Novels; Category: Science-Fiction & Fantasy; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25248/pg25248.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25250,
+      "title": "合錦回文傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25250/pg25250.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25251,
+      "title": "八段錦",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25251/pg25251.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25259,
+      "title": "公墓",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Category: Short Stories",
+      "url": "https://www.gutenberg.org/cache/epub/25259/pg25259.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25260,
+      "title": "豐收",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25260/pg25260.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25279,
+      "title": "錦香亭",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Romance",
+      "url": "https://www.gutenberg.org/cache/epub/25279/pg25279.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25284,
+      "title": "五鳳吟",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25284/pg25284.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25286,
+      "title": "歡喜冤家",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644; Erotic literature, Chinese",
+      "bookshelves": "Erotic Fiction; Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25286/pg25286.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25297,
+      "title": "狂人日記",
+      "language": "zh",
+      "subjects": "Diaries -- Fiction; Chinese fiction -- 20th century",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25297/pg25297.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25315,
+      "title": "續子不語",
+      "language": "zh",
+      "subjects": "Short stories; Fantasy fiction, Chinese",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25315/pg25315.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25323,
+      "title": "狐狸緣全傳",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25323/pg25323.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25328,
+      "title": "豆棚閒話",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Short stories, Chinese",
+      "bookshelves": "Category: Essays, Letters & Speeches",
+      "url": "https://www.gutenberg.org/cache/epub/25328/pg25328.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25329,
+      "title": "春秋配",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25329/pg25329.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25332,
+      "title": "阿Ｑ正傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- 20th century",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25332/pg25332.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25348,
+      "title": "雙鳳奇緣",
+      "language": "zh",
+      "subjects": "Wang, Zhaojun, 53 B.C.-18 A.D. -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Romance",
+      "url": "https://www.gutenberg.org/cache/epub/25348/pg25348.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25349,
+      "title": "東周列國志",
+      "language": "zh",
+      "subjects": "China -- History -- Zhou dynasty, 1122-221 B.C. -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25349/pg25349.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25350,
+      "title": "蕩寇志",
+      "language": "zh",
+      "subjects": "China -- History -- Three kingdoms, 220-265 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25350/pg25350.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25352,
+      "title": "長恨歌",
+      "language": "zh",
+      "subjects": "Chinese poetry; Yang, gui fei, 719-756 -- Poetry; Tang Xuanzong, Emperor of China, 685-762 -- Poetry",
+      "bookshelves": "Category: Poetry; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/25352/pg25352.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25369,
+      "title": "金石緣",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25369/pg25369.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25375,
+      "title": "諧鐸",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Short stories, Chinese",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25375/pg25375.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25376,
+      "title": "三俠五義",
+      "language": "zh",
+      "subjects": "Bao, Zheng, 999-1062 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25376/pg25376.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25377,
+      "title": "鏡花緣",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Fantasy fiction, Chinese",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25377/pg25377.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25379,
+      "title": "文明小史",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25379/pg25379.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25380,
+      "title": "閒情偶寄",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25380/pg25380.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25392,
+      "title": "西湖二集",
+      "language": "zh",
+      "subjects": "West Lake (China) -- History -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/25392/pg25392.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25393,
+      "title": "施公案",
+      "language": "zh",
+      "subjects": "Shi, Shilun, -1722 -- Fiction; Detective and mystery stories, Chinese",
+      "bookshelves": "Category: Historical Novels; Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25393/pg25393.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25399,
+      "title": "石點頭",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25399/pg25399.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25402,
+      "title": "九命奇冤",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25402/pg25402.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25422,
+      "title": "玉樓春",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25422/pg25422.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25423,
+      "title": "狂人日記",
+      "language": "zh",
+      "subjects": "Diaries -- Fiction; Chinese fiction -- 20th century",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25423/pg25423.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25501,
+      "title": "易經",
+      "language": "zh",
+      "subjects": "Chinese classics; Divination -- China",
+      "bookshelves": "Category: Classics of Literature; Category: Philosophy & Ethics; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/25501/pg25501.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25521,
+      "title": "玉梨魂",
+      "language": "zh",
+      "subjects": "Chinese fiction -- 20th century",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25521/pg25521.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25543,
+      "title": "蜃樓志",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; Erotic fiction, Chinese",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25543/pg25543.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25559,
+      "title": "中國小說史略",
+      "language": "zh",
+      "subjects": "Chinese fiction -- History and criticism",
+      "bookshelves": "Category: Literature - Other; Category: History - Other",
+      "url": "https://www.gutenberg.org/cache/epub/25559/pg25559.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25561,
+      "title": "癡人說夢記",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Humour; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25561/pg25561.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25602,
+      "title": "蘭花夢奇傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Gender & Sexuality Studies",
+      "url": "https://www.gutenberg.org/cache/epub/25602/pg25602.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25636,
+      "title": "玉雙魚",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912; China -- Social conditions -- 960-1644 -- Fiction; China -- Social conditions -- 1644-1912 -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25636/pg25636.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25649,
+      "title": "巧聯珠",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25649/pg25649.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26161,
+      "title": "醒世姻緣",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/26161/pg26161.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26729,
+      "title": "二刻拍案驚奇",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/26729/pg26729.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26737,
+      "title": "幽閨記",
+      "language": "zh",
+      "subjects": "Chinese drama",
+      "bookshelves": "Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/26737/pg26737.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26738,
+      "title": "畫圖緣",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26738/pg26738.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26739,
+      "title": "雪月梅傳",
+      "language": "zh",
+      "subjects": "Erotic fiction, Chinese",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26739/pg26739.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26748,
+      "title": "幻中游",
+      "language": "zh",
+      "subjects": "Su, Shi, 1037-1101 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26748/pg26748.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26871,
+      "title": "粉妝樓全傳",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/26871/pg26871.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26872,
+      "title": "海上花列傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26872/pg26872.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26877,
+      "title": "珍珠舶",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26877/pg26877.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26904,
+      "title": "天豹圖",
+      "language": "zh",
+      "subjects": "China -- History -- Song dynasty, 960-1279 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26904/pg26904.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26921,
+      "title": "引鳳蕭",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26921/pg26921.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26922,
+      "title": "春柳鶯",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26922/pg26922.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26931,
+      "title": "風月夢",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26931/pg26931.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26970,
+      "title": "彭公案",
+      "language": "zh",
+      "subjects": "China -- History -- Qing dynasty, 1644-1912 -- Fiction; Detective and mystery stories, Chinese; Peng, Peng, 1637-1704 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26970/pg26970.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27016,
+      "title": "Eight dwelling places of Buddhist immortals",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27016/pg27016.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27023,
+      "title": "白圭志",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27023/pg27023.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27026,
+      "title": "豔異編",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Tang dynasty, 618-907; Chinese fiction -- Ming dynasty, 1368-1644; Short stories, Chinese; Chinese fiction -- 960-1644",
+      "bookshelves": "Category: Romance; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27026/pg27026.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27059,
+      "title": "Hu Die Mei Yuan Yang Meng",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27059/pg27059.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27060,
+      "title": "Qing Lou Meng Qi Hong Xiao Shi",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27060/pg27060.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27082,
+      "title": "楊家將演義",
+      "language": "zh",
+      "subjects": "China -- History -- Song dynasty, 960-1279 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27082/pg27082.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27104,
+      "title": "歸蓮夢",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27104/pg27104.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27105,
+      "title": "玉支机",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27105/pg27105.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27107,
+      "title": "金雲翹傳",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27107/pg27107.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27108,
+      "title": "醒夢駢言",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27108/pg27108.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27119,
+      "title": "比目魚",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27119/pg27119.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27145,
+      "title": "殘唐五代史演義傳",
+      "language": "zh",
+      "subjects": "China -- History -- Tang dynasty, 618-907 -- Fiction; China -- History -- Five dynasties and the Ten kingdoms, 907-979 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27145/pg27145.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27148,
+      "title": "蕉葉帕",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Romance; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27148/pg27148.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27166,
+      "title": "吶喊",
+      "language": "zh",
+      "subjects": "Chinese fiction -- 20th century",
+      "bookshelves": "Category: Short Stories",
+      "url": "https://www.gutenberg.org/cache/epub/27166/pg27166.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27171,
+      "title": "鬼谷四友志",
+      "language": "zh",
+      "subjects": "China -- History -- Warring States, 403-221 B.C. -- Fiction; Sun, Bin, active 4th century B.C. -- Fiction; Pang, Juan, active 4th century B.C. -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27171/pg27171.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27172,
+      "title": "庚巳編",
+      "language": "zh",
+      "subjects": "China -- History -- Ming dynasty, 1368-1644 -- Anecdotes",
+      "bookshelves": "Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27172/pg27172.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27184,
+      "title": "癡人福",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Humour; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27184/pg27184.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27185,
+      "title": "宛如約",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27185/pg27185.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27216,
+      "title": "斬鬼傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Adventure; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27216/pg27216.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27217,
+      "title": "牛郎織女傳",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27217/pg27217.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27302,
+      "title": "鄰女語",
+      "language": "zh",
+      "subjects": "Beijing (China) -- History -- Siege, 1900 -- Fiction; China -- History -- Boxer Rebellion, 1899-1901 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27302/pg27302.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27328,
+      "title": "駐春園小史",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27328/pg27328.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27329,
+      "title": "唐鍾馗平鬼傳",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels; Category: Science-Fiction & Fantasy; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27329/pg27329.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27330,
+      "title": "綠牡丹",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27330/pg27330.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27331,
+      "title": "飛跎全傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27331/pg27331.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27332,
+      "title": "後西游記",
+      "language": "zh",
+      "subjects": "",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27332/pg27332.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27399,
+      "title": "麟兒報",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27399/pg27399.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27402,
+      "title": "風流悟",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27402/pg27402.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27414,
+      "title": "好逑傳",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27414/pg27414.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27415,
+      "title": "殺子報",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27415/pg27415.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27459,
+      "title": "耳食錄",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Short Stories; Category: Science-Fiction & Fantasy; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27459/pg27459.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27582,
+      "title": "喻世明言",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27582/pg27582.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27636,
+      "title": "沉沦",
+      "language": "zh",
+      "subjects": "Chinese prose literature; Chinese fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27636/pg27636.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27686,
+      "title": "狄公案",
+      "language": "zh",
+      "subjects": "Di, Renjie, 629-700 -- Fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27686/pg27686.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27734,
+      "title": "合浦珠",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27734/pg27734.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27753,
+      "title": "一枕奇",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27753/pg27753.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27768,
+      "title": "瞎騙奇聞",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/27768/pg27768.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29032,
+      "title": "海國春秋",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/29032/pg29032.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29079,
+      "title": "五色石",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/29079/pg29079.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 30465,
+      "title": "御製廣寒殿記",
+      "language": "zh",
+      "subjects": "Chinese literature -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: History - Early Modern (c. 1450-1750); Category: History - Royalty; Category: Architecture; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/30465/pg30465.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 30544,
+      "title": "五孝傳",
+      "language": "zh",
+      "subjects": "Chinese literature",
+      "bookshelves": "Category: Biographies; Category: Philosophy & Ethics; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/30544/pg30544.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 43014,
+      "title": "晁氏儒言 一卷",
+      "language": "zh",
+      "subjects": "Chinese literature",
+      "bookshelves": "Category: History - Ancient; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/43014/pg43014.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51828,
+      "title": "聊齋志異",
+      "language": "zh",
+      "subjects": "Short stories, Chinese; China -- Social life and customs -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/51828/pg51828.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52199,
+      "title": "漢宮秋",
+      "language": "zh",
+      "subjects": "Chinese drama -- Yuan dynasty, 1260-1368",
+      "bookshelves": "Category: Historical Novels; Category: Plays/Films/Dramas; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/52199/pg52199.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52200,
+      "title": "金瓶梅",
+      "language": "zh",
+      "subjects": "Domestic fiction; Chinese fiction -- Ming dynasty, 1368-1644; China -- Social life and customs -- 960-1644 -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/52200/pg52200.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52205,
+      "title": "肉蒲團",
+      "language": "zh",
+      "subjects": "Erotic literature, Chinese; Chinese fiction; Erotic fiction, Chinese",
+      "bookshelves": "Category: Novels; Category: Sexuality & Erotica",
+      "url": "https://www.gutenberg.org/cache/epub/52205/pg52205.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52238,
+      "title": "枕中記",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Tang dynasty, 618-907",
+      "bookshelves": "Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/52238/pg52238.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52267,
+      "title": "鶯鶯傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Tang dynasty, 618-907",
+      "bookshelves": "Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/52267/pg52267.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52270,
+      "title": "長生殿",
+      "language": "zh",
+      "subjects": "Chinese drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/52270/pg52270.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52271,
+      "title": "漢武帝別國洞冥記",
+      "language": "zh",
+      "subjects": "Fantasy fiction, Chinese; Curiosities and wonders -- China -- Early works to 1900; Han Wudi, Emperor of China, 156 B.C.-87 B.C. -- Fiction",
+      "bookshelves": "Category: Mythology, Legends & Folklore; Category: History - Ancient",
+      "url": "https://www.gutenberg.org/cache/epub/52271/pg52271.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52276,
+      "title": "竇娥冤",
+      "language": "zh",
+      "subjects": "Chinese drama (Tragedy)",
+      "bookshelves": "Category: Literature - Other; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/52276/pg52276.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 52280,
+      "title": "明鏡公案",
+      "language": "zh",
+      "subjects": "Chinese fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/52280/pg52280.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 54494,
+      "title": "海公案",
+      "language": "zh",
+      "subjects": "Hai, Rui, 1514-1587 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/54494/pg54494.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 54784,
+      "title": "大唐三藏取經詩話",
+      "language": "zh",
+      "subjects": "Xuanzang, approximately 596-664 -- Fiction",
+      "bookshelves": "Category: Poetry; Category: Adventure; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/54784/pg54784.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 56291,
+      "title": "老殘遊記續集",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/56291/pg56291.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 57227,
+      "title": "平妖傳",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Adventure; Category: Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/57227/pg57227.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 57238,
+      "title": "白兔記",
+      "language": "zh",
+      "subjects": "Chinese drama",
+      "bookshelves": "Category: Historical Novels; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/57238/pg57238.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 57248,
+      "title": "初刻拍案驚奇",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Ming dynasty, 1368-1644",
+      "bookshelves": "Category: Short Stories; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/57248/pg57248.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 57278,
+      "title": "青樓夢",
+      "language": "zh",
+      "subjects": "Chinese fiction -- Qing dynasty, 1644-1912",
+      "bookshelves": "Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/57278/pg57278.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 67976,
+      "title": "故事新讀本: 第一冊",
+      "language": "zh",
+      "subjects": "Short stories, Chinese",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/67976/pg67976.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2248,
+      "title": "The Winter's Tale",
+      "language": "en",
+      "subjects": "Fathers and daughters -- Drama; Married people -- Drama; Tragicomedy; Castaways -- Drama; Sicily (Italy) -- Kings and rulers -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2248/pg2248.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 62448,
+      "title": "The Life of David Belasco; Vol. 1",
+      "language": "en",
+      "subjects": "Theater -- United States; Belasco, David, 1853-1931",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Biographies; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/62448/pg62448.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65860,
+      "title": "The Old Miracle Plays of England",
+      "language": "en",
+      "subjects": "Mysteries and miracle-plays, English; English drama -- To 1500",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Plays/Films/Dramas; Category: History - British; Category: History - Medieval/Middle Ages",
+      "url": "https://www.gutenberg.org/cache/epub/65860/pg65860.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 6790,
+      "title": "Demetrius: A Play",
+      "language": "en",
+      "subjects": "Drama",
+      "bookshelves": "Category: Historical Novels; Category: Plays/Films/Dramas; Category: German Literature",
+      "url": "https://www.gutenberg.org/cache/epub/6790/pg6790.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26612,
+      "title": "A Pirate of Parts",
+      "language": "en",
+      "subjects": "Theater -- Fiction",
+      "bookshelves": "Pirates, Buccaneers, Corsairs, etc.; Category: Humour; Category: Plays/Films/Dramas; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/26612/pg26612.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 59965,
+      "title": "A Thousand Years Ago: A Romance of the Orient",
+      "language": "en",
+      "subjects": "American drama -- 20th century; China -- Drama",
+      "bookshelves": "Category: Romance; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/59965/pg59965.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1929,
+      "title": "The School for Scandal",
+      "language": "en",
+      "subjects": "Comedy plays; English drama -- 18th century; England -- Social life and customs -- 18th century -- Drama; Nobility -- England -- History -- 18th century -- Drama",
+      "bookshelves": "Harvard Classics; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1929/pg1929.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1219,
+      "title": "An Essay on Comedy and the Uses of the Comic Spirit",
+      "language": "en",
+      "subjects": "Comedy; Comic, The",
+      "bookshelves": "Category: Essays, Letters & Speeches",
+      "url": "https://www.gutenberg.org/cache/epub/1219/pg1219.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 79216,
+      "title": "Criminals",
+      "language": "en",
+      "subjects": "One-act plays; American drama -- 20th century; Marriage -- United States -- Drama; Newlyweds -- Drama",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/79216/pg79216.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 79089,
+      "title": "St Baldred of the Bass, a Pictish legend",
+      "language": "en",
+      "subjects": "English poetry -- Scottish authors -- 19th century; Baldred, of Tyninghame, Saint, -757 -- Poetry; Bass Rock (Scotland) -- Poetry; Berwick-upon-Tweed (England) -- History -- Siege, 1333 -- Drama",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/79089/pg79089.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2244,
+      "title": "As You Like It",
+      "language": "en",
+      "subjects": "Comedy plays; Fathers and daughters -- Drama; Exiles -- Drama; Pastoral drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2244/pg2244.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1780,
+      "title": "King Henry IV, Part 1",
+      "language": "en",
+      "subjects": "Henry IV, King of England, 1367-1413 -- Drama; Historical drama; Great Britain -- History -- Henry IV, 1399-1413 -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature; Category: History - British",
+      "url": "https://www.gutenberg.org/cache/epub/1780/pg1780.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 59159,
+      "title": "Josiah's Secret: A Play",
+      "language": "en",
+      "subjects": "American drama -- 20th century; Married people -- Drama; Women -- Suffrage -- Drama",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: Gender & Sexuality Studies",
+      "url": "https://www.gutenberg.org/cache/epub/59159/pg59159.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27670,
+      "title": "The Treason and Death of Benedict Arnold: A Play for a Greek Theatre",
+      "language": "en",
+      "subjects": "Arnold, Benedict, 1741-1801 -- Drama; United States -- History -- Revolution, 1775-1783 -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: History - American",
+      "url": "https://www.gutenberg.org/cache/epub/27670/pg27670.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 70884,
+      "title": "French without a master",
+      "language": "en",
+      "subjects": "Comedy plays; French drama -- Translations into English; Farces",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: French Literature",
+      "url": "https://www.gutenberg.org/cache/epub/70884/pg70884.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2258,
+      "title": "King Henry VIII",
+      "language": "en",
+      "subjects": "Great Britain -- Kings and rulers -- Drama; Henry, VIII, King of England, 1491-1547 -- Drama; Historical drama; Great Britain -- History -- Henry VIII, 1509-1547 -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2258/pg2258.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 59112,
+      "title": "R.U.R. (Rossum's Universal Robots) A Fantastic Melodrama in Three Acts and an Epilogue",
+      "language": "en",
+      "subjects": "Robots -- Drama; Science fiction plays; Czech drama -- Translations into English",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/59112/pg59112.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2246,
+      "title": "All's Well That Ends Well",
+      "language": "en",
+      "subjects": "Comedy plays; Married women -- Drama; Runaway husbands -- Drama; Florence (Italy) -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2246/pg2246.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1508,
+      "title": "The Taming of the Shrew",
+      "language": "en",
+      "subjects": "Comedy plays; Man-woman relationships -- Drama; Married people -- Drama; Sex role -- Drama; Padua (Italy) -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1508/pg1508.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35837,
+      "title": "Joan of Arc: A Play in Five Acts",
+      "language": "en",
+      "subjects": "Joan, of Arc, Saint, 1412-1431 -- Drama",
+      "bookshelves": "Category: Historical Novels; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/35837/pg35837.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 30488,
+      "title": "The Green Helmet and Other Poems",
+      "language": "en",
+      "subjects": "English poetry -- Irish authors",
+      "bookshelves": "Category: Poetry; Category: Plays/Films/Dramas; Category: Mythology, Legends & Folklore; Category: British Literature; Nobel Prizes in Literature",
+      "url": "https://www.gutenberg.org/cache/epub/30488/pg30488.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8500,
+      "title": "Plays: Comrades; Facing Death; Pariah; Easter",
+      "language": "en",
+      "subjects": "Drama; Strindberg, August, 1849-1912 -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/8500/pg8500.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 62602,
+      "title": "Shakspeare and His Times",
+      "language": "en",
+      "subjects": "Shakespeare, William, 1564-1616; Dramatists, English -- Early modern, 1500-1700 -- Biography; Stratford-upon-Avon (England) -- Biography; Shakespeare, William, 1564-1616 -- Stage history -- France",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: History - British",
+      "url": "https://www.gutenberg.org/cache/epub/62602/pg62602.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 74002,
+      "title": "The cinnamon heart",
+      "language": "en",
+      "subjects": "American drama -- 19th century; Farces; Musicals -- Librettos",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/74002/pg74002.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 40653,
+      "title": "A Will and No Will; or, A Bone for the Lawyers. (1746) The New Play Criticiz'd, or the Plague of Envy. (1747)",
+      "language": "en",
+      "subjects": "English drama -- 18th century",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/40653/pg40653.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 53895,
+      "title": "Christmas at McCarthy's",
+      "language": "en",
+      "subjects": "Drama; Christmas plays",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/53895/pg53895.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 28511,
+      "title": "The Tree That Saved Connecticut",
+      "language": "en",
+      "subjects": "Radio plays; Charter Oak (Hartford, Conn.)",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: History - American",
+      "url": "https://www.gutenberg.org/cache/epub/28511/pg28511.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 53117,
+      "title": "Motion Picture Directing: The Facts and Theories of the Newest Art",
+      "language": "en",
+      "subjects": "Motion pictures -- Production and direction",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Art",
+      "url": "https://www.gutenberg.org/cache/epub/53117/pg53117.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 901,
+      "title": "The Jew of Malta",
+      "language": "en",
+      "subjects": "Tragedies (Drama); Jews -- Malta -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/901/pg901.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15957,
+      "title": "Punch, or the London Charivari, Volume 103, November 19, 1892",
+      "language": "en",
+      "subjects": "English wit and humor -- Periodicals",
+      "bookshelves": "Punch; Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/15957/pg15957.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 37431,
+      "title": "Pride and Prejudice, a play founded on Jane Austen's novel",
+      "language": "en",
+      "subjects": "England -- Drama; Courtship -- Drama; Young women -- Drama; Social classes -- Drama; Domestic drama; Sisters -- Drama; Bennet, Elizabeth (Fictitious character) -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/37431/pg37431.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1526,
+      "title": "Twelfth Night",
+      "language": "en",
+      "subjects": "Comedy plays; Mistaken identity -- Drama; Twins -- Drama; Siblings -- Drama; Shipwreck survival -- Drama; Illyria -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1526/pg1526.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1130,
+      "title": "Antony and Cleopatra",
+      "language": "en",
+      "subjects": "Generals -- Rome -- Drama; Queens -- Egypt -- Drama; Antonius, Marcus, 83 B.C.?-30 B.C. -- Drama; Cleopatra, Queen of Egypt, -30 B.C. -- Drama; Tragedies (Drama); Romans -- Egypt -- Drama; Egypt -- History -- 332-30 B.C. -- Drama; Rome -- History -- Civil War, 43-31 B.C. -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1130/pg1130.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 71187,
+      "title": "Three plays by Frederic Hebbel",
+      "language": "en",
+      "subjects": "German drama -- Translations into English; Hebbel, Friedrich, 1813-1863 -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: German Literature",
+      "url": "https://www.gutenberg.org/cache/epub/71187/pg71187.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 14040,
+      "title": "Household Gods: A Comedy",
+      "language": "en",
+      "subjects": "English drama",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/14040/pg14040.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 16916,
+      "title": "The Fatal Jealousie (1673)",
+      "language": "en",
+      "subjects": "English drama",
+      "bookshelves": "Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/16916/pg16916.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 63198,
+      "title": "Lords of Creation: Woman Suffrage Drama in Three Acts",
+      "language": "en",
+      "subjects": "Women -- Social conditions -- Drama; Women -- Suffrage -- United States -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: American Literature; Category: Gender & Sexuality Studies",
+      "url": "https://www.gutenberg.org/cache/epub/63198/pg63198.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 16456,
+      "title": "The works of John Dryden, now first collected in eighteen volumes. Volume 06",
+      "language": "en",
+      "subjects": "English literature",
+      "bookshelves": "Category: Poetry; Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/16456/pg16456.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35000,
+      "title": "The Mad Lover, a Tragi-Comedy The Works of Francis Beaumont and John Fletcher (3 of 10)",
+      "language": "en",
+      "subjects": "English drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/35000/pg35000.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 36195,
+      "title": "Dr. Hardhack's Prescription: A Play for Children in Four Acts",
+      "language": "en",
+      "subjects": "Children's plays; American drama",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/36195/pg36195.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 70566,
+      "title": "The collected works of Henrik Ibsen, Vol. 07 (of 11)",
+      "language": "en",
+      "subjects": "Norwegian drama -- Translations into English; Ibsen, Henrik, 1828-1906 -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/70566/pg70566.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 14389,
+      "title": "Punch, Or The London Charivari, Volume 102, March 26, 1892",
+      "language": "en",
+      "subjects": "English wit and humor -- Periodicals",
+      "bookshelves": "Punch; Category: Poetry; Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/14389/pg14389.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1779,
+      "title": "The Merchant of Venice",
+      "language": "en",
+      "subjects": "Comedy plays; Jews -- Italy -- Drama; Moneylenders -- Drama; Venice (Italy) -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1779/pg1779.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 70577,
+      "title": "The collected works of Henrik Ibsen, Vol. 08 (of 11)",
+      "language": "en",
+      "subjects": "Norwegian drama -- Translations into English; Ibsen, Henrik, 1828-1906 -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/70577/pg70577.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15629,
+      "title": "The southern cross",
+      "language": "en",
+      "subjects": "American drama -- 20th century; United States -- History -- Civil War, 1861-1865 -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: History - American",
+      "url": "https://www.gutenberg.org/cache/epub/15629/pg15629.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1244,
+      "title": "Love for Love: A Comedy",
+      "language": "en",
+      "subjects": "English drama (Comedy); Comedy plays",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1244/pg1244.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8499,
+      "title": "Plays: the Father; Countess Julie; the Outlaw; the Stronger",
+      "language": "en",
+      "subjects": "Drama; Strindberg, August, 1849-1912 -- Translations into English",
+      "bookshelves": "One Act Plays; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/8499/pg8499.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35713,
+      "title": "Punch, or the London Charivari, Volume 105, July 29th 1893",
+      "language": "en",
+      "subjects": "English wit and humor -- Periodicals",
+      "bookshelves": "Punch; Category: Poetry; Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/35713/pg35713.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 6587,
+      "title": "King Arthur's Socks and Other Village Plays",
+      "language": "en",
+      "subjects": "Drama",
+      "bookshelves": "One Act Plays; Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/6587/pg6587.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 59279,
+      "title": "Index of the Project Gutenberg Works of Alfred Lord Tennyson",
+      "language": "en",
+      "subjects": "Indexes",
+      "bookshelves": "Category: Poetry; Category: Plays/Films/Dramas; Category: British Literature; Category: Encyclopedias/Dictionaries/Reference",
+      "url": "https://www.gutenberg.org/cache/epub/59279/pg59279.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27265,
+      "title": "The Wagnerian Romances",
+      "language": "en",
+      "subjects": "Operas -- Stories, plots, etc.; Wagner, Richard, 1813-1883",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Mythology, Legends & Folklore; Category: Music",
+      "url": "https://www.gutenberg.org/cache/epub/27265/pg27265.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 3418,
+      "title": "Captain Brassbound's Conversion",
+      "language": "en",
+      "subjects": "English drama (Comedy); Man-woman relationships -- Drama; Revenge -- Drama; Pirates -- Drama; British -- Morocco -- Drama; Self-actualization (Psychology) -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: British Literature; Nobel Prizes in Literature",
+      "url": "https://www.gutenberg.org/cache/epub/3418/pg3418.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27201,
+      "title": "Woman on Her Own, False Gods and The Red Robe Three Plays By Brieux",
+      "language": "en",
+      "subjects": "French drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: French Literature; Category: Gender & Sexuality Studies",
+      "url": "https://www.gutenberg.org/cache/epub/27201/pg27201.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 55933,
+      "title": "Peggy Finds the Theatre",
+      "language": "en",
+      "subjects": "New York (N.Y.) -- Juvenile fiction; Mystery and detective stories; First loves -- Juvenile fiction; Actresses -- Juvenile fiction; Actresses -- United States -- Juvenile fiction; Lane, Peggy (Fictitious character) -- Juvenile fiction; Women dramatists -- Juvenile fiction; Women in the theater -- United States -- Juvenile fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/55933/pg55933.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 37967,
+      "title": "More Portmanteau Plays",
+      "language": "en",
+      "subjects": "American drama -- 20th century",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/37967/pg37967.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 5089,
+      "title": "Boris Godunov: a drama in verse",
+      "language": "en",
+      "subjects": "Godunov, Boris Fyodorovich, Czar of Russia, 1551 or 2-1605 -- Drama",
+      "bookshelves": "Opera; Category: Plays/Films/Dramas; Category: Russian Literature",
+      "url": "https://www.gutenberg.org/cache/epub/5089/pg5089.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 78266,
+      "title": "It's time something happened",
+      "language": "en",
+      "subjects": "Comedy plays; American drama -- 20th century; Triangles (Interpersonal relations) -- Drama",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/78266/pg78266.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 34357,
+      "title": "Honor: A Play in Four Acts",
+      "language": "en",
+      "subjects": "German drama -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: German Literature",
+      "url": "https://www.gutenberg.org/cache/epub/34357/pg34357.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 20264,
+      "title": "Parsifal: Story and Analysis of Wagner's Great Opera",
+      "language": "en",
+      "subjects": "Operas -- Stories, plots, etc.; Wagner, Richard, 1813-1883. Parsifal; Perceval (Legendary character) -- Drama",
+      "bookshelves": "Opera; Category: Plays/Films/Dramas; Category: Music; Category: Philosophy & Ethics; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/20264/pg20264.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 43668,
+      "title": "The Scottish History of James the Fourth 1598",
+      "language": "en",
+      "subjects": "Historical drama; James IV, King of Scotland, 1473-1513 -- Drama; Scotland -- History -- James IV, 1488-1513 -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: History - British",
+      "url": "https://www.gutenberg.org/cache/epub/43668/pg43668.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 3304,
+      "title": "The Machine",
+      "language": "en",
+      "subjects": "American drama -- 20th century; New York (N.Y.) -- Drama; Socialists -- Drama; Political corruption -- Drama; Tammany Hall -- Drama",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/3304/pg3304.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 53425,
+      "title": "The Dearest Things in Boots",
+      "language": "en",
+      "subjects": "Shoe stores -- Drama; Sales personnel -- Drama",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/53425/pg53425.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 30643,
+      "title": "The Works of Robert Louis Stevenson - Swanston Edition, Vol. 15",
+      "language": "en",
+      "subjects": "English literature -- 19th century",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/30643/pg30643.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2269,
+      "title": "Cymbeline",
+      "language": "en",
+      "subjects": "Fathers and daughters -- Drama; Married people -- Drama; Great Britain -- History -- Roman period, 55 B.C.-449 A.D. -- Drama; Britons -- Kings and rulers -- Drama; Tragicomedy",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2269/pg2269.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1770,
+      "title": "King Edward III",
+      "language": "en",
+      "subjects": "Edward III, King of England, 1312-1377 -- Drama",
+      "bookshelves": "Category: Historical Novels; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1770/pg1770.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 14544,
+      "title": "Punch, or the London Charivari, Volume 102, April 30, 1892",
+      "language": "en",
+      "subjects": "English wit and humor -- Periodicals",
+      "bookshelves": "Punch; Category: Poetry; Category: Humour; Category: Plays/Films/Dramas; Category: British Literature; Category: Journals",
+      "url": "https://www.gutenberg.org/cache/epub/14544/pg14544.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35699,
+      "title": "Fontainbleau; a comic opera. In three acts",
+      "language": "en",
+      "subjects": "Operas -- Librettos",
+      "bookshelves": "Opera; Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/35699/pg35699.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 45090,
+      "title": "Punch, or the London Charivari, Volume 108, February 23, 1895",
+      "language": "en",
+      "subjects": "English wit and humor -- Periodicals",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/45090/pg45090.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65299,
+      "title": "Kalevan uhri: Näytelmä 4:ssä näytöksessä",
+      "language": "en",
+      "subjects": "Finnish drama -- 20th century",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/65299/pg65299.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 45375,
+      "title": "Plays by August Strindberg, First Series",
+      "language": "en",
+      "subjects": "Strindberg, August, 1849-1912 -- Translations into English; Swedish drama -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/45375/pg45375.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8772,
+      "title": "The Learned Women",
+      "language": "en",
+      "subjects": "Comedy plays; Molière, 1622-1673 -- Translations into English",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: French Literature",
+      "url": "https://www.gutenberg.org/cache/epub/8772/pg8772.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 78736,
+      "title": "Dethronements",
+      "language": "en",
+      "subjects": "Parnell, Charles Stewart, 1846-1891 -- Drama; Chamberlain, Joseph, 1836-1914 -- Drama; Wilson, Woodrow, 1856-1924 -- Drama",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/78736/pg78736.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51685,
+      "title": "Humanistic Studies of the University of Kansas, Vol. 1",
+      "language": "en",
+      "subjects": "Humanities",
+      "bookshelves": "Category: Plays/Films/Dramas; Category: Essays, Letters & Speeches; Category: British Literature; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/51685/pg51685.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 58114,
+      "title": "What will they say at Brompton? A Comedetta, in One Act.",
+      "language": "en",
+      "subjects": "Comedy plays; English drama -- 19th century",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/58114/pg58114.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65912,
+      "title": "\"Swat the Fly!\": A One-Act Fantasy",
+      "language": "en",
+      "subjects": "American drama -- 20th century; Flies as carriers of disease",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/65912/pg65912.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1781,
+      "title": "The Merry Wives of Windsor",
+      "language": "en",
+      "subjects": "Comedy plays; Falstaff, John, Sir (Fictitious character) -- Drama; Married women -- Drama; Windsor (Windsor and Maidenhead, England) -- Drama",
+      "bookshelves": "Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1781/pg1781.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 69720,
+      "title": "Moll Davis: a comedy",
+      "language": "en",
+      "subjects": "Historical fiction; Great Britain -- History -- Charles II, 1660-1685 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: Humour; Category: Plays/Films/Dramas; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/69720/pg69720.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2252,
+      "title": "King Henry IV, Part 2",
+      "language": "en",
+      "subjects": "Henry IV, King of England, 1367-1413 -- Drama; Historical drama; Great Britain -- History -- Henry IV, 1399-1413 -- Drama",
+      "bookshelves": "Category: Romance; Category: Humour; Category: Plays/Films/Dramas; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2252/pg2252.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 10015,
+      "title": "Punchinello, Volume 1, No. 19, August 6, 1870",
+      "language": "en",
+      "subjects": "American wit and humor -- Periodicals",
+      "bookshelves": "Punchinello; Category: Humour; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/10015/pg10015.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 20172,
+      "title": "The Flutter of the Goldleaf, and Other Plays",
+      "language": "en",
+      "subjects": "American drama -- 20th century",
+      "bookshelves": "One Act Plays; Category: Plays/Films/Dramas",
+      "url": "https://www.gutenberg.org/cache/epub/20172/pg20172.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 42024,
+      "title": "A cup of sweets, that can never cloy: or, delightful tales for good children",
+      "language": "en",
+      "subjects": "Conduct of life -- Juvenile fiction; Children's stories; Children -- Conduct of life -- Juvenile fiction",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading",
+      "url": "https://www.gutenberg.org/cache/epub/42024/pg42024.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24399,
+      "title": "Criminal Negligence",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Prisons -- Fiction",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy",
+      "url": "https://www.gutenberg.org/cache/epub/24399/pg24399.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 11334,
+      "title": "Wilson's Tales of the Borders and of Scotland, Volume 22",
+      "language": "en",
+      "subjects": "Scottish Borders (Scotland) -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Historical Novels; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/11334/pg11334.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29936,
+      "title": "Flamedown",
+      "language": "en",
+      "subjects": "Science fiction; Short stories",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy; Category: Humour",
+      "url": "https://www.gutenberg.org/cache/epub/29936/pg29936.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 79188,
+      "title": "Pirates from Piperock",
+      "language": "en",
+      "subjects": "Short stories; Western stories; Harper, Ike (Fictitious character) -- Fiction",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/79188/pg79188.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 53123,
+      "title": "The Trouble with Truth",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Christmas stories; Journalism -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/53123/pg53123.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 60545,
+      "title": "The Used People Lot",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Automobiles -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Science-Fiction & Fantasy; Category: Humour",
+      "url": "https://www.gutenberg.org/cache/epub/60545/pg60545.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65726,
+      "title": "Day of the Comet",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Spouses -- Fiction; Comets -- Fiction; Cold War -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/65726/pg65726.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 73987,
+      "title": "Rivals of the clouds",
+      "language": "en",
+      "subjects": "Short stories; Air pilots, Military -- Fiction; World War, 1914-1918 -- Aerial operations -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: History - Modern (1750+); Category: History - Warfare",
+      "url": "https://www.gutenberg.org/cache/epub/73987/pg73987.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 21773,
+      "title": "Four Meetings",
+      "language": "en",
+      "subjects": "Short stories",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/21773/pg21773.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 71197,
+      "title": "The haunter of the ring",
+      "language": "en",
+      "subjects": "Short stories; Horror tales; Revenge -- Fiction; Attempted murder -- Fiction; Demoniac possession -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/71197/pg71197.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 11440,
+      "title": "Tales of Three Hemispheres",
+      "language": "en",
+      "subjects": "Fantasy fiction",
+      "bookshelves": "Fantasy; Category: Short Stories; Category: Science-Fiction & Fantasy",
+      "url": "https://www.gutenberg.org/cache/epub/11440/pg11440.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25740,
+      "title": "Ambush: A Terran Empire vignette",
+      "language": "en",
+      "subjects": "Science fiction; Short stories",
+      "bookshelves": "Category: Short Stories; Category: Science-Fiction & Fantasy",
+      "url": "https://www.gutenberg.org/cache/epub/25740/pg25740.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 38241,
+      "title": "Uncle's Dream; and The Permanent Husband",
+      "language": "en",
+      "subjects": "Russia -- Social life and customs -- 1533-1917 -- Fiction; Princes -- Russia -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Russian Literature",
+      "url": "https://www.gutenberg.org/cache/epub/38241/pg38241.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 13135,
+      "title": "Pardners",
+      "language": "en",
+      "subjects": "Short stories; Western stories; Frontier and pioneer life -- West (U.S.) -- Fiction; West (U.S.) -- Social life and customs -- Fiction",
+      "bookshelves": "Western; Movie Books; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/13135/pg13135.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8597,
+      "title": "A Sportsman's Sketches Works of Ivan Turgenev, Volume I",
+      "language": "en",
+      "subjects": "Russia -- Social life and customs -- Fiction; Country life -- Russia -- Fiction; Peasants -- Russia -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Russian Literature",
+      "url": "https://www.gutenberg.org/cache/epub/8597/pg8597.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 11319,
+      "title": "The Fairy Godmothers and Other Tales",
+      "language": "en",
+      "subjects": "Christian life -- Juvenile fiction; Fairy tales; Conduct of life -- Juvenile fiction; Children -- Conduct of life -- Juvenile fiction",
+      "bookshelves": "Children's Myths, Fairy Tales, etc.; Category: Short Stories; Category: Children & Young Adult Reading; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/11319/pg11319.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 44536,
+      "title": "Georgian Folk Tales",
+      "language": "en",
+      "subjects": "Tales -- Georgia (Republic)",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/44536/pg44536.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 16185,
+      "title": "The Nest in the Honeysuckles, and other Stories",
+      "language": "en",
+      "subjects": "Christian life -- Juvenile fiction; Children's stories; Children -- Conduct of life -- Juvenile fiction",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/16185/pg16185.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 58092,
+      "title": "Round the Sofa; vol. 1",
+      "language": "en",
+      "subjects": "England -- Social life and customs -- 19th century -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/58092/pg58092.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 36665,
+      "title": "R. Caldecott's Picture Book (No. 1)",
+      "language": "en",
+      "subjects": "Nursery rhymes",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading",
+      "url": "https://www.gutenberg.org/cache/epub/36665/pg36665.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65741,
+      "title": "Run, Little Monster!",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Apocalyptic fiction; Psychic ability -- Fiction; Mutation (Biology) -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/65741/pg65741.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51880,
+      "title": "Buddhist birth stories; or, Jataka tales, Volume 1",
+      "language": "en",
+      "subjects": "Jataka stories, English",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/51880/pg51880.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 3444,
+      "title": "The Book of the Thousand Nights and a Night — Volume 10 (of 10)",
+      "language": "en",
+      "subjects": "Fairy tales; Tales -- Arab countries",
+      "bookshelves": "Category: Adventure; Category: Mythology, Legends & Folklore; Category: Classics of Literature",
+      "url": "https://www.gutenberg.org/cache/epub/3444/pg3444.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 76139,
+      "title": "Stories jolly: stories new: stories strange & stories true",
+      "language": "en",
+      "subjects": "Children's stories; Children -- Conduct of life -- Juvenile fiction",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/76139/pg76139.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 73158,
+      "title": "A primal woman",
+      "language": "en",
+      "subjects": "Short stories; Fugitives from justice -- Fiction; Islands of the Pacific -- Fiction; Spouses -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/73158/pg73158.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 72109,
+      "title": "A. L. O. E.'s picture story book.",
+      "language": "en",
+      "subjects": "Children's stories; Picture books for children",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading",
+      "url": "https://www.gutenberg.org/cache/epub/72109/pg72109.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15034,
+      "title": "Stories for the Young; Or, Cheap Repository Tracts Entertaining, Moral, and Religious. Vol. VI.",
+      "language": "en",
+      "subjects": "Christian life -- Juvenile fiction; Conduct of life -- Juvenile fiction",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading; Category: British Literature; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/15034/pg15034.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 67455,
+      "title": "Rebuttal",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Christian life -- Fiction; Physicians -- Fiction; Diseases -- Fiction; Priests -- Fiction; Space travelers -- Fiction; Star of Bethlehem -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Philosophy & Ethics",
+      "url": "https://www.gutenberg.org/cache/epub/67455/pg67455.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 68197,
+      "title": "Blind Time",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Time travel -- Fiction; Factories -- Fiction; Accidents -- Fiction; Insurance adjusters -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/68197/pg68197.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 5276,
+      "title": "Tales and Novels of J. de La Fontaine — Volume 02",
+      "language": "en",
+      "subjects": "French poetry -- Translations into English; Fables, French -- Translations into English",
+      "bookshelves": "Category: Short Stories; Category: Classics of Literature; Category: French Literature",
+      "url": "https://www.gutenberg.org/cache/epub/5276/pg5276.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23216,
+      "title": "Sac-Au-Dos 1907",
+      "language": "en",
+      "subjects": "Short stories",
+      "bookshelves": "Category: Historical Novels; Category: Novels; Category: French Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23216/pg23216.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 79194,
+      "title": "The proof",
+      "language": "en",
+      "subjects": "Short stories; Western stories; Christmas stories",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/79194/pg79194.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 62495,
+      "title": "Portland, Oregon, A.D. 1999, and other sketches",
+      "language": "en",
+      "subjects": "Short stories, American; American fiction -- 20th century; Portland (Or.) -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/62495/pg62495.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 74295,
+      "title": "Strangers to Straba",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Space ships -- Fiction; Life on other planets -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/74295/pg74295.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 3419,
+      "title": "Rebecca Mary",
+      "language": "en",
+      "subjects": "Short stories; United States -- Social life and customs -- 19th century -- Fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/3419/pg3419.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 64141,
+      "title": "Slay-Ride",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Space ships -- Fiction; Space pirates -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/64141/pg64141.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15597,
+      "title": "Stories of American Life and Adventure",
+      "language": "en",
+      "subjects": "Readers -- History; United States -- History -- Juvenile literature",
+      "bookshelves": "Category: Short Stories; Category: Historical Novels; Category: Children & Young Adult Reading; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/15597/pg15597.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 74165,
+      "title": "He who served",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Robots -- Fiction; Theft -- Fiction; Blind -- Fiction; Household employees -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/74165/pg74165.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8176,
+      "title": "Death at the Excelsior, and other stories",
+      "language": "en",
+      "subjects": "Humorous stories, English; Wooster, Bertie (Fictitious character) -- Fiction; Jeeves (Fictitious character) -- Fiction; Valets -- Fiction; Pepper, Reggie (Fictitious character) -- Fiction",
+      "bookshelves": "Humor; Category: Short Stories; Category: Crime, Thrillers and Mystery; Category: Humour; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/8176/pg8176.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 32914,
+      "title": "Tales of South Africa",
+      "language": "en",
+      "subjects": "Short stories; South Africa -- Social life and customs -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/32914/pg32914.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 77941,
+      "title": "The laugh",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Psychological fiction; Boys -- Fiction",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/77941/pg77941.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23165,
+      "title": "The Man Who Stole A Meeting-House 1878, From \"Coupon Bonds\"",
+      "language": "en",
+      "subjects": "Short stories",
+      "bookshelves": "Category: Humour; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23165/pg23165.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1944,
+      "title": "The Witch, and Other Stories",
+      "language": "en",
+      "subjects": "Short stories; Russia -- Social life and customs -- Fiction; Chekhov, Anton Pavlovich, 1860-1904 -- Translations into English",
+      "bookshelves": "Category: Short Stories; Category: Russian Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1944/pg1944.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65220,
+      "title": "The Answer",
+      "language": "en",
+      "subjects": "Short stories; Dreams -- Fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/65220/pg65220.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 63306,
+      "title": "The Arabian Nights, Volume II of IV",
+      "language": "en",
+      "subjects": "Arabs -- Folklore; Tales -- Arab countries; Fairy tales -- Arab countries",
+      "bookshelves": "Category: Short Stories; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/63306/pg63306.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2334,
+      "title": "The Works of Rudyard Kipling: One Volume Edition",
+      "language": "en",
+      "subjects": "English poetry; English fiction; Short stories, English",
+      "bookshelves": "Scouts; Category: Short Stories; Category: Poetry; Category: British Literature; Nobel Prizes in Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2334/pg2334.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 31676,
+      "title": "Heathen Master Filcsik",
+      "language": "en",
+      "subjects": "Hungarian fiction -- Translations into English",
+      "bookshelves": "Category: Short Stories",
+      "url": "https://www.gutenberg.org/cache/epub/31676/pg31676.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 78907,
+      "title": "Crack of doom",
+      "language": "en",
+      "subjects": "Science fiction; Short stories",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/78907/pg78907.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 14241,
+      "title": "More English Fairy Tales",
+      "language": "en",
+      "subjects": "Folklore -- England; Fairy tales -- England",
+      "bookshelves": "Children's Myths, Fairy Tales, etc.; Category: Short Stories; Category: Mythology, Legends & Folklore; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/14241/pg14241.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 61668,
+      "title": "Stories of Intellect",
+      "language": "en",
+      "subjects": "Fiction; Short stories",
+      "bookshelves": "Category: Short Stories; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/61668/pg61668.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 33583,
+      "title": "L'Arrabiata and Other Tales",
+      "language": "en",
+      "subjects": "Fiction; Short stories",
+      "bookshelves": "Category: Short Stories; Category: German Literature; Nobel Prizes in Literature",
+      "url": "https://www.gutenberg.org/cache/epub/33583/pg33583.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 77129,
+      "title": "Dot ... dot ... dash ... dot—\"Fire!\"",
+      "language": "en",
+      "subjects": "Short stories; Camping -- Juvenile fiction; Teenage girls -- Juvenile fiction; Girl Scouts -- Juvenile fiction; Michigan, Lake -- Juvenile fiction",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/77129/pg77129.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 67072,
+      "title": "The Curse of Eve",
+      "language": "en",
+      "subjects": "Short stories; London (England) -- Fiction; Physicians -- Fiction; Medical fiction; Husband and wife -- Fiction; Childbirth -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/67072/pg67072.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27784,
+      "title": "Tales of the Malayan Coast From Penang to the Philippines",
+      "language": "en",
+      "subjects": "Philippines -- Fiction; Malaya -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/27784/pg27784.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2147,
+      "title": "The Works of Edgar Allan Poe — Volume 1",
+      "language": "en",
+      "subjects": "Fantasy fiction; Horror tales, American; American fiction -- 19th century; Poe, Edgar Allan, 1809-1849",
+      "bookshelves": "Detective Fiction; Horror; Mystery Fiction; Category: Short Stories; Category: Poetry; Category: Crime, Thrillers and Mystery; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2147/pg2147.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 13094,
+      "title": "Heart of the West [Annotated]",
+      "language": "en",
+      "subjects": "Short stories, American; American fiction -- 20th century",
+      "bookshelves": "Category: Short Stories; Category: Humour; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/13094/pg13094.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 63718,
+      "title": "Graham's Magazine, Vol. XVIII, No. 5, May 1841",
+      "language": "en",
+      "subjects": "Literature, Modern -- 19th century -- Periodicals; Literature -- Periodicals",
+      "bookshelves": "Category: Short Stories; Category: Poetry; Category: Essays, Letters & Speeches; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/63718/pg63718.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27200,
+      "title": "Fairy Tales of Hans Christian Andersen",
+      "language": "en",
+      "subjects": "Short stories; Fairy tales; Fairy tales -- Denmark; Children's stories, Danish -- Translations into English",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Mythology, Legends & Folklore",
+      "url": "https://www.gutenberg.org/cache/epub/27200/pg27200.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65447,
+      "title": "Woman's World",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Sex role -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy",
+      "url": "https://www.gutenberg.org/cache/epub/65447/pg65447.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 22836,
+      "title": "Town Versus Country",
+      "language": "en",
+      "subjects": "Short stories; England -- Social life and customs -- 19th century -- Fiction; Country life -- England -- Fiction; Pastoral fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/22836/pg22836.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29908,
+      "title": "The Adventurer",
+      "language": "en",
+      "subjects": "Science fiction; Short stories",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/29908/pg29908.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29643,
+      "title": "Death of a Spaceman",
+      "language": "en",
+      "subjects": "Science fiction; Short stories",
+      "bookshelves": "Science Fiction; Category: Short Stories; Category: Science-Fiction & Fantasy; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/29643/pg29643.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 6184,
+      "title": "A Romany of the Snows, vol. 5 Being a Continuation of the Personal Histories of \"Pierre and His People\" and the Last Existing Records of Pretty Pierre",
+      "language": "en",
+      "subjects": "Canada, Northern -- Fiction; Short stories, Canadian",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/6184/pg6184.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2809,
+      "title": "Main-Travelled Roads",
+      "language": "en",
+      "subjects": "Short stories; Western stories; Mississippi River Valley -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2809/pg2809.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 73558,
+      "title": "The thin match",
+      "language": "en",
+      "subjects": "Short stories; Matches -- Fiction; Anthropomorphism in literature",
+      "bookshelves": "Category: Short Stories; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/73558/pg73558.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2591,
+      "title": "Grimms' Fairy Tales",
+      "language": "en",
+      "subjects": "Fairy tales -- Germany",
+      "bookshelves": "Category: Short Stories; Category: Children & Young Adult Reading; Category: Mythology, Legends & Folklore; Category: German Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2591/pg2591.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51232,
+      "title": "Psychotennis, Anyone?",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Sports stories; Psychic ability -- Fiction",
+      "bookshelves": "Science Fiction; Category: Short Stories; Category: Science-Fiction & Fantasy",
+      "url": "https://www.gutenberg.org/cache/epub/51232/pg51232.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4038,
+      "title": "Imaginary Portraits",
+      "language": "en",
+      "subjects": "Short stories, English; Courts and courtiers -- Fiction; Europe -- History -- Fiction",
+      "bookshelves": "Category: Short Stories; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/4038/pg4038.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 65668,
+      "title": "Revolt of the Brains",
+      "language": "en",
+      "subjects": "Science fiction; Short stories; Space flight to the moon -- Fiction; Cold War -- Fiction; Nuclear weapons -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/65668/pg65668.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 40862,
+      "title": "The Flower Girl of The Château d'Eau, v.2 (Novels of Paul de Kock Volume XVI)",
+      "language": "en",
+      "subjects": "French fiction -- Translations into English",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: Novels; Category: French Literature",
+      "url": "https://www.gutenberg.org/cache/epub/40862/pg40862.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 54619,
+      "title": "Farewell Love! A Novel",
+      "language": "en",
+      "subjects": "Italian fiction -- Translations into English",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/54619/pg54619.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 10922,
+      "title": "Young Lives",
+      "language": "en",
+      "subjects": "English fiction -- 19th century",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/10922/pg10922.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 17967,
+      "title": "Navy boys behind the big guns",
+      "language": "en",
+      "subjects": "World War, 1914-1918 -- Naval operations -- Juvenile fiction",
+      "bookshelves": "World War I; Category: Historical Novels; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/17967/pg17967.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 18431,
+      "title": "Other Worlds Their Nature, Possibilities and Habitability in the Light of the Latest Discoveries",
+      "language": "en",
+      "subjects": "Astronomy; Planets",
+      "bookshelves": "Science Fiction; Astronomy; Category: Science - Earth/Agricultural/Farming",
+      "url": "https://www.gutenberg.org/cache/epub/18431/pg18431.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 3368,
+      "title": "A Hazard of New Fortunes — Volume 3",
+      "language": "en",
+      "subjects": "New York (N.Y.) -- Fiction; City and town life -- Fiction; Domestic fiction; Married people -- Fiction; Social classes -- Fiction; Middle-aged persons -- Fiction; Moving, Household -- Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/3368/pg3368.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 67866,
+      "title": "The Wolf-Men: A Tale of Amazing Adventure in the Under-World",
+      "language": "en",
+      "subjects": "Science fiction; Submarines (Ships) -- Fiction; Adventure stories; Subterranean fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/67866/pg67866.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35496,
+      "title": "Settling Day",
+      "language": "en",
+      "subjects": "Australia -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/35496/pg35496.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 17455,
+      "title": "The Poison Tree: A Tale of Hindu Life in Bengal",
+      "language": "en",
+      "subjects": "Triangles (Interpersonal relations) -- Fiction; India -- Social life and customs -- Fiction",
+      "bookshelves": "India; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/17455/pg17455.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 45556,
+      "title": "Pappina, the Little Wanderer: A Story of Southern Italy",
+      "language": "en",
+      "subjects": "Girls -- Juvenile fiction; Italy -- Juvenile fiction",
+      "bookshelves": "Italy; Category: Children & Young Adult Reading; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/45556/pg45556.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1869,
+      "title": "The Man in Lower Ten",
+      "language": "en",
+      "subjects": "Detective and mystery stories; Murder -- Fiction; Railroad travel -- Fiction",
+      "bookshelves": "Bestsellers, American, 1895-1923; Category: Crime, Thrillers and Mystery; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1869/pg1869.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25493,
+      "title": "A Cathedral Courtship",
+      "language": "en",
+      "subjects": "Courtship -- Fiction; Americans -- England -- Fiction; Women travelers -- England -- Fiction",
+      "bookshelves": "Category: Romance; Category: Humour; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/25493/pg25493.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 50091,
+      "title": "Silas Strong, Emperor of the Woods",
+      "language": "en",
+      "subjects": "Adirondack Mountains (N.Y.) -- Fiction; Logging -- Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/50091/pg50091.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 22538,
+      "title": "The Devil's Asteroid",
+      "language": "en",
+      "subjects": "Science fiction",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/22538/pg22538.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 10002,
+      "title": "The House on the Borderland",
+      "language": "en",
+      "subjects": "Science fiction",
+      "bookshelves": "Science Fiction; Fantasy; Horror; Category: Science-Fiction & Fantasy; Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/10002/pg10002.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1401,
+      "title": "Tarzan the Untamed",
+      "language": "en",
+      "subjects": "Tarzan (Fictitious character) -- Fiction; Fantasy fiction; Adventure stories",
+      "bookshelves": "Adventure; Movie Books; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/1401/pg1401.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 55832,
+      "title": "Richard Judkins' Wooing: A Tale of Virginia in the Revolution",
+      "language": "en",
+      "subjects": "Historical fiction; Virginia -- History -- Revolution, 1775-1783 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels; Category: American Literature; Category: History - American; Category: History - Modern (1750+); Category: History - Warfare",
+      "url": "https://www.gutenberg.org/cache/epub/55832/pg55832.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 50596,
+      "title": "Quinneys'",
+      "language": "en",
+      "subjects": "Antique dealers -- Fiction; English fiction -- 20th century",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/50596/pg50596.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 64505,
+      "title": "Give Back a World",
+      "language": "en",
+      "subjects": "Science fiction; Adventure stories; Mercury (Planet) -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/64505/pg64505.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 49188,
+      "title": "Daisy Herself",
+      "language": "en",
+      "subjects": "Canada -- Social life and customs -- Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/49188/pg49188.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8686,
+      "title": "The Delicious Vice",
+      "language": "en",
+      "subjects": "Books and reading; Fiction -- History and criticism",
+      "bookshelves": "Category: Essays, Letters & Speeches",
+      "url": "https://www.gutenberg.org/cache/epub/8686/pg8686.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 20710,
+      "title": "Pluck on the Long Trail; Or, Boy Scouts in the Rockies",
+      "language": "en",
+      "subjects": "Hiking -- Juvenile fiction; Rocky Mountains -- Juvenile fiction; Boy Scouts of America -- Juvenile fiction",
+      "bookshelves": "Children's Book Series; Category: Children & Young Adult Reading; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/20710/pg20710.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25778,
+      "title": "Polly's Business Venture",
+      "language": "en",
+      "subjects": "New York (N.Y.) -- Juvenile fiction; Adventure and adventurers -- Juvenile fiction; Girls -- Juvenile fiction",
+      "bookshelves": "Children's Book Series; Category: Romance; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/25778/pg25778.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 70249,
+      "title": "Uncle Jo's Old Coat",
+      "language": "en",
+      "subjects": "Children -- Conduct of life -- Juvenile fiction; Cousins -- Juvenile fiction; Families -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/70249/pg70249.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 75562,
+      "title": "The Assassination Bureau, Ltd.",
+      "language": "en",
+      "subjects": "Detective and mystery stories; Assassination -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/75562/pg75562.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 42183,
+      "title": "Queen of the Black Coast",
+      "language": "en",
+      "subjects": "Fantasy fiction, American; Conan (Fictitious character) -- Fiction",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/42183/pg42183.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 57271,
+      "title": "What Outfit, Buddy?",
+      "language": "en",
+      "subjects": "World War, 1914-1918 -- Fiction; Soldiers -- Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature; Category: History - Modern (1750+); Category: History - Warfare",
+      "url": "https://www.gutenberg.org/cache/epub/57271/pg57271.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 72908,
+      "title": "The cardinal's musketeer",
+      "language": "en",
+      "subjects": "Historical fiction; France -- History -- Louis XIII, 1610-1643 -- Fiction; Richelieu, Armand Jean du Plessis, duc de, 1585-1642 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/72908/pg72908.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51184,
+      "title": "Inside Earth",
+      "language": "en",
+      "subjects": "Science fiction; Spy stories; Revolutionaries -- Fiction",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/51184/pg51184.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2425,
+      "title": "A Bundle of Letters",
+      "language": "en",
+      "subjects": "Epistolary fiction; Paris (France) -- Fiction; Imaginary letters; Boardinghouses -- Fiction",
+      "bookshelves": "Category: Novels; Category: Essays, Letters & Speeches; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2425/pg2425.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35787,
+      "title": "Plain Mary Smith: A Romance of Red Saunders",
+      "language": "en",
+      "subjects": "Fiction; Humorous stories",
+      "bookshelves": "Category: Romance; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/35787/pg35787.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 8165,
+      "title": "The Geste of Duke Jocelyn",
+      "language": "en",
+      "subjects": "Knights and knighthood -- Fiction; Love stories; Adventure stories",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/8165/pg8165.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 16855,
+      "title": "The Land of Mystery",
+      "language": "en",
+      "subjects": "Conduct of life -- Juvenile fiction; Adventure stories; Voyages and travels -- Juvenile fiction; Explorers -- Juvenile fiction; Xingu River (Brazil) -- Juvenile fiction",
+      "bookshelves": "Children's Fiction; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/16855/pg16855.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 55696,
+      "title": "Rose of the World",
+      "language": "en",
+      "subjects": "English fiction",
+      "bookshelves": "Category: Romance; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/55696/pg55696.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 77349,
+      "title": "Gwendoline",
+      "language": "en",
+      "subjects": "Christian life -- Juvenile fiction; Adoptees -- Juvenile fiction; England -- Juvenile fiction; Young women -- Conduct of life -- Juvenile fiction; Wills -- Juvenile fiction",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/77349/pg77349.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 63759,
+      "title": "The Brain Sinner",
+      "language": "en",
+      "subjects": "Science fiction; Human-alien encounters -- Fiction; Telepathy -- Fiction; Psychic ability -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/63759/pg63759.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 12725,
+      "title": "The Vale of Cedars; Or, The Martyr",
+      "language": "en",
+      "subjects": "Historical fiction; Inquisition -- Fiction; Spain -- History -- Ferdinand and Isabella, 1479-1516 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Romance; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/12725/pg12725.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29113,
+      "title": "The Trail of a Sourdough Life in Alaska",
+      "language": "en",
+      "subjects": "Alaska -- Fiction",
+      "bookshelves": "Category: Adventure; Category: History - American; Category: History - Modern (1750+)",
+      "url": "https://www.gutenberg.org/cache/epub/29113/pg29113.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2857,
+      "title": "A Yellow God: An Idol of Africa",
+      "language": "en",
+      "subjects": "Africa -- Fiction",
+      "bookshelves": "Africa; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/2857/pg2857.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51928,
+      "title": "The Dark Fleece",
+      "language": "en",
+      "subjects": "New England -- Fiction; Married people -- Fiction; Man-woman relationships -- Fiction; Gold mines and mining -- Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/51928/pg51928.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7758,
+      "title": "Falkland, Book 2.",
+      "language": "en",
+      "subjects": "Fiction",
+      "bookshelves": "Category: Romance; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/7758/pg7758.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 34927,
+      "title": "The Ranch Girls and Their Great Adventure",
+      "language": "en",
+      "subjects": "Family -- Fiction; Love stories; Friendship -- Juvenile fiction; Sisters -- Juvenile fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: British Literature; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/34927/pg34927.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 64123,
+      "title": "Frank Merriwell's Own Company; Or, Barnstorming in the Middle West",
+      "language": "en",
+      "subjects": "Young men -- Conduct of life -- Juvenile fiction; Adventure stories; Revenge -- Juvenile fiction; Dime novels; Middle West -- Juvenile fiction; Sabotage -- Juvenile fiction; Merriwell, Frank (Fictitious character) -- Juvenile fiction; Magicians -- Juvenile fiction; Theatrical companies -- Juvenile fiction",
+      "bookshelves": "Category: Humour; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/64123/pg64123.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 69935,
+      "title": "The Safety First Club",
+      "language": "en",
+      "subjects": "Boys -- Conduct of life -- Juvenile fiction; Boys -- Societies and clubs -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/69935/pg69935.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7695,
+      "title": "A Strange Story — Volume 04",
+      "language": "en",
+      "subjects": "English fiction -- 19th century",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/7695/pg7695.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 79073,
+      "title": "The last September",
+      "language": "en",
+      "subjects": "Young women -- Fiction; Bildungsromans; Guardian and ward -- Fiction; Country life -- Fiction; Conflict of generations -- Fiction; British -- Ireland -- Fiction; Cork (Ireland: County) -- Fiction",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/79073/pg79073.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 62479,
+      "title": "Buffalo Bill entrapped",
+      "language": "en",
+      "subjects": "Dime novels; Buffalo Bill, 1846-1917 -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/62479/pg62479.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29880,
+      "title": "The Crimson Tide: A Novel",
+      "language": "en",
+      "subjects": "Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/29880/pg29880.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 40262,
+      "title": "Frank Merriwell's Triumph; Or, The Disappearance of Felicia",
+      "language": "en",
+      "subjects": "Western stories; Adventure stories; Arizona -- Juvenile fiction; Mines and mineral resources -- Juvenile fiction; Merriwell, Frank (Fictitious character) -- Juvenile fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/40262/pg40262.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29207,
+      "title": "Cleo The Magnificent; Or, The Muse of the Real: A Novel",
+      "language": "en",
+      "subjects": "Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/29207/pg29207.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 71981,
+      "title": "The doctor, &c., vol. 4 (of 7)",
+      "language": "en",
+      "subjects": "English literature -- 19th century",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/71981/pg71981.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25472,
+      "title": "Blackbeard: Buccaneer",
+      "language": "en",
+      "subjects": "Pirates -- Juvenile fiction",
+      "bookshelves": "Pirates, Buccaneers, Corsairs, etc.; Category: Historical Novels; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25472/pg25472.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4400,
+      "title": "Hira Singh : when India came to fight in Flanders",
+      "language": "en",
+      "subjects": "World War, 1914-1918 -- Fiction",
+      "bookshelves": "World War I; Adventure; Category: Historical Novels; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/4400/pg4400.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 34322,
+      "title": "The Moghul",
+      "language": "en",
+      "subjects": "Historical fiction; East India Company -- Fiction; India -- History -- 1526-1765 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/34322/pg34322.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 19928,
+      "title": "Sunset Pass; or, Running the Gauntlet Through Apache Land",
+      "language": "en",
+      "subjects": "Western stories; Adventure stories; Frontier and pioneer life -- West (U.S.) -- Fiction; Apache Indians -- Fiction",
+      "bookshelves": "Western; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/19928/pg19928.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 42044,
+      "title": "Salem Chapel, v. 2/2",
+      "language": "en",
+      "subjects": "Clergy -- England -- Fiction; Religious fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/42044/pg42044.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23771,
+      "title": "The Hoosier School-boy",
+      "language": "en",
+      "subjects": "Teachers -- Fiction; Indiana -- Fiction; Country life -- Fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23771/pg23771.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 69791,
+      "title": "The testing of Janice Day",
+      "language": "en",
+      "subjects": "Bildungsromans; Automobiles -- Juvenile fiction; Fathers and daughters -- Juvenile fiction; Families -- Juvenile fiction; Young women -- Social life and customs -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/69791/pg69791.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26175,
+      "title": "A Successful Shadow; Or, A Detective's Successful Quest",
+      "language": "en",
+      "subjects": "Detective and mystery stories",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26175/pg26175.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 71132,
+      "title": "A quiet valley",
+      "language": "en",
+      "subjects": "Christian life -- Juvenile fiction; Adoptees -- Juvenile fiction; Families -- Juvenile fiction; Railroad accidents -- Juvenile fiction; Accident victims -- Juvenile fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/71132/pg71132.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 56230,
+      "title": "The Amethyst Cross",
+      "language": "en",
+      "subjects": "England -- Fiction; Jewelry theft -- Fiction; Mystery fiction; Identity -- Fiction",
+      "bookshelves": "Category: Romance; Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/56230/pg56230.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 16288,
+      "title": "Oddsfish!",
+      "language": "en",
+      "subjects": "Charles II, King of England, 1630-1685 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/16288/pg16288.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 54093,
+      "title": "A Valiant Ignorance; vol. 1 of 3 A Novel in Three Volumes",
+      "language": "en",
+      "subjects": "Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/54093/pg54093.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 81,
+      "title": "The Return of Tarzan",
+      "language": "en",
+      "subjects": "Tarzan (Fictitious character) -- Fiction; Fantasy fiction; Adventure stories",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/81/pg81.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 54825,
+      "title": "Junior High School Literature, Book 1",
+      "language": "en",
+      "subjects": "English literature; Readers; American literature",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Poetry; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/54825/pg54825.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 38934,
+      "title": "The Camp Fire Girls' Larks and Pranks; Or, The House of the Open Door",
+      "language": "en",
+      "subjects": "Friendship -- Juvenile fiction; Camp Fire Girls -- Juvenile fiction; Clubs -- Juvenile fiction; Teasing -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/38934/pg38934.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 70559,
+      "title": "Survival of the fittest",
+      "language": "en",
+      "subjects": "Science fiction; War stories; Man-woman relationships -- Fiction; Androids -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/70559/pg70559.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 48531,
+      "title": "The Romaunce of the Sowdone of Babylone and of Ferumbras His Sone Who Conquerede Rome",
+      "language": "en",
+      "subjects": "Romances, English; English poetry -- Middle English, 1100-1500; Charlemagne, Emperor, 742-814 -- Romances",
+      "bookshelves": "Early English Text Society; Category: Historical Novels; Category: Poetry; Category: Adventure; Category: Mythology, Legends & Folklore; Category: Classics of Literature; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/48531/pg48531.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27965,
+      "title": "The Chestermarke Instinct",
+      "language": "en",
+      "subjects": "Detective and mystery stories",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/27965/pg27965.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 30586,
+      "title": "The Exploits of Juve Being the Second of the Series of the \"Fantômas\" Detective Tales",
+      "language": "en",
+      "subjects": "Detective and mystery stories; Fantômas (Fictitious character) -- Fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels; Category: French Literature",
+      "url": "https://www.gutenberg.org/cache/epub/30586/pg30586.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 42167,
+      "title": "The Pit Town Coronet: A Family Mystery, Volume 1 (of 3)",
+      "language": "en",
+      "subjects": "England -- Juvenile fiction; Families -- Juvenile fiction",
+      "bookshelves": "Category: Romance; Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/42167/pg42167.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 75157,
+      "title": "The Bishop murder case",
+      "language": "en",
+      "subjects": "Detective and mystery stories; Murder -- Investigation -- Fiction; Vance, Philo (Fictitious character) -- Fiction; Private investigators -- New York (State) -- New York -- Fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/75157/pg75157.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 44888,
+      "title": "The Diary of a Freshman",
+      "language": "en",
+      "subjects": "Harvard University -- Fiction; College stories",
+      "bookshelves": "Category: Humour; Category: Novels; Category: American Literature; Category: History - Schools & Universities",
+      "url": "https://www.gutenberg.org/cache/epub/44888/pg44888.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35857,
+      "title": "The Motor Maids by Rose, Shamrock and Thistle",
+      "language": "en",
+      "subjects": "Voyages and travels -- Juvenile fiction; Automobile travel -- Juvenile fiction; England -- Description and travel -- Juvenile fiction; Ireland -- Description and travel -- Juvenile fiction; Scotland -- Description and travel -- Juvenile fiction",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/35857/pg35857.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 993,
+      "title": "Malbone: An Oldport Romance",
+      "language": "en",
+      "subjects": "Newport (R.I.) -- Fiction",
+      "bookshelves": "Category: Romance; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/993/pg993.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 13314,
+      "title": "Barford Abbey, a Novel: In a Series of Letters",
+      "language": "en",
+      "subjects": "Gothic fiction; Epistolary fiction, English -- 18th century",
+      "bookshelves": "Category: Novels; Category: Essays, Letters & Speeches; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/13314/pg13314.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 2180,
+      "title": "In a Hollow of the Hills",
+      "language": "en",
+      "subjects": "Western stories; American fiction -- 19th century; California -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/2180/pg2180.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 18172,
+      "title": "This World Is Taboo",
+      "language": "en",
+      "subjects": "Science fiction; Life on other planets -- Fiction; Space medicine -- Fiction; Quarantine -- Fiction",
+      "bookshelves": "Science Fiction; Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/18172/pg18172.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 37775,
+      "title": "Etidorhpa; or, The End of Earth. The Strange History of a Mysterious Being and the Account of a Remarkable Journey",
+      "language": "en",
+      "subjects": "Science fiction; Fantasy fiction; Occultism -- Fiction; Earth (Planet) -- Internal structure -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/37775/pg37775.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 21236,
+      "title": "The Boy Hunters",
+      "language": "en",
+      "subjects": "Animals -- Juvenile fiction; Indians of North America -- Juvenile fiction; Adventure and adventurers -- Juvenile fiction; Natural history -- Juvenile fiction; West (U.S.) -- Juvenile fiction; Hunting -- Juvenile fiction",
+      "bookshelves": "Children's Fiction; Category: Children & Young Adult Reading; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/21236/pg21236.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 64559,
+      "title": "The Magic Cameo: A Love Story",
+      "language": "en",
+      "subjects": "American fiction -- 19th century",
+      "bookshelves": "Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/64559/pg64559.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 78598,
+      "title": "A fatal silence, vol. 3 (of 3)",
+      "language": "en",
+      "subjects": "English fiction -- 19th century",
+      "bookshelves": "",
+      "url": "https://www.gutenberg.org/cache/epub/78598/pg78598.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15117,
+      "title": "Sea and Shore A Sequel to \"Miriam's Memoirs\"",
+      "language": "en",
+      "subjects": "Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/15117/pg15117.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 5118,
+      "title": "The American Senator",
+      "language": "en",
+      "subjects": "Mate selection -- Fiction; Great Britain -- Social life and customs -- 19th century -- Fiction; Courtship -- Fiction; Political fiction; Americans -- Great Britain -- Fiction; Legislators -- Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/5118/pg5118.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 11913,
+      "title": "Mr. Meeson's Will",
+      "language": "en",
+      "subjects": "Detective and mystery stories",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/11913/pg11913.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 47563,
+      "title": "Jim: The Story of a Backwoods Police Dog",
+      "language": "en",
+      "subjects": "Dogs -- Folklore",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/47563/pg47563.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 67259,
+      "title": "The Big Idea",
+      "language": "en",
+      "subjects": "Coal mines and mining -- Fiction; Young men -- Fiction; Man-woman relationships -- Fiction; Inventions -- Fiction; Factories -- Fiction",
+      "bookshelves": "Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/67259/pg67259.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 30732,
+      "title": "The Son of His Mother",
+      "language": "en",
+      "subjects": "Adopted children -- Fiction",
+      "bookshelves": "Category: Novels; Category: German Literature",
+      "url": "https://www.gutenberg.org/cache/epub/30732/pg30732.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 66533,
+      "title": "Benton's Venture",
+      "language": "en",
+      "subjects": "Adventure stories; New York (State) -- Fiction; Teenage boys -- Fiction; Automobiles -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/66533/pg66533.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23803,
+      "title": "A Border Ruffian 1891",
+      "language": "en",
+      "subjects": "United States -- Social life and customs -- 19th century -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23803/pg23803.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 21206,
+      "title": "The Romany Rye a sequel to \"Lavengro\"",
+      "language": "en",
+      "subjects": "England -- Fiction; Adventure stories; Romanies -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/21206/pg21206.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 18566,
+      "title": "Hawthorne (English Men of Letters Series)",
+      "language": "en",
+      "subjects": "Hawthorne, Nathaniel, 1804-1864; Novelists, American -- 19th century -- Biography",
+      "bookshelves": "Category: Essays, Letters & Speeches; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/18566/pg18566.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 70120,
+      "title": "The Blackguard",
+      "language": "en",
+      "subjects": "Canada -- Fiction; North West Mounted Police (Canada) -- Fiction",
+      "bookshelves": "Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/70120/pg70120.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7664,
+      "title": "What Will He Do with It? — Volume 06",
+      "language": "en",
+      "subjects": "English fiction -- 19th century",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/7664/pg7664.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 36758,
+      "title": "Cynthia Wakeham's Money",
+      "language": "en",
+      "subjects": "Fiction; Detective and mystery stories",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/36758/pg36758.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 24181,
+      "title": "Lorraine: A Romance",
+      "language": "en",
+      "subjects": "Franco-Prussian War, 1870-1871 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Romance",
+      "url": "https://www.gutenberg.org/cache/epub/24181/pg24181.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 85,
+      "title": "The Beasts of Tarzan",
+      "language": "en",
+      "subjects": "Tarzan (Fictitious character) -- Fiction; Fantasy fiction; Jungle animals -- Fiction; Adventure stories",
+      "bookshelves": "Adventure; Movie Books; Category: Science-Fiction & Fantasy; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/85/pg85.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 67900,
+      "title": "In the Dead of Night",
+      "language": "en",
+      "subjects": "New York (N.Y.) -- Fiction; Mystery fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/67900/pg67900.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26135,
+      "title": "Love at Paddington",
+      "language": "en",
+      "subjects": "London (England) -- Fiction; Love stories; Social classes -- Fiction",
+      "bookshelves": "Category: Romance; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/26135/pg26135.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 75240,
+      "title": "Suspense",
+      "language": "en",
+      "subjects": "Detective and mystery stories; Young women -- Fiction; Paid companions (Household employees) -- Fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/75240/pg75240.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 62964,
+      "title": "The Peacock Feather: A Romance",
+      "language": "en",
+      "subjects": "Love stories; England -- Social life and customs -- Fiction; Ex-convicts -- Fiction",
+      "bookshelves": "Category: Romance; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/62964/pg62964.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 4453,
+      "title": "Beauchamp's Career — Volume 1",
+      "language": "en",
+      "subjects": "English fiction -- 19th century",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/4453/pg4453.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 58633,
+      "title": "An Irish Cousin; vol. 1/2",
+      "language": "en",
+      "subjects": "Ireland -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/58633/pg58633.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1183,
+      "title": "The Return of Dr. Fu-Manchu",
+      "language": "en",
+      "subjects": "Criminal investigation -- Fiction; Fu Manchu, Doctor (Fictitious character) -- Fiction; Adventure stories; China -- Fiction; Mystery fiction; Secret societies -- Fiction; Poisoning -- Fiction",
+      "bookshelves": "Crime Fiction; Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1183/pg1183.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 1987,
+      "title": "The Outlet",
+      "language": "en",
+      "subjects": "Fiction; Western stories",
+      "bookshelves": "Western; Category: Historical Novels; Category: Adventure; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/1987/pg1987.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 54010,
+      "title": "The Younger Sister: A Novel, Vol. I.",
+      "language": "en",
+      "subjects": "England -- Fiction; Young women -- Fiction; Motherless families -- Fiction; Love stories; Sisters -- Fiction; Mate selection -- Fiction; Courtship -- Fiction; Children of clergy -- Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/54010/pg54010.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 44631,
+      "title": "The Dare Boys with General Greene",
+      "language": "en",
+      "subjects": "United States -- History -- Revolution, 1775-1783 -- Juvenile fiction",
+      "bookshelves": "Category: Historical Novels; Category: Children & Young Adult Reading; Category: Adventure; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/44631/pg44631.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23036,
+      "title": "Dave Darrin After the Mine Layers; Or, Hitting the Enemy a Hard Naval Blow",
+      "language": "en",
+      "subjects": "United States. Navy -- Juvenile fiction; Mines (Military explosives) -- Juvenile fiction",
+      "bookshelves": "Children's Book Series; Category: Adventure; Category: Novels; Category: History - Warfare",
+      "url": "https://www.gutenberg.org/cache/epub/23036/pg23036.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 56426,
+      "title": "The Mummy! A Tale of the Twenty-Second Century",
+      "language": "en",
+      "subjects": "Science fiction; Feminist fiction; Twenty-second century -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/56426/pg56426.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 73798,
+      "title": "Mystery of the inn by the shore",
+      "language": "en",
+      "subjects": "England -- Social life and customs -- 19th century -- Fiction; Detective and mystery stories; Murder -- Investigation -- Fiction; Theft -- Fiction",
+      "bookshelves": "Category: Romance; Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/73798/pg73798.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 57297,
+      "title": "Veiled Women",
+      "language": "en",
+      "subjects": "British -- Egypt -- Fiction; Egypt -- Fiction; Harems -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/57297/pg57297.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 53196,
+      "title": "Annabel: A Novel for Young Folks",
+      "language": "en",
+      "subjects": "Family -- Juvenile fiction; Mystery and detective stories; Fraud -- Juvenile fiction; Young women -- Social life and customs -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/53196/pg53196.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26369,
+      "title": "Amy Harrison; or, Heavenly Seed and Heavenly Dew",
+      "language": "en",
+      "subjects": "Christian life -- Juvenile fiction; Sisters -- Juvenile fiction; Sunday schools -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/26369/pg26369.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 41854,
+      "title": "Polly the Pagan: Her Lost Love Letters",
+      "language": "en",
+      "subjects": "Young women -- Fiction; Love stories; Epistolary fiction; Diary fiction; Americans -- Europe -- Fiction",
+      "bookshelves": "Category: Romance; Category: Humour; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/41854/pg41854.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 35423,
+      "title": "The Storm Centre: A Novel",
+      "language": "en",
+      "subjects": "United States -- History -- Civil War, 1861-1865 -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/35423/pg35423.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 16787,
+      "title": "Life of Charles Dickens",
+      "language": "en",
+      "subjects": "Dickens, Charles, 1812-1870; Novelists, English -- 19th century -- Biography",
+      "bookshelves": "Category: Biographies; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/16787/pg16787.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 56338,
+      "title": "Ruth's Marriage in Mars: A Scientific Novel",
+      "language": "en",
+      "subjects": "Science fiction; Mars (Planet) -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Romance; Category: Novels; Category: Religion/Spirituality",
+      "url": "https://www.gutenberg.org/cache/epub/56338/pg56338.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7692,
+      "title": "A Strange Story — Volume 01",
+      "language": "en",
+      "subjects": "English fiction -- 19th century",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/7692/pg7692.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 40430,
+      "title": "In the Saddle",
+      "language": "en",
+      "subjects": "United States -- History -- Civil War, 1861-1865 -- Juvenile fiction",
+      "bookshelves": "Category: Historical Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/40430/pg40430.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 34794,
+      "title": "Englefield Grange; or, Mary Armstrong's Troubles",
+      "language": "en",
+      "subjects": "Fiction",
+      "bookshelves": "Category: Romance; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/34794/pg34794.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 29046,
+      "title": "The Heads of Apex",
+      "language": "en",
+      "subjects": "Science fiction",
+      "bookshelves": "Science Fiction; Astounding Stories; Category: Science-Fiction & Fantasy; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/29046/pg29046.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 72428,
+      "title": "Pyramids of snow",
+      "language": "en",
+      "subjects": "English fiction -- 20th century",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/72428/pg72428.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15285,
+      "title": "The Hosts of the Air",
+      "language": "en",
+      "subjects": "World War, 1914-1918 -- Fiction",
+      "bookshelves": "Children's Fiction; Category: Historical Novels; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/15285/pg15285.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 71740,
+      "title": "Three pretty maids",
+      "language": "en",
+      "subjects": "Conduct of life -- Juvenile fiction; Friendship -- Juvenile fiction; Girls -- Juvenile fiction; Sisters -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/71740/pg71740.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7480,
+      "title": "The Created Legend",
+      "language": "en",
+      "subjects": "Russia -- Fiction",
+      "bookshelves": "Category: Novels; Category: Russian Literature",
+      "url": "https://www.gutenberg.org/cache/epub/7480/pg7480.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 26242,
+      "title": "The Bill-Toppers",
+      "language": "en",
+      "subjects": "Vaudeville -- Fiction; Stunt cycling -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/26242/pg26242.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 140,
+      "title": "The Jungle",
+      "language": "en",
+      "subjects": "Meat industry and trade -- Fiction; Working class -- Fiction; Political fiction; Lithuanian Americans -- Fiction; Stockyards -- Fiction; Immigrants -- Fiction; Chicago (Ill.) -- Fiction",
+      "bookshelves": "Contemporary Reviews; Bestsellers, American, 1895-1923; Banned Books from Anne Haight's list; Banned Books List from the American Library Association; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/140/pg140.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 40159,
+      "title": "Manners: A Novel, Vol 2",
+      "language": "en",
+      "subjects": "England -- Social life and customs -- Fiction",
+      "bookshelves": "Category: Romance; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/40159/pg40159.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 25938,
+      "title": "Nancy McVeigh of the Monk Road",
+      "language": "en",
+      "subjects": "Canada -- Fiction; Older women -- Fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/25938/pg25938.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 75125,
+      "title": "Eleanor's victory",
+      "language": "en",
+      "subjects": "Detective and mystery stories; Revenge -- Fiction; Psychological fiction; Young women -- Fiction; Fathers and daughters -- Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/75125/pg75125.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 43210,
+      "title": "The War-Trail Fort: Further Adventures of Thomas Fox and Pitamakan",
+      "language": "en",
+      "subjects": "Indians of North America -- Fiction",
+      "bookshelves": "Category: Historical Novels; Category: Children & Young Adult Reading; Category: Adventure; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/43210/pg43210.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 46993,
+      "title": "Blackwood's Edinburgh Magazine, No. 404, June, 1849",
+      "language": "en",
+      "subjects": "Scotland -- Periodicals; England -- Periodicals",
+      "bookshelves": "Blackwood's Edinburgh Magazine; Category: Novels; Category: British Literature; Category: Journals",
+      "url": "https://www.gutenberg.org/cache/epub/46993/pg46993.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 61558,
+      "title": "Frank Merriwell's Strong Arm; Or, Saving an Enemy",
+      "language": "en",
+      "subjects": "Baseball -- Juvenile fiction; Dime novels; Yale University -- Juvenile fiction; Merriwell, Frank (Fictitious character) -- Juvenile fiction; College seniors -- Juvenile fiction",
+      "bookshelves": "Category: Children & Young Adult Reading; Category: Adventure; Category: Novels; Category: American Literature; Category: Sports/Hobbies",
+      "url": "https://www.gutenberg.org/cache/epub/61558/pg61558.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 32930,
+      "title": "A Gallant Grenadier: A Tale of the Crimean War",
+      "language": "en",
+      "subjects": "Crimean War, 1853-1856 -- Juvenile fiction",
+      "bookshelves": "Category: Historical Novels; Category: Adventure; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/32930/pg32930.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 9833,
+      "title": "Pee-wee Harris",
+      "language": "en",
+      "subjects": "Boy Scouts of America -- Juvenile fiction",
+      "bookshelves": "Scouts; Children's Book Series; Category: Children & Young Adult Reading; Category: Humour; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/9833/pg9833.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 9871,
+      "title": "The Avenger",
+      "language": "en",
+      "subjects": "Mystery fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/9871/pg9871.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 64309,
+      "title": "Gama Is Thee!",
+      "language": "en",
+      "subjects": "Science fiction; Adventure stories; Venus (Planet) -- Fiction; Escaped prisoners -- Fiction",
+      "bookshelves": "Category: Science-Fiction & Fantasy; Category: Adventure; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/64309/pg64309.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 13498,
+      "title": "The Fortieth Door",
+      "language": "en",
+      "subjects": "Egypt -- Fiction",
+      "bookshelves": "Category: Romance; Category: Adventure; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/13498/pg13498.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 32440,
+      "title": "Dave Dawson at Dunkirk",
+      "language": "en",
+      "subjects": "World War, 1939-1945 -- Juvenile fiction; Dunkirk, Battle of, Dunkerque, France, 1940 -- Juvenile fiction",
+      "bookshelves": "World War II; Category: Historical Novels; Category: Adventure",
+      "url": "https://www.gutenberg.org/cache/epub/32440/pg32440.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 51188,
+      "title": "The Captain's Story; or, The Disobedient Son",
+      "language": "en",
+      "subjects": "Sea stories; Conduct of life -- Juvenile fiction; Seafaring life -- Juvenile fiction; Ship captains -- Juvenile fiction; Youth -- Conduct of life -- Juvenile fiction; Obedience -- Juvenile fiction",
+      "bookshelves": "Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/51188/pg51188.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 59177,
+      "title": "The Lone Wolf Returns",
+      "language": "en",
+      "subjects": "Jewel thieves -- Fiction",
+      "bookshelves": "Category: Romance; Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/59177/pg59177.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 15798,
+      "title": "Clover",
+      "language": "en",
+      "subjects": "Conduct of life -- Juvenile fiction; Weddings -- Juvenile fiction; Cousins -- Juvenile fiction; Sisters -- Juvenile fiction; Ranches -- Juvenile fiction; Physicians -- Juvenile fiction; Families -- Juvenile fiction; Courtship -- Juvenile fiction",
+      "bookshelves": "Children's Literature; Category: Children & Young Adult Reading; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/15798/pg15798.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 64248,
+      "title": "Some do not...: A novel",
+      "language": "en",
+      "subjects": "England -- Social life and customs -- Fiction; World War, 1914-1918 -- Social aspects -- England -- Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/64248/pg64248.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 46006,
+      "title": "The Black Tortoise: Being the Strange Story of Old Frick's Diamond",
+      "language": "en",
+      "subjects": "Norway -- Fiction",
+      "bookshelves": "Category: Crime, Thrillers and Mystery; Category: Novels",
+      "url": "https://www.gutenberg.org/cache/epub/46006/pg46006.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 27712,
+      "title": "Sir Harry Hotspur of Humblethwaite",
+      "language": "en",
+      "subjects": "Inheritance and succession -- Fiction; Domestic fiction; Fathers and daughters -- Fiction; Cumberland (England) -- Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/27712/pg27712.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 74773,
+      "title": "The freed boy in Alabama",
+      "language": "en",
+      "subjects": "Sunday school literature; African Americans -- Education -- Juvenile fiction",
+      "bookshelves": "Category: Historical Novels; Category: Novels; Category: American Literature",
+      "url": "https://www.gutenberg.org/cache/epub/74773/pg74773.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 23990,
+      "title": "Moor Fires",
+      "language": "en",
+      "subjects": "Triangles (Interpersonal relations) -- Fiction; England -- Social life and customs -- Fiction",
+      "bookshelves": "Category: Novels; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/23990/pg23990.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 49924,
+      "title": "The Elm-tree on the Mall",
+      "language": "en",
+      "subjects": "French fiction -- Translations into English",
+      "bookshelves": "Category: Novels; Category: French Literature; Category: Religion/Spirituality; Nobel Prizes in Literature",
+      "url": "https://www.gutenberg.org/cache/epub/49924/pg49924.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 7318,
+      "title": "The Bravest of the Brave — or, with Peterborough in Spain",
+      "language": "en",
+      "subjects": "Historical fiction; Peterborough, Charles Mordaunt, Earl of, 1658-1735 -- Juvenile fiction; Spanish Succession, War of, 1701-1714 -- Juvenile fiction",
+      "bookshelves": "Historical Fiction; Children's Fiction; Category: Historical Novels; Category: Adventure; Category: British Literature",
+      "url": "https://www.gutenberg.org/cache/epub/7318/pg7318.txt",
+      "max_bytes": 8388608
+    },
+    {
+      "ebook_id": 3793,
+      "title": "Joseph II. and His Court: An Historical Novel",
+      "language": "en",
+      "subjects": "Joseph II, Holy Roman Emperor, 1741-1790 -- Fiction; Austria -- History -- Joseph II, 1780-1790 -- Fiction; Courts and courtiers -- Fiction; Holy Roman Empire -- History -- Joseph II, 1765-1790 -- Fiction",
+      "bookshelves": "Category: Historical Novels",
+      "url": "https://www.gutenberg.org/cache/epub/3793/pg3793.txt",
+      "max_bytes": 8388608
+    }
+  ]
+}

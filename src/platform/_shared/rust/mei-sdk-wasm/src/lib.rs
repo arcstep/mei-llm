@@ -8,7 +8,7 @@ use std::os::raw::c_char;
 use std::ptr;
 
 use mei_sdk_core::{
-    model::runtime_contract_evidence, parse_v2_text, sdk_versions, Engine, Session,
+    model::runtime_contract_evidence, parse_v2_text, sdk_versions, vocab::Vocab, Engine, Session,
 };
 use serde_json::{json, Value};
 
@@ -104,6 +104,50 @@ pub extern "C" fn mei_sdk_wasm_parse(text: *const c_char, out_json: *mut *mut c_
         Err(code) => return code,
     };
     out_string(parse_v2_text(raw).to_value().to_string(), out_json)
+}
+
+/// Audit-only browser entry for the canonical portable tokenizer.  It uses
+/// the same Rust `Vocab` implementation as inference while avoiding the need
+/// to construct a model package merely to compare tokenizer parity.
+#[no_mangle]
+pub extern "C" fn mei_sdk_wasm_tokenizer_audit(
+    vocab_ptr: *const u8,
+    vocab_len: usize,
+    request_json: *const c_char,
+    out_json: *mut *mut c_char,
+) -> i32 {
+    if vocab_ptr.is_null() || vocab_len == 0 {
+        return 1;
+    }
+    let raw = match cstr(request_json) {
+        Ok(value) => value,
+        Err(code) => return code,
+    };
+    let request: Value = match serde_json::from_str(raw) {
+        Ok(value) => value,
+        Err(_) => return 2,
+    };
+    let Some(cases) = request.get("texts").and_then(Value::as_array) else {
+        return 2;
+    };
+    let bytes = unsafe { std::slice::from_raw_parts(vocab_ptr, vocab_len) };
+    let vocab = match Vocab::from_package_payload(bytes) {
+        Ok(value) => value,
+        Err(error) => {
+            remember_error(&error);
+            return error.code();
+        }
+    };
+    let mut results = Vec::with_capacity(cases.len());
+    for value in cases {
+        let Some(text) = value.as_str() else {
+            return 2;
+        };
+        let ids = vocab.encode(text, false);
+        results.push(json!({"ids":ids,"decoded":vocab.decode(&ids)}));
+    }
+    clear_error();
+    out_string(json!({"cases":results}).to_string(), out_json)
 }
 
 /// Load a CQ2 v2 or read-only legacy-Q4 package from memory.

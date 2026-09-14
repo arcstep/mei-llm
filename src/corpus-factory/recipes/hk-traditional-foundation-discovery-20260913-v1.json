@@ -1,0 +1,19 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 1,
+  "records_per_shard": 200,
+  "max_network_bytes": 2147483648,
+  "reserve_disk_bytes": 107374182400,
+  "training_adoption_eligible": false,
+  "sources": [
+    {
+      "source_id": "hk-content-wiki",
+      "role": "foundation-traditional",
+      "repository": "SolarisCipher/hk_content_corpus",
+      "revision": "refs/convert/parquet",
+      "patterns": ["wiki_hk/train/*.parquet", "wiki_hk/*.parquet"],
+      "survey_question": "香港繁体Wiki正文的字形、重复、来源与基础语言适用性。"
+    }
+  ]
+}

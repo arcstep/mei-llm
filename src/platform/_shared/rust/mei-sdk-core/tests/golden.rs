@@ -27,7 +27,7 @@ fn versions_are_experimental_and_unrelated_to_needle() {
     let blob = v.to_string();
     assert!(blob.contains("experimental"));
     assert!(!blob.to_lowercase().contains("needle"));
-    assert_eq!(v["product"], "mei-1.0-51m Runtime");
+    assert_eq!(v["product"], "mei-1.2-51m Runtime");
 }
 
 #[test]

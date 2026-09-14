@@ -1,0 +1,9 @@
+{
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "opensubtitles-zh-CN",
+      "url": "https://opus.nlpl.eu/opusapi/?corpus=OpenSubtitles&source=zh_CN&preprocessing=raw&version=latest"
+    }
+  ]
+}

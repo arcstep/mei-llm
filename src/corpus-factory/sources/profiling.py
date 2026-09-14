@@ -17,6 +17,7 @@ import json
 import math
 from pathlib import Path
 import random
+import re
 import shutil
 import threading
 import zipfile
@@ -38,6 +39,22 @@ def digest(path: Path) -> str:
         for block in iter(lambda: f.read(4 << 20), b""):
             h.update(block)
     return h.hexdigest()
+
+
+def verify_survey_bytes(directory: Path, seen=None):
+    seen=set() if seen is None else seen
+    directory=directory.resolve()
+    if directory in seen: raise ValueError('cyclic evidence adoption')
+    seen.add(directory)
+    manifest=json.loads((directory/'survey.json').read_text())
+    for rel,expected in manifest['artifacts'].items():
+        path=(directory/rel).resolve()
+        if not path.is_relative_to(directory) or digest(path)!=expected:raise ValueError(f'survey artifact integrity failure: {rel}')
+    binding=directory/'adopted-survey-binding.json'
+    if 'adopted-survey-binding.json' in manifest['artifacts']:
+        b=json.loads(binding.read_text());previous=Path(b['survey'])
+        if digest(previous/'survey.json')!=b['manifest_sha256']:raise ValueError('adopted manifest changed')
+        verify_survey_bytes(previous,seen)
 
 
 def write_new(path: Path, value: Any) -> None:
@@ -201,6 +218,8 @@ def github_frame(source: dict, budget: Budget, out: Path) -> dict:
         with (out / "adopted-catalog-frame.json").open("xb") as f:
             f.write(raw)
         return {**previous, "patterns": patterns,
+                "complete_for_patterns": bool(previous.get("complete_for_patterns")) and
+                    (previous.get("patterns") == ["*"] or previous.get("patterns") == patterns),
                 "parent_frame_sha256": hashlib.sha256(raw).hexdigest(),
                 "files": [r for r in previous["files"] if any(fnmatch.fnmatch(r["path"], p) for p in patterns)]}
     revision = urllib.parse.quote(source.get("revision", "HEAD"), safe="")
@@ -326,7 +345,37 @@ def sample_jsonl(path: Path, shard: dict, seed: int, records: int = 200) -> dict
 
 
 def sample_relations(path: Path, shard: dict, source: dict, seed: int, records: int) -> dict:
-    from relations import relation_units
+    if source["relation_kind"] == "zip-inventory":
+        with zipfile.ZipFile(path) as archive:
+            members = [{"path": i.filename, "bytes": i.file_size, "compressed_bytes": i.compress_size,
+                        "crc32": i.CRC, "directory": i.is_dir()} for i in archive.infolist()]
+        return {"shard": shard, "rows": 0, "samples": [], "archive_members": members,
+                "local_sha256": digest(path), "scope": "archive directory only; no content survey"}
+    from relations import relation_units, iter_json_object
+    if source["relation_kind"] in {"crosswoz", "risawoz"} and source.get("archive_member"):
+        rng = seeded(seed, shard["path"])
+        chosen, count = [], 0
+        member_hash = hashlib.sha256()
+        with zipfile.ZipFile(path) as archive, archive.open(source["archive_member"]) as stream:
+            for index, (key, value) in enumerate(iter_json_object(stream, member_hash, mapping=source["relation_kind"] == "crosswoz")):
+                count += 1
+                slot = index if count <= records else rng.randrange(count)
+                if slot < records:
+                    unit = next(relation_units({key: value} if source["relation_kind"] == "crosswoz" else [value], source["relation_kind"]))
+                    if count <= records: chosen.append((index, unit))
+                    else: chosen[slot] = (index, unit)
+        samples = []
+        for index, unit in sorted(chosen):
+            text = json.dumps(unit["input"], ensure_ascii=False, sort_keys=True)
+            probability = shard["shard_probability"] * len(chosen) / count
+            samples.append({"row_index": index, "unit_id": unit["unit_id"], "unit_kind": unit["unit_kind"],
+                "inclusion_probability": probability, "weight": 1/probability,
+                "text": text, "text_sha256": hashlib.sha256(text.encode()).hexdigest(),
+                "utf8_bytes": len(text.encode()), "characters": len(text), "metadata": metadata_of({}),
+                "original": unit, "purpose": "population", "semantic_review": "pending",
+                "serialization": "whole-dialogue survey view; not CPT or SFT release"})
+        return {"shard": shard, "rows": count, "samples": samples, "local_sha256": digest(path),
+                "member_sha256": member_hash.hexdigest(), "sampling": "full-stream whole-dialogue reservoir"}
     if source.get("archive_member"):
         with zipfile.ZipFile(path) as archive:
             member = archive.getinfo(source["archive_member"])
@@ -363,6 +412,8 @@ def summarize(shards: list[dict], *, single_wave: bool = False) -> dict:
     seen_positions = set()
     count = 0
     weight_total = byte_total = 0.0
+    length_hist = Counter()
+    character_total = character_weight = 0.0
     for shard in shards:
         for row in shard["samples"]:
             if row.get("purpose") != "population":
@@ -383,6 +434,15 @@ def summarize(shards: list[dict], *, single_wave: bool = False) -> dict:
             count += 1
             weight_total += w
             byte_total += w * row["utf8_bytes"]
+            characters = row.get("characters")
+            if characters is None and "text" in row:
+                characters = len(row["text"])
+            length_bin = "unknown"
+            if characters is not None:
+                character_total += w * characters
+                character_weight += w
+                length_bin = next((f"le_{n}" for n in (128, 512, 2048, 8192, 32768) if characters <= n), "gt_32768")
+            length_hist[length_bin] += w
             hashes[row["text_sha256"]] += 1
             for key in hist:
                 value = str(row["metadata"].get(key, "unknown"))
@@ -393,6 +453,8 @@ def summarize(shards: list[dict], *, single_wave: bool = False) -> dict:
     return {"sample_records": count, "represented_record_total": weight_total,
             "probability_basis": "single_wave_marginal" if single_wave else "combined_waves",
             "represented_utf8_bytes": byte_total,
+            "weighted_mean_characters": character_total / character_weight if character_weight else None,
+            "character_length_distribution": distribution(length_hist, weight_total),
             "document_distributions": {k: distribution(v, weight_total) for k, v in hist.items()},
             "byte_distributions": {k: distribution(v, byte_total) for k, v in byte_hist.items()},
             "observed_exact_duplicate_excess": sum(n - 1 for n in hashes.values()),
@@ -401,6 +463,32 @@ def summarize(shards: list[dict], *, single_wave: bool = False) -> dict:
                             "sample duplicate rate is not whole-source dedup loss",
                             "semantic suitability and naturalness require review",
                             "UTF-8 bytes are not tokenizer tokens"]}
+
+
+def sample_text(path: Path, shard: dict, source: dict) -> dict:
+    """A whole version-bound document; links/tests are not inferred from proximity."""
+    raw = path.read_bytes()
+    text = raw.decode(source.get("encoding", "utf-8"))
+    original_text = text
+    body_range = None
+    if source.get('strip_gutenberg_wrapper'):
+        start = re.search(r'^\*\*\* START OF .*?\*\*\*\s*$', text, re.M)
+        end = re.search(r'^\*\*\* END OF .*?\*\*\*\s*$', text, re.M)
+        if not start or not end or start.end() >= end.start():
+            raise ValueError('Gutenberg body boundaries missing')
+        body_range = [start.end(), end.start()]
+        text = text[start.end():end.start()]
+    p = shard["shard_probability"]
+    return {"shard": shard, "rows": 1, "local_sha256": digest(path), "samples": [{
+        "row_index": 0, "inclusion_probability": p, "weight": 1 / p,
+        "text": text, "text_sha256": hashlib.sha256(text.encode()).hexdigest(),
+        "characters": len(text), "utf8_bytes": len(text.encode()),
+        "metadata": {**metadata_of({}), "project": source.get("github_repository", "unknown"),
+                     "extension": Path(shard["path"]).suffix or "unknown",
+                     "language": source.get("language", "unknown"),
+                     "work_group": source.get('work_group'), 'title': source.get('title')},
+        "original": {"path": shard["path"], "content": original_text, 'body_character_range': body_range}, "purpose": "population",
+        "semantic_review": "pending", "serialization": "whole source document; not executable gold"}]}
 
 
 def safe_id(value: str) -> str:
@@ -446,32 +534,68 @@ def ledger_inventory(root: Path) -> dict:
 
 
 def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bool = False,
-            resume_from: Path | None = None) -> dict:
+            resume_from: Path | None = None, frozen_evidence_only: bool = False) -> dict:
+    if frozen_evidence_only and (not resume_from or network):
+        raise ValueError("frozen evidence requires a previous run and forbids network")
     if not 1 <= int(config.get("shards_per_wave", 64)) <= 64:
         raise ValueError("survey plan permits 1..64 strata")
-    if not 1 <= int(config.get("records_per_shard", 200)) <= 200:
-        raise ValueError("survey plan permits 1..200 records per shard")
+    max_records = 10000 if config.get('purpose') == 'candidate_preparation' else 200
+    if not 1 <= int(config.get("records_per_shard", 200)) <= max_records:
+        raise ValueError(f"this mode permits 1..{max_records} records per shard")
     ids = [safe_id(s["source_id"]) for s in config["sources"]]
     if len(ids) != len(set(ids)):
         raise ValueError("duplicate source IDs")
     out.mkdir(parents=True, exist_ok=False)
     write_new(out / "config.json", config)
+    write_new(out / "execution.json", {"allow_network": network, "metadata_only": metadata_only,
+              "frozen_evidence_only": frozen_evidence_only, "resume_from": str(resume_from) if resume_from else None})
     implementation = Path(__file__).read_bytes()
     with (out / "implementation.py.snapshot").open("xb") as f:
         f.write(implementation)
     if any(s.get("format") == "relation" for s in config["sources"]):
         with (out / "relations.py.snapshot").open("xb") as f:
             f.write(Path(__file__).with_name("relations.py").read_bytes())
+    if any(s.get("format") == "remote-zip" for s in config["sources"]):
+        with (out / "archive_surveys.py.snapshot").open("xb") as f:
+            f.write(Path(__file__).with_name("archive_surveys.py").read_bytes())
     if resume_from:
         old_config = json.loads((resume_from / "config.json").read_text())
-        if canonical(old_config) != canonical(config):
-            raise ValueError("resume requires identical frozen survey config")
+        selected_ids = {s["source_id"] for s in config["sources"]}
+        old_subset = {**old_config, "sources": [s for s in old_config["sources"] if s["source_id"] in selected_ids]}
+        if canonical(old_subset) != canonical(config):
+            raise ValueError("resume requires identical frozen survey design; a source subset is allowed")
         with (out / "adopted-implementation.py.snapshot").open("xb") as f:
             f.write((resume_from / "implementation.py.snapshot").read_bytes())
+        if (resume_from/'survey.json').exists():
+            verify_survey_bytes(resume_from)
+            write_new(out/'adopted-survey-binding.json',{'survey':str(resume_from.resolve()),'manifest_sha256':digest(resume_from/'survey.json')})
     budget = Budget(out, min(int(config.get("max_network_bytes", 100 * GIB)), 100 * GIB),
                     max(int(config.get("reserve_disk_bytes", 100 * GIB)), 100 * GIB))
     seed = int(config.get("seed", 20260913))
     reports = []
+    if config.get("catalog_pages"):
+        from html.parser import HTMLParser
+        class Links(HTMLParser):
+            def __init__(self): super().__init__(); self.links = []
+            def handle_starttag(self, tag, attrs):
+                if tag == "a":
+                    href = dict(attrs).get("href")
+                    if href: self.links.append(href)
+        entries = []
+        for page in config["catalog_pages"]:
+            entry = {"id": safe_id(page["id"]), "url": page["url"], "status": "pending"}
+            try:
+                if not network: raise ValueError("catalog page access requires --allow-network")
+                raw, headers = fetch(page["url"], budget, length=min(int(page.get("max_bytes", 8 << 20)), 32 << 20))
+                filename = f"catalog-{entry['id']}.raw"
+                with (out / filename).open("xb") as f: f.write(raw)
+                parser = Links(); parser.feed(raw.decode("utf-8", errors="replace"))
+                entry.update(status="captured", file=filename, sha256=hashlib.sha256(raw).hexdigest(),
+                             links=sorted(set(urllib.parse.urljoin(page["url"], h) for h in parser.links)),
+                             content_type=next((v for k,v in headers.items() if k.lower()=="content-type"), None))
+            except Exception as exc: entry.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+            entries.append(entry)
+        write_new(out / "catalog-pages.json", {"entries": entries, "scope": "retrieved metadata; not a complete data manifest or content admission"})
     if config.get("ledger_root"):
         write_new(out / "ledger-inventory.json", ledger_inventory(ROOT / config["ledger_root"]))
     if config.get("local_diagnostics"):
@@ -492,10 +616,30 @@ def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bo
             local.extend(ROOT.glob(pattern))
         local = sorted(set(p.resolve() for p in local if p.is_file()))
         try:
-            if source.get("repository") and network:
+            if frozen_evidence_only:
+                previous = resume_from / source_id
+                frame = json.loads((previous / "frame.json").read_text())
+                for raw_path in previous.glob("upstream-*.json"):
+                    with (directory / raw_path.name).open("xb") as f:
+                        f.write(raw_path.read_bytes())
+            elif source.get('frozen_frame'):
+                frozen = ROOT / source['frozen_frame']
+                if digest(frozen) != source.get('frozen_frame_sha256'):
+                    raise ValueError('frozen source listing changed')
+                frame = json.loads(frozen.read_text())
+            elif source.get("repository") and network:
                 frame = hf_frame(source, budget, directory)
             elif source.get("github_repository") and network:
                 frame = github_frame(source, budget, directory)
+            elif source.get("http_files") and network:
+                frame = {"kind": "explicit_http_inventory", "complete_for_patterns": False,
+                         "revision": source.get("revision"), "files": source["http_files"],
+                         "scope": "explicit source list; upstream completeness requires supporting catalog review"}
+                if source.get('catalog_path'):
+                    catalog=ROOT/source['catalog_path'];raw=catalog.read_bytes()
+                    if hashlib.sha256(raw).hexdigest()!=source.get('catalog_sha256'):raise ValueError('HTTP supporting catalog hash changed')
+                    with (directory/'supporting-catalog.raw').open('xb') as f:f.write(raw)
+                    frame['supporting_catalog_sha256']=source['catalog_sha256']
             else:
                 frame = {"kind": "local_inventory", "complete_for_patterns": False,
                          "files": [{"path": str(p), "bytes": p.stat().st_size} for p in local]}
@@ -503,21 +647,38 @@ def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bo
             report["frame"] = {k: v for k, v in frame.items() if k != "files"}
             report["frame_files"] = len(frame["files"])
             report["local_files"] = len(local)
-            selected = select_shards(frame["files"], seed, int(config.get("shards_per_wave", 64)))
+            if 'random_shard_fraction' in source or 'random_shard_count' in source:
+                files = sorted(frame['files'], key=lambda row: row['path'])
+                if len({r['path'] for r in files}) != len(files):
+                    raise ValueError('duplicate source paths')
+                if 'random_shard_count' in source:
+                    count = source['random_shard_count']
+                    if 'random_shard_fraction' in source or type(count) is not int or not 1 <= count <= len(files):
+                        raise ValueError('specify one valid shard count or fraction')
+                else:
+                    fraction = float(source['random_shard_fraction'])
+                    if not 0 < fraction <= 1: raise ValueError('invalid fraction')
+                    count = math.ceil(len(files) * fraction)
+                selected = sorted([{**r, 'shard_probability': count / len(files),
+                    'selection_method': 'uniform_without_replacement'}
+                    for r in seeded(seed, source_id).sample(files, count)], key=lambda r: r['path']) if files else []
+            else:
+                selected = select_shards(frame["files"], seed, int(config.get("shards_per_wave", 64)))
             write_new(directory / "sampling-plan.json", selected)
             report["planned_shards"] = len(selected)
             results = []
-            if not metadata_only and (frame["kind"] != "github_tree_metadata" or source.get("format") == "relation"):
+            if not metadata_only and (frame["kind"] != "github_tree_metadata" or source.get("format") in {"relation", "text"}):
                 def work(shard):
                     name = hashlib.sha256(shard["path"].encode()).hexdigest()[:20]
                     try:
-                        if resume_from and frame["kind"] == "hf_revision_listing":
+                        if resume_from and frame["kind"] in {"hf_revision_listing", "explicit_http_inventory", "github_tree_metadata"}:
                             previous = resume_from / source_id
                             old_frame_path = previous / "frame.json"
                             old_sample_path = previous / f"sample-{name}.json"
                             if old_frame_path.exists() and old_sample_path.exists():
                                 old_frame = json.loads(old_frame_path.read_text())
-                                if old_frame.get("revision") == frame["revision"] and old_frame.get("files") == frame["files"]:
+                                if old_frame.get("kind") == frame["kind"] and old_frame.get("revision") == frame.get("revision") and old_frame.get("files") == frame["files"]:
+                                    if frame['kind']!='hf_revision_listing' and not (resume_from/'survey.json').exists():raise ValueError('non-HF adoption requires a complete bound parent manifest')
                                     old_sample = json.loads(old_sample_path.read_text())
                                     if old_sample["shard"] != shard:
                                         raise ValueError("adopted shard sampling design differs")
@@ -526,7 +687,39 @@ def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bo
                                         "source_code_sha256": digest(resume_from / "implementation.py.snapshot")}}
                                     write_new(directory / f"sample-{name}.json", result)
                                     return result, None
-                        if frame["kind"] == "github_tree_metadata":
+                        if frozen_evidence_only:
+                            raise ValueError("no complete frozen sample; source remains pending")
+                        if frame['kind'] in {'explicit_http_inventory', 'github_tree_metadata', 'hf_revision_listing'} and not network:
+                            raise ValueError('remote source body access requires --allow-network')
+                        if frame["kind"] == "explicit_http_inventory":
+                            if source.get("format") != "remote-zip": raise ValueError('HTTP inventory supports remote ZIP surveys only')
+                            from archive_surveys import sample_zip
+                            if source.get('archive_transport') == 'whole-bounded':
+                                size=shard.get('bytes')
+                                if size is None:
+                                    with RangeReader(shard['url'],budget) as probe: size=probe.size
+                                if not isinstance(size,int) or not 0<size<=2<<30: raise ValueError('whole survey archive needs known size <=2 GiB')
+                                budget.reserve(size)
+                                raw_path=directory/f'archive-{name}.zip'
+                                h=hashlib.md5(); remaining=size
+                                request=urllib.request.Request(shard['url'],headers={'User-Agent':'mei-source-profile/1','Accept-Encoding':'identity'})
+                                with urllib.request.urlopen(request,timeout=25) as response, raw_path.open('xb') as f:
+                                    while remaining:
+                                        data=response.read(min(1<<20,remaining))
+                                        if not data:raise ValueError('incomplete archive')
+                                        f.write(data);h.update(data);remaining-=len(data)
+                                    if response.read(1):raise ValueError('archive larger than frozen size')
+                                checksum=shard.get('upstream_checksum')
+                                if checksum and checksum!='md5:'+h.hexdigest():raise ValueError('archive upstream checksum mismatch')
+                                with raw_path.open('rb') as handle:
+                                    handle.size=size
+                                    result=sample_zip(handle,shard,source,seed,int(config.get('records_per_shard',200)),metadata_of,directory/'members')
+                                result['archive_sha256']=digest(raw_path)
+                                result['integrity_scope']='full downloaded archive SHA256 and optional upstream MD5; member CRC/SHA256 and original bytes preserved'
+                            else:
+                                with RangeReader(shard['url'], budget) as handle:
+                                    result = sample_zip(handle, shard, source, seed, int(config.get('records_per_shard',200)), metadata_of,directory/'members')
+                        elif frame["kind"] == "github_tree_metadata":
                             size = shard.get("bytes")
                             if not isinstance(size, int) or not 0 < size <= 128 << 20:
                                 raise ValueError("GitHub relation survey requires known file size <=128 MiB")
@@ -538,30 +731,54 @@ def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bo
                             raw_path = directory / f"raw-{name}"
                             with raw_path.open("xb") as f:
                                 f.write(raw)
-                            result = sample_relations(raw_path, shard, source, seed, int(config.get("records_per_shard", 200)))
+                            result = (sample_text(raw_path, shard, source) if source.get("format") == "text" else
+                                      sample_relations(raw_path, shard, source, seed, int(config.get("records_per_shard", 200))))
                             result["source_revision"] = frame["revision"]
                             result["git_blob_sha"] = blob_sha
                         elif frame["kind"] == "hf_revision_listing":
                             url = f"https://huggingface.co/datasets/{source['repository']}/resolve/{frame['revision']}/{urllib.parse.quote(shard['path'], safe='/')}"
-                            with RangeReader(url, budget) as handle:
-                                result = sample_parquet(handle, shard, seed, int(config.get("records_per_shard", 200)))
+                            if source.get("format") in {"relation", "text", "jsonl"}:
+                                limit = min(int(source.get("max_source_bytes", 64 << 20)), 128 << 20)
+                                raw, _ = fetch(url, budget, length=limit)
+                                raw_path = directory / f"raw-{name}"
+                                with raw_path.open("xb") as f: f.write(raw)
+                                if source.get("format") == "text":
+                                    result = sample_text(raw_path, shard, source)
+                                elif source.get("format") == "jsonl":
+                                    result = sample_jsonl(raw_path, shard, seed, int(config.get("records_per_shard", 200)))
+                                else:
+                                    result = sample_relations(raw_path, shard, source, seed, int(config.get("records_per_shard", 200)))
+                                result["source_revision"] = frame["revision"]
+                            else:
+                                with RangeReader(url, budget) as handle:
+                                    result = sample_parquet(handle, shard, seed, int(config.get("records_per_shard", 200)))
                         else:
                             if source.get("format") == "jsonl":
                                 result = sample_jsonl(Path(shard["path"]), shard, seed, int(config.get("records_per_shard", 200)))
                             elif source.get("format") == "relation":
                                 result = sample_relations(Path(shard["path"]), shard, source, seed, int(config.get("records_per_shard", 200)))
+                            elif source.get("format") == "text":
+                                result = sample_text(Path(shard["path"]), shard, source)
                             else:
                                 result = sample_parquet(shard["path"], shard, seed, int(config.get("records_per_shard", 200)))
                             result["local_sha256"] = digest(Path(shard["path"]))
                         for row in result["samples"]:
                             row["split"] = source.get("official_split", row.get("original", {}).get("split", "unknown") if isinstance(row.get("original"), dict) else "unknown")
+                        if source.get('write_candidate_texts'):
+                            if source.get('format') != 'text' or len(result['samples']) != 1:
+                                raise ValueError('candidate text export requires one whole text document')
+                            candidate = directory / f'candidate-text-{name}.txt'
+                            with candidate.open('x') as f: f.write(result['samples'][0]['text'])
+                            result['candidate_text'] = {'path': candidate.name, 'sha256': digest(candidate), 'release': False}
                         write_new(directory / f"sample-{name}.json", result)
                         return result, None
                     except Exception as exc:
                         failure = {"path": shard["path"], "error": f"{type(exc).__name__}: {exc}"}
                         write_new(directory / f"failure-{name}.json", failure)
                         return None, failure
-                with ThreadPoolExecutor(max_workers=2) as executor:
+                workers=int(config.get('download_workers',2))
+                if workers not in (1,2):raise ValueError('download_workers must be 1 or 2')
+                with ThreadPoolExecutor(max_workers=workers) as executor:
                     for result, error in executor.map(work, selected):
                         if result is not None:
                             results.append(result)
@@ -570,15 +787,15 @@ def profile(config: dict, out: Path, *, network: bool = False, metadata_only: bo
                         print(json.dumps({"source": source_id, "completed": len(results), "failed": len(report["errors"])}), flush=True)
             report["sampled_shards"] = len(results)
             report["statistics"] = summarize(results)
-            report["wave_statistics"] = {str(w): summarize([r for r in results if r["shard"]["wave"] == w], single_wave=True)
-                                         for w in (1, 2) if any(r["shard"]["wave"] == w for r in results)}
+            report["wave_statistics"] = {str(w): summarize([r for r in results if r["shard"].get("wave") == w], single_wave=True)
+                                         for w in (1, 2) if any(r["shard"].get("wave") == w for r in results)}
             report["estimation_scope"] = ("complete_sampling_frame" if results and len(results) == len(selected)
                                           else "completed_samples_only_no_population_extrapolation")
             report["process_status"] = "surveyed_pending_review" if results else "metadata_only" if frame["files"] else "hold"
             if report["errors"]:
                 report["process_status"] = "partial"
             report["m1_gaps"] = ["target-suitability review", "net-yield and cross-source overlap review"]
-            if not results:
+            if not report["statistics"]["sample_records"]:
                 report["m1_gaps"].append("content survey missing")
             if not frame["complete_for_patterns"]:
                 report["m1_gaps"].append("upstream population coverage not established")
@@ -605,7 +822,10 @@ def audit_coverage(paths: list[Path]) -> dict:
     wave_diagnostics = []
     dossiers = []
     for path in paths:
+        verify_survey_bytes(path)
         manifest = json.loads((path / "survey.json").read_text())
+        bound_samples = defaultdict(list)
+        bound_profiles = []
         for rel, expected in manifest["artifacts"].items():
             p = (path / rel).resolve()
             if not p.is_relative_to(path.resolve()) or digest(p) != expected:
@@ -613,6 +833,7 @@ def audit_coverage(paths: list[Path]) -> dict:
             if p.name.startswith("sample-"):
                 sample = json.loads(p.read_text())
                 source = Path(rel).parts[0]
+                bound_samples[source].append(sample)
                 for row in sample["samples"]:
                     if not row.get("text"):
                         continue
@@ -620,16 +841,18 @@ def audit_coverage(paths: list[Path]) -> dict:
                         "path": sample["shard"]["path"], "row_index": row["row_index"],
                         "split": row.get("split", "unknown")})
                     unique_positions.add((source, sample["shard"]["path"], row["row_index"], row["text_sha256"]))
-        for directory in sorted(p for p in path.iterdir() if p.is_dir()):
-            samples = [json.loads(p.read_text()) for p in sorted(directory.glob("sample-*.json"))]
+            if p.name == "profile.json":
+                bound_profiles.append(p)
+        for source, samples in sorted(bound_samples.items()):
             if not samples or not all("wave_probability" in s["shard"] for s in samples):
                 continue
-            wave_diagnostics.append({"survey": str(path), "source_id": directory.name,
+            wave_diagnostics.append({"survey": str(path), "source_id": source,
                 "wave_statistics": {str(w): summarize([s for s in samples if s["shard"]["wave"] == w], single_wave=True)
                                     for w in (1, 2) if any(s["shard"]["wave"] == w for s in samples)},
                 "scope": "observed wave support; wave 2 excludes singleton strata; no extrapolation with failures"})
-        for p in sorted(path.glob("*/profile.json")):
+        for p in sorted(bound_profiles):
             entry = json.loads(p.read_text())
+            entry = {**entry, "survey_path": str(path), "statistics": summarize(bound_samples.get(entry["source_id"], []))}
             profiles.append(entry)
             stats = entry.get("statistics", {})
             complete = entry.get("estimation_scope") == "complete_sampling_frame"
@@ -643,8 +866,8 @@ def audit_coverage(paths: list[Path]) -> dict:
                 "intended_use": {"role": entry.get("role"), "question": entry.get("source", {}).get("survey_question"),
                                  "semantic_suitability": "pending_review"},
                 "volume": {"published_records": None, "sampled_records": stats.get("sample_records"),
-                           "population_record_estimate": stats.get("represented_record_total") if complete else None,
-                           "population_utf8_byte_estimate": stats.get("represented_utf8_bytes") if complete else None,
+                           "sampling_frame_record_estimate": stats.get("represented_record_total") if complete else None,
+                           "sampling_frame_utf8_byte_estimate": stats.get("represented_utf8_bytes") if complete else None,
                            "audited_net_tokens": None, "cross_source_dedup_yield": None},
                 "bias": {"document_distributions": stats.get("document_distributions"),
                          "byte_distributions": stats.get("byte_distributions"),
@@ -662,8 +885,14 @@ def audit_coverage(paths: list[Path]) -> dict:
             for axis in ("dump", "host", "language", "project", "extension"):
                 x = a.get("statistics", {}).get("document_distributions", {}).get(axis, {})
                 y = b.get("statistics", {}).get("document_distributions", {}).get(axis, {})
-                metrics[axis] = sum(abs(x.get(k, 0) - y.get(k, 0)) for k in x.keys() | y.keys()) / 2 if x and y else None
-            comparisons.append({"source_id": a["source_id"], "total_variation_distance": metrics,
+                known_x = sum(v for k,v in x.items() if k != "unknown")
+                known_y = sum(v for k,v in y.items() if k != "unknown")
+                metrics[axis] = sum(abs(x.get(k, 0) - y.get(k, 0)) for k in x.keys() | y.keys()) / 2 if known_x and known_y else None
+            x = a["statistics"]["character_length_distribution"]
+            y = b["statistics"]["character_length_distribution"]
+            metrics["character_length_bin"] = sum(abs(x.get(k, 0) - y.get(k, 0)) for k in x.keys() | y.keys()) / 2 if x and y and set(x) != {"unknown"} and set(y) != {"unknown"} else None
+            comparisons.append({"source_id": a["source_id"], "left_survey": a["survey_path"],
+                                "right_survey": b["survey_path"], "total_variation_distance": metrics,
                                 "interpretation": "descriptive; sample size/design uncertainty not quantified"})
     overlap = [rows for rows in observed.values() if len({r["source"] for r in rows}) > 1]
     split_leaks = [rows for rows in observed.values()
@@ -676,6 +905,8 @@ def audit_coverage(paths: list[Path]) -> dict:
             "wave_diagnostics": wave_diagnostics,
             "source_dossiers": dossiers,
             "unique_observed_positions": len(unique_positions),
+            "unique_observed_nonempty_text_hashes": len(observed),
+            "sample_positions_are_independent_capacity": False,
             "observed_cross_source_exact_overlap_groups": len(overlap),
             "observed_train_test_exact_leak_groups": len(split_leaks),
             "overlap_examples": overlap[:20], "leak_examples": split_leaks[:20],
@@ -693,23 +924,54 @@ def main(argv=None) -> int:
     p.add_argument("--allow-network", action="store_true")
     p.add_argument("--metadata-only", action="store_true")
     p.add_argument("--resume-from", type=Path, help="Adopt complete shard evidence into a NEW run; retry missing shards")
+    p.add_argument("--frozen-evidence-only", action="store_true", help="Seal only existing evidence into a NEW run, without fetching missing samples")
     a = commands.add_parser("audit-coverage")
     a.add_argument("--surveys", type=Path, nargs="+", required=True)
     a.add_argument("--out", type=Path, required=True)
-    a.add_argument("--local-teacher-review", action="store_true",
+    review_mode = a.add_mutually_exclusive_group()
+    review_mode.add_argument('--pro-calibrate-from', type=Path, help='User-authorized Pro rubric calibration under cumulative 20M token budget')
+    a.add_argument('--teacher-system-prompt', type=Path)
+    a.add_argument('--teacher-offsets', type=int, nargs='+')
+    review_mode.add_argument('--flash-compare-from', type=Path, help='Authorized 24-record blind replay; cloud budget <= 1 CNY')
+    a.add_argument('--teacher-pricing', type=Path)
+    a.add_argument('--teacher-provider-status', type=Path)
+    a.add_argument('--teacher-continue-from', type=Path, help='Adopt a billed Flash prefix into a new ID; never retry requests')
+    a.add_argument('--cloud-teacher-model', choices=['deepseek-v4-flash', 'deepseek-v4-pro'], default='deepseek-v4-flash', help='Explicitly authorized teacher; Flash <=1 CNY, Pro <=5 CNY')
+    review_mode.add_argument("--local-teacher-review", action="store_true",
                    help="Annotate frozen survey snippets with the explicitly configured local Qwen; no cloud calls")
+    review_mode.add_argument("--review-bundle", action="store_true", help="Create a blinded human review entry packet, never an approval")
+    a.add_argument("--teacher-sources", nargs="+", help="Limit local annotation to these source IDs")
+    a.add_argument('--teacher-per-source',type=int,default=32)
+    a.add_argument('--teacher-quality',action='store_true',help='Bounded source keep/reject/uncertain probe with literal evidence; no admission')
+    a.add_argument('--teacher-max-seconds',type=int,default=1800)
     args = parser.parse_args(argv)
     if args.action == "profile":
         result = profile(json.loads(args.config.read_text()), args.out,
-                         network=args.allow_network, metadata_only=args.metadata_only, resume_from=args.resume_from)
+                         network=args.allow_network, metadata_only=args.metadata_only, resume_from=args.resume_from,
+                         frozen_evidence_only=args.frozen_evidence_only)
     else:
         result = audit_coverage(args.surveys)
-        if args.local_teacher_review:
+        if args.pro_calibrate_from:
+            if not args.teacher_system_prompt or not args.teacher_offsets:
+                parser.error('Pro calibration requires a rubric and explicit offsets')
+            from teacher_calibration import calibrate
+            result = calibrate(args.pro_calibrate_from, args.out, args.teacher_system_prompt, args.teacher_offsets)
+        elif args.flash_compare_from:
+            if args.cloud_teacher_model == 'deepseek-v4-pro':
+                parser.error('Pro now uses cumulative tokens: use --pro-calibrate-from, --teacher-system-prompt and --teacher-offsets')
+            if not args.teacher_pricing or not args.teacher_provider_status:
+                parser.error('Flash replay requires provider pricing and status snapshots')
+            from semantic_survey import flash_compare
+            result = flash_compare(args.flash_compare_from, args.out, args.teacher_pricing, args.teacher_provider_status, args.teacher_continue_from, args.cloud_teacher_model)
+        elif args.local_teacher_review:
             from semantic_survey import review
-            result = review(args.surveys, args.out)
+            result = review(args.surveys, args.out, source_ids=args.teacher_sources, per_source=args.teacher_per_source, quality=args.teacher_quality, max_seconds=args.teacher_max_seconds)
+        elif args.review_bundle:
+            from review_bundle import build
+            result = build(args.surveys, result, args.out)
         else:
             write_new(args.out, result)
-    print(json.dumps({k: v for k, v in result.items() if k != "artifacts"}, ensure_ascii=False))
+    print(json.dumps({k: v for k, v in result.items() if k not in {"artifacts", "outcomes", "wave_diagnostics", "source_dossiers"}}, ensure_ascii=False))
     return 0
 
 

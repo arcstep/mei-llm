@@ -1,0 +1,1241 @@
+{
+  "schema": "mei-node-task-semantic-seeds-v1",
+  "independence": "train/dev are deliberately related compiler seeds; not independent held-out benchmark",
+  "plans": [
+    {
+      "id": "customer-required",
+      "split": "train",
+      "family": "customer-required",
+      "shape": "single",
+      "query": "检查客户编号是否为空。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "客户编号",
+            "姓名"
+          ],
+          [
+            "C1",
+            "甲"
+          ],
+          [
+            "",
+            "乙"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "客户编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "required": 1
+      }
+    },
+    {
+      "id": "asset-independent",
+      "split": "train",
+      "family": "asset-independent",
+      "shape": "parallel",
+      "query": "资产编号不能空，也不能重复，两项可以分别检查。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "资产编号"
+          ],
+          [
+            "A1"
+          ],
+          [
+            "A1"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "资产编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "资产编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "required": 0,
+        "unique": 1
+      }
+    },
+    {
+      "id": "batch-sequence",
+      "split": "train",
+      "family": "batch-sequence",
+      "shape": "sequence",
+      "query": "先检查批次号是否为空，通过后再查重复。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "批次号"
+          ],
+          [
+            "B1"
+          ],
+          [
+            "B2"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "required": 0,
+        "unique": 0
+      }
+    },
+    {
+      "id": "invoice-fork-join",
+      "split": "train",
+      "family": "invoice-fork-join",
+      "shape": "mixed",
+      "query": "分别检查数量在1至1000、单价在0至100000；两项通过后，核对数量乘单价是否等于金额。允许误差0.01。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "数量",
+            "单价",
+            "金额"
+          ],
+          [
+            2,
+            3,
+            6
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "number",
+            "tool": "check_number",
+            "args": {
+              "column": "数量",
+              "min": 1,
+              "max": 1000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "price",
+            "tool": "check_number",
+            "args": {
+              "column": "单价",
+              "min": 0,
+              "max": 100000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "product",
+            "tool": "check_product",
+            "args": {
+              "quantity": "数量",
+              "price": "单价",
+              "total": "金额"
+            },
+            "after": [
+              "number",
+              "price"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "number": 0,
+        "price": 0,
+        "product": 0
+      }
+    },
+    {
+      "id": "status-allowed",
+      "split": "train",
+      "family": "status-allowed",
+      "shape": "single",
+      "query": "状态只允许待付款、已付款、已取消。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "状态"
+          ],
+          [
+            "已取消"
+          ],
+          [
+            "未知"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "enum",
+            "tool": "check_enum",
+            "args": {
+              "column": "状态",
+              "allowed": "待付款,已付款,已取消"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "enum": 1
+      }
+    },
+    {
+      "id": "sample-explicit-order",
+      "split": "train",
+      "family": "sample-explicit-order",
+      "shape": "sequence",
+      "query": "先查样本号重复，查完即使有问题也继续查是否为空。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "样本号"
+          ],
+          [
+            "S"
+          ],
+          [
+            "S"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "样本号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "样本号"
+            },
+            "after": [
+              "unique"
+            ],
+            "gate": "all_succeeded"
+          }
+        ]
+      },
+      "expected_issues": {
+        "unique": 1,
+        "required": 0
+      }
+    },
+    {
+      "id": "student-required",
+      "split": "dev",
+      "family": "student-required",
+      "shape": "single",
+      "query": "学号这一列帮我查一下，不能留空。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "学号",
+            "姓名"
+          ],
+          [
+            "X",
+            "甲"
+          ],
+          [
+            "",
+            "乙"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "学号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "required": 1
+      }
+    },
+    {
+      "id": "shipment-independent",
+      "split": "dev",
+      "family": "shipment-independent",
+      "shape": "parallel",
+      "query": "运单号的空值和重复都看看，互相不用等。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "运单号"
+          ],
+          [
+            "Y"
+          ],
+          [
+            "Y"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "运单号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "运单号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "required": 0,
+        "unique": 1
+      }
+    },
+    {
+      "id": "appointment-sequence",
+      "split": "dev",
+      "family": "appointment-sequence",
+      "shape": "sequence",
+      "query": "预约号没填完整就先别查重复；没有空值再查。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "预约号"
+          ],
+          [
+            "R1"
+          ],
+          [
+            "R2"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "预约号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "预约号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "required": 0,
+        "unique": 0
+      }
+    },
+    {
+      "id": "sales-fork-join",
+      "split": "dev",
+      "family": "sales-fork-join",
+      "shape": "mixed",
+      "query": "数量和单价分别查范围：1到1000、0到100000，都含端点；都合格后再核算金额，误差容许0.01。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "数量",
+            "单价",
+            "金额"
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            1000,
+            1,
+            1001
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "number",
+            "tool": "check_number",
+            "args": {
+              "column": "数量",
+              "min": 1,
+              "max": 1000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "price",
+            "tool": "check_number",
+            "args": {
+              "column": "单价",
+              "min": 0,
+              "max": 100000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "product",
+            "tool": "check_product",
+            "args": {
+              "quantity": "数量",
+              "price": "单价",
+              "total": "金额"
+            },
+            "after": [
+              "number",
+              "price"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "number": 0,
+        "price": 0,
+        "product": 1
+      }
+    },
+    {
+      "id": "review-enum",
+      "split": "dev",
+      "family": "review-enum",
+      "shape": "single",
+      "query": "审核结论只能填通过或退回。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "结论"
+          ],
+          [
+            "通过"
+          ],
+          [
+            "待定"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "enum",
+            "tool": "check_enum",
+            "args": {
+              "column": "结论",
+              "allowed": "通过,退回"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "expected_issues": {
+        "enum": 1
+      }
+    },
+    {
+      "id": "inventory-reverse-order",
+      "split": "dev",
+      "family": "inventory-reverse-order",
+      "shape": "sequence",
+      "query": "库存码先查重，完成后无论有没重复都查空值。",
+      "authorship": "explicit_development_seed",
+      "visible_policy": {
+        "product_tolerance": 0.01,
+        "plan_requires_confirmation": true
+      },
+      "sheet": {
+        "name": "数据",
+        "rows": [
+          [
+            "库存码"
+          ],
+          [
+            "Z"
+          ],
+          [
+            "Z"
+          ]
+        ]
+      },
+      "plan": {
+        "tasks": [
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "库存码"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "库存码"
+            },
+            "after": [
+              "unique"
+            ],
+            "gate": "all_succeeded"
+          }
+        ]
+      },
+      "expected_issues": {
+        "unique": 1,
+        "required": 0
+      }
+    }
+  ],
+  "states": [
+    {
+      "id": "parallel-start",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "资产编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "资产编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {},
+      "expected": {
+        "decision": "execute",
+        "ready": [
+          "required",
+          "unique"
+        ]
+      }
+    },
+    {
+      "id": "one-waits-other-runs",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "资产编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "资产编号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "waiting_assistance"
+      },
+      "expected": {
+        "decision": "execute",
+        "ready": [
+          "unique"
+        ]
+      }
+    },
+    {
+      "id": "sequence-blocked-by-issue",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "issues"
+      },
+      "expected": {
+        "decision": "incomplete",
+        "ready": []
+      }
+    },
+    {
+      "id": "sequence-success",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "passed"
+      },
+      "expected": {
+        "decision": "execute",
+        "ready": [
+          "unique"
+        ]
+      }
+    },
+    {
+      "id": "fork-join-waits",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "number",
+            "tool": "check_number",
+            "args": {
+              "column": "数量",
+              "min": 1,
+              "max": 1000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "price",
+            "tool": "check_number",
+            "args": {
+              "column": "单价",
+              "min": 0,
+              "max": 100000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "product",
+            "tool": "check_product",
+            "args": {
+              "quantity": "数量",
+              "price": "单价",
+              "total": "金额"
+            },
+            "after": [
+              "number",
+              "price"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "number": "passed",
+        "price": "running"
+      },
+      "expected": {
+        "decision": "incomplete",
+        "ready": []
+      }
+    },
+    {
+      "id": "fork-join-ready",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "number",
+            "tool": "check_number",
+            "args": {
+              "column": "数量",
+              "min": 1,
+              "max": 1000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "price",
+            "tool": "check_number",
+            "args": {
+              "column": "单价",
+              "min": 0,
+              "max": 100000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "product",
+            "tool": "check_product",
+            "args": {
+              "quantity": "数量",
+              "price": "单价",
+              "total": "金额"
+            },
+            "after": [
+              "number",
+              "price"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "number": "passed",
+        "price": "passed"
+      },
+      "expected": {
+        "decision": "execute",
+        "ready": [
+          "product"
+        ]
+      }
+    },
+    {
+      "id": "all-passed-confirm-upload",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "number",
+            "tool": "check_number",
+            "args": {
+              "column": "数量",
+              "min": 1,
+              "max": 1000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "price",
+            "tool": "check_number",
+            "args": {
+              "column": "单价",
+              "min": 0,
+              "max": 100000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "product",
+            "tool": "check_product",
+            "args": {
+              "quantity": "数量",
+              "price": "单价",
+              "total": "金额"
+            },
+            "after": [
+              "number",
+              "price"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "number": "passed",
+        "price": "passed",
+        "product": "passed"
+      },
+      "expected": {
+        "decision": "request_approval",
+        "ready": []
+      },
+      "upload_requested": true
+    },
+    {
+      "id": "all-passed-complete",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "number",
+            "tool": "check_number",
+            "args": {
+              "column": "数量",
+              "min": 1,
+              "max": 1000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "price",
+            "tool": "check_number",
+            "args": {
+              "column": "单价",
+              "min": 0,
+              "max": 100000
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "product",
+            "tool": "check_product",
+            "args": {
+              "quantity": "数量",
+              "price": "单价",
+              "total": "金额"
+            },
+            "after": [
+              "number",
+              "price"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "number": "passed",
+        "price": "passed",
+        "product": "passed"
+      },
+      "expected": {
+        "decision": "complete",
+        "ready": []
+      }
+    },
+    {
+      "id": "offline-assistance",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "waiting_assistance"
+      },
+      "expected": {
+        "decision": "queue_assistance",
+        "ready": []
+      },
+      "requires_remote": true,
+      "online": false
+    },
+    {
+      "id": "stale-reply",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "waiting_assistance"
+      },
+      "expected": {
+        "decision": "ignore_stale_reply",
+        "ready": []
+      },
+      "reply_revision": 1
+    },
+    {
+      "id": "cancelled-task-is-not-success",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "cancelled"
+      },
+      "expected": {
+        "decision": "incomplete",
+        "ready": []
+      }
+    },
+    {
+      "id": "failure-is-not-pass",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "批次号"
+            },
+            "after": [
+              "required"
+            ],
+            "gate": "all_passed"
+          }
+        ]
+      },
+      "states": {
+        "required": "failed"
+      },
+      "expected": {
+        "decision": "incomplete",
+        "ready": []
+      }
+    },
+    {
+      "id": "issues-allow-next-when-explicit",
+      "split": "dev",
+      "revision": 2,
+      "plan": {
+        "tasks": [
+          {
+            "id": "unique",
+            "tool": "check_unique",
+            "args": {
+              "column": "样本号"
+            },
+            "after": [],
+            "gate": "all_passed"
+          },
+          {
+            "id": "required",
+            "tool": "check_required",
+            "args": {
+              "column": "样本号"
+            },
+            "after": [
+              "unique"
+            ],
+            "gate": "all_succeeded"
+          }
+        ]
+      },
+      "states": {
+        "unique": "issues"
+      },
+      "expected": {
+        "decision": "execute",
+        "ready": [
+          "required"
+        ]
+      }
+    }
+  ],
+  "semantic_edge_cases": [
+    {
+      "id": "strict-equality-conflicts-default",
+      "request": "金额必须严格等于数量乘单价，不接受任何误差。",
+      "expected": "existing check_product cannot fulfill; clarify or offer another authorized tool, do not silently accept 0.01"
+    },
+    {
+      "id": "missing-column-binding",
+      "request": "检查编号不能为空。",
+      "headers": [
+        "订单编号",
+        "客户编号"
+      ],
+      "expected": "ask which field; no guessed binding"
+    },
+    {
+      "id": "cancel-one-rule",
+      "request": "重复先不用查了，其他照常。",
+      "expected": "new plan revision removes only uniqueness requirement; late replies from previous revision ignored"
+    },
+    {
+      "id": "modify-range",
+      "request": "把数量上限从1000改成500，其他不变。",
+      "expected": "new plan revision; previous check result does not prove the new rule passed"
+    },
+    {
+      "id": "unsupported-cross-source",
+      "request": "和上个月服务器里的订单一起去重。",
+      "expected": "local uniqueness is insufficient; request an authorized remote capability"
+    },
+    {
+      "id": "no-silent-upload",
+      "request": "全部通过后告诉我。",
+      "expected": "report success, no upload or implicit request for upload"
+    },
+    {
+      "id": "undeclared-removal",
+      "request": "检查完再清理错误行。",
+      "expected": "requires explicit authorized mutation tool and approved plan; current five read-only tools cannot remove rows"
+    }
+  ]
+}

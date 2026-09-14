@@ -1,0 +1,95 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "records_per_shard": 200,
+  "sources": [
+    {
+      "source_id": "python-tutorial",
+      "role": "tutorial-code",
+      "reference_url": "https://docs.python.org/zh-cn/3/tutorial/",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "postgres-tutorial",
+      "role": "tutorial-structure",
+      "reference_url": "https://www.postgresql.org/docs/current/tutorial.html",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "json-schema-guide",
+      "role": "tutorial-structure",
+      "reference_url": "https://json-schema.org/learn/getting-started-step-by-step",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "toolace",
+      "role": "tool-supervision-candidate",
+      "reference_url": "https://huggingface.co/datasets/Team-ACE/ToolACE",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "xlam-apigen-60k",
+      "role": "tool-supervision-candidate",
+      "reference_url": "https://huggingface.co/datasets/Salesforce/xlam-function-calling-60k",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "toolbench",
+      "role": "tool-supervision-candidate",
+      "reference_url": "https://github.com/OpenBMB/ToolBench",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "bfcl",
+      "role": "evaluation-reference-holdout",
+      "reference_url": "https://gorilla.cs.berkeley.edu/leaderboard",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    },
+    {
+      "source_id": "ultratool",
+      "role": "evaluation-reference-holdout",
+      "reference_url": "https://github.com/JoeYing1019/UltraTool",
+      "reference_only": true,
+      "local_globs": [],
+      "source_revision": null,
+      "audited_net_tokens": null,
+      "production_status": "hold_until_version_mapping_validation_and_review",
+      "survey_question": "固定完整版本与文件清单；保留说明/代码/测试或请求/schema/答案关联；调查语言、API/项目/模板集中、生成身份、验证证据、Mei映射与评测隔离。"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "mode": "v12_inputs_rebundle",
+  "release_id": "mei-v12-cpt-inputs-20260914-v3",
+  "source_release_dir": "corpus/pools/mei-v12-cpt-inputs-20260914-v2",
+  "release_dir": "corpus/pools/mei-v12-cpt-inputs-20260914-v3",
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-20260914-v2/RELEASE.json"
+}

@@ -1,0 +1,165 @@
+{
+  "sources": [
+    {
+      "source_id": "pg-54756",
+      "role": "literary-language",
+      "format": "text",
+      "language": "zh",
+      "title": "官場現形記",
+      "work_group": "pg-work-54756",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-54756-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/54756",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-54567",
+      "role": "literary-language",
+      "format": "text",
+      "language": "zh",
+      "title": "二十年目睹之怪現狀",
+      "work_group": "pg-work-54567",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-54567-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/54567",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-23865",
+      "role": "literary-language",
+      "format": "text",
+      "language": "zh",
+      "title": "恨海",
+      "work_group": "pg-work-23865",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-23865-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/23865",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-25128",
+      "role": "literary-language",
+      "format": "text",
+      "language": "zh",
+      "title": "孽海花",
+      "work_group": "pg-work-25128",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-25128-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/25128",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-25327",
+      "role": "literary-language",
+      "format": "text",
+      "language": "zh",
+      "title": "兒女英雄傳",
+      "work_group": "pg-work-25327",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-25327-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/25327",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-3825",
+      "role": "authored-dialogue",
+      "format": "text",
+      "language": "en",
+      "title": "Pygmalion",
+      "work_group": "pg-work-3825",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-3825-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/3825",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-2542",
+      "role": "authored-dialogue",
+      "format": "text",
+      "language": "en",
+      "title": "A Doll's House",
+      "work_group": "pg-work-2542",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-2542-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/2542",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-844",
+      "role": "authored-dialogue",
+      "format": "text",
+      "language": "en",
+      "title": "The Importance of Being Earnest",
+      "work_group": "pg-work-844",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-844-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/844",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-4070",
+      "role": "authored-dialogue",
+      "format": "text",
+      "language": "en",
+      "title": "The Master Builder",
+      "work_group": "pg-work-4070",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-4070-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/4070",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-1754",
+      "role": "authored-dialogue",
+      "format": "text",
+      "language": "en",
+      "title": "The Sea-Gull",
+      "work_group": "pg-work-1754",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/catalog-pg-1754-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "write_candidate_texts": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/1754",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-fast-acquisition-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    }
+  ],
+  "download_workers": 1
+}

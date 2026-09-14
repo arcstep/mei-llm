@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "base-freeze-proposal",
+  "candidate": "models/mei-1.2-51m/releases/exp-01800m/base/mei-1.2-51m-base-cpt1800m-v1",
+  "process_complete": true,
+  "release_eligible": true,
+  "eligible": true,
+  "productization_experiment_eligible": true,
+  "continuation_checkpoint_eligible": true,
+  "automatic_parent_promotion_eligible": true,
+  "corpus_reuse_eligible": true,
+  "future_parent_eligible": true,
+  "unmet_gates": [],
+  "proposed_at": "2026-09-13T15:56:56.330472+00:00",
+  "current_sha256_observed": "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607",
+  "current_mutated": false,
+  "requires_explicit_finalize": true,
+  "finalize_confirmation": "freeze mei-1.2-51m base"
+}

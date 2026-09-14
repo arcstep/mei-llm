@@ -1,0 +1,21 @@
+{
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "gutenberg-nahan",
+      "url": "https://www.gutenberg.org/cache/epub/27166/pg27166.txt"
+    },
+    {
+      "id": "gutenberg-laocan",
+      "url": "https://www.gutenberg.org/cache/epub/25124/pg25124.txt"
+    },
+    {
+      "id": "gutenberg-kuangren",
+      "url": "https://www.gutenberg.org/ebooks/25423.txt.utf-8"
+    },
+    {
+      "id": "sotab-table",
+      "url": "https://data.dws.informatik.uni-mannheim.de/structureddata/sotab/sample_cpa_table.json"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "sources": [
+    {
+      "source_id": "fineweb2-hq-cmn-hani",
+      "role": "foundation_language",
+      "repository": "epfml/FineWeb2-HQ",
+      "frozen_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/hq-survey-repair-20260913-v1/fineweb2-hq-cmn-hani/frame.json",
+      "frozen_frame_sha256": "10cfee154c0c7760dc38daf329599176daa7f3853ef097528d33349562aca8c1",
+      "sampling_note": "User reduced the working set to 30-50 shards; choose 40 uniformly from all 975 frozen shards.",
+      "random_shard_count": 40
+    }
+  ]
+}

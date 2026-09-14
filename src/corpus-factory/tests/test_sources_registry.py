@@ -31,7 +31,15 @@ class RegistryTests(unittest.TestCase):
         value = registry.load_registry()
         self.assertEqual("mei-51m-source-registry-v1", value["schema"])
         self.assertEqual(
-            ["fineweb2_hq", "wiki_zh", "wiki_en", "dialogue", "structured", "code"],
+            [
+                "fineweb2_hq",
+                "wiki_zh",
+                "wiki_en",
+                "dialogue",
+                "structured",
+                "code",
+                "literature",
+            ],
             registry.roles(value),
         )
 

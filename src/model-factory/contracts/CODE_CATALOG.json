@@ -64,6 +64,11 @@
       "path": "skills/mei-51m-cpt-lifecycle",
       "role": "routing only; contains no training or corpus implementation",
       "status": "maintained_compatibility"
+    },
+    {
+      "path": "src/corpus-factory/sources/profiling.py",
+      "role": "preparation-only source population surveys, coverage diagnostics and review evidence; no admission or training authorization",
+      "status": "current"
     }
   ],
   "directory_contracts": [

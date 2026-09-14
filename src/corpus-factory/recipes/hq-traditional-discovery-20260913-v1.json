@@ -1,0 +1,18 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 64,
+  "records_per_shard": 200,
+  "max_network_bytes": 1073741824,
+  "reserve_disk_bytes": 107374182400,
+  "training_adoption_eligible": false,
+  "sources": [
+    {
+      "source_id": "fineweb2-hq-zho-hant",
+      "role": "fineweb2_hq_traditional",
+      "repository": "epfml/FineWeb2-HQ",
+      "patterns": ["zho_Hant/*.parquet", "cmn_Hant/*.parquet"],
+      "survey_question": "繁体中文HQ独立来源的完整分片范围与可用规模。"
+    }
+  ]
+}

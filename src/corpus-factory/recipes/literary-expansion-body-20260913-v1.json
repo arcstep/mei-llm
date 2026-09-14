@@ -1,0 +1,311 @@
+{
+  "sources": [
+    {
+      "source_id": "pg-1342",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-1342",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-1342-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/1342",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-161",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-161",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-161-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/161",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-158",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-158",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-158-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/158",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-105",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-105",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-105-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/105",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-141",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-141",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-141-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/141",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-121",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-121",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-121-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/121",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-768",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-768",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-768-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/768",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-599",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-599",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-599-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/599",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-559",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-559",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-559-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/559",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-8581",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-8581",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-8581-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/8581",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-2211",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-2211",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-2211-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/2211",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-3618",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-3618",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-3618-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/3618",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-1165",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-1165",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-1165-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/1165",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-902",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-902",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-902-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/902",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-1454",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-1454",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-1454-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/1454",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-8157",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-8157",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-8157-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/8157",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-396",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-396",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-396-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/396",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-3797",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-3797",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-3797-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/3797",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-3772",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-3772",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-3772-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/3772",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-5053",
+      "format": "text",
+      "role": "literary-language",
+      "language": "en",
+      "work_group": "pg-work-5053",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/catalog-pg-5053-text.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/5053",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1/survey.json",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-27166",
+      "format": "text",
+      "role": "literary-language",
+      "language": "zh",
+      "work_group": "pg-work-27166",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/catalog-gutenberg-nahan.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/27166",
+      "official_split": "candidate-unassigned"
+    },
+    {
+      "source_id": "pg-25124",
+      "format": "text",
+      "role": "literary-language",
+      "language": "zh",
+      "work_group": "pg-work-25124",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/catalog-gutenberg-laocan.raw"
+      ],
+      "strip_gutenberg_wrapper": true,
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/25124",
+      "official_split": "candidate-unassigned"
+    }
+  ],
+  "download_workers": 1
+}

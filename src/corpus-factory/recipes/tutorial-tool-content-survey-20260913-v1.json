@@ -1,0 +1,106 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 16,
+  "records_per_shard": 200,
+  "max_network_bytes": 2147483648,
+  "reserve_disk_bytes": 107374182400,
+  "sources": [
+    {
+      "source_id": "pandas-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "pandas-dev/pandas",
+      "patterns": [
+        "doc/source/getting_started/*.rst",
+        "doc/source/user_guide/*.rst"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/pandas/frame.json",
+      "catalog_frame_sha256": "278ce69cec5a9e6e8d1a38f697c3c445801d32cfce0139924b9451250c14af14",
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "postgres-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "postgres/postgres",
+      "patterns": [
+        "doc/src/sgml/*.sgml"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/postgres/frame.json",
+      "catalog_frame_sha256": "1508dab5a9604dca2a05f7c7bd944af1ab5b92b1912bd80403c4105e7550897c",
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "frictionless-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "frictionlessdata/specs",
+      "patterns": [
+        "content/docs/*.md"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/frictionless/frame.json",
+      "catalog_frame_sha256": "9f7cd208b5e7856e9a59f3cf7df83dab337ffde64c6b5ef6fc021181702920a7",
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "prometheus-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "prometheus/prometheus",
+      "patterns": [
+        "docs/*.md"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/prometheus/frame.json",
+      "catalog_frame_sha256": "bf80fd0f3755205e64b16b463901a24b0c056a83ca7ff74f5b0131555c8a1447",
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "celery-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "celery/celery",
+      "patterns": [
+        "docs/userguide/*.rst"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/celery/frame.json",
+      "catalog_frame_sha256": "766efdff3642a7f6eaf426b32858225df3e591eab03d90e301fcb61b86eda35d",
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "python-tutorial-en",
+      "role": "tutorial-code",
+      "github_repository": "python/cpython",
+      "patterns": [
+        "Doc/tutorial/*.rst"
+      ],
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document"
+    },
+    {
+      "source_id": "toolace",
+      "role": "tool-supervision-candidate",
+      "repository": "Team-ACE/ToolACE",
+      "patterns": [
+        "data.json"
+      ],
+      "format": "relation",
+      "relation_kind": "toolace",
+      "official_split": "train",
+      "max_source_bytes": 67108864,
+      "generation_identity": "synthetic",
+      "sampling_unit": "whole-tool-dialogue"
+    }
+  ]
+}

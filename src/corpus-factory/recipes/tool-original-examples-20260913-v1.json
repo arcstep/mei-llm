@@ -1,0 +1,50 @@
+{
+  "sources": [
+    {
+      "source_id": "toolbench",
+      "github_repository": "OpenBMB/ToolBench",
+      "patterns": [
+        "README*.md",
+        "data_example/instruction/*.json",
+        "data_example/answer/*/*.json"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tool-population-metadata-20260913-v1/toolbench/frame.json",
+      "catalog_frame_sha256": "169faf217224e647ea1b12e6c779d8989ce22a50203eb8d2cec437bbee8214bc",
+      "format": "text",
+      "role": "tool-source-documentation-survey",
+      "scope": "README and shipped examples only; not whole-dataset capacity",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "ultratool",
+      "github_repository": "JoeYing1019/UltraTool",
+      "patterns": [
+        "README.md",
+        "data/*/example/*.json"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tool-population-metadata-20260913-v1/ultratool/frame.json",
+      "catalog_frame_sha256": "4c2062a4e1ca6311aebc5cfaf4f3b12af293416d09ae51ec966594bad8b9a1ef",
+      "format": "text",
+      "role": "tool-source-documentation-survey",
+      "scope": "README and shipped examples only; not whole-dataset capacity",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "bfcl",
+      "github_repository": "ShishirPatil/gorilla",
+      "patterns": [
+        "berkeley-function-call-leaderboard/README.md",
+        "berkeley-function-call-leaderboard/bfcl_eval/data/README.md"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tool-population-metadata-20260913-v1/bfcl/frame.json",
+      "catalog_frame_sha256": "565b5f48e67a3b157b548542987d70b85e2c661ccb035d741ab056ebc3ce5566",
+      "format": "text",
+      "role": "tool-source-documentation-survey",
+      "scope": "README and shipped examples only; not whole-dataset capacity",
+      "production_status": "hold_until_review"
+    }
+  ],
+  "shards_per_wave": 64,
+  "records_per_shard": 200,
+  "max_network_bytes": 268435456
+}

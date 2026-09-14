@@ -1,0 +1,190 @@
+{
+  "sources": [],
+  "max_network_bytes": 104857600,
+  "reserve_disk_bytes": 107374182400,
+  "catalog_pages": [
+    {
+      "id": "pg-54756-metadata",
+      "url": "https://www.gutenberg.org/ebooks/54756",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-54756-text",
+      "url": "https://www.gutenberg.org/ebooks/54756.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-54567-metadata",
+      "url": "https://www.gutenberg.org/ebooks/54567",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-54567-text",
+      "url": "https://www.gutenberg.org/ebooks/54567.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-23865-metadata",
+      "url": "https://www.gutenberg.org/ebooks/23865",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-23865-text",
+      "url": "https://www.gutenberg.org/ebooks/23865.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-25128-metadata",
+      "url": "https://www.gutenberg.org/ebooks/25128",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-25128-text",
+      "url": "https://www.gutenberg.org/ebooks/25128.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-25327-metadata",
+      "url": "https://www.gutenberg.org/ebooks/25327",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-25327-text",
+      "url": "https://www.gutenberg.org/ebooks/25327.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3825-metadata",
+      "url": "https://www.gutenberg.org/ebooks/3825",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-3825-text",
+      "url": "https://www.gutenberg.org/ebooks/3825.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-2542-metadata",
+      "url": "https://www.gutenberg.org/ebooks/2542",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-2542-text",
+      "url": "https://www.gutenberg.org/ebooks/2542.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-844-metadata",
+      "url": "https://www.gutenberg.org/ebooks/844",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-844-text",
+      "url": "https://www.gutenberg.org/ebooks/844.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-4070-metadata",
+      "url": "https://www.gutenberg.org/ebooks/4070",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-4070-text",
+      "url": "https://www.gutenberg.org/ebooks/4070.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-1754-metadata",
+      "url": "https://www.gutenberg.org/ebooks/1754",
+      "max_bytes": 1048576
+    },
+    {
+      "id": "pg-1754-text",
+      "url": "https://www.gutenberg.org/ebooks/1754.txt.utf-8",
+      "max_bytes": 8388608
+    }
+  ],
+  "acquisition_purpose": "literature and dialogue raw texts; retain source rights and work identity; no per-document LLM grading",
+  "works": [
+    {
+      "ebook_id": 54756,
+      "title": "官場現形記",
+      "declared_language": "zh",
+      "kind": "novel",
+      "work_group": "pg-work-54756",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/54756"
+    },
+    {
+      "ebook_id": 54567,
+      "title": "二十年目睹之怪現狀",
+      "declared_language": "zh",
+      "kind": "novel",
+      "work_group": "pg-work-54567",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/54567"
+    },
+    {
+      "ebook_id": 23865,
+      "title": "恨海",
+      "declared_language": "zh",
+      "kind": "novel",
+      "work_group": "pg-work-23865",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/23865"
+    },
+    {
+      "ebook_id": 25128,
+      "title": "孽海花",
+      "declared_language": "zh",
+      "kind": "novel",
+      "work_group": "pg-work-25128",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/25128"
+    },
+    {
+      "ebook_id": 25327,
+      "title": "兒女英雄傳",
+      "declared_language": "zh",
+      "kind": "novel",
+      "work_group": "pg-work-25327",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/25327"
+    },
+    {
+      "ebook_id": 3825,
+      "title": "Pygmalion",
+      "declared_language": "en",
+      "kind": "play",
+      "work_group": "pg-work-3825",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/3825"
+    },
+    {
+      "ebook_id": 2542,
+      "title": "A Doll's House",
+      "declared_language": "en",
+      "kind": "play",
+      "work_group": "pg-work-2542",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/2542"
+    },
+    {
+      "ebook_id": 844,
+      "title": "The Importance of Being Earnest",
+      "declared_language": "en",
+      "kind": "play",
+      "work_group": "pg-work-844",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/844"
+    },
+    {
+      "ebook_id": 4070,
+      "title": "The Master Builder",
+      "declared_language": "en",
+      "kind": "play",
+      "work_group": "pg-work-4070",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/4070"
+    },
+    {
+      "ebook_id": 1754,
+      "title": "The Sea-Gull",
+      "declared_language": "en",
+      "kind": "play",
+      "work_group": "pg-work-1754",
+      "rights_metadata_url": "https://www.gutenberg.org/ebooks/1754"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "gutenberg-literary-pilot",
+      "role": "authored-dialogue",
+      "format": "text",
+      "language": "zh",
+      "sampling_unit": "whole-book-edition",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/catalog-gutenberg-*.raw"
+      ],
+      "scope": "three purposively chosen editions; not representative of all Chinese literature",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/survey.json"
+    },
+    {
+      "source_id": "wikisource-drama-pilot",
+      "role": "authored-dialogue",
+      "format": "relation",
+      "relation_kind": "wikisource-pages",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/source-link-reconnaissance-20260913-v3/catalog-literary-pages.raw"
+      ],
+      "scope": "requested title set; missing titles and unresolved transclusions retained in source metadata"
+    }
+  ],
+  "records_per_shard": 200
+}

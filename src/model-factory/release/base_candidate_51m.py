@@ -555,17 +555,32 @@ def _candidate_dir(candidate: Path) -> Path:
     if BASE_ROOT is not None:
         allowed = resolved.parent == BASE_ROOT.resolve()
     else:
+        allowed = False
+        # 新链（zh-v2-rebuild）base 候选归入 models/mei-1.2-51m/releases/exp-XXXm/base，
+        # 与 _base_root 的新链分支一致。
+        releases_root = ROOT / "models/mei-1.2-51m/releases"
         try:
-            relative_parent = resolved.parent.relative_to(CYCLES_ROOT.resolve())
+            rel = resolved.parent.relative_to(releases_root.resolve())
         except ValueError:
-            allowed = False
-        else:
-            parts = relative_parent.parts
+            rel = None
+        if rel is not None and len(rel.parts) == 2:
             allowed = (
-                len(parts) == 3
-                and re.fullmatch(r"exp-[0-9]{6}m", parts[0]) is not None
-                and parts[1:] == ("models", "base")
+                re.fullmatch(r"exp-[0-9]+m", rel.parts[0]) is not None
+                and rel.parts[1] == "base"
             )
+        # 旧链 legacy：cycles/exp-XXXm/models/base（向后兼容）
+        if not allowed:
+            try:
+                relative_parent = resolved.parent.relative_to(CYCLES_ROOT.resolve())
+            except ValueError:
+                allowed = False
+            else:
+                parts = relative_parent.parts
+                allowed = (
+                    len(parts) == 3
+                    and re.fullmatch(r"exp-[0-9]+m", parts[0]) is not None
+                    and parts[1:] == ("models", "base")
+                )
     if not allowed:
         raise ValueError("candidate must be a direct cycle models/base child")
     return resolved
@@ -588,6 +603,22 @@ def propose_freeze(candidate: Path) -> dict:
             raise RuntimeError(f"candidate {role} hash mismatch")
     release_eligible = release.get("release_eligible") is True
     blockers = list(release.get("release_blockers") or [])
+    corpus_reuse_eligible = release.get("corpus_reuse_eligible") is True
+    # 语料质量审计是动态的（diversity receipt 可后补）。冻结时重审 run 目录的
+    # receipt，覆盖注册快照，避免「注册时 receipt 缺失 → not_audited 永久化」
+    # （1800m base 即此情形：8月注册时 receipt 未生成，现 receipt 已 passed）。
+    source_run_rel = release.get("source_run")
+    live_quality = (
+        _corpus_quality(ROOT / source_run_rel) if source_run_rel else None
+    )
+    if live_quality is not None:
+        if live_quality["corpus_diversity_degraded"]:
+            if "corpus_diversity_degraded" not in blockers:
+                blockers.append("corpus_diversity_degraded")
+        elif "corpus_diversity_degraded" in blockers:
+            blockers.remove("corpus_diversity_degraded")
+        release_eligible = not blockers
+        corpus_reuse_eligible = not live_quality["corpus_diversity_degraded"]
     proposal = {
         "schema_version": 1,
         "kind": "base-freeze-proposal",
@@ -601,11 +632,9 @@ def propose_freeze(candidate: Path) -> dict:
         "continuation_checkpoint_eligible": (
             release.get("continuation_checkpoint_eligible") is True
         ),
-        "automatic_parent_promotion_eligible": (
-            release.get("automatic_parent_promotion_eligible") is True
-        ),
-        "corpus_reuse_eligible": release.get("corpus_reuse_eligible") is True,
-        "future_parent_eligible": release.get("future_parent_eligible") is True,
+        "automatic_parent_promotion_eligible": release_eligible,
+        "corpus_reuse_eligible": corpus_reuse_eligible,
+        "future_parent_eligible": release_eligible,
         "unmet_gates": blockers,
         "proposed_at": utc_now(),
         "current_sha256_observed": current_hash(),

@@ -2,10 +2,133 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import codecs
+import json
+
+
+def iter_json_object(stream, hasher, *, chunk_size=65536, record_limit=8 << 20, mapping=True):
+    """Stream a top-level JSON mapping, preserving whole values and byte hash."""
+    decoder = json.JSONDecoder()
+    utf8 = codecs.getincrementaldecoder("utf-8")()
+    buffer, position, ended = "", 0, False
+    def fill():
+        nonlocal buffer, position, ended
+        if len(buffer) - position > record_limit:
+            raise ValueError("individual JSON record exceeds streaming survey bound")
+        raw = stream.read(chunk_size)
+        hasher.update(raw)
+        ended = not raw
+        buffer = buffer[position:] + utf8.decode(raw, final=ended)
+        position = 0
+    def peek():
+        nonlocal position
+        while True:
+            while position < len(buffer) and buffer[position] in " \t\r\n": position += 1
+            if position < len(buffer): return buffer[position]
+            if ended: raise ValueError("unexpected end of JSON mapping")
+            fill()
+    def character(expected):
+        nonlocal position
+        if peek() != expected: raise ValueError(f"expected JSON delimiter {expected}")
+        position += 1
+    def value():
+        nonlocal position
+        peek()
+        while True:
+            try:
+                item, stop = decoder.raw_decode(buffer, position)
+                # A number can be a valid prefix at a buffer boundary.
+                if not ended and (stop == len(buffer) or
+                    (type(item) in (int, float) and buffer[stop:stop+1] in ("e", "E", "."))):
+                    fill()
+                    continue
+                position = stop
+                return item
+            except json.JSONDecodeError:
+                if ended: raise
+                fill()
+    character("{" if mapping else "[")
+    keys = set()
+    closing = "}" if mapping else "]"
+    index = 0
+    if peek() != closing:
+        while True:
+            key = value() if mapping else index
+            if mapping:
+                if not isinstance(key, str): raise ValueError("JSON mapping key is not a string")
+                if key in keys: raise ValueError("duplicate JSON mapping key")
+                keys.add(key)
+                character(":")
+            item = value()
+            yield key, item
+            index += 1
+            if peek() == closing: break
+            character(",")
+    character(closing)
+    while True:
+        if buffer[position:].strip(): raise ValueError("trailing JSON content")
+        position = len(buffer)
+        if ended: return
+        fill()
 
 
 def relation_units(value, kind: str):
-    if kind == "crosswoz":
+    if kind == 'wikisource-pages':
+        pages=value.get('query',{}).get('pages',{})
+        if not isinstance(pages,dict):raise ValueError('MediaWiki pages mapping required')
+        for page in pages.values():
+            if 'missing' in page:continue
+            revision=page['revisions'][0]
+            text=revision['slots']['main']['*']
+            yield {'unit_id':str(page['pageid']),'unit_kind':'versioned-literary-page',
+                   'input':{'title':page['title'],'wikitext':text},
+                   'annotations':{'revision_id':revision['revid'],'timestamp':revision.get('timestamp'),
+                                  'upstream_sha1':revision.get('sha1'),'categories':page.get('categories',[]),
+                                  'transclusions_resolved':False,'complete_work_verified':False},'original':deepcopy(page)}
+    elif kind == "risawoz":
+        if not isinstance(value, list): raise ValueError("RiSAWOZ requires dialogue array")
+        for row in value:
+            turns = row.get("dialogue")
+            if not isinstance(turns, list): raise ValueError("RiSAWOZ dialogue missing")
+            visible, labels = [], []
+            for t in turns:
+                if any(not isinstance(t.get(k), str) for k in ('user_utterance','system_utterance')):
+                    raise ValueError("RiSAWOZ utterance missing")
+                visible.append({k:t[k] for k in ('user_utterance','system_utterance')})
+                labels.append({k:deepcopy(v) for k,v in t.items() if k not in visible[-1]})
+            yield {"unit_id":str(row['dialogue_id']),"unit_kind":"whole-dialogue",
+                   "input":{"turns":visible},"annotations":{"turns":labels,"dialogue":{k:deepcopy(v) for k,v in row.items() if k!='dialogue'}},"original":deepcopy(row)}
+    elif kind == "naturalconv":
+        if not isinstance(value, list): raise ValueError("NaturalConv requires dialogue array")
+        for row in value:
+            if not isinstance(row.get('content'), list) or any(not isinstance(t,str) for t in row['content']):
+                raise ValueError("NaturalConv content missing")
+            yield {"unit_id":str(row['dialog_id']),"unit_kind":"whole-dialogue",
+                   "input":{"turns":deepcopy(row['content'])},
+                   "annotations":{"document_id":row.get('document_id'),"grounding_document_loaded":False},"original":deepcopy(row)}
+    elif kind == "toolace":
+        if not isinstance(value, list): raise ValueError("ToolACE requires a record array")
+        for index, row in enumerate(value):
+            turns = row.get("conversations")
+            if not isinstance(turns, list) or not isinstance(row.get("system"), str):
+                raise ValueError("ToolACE system and conversations required")
+            if any(not isinstance(t, dict) or not isinstance(t.get("from"), str) or
+                   not isinstance(t.get("value"), str) for t in turns):
+                raise ValueError("invalid ToolACE turn")
+            yield {"unit_id": str(index), "unit_kind": "whole-tool-dialogue",
+                   "input": {"system_and_tool_descriptions": row["system"],
+                             "user_turns": [{"turn_index": i, **deepcopy(t)} for i,t in enumerate(turns) if t["from"] == "user"]},
+                   "annotations": {"non_user_turns": [{"turn_index": i, **deepcopy(t)} for i,t in enumerate(turns) if t["from"] != "user"],
+                                   "label_origin": "upstream_generated_not_reexecuted",
+                                   "view_scope": "survey only; user turns are not one simultaneous agent input"},
+                   "original": deepcopy(row)}
+    elif kind == "schema-document":
+        if not isinstance(value, (dict, bool)):
+            raise ValueError("JSON schema must be an object or boolean")
+        yield {"unit_id": str(value.get("$id", "schema")) if isinstance(value, dict) else "boolean-schema",
+               "unit_kind": "schema-document", "input": {"schema": deepcopy(value)},
+               "annotations": {}, "original": deepcopy(value)}
+    elif kind == "crosswoz":
         if not isinstance(value, dict):
             raise ValueError("CrossWOZ requires a dialogue-ID mapping")
         for key, dialogue in value.items():

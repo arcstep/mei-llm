@@ -1,0 +1,16 @@
+{
+  "mode": "nemotron_cpt",
+  "max_records_per_source": 1000,
+  "sources": [
+    {
+      "id": "nemotron-interactive_agent",
+      "path": "corpus/pools/nemotron-raw-20260913-v1/data__interactive_agent.jsonl",
+      "sha256": "dcfeda22372fa707c979cab29ddfe896b89a933f15ed4acbb4f16e7e3787d9dd"
+    },
+    {
+      "id": "nemotron-tool_calling",
+      "path": "corpus/pools/nemotron-raw-20260913-v1/data__tool_calling.jsonl",
+      "sha256": "f537a901d38a999627b8fe59e77a1007af0d79d71a892ad9a4a3d80456e5601b"
+    }
+  ]
+}

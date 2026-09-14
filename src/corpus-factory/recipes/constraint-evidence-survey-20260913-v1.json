@@ -1,0 +1,35 @@
+{
+  "sources": [
+    {
+      "source_id": "duckdb-constraint-tests",
+      "github_repository": "duckdb/duckdb",
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/duckdb/frame.json",
+      "catalog_frame_sha256": "97b9904210cca185c9b0a3f71be66b8321ca4f986c6e446fd3aea2dc726ab83f",
+      "patterns": [
+        "test/sql/constraints/*.test"
+      ],
+      "format": "text",
+      "role": "constraint-input-expected-result-evidence",
+      "scope": "fixed-version original tests; execution and prerequisite binding pending",
+      "language": "en",
+      "production_status": "hold_until_review"
+    },
+    {
+      "source_id": "great-expectations-constraint-tests",
+      "github_repository": "great-expectations/great_expectations",
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/great-expectations/frame.json",
+      "catalog_frame_sha256": "86b22b5e440e84ced56e61bcd33939dbb74505fb0f16cca076dc7fe0ae344a2b",
+      "patterns": [
+        "tests/integration/data_sources_and_expectations/expectations/test_expect_*.py"
+      ],
+      "format": "text",
+      "role": "constraint-input-expected-result-evidence",
+      "scope": "fixed-version original tests; execution and prerequisite binding pending",
+      "language": "en",
+      "production_status": "hold_until_review"
+    }
+  ],
+  "shards_per_wave": 32,
+  "download_workers": 1,
+  "max_network_bytes": 67108864
+}

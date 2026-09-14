@@ -1,0 +1,45 @@
+{
+  "purpose": "candidate_preparation",
+  "records_per_shard": 10000,
+  "seed": 20260913,
+  "download_workers": 1,
+  "sources": [
+    {
+      "format": "relation",
+      "official_split": "upstream-unspecified",
+      "relation_kind": "naturalconv",
+      "rights": "noncommercial-research-only-pending-review",
+      "role": "colloquial",
+      "source_id": "naturalconv",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/extended-dialogue-content-20260913-v1/naturalconv/raw-1a800a2777f6fb8127b0"
+      ],
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/extended-dialogue-content-20260913-v1/survey.json"
+    },
+    {
+      "archive_member": "train.json",
+      "format": "relation",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/relation-survey-20260913-v1/crosswoz/raw-3ad844b33d46313ff4b0"
+      ],
+      "official_split": "train",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/relation-survey-20260913-v1",
+      "relation_kind": "crosswoz",
+      "role": "colloquial",
+      "source_id": "crosswoz",
+      "source_revision": "df82c9fdff91b9b130f2d6b89110d3870ba6260e"
+    },
+    {
+      "archive_member": "source-data/all_train10000.json",
+      "format": "relation",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-artifact-20260913-v1/risawoz/raw-98b8e0470543833bcff9"
+      ],
+      "official_split": "train",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-artifact-20260913-v1/survey.json",
+      "relation_kind": "risawoz",
+      "role": "colloquial",
+      "source_id": "risawoz-train"
+    }
+  ]
+}

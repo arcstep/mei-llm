@@ -1,0 +1,10 @@
+{
+  "mode": "v12_inputs_freeze",
+  "release_id": "mei-v12-cpt-inputs-20260914-v1",
+  "seed": 20260914,
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-20260914-v1/RELEASE.json",
+  "tokenizer_train_sample": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/train.jsonl",
+  "tokenizer_dev_sample": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/dev.jsonl",
+  "corpus_plan": "src/corpus-factory/recipes/v12-three-stage-corpus-20260914-v1.json",
+  "release_dir": "corpus/pools/mei-v12-cpt-inputs-20260914-v1"
+}

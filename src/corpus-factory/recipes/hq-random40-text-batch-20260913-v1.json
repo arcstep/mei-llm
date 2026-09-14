@@ -1,0 +1,20 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "sources": [
+    {
+      "source_id": "fineweb2-hq-cmn-hani",
+      "role": "foundation_language",
+      "repository": "epfml/FineWeb2-HQ",
+      "frozen_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/hq-survey-repair-20260913-v1/fineweb2-hq-cmn-hani/frame.json",
+      "frozen_frame_sha256": "10cfee154c0c7760dc38daf329599176daa7f3853ef097528d33349562aca8c1",
+      "sampling_note": "First usable batch: 1000 whole records per chosen shard, seeded row-group/row sampling; no teacher grading.",
+      "random_shard_count": 40
+    }
+  ],
+  "records_per_shard": 1000,
+  "download_workers": 2,
+  "max_network_bytes": 8589934592,
+  "reserve_disk_bytes": 107374182400,
+  "purpose": "candidate_preparation"
+}

@@ -1,0 +1,145 @@
+{
+  "sources": [
+    {
+      "source_id": "opensubtitles-zh-CN",
+      "role": "authored-dialogue-subtitles",
+      "format": "remote-zip",
+      "revision": "v2024",
+      "member_patterns": [
+        "*.xml"
+      ],
+      "member_format": "xml-subtitles",
+      "catalog_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/opus-language-discovery-20260913-v1/catalog-opensubtitles-zh-CN.raw",
+      "catalog_sha256": "b6bd0a62e783ab89eed33af8429607079f53c5b2c199a959e454857bfe6cb835",
+      "published_counts": {
+        "alignment_pairs": 4926123,
+        "corpus": "OpenSubtitles",
+        "documents": 49971,
+        "id": 673741,
+        "latest": "True",
+        "preprocessing": "raw",
+        "size": 1585648,
+        "source": "zh_CN",
+        "source_tokens": 29966609,
+        "target": "",
+        "target_tokens": "",
+        "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_CN.zip",
+        "version": "v2024"
+      },
+      "http_files": [
+        {
+          "path": "zh_CN.zip",
+          "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_CN.zip",
+          "bytes": null
+        }
+      ],
+      "scope": "whole subtitle versions; title/work grouping and language validation pending"
+    },
+    {
+      "source_id": "opensubtitles-zh-TW",
+      "role": "authored-dialogue-subtitles",
+      "format": "remote-zip",
+      "revision": "v2024",
+      "member_patterns": [
+        "*.xml"
+      ],
+      "member_format": "xml-subtitles",
+      "catalog_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/opus-language-discovery-20260913-v1/catalog-opensubtitles-zh-CN.raw",
+      "catalog_sha256": "b6bd0a62e783ab89eed33af8429607079f53c5b2c199a959e454857bfe6cb835",
+      "published_counts": {
+        "alignment_pairs": 1639907,
+        "corpus": "OpenSubtitles",
+        "documents": 35132,
+        "id": 673746,
+        "latest": "True",
+        "preprocessing": "raw",
+        "size": 1100047,
+        "source": "zh_TW",
+        "source_tokens": 9877826,
+        "target": "",
+        "target_tokens": "",
+        "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_TW.zip",
+        "version": "v2024"
+      },
+      "http_files": [
+        {
+          "path": "zh_TW.zip",
+          "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_TW.zip",
+          "bytes": null
+        }
+      ],
+      "scope": "whole subtitle versions; title/work grouping and language validation pending"
+    },
+    {
+      "source_id": "opensubtitles-zh-ze",
+      "role": "authored-dialogue-subtitles",
+      "format": "remote-zip",
+      "revision": "v2024",
+      "member_patterns": [
+        "*.xml"
+      ],
+      "member_format": "xml-subtitles",
+      "catalog_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/opus-language-discovery-20260913-v1/catalog-opensubtitles-zh-CN.raw",
+      "catalog_sha256": "b6bd0a62e783ab89eed33af8429607079f53c5b2c199a959e454857bfe6cb835",
+      "published_counts": {
+        "alignment_pairs": 11126794,
+        "corpus": "OpenSubtitles",
+        "documents": 10483,
+        "id": 673751,
+        "latest": "True",
+        "preprocessing": "raw",
+        "size": 333874,
+        "source": "zh_ze",
+        "source_tokens": 67388300,
+        "target": "",
+        "target_tokens": "",
+        "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_ze.zip",
+        "version": "v2024"
+      },
+      "http_files": [
+        {
+          "path": "zh_ze.zip",
+          "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_ze.zip",
+          "bytes": null
+        }
+      ],
+      "scope": "whole subtitle versions; title/work grouping and language validation pending"
+    },
+    {
+      "source_id": "ted2020-zh-cn",
+      "role": "speech-transcript",
+      "format": "remote-zip",
+      "revision": "v1",
+      "archive_transport": "whole-bounded",
+      "member_patterns": [
+        "*.xml"
+      ],
+      "member_format": "xml-subtitles",
+      "published_counts": {
+        "alignment_pairs": 399174,
+        "corpus": "TED2020",
+        "documents": 3827,
+        "id": 444574,
+        "latest": "True",
+        "preprocessing": "raw",
+        "size": 19440,
+        "source": "zh_cn",
+        "source_tokens": 2366480,
+        "target": "",
+        "target_tokens": "",
+        "url": "https://object.pouta.csc.fi/OPUS-TED2020/v1/raw/zh_cn.zip",
+        "version": "v1"
+      },
+      "http_files": [
+        {
+          "path": "zh_cn.zip",
+          "url": "https://object.pouta.csc.fi/OPUS-TED2020/v1/raw/zh_cn.zip",
+          "bytes": null
+        }
+      ]
+    }
+  ],
+  "seed": 20260913,
+  "records_per_shard": 200,
+  "max_network_bytes": 4294967296
+}

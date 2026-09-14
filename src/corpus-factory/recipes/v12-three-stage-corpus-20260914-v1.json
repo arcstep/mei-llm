@@ -1,0 +1,1296 @@
+{
+  "schema": "mei-corpus-staged-selection-plan-v1",
+  "plan_id": "v12-three-stage-corpus-20260914-v1",
+  "status": "inputs_ready_release_bound",
+  "generation": "v1.2",
+  "training_authorized": false,
+  "acquisition_policy": "no_new_download_batches_in_this_step",
+  "user_decisions": {
+    "generation_sequence": [
+      "v1.0",
+      "v1.1",
+      "v1.2",
+      "v1.3",
+      "v1.4"
+    ],
+    "cumulative_base_targets": [
+      1000000000,
+      2000000000,
+      2800000000
+    ],
+    "prefer_single_use": true,
+    "allow_rebalance": true,
+    "allow_repetition_to_fill_quota": false,
+    "natural_language_ratio": [
+      8,
+      1,
+      1
+    ],
+    "approximate_total_may_be_below_3b": true,
+    "oral_priority": "Simplified Chinese; no required English oral quota",
+    "natural_language_ratio_status": "8:1:1 preference, oral exception approved; report actual rather than force ratios",
+    "vocab_size": 24000,
+    "capacity_comparison_cancelled": true
+  },
+  "allocation_status": "frozen_in_mei-v12-cpt-inputs-20260914-v4",
+  "reference_tokenizer": {
+    "current": "tokenizer/zh-24k-v3.model",
+    "frozen_at": "2026-09-05T01:45:34.525854+00:00",
+    "manifest": "tokenizer-zh-24k-v3-manifest.json",
+    "model_sha256": "5aa8bb7b426db8e3c6327066568b37e194090af3900d4c2ead09144756124945",
+    "schema": "mei-51m-tokenizer-pointer-v1",
+    "status": "frozen",
+    "supersedes": "zh-32k-v2",
+    "tokenizer_id": "zh-24k-v3",
+    "vocab_size": 24000
+  },
+  "count_basis": "zh-24k-v3 encode_document, BOS/EOS included; completed candidate text only",
+  "frozen_count_basis": "mei-24k-lossless-20260914-v2 encode_document; exact text dedup; group split before windowing",
+  "frozen_release": {
+    "path": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/RELEASE.json",
+    "sha256": "9dc46b0d7e808a97a8cfb51b4291174f148909c0bf98cae38ad3418ff2bda148",
+    "status": "inputs_ready",
+    "eligible_unique_tokens": 3385619450,
+    "selected_net_tokens": 2764543719,
+    "planned_exposure_tokens": 2764543694
+  },
+  "final_tokenizer": {
+    "tokenizer_id": "mei-24k-lossless-20260914-v2",
+    "manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-20260914-v2/RELEASE.json",
+    "model_sha256": "357d2cb7c6bfc2580605a601d40866cd9fa2e41669764f81630ab928d0277174",
+    "vocab_size": 24000,
+    "encoding_profile_id": "mei-lossless-identity-v1"
+  },
+  "evidence": [
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/corpus-domain-language-matrix-20260913-v4/manifest.json",
+      "sha256": "3808b1712d745015a1bc2974ab35fad172259d1854902720c26b48a8d4c276b7"
+    },
+    {
+      "path": "corpus/pools/chinese-author-novel-candidate-20260914-v2/manifest.json",
+      "sha256": "a9290ff529c8a9cad1b8e7be36a3d8eb654b5d68aebf4232089e18500c9d2fe1"
+    }
+  ],
+  "candidate_total_tokens": 3428459823,
+  "selected_net_tokens": 2764543719,
+  "quality_admitted_tokens": 3385619450,
+  "planning_target_tokens": 2800000000,
+  "domains": [
+    {
+      "domain": "foundation",
+      "label": "基础语言理解",
+      "candidate_tokens": 1837390410,
+      "planning_target_tokens": 1700000000,
+      "selected_net_tokens": 1678601642,
+      "source_ids": [
+        "web-hq-zh",
+        "wiki-zh",
+        "wiki-en",
+        "wiki-en-foundation-expansion-20260913-v1",
+        "hk-traditional-foundation-expansion-20260913-v1"
+      ],
+      "language_target_tokens": {
+        "zh_hans": 1360000000,
+        "zh_hant": 170000000,
+        "en": 170000000
+      },
+      "language_target_status": "preference; materialization reports deviations"
+    },
+    {
+      "domain": "oral",
+      "label": "口语理解",
+      "candidate_tokens": 575880342,
+      "planning_target_tokens": 400000000,
+      "selected_net_tokens": 368281820,
+      "source_ids": [
+        "lccc-dialogue",
+        "naturalconv",
+        "opensubtitles-zh-CN",
+        "opensubtitles-zh-TW",
+        "ted2020-zh-cn"
+      ],
+      "language_policy": "Prioritize Simplified Chinese; retain useful Traditional; no English floor and no forced translation."
+    },
+    {
+      "domain": "literature",
+      "label": "文学与剧本",
+      "candidate_tokens": 73749587,
+      "planning_target_tokens": 50000000,
+      "selected_net_tokens": 52294822,
+      "source_ids": [
+        "literature-dialogue",
+        "literature-zh-translation",
+        "project-gutenberg",
+        "chinese-author-novel-cc-by-4"
+      ],
+      "language_policy": "Prefer useful Chinese works; retain English originals; no repetition or script conversion to force 8:1:1."
+    },
+    {
+      "domain": "code_structure",
+      "label": "代码/结构",
+      "candidate_tokens": 344275329,
+      "planning_target_tokens": 300000000,
+      "selected_net_tokens": 315351053,
+      "source_ids": [
+        "github-code",
+        "technical-guides",
+        "constraint-tests",
+        "schemastore-04787bb",
+        "json-schema-tests-f6fd52a",
+        "openapi-directory-latest-half-f04b8d0"
+      ]
+    },
+    {
+      "domain": "task_tools",
+      "label": "任务与工具",
+      "candidate_tokens": 597164155,
+      "planning_target_tokens": 350000000,
+      "selected_net_tokens": 350014382,
+      "source_ids": [
+        "crosswoz",
+        "risawoz",
+        "toolace",
+        "nemotron-interactive_agent",
+        "nemotron-tool_calling"
+      ]
+    }
+  ],
+  "source_inventory": [
+    {
+      "source_id": "constraint-tests",
+      "domain": "code_structure",
+      "candidate_tokens": 199006,
+      "records": 101,
+      "heuristic_language_cells": [
+        {
+          "language": "英文为主",
+          "tokens": 199006,
+          "records": 101
+        }
+      ]
+    },
+    {
+      "source_id": "crosswoz",
+      "domain": "task_tools",
+      "candidate_tokens": 2896746,
+      "records": 5012,
+      "heuristic_language_cells": [
+        {
+          "language": "简体为主",
+          "tokens": 2896746,
+          "records": 5012
+        }
+      ]
+    },
+    {
+      "source_id": "github-code",
+      "domain": "code_structure",
+      "candidate_tokens": 238627083,
+      "records": 68665,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 238443000,
+          "records": 68585
+        },
+        {
+          "language": "简体为主",
+          "tokens": 75220,
+          "records": 69
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 2629,
+          "records": 6
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 106234,
+          "records": 5
+        }
+      ]
+    },
+    {
+      "source_id": "hk-traditional-foundation-expansion-20260913-v1",
+      "domain": "foundation",
+      "candidate_tokens": 181400229,
+      "records": 582552,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 1066402,
+          "records": 1704
+        },
+        {
+          "language": "中文共有字／待判",
+          "tokens": 45518,
+          "records": 5624
+        },
+        {
+          "language": "简体为主",
+          "tokens": 7302,
+          "records": 847
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 10940178,
+          "records": 105582
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 169340829,
+          "records": 468795
+        }
+      ]
+    },
+    {
+      "source_id": "json-schema-tests-f6fd52a",
+      "domain": "code_structure",
+      "candidate_tokens": 359127,
+      "records": 244,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 359127,
+          "records": 244
+        }
+      ]
+    },
+    {
+      "source_id": "lccc-dialogue",
+      "domain": "oral",
+      "candidate_tokens": 89908782,
+      "records": 2955201,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 2986,
+          "records": 47
+        },
+        {
+          "language": "中文共有字／待判",
+          "tokens": 328043,
+          "records": 26132
+        },
+        {
+          "language": "简体为主",
+          "tokens": 89529042,
+          "records": 2927544
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 218,
+          "records": 15
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 48493,
+          "records": 1463
+        }
+      ]
+    },
+    {
+      "source_id": "literature-dialogue",
+      "domain": "literature",
+      "candidate_tokens": 5192347,
+      "records": 23,
+      "heuristic_language_cells": [
+        {
+          "language": "繁简混用",
+          "tokens": 1927478,
+          "records": 7
+        },
+        {
+          "language": "英文为主",
+          "tokens": 3264869,
+          "records": 16
+        }
+      ]
+    },
+    {
+      "source_id": "literature-zh-translation",
+      "domain": "literature",
+      "candidate_tokens": 41310,
+      "records": 1,
+      "heuristic_language_cells": [
+        {
+          "language": "繁简混用",
+          "tokens": 41310,
+          "records": 1
+        }
+      ]
+    },
+    {
+      "source_id": "naturalconv",
+      "domain": "oral",
+      "candidate_tokens": 3419858,
+      "records": 9993,
+      "heuristic_language_cells": [
+        {
+          "language": "简体为主",
+          "tokens": 3418864,
+          "records": 9991
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 994,
+          "records": 2
+        }
+      ]
+    },
+    {
+      "source_id": "nemotron-interactive_agent",
+      "domain": "task_tools",
+      "candidate_tokens": 90634266,
+      "records": 14974,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 90634266,
+          "records": 14974
+        }
+      ]
+    },
+    {
+      "source_id": "nemotron-tool_calling",
+      "domain": "task_tools",
+      "candidate_tokens": 497221276,
+      "records": 186881,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 497221028,
+          "records": 186880
+        },
+        {
+          "language": "简体为主",
+          "tokens": 248,
+          "records": 1
+        }
+      ]
+    },
+    {
+      "source_id": "openapi-directory-latest-half-f04b8d0",
+      "domain": "code_structure",
+      "candidate_tokens": 83069401,
+      "records": 1329,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 83069401,
+          "records": 1329
+        }
+      ]
+    },
+    {
+      "source_id": "opensubtitles-zh-CN",
+      "domain": "oral",
+      "candidate_tokens": 266195524,
+      "records": 33065,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 11881696,
+          "records": 332
+        },
+        {
+          "language": "简体为主",
+          "tokens": 234772273,
+          "records": 30826
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 39312,
+          "records": 4
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 19502243,
+          "records": 1903
+        }
+      ]
+    },
+    {
+      "source_id": "opensubtitles-zh-TW",
+      "domain": "oral",
+      "candidate_tokens": 208294232,
+      "records": 26515,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 17576758,
+          "records": 716
+        },
+        {
+          "language": "简体为主",
+          "tokens": 29940683,
+          "records": 4083
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 34863,
+          "records": 7
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 160741928,
+          "records": 21709
+        }
+      ]
+    },
+    {
+      "source_id": "project-gutenberg",
+      "domain": "literature",
+      "candidate_tokens": 67188361,
+      "records": 503,
+      "heuristic_language_cells": [
+        {
+          "language": "简体为主",
+          "tokens": 729338,
+          "records": 2
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 31067143,
+          "records": 203
+        },
+        {
+          "language": "英文为主",
+          "tokens": 35391880,
+          "records": 298
+        }
+      ]
+    },
+    {
+      "source_id": "risawoz",
+      "domain": "task_tools",
+      "candidate_tokens": 3207012,
+      "records": 9995,
+      "heuristic_language_cells": [
+        {
+          "language": "简体为主",
+          "tokens": 3206156,
+          "records": 9992
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 856,
+          "records": 3
+        }
+      ]
+    },
+    {
+      "source_id": "schemastore-04787bb",
+      "domain": "code_structure",
+      "candidate_tokens": 16854609,
+      "records": 975,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 16854609,
+          "records": 975
+        }
+      ]
+    },
+    {
+      "source_id": "technical-guides",
+      "domain": "code_structure",
+      "candidate_tokens": 5166103,
+      "records": 595,
+      "heuristic_language_cells": [
+        {
+          "language": "英文为主",
+          "tokens": 5166103,
+          "records": 595
+        }
+      ]
+    },
+    {
+      "source_id": "ted2020-zh-cn",
+      "domain": "oral",
+      "candidate_tokens": 8061946,
+      "records": 3827,
+      "heuristic_language_cells": [
+        {
+          "language": "简体为主",
+          "tokens": 8056616,
+          "records": 3826
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 5330,
+          "records": 1
+        }
+      ]
+    },
+    {
+      "source_id": "toolace",
+      "domain": "task_tools",
+      "candidate_tokens": 3204855,
+      "records": 3863,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 3199313,
+          "records": 3857
+        },
+        {
+          "language": "简体为主",
+          "tokens": 5542,
+          "records": 6
+        }
+      ]
+    },
+    {
+      "source_id": "web-hq-zh",
+      "domain": "foundation",
+      "candidate_tokens": 1094379944,
+      "records": 1208027,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 476159,
+          "records": 649
+        },
+        {
+          "language": "简体为主",
+          "tokens": 1050046763,
+          "records": 1157365
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 673696,
+          "records": 2538
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 43183326,
+          "records": 47475
+        }
+      ]
+    },
+    {
+      "source_id": "wiki-en",
+      "domain": "foundation",
+      "candidate_tokens": 10546457,
+      "records": 8200,
+      "heuristic_language_cells": [
+        {
+          "language": "英文为主",
+          "tokens": 10546457,
+          "records": 8200
+        }
+      ]
+    },
+    {
+      "source_id": "wiki-en-foundation-expansion-20260913-v1",
+      "domain": "foundation",
+      "candidate_tokens": 163753496,
+      "records": 156065,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 7,
+          "records": 1
+        },
+        {
+          "language": "简体为主",
+          "tokens": 15926,
+          "records": 1
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 859,
+          "records": 1
+        },
+        {
+          "language": "英文为主",
+          "tokens": 163736704,
+          "records": 156062
+        }
+      ]
+    },
+    {
+      "source_id": "wiki-zh",
+      "domain": "foundation",
+      "candidate_tokens": 387310284,
+      "records": 716558,
+      "heuristic_language_cells": [
+        {
+          "language": "中外文混合／其他",
+          "tokens": 12694808,
+          "records": 9395
+        },
+        {
+          "language": "中文共有字／待判",
+          "tokens": 3613,
+          "records": 247
+        },
+        {
+          "language": "简体为主",
+          "tokens": 92163352,
+          "records": 242822
+        },
+        {
+          "language": "繁体为主",
+          "tokens": 3701224,
+          "records": 18120
+        },
+        {
+          "language": "繁简混用",
+          "tokens": 278747287,
+          "records": 445974
+        }
+      ]
+    },
+    {
+      "source_id": "chinese-author-novel-cc-by-4",
+      "domain": "literature",
+      "candidate_tokens": 1327569,
+      "records": 276,
+      "heuristic_language_cells": null,
+      "language_note": "Source described as Traditional; not in matrix v4 classification."
+    }
+  ],
+  "candidate_files": [
+    {
+      "file": "corpus/pools/public-raw-candidate-20260913-v1/lccc-dialogue.jsonl",
+      "sha256": "4d90e90fec1bdc82d6ee8dc87e4e1858caf3eebbc7c22e6cebc9155ecec50081",
+      "records": 100000,
+      "tokens": 3041934
+    },
+    {
+      "file": "corpus/pools/public-raw-candidate-20260913-v1/technical-guides.jsonl",
+      "sha256": "2c7d6c65b0188c5de83e90e4c31d27bb3ed29376ad44a973e564ae0eef4cc84f",
+      "records": 157,
+      "tokens": 1048457
+    },
+    {
+      "file": "corpus/pools/public-raw-candidate-20260913-v1/constraint-tests.jsonl",
+      "sha256": "e1ac305831fd7fc8822a9fa83fec5486112ff141a493974d3e80ccacd4fb8982",
+      "records": 101,
+      "tokens": 199006
+    },
+    {
+      "file": "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl",
+      "sha256": "37686b9fabdf0ce938c0a3ee8117f876fff387330d06ae1567448d5a935dda03",
+      "records": 10,
+      "tokens": 2068451
+    },
+    {
+      "file": "corpus/pools/dialogue-expanded-candidate-20260913-v1/lccc-dialogue.jsonl",
+      "sha256": "da67f1b7157bc365c5d61dfa2880ff715f1c543db7dcaea3242361f79a74ea58",
+      "records": 965879,
+      "tokens": 29388010
+    },
+    {
+      "file": "corpus/pools/dialogue-expanded-candidate-20260913-v1/naturalconv.jsonl",
+      "sha256": "fe8e18ce9d127d03e6266d1bd754eb143c5019fc6cd2ed9b04ac36db5c827c01",
+      "records": 9993,
+      "tokens": 3419858
+    },
+    {
+      "file": "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+      "sha256": "5ce80e6cbc66c154975368e34433d7e89d36ea52bccf7d88322fd466118f1cac",
+      "records": 5012,
+      "tokens": 2896746
+    },
+    {
+      "file": "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl",
+      "sha256": "849174be21c0d8a8fd6f47318c2a824ae30c1f81e5ff5f06128d65c6be786966",
+      "records": 9995,
+      "tokens": 3207012
+    },
+    {
+      "file": "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-zh.jsonl",
+      "sha256": "063f1661a7779cb756a211a66319cc9d807723f8d1a3057140ba6f189d7ae927",
+      "records": 47905,
+      "tokens": 27303778
+    },
+    {
+      "file": "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-en.jsonl",
+      "sha256": "06742af1759f23b00ba4ca32bd76803076bb0094f2f7d9c819ccbd8e1e2c88f7",
+      "records": 8200,
+      "tokens": 10546457
+    },
+    {
+      "file": "corpus/pools/hq-random40-candidate-20260913-v1/web-hq-zh.jsonl",
+      "sha256": "75a5b0987942ce042c33a0d8a5366bc621eef6578d1c95d3f2d308bc439cdacd",
+      "records": 39892,
+      "tokens": 37562519
+    },
+    {
+      "file": "corpus/pools/wiki-foundation-scale-20260913-v1/part-0000.jsonl",
+      "sha256": "96cf82c12d19535230d9b583e888df7b3fba0ba49e5e35bcf34496c5852f0f6b",
+      "records": 112769,
+      "tokens": 124487511
+    },
+    {
+      "file": "corpus/pools/wiki-foundation-scale-20260913-v1/part-0001.jsonl",
+      "sha256": "e1565f73ab3a6ded6d692f0e0f8590b53778d910d737666e2393fec43e56c4db",
+      "records": 110582,
+      "tokens": 52540057
+    },
+    {
+      "file": "corpus/pools/wiki-foundation-scale-20260913-v1/part-0002.jsonl",
+      "sha256": "1870ddcfb8294318789860ff23fbbb5cb2d061c487aea50b09ccddd63977782d",
+      "records": 112784,
+      "tokens": 29449832
+    },
+    {
+      "file": "corpus/pools/wiki-foundation-scale-20260913-v1/part-0003.jsonl",
+      "sha256": "e83700e6ee03fc322e32399ce71e322a3cc530aebe6413da550f979ce5276ec3",
+      "records": 110987,
+      "tokens": 55702186
+    },
+    {
+      "file": "corpus/pools/wiki-foundation-scale-20260913-v1/part-0004.jsonl",
+      "sha256": "582736d35c6a06da2f0ca6cc2f120847394f83cec06d026380c0b890806557cf",
+      "records": 110801,
+      "tokens": 52003950
+    },
+    {
+      "file": "corpus/pools/wiki-foundation-scale-20260913-v1/part-0005.jsonl",
+      "sha256": "100a5ac66b49599669ae7e9b139a4db938a8122d24e68e93142940de4a58d19a",
+      "records": 110730,
+      "tokens": 45822970
+    },
+    {
+      "file": "corpus/pools/lccc-complete-filtered-20260913-v1/lccc-dialogue.jsonl",
+      "sha256": "e4520ade6e72d98309ad6e0e126214d809339d51afd938f10b3e7a92b9ceea38",
+      "records": 1889322,
+      "tokens": 57478838
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0000.jsonl",
+      "sha256": "7fc552d8207880862f0f3a38d2ece8448d52b0c48f744a93f70133458bb8208f",
+      "records": 41000,
+      "tokens": 36337685
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0001.jsonl",
+      "sha256": "017aad7e3e7a19b27d46459dd5b0a16c1b70ce77cf32ba06b96248680187d49d",
+      "records": 41000,
+      "tokens": 33803237
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0002.jsonl",
+      "sha256": "d3d3b603b6e19e3876118870f7938d113c4df9f6bddc3f1d4d671c94446f5080",
+      "records": 40332,
+      "tokens": 32798943
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0003.jsonl",
+      "sha256": "247c10408d23f4ab80bcb2497d05466fb9dd3161ffa0cfbb3d8e74d9bb24587d",
+      "records": 40528,
+      "tokens": 34171164
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0004.jsonl",
+      "sha256": "2d514648dc403b2d63016c8f736e17e2c6ac8c8a7b9f5f109b576661347ddbf4",
+      "records": 40899,
+      "tokens": 34155146
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0005.jsonl",
+      "sha256": "6d6490ae919a6203458d9b9e5d271be9510c6cceba2defb8e68f2c1ce043030c",
+      "records": 23000,
+      "tokens": 23630402
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0006.jsonl",
+      "sha256": "9d2213e7277addc621915bf72ddbfd7528eecc7d06325fde5826a5e290d4e1fb",
+      "records": 36826,
+      "tokens": 34015676
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0007.jsonl",
+      "sha256": "3adcd5bfe1de0563f4ac834ff6a51f0ac0c50ca049b3d75b93da589cfdfaac8e",
+      "records": 34000,
+      "tokens": 31079028
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0008.jsonl",
+      "sha256": "2fb81e99d80ea7fe304c4919b382ea1089e3d2dd10c24c2333b4de1a679a3c9b",
+      "records": 34946,
+      "tokens": 32020464
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0009.jsonl",
+      "sha256": "af5b17f3623a16c3df8e27f8c61916a1b1e6505d17fa47aad35aba6380d1fcfb",
+      "records": 35559,
+      "tokens": 29865838
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0010.jsonl",
+      "sha256": "d4e7c4098cccd88b1c0d27c0aa81a7b62f3604d2ec9895964aa118f50ea676bf",
+      "records": 35243,
+      "tokens": 30569717
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0011.jsonl",
+      "sha256": "107132dbf5dbea6e87f39f2f11ab6ee5235d6352d5ae661597db8e5495c713e5",
+      "records": 11493,
+      "tokens": 10036641
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0012.jsonl",
+      "sha256": "475313c575cf49c27bd503df19b6fe154943051ea0c39864604a9629cecd8440",
+      "records": 14125,
+      "tokens": 12686171
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0013.jsonl",
+      "sha256": "d85bfcce1f2e49855e9c726785416b6be6e8179901c4df7310ad2af379057e38",
+      "records": 13657,
+      "tokens": 12203038
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0014.jsonl",
+      "sha256": "e6cd13d6f76f4c3cb8d06dd1cb4d09c73cfc0b1a3836c60a5d415074c945b203",
+      "records": 17977,
+      "tokens": 16249519
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0015.jsonl",
+      "sha256": "0583fd48b52bb811fbd7ccf95de0af7628ef874a7d983b76e103b51bc07e1b16",
+      "records": 17000,
+      "tokens": 15489494
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0016.jsonl",
+      "sha256": "fbfd617b0ba055fddd159d288f72a6e626396ae9e45f51254ed1219ca56a763d",
+      "records": 27993,
+      "tokens": 26121986
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0017.jsonl",
+      "sha256": "11029077a599015325bff87e16ce1f76227b6f8dc6553fa5c4d5def691e1fbe7",
+      "records": 24103,
+      "tokens": 25300653
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0018.jsonl",
+      "sha256": "d32b98e4eec2f5d8a8e168df035253cde97b6382ce74373d54372b11dbd6e2b0",
+      "records": 23358,
+      "tokens": 24081219
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0019.jsonl",
+      "sha256": "485d85ff51035f4cbfc5134d7bd1418c754f6ded3bba7f42df7b10a478ba6139",
+      "records": 24025,
+      "tokens": 24319244
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0020.jsonl",
+      "sha256": "a2fc4e5786ac83a54b46095faa74bca0c164bb2508f02a93284e0ac624df751a",
+      "records": 35650,
+      "tokens": 32553416
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0021.jsonl",
+      "sha256": "d9836de9367334173bcef08a0b8393f0ec8fe3589b32b7a7293b6e6aefd9cd7f",
+      "records": 34845,
+      "tokens": 31731596
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0022.jsonl",
+      "sha256": "fc45d8f7c9f571ec828a49a983c036fb77daf08fff54520aa5c8f46462d79aeb",
+      "records": 35000,
+      "tokens": 32536468
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0023.jsonl",
+      "sha256": "e7af6b50c3d0a18c70d968dd384f6e6d3715a28b832d66565394843186f3097b",
+      "records": 34694,
+      "tokens": 31200599
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0024.jsonl",
+      "sha256": "1a68d88823de61735b36e0687b61e154282ecf71769df72b2aecfd900a3a5dd2",
+      "records": 32354,
+      "tokens": 29197859
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0025.jsonl",
+      "sha256": "ea0316a6c4f86d5b9b491a0376cc7280f2f46fd07423f99d41563255851bbcda",
+      "records": 33354,
+      "tokens": 29457393
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0026.jsonl",
+      "sha256": "0821a930a8ae5803f9f295319a1908a13b3ed7e9513751ba0553c62c97a0603c",
+      "records": 36000,
+      "tokens": 30275725
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0027.jsonl",
+      "sha256": "82958590f47e9f13d1ed90d766bf5c95055974d7819837ff69d2b4493423fa2b",
+      "records": 15812,
+      "tokens": 16262771
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0028.jsonl",
+      "sha256": "37cacda686fd8ff9a1202e11d28e94bf5262ee05cc31224ffb176751da14db82",
+      "records": 15000,
+      "tokens": 15348746
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0029.jsonl",
+      "sha256": "395dad4dbf52425be70749c4842dc46d87807a4118f64e0b50e21b86b0071291",
+      "records": 16955,
+      "tokens": 17095575
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0030.jsonl",
+      "sha256": "cd134f47afbd2096d299458b550d31c3700745bd7d24dd88aa4f854fcd8963f4",
+      "records": 16000,
+      "tokens": 16509195
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0031.jsonl",
+      "sha256": "01ec1fb474a53f953e33054d0fa53bc269ced1142e30d6ed28b1fb7d003bf8be",
+      "records": 17000,
+      "tokens": 17068372
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0032.jsonl",
+      "sha256": "2f4d0f78b75fc5fc5d95609ab57189bac219ca98b2659e6c6283e9f2f15964c0",
+      "records": 29000,
+      "tokens": 27063812
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0033.jsonl",
+      "sha256": "bff66831fb12a3e45c6ec5618110518a05f443b975a5d4565fadc7423553de87",
+      "records": 33449,
+      "tokens": 28982606
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0034.jsonl",
+      "sha256": "f6ab1b73c63362b899d2144234a0d23b42dd20a78a27acd4c59c61b434279d6c",
+      "records": 33541,
+      "tokens": 29738733
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0035.jsonl",
+      "sha256": "f24f59bfcc0b4f2f2d2a0217173b95b791eab17b628a6ece4e2f28cd4a205976",
+      "records": 34299,
+      "tokens": 30158071
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0036.jsonl",
+      "sha256": "08d5fd0541d187d189bd9613fa10ff0a2e900f13fbd098516ec1d35a786339b6",
+      "records": 34000,
+      "tokens": 29935251
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0037.jsonl",
+      "sha256": "2201bad17b50c63fcfa61b5f16fa8b2afb8fc16e58e07ed8d0e6e8529de18c2e",
+      "records": 34463,
+      "tokens": 30579411
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0038.jsonl",
+      "sha256": "a84dbd2a66452800a52e512a55ee49cfa0bdc68d492b247f7bf4adefaf7105f6",
+      "records": 34821,
+      "tokens": 31638030
+    },
+    {
+      "file": "corpus/pools/hq-foundation-scale-20260913-v3/part-0039.jsonl",
+      "sha256": "22aa85b47b62d0986bff7b7d7c19fa52502510de60f5fa751a555a2926ee6baa",
+      "records": 34835,
+      "tokens": 30548622
+    },
+    {
+      "file": "corpus/pools/subtitle-scale-20260913-v1/opensubtitles-zh-CN.jsonl",
+      "sha256": "b734c9b47435bb5ac7790ad62eda3d57c9e8e0cd517391c1440cb6e6e51a03ee",
+      "records": 33065,
+      "tokens": 266195524
+    },
+    {
+      "file": "corpus/pools/subtitle-scale-20260913-v1/opensubtitles-zh-TW.jsonl",
+      "sha256": "849c83aa9dbf28c0881d3b11f8005825692cda87a87e5dc15fd3938c514b73ff",
+      "records": 26515,
+      "tokens": 208294232
+    },
+    {
+      "file": "corpus/pools/subtitle-scale-20260913-v1/ted2020-zh-cn.jsonl",
+      "sha256": "0aca46f76fb1e0c1cf3e63a5d5906b3d03e82303186473f3cda99343771a3e11",
+      "records": 3827,
+      "tokens": 8061946
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0000.jsonl",
+      "sha256": "23c8ab650907eefe72a8a1978f9bdec289ec0af54dca1e9c568e11b464b935f8",
+      "records": 4568,
+      "tokens": 13993855
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0001.jsonl",
+      "sha256": "d04354e31cb75bc2995c16ad7d78aa6eacd91bfe1f58eb5e9bf725f06df68f03",
+      "records": 4561,
+      "tokens": 15883936
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0002.jsonl",
+      "sha256": "06f7eb17670360dde8c27107cab21527adbc4373a6ca319d78c5cd50a56d2ae1",
+      "records": 4409,
+      "tokens": 15608054
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0003.jsonl",
+      "sha256": "5df62740e8871c203d56644ea5e50163492fab7978db7f43194257e9466b3251",
+      "records": 4894,
+      "tokens": 21199031
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0004.jsonl",
+      "sha256": "1ea6bc42d3248830d92eb3f60ee25bcfdb3677c88fbbec46f4a31432cd076e24",
+      "records": 5085,
+      "tokens": 16408532
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0005.jsonl",
+      "sha256": "aa96696aacf02ef24792ed7f5ef0e1738ad484cc52b6ac8b95e728d10773cf41",
+      "records": 4958,
+      "tokens": 15426525
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0006.jsonl",
+      "sha256": "6bc1896e83095e1cffd372a5adf5714d1ed3c50b38f64c48b617d57c50a0d6f7",
+      "records": 4507,
+      "tokens": 15473965
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0007.jsonl",
+      "sha256": "bf84d7b082aab1474087f46209361dfda3e4d067f2e1eadc262f7c2ea7f67308",
+      "records": 4883,
+      "tokens": 17032210
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0008.jsonl",
+      "sha256": "caeac39e01db8ea4f413e117a070f3f26a31ffc94fb3007ae1209722b5849f43",
+      "records": 4929,
+      "tokens": 16607463
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0009.jsonl",
+      "sha256": "f21cf2f3fadfcc2c11ed9bf52c0912343d9fb4064ad0fe7f76f358b30dbc81e3",
+      "records": 1152,
+      "tokens": 5355678
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0010.jsonl",
+      "sha256": "099d5390584f44c6595d3d4368f4572b7ec4526fce9b719abe611e636cd0d506",
+      "records": 4576,
+      "tokens": 15346412
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0011.jsonl",
+      "sha256": "9d092a50b55c40510423a449393fa3d82bea26de78570537710023a394b4e9b6",
+      "records": 4964,
+      "tokens": 19560777
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0012.jsonl",
+      "sha256": "a09d7056fb447784a67dcca12a173095d9f2dcb88fe3f60b5a5d5f8bdb704435",
+      "records": 981,
+      "tokens": 2871742
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0013.jsonl",
+      "sha256": "468fd6db2026b693a6af3d0665d5e489efaa458ed9e2947a0a77b6d3a5b935cb",
+      "records": 4656,
+      "tokens": 15250407
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0014.jsonl",
+      "sha256": "2c57e527294f9a03f4edd85f364da3132d7c5077bc2d0ee0b8ffa4c574900417",
+      "records": 4977,
+      "tokens": 16112659
+    },
+    {
+      "file": "corpus/pools/code-scale-20260913-v1/part-0015.jsonl",
+      "sha256": "847ce14c680f29b2a6ef90e7321eb7e3dac80609cd9b54e6da6dcc6cab125b40",
+      "records": 4565,
+      "tokens": 16495837
+    },
+    {
+      "file": "corpus/pools/tutorial-complete-candidate-20260913-v2/technical-guides.jsonl",
+      "sha256": "58e317494367866cdc15067684960d40f9e405a7c7cbe2073b56392bf2965d9a",
+      "records": 438,
+      "tokens": 4117646
+    },
+    {
+      "file": "corpus/pools/literary-expansion-candidate-20260913-v1/literature-dialogue.jsonl",
+      "sha256": "66731004ccb62562a30d4a0bbc7533fd6ac602baac81c8cd7c192b26d36dda5f",
+      "records": 13,
+      "tokens": 3123896
+    },
+    {
+      "file": "corpus/pools/translated-literature-candidate-20260913-v2/literature-zh-translation.jsonl",
+      "sha256": "97b1dab17493f590e180f035f7cbcebbcb27c9549647009b2630d36bd86e1d73",
+      "records": 1,
+      "tokens": 41310
+    },
+    {
+      "file": "corpus/pools/gutenberg-literary-expansion-20260913-v2/literature.jsonl",
+      "sha256": "f646755c659168dde7184fd2043680b42e70d1bb7755056ad6771b8684c1d5f7",
+      "records": 503,
+      "tokens": 67188361
+    },
+    {
+      "file": "corpus/pools/wiki-en-foundation-expansion-20260913-v1/part-0000.jsonl",
+      "sha256": "bf1341d0391be5a99a4c088c1cf1be583fa31b52597fe3e3aff42aa5b4e77e99",
+      "records": 156065,
+      "tokens": 163753496
+    },
+    {
+      "file": "corpus/pools/structured-archives-expansion-20260913-v1/part-000.jsonl",
+      "sha256": "58ca292c4c199ae1037b4b0604f0ac9038b3c7a821ddfcaf986774acd634f2aa",
+      "records": 975,
+      "tokens": 16854609
+    },
+    {
+      "file": "corpus/pools/structured-archives-expansion-20260913-v1/part-001.jsonl",
+      "sha256": "b90e033ba5129f87b45cb7453bbb031da4cae12c5b3bdb49e7ff6276c1fbde26",
+      "records": 244,
+      "tokens": 359127
+    },
+    {
+      "file": "corpus/pools/openapi-latest-half-expansion-20260913-v1/part-000.jsonl",
+      "sha256": "2601542a1abc010410e6918f312150e2521e6c3cf26fc68d18482a507af62f44",
+      "records": 1329,
+      "tokens": 83069401
+    },
+    {
+      "file": "corpus/pools/hk-traditional-foundation-expansion-20260913-v1/part-0000.jsonl",
+      "sha256": "8699ddcb450d1ebd60b33990c1abe5cc63b001d3431d29ca7cf60a8456e0e315",
+      "records": 439233,
+      "tokens": 140727249
+    },
+    {
+      "file": "corpus/pools/hk-traditional-foundation-expansion-20260913-v1/part-0001.jsonl",
+      "sha256": "a81c71bf51893ff3f4ece454f06a46d3b8e47e26d5e6e9e7d2fd594040129c5a",
+      "records": 143320,
+      "tokens": 40673089
+    },
+    {
+      "file": "corpus/pools/toolace-cpt-candidate-20260913-v1/toolace.jsonl",
+      "sha256": "1d80ebdc34421291a197a67f656a03918882ff86fc280da5a9a4617f61931427",
+      "records": 3863,
+      "tokens": 3204855
+    },
+    {
+      "file": "corpus/pools/nemotron-cpt-full-20260913-v2/candidate.jsonl",
+      "sha256": "f9a6e7753cfbba3fdfc780775ef65c7e6cdb5c59569e824ca0873a139791112e",
+      "records": 201855,
+      "tokens": 587855542
+    },
+    {
+      "file": "corpus/pools/chinese-author-novel-candidate-20260914-v2/chinese-author-novel-cc-by-4.jsonl",
+      "sha256": "d80e41325d47c8b642f1eb71223f8be244ac11f35856a9cc669a031fb9dbaae8",
+      "tokens": 1327569,
+      "records": 276
+    }
+  ],
+  "phases": [
+    {
+      "phase": 1,
+      "base_name": "mei-51m-v1.2-981m-base",
+      "incremental_target_tokens": 1000000000,
+      "cumulative_target_tokens": 1000000000,
+      "domain_target_tokens": {
+        "foundation": 607142857,
+        "oral": 142857143,
+        "literature": 17857143,
+        "code_structure": 107142857,
+        "task_tools": 125000000
+      },
+      "actual_incremental_tokens": 980805632,
+      "actual_cumulative_tokens": 980805632,
+      "selected_manifest": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/schedule.json"
+    },
+    {
+      "phase": 2,
+      "base_name": "mei-51m-v1.2-1975m-base",
+      "incremental_target_tokens": 1000000000,
+      "cumulative_target_tokens": 2000000000,
+      "domain_target_tokens": {
+        "foundation": 607142857,
+        "oral": 142857143,
+        "literature": 17857143,
+        "code_structure": 107142857,
+        "task_tools": 125000000
+      },
+      "actual_incremental_tokens": 994621440,
+      "actual_cumulative_tokens": 1975427072,
+      "selected_manifest": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/schedule.json"
+    },
+    {
+      "phase": 3,
+      "base_name": "mei-51m-v1.2-2765m-base",
+      "incremental_target_tokens": 800000000,
+      "cumulative_target_tokens": 2800000000,
+      "domain_target_tokens": {
+        "foundation": 485714286,
+        "oral": 114285714,
+        "literature": 14285714,
+        "code_structure": 85714286,
+        "task_tools": 100000000
+      },
+      "actual_incremental_tokens": 789116622,
+      "actual_cumulative_tokens": 2764543694,
+      "selected_manifest": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/schedule.json"
+    }
+  ],
+  "sampling": {
+    "seed": 20260914,
+    "default_replacement": false,
+    "split_before_windowing": true,
+    "eval_group_axes": [
+      "work",
+      "conversation",
+      "project",
+      "api_family",
+      "schema_family",
+      "template_family"
+    ],
+    "train_phase_strata": [
+      "domain",
+      "language",
+      "source",
+      "subsource",
+      "length"
+    ],
+    "source_phase_policy": "allocate each selected source approximately 5/14, 5/14, 4/14 across the three increments; record indivisible exceptions",
+    "runtime_mix": "token_deficit_weighted_shuffle",
+    "report_interval_loss_tokens": 10000000,
+    "persist": [
+      "rng_state",
+      "source_order",
+      "cursor",
+      "tokens_consumed"
+    ],
+    "implementation_status": "materialized_and_resume_replay_validated"
+  },
+  "downstream": {
+    "qat": "reuse explicit CPT train replay; independent exposure manifest and Float controls",
+    "sft": "validated train-source conversion and audited legacy train reuse; independent release per capability",
+    "eval": "family-level reserve before any CPT; inspected old locks are regression evidence",
+    "base_exposure_includes_qat_or_sft": false
+  },
+  "blockers": [
+    "downstream SFT and task Eval releases remain separate future work and are not CPT input blockers",
+    "semantic near-duplicate and commercial-rights review remain explicit release limitations"
+  ],
+  "tokenizer_candidates": [
+    24000
+  ],
+  "tokenizer_selection_status": "frozen; Python, Rust and real Browser-WASM parity passed",
+  "tokenizer_priority_audit_domains": [
+    "Chinese colloquial language",
+    "tool calls and arguments"
+  ],
+  "selected_vocab_size": 24000
+}

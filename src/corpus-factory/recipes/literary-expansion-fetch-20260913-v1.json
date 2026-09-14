@@ -1,0 +1,210 @@
+{
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "pg-1342-metadata",
+      "url": "https://www.gutenberg.org/ebooks/1342",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-1342-text",
+      "url": "https://www.gutenberg.org/ebooks/1342.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-161-metadata",
+      "url": "https://www.gutenberg.org/ebooks/161",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-161-text",
+      "url": "https://www.gutenberg.org/ebooks/161.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-158-metadata",
+      "url": "https://www.gutenberg.org/ebooks/158",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-158-text",
+      "url": "https://www.gutenberg.org/ebooks/158.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-105-metadata",
+      "url": "https://www.gutenberg.org/ebooks/105",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-105-text",
+      "url": "https://www.gutenberg.org/ebooks/105.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-141-metadata",
+      "url": "https://www.gutenberg.org/ebooks/141",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-141-text",
+      "url": "https://www.gutenberg.org/ebooks/141.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-121-metadata",
+      "url": "https://www.gutenberg.org/ebooks/121",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-121-text",
+      "url": "https://www.gutenberg.org/ebooks/121.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-768-metadata",
+      "url": "https://www.gutenberg.org/ebooks/768",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-768-text",
+      "url": "https://www.gutenberg.org/ebooks/768.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-599-metadata",
+      "url": "https://www.gutenberg.org/ebooks/599",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-599-text",
+      "url": "https://www.gutenberg.org/ebooks/599.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-559-metadata",
+      "url": "https://www.gutenberg.org/ebooks/559",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-559-text",
+      "url": "https://www.gutenberg.org/ebooks/559.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-8581-metadata",
+      "url": "https://www.gutenberg.org/ebooks/8581",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-8581-text",
+      "url": "https://www.gutenberg.org/ebooks/8581.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-2211-metadata",
+      "url": "https://www.gutenberg.org/ebooks/2211",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-2211-text",
+      "url": "https://www.gutenberg.org/ebooks/2211.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3618-metadata",
+      "url": "https://www.gutenberg.org/ebooks/3618",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3618-text",
+      "url": "https://www.gutenberg.org/ebooks/3618.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-1165-metadata",
+      "url": "https://www.gutenberg.org/ebooks/1165",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-1165-text",
+      "url": "https://www.gutenberg.org/ebooks/1165.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-902-metadata",
+      "url": "https://www.gutenberg.org/ebooks/902",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-902-text",
+      "url": "https://www.gutenberg.org/ebooks/902.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-1454-metadata",
+      "url": "https://www.gutenberg.org/ebooks/1454",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-1454-text",
+      "url": "https://www.gutenberg.org/ebooks/1454.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-8157-metadata",
+      "url": "https://www.gutenberg.org/ebooks/8157",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-8157-text",
+      "url": "https://www.gutenberg.org/ebooks/8157.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-396-metadata",
+      "url": "https://www.gutenberg.org/ebooks/396",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-396-text",
+      "url": "https://www.gutenberg.org/ebooks/396.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3797-metadata",
+      "url": "https://www.gutenberg.org/ebooks/3797",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3797-text",
+      "url": "https://www.gutenberg.org/ebooks/3797.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3772-metadata",
+      "url": "https://www.gutenberg.org/ebooks/3772",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-3772-text",
+      "url": "https://www.gutenberg.org/ebooks/3772.txt.utf-8",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-5053-metadata",
+      "url": "https://www.gutenberg.org/ebooks/5053",
+      "max_bytes": 8388608
+    },
+    {
+      "id": "pg-5053-text",
+      "url": "https://www.gutenberg.org/ebooks/5053.txt.utf-8",
+      "max_bytes": 8388608
+    }
+  ],
+  "max_network_bytes": 209715200,
+  "reserve_disk_bytes": 107374182400,
+  "download_workers": 1,
+  "authorization": "2026-09-13 user: 马上按这个规划补充高质量语料; expand listed Gutenberg literature source.",
+  "estimated_net_tokens": null
+}

@@ -312,13 +312,55 @@ def encode_fullcall_row(
     }
 
 
-def fullcall_epoch_order(rows: Sequence[dict[str, Any]], epoch: int) -> list[int]:
+def _is_execute_row(row: dict[str, Any]) -> bool:
+    return str(row.get("kind") or row.get("alignment_task") or "") == "execute"
+
+
+def _oversample_execute(
+    order: list[int],
+    rows: Sequence[dict[str, Any]],
+    execute_repeat: int,
+) -> list[int]:
+    """让 execute 行在训练采样里重复 execute_repeat 倍（压低「输出 []」暴露）。
+
+    execute 组与其余组的采样权重比 = execute_repeat : 1，总长度保持 len(rows)。
+    execute 行循环重复、非 execute 行循环保留（部分非 execute 行可能被跳过）。
+    """
+    if execute_repeat <= 1:
+        return order
+    n = len(order)
+    exec_idx = [i for i in order if _is_execute_row(rows[i])]
+    other_idx = [i for i in order if not _is_execute_row(rows[i])]
+    if not exec_idx or not other_idx:
+        return order
+    n_exec = round(n * execute_repeat / (execute_repeat + 1))
+    n_other = n - n_exec
+    exec_slots = [exec_idx[i % len(exec_idx)] for i in range(n_exec)]
+    other_slots = [other_idx[i % len(other_idx)] for i in range(n_other)]
+    merged: list[int] = []
+    ei = oi = 0
+    while len(merged) < n:
+        for _ in range(execute_repeat):
+            if ei < len(exec_slots) and len(merged) < n:
+                merged.append(exec_slots[ei])
+                ei += 1
+        if oi < len(other_slots) and len(merged) < n:
+            merged.append(other_slots[oi])
+            oi += 1
+    return merged
+
+
+def fullcall_epoch_order(
+    rows: Sequence[dict[str, Any]],
+    epoch: int,
+    execute_repeat: int = 1,
+) -> list[int]:
     groups: dict[tuple[str, str], list[int]] = defaultdict(list)
     for index, row in enumerate(rows):
         groups[(str(row.get("kind") or "refuse"), str(row.get("candidate_tool") or row.get("gold_name") or ""))].append(index)
-    kinds = [kind for kind in ("execute", "refuse") if any(key[0] == kind for key in groups)]
+    kinds = [kind for kind in ("execute", "refuse", "capability_insufficient") if any(key[0] == kind for key in groups)]
     tools = sorted({key[1] for key in groups})
-    if kinds != ["execute", "refuse"] or not tools:
+    if "execute" not in kinds or "refuse" not in kinds or not tools:
         raise RuntimeError("full-call sampler requires execute/refuse rows grouped by tool")
     shuffled: dict[tuple[str, str], list[int]] = {}
     for key, values in groups.items():
@@ -333,8 +375,14 @@ def fullcall_epoch_order(rows: Sequence[dict[str, Any]], epoch: int) -> list[int
                 values = shuffled.get((kind, tool)) or []
                 if offset < len(values):
                     order.append(values[offset])
-    if len(order) != len(rows) or len(set(order)) != len(rows):
-        raise RuntimeError("full-call sampler failed exact once-per-epoch coverage")
+    order = _oversample_execute(order, rows, execute_repeat)
+    if len(order) != len(rows):
+        raise RuntimeError("full-call sampler failed exact length coverage")
+    if execute_repeat == 1:
+        if len(set(order)) != len(rows):
+            raise RuntimeError("full-call sampler failed exact once-per-epoch coverage")
+    elif not {i for i in range(len(rows)) if _is_execute_row(rows[i])}.issubset(set(order)):
+        raise RuntimeError("full-call oversampling dropped an execute row")
     return order
 
 
@@ -411,7 +459,11 @@ def fullcall_training_schedule(
     return output
 
 
-def agent_epoch_order(rows: Sequence[dict[str, Any]], epoch: int) -> list[int]:
+def agent_epoch_order(
+    rows: Sequence[dict[str, Any]],
+    epoch: int,
+    execute_repeat: int = 1,
+) -> list[int]:
     trajectories: dict[str, list[int]] = defaultdict(list)
     for index, row in enumerate(rows):
         trajectories[str(row.get("trajectory_id") or row.get("cf_group") or "")].append(index)
@@ -428,8 +480,14 @@ def agent_epoch_order(rows: Sequence[dict[str, Any]], epoch: int) -> list[int]:
             values = trajectories[name]
             if step_offset < len(values):
                 order.append(values[step_offset])
-    if len(order) != len(rows) or len(set(order)) != len(rows):
-        raise RuntimeError("Agent sampler failed exact once-per-epoch coverage")
+    order = _oversample_execute(order, rows, execute_repeat)
+    if len(order) != len(rows):
+        raise RuntimeError("Agent sampler failed exact length coverage")
+    if execute_repeat == 1:
+        if len(set(order)) != len(rows):
+            raise RuntimeError("Agent sampler failed exact once-per-epoch coverage")
+    elif not {i for i in range(len(rows)) if _is_execute_row(rows[i])}.issubset(set(order)):
+        raise RuntimeError("Agent oversampling dropped an execute row")
     return order
 
 
@@ -765,6 +823,7 @@ def train_lm_sft_v3(
     resume: bool = False,
     checkpoint_every_steps: int = 100,
     stage_id: str,
+    execute_repeat: int = 1,
 ) -> dict[str, Any]:
     import mlx.core as mx
     import mlx.nn as nn
@@ -779,12 +838,12 @@ def train_lm_sft_v3(
         raise RuntimeError("SFT-v3 LM stage has no encoded rows")
     fixed_schedule: list[int] | None = None
     if sampler == FULLCALL_SAMPLER_ID:
-        order_fn = fullcall_epoch_order
+        order_fn = lambda rows_, epoch_: fullcall_epoch_order(rows_, epoch_, execute_repeat)
     elif sampler == BANKED_FULLCALL_SAMPLER_ID:
         fixed_schedule = fullcall_training_schedule(rows, steps)
-        order_fn = fullcall_epoch_order
+        order_fn = lambda rows_, epoch_: fullcall_epoch_order(rows_, epoch_, execute_repeat)
     elif sampler == AGENT_SAMPLER_ID:
-        order_fn = agent_epoch_order
+        order_fn = lambda rows_, epoch_: agent_epoch_order(rows_, epoch_, execute_repeat)
     else:
         raise ValueError(f"unsupported SFT-v3 sampler: {sampler}")
     data_fingerprint = contract.sha_bytes(

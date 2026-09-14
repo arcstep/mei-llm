@@ -1,0 +1,30 @@
+{
+  "mode": "approved_batch",
+  "authorization": "User explicitly requested acquisition under the revised 3B recipe.",
+  "wait_for_process": {
+    "pid": 52583,
+    "command_contains": "approved-tool-batch-20260913-v1.json"
+  },
+  "jobs": [
+    {
+      "name": "literature-fetch",
+      "action": "profile",
+      "config": "src/corpus-factory/recipes/literary-expansion-fetch-20260913-v1.json",
+      "out": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-fetch-20260913-v1",
+      "network": true
+    },
+    {
+      "name": "literature-body",
+      "action": "profile",
+      "config": "src/corpus-factory/recipes/literary-expansion-body-20260913-v1.json",
+      "out": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-body-20260913-v1"
+    },
+    {
+      "name": "literature-materialize",
+      "action": "materialize",
+      "config": "src/corpus-factory/recipes/literary-expansion-materialize-20260913-v1.json",
+      "out": "corpus/pools/literary-expansion-candidate-20260913-v1",
+      "requires": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-body-20260913-v1/survey.json"
+    }
+  ]
+}

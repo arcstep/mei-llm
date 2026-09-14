@@ -1,0 +1,38 @@
+{
+  "seed": 20260913,
+  "exclude_jsonl": [
+    "corpus/pools/zh-v2-pool/prepared/lccc-base-20260910-v3/valid.jsonl",
+    "corpus/pools/zh-v2-pool/raw/lccc-base-5bd582fa-v1/lccc_base_test.jsonl.gz"
+  ],
+  "sources": [
+    {
+      "source_id": "lccc-dialogue",
+      "kind": "jsonl_reservoir",
+      "path": "corpus/pools/zh-v2-pool/prepared/lccc-base-20260910-v3/train.jsonl",
+      "records": 100000
+    },
+    {
+      "source_id": "technical-guides",
+      "kind": "survey",
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-tool-content-20260913-v1",
+      "include_sources": [
+        "pandas-guides",
+        "postgres-guides",
+        "frictionless-guides",
+        "prometheus-guides",
+        "celery-guides",
+        "python-tutorial-en"
+      ]
+    },
+    {
+      "source_id": "constraint-tests",
+      "kind": "survey",
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/constraint-evidence-20260913-v1"
+    },
+    {
+      "source_id": "literature-dialogue",
+      "kind": "survey",
+      "survey": "corpus/pools/literary-public-candidate-20260913-v1"
+    }
+  ]
+}

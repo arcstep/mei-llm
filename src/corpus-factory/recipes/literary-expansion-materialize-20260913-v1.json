@@ -1,0 +1,13 @@
+{
+  "count_tokens": true,
+  "sources": [
+    {
+      "source_id": "literature-dialogue",
+      "kind": "survey",
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-expansion-body-20260913-v1"
+    }
+  ],
+  "exclude_jsonl": [
+    "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl"
+  ]
+}

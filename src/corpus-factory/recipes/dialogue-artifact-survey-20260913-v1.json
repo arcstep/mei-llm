@@ -1,0 +1,41 @@
+{
+  "sources": [
+    {
+      "source_id": "risawoz",
+      "role": "scene",
+      "github_repository": "terryqj0107/RiSAWOZ",
+      "patterns": [
+        "RiSAWOZ-data/source-data.zip"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/risawoz/frame.json",
+      "catalog_frame_sha256": "383aa5f401654deb2b9c93b6664352607606b2b348f184ae7260d35b993391d9",
+      "format": "relation",
+      "relation_kind": "zip-inventory"
+    },
+    {
+      "source_id": "abcd",
+      "role": "scene",
+      "github_repository": "asappresearch/abcd",
+      "patterns": [
+        "README.md",
+        "data/abcd_sample.json",
+        "data/guidelines.json",
+        "data/ontology.json"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/abcd/frame.json",
+      "catalog_frame_sha256": "00c075f08b32526066343a129c29652bbfe113abe1edf6950e3028925b89a6a3",
+      "format": "text"
+    },
+    {
+      "source_id": "rein",
+      "role": "scene",
+      "github_repository": "mohamedyd/rein-benchmark",
+      "patterns": [
+        "README.md"
+      ],
+      "catalog_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/catalog-metadata-20260913-v1/rein/frame.json",
+      "catalog_frame_sha256": "cdd5029bf450108127ca1c61604047667a0da9f7c9c6cbd7e541ae13023a9ea0",
+      "format": "text"
+    }
+  ]
+}

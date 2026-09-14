@@ -1,0 +1,15 @@
+{
+  "sources": [],
+  "local_diagnostics": {
+    "literary_overlap": {
+      "paths": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/catalog-gutenberg-kuangren.raw",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/catalog-gutenberg-laocan.raw",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-original-acquisition-20260913-v1/catalog-gutenberg-nahan.raw"
+      ]
+    },
+    "table_source_inventory": {
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/gittables-content-20260913-v2"
+    }
+  }
+}

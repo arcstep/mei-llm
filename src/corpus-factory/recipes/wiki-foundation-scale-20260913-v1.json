@@ -1,0 +1,53 @@
+{
+  "mode": "parquet_bulk",
+  "source_id": "wiki-zh",
+  "seed": 20260913,
+  "row_group_fraction": 0.5,
+  "download_workers": 1,
+  "reserve_disk_bytes": 107374182400,
+  "exclude_jsonl": [
+    "corpus/pools/public-raw-candidate-20260913-v1/constraint-tests.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/technical-guides.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/naturalconv.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-en.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-zh.jsonl",
+    "corpus/pools/hq-random40-candidate-20260913-v1/web-hq-zh.jsonl"
+  ],
+  "files": [
+    {
+      "path": "corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/20231101.zh__train-00000-of-00006.parquet",
+      "source_revision": "20231101.zh",
+      "shard_probability": 1
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/20231101.zh__train-00001-of-00006.parquet",
+      "source_revision": "20231101.zh",
+      "shard_probability": 1
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/20231101.zh__train-00002-of-00006.parquet",
+      "source_revision": "20231101.zh",
+      "shard_probability": 1
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/20231101.zh__train-00003-of-00006.parquet",
+      "source_revision": "20231101.zh",
+      "shard_probability": 1
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/20231101.zh__train-00004-of-00006.parquet",
+      "source_revision": "20231101.zh",
+      "shard_probability": 1
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/raw/zh-wiki-hf-20231101/20231101.zh__train-00005-of-00006.parquet",
+      "source_revision": "20231101.zh",
+      "shard_probability": 1
+    }
+  ]
+}

@@ -937,6 +937,7 @@ def build_plan(args: argparse.Namespace) -> dict[str, Any]:
         "recipe": {
             "fullcall_alignment_steps": int(args.fullcall_alignment_steps),
             "agent_alignment_steps": int(args.agent_alignment_steps),
+            "execute_repeat": int(args.execute_repeat),
             "retrieval_r2_steps": int(args.retrieval_r2_steps),
             "mw_steps": int(args.mw_steps),
             "confidence_train_limit": int(args.confidence_train_limit),
@@ -1767,6 +1768,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
             checkpoint_dir=directory / "checkpoints",
             resume=args.resume,
             stage_id="fullcall-alignment-v5",
+            execute_repeat=args.execute_repeat,
         )
         save_params(runtime.model, paths["fullcall"])
         report.update(
@@ -1806,6 +1808,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
             checkpoint_dir=directory / "checkpoints",
             resume=args.resume,
             stage_id="agent-alignment-v5",
+            execute_repeat=args.execute_repeat,
         )
         save_params(runtime.model, paths["agent"])
         report.update(
@@ -2831,6 +2834,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument("--fullcall-alignment-steps", type=int, default=2_000)
     parser.add_argument("--agent-alignment-steps", type=int, default=1_000)
+    parser.add_argument("--execute-repeat", type=int, default=1)
     parser.add_argument("--retrieval-r2-steps", type=int, default=1_600)
     parser.add_argument("--mw-steps", type=int, default=2_000)
     parser.add_argument("--confidence-train-limit", type=int, default=5_255)

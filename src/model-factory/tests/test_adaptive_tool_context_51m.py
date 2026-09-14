@@ -191,10 +191,10 @@ class AdaptiveToolContext51MTest(unittest.TestCase):
         )
         self.assertEqual(
             [row["batch_outcome"] for row in views],
-            ["capability_insufficient", "call"],
+            ["capability_insufficient"],
         )
         self.assertEqual(views[0]["answers"], [])
-        self.assertEqual(views[1]["answers"][0]["name"], "tool.05")
+        self.assertEqual(views[0]["kind"], "capability_insufficient")
         for view in views:
             prompt, answer, stats = training.encode_fullcall_row(
                 _Runtime.tokenizer, view, {}
@@ -203,6 +203,42 @@ class AdaptiveToolContext51MTest(unittest.TestCase):
             self.assertEqual(len(prompt), view["_budgeted_prompt_tokens"])
             self.assertLessEqual(len(prompt) + 128, 2048)
             self.assertLessEqual(len(answer), 128)
+
+    def test_alignment_call_keeps_source_kind(self):
+        sample_id = next(
+            f"alignment-{index}"
+            for index in range(100)
+            if int(hashlib.sha256(f"alignment-{index}".encode()).hexdigest()[:8], 16)
+            % 4
+            in {2, 3}
+        )
+        source = {
+            "sample_id": sample_id,
+            "split": "train",
+            "kind": "execute",
+            "query": "执行第一项",
+            "gold_name": "tool.01",
+            "answers": [{"name": "tool.01", "arguments": {}}],
+            "retrieved_tools": [f"tool.{index:02d}" for index in range(5)],
+            "context": {},
+            "evidence": [],
+            "permissions": {},
+            "state": {},
+            "history": [],
+            "tool_results": [],
+        }
+        views = list(
+            iter_alignment_views(
+                _Runtime(),
+                [source],
+                self.catalog,
+                self.calibration,
+                task="full_call",
+            )
+        )
+        self.assertEqual([row["batch_outcome"] for row in views], ["call"])
+        self.assertEqual(views[0]["kind"], "execute")
+        self.assertEqual(views[0]["answers"][0]["name"], "tool.01")
 
     def test_alignment_selector_freezes_exact_25_25_50_mix(self):
         rows = []

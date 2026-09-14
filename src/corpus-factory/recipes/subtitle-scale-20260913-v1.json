@@ -1,0 +1,41 @@
+{
+  "mode": "subtitle_bulk",
+  "download_workers": 2,
+  "sources": [
+    {
+      "source_id": "opensubtitles-zh-CN",
+      "kind": "opensubtitles",
+      "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_CN.zip",
+      "expected_bytes": 1623703895,
+      "version": "v2024"
+    },
+    {
+      "source_id": "opensubtitles-zh-TW",
+      "kind": "opensubtitles",
+      "url": "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/raw/zh_TW.zip",
+      "expected_bytes": 1126448685,
+      "version": "v2024"
+    },
+    {
+      "source_id": "ted2020-zh-cn",
+      "kind": "ted",
+      "url": "https://object.pouta.csc.fi/OPUS-TED2020/v1/raw/zh_cn.zip",
+      "expected_bytes": 19907449,
+      "version": "v1"
+    }
+  ],
+  "max_network_bytes": 4294967296,
+  "exclude_jsonl": [
+    "corpus/pools/public-raw-candidate-20260913-v1/constraint-tests.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/technical-guides.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/naturalconv.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-en.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-zh.jsonl",
+    "corpus/pools/hq-random40-candidate-20260913-v1/web-hq-zh.jsonl"
+  ]
+}

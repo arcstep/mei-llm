@@ -1,0 +1,28 @@
+{
+  "seed": 20260913,
+  "exclude_jsonl": [
+    "corpus/pools/public-raw-candidate-20260913-v1/constraint-tests.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/technical-guides.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/naturalconv.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl"
+  ],
+  "sources": [
+    {
+      "source_id": "wiki-zh",
+      "kind": "survey",
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/wiki-zh-raw-batch-20260913-v1"
+    },
+    {
+      "source_id": "wiki-en",
+      "kind": "survey",
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/global-frozen-evidence-20260913-v1",
+      "include_sources": [
+        "wiki-en"
+      ]
+    }
+  ]
+}

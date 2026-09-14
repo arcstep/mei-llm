@@ -1,0 +1,11 @@
+{
+  "mode": "delivery_inventory",
+  "pools": [
+    "corpus/pools/public-raw-candidate-20260913-v1",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1",
+    "corpus/pools/wiki-raw-candidate-20260913-v1",
+    "corpus/pools/hq-random40-candidate-20260913-v1",
+    "corpus/pools/wiki-foundation-scale-20260913-v1",
+    "corpus/pools/lccc-complete-filtered-20260913-v1"
+  ]
+}

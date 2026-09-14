@@ -1,0 +1,30 @@
+{
+  "mode": "tokenizer_24k_candidate",
+  "tokenizer_id": "mei-24k-lossless-20260914-v1",
+  "vocab_size": 24000,
+  "train_jsonl": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/train.jsonl",
+  "dev_jsonl": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/dev.jsonl",
+  "sample_manifest": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/sample-manifest.json",
+  "source_domains_config": "src/corpus-factory/recipes/tokenizer-pair-16k-24k-20260914-v1.json",
+  "input_sha256": {
+    "train": "7026dbd7dcacf1ea9878164bdbeb3f2059f9836e5245336574ce4fca931e422e",
+    "dev": "e4a4c516b8d43ff852c74e7ef0d7d63c8963520ed1a26396530bc5153caf9db0",
+    "manifest": "8db967b0e7b1f8bea738fc40753e88bb7cace0e6e7193ff3f623a42982b45de6"
+  },
+  "protocol_symbols": [
+    "<|im_start|>", "<|im_end|>", "<think>", "</think>",
+    "<tools>", "</tools>", "<tool_call>", "</tool_call>",
+    "<tool_result>", "</tool_result>", "<act_execute>", "<act_refuse>",
+    "<act_expand>", "<act_shape>", "<act_escalate>", "<act_stop>"
+  ],
+  "boundary_probes": [
+    " 简体  中文\t换行\n结尾 ",
+    "繁體中文與英文 ABC xyz",
+    "ＡＢＣ ① é é",
+    "literal ▁ marker",
+    "{\"name\":\"schedule_room_cooling\",\"arguments\":{\"id\":\"000123\",\"value\":-24.50,\"path\":\"C:\\\\tmp\",\"note\":\"x  y\"}}",
+    "😀𠀀罕见字",
+    "\r\n\t leading and trailing  \r\n",
+    "<|im_start|>user\n先别开，等我回家再开。<|im_end|>"
+  ]
+}

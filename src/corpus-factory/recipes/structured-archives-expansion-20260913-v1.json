@@ -1,0 +1,31 @@
+{
+  "mode": "archive_cpt",
+  "max_network_bytes": 1073741824,
+  "reserve_disk_bytes": 107374182400,
+  "sources": [
+    {
+      "source_id": "schemastore-04787bb",
+      "repository": "SchemaStore/schemastore",
+      "revision": "04787bb09aec3add05cf75889c5d1f4cba9625f1",
+      "url": "https://codeload.github.com/SchemaStore/schemastore/zip/04787bb09aec3add05cf75889c5d1f4cba9625f1",
+      "max_bytes": 268435456,
+      "include": ["src/schemas/json/*.json"],
+      "exclude": [],
+      "content_kind": "json-schema",
+      "language": "structured",
+      "license_review": "catalog evidence recorded; production admission pending"
+    },
+    {
+      "source_id": "json-schema-tests-f6fd52a",
+      "repository": "json-schema-org/JSON-Schema-Test-Suite",
+      "revision": "f6fd52a0a95472e079cbfc6ef7f089702b80e045",
+      "url": "https://codeload.github.com/json-schema-org/JSON-Schema-Test-Suite/zip/f6fd52a0a95472e079cbfc6ef7f089702b80e045",
+      "max_bytes": 67108864,
+      "include": ["tests/**/*.json", "README.md", "CONTRIBUTING.md"],
+      "exclude": ["tests/**/optional/*.json"],
+      "content_kind": "constraint-test",
+      "language": "structured",
+      "license_review": "catalog evidence recorded; production admission pending"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 16,
+  "records_per_shard": 200,
+  "max_network_bytes": 536870912,
+  "reserve_disk_bytes": 107374182400,
+  "sources": [
+    {
+      "source_id": "pandas-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "pandas-dev/pandas",
+      "patterns": [
+        "doc/source/getting_started/*.rst",
+        "doc/source/user_guide/*.rst"
+      ],
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "raw_candidate_preparation_authorized",
+      "random_shard_fraction": 1.0,
+      "frozen_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-complete-inputs-20260913-v1/pandas-guides-remaining-frame.json",
+      "frozen_frame_sha256": "6e9a94477ab69c32124c0b5ef6fbc6e8a57b12287312237668528b59cf8e66f4"
+    },
+    {
+      "source_id": "postgres-guides",
+      "role": "tutorial-code-structure",
+      "github_repository": "postgres/postgres",
+      "patterns": [
+        "doc/src/sgml/*.sgml"
+      ],
+      "format": "text",
+      "language": "en",
+      "sampling_unit": "project-version-document",
+      "production_status": "raw_candidate_preparation_authorized",
+      "random_shard_fraction": 1.0,
+      "frozen_frame": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-complete-inputs-20260913-v1/postgres-guides-remaining-frame.json",
+      "frozen_frame_sha256": "b5b862319d35229dd1c684aa2609117c10f344693058ad8e2ecaf567e2d8048a"
+    }
+  ],
+  "purpose": "candidate_preparation",
+  "download_workers": 1
+}

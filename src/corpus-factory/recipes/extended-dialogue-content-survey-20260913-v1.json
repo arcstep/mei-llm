@@ -1,0 +1,30 @@
+{
+  "sources": [
+    {
+      "source_id": "risawoz-train",
+      "role": "colloquial",
+      "local_globs": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-artifact-20260913-v1/risawoz/raw-98b8e0470543833bcff9"
+      ],
+      "format": "relation",
+      "relation_kind": "risawoz",
+      "archive_member": "source-data/all_train10000.json",
+      "official_split": "train",
+      "parent_survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-artifact-20260913-v1/survey.json"
+    },
+    {
+      "source_id": "naturalconv",
+      "role": "colloquial",
+      "repository": "xywang1/NaturalConv",
+      "patterns": [
+        "dialog_release.json"
+      ],
+      "format": "relation",
+      "relation_kind": "naturalconv",
+      "max_source_bytes": 134217728,
+      "official_split": "upstream-unspecified",
+      "rights": "noncommercial-research-only-pending-review"
+    }
+  ],
+  "records_per_shard": 200
+}

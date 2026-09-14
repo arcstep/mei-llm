@@ -1,0 +1,10 @@
+{
+  "mode": "cpt_windows",
+  "path": "corpus/pools/nemotron-cpt-full-20260913-v2/candidate.jsonl",
+  "sha256": "f9a6e7753cfbba3fdfc780775ef65c7e6cdb5c59569e824ca0873a139791112e",
+  "parent_manifest": "corpus/pools/nemotron-cpt-full-20260913-v2/manifest.json",
+  "parent_manifest_sha256": "fb7b17f86ffc2fd71a8fd5b53f2b1a3dc16b5a0331447594767e915c61a829f6",
+  "limit": 2048,
+  "overlap_budget": 128,
+  "context_budget": 256
+}

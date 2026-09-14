@@ -48,6 +48,9 @@ class ZhTokenizerV1:
                     f"tokenizer hash mismatch: file={self.model_sha256} manifest={expected}"
                 )
         self.sp = spm.SentencePieceProcessor(model_file=str(self.model_path))
+        self.encoding_profile_id = str(
+            self.manifest.get("encoding_profile_id") or "sentencepiece-nmt-nfkc-v1"
+        )
         self.pad_id, self.eos_id, self.bos_id, self.unk_id = 0, 1, 2, 3
         if int(self.sp.get_piece_size()) != 24_000:
             raise ValueError(f"expected 24000 pieces, got {self.sp.get_piece_size()}")
@@ -65,6 +68,7 @@ class ZhTokenizerV1:
         return int(self.sp.get_piece_size())
 
     def encode(self, text: str, add_bos: bool = False, add_eos: bool = False) -> list[int]:
+        text.encode("utf-8", errors="strict")
         ids = list(self.sp.encode(text, out_type=int))
         if add_bos:
             ids.insert(0, self.bos_id)
@@ -111,11 +115,12 @@ class ZhTokenizerV2:
         tokenizer_id: str,
         vocab_size: int,
         manifest_path: Path | None = None,
+        model_path: Path | None = None,
     ):
         import sentencepiece as spm
 
         self.tokenizer_id = tokenizer_id
-        self.model_path = TOKENIZER_DIR / f"{tokenizer_id}.model"
+        self.model_path = Path(model_path or (TOKENIZER_DIR / f"{tokenizer_id}.model"))
         if not self.model_path.is_file():
             raise FileNotFoundError(f"missing tokenizer {self.model_path}")
         self.model_sha256 = sha256_file(self.model_path)
@@ -133,7 +138,24 @@ class ZhTokenizerV2:
                     f"manifest tokenizer_id {self.manifest.get('tokenizer_id')!r} "
                     f"!= {tokenizer_id!r}"
                 )
+        self.encoding_profile_id = str(
+            self.manifest.get("encoding_profile_id") or "sentencepiece-nmt-nfkc-v1"
+        )
+        if self.encoding_profile_id not in {
+            "sentencepiece-nmt-nfkc-v1",
+            "mei-lossless-identity-v1",
+        }:
+            raise ValueError(
+                f"unsupported tokenizer encoding profile: {self.encoding_profile_id!r}"
+            )
         self.sp = spm.SentencePieceProcessor(model_file=str(self.model_path))
+        self._byte_ids = {
+            byte: int(self.sp.piece_to_id(f"<0x{byte:02X}>")) for byte in range(256)
+        }
+        if self.encoding_profile_id == "mei-lossless-identity-v1" and any(
+            value == int(self.sp.unk_id()) for value in self._byte_ids.values()
+        ):
+            raise ValueError("lossless tokenizer lacks complete byte fallback")
         if vocab_size and int(self.sp.get_piece_size()) != vocab_size:
             raise ValueError(
                 f"expected {vocab_size} pieces, got {self.sp.get_piece_size()}"
@@ -153,7 +175,18 @@ class ZhTokenizerV2:
         return int(self.sp.get_piece_size())
 
     def encode(self, text: str, add_bos: bool = False, add_eos: bool = False) -> list[int]:
-        ids = list(self.sp.encode(text, out_type=int))
+        text.encode("utf-8", errors="strict")
+        if self.encoding_profile_id == "mei-lossless-identity-v1":
+            # SentencePiece reserves U+2581 as its escaped-space marker.  A
+            # literal marker therefore has to travel through byte pieces so
+            # that original text and structural values round-trip exactly.
+            ids: list[int] = []
+            for index, part in enumerate(text.split("▁")):
+                if index:
+                    ids.extend(self._byte_ids[byte] for byte in "▁".encode("utf-8"))
+                ids.extend(self.sp.encode(part, out_type=int))
+        else:
+            ids = list(self.sp.encode(text, out_type=int))
         if add_bos:
             ids.insert(0, self.bos_id)
         if add_eos:

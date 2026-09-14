@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import tempfile
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -17,6 +18,74 @@ spec.loader.exec_module(p)
 
 
 class SourceProfilingTests(unittest.TestCase):
+    def test_http_catalog_is_frozen_but_does_not_claim_population_completeness(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);catalog=root/'catalog.json';catalog.write_text('{"files":[]}')
+            config={'sources':[{'source_id':'archive','catalog_path':'catalog.json',
+                'catalog_sha256':p.digest(catalog),'http_files':[{'path':'data.zip','url':'https://example.test/data.zip'}]}]}
+            with patch.object(p,'ROOT',root),patch.object(p,'fetch') as fetch:
+                good=p.profile(config,root/'good',network=True,metadata_only=True)
+                self.assertEqual((root/'good/archive/supporting-catalog.raw').read_bytes(),catalog.read_bytes())
+                self.assertFalse(json.loads((root/'good/archive/frame.json').read_text())['complete_for_patterns'])
+                catalog.write_text('changed')
+                bad=p.profile(config,root/'bad',network=True,metadata_only=True)
+                self.assertIn('catalog hash changed',str(bad['sources'][0]['errors']))
+                fetch.assert_not_called()
+
+    def test_document_survey_preserves_format_and_does_not_invent_relations(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'guide.md'; text='字段001不能改成1\n```sql\nselect 0 where false;\n```\n'
+            path.write_text(text)
+            sample=p.sample_text(path,{'path':'guide.md','shard_probability':0.25},{'github_repository':'owner/project'})
+            self.assertEqual(sample['rows'],1)
+            self.assertEqual(sample['samples'][0]['text'],text)
+            self.assertEqual(sample['samples'][0]['weight'],4)
+            self.assertNotIn('relationships',sample['samples'][0]['original'])
+
+    def test_audit_detects_split_leak_without_adopting_unbound_files(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            for split in ("train", "test"):
+                pq.write_table(pa.table({"text": ["保持字段001，不补猜缺失值"]}), root / f"{split}.parquet")
+            config = {"sources": [{"source_id": split, "official_split": split,
+                                    "local_globs": [f"{split}.parquet"]} for split in ("train", "test")]}
+            out = root / "survey"
+            with patch.object(p, "ROOT", root):
+                p.profile(config, out)
+            (out / "unbound").mkdir()
+            (out / "unbound/profile.json").write_text("not a bound profile")
+            result = p.audit_coverage([out, out])
+            self.assertEqual(result["observed_train_test_exact_leak_groups"], 1)
+            self.assertEqual(result["observed_cross_source_exact_overlap_groups"], 1)
+            self.assertEqual(result["unique_observed_positions"], 2)
+            self.assertEqual(result["unique_observed_nonempty_text_hashes"], 1)
+            self.assertFalse(result["sample_positions_are_independent_capacity"])
+            self.assertTrue(all(c["total_variation_distance"]["language"] is None for c in result["comparisons"]))
+
+    def test_git_relation_requires_frozen_blob_bytes(self):
+        raw = b'[{"schema":{"type":"integer"},"tests":[{"data":"001","valid":false}]}]'
+        blob = p.hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+        frame = {"kind": "github_tree_metadata", "revision": "fixed", "complete_for_patterns": True,
+                 "files": [{"path": "tests/test.json", "bytes": len(raw), "git_blob_sha": blob}]}
+        config = {"sources": [{"source_id": "test", "github_repository": "org/repo", "format": "relation",
+                                "relation_kind": "json-schema-tests", "official_split": "test"}]}
+        sys.path.insert(0, str(MODULE.parent))
+        try:
+            with tempfile.TemporaryDirectory() as folder:
+                out = Path(folder) / "ok"
+                with patch.object(p, "github_frame", return_value=frame), patch.object(p, "fetch", return_value=(raw, {})):
+                    result = p.profile(config, out, network=True)
+                self.assertEqual(result["sources"][0]["sampled_shards"], 1)
+                sample = json.loads(next((out / "test").glob("sample-*.json")).read_text())
+                self.assertEqual(sample["samples"][0]["split"], "test")
+                self.assertEqual(sample["samples"][0]["original"]["annotations"]["expected_valid"], [False])
+                with patch.object(p, "github_frame", return_value=frame), patch.object(p, "fetch", return_value=(raw.replace(b"001", b"002"), {})):
+                    failed = p.profile(config, Path(folder) / "bad", network=True)
+                self.assertEqual(failed["sources"][0]["sampled_shards"], 0)
+                self.assertIn("frozen blob", failed["sources"][0]["errors"][0]["error"])
+        finally:
+            sys.path.pop(0)
+
     def test_single_wave_uses_marginal_not_union_probability(self):
         a = {"shard": {"path": "a", "wave_probability": .1, "shard_probability": .2},
              "samples": [{"row_index": 0, "purpose": "population", "inclusion_probability": .02,

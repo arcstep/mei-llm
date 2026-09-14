@@ -36,6 +36,12 @@
       "requires_clearance_receipt": true,
       "per_file_license": true,
       "note": "GitHub 公开代码，逐文件 license"
+    },
+    "literature": {
+      "band_policy": "B",
+      "dedup_mode": "text",
+      "requires_clearance_receipt": true,
+      "note": "文学、小说与剧本；作品权利链和来源声明逐批保留，候选不等于正式准入"
     }
   },
   "sources": [
@@ -48,10 +54,17 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["cmn_Hani/*.parquet"]
+        "patterns": [
+          "cmn_Hani/*.parquet"
+        ]
       },
-      "license": {"license_id": "ODC-By-1.0", "reviewed": false},
-      "admit": {"dedup_mode": "text"},
+      "license": {
+        "license_id": "ODC-By-1.0",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "text"
+      },
       "note": "全量 975 片，每片 ~1.2GB / 数千万 token；存量矿远超 7 轮 hq 配额 875M。国内网络用 HF_ENDPOINT=https://hf-mirror.com"
     },
     {
@@ -62,8 +75,13 @@
         "type": "direct_urls",
         "base_url": "https://dumps.wikimedia.org/zhwiki/"
       },
-      "license": {"license_id": "CC BY-SA 3.0/4.0 + GFDL", "reviewed": false},
-      "admit": {"dedup_mode": "text"},
+      "license": {
+        "license_id": "CC BY-SA 3.0/4.0 + GFDL",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "text"
+      },
       "urls": [],
       "note": "具体 dump 文件在授权时逐条钉扎；旧 zh-pretrain-v0 池 316.6M 剩余可滚入"
     },
@@ -75,10 +93,17 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["20231101.zh/*.parquet"]
+        "patterns": [
+          "20231101.zh/*.parquet"
+        ]
       },
-      "license": {"license_id": "CC BY-SA 3.0/4.0 + GFDL", "reviewed": false},
-      "admit": {"dedup_mode": "text"},
+      "license": {
+        "license_id": "CC BY-SA 3.0/4.0 + GFDL",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "text"
+      },
       "note": "HF 成品 parquet（text 列），20231101 快照 6 片；legacy shards 52.5M 之外的 wiki 配额主力"
     },
     {
@@ -89,10 +114,17 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["20231101.en/*.parquet"]
+        "patterns": [
+          "20231101.en/*.parquet"
+        ]
       },
-      "license": {"license_id": "CC BY-SA 3.0/4.0 + GFDL", "reviewed": false},
-      "admit": {"dedup_mode": "text"},
+      "license": {
+        "license_id": "CC BY-SA 3.0/4.0 + GFDL",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "text"
+      },
       "note": "配额克制（≤10M/轮）；20231101 快照 41 片，按需少量拉取"
     },
     {
@@ -108,7 +140,9 @@
         "reviewed": false,
         "note": "字幕版权未清算；每批须 clearance receipt"
       },
-      "admit": {"dedup_mode": "text"},
+      "admit": {
+        "dedup_mode": "text"
+      },
       "urls": [],
       "note": "口语主来源；翻译腔/机翻需人工抽检过滤"
     },
@@ -125,7 +159,9 @@
         "reviewed": false,
         "note": "非商用；数据仅研究/内部使用（已拍板）"
       },
-      "admit": {"dedup_mode": "text"},
+      "admit": {
+        "dedup_mode": "text"
+      },
       "urls": [],
       "note": "演讲转录，口语规范"
     },
@@ -143,7 +179,9 @@
         "reviewed": false,
         "note": "微博对话，研究用途；须强过滤（垃圾/广告/低质）"
       },
-      "admit": {"dedup_mode": "text"},
+      "admit": {
+        "dedup_mode": "text"
+      },
       "urls": [
         {
           "filename": "lccc_base_train.jsonl.gz",
@@ -174,14 +212,18 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["*.jsonl"]
+        "patterns": [
+          "*.jsonl"
+        ]
       },
       "license": {
         "license_id": "CC BY-NC 4.0",
         "reviewed": false,
         "note": "非商用；数据仅研究/内部使用（已拍板）"
       },
-      "admit": {"dedup_mode": "text"},
+      "admit": {
+        "dedup_mode": "text"
+      },
       "note": "指令+多轮，质量高"
     },
     {
@@ -192,10 +234,17 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["*.jsonl"]
+        "patterns": [
+          "*.jsonl"
+        ]
       },
-      "license": {"license_id": "to-be-reviewed", "reviewed": false},
-      "admit": {"dedup_mode": "text"},
+      "license": {
+        "license_id": "to-be-reviewed",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "text"
+      },
       "note": "中文对话 SFT，~110 万条"
     },
     {
@@ -207,8 +256,13 @@
         "type": "direct_urls",
         "base_url": "https://github.com/MarkWuNLP/MultiTurnResponseSelection"
       },
-      "license": {"license_id": "to-be-reviewed", "reviewed": false},
-      "admit": {"dedup_mode": "text"},
+      "license": {
+        "license_id": "to-be-reviewed",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "text"
+      },
       "urls": [],
       "note": "小组闲聊，中等质量"
     },
@@ -220,7 +274,10 @@
         "type": "static_manifest",
         "manifest": "manifests/wikidata-json.json"
       },
-      "license": {"license_id": "CC0-1.0", "reviewed": false},
+      "license": {
+        "license_id": "CC0-1.0",
+        "reviewed": false
+      },
       "admit": {
         "dedup_mode": "record",
         "record_key": "id",
@@ -236,7 +293,10 @@
         "type": "direct_urls",
         "base_url": "https://dblp.org/xml/"
       },
-      "license": {"license_id": "ODC-By-1.0", "reviewed": false},
+      "license": {
+        "license_id": "ODC-By-1.0",
+        "reviewed": false
+      },
       "admit": {
         "dedup_mode": "record",
         "record_element": "article|inproceedings|incollection|phdthesis|mastersthesis|www",
@@ -258,7 +318,10 @@
         "type": "direct_urls",
         "base_url": "https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/"
       },
-      "license": {"license_id": "to-be-reviewed", "reviewed": false},
+      "license": {
+        "license_id": "to-be-reviewed",
+        "reviewed": false
+      },
       "admit": {
         "dedup_mode": "record",
         "record_element": "PubmedArticle",
@@ -276,8 +339,14 @@
         "type": "static_manifest",
         "manifest": "manifests/json-schema-store.json"
       },
-      "license": {"license_id": "Apache-2.0", "reviewed": false},
-      "admit": {"dedup_mode": "record", "record_key": "path"},
+      "license": {
+        "license_id": "Apache-2.0",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "record",
+        "record_key": "path"
+      },
       "note": "常见配置 schema"
     },
     {
@@ -293,7 +362,10 @@
         "license_id": "directory CC0-1.0 / specs per-API",
         "reviewed": false
       },
-      "admit": {"dedup_mode": "record", "record_key": "path"},
+      "admit": {
+        "dedup_mode": "record",
+        "record_key": "path"
+      },
       "note": "单个 spec 各自 license，逐 spec 审核后收录"
     },
     {
@@ -305,7 +377,10 @@
         "type": "static_manifest",
         "manifest": "manifests/spider-sql.json"
       },
-      "license": {"license_id": "CC BY-SA 4.0", "reviewed": false},
+      "license": {
+        "license_id": "CC BY-SA 4.0",
+        "reviewed": false
+      },
       "admit": {
         "dedup_mode": "record",
         "record_element": "query",
@@ -322,7 +397,10 @@
         "type": "static_manifest",
         "manifest": "manifests/wikisql.json"
       },
-      "license": {"license_id": "to-be-reviewed", "reviewed": false},
+      "license": {
+        "license_id": "to-be-reviewed",
+        "reviewed": false
+      },
       "admit": {
         "dedup_mode": "record",
         "record_element": "query",
@@ -339,7 +417,10 @@
         "type": "static_manifest",
         "manifest": "manifests/sqllogictest.json"
       },
-      "license": {"license_id": "public domain", "reviewed": false},
+      "license": {
+        "license_id": "public domain",
+        "reviewed": false
+      },
       "admit": {
         "dedup_mode": "record",
         "record_element": "statement",
@@ -355,10 +436,19 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["*.parquet"]
+        "patterns": [
+          "*.parquet"
+        ]
       },
-      "license": {"license_id": "per-file", "reviewed": false, "per_file_license": true},
-      "admit": {"dedup_mode": "record", "max_invalid_ratio": 0.001},
+      "license": {
+        "license_id": "per-file",
+        "reviewed": false,
+        "per_file_license": true
+      },
+      "admit": {
+        "dedup_mode": "record",
+        "max_invalid_ratio": 0.001
+      },
       "note": ".github/workflows/*.yml；repo 在授权时钉扎（GitHub 公开仓库定向抓取）"
     },
     {
@@ -369,10 +459,19 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["*.parquet"]
+        "patterns": [
+          "*.parquet"
+        ]
       },
-      "license": {"license_id": "per-file", "reviewed": false, "per_file_license": true},
-      "admit": {"dedup_mode": "record", "max_invalid_ratio": 0.001},
+      "license": {
+        "license_id": "per-file",
+        "reviewed": false,
+        "per_file_license": true
+      },
+      "admit": {
+        "dedup_mode": "record",
+        "max_invalid_ratio": 0.001
+      },
       "note": "正则密集代码切片；repo 在授权时钉扎"
     },
     {
@@ -383,11 +482,78 @@
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
-        "patterns": ["*.parquet"]
+        "patterns": [
+          "*.parquet"
+        ]
       },
-      "license": {"license_id": "per-file", "reviewed": false, "per_file_license": true},
-      "admit": {"dedup_mode": "record", "max_invalid_ratio": 0.001},
+      "license": {
+        "license_id": "per-file",
+        "reviewed": false,
+        "per_file_license": true
+      },
+      "admit": {
+        "dedup_mode": "record",
+        "max_invalid_ratio": 0.001
+      },
       "note": "真实业务 SQL 模式；repo 在授权时钉扎"
+    },
+    {
+      "source_id": "nemotron-agentic-v1-frozen-20260913",
+      "role": "structured",
+      "band": "C",
+      "repository": "nvidia/Nemotron-Agentic-v1",
+      "revision": "650d590978ca35c8f1ecea2faf136e5fac421b62",
+      "manifest_source": {
+        "type": "direct_urls"
+      },
+      "license": {
+        "license_id": "CC-BY-4.0",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "record"
+      },
+      "urls": [
+        {
+          "filename": "data/interactive_agent.jsonl",
+          "url": "https://huggingface.co/datasets/nvidia/Nemotron-Agentic-v1/resolve/650d590978ca35c8f1ecea2faf136e5fac421b62/data/interactive_agent.jsonl",
+          "bytes": 448570455,
+          "sha256": "dcfeda22372fa707c979cab29ddfe896b89a933f15ed4acbb4f16e7e3787d9dd"
+        },
+        {
+          "filename": "data/tool_calling.jsonl",
+          "url": "https://huggingface.co/datasets/nvidia/Nemotron-Agentic-v1/resolve/650d590978ca35c8f1ecea2faf136e5fac421b62/data/tool_calling.jsonl",
+          "bytes": 5338348607,
+          "sha256": "f537a901d38a999627b8fe59e77a1007af0d79d71a892ad9a4a3d80456e5601b"
+        }
+      ],
+      "note": "Previously listed D06 public synthetic tool trajectories; preserve simulated environment/reasoning identity; no automatic training admission or execution gold."
+    },
+    {
+      "source_id": "chinese-novel-author-release-20260914",
+      "role": "literature",
+      "band": "B",
+      "repository": "asd567557275/chinese_novel",
+      "revision": "be27e745bf43ba34e18bd1f6fff1b42feaee1c40",
+      "manifest_source": {
+        "type": "direct_urls"
+      },
+      "license": {
+        "license_id": "CC-BY-4.0",
+        "reviewed": false
+      },
+      "admit": {
+        "dedup_mode": "record"
+      },
+      "urls": [
+        {
+          "filename": "novel_by_chapter.jsonl",
+          "url": "https://huggingface.co/datasets/asd567557275/chinese_novel/resolve/be27e745bf43ba34e18bd1f6fff1b42feaee1c40/novel_by_chapter.jsonl",
+          "bytes": 4971053,
+          "sha256": "dcc5186883f0acb08a49d2f2de8a9af3c4e53680e16c39bbed62b3218108484d"
+        }
+      ],
+      "note": "Author-uploaded Traditional Chinese novel; dataset card states human-authored and direct author release. API metadata says CC-BY-4.0; keep candidate pending license/quality admission."
     }
   ]
 }

@@ -1,0 +1,28 @@
+{
+  "count_tokens": true,
+  "seed": 20260913,
+  "exclude_jsonl": [
+    "corpus/pools/public-raw-candidate-20260913-v1/constraint-tests.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/technical-guides.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/naturalconv.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-en.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-zh.jsonl",
+    "corpus/pools/hq-random40-candidate-20260913-v1/web-hq-zh.jsonl",
+    "corpus/pools/zh-v2-pool/prepared/lccc-base-20260910-v3/valid.jsonl",
+    "corpus/pools/zh-v2-pool/raw/lccc-base-5bd582fa-v1/lccc_base_test.jsonl.gz",
+    "corpus/pools/zh-v2-pool/raw/lccc-base-5bd582fa-v1/lccc_base_valid.jsonl.gz"
+  ],
+  "sources": [
+    {
+      "source_id": "lccc-dialogue",
+      "kind": "jsonl_stream",
+      "path": "corpus/pools/zh-v2-pool/prepared/lccc-base-20260910-v3/train.jsonl"
+    }
+  ],
+  "reuse_decision": "complete the previously selected filtered train source; exclude earlier deliveries, do not count raw and filtered as independent sources"
+}

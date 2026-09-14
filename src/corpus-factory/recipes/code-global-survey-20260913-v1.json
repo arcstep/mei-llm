@@ -1,0 +1,24 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 16,
+  "records_per_shard": 200,
+  "max_network_bytes": 107374182400,
+  "reserve_disk_bytes": 107374182400,
+  "cloud_budget_cny": 100,
+  "training_adoption_eligible": false,
+  "sources": [
+    {
+      "source_id": "github-code",
+      "role": "code",
+      "repository": "codeparrot/github-code",
+      "patterns": [
+        "data/*.parquet"
+      ],
+      "local_globs": [
+        "corpus/**/raw/github-code/data/*.parquet"
+      ],
+      "survey_question": "前两片之外的项目和语言覆盖；依赖、生成代码和任务相关性。"
+    }
+  ]
+}

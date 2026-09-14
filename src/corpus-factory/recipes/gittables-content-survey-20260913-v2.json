@@ -1,0 +1,599 @@
+{
+  "sources": [
+    {
+      "source_id": "gittables-1m",
+      "role": "structured",
+      "format": "remote-zip",
+      "revision": "zenodo:6517052:0.0.6",
+      "member_patterns": [
+        "*.parquet"
+      ],
+      "member_format": "parquet-table",
+      "catalog_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/source-link-reconnaissance-20260913-v2/catalog-gittables-1m.raw",
+      "catalog_sha256": "cb8665e0e004466fe8bcb7f4437ebf12f21b6a23c857301f86b351e40c9d8840",
+      "http_files": [
+        {
+          "path": "beats_per_minute_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/beats_per_minute_tables_licensed.zip/content",
+          "bytes": 11540420,
+          "upstream_checksum": "md5:c17a9aa80624fd7a2b7888775eeb11e9"
+        },
+        {
+          "path": "abstraction_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/abstraction_tables_licensed.zip/content",
+          "bytes": 183535966,
+          "upstream_checksum": "md5:01d0e1297c3f3c136da8bbe9f7ff9f6c"
+        },
+        {
+          "path": "bits_per_second_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/bits_per_second_tables_licensed.zip/content",
+          "bytes": 83926946,
+          "upstream_checksum": "md5:a3dea6b311fa698a9e5769710a6cef79"
+        },
+        {
+          "path": "attrition_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/attrition_rate_tables_licensed.zip/content",
+          "bytes": 4008559,
+          "upstream_checksum": "md5:07ce67ed497012079238c857b3729af7"
+        },
+        {
+          "path": "beauty_sleep_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/beauty_sleep_tables_licensed.zip/content",
+          "bytes": 27813831,
+          "upstream_checksum": "md5:9d6b103927ea4ee6e7982d99a97b0946"
+        },
+        {
+          "path": "cardiac_output_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/cardiac_output_tables_licensed.zip/content",
+          "bytes": 5063412,
+          "upstream_checksum": "md5:9cf4b6d0638e0d1926fa0272a5da6cfd"
+        },
+        {
+          "path": "allegro_con_spirito_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/allegro_con_spirito_tables_licensed.zip/content",
+          "bytes": 3347461,
+          "upstream_checksum": "md5:c899a73b9f31c201ff5b028efcd0ed17"
+        },
+        {
+          "path": "cease_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/cease_tables_licensed.zip/content",
+          "bytes": 25193940,
+          "upstream_checksum": "md5:8ec50d265135da0acc22c2371d9d5af6"
+        },
+        {
+          "path": "entr'acte_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/entr'acte_tables_licensed.zip/content",
+          "bytes": 2440787,
+          "upstream_checksum": "md5:79a7cb6efab03c55b5c5aa247d09b7b8"
+        },
+        {
+          "path": "dwarf_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/dwarf_tables_licensed.zip/content",
+          "bytes": 28987784,
+          "upstream_checksum": "md5:df934dc1c9c7b19ce5f2bbc1cc995d77"
+        },
+        {
+          "path": "show_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/show_time_tables_licensed.zip/content",
+          "bytes": 894205331,
+          "upstream_checksum": "md5:09598e83390661087b2e2c2d183a8e28"
+        },
+        {
+          "path": "dose_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/dose_rate_tables_licensed.zip/content",
+          "bytes": 21052095,
+          "upstream_checksum": "md5:7ae632e8b75c7be3beb8d2d73dc7ed25"
+        },
+        {
+          "path": "dogwatch_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/dogwatch_tables_licensed.zip/content",
+          "bytes": 3305472,
+          "upstream_checksum": "md5:cd2a6fd4849b49ea336f6a0736bfdfb3"
+        },
+        {
+          "path": "dead_air_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/dead_air_tables_licensed.zip/content",
+          "bytes": 135027207,
+          "upstream_checksum": "md5:2c874017ce9a8e326438effd0bce7a26"
+        },
+        {
+          "path": "data_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/data_rate_tables_licensed.zip/content",
+          "bytes": 745911510,
+          "upstream_checksum": "md5:107f4196c8db3ea0be40ae47730265b4"
+        },
+        {
+          "path": "multistage_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/multistage_tables_licensed.zip/content",
+          "bytes": 1094676,
+          "upstream_checksum": "md5:2ef20e46c37e52e067182c8e81cc07ba"
+        },
+        {
+          "path": "solar_constant_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/solar_constant_tables_licensed.zip/content",
+          "bytes": 18624990,
+          "upstream_checksum": "md5:07fdfce4de15cde5fcff33a5a9cebcc2"
+        },
+        {
+          "path": "speed_of_light_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/speed_of_light_tables_licensed.zip/content",
+          "bytes": 165212547,
+          "upstream_checksum": "md5:ceec7fa340da9ed5d49909c135612e57"
+        },
+        {
+          "path": "split_shift_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/split_shift_tables_licensed.zip/content",
+          "bytes": 35497498,
+          "upstream_checksum": "md5:4f7f0027b15452f2bcf1787558c6f595"
+        },
+        {
+          "path": "rate_of_return_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/rate_of_return_tables_licensed.zip/content",
+          "bytes": 193565145,
+          "upstream_checksum": "md5:27424a70a3de975f34fef1c3b1359d12"
+        },
+        {
+          "path": "metabolic_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/metabolic_rate_tables_licensed.zip/content",
+          "bytes": 5571251,
+          "upstream_checksum": "md5:f03756251038867e137d68cd572766cf"
+        },
+        {
+          "path": "miles_per_hour_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/miles_per_hour_tables_licensed.zip/content",
+          "bytes": 36879782,
+          "upstream_checksum": "md5:27a3606167228c022bf8bd40421b0c17"
+        },
+        {
+          "path": "musth_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/musth_tables_licensed.zip/content",
+          "bytes": 1833492,
+          "upstream_checksum": "md5:ba87146e5b27cbd998340a1df825baf1"
+        },
+        {
+          "path": "neonatal_mortality_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/neonatal_mortality_tables_licensed.zip/content",
+          "bytes": 2134214,
+          "upstream_checksum": "md5:4e0e7301ec320aeda7dedabfb7b541c7"
+        },
+        {
+          "path": "object_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/object_tables_licensed.zip/content",
+          "bytes": 765747955,
+          "upstream_checksum": "md5:862ebb8e31d4bbe1923c2cd06db23fe3"
+        },
+        {
+          "path": "rainy_day_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/rainy_day_tables_licensed.zip/content",
+          "bytes": 16573059,
+          "upstream_checksum": "md5:b45b69f715f4228e9ab6d3b0dee4ff35"
+        },
+        {
+          "path": "orbit_period_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/orbit_period_tables_licensed.zip/content",
+          "bytes": 13048961,
+          "upstream_checksum": "md5:0f115eb9d8f0ccad5221617ea57d58de"
+        },
+        {
+          "path": "organism_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/organism_tables_licensed.zip/content",
+          "bytes": 26911287,
+          "upstream_checksum": "md5:59d47e8a7da4dc2bf33b66038685b375"
+        },
+        {
+          "path": "radial_velocity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/radial_velocity_tables_licensed.zip/content",
+          "bytes": 1065479,
+          "upstream_checksum": "md5:8547e9a82cf9580d73256b17c003a805"
+        },
+        {
+          "path": "parent_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/parent_tables_licensed.zip/content",
+          "bytes": 1215267776,
+          "upstream_checksum": "md5:f81e9ffdd90f6311b8f472dbc01d266a"
+        },
+        {
+          "path": "radial_pulse_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/radial_pulse_tables_licensed.zip/content",
+          "bytes": 549235,
+          "upstream_checksum": "md5:e98656caeca7a072df8d277c2061ddaa"
+        },
+        {
+          "path": "steerageway_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/steerageway_tables_licensed.zip/content",
+          "bytes": 95244,
+          "upstream_checksum": "md5:eb3252bcbfb79267484332dca19e2d50"
+        },
+        {
+          "path": "reaction_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/reaction_time_tables_licensed.zip/content",
+          "bytes": 161091309,
+          "upstream_checksum": "md5:1d5f41fa761b14cd2361bb6862206e88"
+        },
+        {
+          "path": "stopping_point_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/stopping_point_tables_licensed.zip/content",
+          "bytes": 71728887,
+          "upstream_checksum": "md5:fc6cb5f9f58586c4c48695677e4a291e"
+        },
+        {
+          "path": "terminal_velocity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/terminal_velocity_tables_licensed.zip/content",
+          "bytes": 12815155,
+          "upstream_checksum": "md5:a16aa2c3e3548d35b4b93b8038846b5f"
+        },
+        {
+          "path": "real_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/real_time_tables_licensed.zip/content",
+          "bytes": 1053042053,
+          "upstream_checksum": "md5:8a93ac30870ce80c102af12d44c5dbbb"
+        },
+        {
+          "path": "quick_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/quick_time_tables_licensed.zip/content",
+          "bytes": 426269760,
+          "upstream_checksum": "md5:16bc80400e85a51f58ae61330ed9c9e6"
+        },
+        {
+          "path": "relaxation_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/relaxation_time_tables_licensed.zip/content",
+          "bytes": 14860868,
+          "upstream_checksum": "md5:e9725052f3f4edcc595311e6aa61e88a"
+        },
+        {
+          "path": "respiratory_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/respiratory_rate_tables_licensed.zip/content",
+          "bytes": 23217349,
+          "upstream_checksum": "md5:5ae5cc0acfdda755dfc2ee2df265494c"
+        },
+        {
+          "path": "return_on_invested_capital_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/return_on_invested_capital_tables_licensed.zip/content",
+          "bytes": 12728283,
+          "upstream_checksum": "md5:c6f2a1a94b6d3f1961307f16b9ab68d5"
+        },
+        {
+          "path": "revolutions_per_minute_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/revolutions_per_minute_tables_licensed.zip/content",
+          "bytes": 1854765,
+          "upstream_checksum": "md5:f9b6f5a7870c5782871f2f4ff03517e1"
+        },
+        {
+          "path": "terminus_ad_quem_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/terminus_ad_quem_tables_licensed.zip/content",
+          "bytes": 3444828,
+          "upstream_checksum": "md5:b1caae5ef01a54f48f1aef45ba1ec3b4"
+        },
+        {
+          "path": "then_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/then_tables_licensed.zip/content",
+          "bytes": 1269049118,
+          "upstream_checksum": "md5:2ded04348a7dc4e7cd28bcd077be396c"
+        },
+        {
+          "path": "rotational_latency_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/rotational_latency_tables_licensed.zip/content",
+          "bytes": 18420115,
+          "upstream_checksum": "md5:dd43cf9379d94c6b320d3aa13b5fe3bf"
+        },
+        {
+          "path": "running_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/running_time_tables_licensed.zip/content",
+          "bytes": 602132545,
+          "upstream_checksum": "md5:80d4a2a01c2021063652eff08e6a44e1"
+        },
+        {
+          "path": "thing_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/thing_tables_licensed.zip/content",
+          "bytes": 1190673175,
+          "upstream_checksum": "md5:23459f9417d803f0ebf297dc11dd0b1b"
+        },
+        {
+          "path": "menstrual_cycle_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/menstrual_cycle_tables_licensed.zip/content",
+          "bytes": 912308,
+          "upstream_checksum": "md5:7bd12d78dccf6cb88832aa99f9bbc74a"
+        },
+        {
+          "path": "safe_period_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/safe_period_tables_licensed.zip/content",
+          "bytes": 118791170,
+          "upstream_checksum": "md5:ebc453d6c92a937eb14ca00db96b7d8b"
+        },
+        {
+          "path": "sampling_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/sampling_rate_tables_licensed.zip/content",
+          "bytes": 40934516,
+          "upstream_checksum": "md5:66334c5e34def53c3e12bb388858010c"
+        },
+        {
+          "path": "meno_mosso_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/meno_mosso_tables_licensed.zip/content",
+          "bytes": 2374854,
+          "upstream_checksum": "md5:28336e76ace33e33747518b76b63d752"
+        },
+        {
+          "path": "lunitidal_interval_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/lunitidal_interval_tables_licensed.zip/content",
+          "bytes": 22,
+          "upstream_checksum": "md5:76cdb2bad9582d23c1f6f4d868218d6c"
+        },
+        {
+          "path": "time_interval_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/time_interval_tables_licensed.zip/content",
+          "bytes": 88211735,
+          "upstream_checksum": "md5:423eaf1a8bae5d22450b94ab31dd109e"
+        },
+        {
+          "path": "time-out_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/time-out_tables_licensed.zip/content",
+          "bytes": 1267044,
+          "upstream_checksum": "md5:cba1163c4402ce1eb04cdf0b5fa6a096"
+        },
+        {
+          "path": "living_thing_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/living_thing_tables_licensed.zip/content",
+          "bytes": 442753124,
+          "upstream_checksum": "md5:1d95b7627a0951fc69deb86d95be81fd"
+        },
+        {
+          "path": "time_slot_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/time_slot_tables_licensed.zip/content",
+          "bytes": 30007854,
+          "upstream_checksum": "md5:5d95a0ce74d2f7597f749d4f52dca30c"
+        },
+        {
+          "path": "track-to-track_seek_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/track-to-track_seek_time_tables_licensed.zip/content",
+          "bytes": 22,
+          "upstream_checksum": "md5:76cdb2bad9582d23c1f6f4d868218d6c"
+        },
+        {
+          "path": "usance_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/usance_tables_licensed.zip/content",
+          "bytes": 2856937,
+          "upstream_checksum": "md5:43a947d22a5d9224d35f2dcedf0cc86c"
+        },
+        {
+          "path": "wartime_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/wartime_tables_licensed.zip/content",
+          "bytes": 5418231,
+          "upstream_checksum": "md5:c6c2448b87d8d05f18d4af6dfbca5265"
+        },
+        {
+          "path": "whole_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/whole_tables_licensed.zip/content",
+          "bytes": 961271561,
+          "upstream_checksum": "md5:d397311d8cb81902ab9ca025e015791b"
+        },
+        {
+          "path": "question_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/question_time_tables_licensed.zip/content",
+          "bytes": 773672058,
+          "upstream_checksum": "md5:0596f1405d3f5b748134e18908f32021"
+        },
+        {
+          "path": "processing_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/processing_time_tables_licensed.zip/content",
+          "bytes": 316443251,
+          "upstream_checksum": "md5:9ff4921799084c9cf214cd8961cf5cdf"
+        },
+        {
+          "path": "lead_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/lead_time_tables_licensed.zip/content",
+          "bytes": 405521821,
+          "upstream_checksum": "md5:0eef8405992811378812aa887c631ab4"
+        },
+        {
+          "path": "latent_period_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/latent_period_tables_licensed.zip/content",
+          "bytes": 3737123,
+          "upstream_checksum": "md5:819ef38984cffb68b01397cf2c1c7660"
+        },
+        {
+          "path": "last_gasp_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/last_gasp_tables_licensed.zip/content",
+          "bytes": 7540712,
+          "upstream_checksum": "md5:01b8cd21bea40d57452cfc23e42f2ade"
+        },
+        {
+          "path": "physical_entity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/physical_entity_tables_licensed.zip/content",
+          "bytes": 36774933,
+          "upstream_checksum": "md5:f3669555ed1525d01bba54679bf225a8"
+        },
+        {
+          "path": "peacetime_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/peacetime_tables_licensed.zip/content",
+          "bytes": 597266,
+          "upstream_checksum": "md5:3adf5063467f45324b2e26009c98440c"
+        },
+        {
+          "path": "peculiar_velocity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/peculiar_velocity_tables_licensed.zip/content",
+          "bytes": 1001311,
+          "upstream_checksum": "md5:b8d3dd1b5df774b8422367474bc1efcc"
+        },
+        {
+          "path": "sampling_frequency_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/sampling_frequency_tables_licensed.zip/content",
+          "bytes": 7008238,
+          "upstream_checksum": "md5:86a21db356d5bd0dead8ea0458f1f29c"
+        },
+        {
+          "path": "secretory_phase_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/secretory_phase_tables_licensed.zip/content",
+          "bytes": 5675672,
+          "upstream_checksum": "md5:ab6c7a18dcc5de95b8dcbffd8e97ceb1"
+        },
+        {
+          "path": "lapse_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/lapse_tables_licensed.zip/content",
+          "bytes": 9834100,
+          "upstream_checksum": "md5:b3a5cc0dba30747e18de8add8201fc98"
+        },
+        {
+          "path": "kilometers_per_hour_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/kilometers_per_hour_tables_licensed.zip/content",
+          "bytes": 1908512,
+          "upstream_checksum": "md5:52011a535602ddf51a172ccf1b963aa6"
+        },
+        {
+          "path": "kilohertz_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/kilohertz_tables_licensed.zip/content",
+          "bytes": 6037387,
+          "upstream_checksum": "md5:b5f4468254bbd363bd83787f8d313bc4"
+        },
+        {
+          "path": "in_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/in_time_tables_licensed.zip/content",
+          "bytes": 252432936,
+          "upstream_checksum": "md5:297621a79135209427a37b33697d368e"
+        },
+        {
+          "path": "interim_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/interim_tables_licensed.zip/content",
+          "bytes": 20505433,
+          "upstream_checksum": "md5:f139baf7a3107910c86c9318f3d504d8"
+        },
+        {
+          "path": "inflation_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/inflation_rate_tables_licensed.zip/content",
+          "bytes": 50402015,
+          "upstream_checksum": "md5:89cf031ae8dacf850fe25dd476830a53"
+        },
+        {
+          "path": "indiction_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/indiction_tables_licensed.zip/content",
+          "bytes": 842622,
+          "upstream_checksum": "md5:43d792bd00c305df64e7a93ac60b65ac"
+        },
+        {
+          "path": "incubation_period_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/incubation_period_tables_licensed.zip/content",
+          "bytes": 10652635,
+          "upstream_checksum": "md5:ccaffefbb7f97fc2fd9fee74efa3321a"
+        },
+        {
+          "path": "seek_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/seek_time_tables_licensed.zip/content",
+          "bytes": 225138060,
+          "upstream_checksum": "md5:8b7177ddc7aaf1940c18a20ab53fdafd"
+        },
+        {
+          "path": "id_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/id_tables_licensed.zip/content",
+          "bytes": 1990393555,
+          "upstream_checksum": "md5:2314c090e6d6fb0c61540da50f91c30c"
+        },
+        {
+          "path": "hypervelocity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/hypervelocity_tables_licensed.zip/content",
+          "bytes": 4319518,
+          "upstream_checksum": "md5:e0464e8da5550ac11ace6a5b7d44bf2d"
+        },
+        {
+          "path": "centripetal_acceleration_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/centripetal_acceleration_tables_licensed.zip/content",
+          "bytes": 6654010,
+          "upstream_checksum": "md5:e1ee6a4ffed2a03ab0183cf3032b436e"
+        },
+        {
+          "path": "channel_capacity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/channel_capacity_tables_licensed.zip/content",
+          "bytes": 28208004,
+          "upstream_checksum": "md5:0ea88e32aab30d13f9d00f3ee257764e"
+        },
+        {
+          "path": "clotting_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/clotting_time_tables_licensed.zip/content",
+          "bytes": 966429,
+          "upstream_checksum": "md5:8777e7dffe24e58dae7d731a3c7580ad"
+        },
+        {
+          "path": "command_processing_overhead_time_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/command_processing_overhead_time_tables_licensed.zip/content",
+          "bytes": 5779496,
+          "upstream_checksum": "md5:3f058d98d8fa03d6827c88208283a8f7"
+        },
+        {
+          "path": "heterotroph_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/heterotroph_tables_licensed.zip/content",
+          "bytes": 1494242,
+          "upstream_checksum": "md5:9ce1258256a3821dd2f807aef88e26b7"
+        },
+        {
+          "path": "halftime_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/halftime_tables_licensed.zip/content",
+          "bytes": 2581621,
+          "upstream_checksum": "md5:c89c5a472dfb54c578e2523199d84b3f"
+        },
+        {
+          "path": "half_life_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/half_life_tables_licensed.zip/content",
+          "bytes": 431576336,
+          "upstream_checksum": "md5:275f5a7f6bf032b2da7311c04dbfb749"
+        },
+        {
+          "path": "shiva_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/shiva_tables_licensed.zip/content",
+          "bytes": 15708851,
+          "upstream_checksum": "md5:fea2cd95cdead7bd0e0209e5e78490a5"
+        },
+        {
+          "path": "growth_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/growth_rate_tables_licensed.zip/content",
+          "bytes": 240050687,
+          "upstream_checksum": "md5:142724919f37d91062f55677329ac78b"
+        },
+        {
+          "path": "graveyard_watch_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/graveyard_watch_tables_licensed.zip/content",
+          "bytes": 2822980,
+          "upstream_checksum": "md5:983c71daffe9d098534ca69d0a96803f"
+        },
+        {
+          "path": "fertile_period_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/fertile_period_tables_licensed.zip/content",
+          "bytes": 2485370,
+          "upstream_checksum": "md5:43a30b5686325d153f8a8af39a79bd44"
+        },
+        {
+          "path": "escape_velocity_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/escape_velocity_tables_licensed.zip/content",
+          "bytes": 33337636,
+          "upstream_checksum": "md5:c684109a3be54770a21c5cb72f52103d"
+        },
+        {
+          "path": "erythrocyte_sedimentation_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/erythrocyte_sedimentation_rate_tables_licensed.zip/content",
+          "bytes": 9757961,
+          "upstream_checksum": "md5:f0062b74013b708027caa3edeb1958a8"
+        },
+        {
+          "path": "episcopate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/episcopate_tables_licensed.zip/content",
+          "bytes": 2981522,
+          "upstream_checksum": "md5:788d769236ee55d85fdaa0f9001baaa9"
+        },
+        {
+          "path": "count_per_minute_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/count_per_minute_tables_licensed.zip/content",
+          "bytes": 33700226,
+          "upstream_checksum": "md5:ee91dd6f4d79b55f4abfdf318d625713"
+        },
+        {
+          "path": "crime_rate_tables_licensed.zip",
+          "url": "https://zenodo.org/api/records/6517052/files/crime_rate_tables_licensed.zip/content",
+          "bytes": 74223427,
+          "upstream_checksum": "md5:66ec18db2fef4a3e8710fa4b0681a265"
+        }
+      ],
+      "archive_transport": "whole-bounded"
+    }
+  ],
+  "seed": 20260913,
+  "shards_per_wave": 8,
+  "records_per_shard": 200,
+  "max_network_bytes": 8589934592
+}

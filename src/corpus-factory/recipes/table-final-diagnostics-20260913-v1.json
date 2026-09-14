@@ -1,0 +1,14 @@
+{
+  "sources": [],
+  "local_diagnostics": {
+    "table_source_inventory": {
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/gittables-content-20260913-v3"
+    },
+    "survey_token_capacity": {
+      "surveys": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/gittables-content-20260913-v3",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/literary-content-20260913-v1"
+      ]
+    }
+  }
+}

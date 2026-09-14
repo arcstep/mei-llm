@@ -1,0 +1,9 @@
+{
+  "mode": "node_task_preparation",
+  "id": "mei-node-task-preparation-20260914-v2",
+  "cpt_release": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/RELEASE.json",
+  "cpt_sha256": "9dc46b0d7e808a97a8cfb51b4291174f148909c0bf98cae38ad3418ff2bda148",
+  "fixtures": "src/corpus-factory/fixtures/node-task-seeds-20260914-v1.json",
+  "qat_records_per_source": 12,
+  "legacy_sft_manifest": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4/release-manifest.json"
+}

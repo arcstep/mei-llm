@@ -1,0 +1,28 @@
+{
+  "mode": "parquet_bulk",
+  "source_id": "wiki-en-foundation-expansion-20260913-v1",
+  "seed": 20260913,
+  "row_group_fraction": 1.0,
+  "download_workers": 1,
+  "max_network_bytes": 3221225472,
+  "reserve_disk_bytes": 107374182400,
+  "columns": ["id", "url", "title", "text"],
+  "text_column": "text",
+  "locks": [
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/global-frozen-evidence-20260913-v1/wiki-en/frame.json",
+      "sha256": "7478e1e0d985b22c37b309355f61e483bccc1b2712da05683b2c88adee2aee04"
+    }
+  ],
+  "exclude_jsonl": [
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-en.jsonl"
+  ],
+  "files": [
+    {
+      "path": "20231101.en/train-00017-of-00041.parquet",
+      "url": "https://huggingface.co/datasets/wikimedia/wikipedia/resolve/b04c8d1ceb2f5cd4588862100d08de323dccfbaa/20231101.en/train-00017-of-00041.parquet",
+      "source_revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "shard_probability": 0.024390243902439025
+    }
+  ]
+}

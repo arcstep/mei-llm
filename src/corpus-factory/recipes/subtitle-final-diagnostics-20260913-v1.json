@@ -1,0 +1,14 @@
+{
+  "sources": [],
+  "local_diagnostics": {
+    "subtitle_inventory": {
+      "survey": "cycles/mei-1.2-51m/exp-corpus-survey/runs/subtitle-content-20260913-v1"
+    },
+    "survey_token_capacity": {
+      "surveys": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/subtitle-content-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/constraint-evidence-20260913-v1"
+      ]
+    }
+  }
+}

@@ -645,9 +645,15 @@ def iter_alignment_views(
             if prompt_tokens + 128 > 2048:
                 raise RuntimeError(f"alignment prompt exceeds joint budget: {sample_id}")
             view = dict(source)
+            view_kind = (
+                "capability_insufficient"
+                if outcome == "capability_insufficient"
+                else str(source.get("kind") or "")
+            )
             view.update(
                 {
                     "schema": ALIGNMENT_VIEW_SCHEMA,
+                    "kind": view_kind,
                     "view_id": _sha(
                         [
                             sample_id,
@@ -687,7 +693,7 @@ def iter_alignment_views(
                 }
             )
             yield view
-            if outcome in {"call", "terminal_refusal"} or mode == "anchor_top5":
+            if outcome in {"call", "terminal_refusal", "capability_insufficient"} or mode == "anchor_top5":
                 break
 
 

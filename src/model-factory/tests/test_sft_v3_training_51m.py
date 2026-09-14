@@ -92,6 +92,41 @@ class SftV3TrainingContractTests(unittest.TestCase):
         self.assertEqual(len(agent_order), len(agent))
         self.assertEqual(set(agent_order), set(range(len(agent))))
 
+    def test_fullcall_epoch_order_handles_capability_insufficient_kind(self):
+        rows = [
+            {"kind": "execute", "candidate_tool": f"tool.{index}"}
+            for index in range(3)
+        ] + [
+            {"kind": "refuse", "candidate_tool": f"tool.{index}"}
+            for index in range(3)
+        ] + [
+            {"kind": "capability_insufficient", "candidate_tool": "tool.0"}
+            for _ in range(2)
+        ]
+        order = training.fullcall_epoch_order(rows, 0)
+        self.assertEqual(len(order), len(rows))
+        self.assertEqual(set(order), set(range(len(rows))))
+        self.assertIn("capability_insufficient", {rows[index]["kind"] for index in order})
+
+    def test_epoch_sampler_execute_oversample_repeats_execute_rows(self):
+        rows = [
+            {"kind": "execute", "candidate_tool": f"tool.{index}"}
+            for index in range(3)
+        ] + [
+            {"kind": "refuse", "candidate_tool": f"tool.{index}"}
+            for index in range(3)
+        ]
+        order = training.fullcall_epoch_order(rows, 0, execute_repeat=2)
+        self.assertEqual(len(order), len(rows))
+        exec_idx = {i for i, row in enumerate(rows) if row["kind"] == "execute"}
+        # execute 行不遗漏，且占比高于现状（3/6=50% → 过采样后 >50%）
+        self.assertTrue(exec_idx.issubset(set(order)))
+        exec_count = sum(1 for index in order if rows[index]["kind"] == "execute")
+        self.assertGreater(exec_count, len(exec_idx))
+        # 非 execute 行不重复（execute_repeat 只放大 execute，不放大 refuse）
+        for index in set(order) - exec_idx:
+            self.assertEqual(order.count(index), 1)
+
     def test_retrieval_schedule_exposes_structural_and_natural_rows(self):
         natural_release = (
             contract.DEFAULT_RELEASE_ROOT

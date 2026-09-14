@@ -1,0 +1,356 @@
+{
+  "mode": "parquet_bulk",
+  "source_id": "web-hq-zh",
+  "seed": 20260913,
+  "row_group_fraction": 0.52,
+  "download_workers": 2,
+  "reserve_disk_bytes": 107374182400,
+  "exclude_jsonl": [
+    "corpus/pools/public-raw-candidate-20260913-v1/constraint-tests.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/literature-dialogue.jsonl",
+    "corpus/pools/public-raw-candidate-20260913-v1/technical-guides.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/lccc-dialogue.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/naturalconv.jsonl",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-en.jsonl",
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-zh.jsonl",
+    "corpus/pools/hq-random40-candidate-20260913-v1/web-hq-zh.jsonl"
+  ],
+  "files": [
+    {
+      "path": "cmn_Hani/000_00000.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00000.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0000.json",
+      "adopt_receipt_sha256": "33f4da8d0c0dfe2a8d215582424b37f1e54b6e61ff38c9ecf6546fcebf2c47b2"
+    },
+    {
+      "path": "cmn_Hani/000_00014.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00014.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0001.json",
+      "adopt_receipt_sha256": "932133b9aae0d80af28340ebcc59361222629c05987004bba6f0eaba5e1a3a51"
+    },
+    {
+      "path": "cmn_Hani/000_00028.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00028.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0002.json",
+      "adopt_receipt_sha256": "3d1de40472bc25d17d87dea022f1cff1105b746ababcc8758186d760d2cdbd97"
+    },
+    {
+      "path": "cmn_Hani/000_00037.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00037.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0003.json",
+      "adopt_receipt_sha256": "5dc6d57b443234d242cda4278a584e68bd821a84bfc138d23d2c0173d7ffeb0e"
+    },
+    {
+      "path": "cmn_Hani/000_00074.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00074.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0004.json",
+      "adopt_receipt_sha256": "dc209ef4d125757044764be6c1179f8544f5bb1a7faee900b82faff26bfb3633"
+    },
+    {
+      "path": "cmn_Hani/000_00106.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00106.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0005.json",
+      "adopt_receipt_sha256": "ac1195d6f8686dcba2fe89ab8cbfd3850afb53aceffbf8c327cb628ffab3925a"
+    },
+    {
+      "path": "cmn_Hani/000_00170.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00170.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0006.json",
+      "adopt_receipt_sha256": "c951867eeaf6b4c16b7da013a138acf69aef2245d89e08b81397e2d44bc19cfb"
+    },
+    {
+      "path": "cmn_Hani/000_00204.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00204.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0007.json",
+      "adopt_receipt_sha256": "7600b0d1ee520ac3f8a3218538ad58ae1a6002ea691ddaf39da841d9fc36534b"
+    },
+    {
+      "path": "cmn_Hani/000_00209.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00209.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0008.json",
+      "adopt_receipt_sha256": "5a092014a66ae7f87d7f797f5e6f0fae830910c2fdccfa00406af97ee9303a45"
+    },
+    {
+      "path": "cmn_Hani/000_00231.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00231.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0009.json",
+      "adopt_receipt_sha256": "f4d3c426fa085929fea31f421bd01863a46160b8b5d0f433b9605f75e4282542"
+    },
+    {
+      "path": "cmn_Hani/000_00271.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00271.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0010.json",
+      "adopt_receipt_sha256": "d914cbccbc6c1c42825f50a7e14a5c7ec8f65cdd925fbbb225fa44950799aa56"
+    },
+    {
+      "path": "cmn_Hani/000_00323.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00323.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0011.json",
+      "adopt_receipt_sha256": "94f893aa966320892935099a1ff1753df17f70b17ecbdbc86d6d050f003abb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00343.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00343.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0012.json",
+      "adopt_receipt_sha256": "f91ee5d69614d6d7d720f996f37b3ac0ef8213ade4eec08c2691f4c9d5d7e2b8"
+    },
+    {
+      "path": "cmn_Hani/000_00347.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00347.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0013.json",
+      "adopt_receipt_sha256": "043e91de40b55a71f85f0b2659e0a506f9d97aaa85e457739f2058af2fcaba6e"
+    },
+    {
+      "path": "cmn_Hani/000_00354.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00354.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0014.json",
+      "adopt_receipt_sha256": "c3aa3e85312ea21483daefbcad30d51b23ae4cf603c1f2912b94143a1b52a4b0"
+    },
+    {
+      "path": "cmn_Hani/000_00357.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00357.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0015.json",
+      "adopt_receipt_sha256": "ba82c426cf3e5707bb4487600e523a11fa8a08b3d128ecae9a4e2867824e8b9f"
+    },
+    {
+      "path": "cmn_Hani/000_00415.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00415.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0016.json",
+      "adopt_receipt_sha256": "15b3e639add56457dc1bd176bcb525154b3240b4104318451530e13dc0354a66"
+    },
+    {
+      "path": "cmn_Hani/000_00461.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00461.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0017.json",
+      "adopt_receipt_sha256": "057de08738ef7471afd3133245473f47ccda352be44405d0f4de072b26167bd8"
+    },
+    {
+      "path": "cmn_Hani/000_00487.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00487.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e",
+      "adopt_receipt": "corpus/pools/hq-foundation-scale-20260913-v2/original-columns/0018.json",
+      "adopt_receipt_sha256": "e68103c55ea8d9dc4850190b037649e6307b502dd19d1e0875393e939da69f20"
+    },
+    {
+      "path": "cmn_Hani/000_00502.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00502.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00534.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00534.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00560.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00560.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00584.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00584.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00597.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00597.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00642.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00642.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00649.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00649.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00672.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00672.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00676.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00676.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00688.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00688.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00757.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00757.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00791.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00791.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00812.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00812.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00838.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00838.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00904.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00904.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00907.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00907.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00913.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00913.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00930.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00930.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00944.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00944.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00963.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00963.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    },
+    {
+      "path": "cmn_Hani/000_00971.parquet",
+      "selection_method": "uniform_without_replacement",
+      "shard_probability": 0.041025641025641026,
+      "url": "https://huggingface.co/datasets/epfml/FineWeb2-HQ/resolve/c0c06e94fd3a44ae9e802b2b0fc533817601eb5e/cmn_Hani/000_00971.parquet",
+      "source_revision": "c0c06e94fd3a44ae9e802b2b0fc533817601eb5e"
+    }
+  ],
+  "max_network_bytes": 32212254720,
+  "locks": [
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/hq-survey-repair-20260913-v1/fineweb2-hq-cmn-hani/frame.json",
+      "sha256": "10cfee154c0c7760dc38daf329599176daa7f3853ef097528d33349562aca8c1"
+    },
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/hq-random40-acquisition-20260913-v1/fineweb2-hq-cmn-hani/sampling-plan.json",
+      "sha256": "a4b97d34030d5de09a3a8d5597cd5d39fc1676f2bbf61e85e9444ebac3cf3306"
+    }
+  ],
+  "columns": [
+    "text"
+  ],
+  "change_note": "Resume after clarification: downloads continue while historical corpus scope is consolidated. Adopt all 19 completed shard receipts; unchanged selection."
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 1,
+  "records_per_shard": 1,
+  "max_network_bytes": 33554432,
+  "reserve_disk_bytes": 107374182400,
+  "training_adoption_eligible": false,
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "gutenberg-pg-catalog-csv-gz",
+      "url": "https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv.gz",
+      "max_bytes": 16777216
+    }
+  ]
+}

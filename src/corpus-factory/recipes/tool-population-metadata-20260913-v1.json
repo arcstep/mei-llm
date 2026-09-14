@@ -1,0 +1,37 @@
+{
+  "sources": [
+    {
+      "source_id": "toolbench",
+      "github_repository": "OpenBMB/ToolBench",
+      "patterns": [
+        "*"
+      ],
+      "role": "tool-supervision-candidate"
+    },
+    {
+      "source_id": "ultratool",
+      "github_repository": "JoeYing1019/UltraTool",
+      "patterns": [
+        "*"
+      ],
+      "role": "evaluation-reference-holdout"
+    },
+    {
+      "source_id": "bfcl",
+      "github_repository": "ShishirPatil/gorilla",
+      "patterns": [
+        "*"
+      ],
+      "role": "evaluation-reference-holdout"
+    },
+    {
+      "source_id": "xlam-apigen-60k",
+      "repository": "Salesforce/xlam-function-calling-60k",
+      "patterns": [
+        "*"
+      ],
+      "role": "tool-supervision-candidate"
+    }
+  ],
+  "max_network_bytes": 268435456
+}

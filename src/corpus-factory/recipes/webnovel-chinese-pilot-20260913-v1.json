@@ -1,0 +1,27 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 1,
+  "records_per_shard": 1,
+  "max_network_bytes": 67108864,
+  "reserve_disk_bytes": 107374182400,
+  "training_adoption_eligible": false,
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "webnovel-offset-0",
+      "url": "https://datasets-server.huggingface.co/rows?dataset=wdndev%2Fwebnovel-chinese&config=default&split=train&offset=0&length=100",
+      "max_bytes": 16777216
+    },
+    {
+      "id": "webnovel-offset-300000",
+      "url": "https://datasets-server.huggingface.co/rows?dataset=wdndev%2Fwebnovel-chinese&config=default&split=train&offset=300000&length=100",
+      "max_bytes": 16777216
+    },
+    {
+      "id": "webnovel-offset-600000",
+      "url": "https://datasets-server.huggingface.co/rows?dataset=wdndev%2Fwebnovel-chinese&config=default&split=train&offset=600000&length=100",
+      "max_bytes": 16777216
+    }
+  ]
+}

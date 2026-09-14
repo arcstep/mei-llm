@@ -1,0 +1,20 @@
+{
+  "mode": "approved_batch",
+  "authorization": "Repair authorized remaining 439 tutorial files; no inherited survey design and no redownload of earlier 157 files. One network worker shares two-slot budget with existing single-worker download.",
+  "jobs": [
+    {
+      "name": "tutorials-fetch",
+      "action": "profile",
+      "config": "src/corpus-factory/recipes/tutorial-complete-20260913-v2.json",
+      "out": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-complete-20260913-v2",
+      "network": true
+    },
+    {
+      "name": "tutorials-materialize",
+      "action": "materialize",
+      "config": "src/corpus-factory/recipes/tutorial-complete-materialize-20260913-v2.json",
+      "out": "corpus/pools/tutorial-complete-candidate-20260913-v2",
+      "requires": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-complete-20260913-v2/survey.json"
+    }
+  ]
+}

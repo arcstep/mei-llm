@@ -1,0 +1,37 @@
+{
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "gittables",
+      "url": "https://gittables.github.io/"
+    },
+    {
+      "id": "sotab",
+      "url": "https://webdatacommons.org/structureddata/sotab/v2/"
+    },
+    {
+      "id": "naturalconv",
+      "url": "https://ai.tencent.com/ailab/nlp/dialogue/"
+    },
+    {
+      "id": "ramc",
+      "url": "https://www.openslr.org/123/"
+    },
+    {
+      "id": "opus-ted",
+      "url": "https://opus.nlpl.eu/opusapi/?corpus=TED2020&source=zh_cn&preprocessing=xml&version=latest"
+    },
+    {
+      "id": "opus-subtitles",
+      "url": "https://opus.nlpl.eu/opusapi/?corpus=OpenSubtitles&source=zh_cn&preprocessing=xml&version=latest"
+    },
+    {
+      "id": "wikisource-drama",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&titles=%E7%B5%82%E8%BA%AB%E5%A4%A7%E4%BA%8B&prop=revisions&rvprop=ids%7Ccontent&rvslots=main&format=json"
+    },
+    {
+      "id": "spokenwoz",
+      "url": "https://huggingface.co/api/datasets/ssz1111/SpokenWOZ-Train-Text/revision/main"
+    }
+  ]
+}

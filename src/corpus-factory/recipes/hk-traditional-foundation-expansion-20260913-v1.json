@@ -1,0 +1,40 @@
+{
+  "mode": "parquet_bulk",
+  "source_id": "hk-traditional-foundation-expansion-20260913-v1",
+  "seed": 20260913,
+  "row_group_fraction": 1.0,
+  "download_workers": 2,
+  "max_network_bytes": 4294967296,
+  "reserve_disk_bytes": 107374182400,
+  "columns": ["text"],
+  "text_column": "text",
+  "locks": [
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/hk-traditional-foundation-pilot-20260913-v1/hk-content-wiki/frame.json",
+      "sha256": "160db93104b5b444fc7b43072ccfee515f17fe1ac012edb22664e723e8e69439"
+    }
+  ],
+  "exclude_jsonl": [
+    "corpus/pools/wiki-raw-candidate-20260913-v1/wiki-zh.jsonl",
+    "corpus/pools/wiki-foundation-scale-20260913-v1/part-0000.jsonl",
+    "corpus/pools/wiki-foundation-scale-20260913-v1/part-0001.jsonl",
+    "corpus/pools/wiki-foundation-scale-20260913-v1/part-0002.jsonl",
+    "corpus/pools/wiki-foundation-scale-20260913-v1/part-0003.jsonl",
+    "corpus/pools/wiki-foundation-scale-20260913-v1/part-0004.jsonl",
+    "corpus/pools/wiki-foundation-scale-20260913-v1/part-0005.jsonl"
+  ],
+  "files": [
+    {
+      "path": "wiki_hk/train/0002.parquet",
+      "url": "https://huggingface.co/datasets/SolarisCipher/hk_content_corpus/resolve/e88dec4469416cafb1ded0b7c0310c25c7c05dc9/wiki_hk/train/0002.parquet",
+      "source_revision": "e88dec4469416cafb1ded0b7c0310c25c7c05dc9",
+      "shard_probability": 0.5
+    },
+    {
+      "path": "wiki_hk/train/0003.parquet",
+      "url": "https://huggingface.co/datasets/SolarisCipher/hk_content_corpus/resolve/e88dec4469416cafb1ded0b7c0310c25c7c05dc9/wiki_hk/train/0003.parquet",
+      "source_revision": "e88dec4469416cafb1ded0b7c0310c25c7c05dc9",
+      "shard_probability": 0.5
+    }
+  ]
+}

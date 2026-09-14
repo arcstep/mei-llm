@@ -1,0 +1,24 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 64,
+  "records_per_shard": 200,
+  "max_network_bytes": 107374182400,
+  "reserve_disk_bytes": 107374182400,
+  "cloud_budget_cny": 100,
+  "training_adoption_eligible": false,
+  "sources": [
+    {
+      "source_id": "fineweb2-hq-cmn-hani",
+      "role": "fineweb2_hq",
+      "repository": "epfml/FineWeb2-HQ",
+      "patterns": [
+        "cmn_Hani/*.parquet"
+      ],
+      "local_globs": [
+        "corpus/pools/zh-v2-pool/raw/fineweb2-hq*/*.parquet"
+      ],
+      "survey_question": "时间、站点与主题是否局限于现有连续分片？"
+    }
+  ]
+}

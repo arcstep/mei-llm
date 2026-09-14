@@ -1,0 +1,54 @@
+{
+  "mode": "corpus_matrix",
+  "pools": [
+    "corpus/pools/public-raw-candidate-20260913-v1",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1",
+    "corpus/pools/wiki-raw-candidate-20260913-v1",
+    "corpus/pools/hq-random40-candidate-20260913-v1",
+    "corpus/pools/wiki-foundation-scale-20260913-v1",
+    "corpus/pools/lccc-complete-filtered-20260913-v1",
+    "corpus/pools/hq-foundation-scale-20260913-v3",
+    "corpus/pools/subtitle-scale-20260913-v1",
+    "corpus/pools/code-scale-20260913-v1",
+    "corpus/pools/tutorial-complete-candidate-20260913-v2",
+    "corpus/pools/literary-expansion-candidate-20260913-v1",
+    "corpus/pools/translated-literature-candidate-20260913-v2",
+    "corpus/pools/gutenberg-literary-expansion-20260913-v2",
+    "corpus/pools/wiki-en-foundation-expansion-20260913-v1",
+    "corpus/pools/structured-archives-expansion-20260913-v1",
+    "corpus/pools/openapi-latest-half-expansion-20260913-v1",
+    "corpus/pools/hk-traditional-foundation-expansion-20260913-v1",
+    "corpus/pools/toolace-cpt-candidate-20260913-v1",
+    "corpus/pools/nemotron-cpt-full-20260913-v2"
+  ],
+  "domain_mapping": {
+    "opensubtitles-zh-CN": "口语理解",
+    "opensubtitles-zh-TW": "口语理解",
+    "ted2020-zh-cn": "口语理解",
+    "literature-zh-translation": "文学与剧本表达",
+    "project-gutenberg": "文学与剧本表达",
+    "wiki-en-foundation-expansion-20260913-v1": "基础语言理解",
+    "hk-traditional-foundation-expansion-20260913-v1": "基础语言理解",
+    "schemastore-04787bb": "代码与结构理解",
+    "json-schema-tests-f6fd52a": "代码与结构理解",
+    "openapi-directory-latest-half-f04b8d0": "代码与结构理解",
+    "toolace": "任务与工具语义",
+    "nemotron-interactive_agent": "任务与工具语义",
+    "nemotron-tool_calling": "任务与工具语义"
+  },
+  "english_source_ids": [
+    "wiki-en-foundation-expansion-20260913-v1"
+  ],
+  "pool_outputs": {
+    "corpus/pools/nemotron-cpt-full-20260913-v2": [
+      {
+        "file": "candidate.jsonl",
+        "sha256": "f9a6e7753cfbba3fdfc780775ef65c7e6cdb5c59569e824ca0873a139791112e",
+        "tokens": 587855542,
+        "counts": {
+          "written": 201855
+        }
+      }
+    ]
+  }
+}

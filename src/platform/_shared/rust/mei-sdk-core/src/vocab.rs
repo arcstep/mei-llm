@@ -201,6 +201,8 @@ pub struct Vocab {
     scores: Vec<f32>,
     kinds: Vec<PieceKind>,
     by_piece: std::collections::HashMap<String, u32>,
+    byte_ids: [u32; 256],
+    has_byte_fallback: bool,
     max_piece_chars: usize,
     normalizer: NormalizerSpec,
     token_bytes_cache: Vec<Vec<u8>>,
@@ -347,6 +349,8 @@ impl Vocab {
         let mut kinds = vec![PieceKind::Normal; pieces.len()];
         let mut by_piece = std::collections::HashMap::new();
         let mut max_piece_chars = 0usize;
+        let mut byte_ids = [unk_id; 256];
+        let mut byte_piece_count = 0usize;
         for item in source_pieces {
             let id = item.id as usize;
             if id >= pieces.len() {
@@ -358,24 +362,51 @@ impl Vocab {
                 max_piece_chars = max_piece_chars.max(item.piece.chars().count());
                 by_piece.insert(item.piece.clone(), item.id);
             }
+            if item.kind == PieceKind::Byte {
+                if let Some(hex) = item
+                    .piece
+                    .strip_prefix("<0x")
+                    .and_then(|s| s.strip_suffix('>'))
+                {
+                    if hex.len() == 2 {
+                        if let Ok(byte) = u8::from_str_radix(hex, 16) {
+                            if byte_ids[byte as usize] == unk_id {
+                                byte_piece_count += 1;
+                            }
+                            byte_ids[byte as usize] = item.id;
+                        }
+                    }
+                }
+            }
             pieces[id] = item.piece;
             scores[id] = item.score;
             kinds[id] = item.kind;
         }
         if model_type != "unigram" {
-            return Err(SdkError::new(
-                "unsupported_tokenizer",
-                format!("portable tokenizer requires unigram, got {}", model_type),
-            ));
+            return Err(invalid_model(format!(
+                "portable tokenizer requires unigram, got {}",
+                model_type
+            )));
         }
-        if normalizer.name != "nmt_nfkc" {
-            return Err(SdkError::new(
-                "unsupported_tokenizer",
-                format!(
-                    "portable tokenizer requires nmt_nfkc, got {}",
-                    normalizer.name
-                ),
-            ));
+        match normalizer.name.as_str() {
+            "nmt_nfkc" => {}
+            "identity"
+                if !normalizer.add_dummy_prefix
+                    && !normalizer.remove_extra_whitespaces
+                    && normalizer.escape_whitespaces => {}
+            "identity" => return Err(invalid_model(
+                "identity tokenizer must disable dummy prefix/whitespace folding and escape spaces",
+            )),
+            other => {
+                return Err(invalid_model(format!(
+                    "portable tokenizer does not support normalizer {other}"
+                )))
+            }
+        }
+        if normalizer.name == "identity" && byte_piece_count != 256 {
+            return Err(invalid_model(format!(
+                "lossless identity tokenizer requires 256 byte pieces, found {byte_piece_count}"
+            )));
         }
         let mut vocab = Self {
             pad_id,
@@ -387,6 +418,8 @@ impl Vocab {
             scores,
             kinds,
             by_piece,
+            byte_ids,
+            has_byte_fallback: byte_piece_count == 256,
             max_piece_chars,
             normalizer,
             token_bytes_cache: Vec::new(),
@@ -450,7 +483,11 @@ impl Vocab {
 
     pub fn generated_token_bytes_ref(&self, id: u32, at_start: bool) -> &[u8] {
         let bytes = self.token_bytes_ref(id);
-        if at_start && self.piece(id).starts_with('▁') && bytes.first() == Some(&b' ') {
+        if at_start
+            && self.normalizer.add_dummy_prefix
+            && self.piece(id).starts_with('▁')
+            && bytes.first() == Some(&b' ')
+        {
             &bytes[1..]
         } else {
             bytes
@@ -492,7 +529,7 @@ impl Vocab {
                 out.extend_from_slice(piece.as_bytes());
             }
         }
-        if out.first() == Some(&b' ') {
+        if self.normalizer.add_dummy_prefix && out.first() == Some(&b' ') {
             out.remove(0);
         }
         String::from_utf8_lossy(&out).into_owned()
@@ -503,9 +540,28 @@ impl Vocab {
         if add_bos {
             ids.push(self.bos_id);
         }
+        if self.normalizer.name == "identity" {
+            for (index, part) in text.split('▁').enumerate() {
+                if index > 0 {
+                    ids.extend(
+                        "▁"
+                            .as_bytes()
+                            .iter()
+                            .map(|byte| self.byte_ids[*byte as usize]),
+                    );
+                }
+                ids.extend(self.encode_segment(part));
+            }
+            return ids;
+        }
+        ids.extend(self.encode_segment(text));
+        ids
+    }
+
+    fn encode_segment(&self, text: &str) -> Vec<u32> {
         let normalized = self.normalize(text);
         if normalized.is_empty() {
-            return ids;
+            return Vec::new();
         }
         let chars: Vec<char> = normalized.chars().collect();
         let n = chars.len();
@@ -549,19 +605,34 @@ impl Vocab {
                 // unknown fallback, but fail closed if the lattice is corrupt.
                 return vec![self.unk_id];
             };
-            if id != self.unk_id || reversed.last() != Some(&self.unk_id) {
+            if id == self.unk_id && self.has_byte_fallback {
+                let original = chars[previous..cursor].iter().collect::<String>();
+                reversed.extend(
+                    original
+                        .as_bytes()
+                        .iter()
+                        .rev()
+                        .map(|byte| self.byte_ids[*byte as usize]),
+                );
+            } else if id != self.unk_id || reversed.last() != Some(&self.unk_id) {
                 reversed.push(id);
             }
             cursor = previous;
         }
         reversed.reverse();
-        ids.extend(reversed);
-        ids
+        reversed
     }
 
     fn normalize(&self, text: &str) -> String {
         if text.is_empty() {
             return String::new();
+        }
+        if self.normalizer.name == "identity" {
+            return if self.normalizer.escape_whitespaces {
+                text.replace(' ', "▁")
+            } else {
+                text.to_string()
+            };
         }
         let nfkc: String = text.nfkc().collect();
         let mut visible = String::new();

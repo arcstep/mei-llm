@@ -1,0 +1,33 @@
+{
+  "sources": [],
+  "catalog_pages": [
+    {
+      "id": "gittables-1m",
+      "url": "https://zenodo.org/api/records/6517052"
+    },
+    {
+      "id": "gittables-csv",
+      "url": "https://zenodo.org/api/records/6515973"
+    },
+    {
+      "id": "sotab-http",
+      "url": "http://webdatacommons.org/structureddata/sotab/v2/"
+    },
+    {
+      "id": "opus-zh-all",
+      "url": "https://opus.nlpl.eu/opusapi/?corpus=OpenSubtitles&source=zh&preprocessing=raw&version=latest"
+    },
+    {
+      "id": "opus-ted-raw",
+      "url": "https://opus.nlpl.eu/opusapi/?corpus=TED2020&source=zh_cn&preprocessing=raw&version=latest"
+    },
+    {
+      "id": "literary-search",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&list=search&srsearch=%E7%B5%82%E8%BA%AB%E5%A4%A7%E4%BA%8B&format=json"
+    },
+    {
+      "id": "naturalconv-search",
+      "url": "https://huggingface.co/api/datasets?search=NaturalConv&limit=20"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "a10_started": false,
+  "byte_fallback": true,
+  "candidate_manifest": {
+    "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-24k-lossless-20260914-v1/manifest.json",
+    "sha256": "f2042faa2e2a6a8f285a8f76531e5f1717755cb86efe3a9bd38058d836e4c12c"
+  },
+  "current_mutated": false,
+  "encoding_profile_id": "mei-lossless-identity-v1",
+  "model_file": "tokenizer.model",
+  "model_sha256": "357d2cb7c6bfc2580605a601d40866cd9fa2e41669764f81630ab928d0277174",
+  "normalizer": {
+    "add_dummy_prefix": false,
+    "escape_whitespaces": true,
+    "literal_space_marker_policy": "UTF-8 byte fallback",
+    "name": "identity",
+    "remove_extra_whitespaces": false
+  },
+  "protocol_symbols": [
+    "<|im_start|>",
+    "<|im_end|>",
+    "<think>",
+    "</think>",
+    "<tools>",
+    "</tools>",
+    "<tool_call>",
+    "</tool_call>",
+    "<tool_result>",
+    "</tool_result>",
+    "<act_execute>",
+    "<act_refuse>",
+    "<act_expand>",
+    "<act_shape>",
+    "<act_escalate>",
+    "<act_stop>"
+  ],
+  "runtime_audit": {
+    "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-runtime-audit-20260914-v8/report.json",
+    "python_cases": 264,
+    "real_browser_passed": true,
+    "rust_passed": true,
+    "sha256": "d929ebbc460a497c4f2665618f4abc7c3dc20e3c129b00d8e1c1b8baf8decaf3",
+    "wasm_sha256": "144d9d8d67186ebac2864cb1374a20549dda3a902b9d925f492d1f5a3ed2e2ef"
+  },
+  "schema": "mei-51m-tokenizer-release-v1",
+  "scope": "v1.2 training inputs; current runtime pointer unchanged",
+  "special_ids": {
+    "bos_id": 2,
+    "eos_id": 1,
+    "pad_id": 0,
+    "unk_id": 3
+  },
+  "split_digits": true,
+  "status": "frozen",
+  "tokenizer_id": "mei-24k-lossless-20260914-v2",
+  "training_sample": {
+    "dev_jsonl": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/dev.jsonl",
+    "sha256": {
+      "dev": "e4a4c516b8d43ff852c74e7ef0d7d63c8963520ed1a26396530bc5153caf9db0",
+      "manifest": "8db967b0e7b1f8bea738fc40753e88bb7cace0e6e7193ff3f623a42982b45de6",
+      "train": "7026dbd7dcacf1ea9878164bdbeb3f2059f9836e5245336574ce4fca931e422e"
+    },
+    "train_jsonl": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-pair-16k-24k-20260914-v1/train.jsonl"
+  },
+  "vocab_file": "tokenizer.vocab",
+  "vocab_sha256": "899d04d4da36d98e3333edf4f0e55da481d36031277ffd47975929a2697a916d",
+  "vocab_size": 24000
+}

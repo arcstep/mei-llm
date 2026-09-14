@@ -1,0 +1,29 @@
+{
+  "count_tokens": true,
+  "sources": [
+    {
+      "source_id": "literature-zh-translation",
+      "kind": "wiki_onlyinclude",
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/translated-literature-chapters-20260913-v1/catalog-translation-chapters.raw",
+      "sha256": "d257f7a85c795aa5960759bca64d766a3f7bc9d2eff879eeca1bc21ca392c0fa",
+      "chapter_titles": [
+        "月界旅行/第一回",
+        "月界旅行/第二回",
+        "月界旅行/第三回",
+        "月界旅行/第四回",
+        "月界旅行/第五回",
+        "月界旅行/第六回",
+        "月界旅行/第七回",
+        "月界旅行/第八回",
+        "月界旅行/第九回",
+        "月界旅行/第十回",
+        "月界旅行/第十一回",
+        "月界旅行/第十二回",
+        "月界旅行/第十三回",
+        "月界旅行/第十四回"
+      ],
+      "work_group": "verne-from-earth-to-moon-luxun",
+      "translator": "魯迅"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "mode": "approved_batch",
+  "authorization": "User: 那么请继续，完成计划。 Following prepared D02/D03 and stated D04 scope. No new source-family expansion.",
+  "wait_for_process": {
+    "pid": 46879,
+    "command_contains": "hq-foundation-scale-20260913-v3.json"
+  },
+  "jobs": [
+    {
+      "name": "subtitles",
+      "action": "materialize",
+      "config": "src/corpus-factory/recipes/subtitle-scale-20260913-v1.json",
+      "out": "corpus/pools/subtitle-scale-20260913-v1",
+      "network": true
+    },
+    {
+      "name": "code",
+      "action": "materialize",
+      "config": "src/corpus-factory/recipes/code-scale-20260913-v1.json",
+      "out": "corpus/pools/code-scale-20260913-v1",
+      "network": true
+    },
+    {
+      "name": "tutorials-fetch",
+      "action": "profile",
+      "config": "src/corpus-factory/recipes/tutorial-complete-20260913-v1.json",
+      "out": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-complete-20260913-v1",
+      "network": true,
+      "resume_from": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-tool-content-20260913-v1"
+    },
+    {
+      "name": "tutorials-materialize",
+      "action": "materialize",
+      "config": "src/corpus-factory/recipes/tutorial-complete-materialize-20260913-v1.json",
+      "out": "corpus/pools/tutorial-complete-candidate-20260913-v1",
+      "requires": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-complete-20260913-v1/survey.json"
+    }
+  ]
+}

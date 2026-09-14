@@ -1,0 +1,21 @@
+{
+  "sources": [],
+  "local_diagnostics": {
+    "toolace_inventory": {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-tool-content-20260913-v1/toolace/raw-99377c63fbe5425d01e6",
+      "sha256": "ba12c083fca7e8da48c67ad5b895e495447da7c66e39a2e19742c082e6cb537e"
+    },
+    "survey_token_capacity": {
+      "surveys": [
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/hq-survey-repair-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/global-frozen-evidence-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/code-global-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/extended-dialogue-content-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-tool-content-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/crosswoz-streamed-20260913-v1",
+        "cycles/mei-1.2-51m/exp-corpus-survey/runs/relation-survey-20260913-v1"
+      ]
+    }
+  }
+}

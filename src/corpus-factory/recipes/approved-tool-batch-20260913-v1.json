@@ -1,0 +1,17 @@
+{
+  "mode": "approved_batch",
+  "authorization": "Continue the listed D06 public Nemotron download after metadata pinning; prior user requested completion of the corpus plan.",
+  "wait_for_process": {
+    "pid": 49925,
+    "command_contains": "approved-preparation-batch-20260913-v1.json"
+  },
+  "jobs": [
+    {
+      "name": "nemotron-raw",
+      "action": "materialize",
+      "config": "src/corpus-factory/recipes/nemotron-download-20260913-v1.json",
+      "out": "corpus/pools/nemotron-raw-20260913-v1",
+      "network": true
+    }
+  ]
+}

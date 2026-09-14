@@ -1,0 +1,29 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260914,
+  "shards_per_wave": 10,
+  "records_per_shard": 20,
+  "max_network_bytes": 1073741824,
+  "reserve_disk_bytes": 107374182400,
+  "training_adoption_eligible": false,
+  "sources": [
+    {
+      "source_id": "common-corpus-open-culture-zh-pilot",
+      "role": "literature",
+      "repository": "PleIAs/common_corpus",
+      "patterns": [
+        "common_corpus_1/subset_10_1.parquet",
+        "common_corpus_2/subset_20_2.parquet",
+        "common_corpus_3/subset_30_3.parquet",
+        "common_corpus_4/subset_40_4.parquet",
+        "common_corpus_5/subset_50_5.parquet",
+        "common_corpus_6/subset_60_6.parquet",
+        "common_corpus_7/subset_70_7.parquet",
+        "common_corpus_8/subset_80_8.parquet",
+        "common_corpus_9/subset_90_9.parquet",
+        "common_corpus_10/subset_100_10.parquet"
+      ],
+      "survey_question": "跨10个目录浅探是否能以language/collection/license字段快速定位中文OpenCulture文学，不作全库分析。"
+    }
+  ]
+}

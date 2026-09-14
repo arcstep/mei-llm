@@ -1,0 +1,34 @@
+{
+  "schema": "mei-source-survey-config-v1",
+  "seed": 20260913,
+  "shards_per_wave": 64,
+  "records_per_shard": 200,
+  "sources": [
+    {
+      "source_id": "github-code",
+      "role": "code",
+      "local_globs": [
+        "cycles/mei-1.1-51m/_legacy/notebook/archive/corpus/zh-pretrain-v2/raw/github-code/data/*.parquet"
+      ],
+      "survey_question": "按注册迁移路径找到原始16片，与账本只使用前2片分别调查。"
+    },
+    {
+      "source_id": "fineweb2-hq-cmn-hani",
+      "role": "fineweb2_hq",
+      "local_globs": [
+        "cycles/mei-1.1-51m/_legacy/notebook/archive/corpus/zh-pretrain-v2/raw/fineweb2-hq/cmn_Hani/*.parquet"
+      ],
+      "survey_question": "补齐旧路径0至3片的来源调查。"
+    },
+    {
+      "source_id": "schemastore",
+      "role": "structured",
+      "format": "relation",
+      "relation_kind": "schema-document",
+      "local_globs": [
+        "cycles/mei-1.1-51m/_legacy/notebook/archive/corpus/zh-pretrain-v2/raw/schemastore/src/schemas/json/*.json"
+      ],
+      "survey_question": "同schema和API多版本集中度；description与可执行约束，不把版本变体计作独立任务。"
+    }
+  ]
+}
