@@ -1,0 +1,59 @@
+{
+  "mode": "node_task_v12_preparation",
+  "id": "mei-v12-task-preparation-20260914-v1",
+  "cpt_release": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/RELEASE.json",
+  "tokenizer_model": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-20260914-v2/tokenizer.model",
+  "legacy_sft_manifest": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4/release-manifest.json",
+  "local_task_sources": [
+    {
+      "id": "toolace",
+      "kind": "public_tool_call_dialogue",
+      "manifest": "corpus/pools/toolace-cpt-candidate-20260913-v1/manifest.json",
+      "manifest_sha256": "d9aa8e1118a9c32c20e0550cddc482c8fc12c706c69072130f3e3d2140439a70",
+      "path": "corpus/pools/toolace-cpt-candidate-20260913-v1/toolace.jsonl",
+      "sha256": "1d80ebdc34421291a197a67f656a03918882ff86fc280da5a9a4617f61931427",
+      "sft_use": "general tool-call train candidate after semantic and catalog adaptation",
+      "reason": "wire and partial schema checks exist; execution and semantic correctness are not certified"
+    },
+    {
+      "id": "nemotron",
+      "kind": "public_agent_trajectory",
+      "manifest": "corpus/pools/nemotron-cpt-full-20260913-v2/manifest.json",
+      "manifest_sha256": "fb7b17f86ffc2fd71a8fd5b53f2b1a3dc16b5a0331447594767e915c61a829f6",
+      "path": "corpus/pools/nemotron-cpt-full-20260913-v2/candidate.jsonl",
+      "sha256": "f9a6e7753cfbba3fdfc780775ef65c7e6cdb5c59569e824ca0873a139791112e",
+      "cpt_source_ids": ["nemotron-interactive_agent", "nemotron-tool_calling"],
+      "sft_use": "policy and multi-turn tool trajectory candidate after bounded adaptation",
+      "reason": "partial schema checks exist; result association, policy semantics and executable gold need review"
+    },
+    {
+      "id": "crosswoz",
+      "kind": "public_task_dialogue",
+      "manifest": "corpus/pools/dialogue-expanded-candidate-20260913-v1/manifest.json",
+      "manifest_sha256": "1923a1c319999195f587c6782adb3b75fb97de0b5089f6b199a27e99321e496e",
+      "path": "corpus/pools/dialogue-expanded-candidate-20260913-v1/crosswoz.jsonl",
+      "sha256": "5ce80e6cbc66c154975368e34433d7e89d36ea52bccf7d88322fd466118f1cac",
+      "sft_use": "Chinese dialogue-state and request-understanding candidate",
+      "reason": "contains dialogue goals and state but no Mei tool execution gold"
+    },
+    {
+      "id": "risawoz",
+      "kind": "public_task_dialogue",
+      "manifest": "corpus/pools/dialogue-expanded-candidate-20260913-v1/manifest.json",
+      "manifest_sha256": "1923a1c319999195f587c6782adb3b75fb97de0b5089f6b199a27e99321e496e",
+      "path": "corpus/pools/dialogue-expanded-candidate-20260913-v1/risawoz.jsonl",
+      "sha256": "849174be21c0d8a8fd6f47318c2a824ae30c1f81e5ff5f06128d65c6be786966",
+      "sft_use": "Chinese dialogue-state and request-understanding candidate",
+      "reason": "contains dialogue goals and state but no Mei tool execution gold"
+    }
+  ],
+  "input_sha256": {
+    "cpt_release": "9dc46b0d7e808a97a8cfb51b4291174f148909c0bf98cae38ad3418ff2bda148",
+    "tokenizer_model": "357d2cb7c6bfc2580605a601d40866cd9fa2e41669764f81630ab928d0277174",
+    "legacy_sft_manifest": "0085b9ccdca5e5c5c98e0d9b52dd944654af2188acd628035a8e03b351bb537d"
+  },
+  "reserve_free_bytes": 107374182400,
+  "network": false,
+  "teacher_calls": 0,
+  "training_authorized": false
+}

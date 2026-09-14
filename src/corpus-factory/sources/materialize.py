@@ -186,6 +186,13 @@ def main(argv=None):
         result = run(config, args.out)
         print(json.dumps(result, ensure_ascii=False))
         return 0
+    if config.get('mode') == 'node_task_v12_preparation':
+        if args.allow_network:
+            raise ValueError('v1.2 node task preparation is offline only')
+        from node_task_v12 import run
+        result = run(config, args.out)
+        print(json.dumps(result, ensure_ascii=False))
+        return 0
     if config.get('mode') == 'tokenizer_24k_candidate':
         if args.allow_network:
             raise ValueError('tokenizer candidate training is offline only')

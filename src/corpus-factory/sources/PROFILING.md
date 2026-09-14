@@ -170,3 +170,24 @@ source code, calls APIs described by source text, trains a model, or grants M1/M
 lossless primary source spans and separately recorded repeated context. It is not
 additional independent corpus capacity or executable SFT gold. Actual encoded windows,
 including context, continuation labels and BOS/EOS, must fit `limit` (2048 by default).
+
+### v1.2 node-task preparation
+
+`mode: node_task_v12_preparation` is an offline-only audit and preparation run.
+It binds one CPT input release, one explicit tokenizer model, the legacy SFT
+manifest and hash-pinned local task sources. The output contains:
+
+- 120 non-independent engineering fixtures replayed through the real data-check
+  JavaScript tools and the bounded plan runtime;
+- a per-binding legacy SFT audit and at most 300 CPT evidence candidates;
+- 100M/20M/1M train references plus a 500K dev reference set for future QAT,
+  with every file hash and token range verified;
+- bounded 200-row ToolACE and Nemotron adapter pilots; and
+- a task-domain tokenizer preservation and length audit bound to the frozen real
+  Browser-WASM receipt.
+
+Engineering fixtures and structurally compiled public calls remain
+`training_eligible=false` until semantic and runtime admission. Sources already
+selected for CPT cannot become independent locked Eval without a successor CPT
+release that excludes their association families. This mode does not download,
+call a teacher, train, mutate CURRENT, or promote the tokenizer.
