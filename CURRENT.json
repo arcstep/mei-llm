@@ -1,14 +1,14 @@
 {
-  "tokenizer": "tokenizer/zh-24k-v1",
+  "tokenizer": "tokenizer/zh-24k-v3",
   "corpus": "corpus/lm-v1",
   "architecture": "architecture/mei-1.0-51m-arch-v1",
   "training": "training/mei-1.0-51m-train-v1",
-  "base": "base/mei-1.0-51m-base-scratch300m-v1",
+  "base": "models/mei-1.2-51m/releases/exp-01800m/base/mei-1.2-51m-base-cpt1800m-v1",
   "sft": null,
   "runtime": null,
-  "stage": "scratch-300m-promoted",
+  "stage": "cpt-1800m-frozen",
   "blocked": [],
-  "product": "mei-1.0-51m",
+  "product": "mei-1.2-51m",
   "plan": {
     "mode": "scratch",
     "schedule": "corpus/lm-v1/schedule-scratch.json",
@@ -33,5 +33,5 @@
     }
   },
   "architecture_id": "mei-1.0-51m-arch-v1",
-  "base_model_id": "mei-1.0-51m-base-scratch300m-v1"
+  "base_model_id": "mei-1.2-51m-base-cpt1800m-v1"
 }

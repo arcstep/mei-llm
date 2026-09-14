@@ -662,11 +662,20 @@ def finalize_current(
     ):
         raise RuntimeError("eligible freeze proposal is missing or mismatched")
     current = load_json(CURRENT_PATH)
-    if current.get("product") != "mei-1.0-51m":
+    if current.get("product") not in ("mei-1.0-51m", "mei-1.2-51m"):
         raise RuntimeError("CURRENT product identity mismatch")
     release = load_json(destination / "RELEASE.json")
     current["base"] = relative(destination)
     current["stage"] = f"cpt-{release['rung']}-frozen"
+    # 跨血统冻结（mei-1.0 → mei-1.2）需同步主线血统字段，避免 CURRENT 自相矛盾。
+    # product / base_model_id 取候选 RELEASE.json；tokenizer 对齐全局 TOKENIZER.json 指针。
+    target_product = release.get("product")
+    if target_product and current.get("product") != target_product:
+        current["product"] = target_product
+    target_base_model_id = release.get("model_id")
+    if target_base_model_id and current.get("base_model_id") != target_base_model_id:
+        current["base_model_id"] = target_base_model_id
+    current["tokenizer"] = f"tokenizer/{frozen_tokenizer_path().stem}"
     atomic_json(CURRENT_PATH, current)
     return {"ok": True, "base": current["base"], "current_sha256": current_hash()}
 
