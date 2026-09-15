@@ -32,18 +32,25 @@ from audit import structural_gate, timeline_structural_checks
 DERIVERS = [ToolLmDeriver(), RetrievalDeriver(), DispositionDeriver(), NarrationDeriver()]
 
 
-def run_pipeline(source_id: str, raw_path: Path, out_dir: Path, *, max_records: int = 200) -> dict[str, int]:
-    """跑通 intake → derive → audit，返回各产出行数。"""
+def run_pipeline(source_id: str, raw_path: Path, out_dir: Path, *, max_records: int = 200,
+                 heads: list[str] | None = None) -> dict[str, int]:
+    """跑通 intake → derive → audit，返回各产出行数。
+
+    heads 为头白名单（如 ["retrieval", "tool_lm"]），None 表示全部头。
+    用于「分头分层提取」：最可信的头先提，其余后处理。
+    """
     adapter = adapter_for(source_id)()
     evidences = adapter.load(raw_path, limits=AdapterLimits(max_records=max_records))
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    derivers = [d for d in DERIVERS if heads is None or d.head in heads]
 
     views: list[dict] = []
     audit_rows: list[dict] = []
     for evidence in evidences:
         for issue in timeline_structural_checks(evidence):
             audit_rows.append({"case_id": evidence.identity.case_id, "view_id": "", "head": "timeline", "issues": [issue]})
-        for deriver in DERIVERS:
+        for deriver in derivers:
             for view in deriver.derive(evidence):
                 report = structural_gate(evidence, view)
                 views.append(view.to_dict())
@@ -80,9 +87,11 @@ def main() -> int:
     parser.add_argument("--raw", required=True, help="原始数据文件路径（zip/jsonl/json）")
     parser.add_argument("--out", required=True, help="产出目录")
     parser.add_argument("--max-records", type=int, default=200, help="试批上限")
+    parser.add_argument("--heads", help="只跑这些头（逗号分隔，如 retrieval,tool_lm），默认全部")
     args = parser.parse_args()
 
-    counts = run_pipeline(args.source_id, Path(args.raw), Path(args.out), max_records=args.max_records)
+    heads = args.heads.split(",") if args.heads else None
+    counts = run_pipeline(args.source_id, Path(args.raw), Path(args.out), max_records=args.max_records, heads=heads)
     print(json.dumps(counts, ensure_ascii=False, indent=2))
     return 0
 
