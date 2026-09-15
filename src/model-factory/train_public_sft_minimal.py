@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import sys
 from pathlib import Path
 from typing import Any
@@ -82,7 +83,8 @@ def main() -> int:
     parser.add_argument("--steps", type=int, default=40, help="训练步数（默认 40）")
     parser.add_argument("--lr-lm", type=float, default=2e-4, help="fullcall LM 学习率")
     parser.add_argument("--lr-retrieval", type=float, default=1e-3, help="retrieval 头学习率")
-    parser.add_argument("--holdout", type=int, default=4, help="留出 fullcall 样本数（不进训练，供 Step 4 生成验证）")
+    parser.add_argument("--holdout", type=int, default=4, help="随机留出 fullcall 样本数（不进训练，供生成验证）")
+    parser.add_argument("--seed", type=int, default=42, help="holdout 随机留出的固定种子（可复现）")
     args = parser.parse_args()
 
     rows_dir = Path(args.rows_dir).resolve()
@@ -98,9 +100,15 @@ def main() -> int:
     tools = json.loads((rows_dir / "tools.json").read_text(encoding="utf-8"))["tools"]
     tools_by_name = {str(tool["name"]): tool for tool in tools}
 
-    # 3. 留出 holdout fullcall 样本（不进训练），其余补 agent 轨迹字段
-    holdout_rows = fullcall_rows[-args.holdout:] if args.holdout > 0 else []
-    train_fullcall = fullcall_rows[: len(fullcall_rows) - args.holdout] if args.holdout > 0 else fullcall_rows
+    # 3. 随机留出 holdout fullcall 样本（固定 seed 可复现，覆盖各 source），其余补 agent 轨迹字段
+    if args.holdout > 0:
+        shuffled = list(fullcall_rows)
+        random.Random(args.seed).shuffle(shuffled)
+        holdout_rows = shuffled[: args.holdout]
+        train_fullcall = shuffled[args.holdout:]
+    else:
+        holdout_rows = []
+        train_fullcall = list(fullcall_rows)
     _add_agent_trajectory_fields(train_fullcall)
 
     # 4. 训 fullcall LM（AGENT_SAMPLER_ID，走普通 FP row 路径）
