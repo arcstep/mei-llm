@@ -120,6 +120,9 @@ class Behavior:
     dependencies: list[dict[str, Any]] = field(default_factory=list)
     call_to_result: dict[str, str] = field(default_factory=dict)  # call_id -> result_id
     failure_unexecuted: list[str] = field(default_factory=list)
+    # 处置源标注：adapter 从源数据提取的动作/原因/来源（如 dialog_act/system_actions）。
+    # 派生器据此派生 disposition 视图；无标注则从 timeline 推断（有调用→execute）。
+    source_disposition: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

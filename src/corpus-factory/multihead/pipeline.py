@@ -21,9 +21,11 @@ import adapter_toolace     # noqa: F401  触发注册
 from adapter_base import adapter_for, AdapterLimits, registered_ids
 from derive_tool_lm import ToolLmDeriver
 from derive_retrieval import RetrievalDeriver
+from derive_disposition import DispositionDeriver
+from derive_narration import NarrationDeriver
 from audit import structural_gate, timeline_structural_checks
 
-DERIVERS = [ToolLmDeriver(), RetrievalDeriver()]
+DERIVERS = [ToolLmDeriver(), RetrievalDeriver(), DispositionDeriver(), NarrationDeriver()]
 
 
 def run_pipeline(source_id: str, raw_path: Path, out_dir: Path, *, max_records: int = 200) -> dict[str, int]:

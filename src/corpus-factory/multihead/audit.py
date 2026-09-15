@@ -82,6 +82,17 @@ def structural_gate(evidence: TaskEvidence, view: HeadView) -> AuditReport:
             if name not in catalog_names:
                 report.issues.append({"reason": "positive_tool_not_visible", "tool": name})
 
+    elif view.head == "disposition":
+        if not view.target.get("action"):
+            report.issues.append({"reason": "empty_disposition_action"})
+
+    elif view.head == "narration":
+        timeline_ids = {e.event_id for e in evidence.timeline}
+        if view.target.get("result_event_id") not in timeline_ids:
+            report.issues.append({"reason": "narration_result_event_missing"})
+        if view.target.get("reply_event_id") not in timeline_ids:
+            report.issues.append({"reason": "narration_reply_event_missing"})
+
     return report
 
 
