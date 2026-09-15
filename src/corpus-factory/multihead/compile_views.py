@@ -5,25 +5,29 @@
 （44 条，semantic_label_masks 已置 1），本脚本吃未 review 的 views（pipeline 的
 intake→derive→audit 产出，语义标签仍 masked），用「结构可信」替代「语义 review」作准入：
 
-fullcall 准入（更严格，保证 target 忠实）：
+fullcall 准入（更严格，保证 target 忠实 + 约束解码可生成）：
 - calls 恰好 1 个（serialize_tool_target 单调用限制）
 - schema_errors 空（schema 检查通过）
 - behavior.verified_result_dependency == false
 - behavior.arguments_with_prior_result_literal == 0（排除参数依赖前置结果字面量）
 - fits_five_tool_catalog == true（恰好 5 工具目录）
 - encoding.fits_2048 == true（prompt 不超预算）
+- gold 工具约束解码兼容（schema_subset 平铺 schema，嵌套 object 无法编 grammar）
 - 5 工具 sink 不超 stable prefix 预算（STABLE_PREFIX_TOKENS_MAX=1024，预算感知选干扰工具）
 - target 序列化后不超 128 token（encode_fullcall_row 的 max_answer 契约）
 
 retrieval 准入（更宽松，检索只看 gold 工具）：
 - schema_errors 空 + calls 非空（build_retrieval_rows 内部再跳过无调用）
 
-关于「预算感知选干扰工具」：compile_minimal 用 selected_tools（相似度优先），在 44 个
-小 schema 样板下 sink 不超预算。扩量到 1028 工具后，ToolACE/MOSS 里有 schema 巨大的
-工具，相似度排名会把它们排进 top-48 窗口，5 工具 sink 渲染后超 1024 token，训练期
-encode_fullcall_row 抛 ToolSchemaBudgetExceeded（实测 335/1447 条触发）。修复：fullcall
-的 4 个干扰工具改为「相似度优先 + sink 预算约束」的贪心选择——干扰工具本就是非 gold 的
-候选占位，换 schema 小的不影响训练语义，但保住 335 条数据不丢。
+三个扩量才暴露的硬约束（最小闭环 22 个小 schema 工具没触发）：
+1. sink 预算：ToolACE/MOSS 有 schema 巨大的工具，相似度排名会把它排进干扰工具，
+   5 工具 sink 渲染超 1024 token → encode_fullcall_row 抛 ToolSchemaBudgetExceeded
+   （实测 335/1447 条）。修复：干扰工具改「相似度优先 + sink 预算约束」贪心选择。
+2. 约束解码兼容：runtime.greedy(decode_mode="constrained") 的 byte_grammar 只支持
+   平铺 schema（scalar + array，不支持嵌套 object 作参数值）。扩量工具目录里有 68 个
+   含嵌套 object 的工具（实测 18 条 gold 受影响、921 条 negative 受影响）。修复：
+   gold 不兼容则排除该 view，干扰工具只从 validate_tool 通过的兼容池里选。
+3. target 预算：gold 参数超长导致序列化 target 超 128 token（7 条）。修复：排除。
 
 定位：能力/链路验证的扩量。语义标签仍 masked，训练可能引入少量错误 gold，属
 「用规模换泛化」的探索，不是最终 SFT 语料。
@@ -69,6 +73,7 @@ from contracts.sft_v3_contract_51m import (  # noqa: E402
 )
 from training.tool_use.sft_v3_training_51m import render_fullcall_prompt_parts  # noqa: E402
 from training.cpt.train_pretrain import _frozen_tokenizer  # noqa: E402
+from schema_subset import UnsupportedSchemaError, validate_tool  # noqa: E402
 
 # encode_fullcall_row 的 max_answer 默认值（train_lm_sft_v3 未覆盖，走默认 128）。
 ANSWER_TOKEN_MAX = 128
@@ -79,6 +84,15 @@ def _no_prior_result_literal(view: dict[str, Any]) -> bool:
     if behavior.get("verified_result_dependency"):
         return False
     return int(behavior.get("arguments_with_prior_result_literal") or 0) == 0
+
+
+def _is_compatible(tool: dict[str, Any]) -> bool:
+    """约束解码兼容：schema_subset 平铺 schema 校验通过（不支持嵌套 object/array）。"""
+    try:
+        validate_tool(tool)
+        return True
+    except UnsupportedSchemaError:
+        return False
 
 
 def _compact_len(tool: dict[str, Any]) -> int:
@@ -93,16 +107,17 @@ def _sink_tokens(tools_5: list[dict[str, Any]], tokenizer: Any) -> int:
 
 def _budget_aware_catalog(
     gold_tool: dict[str, Any],
-    all_tools: list[dict[str, Any]],
+    compatible_tools: list[dict[str, Any]],
     variant: int,
     tokenizer: Any,
     smallest_names: list[str],
 ) -> list[str] | None:
     """相似度优先 + sink 预算约束选 4 个干扰工具，返回 5 工具名（gold 在 variant%5 位）。
 
+    compatible_tools 是已通过 validate_tool 的约束解码兼容池，保证 5 工具都可编 grammar。
     返回 None 表示无法在该 gold 工具下凑出 sink <= 预算的 5 工具目录（gold 本身太大）。
     """
-    by_name = {str(item["name"]): item for item in all_tools}
+    by_name = {str(item["name"]): item for item in compatible_tools}
     gold_name = str(gold_tool["name"])
     budget = STABLE_PREFIX_TOKENS_MAX
 
@@ -114,7 +129,7 @@ def _budget_aware_catalog(
         return None
 
     # 2. 贪心：按相似度降序遍历，接受「加入后仍能用最小工具补齐到 5 且不超预算」的候选。
-    ranked = ranked_hard_negatives(gold_tool, all_tools)
+    ranked = ranked_hard_negatives(gold_tool, compatible_tools)
     negatives: list[str] = []
     for name in ranked:
         if len(negatives) == 4:
@@ -147,7 +162,7 @@ def _budget_aware_catalog(
 def build_fullcall_rows_from_views(
     views: list[dict[str, Any]],
     tools_by_name: dict[str, dict[str, Any]],
-    all_tools: list[dict[str, Any]],
+    compatible_tools: list[dict[str, Any]],
     tokenizer: Any,
     smallest_names: list[str],
 ) -> tuple[list[dict[str, Any]], dict[str, int]]:
@@ -159,6 +174,7 @@ def build_fullcall_rows_from_views(
         "prior_result_literal": 0,
         "budget": 0,
         "answer_over": 0,
+        "constraint_incompatible": 0,
         "missing_tool": 0,
     }
     for variant, view in enumerate(views):
@@ -182,6 +198,9 @@ def build_fullcall_rows_from_views(
         if gold_tool is None:
             excluded["missing_tool"] += 1
             continue
+        if not _is_compatible(gold_tool):
+            excluded["constraint_incompatible"] += 1
+            continue
         history, query = _history_and_query(view)
         answers = calls
         target_text = serialize_tool_target(answers)
@@ -193,7 +212,7 @@ def build_fullcall_rows_from_views(
         if answer_tokens > ANSWER_TOKEN_MAX:
             excluded["answer_over"] += 1
             continue
-        names = _budget_aware_catalog(gold_tool, all_tools, variant, tokenizer, smallest_names)
+        names = _budget_aware_catalog(gold_tool, compatible_tools, variant, tokenizer, smallest_names)
         if names is None:
             excluded["budget"] += 1
             continue
@@ -233,10 +252,12 @@ def main() -> int:
     tools_by_name, all_tools = collect_tools(schema_clean)
 
     tokenizer = _frozen_tokenizer()
-    smallest_names = [str(tool["name"]) for tool in sorted(all_tools, key=_compact_len)]
+    # 约束解码兼容工具池（平铺 schema），干扰工具只从这里选；gold 不兼容则排除。
+    compatible_tools = [tool for tool in all_tools if _is_compatible(tool)]
+    smallest_names = [str(tool["name"]) for tool in sorted(compatible_tools, key=_compact_len)]
 
     fullcall_rows, excluded = build_fullcall_rows_from_views(
-        views, tools_by_name, all_tools, tokenizer, smallest_names
+        views, tools_by_name, compatible_tools, tokenizer, smallest_names
     )
     retrieval_rows = build_retrieval_rows(schema_clean, tools_by_name, all_tools)
     _verify(fullcall_rows)
@@ -263,16 +284,21 @@ def main() -> int:
         "fullcall_excluded": excluded,
         "retrieval_rows": len(retrieval_rows),
         "tools": len(all_tools),
+        "constraint_compatible_tools": len(compatible_tools),
         "serializer_id": "mei-tool-call-serializer-v2",
         "admission": "structural_trust_not_semantic_review",
         "fullcall_only_single_call": True,
         "retrieval_gold_from_first_call": True,
-        "fullcall_negative_selection": "similarity_ranked_with_sink_budget_greedy",
+        "fullcall_negative_selection": "similarity_ranked_with_sink_budget_greedy_constraint_compatible",
         "stable_prefix_tokens_max": STABLE_PREFIX_TOKENS_MAX,
         "answer_token_max": ANSWER_TOKEN_MAX,
         "excluded_prior_result_literal_reason": (
             "参数依赖前置工具结果字面量（arguments_with_prior_result_literal>0），"
             "纯 query→单调用 会产出参数凭空样本，留待结果配对派生通道"
+        ),
+        "excluded_constraint_incompatible_reason": (
+            "gold 工具 schema 含嵌套 object/array（schema_subset 平铺子集不支持），"
+            "约束解码 byte_grammar 无法编译，eval 阶段无法生成"
         ),
     }
     (out_dir / "manifest.json").write_text(
