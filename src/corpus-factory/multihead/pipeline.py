@@ -18,6 +18,10 @@ from pathlib import Path
 
 import adapter_moss        # noqa: F401  触发注册
 import adapter_toolace     # noqa: F401  触发注册
+import adapter_api_bank    # noqa: F401  触发注册
+import adapter_crosswoz    # noqa: F401  触发注册
+import adapter_risawoz     # noqa: F401  触发注册
+import adapter_nemotron    # noqa: F401  触发注册
 from adapter_base import adapter_for, AdapterLimits, registered_ids
 from derive_tool_lm import ToolLmDeriver
 from derive_retrieval import RetrievalDeriver

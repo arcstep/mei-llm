@@ -25,7 +25,35 @@ class DispositionDeriver:
     def derive(self, evidence: TaskEvidence) -> list[HeadView]:
         case_id = evidence.identity.case_id
         sd = evidence.behavior.source_disposition
-        action = sd.get("action") if isinstance(sd, dict) else None
+        if not isinstance(sd, dict):
+            sd = {}
+        # 多轮源（如 Nemotron 的 policy 驱动对话）：每个带 action 的轮派生一个视图。
+        turns = sd.get("turns")
+        if isinstance(turns, list):
+            views: list[HeadView] = []
+            for turn in turns:
+                action = turn.get("action")
+                if not action:
+                    # 无调用回复等未标注轮：禁止默认值，不派生。
+                    continue
+                views.append(HeadView(
+                    view_id=f"{case_id}:disposition:{turn.get('turn_index', '?')}",
+                    case_id=case_id,
+                    head=self.head,
+                    target={
+                        "action": action,
+                        "reason": turn.get("reason"),
+                        "missing_fields": turn.get("missing_fields", []),
+                    },
+                    label_mask={"disposition": 1},
+                    status="pending_semantic_review",
+                    evidence={
+                        "source_kind": turn.get("source_kind", sd.get("source_kind")),
+                        "source": "behavior.source_disposition.turns",
+                    },
+                ))
+            return views
+        action = sd.get("action")
         if action:
             return [HeadView(
                 view_id=f"{case_id}:disposition",

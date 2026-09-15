@@ -122,7 +122,11 @@ class Behavior:
     failure_unexecuted: list[str] = field(default_factory=list)
     # 处置源标注：adapter 从源数据提取的动作/原因/来源（如 dialog_act/system_actions）。
     # 派生器据此派生 disposition 视图；无标注则从 timeline 推断（有调用→execute）。
+    # 多轮源（如 Nemotron 的 policy 驱动对话）可塞 "turns" 列表，每项 {turn_index,action,reason}。
     source_disposition: dict[str, Any] = field(default_factory=dict)
+    # 处置政策文本：源数据显式给出的行为约束（如 Nemotron 的 <policy> 正文）。
+    # 处置监督的输入依据；无政策的数据集不填（默认空）。
+    source_policy_text: str = ""
 
 
 @dataclass
