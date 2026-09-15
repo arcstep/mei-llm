@@ -54,6 +54,7 @@ import adapter_api_bank  # noqa: E402,F401  触发注册
 import adapter_nemotron  # noqa: E402,F401  触发注册
 import adapter_crosswoz  # noqa: E402,F401  触发注册
 import adapter_risawoz  # noqa: E402,F401  触发注册
+import adapter_msagent_bench  # noqa: E402,F401  触发注册
 from adapter_base import adapter_for, AdapterLimits  # noqa: E402
 
 _DEFAULT_MANIFEST = "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json"
