@@ -923,9 +923,13 @@ def hard_negatives(
     if count == 1:
         return ranked[:1]
     window = min(48, len(ranked) - 1)
+    # 步长须与 window 互质：否则旋转采样会落到同一位置（如 window=7 时步长 7 使
+    # index*7 % 7 == 0，三个 index 采样到同一负样本，必然 duplicates）。大工具池
+    # window=48 时 gcd(7,48)==1，仍用 7，行为与历史一致。
+    step = next(s for s in (7, 5, 3, 2, 1) if math.gcd(s, window) == 1)
     selected = [ranked[0]]
     for index in range(count - 1):
-        selected.append(ranked[1 + ((variant * 11 + index * 7) % window)])
+        selected.append(ranked[1 + ((variant * 11 + index * step) % window)])
     if len(set(selected)) != count:
         raise RuntimeError(f"hard-negative sampler produced duplicates for {tool['name']}")
     return selected
