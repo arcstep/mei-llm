@@ -502,18 +502,14 @@ list_raw_pages = list_raw_pages
 
 def list_token_shards(root: Path, split: str) -> list[Path]:
     """List packed uint16 shards. A mix.json atlas wins over tokens/{split}-*.bin."""
-    root = Path(root)
+    root = _resolve_repo_path(root)
     mix_path = root / "mix.json"
     if mix_path.is_file():
         mix = json.loads(mix_path.read_text(encoding="utf-8"))
         rels = mix.get(f"{split}_shards") or []
-        from common.paths import ROOT as REPO_ROOT
-
         out: list[Path] = []
         for rel in rels:
-            path = Path(rel)
-            if not path.is_absolute():
-                path = REPO_ROOT / rel
+            path = _resolve_repo_path(rel)
             if path.is_file():
                 out.append(path.resolve())
         return out
@@ -545,16 +541,12 @@ def _bisect_prefix(prefix: list[int], pos: int) -> int:
 
 
 def _resolve_repo_path(rel: str | Path) -> Path:
-    path = Path(rel)
-    if path.is_absolute():
-        return path
-    from common.paths import ROOT as REPO_ROOT
-
-    return (REPO_ROOT / rel).resolve()
+    from common.paths import resolve_repo_path
+    return resolve_repo_path(rel).resolve()
 
 
 def load_mix_document(root: Path) -> dict[str, Any]:
-    mix_path = Path(root) / "mix.json"
+    mix_path = _resolve_repo_path(root) / "mix.json"
     if not mix_path.is_file():
         return {}
     return json.loads(mix_path.read_text(encoding="utf-8"))
@@ -592,7 +584,7 @@ class PackedTokenSource:
     def __init__(self, paths: list[Path], seq_len: int, pad_id: int = 0, *, skip_tokens: int = 0):
         if seq_len < 1:
             raise ValueError("seq_len must be >= 1")
-        self.paths = [Path(p) for p in paths]
+        self.paths = [_resolve_repo_path(p) for p in paths]
         if not self.paths:
             raise ValueError("no token shards")
         self.seq_len = int(seq_len)
@@ -1158,8 +1150,8 @@ def load_scheduled_train(
     curriculum_stage: str | None = None,
     tokens_seen: int | None = None,
 ) -> WeightedPackedSources | QuotaPackedSources | None:
-    root = Path(root)
-    sched_path = Path(schedule_path) if schedule_path is not None else (root / "schedule-scratch.json")
+    root = _resolve_repo_path(root)
+    sched_path = _resolve_repo_path(schedule_path) if schedule_path is not None else (root / "schedule-scratch.json")
     if not sched_path.is_file():
         return None
     schedule = json.loads(sched_path.read_text(encoding="utf-8"))
@@ -1234,7 +1226,7 @@ def classify_schedule(schedule: dict | None) -> str:
 
 
 def resolve_schedule_file(root: Path, kind: str, *, target_tokens: int | None = None) -> Path | None:
-    root = Path(root)
+    root = _resolve_repo_path(root)
     if kind == "scratch":
         path = root / "schedule-scratch.json"
         return path if path.is_file() else None

@@ -1,0 +1,68 @@
+{
+  "a10_started": false,
+  "byte_fallback": true,
+  "candidate_manifest": {
+    "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-24k-hans-en-20260914-v1/manifest.json",
+    "sha256": "0a58b21bc11c61b9e228df6320815ae2e709a37511acabcfde0ae97b32b1099b"
+  },
+  "current_mutated": false,
+  "encoding_profile_id": "mei-lossless-identity-v1",
+  "model_file": "tokenizer.model",
+  "model_sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346",
+  "normalizer": {
+    "add_dummy_prefix": false,
+    "escape_whitespaces": true,
+    "literal_space_marker_policy": "UTF-8 byte fallback",
+    "name": "identity",
+    "remove_extra_whitespaces": false
+  },
+  "protocol_symbols": [
+    "<|im_start|>",
+    "<|im_end|>",
+    "<think>",
+    "</think>",
+    "<tools>",
+    "</tools>",
+    "<tool_call>",
+    "</tool_call>",
+    "<tool_result>",
+    "</tool_result>",
+    "<act_execute>",
+    "<act_refuse>",
+    "<act_expand>",
+    "<act_shape>",
+    "<act_escalate>",
+    "<act_stop>"
+  ],
+  "runtime_audit": {
+    "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-hans-en-runtime-audit-20260914-v1/report.json",
+    "python_cases": 264,
+    "real_browser_passed": true,
+    "rust_passed": true,
+    "sha256": "ae2c9e46c0052700cfb17fe6c303e5b32d08fc34435e3def296fb5ddb8a36ac0",
+    "wasm_sha256": "5f13643a0d8b6923041ba28463a17399a44d48965fdc268347c7cabc6cbcfc0e"
+  },
+  "schema": "mei-51m-tokenizer-release-v1",
+  "scope": "v1.2 training inputs; current runtime pointer unchanged",
+  "special_ids": {
+    "bos_id": 2,
+    "eos_id": 1,
+    "pad_id": 0,
+    "unk_id": 3
+  },
+  "split_digits": true,
+  "status": "frozen",
+  "tokenizer_id": "mei-24k-lossless-hans-en-20260914-v1",
+  "training_sample": {
+    "dev_jsonl": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v1/dev.jsonl",
+    "sha256": {
+      "dev": "194e2a328f13f27b173d861e7f444812e92997b28caaf48f86d15ada071947cd",
+      "manifest": "bdc1d34ff360e4cfca4884d2a585c96685da8096371e98d858345c55ca7c9be3",
+      "train": "559650878426baa4f677fd47cbbaa4755edf714af2208885307fceaf6b4f84ed"
+    },
+    "train_jsonl": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v1/train.jsonl"
+  },
+  "vocab_file": "tokenizer.vocab",
+  "vocab_sha256": "c7f3cf2e577b997449ca58db6dc206029112f4f1476172df4cad49a9c9666ac0",
+  "vocab_size": 24000
+}

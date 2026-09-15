@@ -209,43 +209,119 @@
       "role": "dialogue",
       "band": "C",
       "repository": "BAAI/COIG-PC",
+      "revision": "4ca2778d69d7a9c17a0a6c1668c6e989b102176b",
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
         "patterns": [
-          "*.jsonl"
+          "data/Top100PerTask-*.parquet"
         ]
       },
       "license": {
-        "license_id": "CC BY-NC 4.0",
+        "license_id": "mixed-per-source; gated repository terms",
         "reviewed": false,
-        "note": "非商用；数据仅研究/内部使用（已拍板）"
+        "note": "Repository card says sub-dataset licenses take precedence and otherwise Apache-2.0; gated terms require source-by-source review"
       },
       "admit": {
         "dedup_mode": "text"
       },
-      "note": "指令+多轮，质量高"
+      "note": "中文指令集合；本轮只收集每任务最多100条的77MB诊断子集，不把聚合清洗声明等同于逐条语义准入"
     },
     {
       "source_id": "moss-003-sft-data",
       "role": "dialogue",
       "band": "C",
-      "repository": "fnlp/moss-003-sft-data",
+      "repository": "OpenMOSS-Team/moss-003-sft-data",
+      "revision": "42e216d3e3fb331c18d5fa6e7cb4f1c53eef24a4",
       "manifest_source": {
         "type": "hf_api",
         "repo_type": "dataset",
         "patterns": [
-          "*.jsonl"
+          "moss-003-sft-with-tools-*.zip"
         ]
       },
       "license": {
-        "license_id": "to-be-reviewed",
-        "reviewed": false
+        "license_id": "CC-BY-4.0",
+        "reviewed": true,
+        "note": "Hugging Face dataset card metadata at pinned revision"
       },
       "admit": {
         "dedup_mode": "text"
       },
-      "note": "中文对话 SFT，~110 万条"
+      "note": "中文/英文多轮插件对话；本轮只收集两个 with-tools 压缩包，不获取 2.68GB 的 no-tools 通用 SFT"
+    },
+    {
+      "source_id": "api-bank-training",
+      "role": "structured",
+      "band": "B",
+      "repository": "liminghao1630/API-Bank",
+      "revision": "12e8158b7628c168f07e8f31fbbe3445e99f44cf",
+      "manifest_source": {
+        "type": "hf_api",
+        "repo_type": "dataset",
+        "patterns": [
+          "training-data/*-train.json"
+        ]
+      },
+      "license": {
+        "license_id": "MIT",
+        "reviewed": true,
+        "note": "Hugging Face dataset card metadata at pinned revision"
+      },
+      "admit": {
+        "dedup_mode": "record"
+      },
+      "note": "英文工具训练原件；1,888个工具对话、2,138个API，作为中文不足时的翻译备份；test-data不下载"
+    },
+    {
+      "source_id": "xlam-function-calling-60k",
+      "role": "structured",
+      "band": "B",
+      "repository": "Salesforce/xlam-function-calling-60k",
+      "revision": "26d14ebfe18b1f7b524bd39b404b50af5dc97866",
+      "manifest_source": {
+        "type": "hf_api",
+        "repo_type": "dataset",
+        "patterns": [
+          "xlam_function_calling_60k.json"
+        ]
+      },
+      "license": {
+        "license_id": "CC-BY-4.0",
+        "reviewed": true,
+        "note": "Hugging Face dataset card metadata at pinned revision"
+      },
+      "admit": {
+        "dedup_mode": "record"
+      },
+      "note": "英文单轮与并行函数调用备份；先保留原文，翻译时工具名、字段和枚举不变"
+    },
+    {
+      "source_id": "msagent-bench-dev",
+      "role": "structured",
+      "band": "B",
+      "repository": "iic/MSAgent-Bench",
+      "revision": "350cf32d0239f621702df769c3efbf2a28aa1725",
+      "manifest_source": {
+        "type": "direct_urls"
+      },
+      "license": {
+        "license_id": "Apache-2.0",
+        "reviewed": true,
+        "note": "ModelScope dataset card and repository metadata"
+      },
+      "admit": {
+        "dedup_mode": "record"
+      },
+      "urls": [
+        {
+          "filename": "dev.jsonl",
+          "url": "https://www.modelscope.cn/datasets/iic/MSAgent-Bench/resolve/350cf32d0239f621702df769c3efbf2a28aa1725/dev.jsonl",
+          "bytes": 1778092,
+          "sha256": "e74366586aac4655ae77c4284f5eb39f850ab354f7f9abb5f95521df9c677b49"
+        }
+      ],
+      "note": "中文/英文插件调用开发集试收；全量train.jsonl为2,236,029,751字节，待试样通过后再决定"
     },
     {
       "source_id": "douban-conversation",

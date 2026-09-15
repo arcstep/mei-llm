@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import shutil
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 
 
 def _write(path: Path, value) -> None:
@@ -16,8 +16,8 @@ def _write(path: Path, value) -> None:
 
 
 def run(config: dict, out: Path) -> dict:
-    candidate_dir = (ROOT / config["candidate_dir"]).resolve()
-    audit_dir = (ROOT / config["runtime_audit_dir"]).resolve()
+    candidate_dir = (resolve_path(ROOT / config["candidate_dir"])).resolve()
+    audit_dir = (resolve_path(ROOT / config["runtime_audit_dir"])).resolve()
     candidate = json.loads((candidate_dir / "manifest.json").read_text(encoding="utf-8"))
     audit = json.loads((audit_dir / "report.json").read_text(encoding="utf-8"))
     if candidate.get("status") != "candidate_python_audited" or candidate.get("hard_errors"):

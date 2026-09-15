@@ -3,7 +3,7 @@ from collections import Counter
 import hashlib
 import json
 from pathlib import Path
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 from source_manager import load_tokenizer, tokenizer_pointer
 
 
@@ -14,7 +14,7 @@ def aggregate(config,out):
     pointer=tokenizer_pointer()
     with (out/'duplicate-occurrences.jsonl').open('x') as duplicates:
         for rel in config['pools']:
-            directory=ROOT/rel; manifest_path=directory/'manifest.json'
+            directory=resolve_path(ROOT/rel); manifest_path=directory/'manifest.json'
             manifest=json.loads(manifest_path.read_text())
             count_path=directory/'token-count.json'
             token_receipt=json.loads(count_path.read_text()) if count_path.exists() else manifest

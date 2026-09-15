@@ -1,0 +1,16 @@
+export async function probeGPU(){
+ const r={date:new Date().toISOString(),userAgent:navigator.userAgent,secureContext:isSecureContext,webgpu:!!navigator.gpu};
+ if(!navigator.gpu)return r;
+ const adapter=await navigator.gpu.requestAdapter({powerPreference:'high-performance'});
+ if(!adapter)return {...r,adapter:null};
+ const info=adapter.info;r.adapter={vendor:info.vendor,architecture:info.architecture,device:info.device,description:info.description,isFallbackAdapter:info.isFallbackAdapter??adapter.isFallbackAdapter??null};r.features=[...adapter.features];r.limits={maxStorageBufferBindingSize:adapter.limits.maxStorageBufferBindingSize,maxBufferSize:adapter.limits.maxBufferSize,maxComputeWorkgroupStorageSize:adapter.limits.maxComputeWorkgroupStorageSize};
+ const d=await adapter.requestDevice();d.pushErrorScope('validation');
+ const out=d.createBuffer({size:16,usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_SRC});const read=d.createBuffer({size:16,usage:GPUBufferUsage.COPY_DST|GPUBufferUsage.MAP_READ});
+ const mod=d.createShaderModule({code:'@group(0) @binding(0) var<storage,read_write> out: array<u32>; @compute @workgroup_size(4) fn main(@builtin(global_invocation_id) id:vec3u){out[id.x]=(id.x+1u)*(id.x+1u);}'});
+ const p=await d.createComputePipelineAsync({layout:'auto',compute:{module:mod,entryPoint:'main'}});const e=d.createCommandEncoder();const pass=e.beginComputePass();pass.setPipeline(p);pass.setBindGroup(0,d.createBindGroup({layout:p.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer:out}}]}));pass.dispatchWorkgroups(1);pass.end();e.copyBufferToBuffer(out,0,read,0,16);d.queue.submit([e.finish()]);await read.mapAsync(GPUMapMode.READ);r.computeResult=Array.from(new Uint32Array(read.getMappedRange()));r.computePassed=JSON.stringify(r.computeResult)==='[1,4,9,16]';read.unmap();r.validationError=(await d.popErrorScope())?.message??null;d.destroy();return r;
+}
+document.querySelector('#probe').onclick=async()=>{const el=document.querySelector('#result');el.textContent='检测中';try{const r=await probeGPU();el.textContent=JSON.stringify(r,null,2);await fetch('/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'gpu-probe',...r})});}catch(e){el.textContent=String(e.stack||e);}};
+for(const mode of ['smoke','bench']){
+ const b=document.createElement('button');b.textContent=mode==='smoke'?'GPU 模型数值探针':'CPU / GPU 交替性能实验';document.body.append(b);
+ b.onclick=()=>{for(const button of document.querySelectorAll('button'))button.disabled=true;const worker=new Worker('/bench-worker.mjs',{type:'module'});const out=document.querySelector('#result');worker.onmessage=async({data})=>{if(data.progress){out.textContent=data.progress;return;}out.textContent=JSON.stringify(data.report?{...Object.fromEntries(Object.entries(data.report).map(([k,v])=>[k,k.endsWith('_logits')?'[24000 values recorded]':v])),rounds:data.report.rounds?`[${data.report.rounds.length} detailed runs saved locally]`:undefined}:data,null,2);await fetch('/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data.report||data)});worker.terminate();for(const button of document.querySelectorAll('button'))button.disabled=false;};worker.postMessage({mode});};
+}

@@ -13,6 +13,17 @@ pub const Q4_CODEBOOK: [f32; 16] = [
     0.128_396, 0.388_055, 0.656_759, 0.942_34, 1.256_231, 1.618_046, 2.069_018, 2.732_589,
 ];
 
+#[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+#[inline(always)]
+pub(crate) unsafe fn simd_madd(
+    a: core::arch::wasm32::v128,
+    b: core::arch::wasm32::v128,
+    c: core::arch::wasm32::v128,
+) -> core::arch::wasm32::v128 {
+    use core::arch::wasm32::*;
+    f32x4_add(f32x4_mul(a, b), c)
+}
+
 #[cfg(target_arch = "wasm32")]
 const fn q2_byte_table() -> [[f32; 4]; 256] {
     let mut table = [[0.0f32; 4]; 256];
@@ -35,6 +46,48 @@ const fn q2_byte_table() -> [[f32; 4]; 256] {
 /// scalar gathers per group.
 #[cfg(target_arch = "wasm32")]
 static Q2_BYTE_TABLE: [[f32; 4]; 256] = q2_byte_table();
+
+#[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+const fn q4_byte_table() -> [[f32; 2]; 256] {
+    let mut table = [[0.0; 2]; 256];
+    let mut byte = 0;
+    while byte < 256 {
+        table[byte] = [Q4_CODEBOOK[byte & 15], Q4_CODEBOOK[byte >> 4]];
+        byte += 1;
+    }
+    table
+}
+
+#[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+static Q4_BYTE_TABLE: [[f32; 2]; 256] = q4_byte_table();
+
+// Experimental compute-only requantization in the WHT domain. Canonical
+// package bytes stay unchanged; this path does not claim CQ2 numeric parity.
+#[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+const Q2_I16: [i16; 4] = [-127, -38, 38, 127];
+#[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+const Q4_I16: [i16; 16] = [
+    -127, -96, -75, -58, -44, -31, -18, -6, 6, 18, 31, 44, 58, 75, 96, 127,
+];
+
+#[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+const fn integer_tables() -> ([[i16; 4]; 256], [[i16; 2]; 256]) {
+    let mut q2 = [[0; 4]; 256];
+    let mut q4 = [[0; 2]; 256];
+    let mut byte = 0;
+    while byte < 256 {
+        let mut j = 0;
+        while j < 4 {
+            q2[byte][j] = Q2_I16[(byte >> (2 * j)) & 3];
+            j += 1;
+        }
+        q4[byte] = [Q4_I16[byte & 15], Q4_I16[byte >> 4]];
+        byte += 1;
+    }
+    (q2, q4)
+}
+#[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+static INTEGER_TABLES: ([[i16; 4]; 256], [[i16; 2]; 256]) = integer_tables();
 
 #[cfg(target_arch = "wasm32")]
 const fn q2_nibble_planes() -> ([u8; 256], [u8; 256]) {
@@ -101,6 +154,35 @@ pub struct PreparedActivationGroup {
 }
 
 impl PreparedActivationGroup {
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-tiled-prefill"))]
+    pub(crate) fn transformed_values(&self) -> &[f32; GROUP_SIZE] {
+        &self.transformed
+    }
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+    #[inline(always)]
+    pub(crate) fn dot_unpacked(&self, weights: &[f32; GROUP_SIZE]) -> f32 {
+        use core::arch::wasm32::*;
+        // SAFETY: both fixed-size arrays have 128 elements; loads are unaligned.
+        unsafe {
+            let mut s0 = f32x4_splat(0.0);
+            let mut s1 = s0;
+            let mut s2 = s0;
+            let mut s3 = s0;
+            for i in (0..GROUP_SIZE).step_by(16) {
+                let w = weights.as_ptr().add(i);
+                let a = self.transformed.as_ptr().add(i);
+                s0 = simd_madd(v128_load(w.cast()), v128_load(a.cast()), s0);
+                s1 = simd_madd(v128_load(w.add(4).cast()), v128_load(a.add(4).cast()), s1);
+                s2 = simd_madd(v128_load(w.add(8).cast()), v128_load(a.add(8).cast()), s2);
+                s3 = simd_madd(v128_load(w.add(12).cast()), v128_load(a.add(12).cast()), s3);
+            }
+            let total = f32x4_add(f32x4_add(s0, s1), f32x4_add(s2, s3));
+            let mut lanes = [0.0; 4];
+            v128_store(lanes.as_mut_ptr().cast(), total);
+            (lanes[0] + lanes[1]) + (lanes[2] + lanes[3])
+        }
+    }
+
     pub fn new(values: &[f32]) -> Result<Self, SdkError> {
         Self::new_with_qdq_step(values, None)
     }
@@ -214,6 +296,10 @@ impl PreparedActivationGroup {
     #[inline(always)]
     pub(crate) fn dot_q2_validated(&self, packed: &[u8], scale: f32) -> f32 {
         debug_assert_eq!(packed.len(), GROUP_SIZE / 4);
+        #[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+        if let Some(codes) = self.transformed_qdq.as_ref() {
+            return unsafe { self.dot_integer_wasm(packed, codes, 2) } * self.qdq_wht_scale * scale;
+        }
         #[cfg(target_arch = "wasm32")]
         {
             // SAFETY: callers use a container whose group geometry and scales
@@ -238,13 +324,109 @@ impl PreparedActivationGroup {
     #[inline(always)]
     pub(crate) fn dot_q4_validated(&self, packed: &[u8], scale: f32) -> f32 {
         debug_assert_eq!(packed.len(), GROUP_SIZE / 2);
-        let mut acc = [0f32; 4];
-        for (index, byte) in packed.iter().copied().enumerate() {
-            let offset = index * 2;
-            acc[index & 3] += Q4_CODEBOOK[(byte & 0x0f) as usize] * self.transformed[offset]
-                + Q4_CODEBOOK[(byte >> 4) as usize] * self.transformed[offset + 1];
+        #[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+        if let Some(codes) = self.transformed_qdq.as_ref() {
+            return unsafe { self.dot_integer_wasm(packed, codes, 4) } * self.qdq_wht_scale * scale;
         }
-        ((acc[0] + acc[1]) + (acc[2] + acc[3])) * scale
+        #[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+        {
+            // SAFETY: validated groups contain exactly 64 packed bytes and
+            // 128 transformed activations; each table entry holds two f32s.
+            return unsafe { self.dot_q4_wasm(packed) } * scale;
+        }
+        #[cfg(not(all(target_arch = "wasm32", feature = "wasm-fast-kernels")))]
+        {
+            let mut acc = [0f32; 4];
+            for (index, byte) in packed.iter().copied().enumerate() {
+                let offset = index * 2;
+                acc[index & 3] += Q4_CODEBOOK[(byte & 0x0f) as usize] * self.transformed[offset]
+                    + Q4_CODEBOOK[(byte >> 4) as usize] * self.transformed[offset + 1];
+            }
+            ((acc[0] + acc[1]) + (acc[2] + acc[3])) * scale
+        }
+    }
+
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+    #[inline(always)]
+    unsafe fn dot_q4_wasm(&self, packed: &[u8]) -> f32 {
+        use core::arch::wasm32::*;
+        let mut sums = [f32x4_splat(0.0); 4];
+        for chunk in 0..GROUP_SIZE / 4 {
+            let first = *packed.get_unchecked(chunk * 2) as usize;
+            let second = *packed.get_unchecked(chunk * 2 + 1) as usize;
+            let lo = v128_load64_zero(Q4_BYTE_TABLE[first].as_ptr().cast());
+            let hi = v128_load64_zero(Q4_BYTE_TABLE[second].as_ptr().cast());
+            let weights = i64x2_shuffle::<0, 2>(lo, hi);
+            let values = v128_load(self.transformed.as_ptr().add(chunk * 4).cast());
+            sums[chunk & 3] = simd_madd(weights, values, sums[chunk & 3]);
+        }
+        let total = f32x4_add(f32x4_add(sums[0], sums[1]), f32x4_add(sums[2], sums[3]));
+        let mut lanes = [0.0; 4];
+        v128_store(lanes.as_mut_ptr().cast(), total);
+        (lanes[0] + lanes[1]) + (lanes[2] + lanes[3])
+    }
+
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-approx-kernels"))]
+    #[inline(always)]
+    unsafe fn dot_integer_wasm(
+        &self,
+        bytes: &[u8],
+        activation: &[i16; GROUP_SIZE],
+        bits: u8,
+    ) -> f32 {
+        use core::arch::wasm32::*;
+        let mut sum = i32x4_splat(0);
+        for chunk in 0..GROUP_SIZE / 8 {
+            let weights = if bits == 2 {
+                let a = *bytes.get_unchecked(chunk * 2) as usize;
+                let b = *bytes.get_unchecked(chunk * 2 + 1) as usize;
+                i64x2_shuffle::<0, 2>(
+                    v128_load64_zero(INTEGER_TABLES.0[a].as_ptr().cast()),
+                    v128_load64_zero(INTEGER_TABLES.0[b].as_ptr().cast()),
+                )
+            } else {
+                let p = chunk * 4;
+                let a = v128_load32_zero(
+                    INTEGER_TABLES.1[*bytes.get_unchecked(p) as usize]
+                        .as_ptr()
+                        .cast(),
+                );
+                let b = v128_load32_zero(
+                    INTEGER_TABLES.1[*bytes.get_unchecked(p + 1) as usize]
+                        .as_ptr()
+                        .cast(),
+                );
+                let c = v128_load32_zero(
+                    INTEGER_TABLES.1[*bytes.get_unchecked(p + 2) as usize]
+                        .as_ptr()
+                        .cast(),
+                );
+                let d = v128_load32_zero(
+                    INTEGER_TABLES.1[*bytes.get_unchecked(p + 3) as usize]
+                        .as_ptr()
+                        .cast(),
+                );
+                i64x2_shuffle::<0, 2>(
+                    i32x4_shuffle::<0, 4, 1, 5>(a, b),
+                    i32x4_shuffle::<0, 4, 1, 5>(c, d),
+                )
+            };
+            sum = i32x4_add(
+                sum,
+                i32x4_dot_i16x8(
+                    v128_load(activation.as_ptr().add(chunk * 8).cast()),
+                    weights,
+                ),
+            );
+        }
+        let mut lanes = [0i32; 4];
+        v128_store(lanes.as_mut_ptr().cast(), sum);
+        let code_scale = if bits == 2 {
+            Q2_CODEBOOK[3] / 127.0
+        } else {
+            Q4_CODEBOOK[15] / 127.0
+        };
+        ((lanes[0] + lanes[1]) + (lanes[2] + lanes[3])) as f32 * code_scale
     }
 
     #[cfg(target_arch = "wasm32")]

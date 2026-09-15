@@ -8,6 +8,8 @@ import shutil
 import sqlite3
 import subprocess
 
+from profiling import resolve_path
+
 ROOT = Path(__file__).resolve().parents[3]
 
 def sha(path):
@@ -62,12 +64,12 @@ def run(config, out):
     out = Path(out)
     if out.exists(): raise ValueError('use a new output ID')
     if shutil.disk_usage(ROOT).free < 100 * 1024**3: raise ValueError('disk reserve')
-    cpt = ROOT / config['cpt_release']
+    cpt = resolve_path(ROOT / config['cpt_release'])
     if sha(cpt) != config['cpt_sha256']: raise ValueError('CPT binding changed')
     release = json.loads(cpt.read_text())
     out.mkdir(parents=True)
     write(out/'config.json', config)
-    fixtures = json.loads((ROOT/config['fixtures']).read_text())
+    fixtures = json.loads((resolve_path(ROOT/config['fixtures'])).read_text())
     demo = ROOT/'src/demos/data-check'
     # Execute the existing JS validators and tools, not a Python reimplementation.
     js = '''import fs from 'node:fs';
@@ -138,7 +140,7 @@ process.stdout.write(JSON.stringify({catalog:TOOLS,results:result}));'''
         'selection':'first K selected records ordered by original phase/seeded priority/ID per source; engineering probe, not representative training mixture',
         'training_authorized':False, 'token_bytes_rehashed_this_run':False,
         'recount_required_if_tokenizer_changes':True})
-    legacy=ROOT/config['legacy_sft_manifest']
+    legacy=resolve_path(ROOT/config['legacy_sft_manifest'])
     old=json.loads(legacy.read_text())
     write(out/'legacy-review.json', {'manifest':str(legacy),'sha256':sha(legacy),
         'base_binding':old.get('base_binding'),'families':old.get('families'),
@@ -158,7 +160,7 @@ process.stdout.write(JSON.stringify({catalog:TOOLS,results:result}));'''
         'qat':'train-only source references; quality admission and balanced replay recipe pending',
         'eval':'development graph/state oracle; no new locked test release'}
     write(out/'BINDINGS.json',bindings)
-    evidence=[cpt,ROOT/config['fixtures'],legacy,Path(__file__),
+    evidence=[cpt,resolve_path(ROOT/config['fixtures']),legacy,Path(__file__),
         demo/'catalog.mjs',demo/'checks.mjs',ROOT/'src/corpus-factory/sources/materialize.py']
     write(out/'SOURCE-BINDING.json', [{'path':str(p),'sha256':sha(p)} for p in evidence])
     write(out/'implementation-snapshot.json', {str(p.relative_to(ROOT)):p.read_text()

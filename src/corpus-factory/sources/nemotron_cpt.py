@@ -5,7 +5,7 @@ import shutil
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 
 
 def dumps(value):
@@ -180,7 +180,7 @@ def run(config, out):
     if shutil.disk_usage(ROOT).free < 100 * 1024**3:
         raise ValueError('disk_reserve')
     for entry in config['sources']:
-        if digest(ROOT / entry['path']) != entry['sha256']:
+        if digest(resolve_path(ROOT / entry['path'])) != entry['sha256']:
             raise ValueError('source_hash_changed')
     out.mkdir(parents=True, exist_ok=False)
     (out/'config.json').write_text(json.dumps(config, ensure_ascii=False, indent=2))
@@ -203,7 +203,7 @@ def run(config, out):
     try:
         for entry in config['sources']:
             counts = Counter(); by_source[entry['id']] = counts
-            with (ROOT/entry['path']).open() as stream:
+            with (resolve_path(ROOT/entry['path'])).open() as stream:
                 for index, line in enumerate(stream):
                     if config.get('max_records_per_source') and index >= config['max_records_per_source']:
                         break

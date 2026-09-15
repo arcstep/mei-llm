@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 from v12_inputs_freeze import _atomic_json, validate_sampler
 
 
@@ -30,10 +30,10 @@ def _clone_tree(source: Path, target: Path) -> str:
 
 
 def run(config: dict, out: Path) -> dict:
-    source = (ROOT / config["source_release_dir"]).resolve()
-    target = (ROOT / config["release_dir"]).resolve()
-    tokenizer_manifest = (ROOT / config["tokenizer_manifest"]).resolve()
-    out = (ROOT / out).resolve() if not out.is_absolute() else out.resolve()
+    source = (resolve_path(ROOT / config["source_release_dir"])).resolve()
+    target = (resolve_path(ROOT / config["release_dir"])).resolve()
+    tokenizer_manifest = (resolve_path(ROOT / config["tokenizer_manifest"])).resolve()
+    out = (resolve_path(ROOT / out)).resolve() if not out.is_absolute() else out.resolve()
     if target.exists() or out.exists():
         raise FileExistsError(target if target.exists() else out)
     source_manifest = json.loads((source / "RELEASE.json").read_text(encoding="utf-8"))

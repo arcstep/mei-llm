@@ -108,14 +108,21 @@ impl InferRuntime {
     }
 
     pub fn embed(&self, tokens: &[u32]) -> Result<Vec<f32>, SdkError> {
-        let out = self.model.forward_features(tokens, &mut None, false)?;
-        if self.model.has_tensor("heads.contrastive.proj.weight") {
-            return self.model.contrastive_embedding(&out);
+        #[cfg(feature = "wasm-prefix-cache")]
+        if let Some(embedding) = self.model.cached_retrieval_embedding(tokens) {
+            return Ok(embedding);
         }
-        let d = self.model.arch.d_model;
-        let t = out.t.max(1);
-        let last = out.hidden[(t - 1) * d..t * d].to_vec();
-        Ok(l2_normalize(&last))
+        let out = self.model.forward_features(tokens, &mut None, false)?;
+        let embedding = if self.model.has_tensor("heads.contrastive.proj.weight") {
+            self.model.contrastive_embedding(&out)?
+        } else {
+            let d = self.model.arch.d_model;
+            let t = out.t.max(1);
+            l2_normalize(&out.hidden[(t - 1) * d..t * d])
+        };
+        #[cfg(feature = "wasm-prefix-cache")]
+        self.model.store_retrieval_embedding(tokens, &embedding);
+        Ok(embedding)
     }
 
     pub fn search_top_k(
@@ -385,6 +392,12 @@ impl InferRuntime {
             .as_ref()
             .map(|layers| crate::model::cache_evidence(layers))
             .unwrap_or_else(|| json!({"cache_growth_bounded": false}));
+        #[cfg(feature = "wasm-prefix-cache")]
+        let cache_report = {
+            let mut report = cache_report;
+            report["prefix_cache"] = self.model.prefix_cache_stats();
+            report
+        };
         Ok((
             text,
             pieces,
@@ -616,6 +629,7 @@ fn complete_infer_batch(
         "generated_token_ids": pieces,
         "prefill_topk_ids": prefill_topk_ids,
         "runtime_cache": cache_report,
+        "compute_profile": crate::version::compute_profile(),
         "mw_disposition": mw_audit,
         "confidence": {
             "available": true,

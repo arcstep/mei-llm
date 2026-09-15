@@ -1,0 +1,20 @@
+{
+  "mode": "tokenizer_runtime_audit",
+  "seed": 20260914,
+  "model": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-24k-hans-en-20260914-v1/tokenizer.model",
+  "model_sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346",
+  "candidate_manifest": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-24k-hans-en-20260914-v1/manifest.json",
+  "manifest_sha256": "0a58b21bc11c61b9e228df6320815ae2e709a37511acabcfde0ae97b32b1099b",
+  "dev_jsonl": "corpus/pools/mei-public-five-head-trial-20260914-v2/browser-audit-texts.jsonl",
+  "dev_cases": 12,
+  "boundary_probes": [
+    " 简体  中文\t换行\n结尾 ",
+    "繁體中文與英文 ABC xyz",
+    "ＡＢＣ ① é é",
+    "literal ▁ marker",
+    "{\"name\":\"schedule_room_cooling\",\"arguments\":{\"id\":\"000123\",\"value\":-24.50,\"path\":\"C:\\\\tmp\",\"note\":\"x  y\"}}",
+    "😀𠀀罕见字",
+    "\r\n\t leading and trailing  \r\n",
+    "<|im_start|>user\n先别开，等我回家再开。<|im_end|>"
+  ]
+}

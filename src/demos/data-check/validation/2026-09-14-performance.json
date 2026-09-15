@@ -1,0 +1,517 @@
+{
+  "warmup": {
+    "elapsed_ms": 427.89999985694885,
+    "stats": {
+      "backend": "portable-q4",
+      "wall_ms": 0,
+      "decode_mode": "raw",
+      "prompt_tokens": 1,
+      "output_tokens": 32,
+      "quantized_only": true
+    },
+    "generated": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "cache": {
+      "kv_storage_dtype": "int8",
+      "kv_scale_granularity": "per-head-vector",
+      "layers": 27,
+      "stable_prefix_tokens": 1,
+      "rolling_tokens": 31,
+      "visible_tokens": 32,
+      "next_position": 32,
+      "storage_bytes": 470016,
+      "cache_growth_bounded": true
+    }
+  },
+  "pairs": [
+    {
+      "short": {
+        "elapsed_ms": 11.900000095367432,
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "raw",
+          "prompt_tokens": 1,
+          "output_tokens": 1,
+          "quantized_only": true
+        },
+        "generated": [
+          2
+        ],
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 1,
+          "rolling_tokens": 0,
+          "visible_tokens": 1,
+          "next_position": 1,
+          "storage_bytes": 14688,
+          "cache_growth_bounded": true
+        }
+      },
+      "long": {
+        "elapsed_ms": 410.2999999523163,
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "raw",
+          "prompt_tokens": 1,
+          "output_tokens": 32,
+          "quantized_only": true
+        },
+        "generated": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 1,
+          "rolling_tokens": 31,
+          "visible_tokens": 32,
+          "next_position": 32,
+          "storage_bytes": 470016,
+          "cache_growth_bounded": true
+        }
+      },
+      "decode_tok_s": 77.8112450078589
+    },
+    {
+      "short": {
+        "elapsed_ms": 11.799999952316284,
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "raw",
+          "prompt_tokens": 1,
+          "output_tokens": 1,
+          "quantized_only": true
+        },
+        "generated": [
+          2
+        ],
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 1,
+          "rolling_tokens": 0,
+          "visible_tokens": 1,
+          "next_position": 1,
+          "storage_bytes": 14688,
+          "cache_growth_bounded": true
+        }
+      },
+      "long": {
+        "elapsed_ms": 408.7999999523163,
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "raw",
+          "prompt_tokens": 1,
+          "output_tokens": 32,
+          "quantized_only": true
+        },
+        "generated": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 1,
+          "rolling_tokens": 31,
+          "visible_tokens": 32,
+          "next_position": 32,
+          "storage_bytes": 470016,
+          "cache_growth_bounded": true
+        }
+      },
+      "decode_tok_s": 78.08564231738035
+    },
+    {
+      "short": {
+        "elapsed_ms": 11.900000095367432,
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "raw",
+          "prompt_tokens": 1,
+          "output_tokens": 1,
+          "quantized_only": true
+        },
+        "generated": [
+          2
+        ],
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 1,
+          "rolling_tokens": 0,
+          "visible_tokens": 1,
+          "next_position": 1,
+          "storage_bytes": 14688,
+          "cache_growth_bounded": true
+        }
+      },
+      "long": {
+        "elapsed_ms": 410.5,
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "raw",
+          "prompt_tokens": 1,
+          "output_tokens": 32,
+          "quantized_only": true
+        },
+        "generated": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 1,
+          "rolling_tokens": 31,
+          "visible_tokens": 32,
+          "next_position": 32,
+          "storage_bytes": 470016,
+          "cache_growth_bounded": true
+        }
+      },
+      "decode_tok_s": 77.77220272809066
+    }
+  ],
+  "contextual": {
+    "short": {
+      "elapsed_ms": 3580.300000190735,
+      "stats": {
+        "backend": "portable-q4",
+        "wall_ms": 0,
+        "decode_mode": "raw",
+        "prompt_tokens": 512,
+        "output_tokens": 1,
+        "quantized_only": true
+      },
+      "generated": [
+        2
+      ],
+      "cache": {
+        "kv_storage_dtype": "int8",
+        "kv_scale_granularity": "per-head-vector",
+        "layers": 27,
+        "stable_prefix_tokens": 512,
+        "rolling_tokens": 0,
+        "visible_tokens": 512,
+        "next_position": 512,
+        "storage_bytes": 7520256,
+        "cache_growth_bounded": true
+      }
+    },
+    "long": {
+      "elapsed_ms": 4048.2999999523163,
+      "stats": {
+        "backend": "portable-q4",
+        "wall_ms": 0,
+        "decode_mode": "raw",
+        "prompt_tokens": 512,
+        "output_tokens": 32,
+        "quantized_only": true
+      },
+      "generated": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "cache": {
+        "kv_storage_dtype": "int8",
+        "kv_scale_granularity": "per-head-vector",
+        "layers": 27,
+        "stable_prefix_tokens": 512,
+        "rolling_tokens": 31,
+        "visible_tokens": 543,
+        "next_position": 543,
+        "storage_bytes": 7975584,
+        "cache_growth_bounded": true
+      }
+    },
+    "decode_tok_s": 66.23931627306129
+  },
+  "heap_bytes": 78905344,
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+  "receipt": {
+    "id": "data-check-d919985609f9",
+    "source_package": "/Users/xuehongwei/codeup/mei-projects/mei-llm/models/mei-1.2-51m/exp-00900m/products/mei-1.2-51m-cpt900m-tool-sft-cq2-v1",
+    "source_manifest_sha256": "0294a433e222fb19c5c30ce35c84959e0b47861bf2cfc9baa28465781a550b30",
+    "tensor_sha256": "3da0427a5aa53226d9c77947831a96497f3131199cf0564dc981815affffa49c",
+    "wasm_sha256": "8255ddf213f2ef85916eaf3e8330177c3cd8a8283e5e96806cb9cf537db0e8d3",
+    "index_sha256": "406c0d8b5d2cccaa8ae91aa43b35f60fd4c2c73271bf1402e59730c6824f7549",
+    "catalog": [
+      {
+        "name": "check_required",
+        "description": "检查一列是否存在空值。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "column"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_unique",
+        "description": "检查一列是否有重复值。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "column"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_number",
+        "description": "检查一列是否为数字并在最小值与最大值之间（包含边界）。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "column",
+            "min",
+            "max"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_enum",
+        "description": "检查一列的值是否属于允许值，允许值用英文逗号分隔。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "string"
+            },
+            "allowed": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "column",
+            "allowed"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "check_product",
+        "description": "检查数量乘单价是否等于金额，允许误差0.01。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "quantity": {
+              "type": "string"
+            },
+            "price": {
+              "type": "string"
+            },
+            "total": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "quantity",
+            "price",
+            "total"
+          ],
+          "additionalProperties": false
+        }
+      }
+    ],
+    "embedding_source": "same-package Rust/WASM contrastive head; offline preparation",
+    "release_eligible": false,
+    "weights_changed": false,
+    "created_at": "2026-09-13T03:13:52.162Z"
+  },
+  "measured_at": "2026-09-14T08:35:48.956Z",
+  "cpu": "Apple M4 Max",
+  "browser": "151.0.7922.34",
+  "contract": "diagnostic-only; in-memory experimental release override; same package bytes; raw 1-vs-32 tokens; 3 warm pairs plus synthetic 512-token context; no task quality claim",
+  "concurrent_load": "No mei_llm training processes observed before run; other desktop processes not stopped."
+}

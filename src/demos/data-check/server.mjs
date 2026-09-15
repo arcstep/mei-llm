@@ -3,7 +3,7 @@ import {createRequire} from 'node:module';
 const XLSX=createRequire(import.meta.url)('./vendor/xlsx.full.min.js');
 import {readFile,mkdir,writeFile,readdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
-import {join,extname,basename} from 'node:path';
+import {join,extname,basename,dirname,resolve} from 'node:path';
 import {randomBytes,createHash} from 'node:crypto';
 import {TOOLS} from './catalog.mjs';
 import {validatePlan,runCheck,summarize} from './checks.mjs';
@@ -19,7 +19,16 @@ const cfg={url:env[provider+'_BASE_URL'],key:env[provider+'_API_KEY'],model:env[
 const cache=join(root,'.local/cache/data-check');
 const packages=(await readdir(cache)).filter(x=>x.startsWith('data-check-')).sort();
 const pkg=process.env.MEI_DEMO_PACKAGE||join(cache,packages.at(-1)||'missing');
-const receipt=JSON.parse(await readFile(join(pkg,'receipt.json')));
+let receipt=JSON.parse(await readFile(join(pkg,'receipt.json')));
+let runtimeOverride=null;
+if(process.env.MEI_DEMO_WASM){
+ const path=process.env.MEI_DEMO_WASM;
+ runtimeOverride=await readFile(path);
+ const sha=createHash('sha256').update(runtimeOverride).digest('hex');
+ const runtimeReceipt=JSON.parse(await readFile(join(dirname(resolve(path)),'runtime-receipt.json')));
+ if(runtimeReceipt.wasm_sha256!==sha||runtimeReceipt.experimental!==true)throw Error('Experimental runtime receipt mismatch');
+ receipt={...receipt,source_wasm_sha256:receipt.wasm_sha256,wasm_sha256:sha,runtime_experiment:runtimeReceipt,release_eligible:false};
+}
 const token=randomBytes(24).toString('hex');let calls=0,active=false;
 const port=Number(process.env.PORT||8765),origin=`http://127.0.0.1:${port}`;
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.wasm':'application/wasm','.bin':'application/octet-stream','.model':'application/octet-stream','.csv':'text/csv; charset=utf-8'};
@@ -32,6 +41,8 @@ const server=http.createServer(async(req,res)=>{
   if(![`127.0.0.1:${port}`,`localhost:${port}`].includes(req.headers.host)){send(res,403,{error:'Invalid host'});return;}
   const url=new URL(req.url,origin);
   if(req.method==='GET'&&url.pathname==='/api/config'){send(res,200,{token,planner:{provider,model:cfg.model,available:!!(cfg.key&&cfg.url&&cfg.model),remaining:10-calls},package:receipt});return;}
+  if(req.method==='GET'&&url.pathname==='/assets/receipt.json'){send(res,200,receipt);return;}
+  if(req.method==='GET'&&url.pathname==='/assets/runtime.wasm'&&runtimeOverride){res.writeHead(200,{'Content-Type':'application/wasm','Cache-Control':'no-cache'});res.end(runtimeOverride);return;}
   if(req.method==='POST'){
    if(req.headers.origin!==origin||req.headers['x-demo-token']!==token||!String(req.headers['content-type']).startsWith('application/json')){send(res,403,{error:'仅允许本地页面发起请求'});return;}
    let body='';for await(const b of req){body+=b;if(Buffer.byteLength(body)>(url.pathname==='/api/submit'?15*1024*1024:32000)){send(res,413,{error:'请求过大'});return;}}

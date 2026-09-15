@@ -1,0 +1,1495 @@
+{
+  "schema": "mei-performance-handoff-v1",
+  "date": "2026-09-14",
+  "handoff_document": "docs/draft/2026-09-14-Mei运行时性能探索交接.md",
+  "product_git_head": "28ad7fc20e48d49ea56a573ccbb78b495c804ac5",
+  "docs_git_head": "f15da3ec9fba001cf1bd53d798b853af1ed127c6",
+  "working_tree_included": true,
+  "committed_by_this_handoff": false,
+  "pushed": false,
+  "model_weights_included": false,
+  "secrets_included": false,
+  "complete_repository": false,
+  "target_300_tok_s_achieved": false,
+  "model_weights_sha256": "3da0427a5aa53226d9c77947831a96497f3131199cf0564dc981815affffa49c",
+  "file_count_excluding_this_manifest": 275,
+  "verified_build_assets": [
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/runtime.wasm",
+      "sha256": "e2e1a2fb63df6c9bcd84a65f4c87fc89b8530cfdc3ee990f8051fcb6f98c7d1e",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/source.tar.gz",
+      "sha256": "6a6eccc05589d1b2ba7b4b12dcf5d1264ed5ecccc1f86fa33f225fff6a64b4e1",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/runtime.wasm",
+      "sha256": "e599b8d1f13a6dbbff5100d499216f747dc48363b407617261934dc222bf91b1",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/source.tar.gz",
+      "sha256": "f27dadb3ef111644201df3a60394d27d20e83cbe4627943113bc2ec730940dea",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/runtime.wasm",
+      "sha256": "7c985ff44ea375b69f4f3f264d7a7e4a7b35a82dc4198107c75abb27f3b73b90",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/source.tar.gz",
+      "sha256": "4b860bf5d7271f812ff1ffffcc0adf0e570cfe793a7dc7161086ce769a7a5aac",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/runtime.wasm",
+      "sha256": "d0a9767b8805e0b1a9465ff4706eaf546c3b2a9c8aabbd428920e7fe27da3207",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/source.tar.gz",
+      "sha256": "d2ea290ad038d2cab142fdeae1b01abeae5c4242a941cb624f36aa6179ac0a6b",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/runtime.wasm",
+      "sha256": "01d4c16f41b4f6eb58984f8d79e71116bf6ef51160032b36e6559abc541c05af",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/source.tar.gz",
+      "sha256": "37dae6e46821a3ce8f4db375343f690ad786a1453090f0efbdd5fa2650c7c4a1",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/runtime.wasm",
+      "sha256": "27ccafac5058abded1a8156edc1355fb45c83a881b21e1eeb27cc766bb4ccb05",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/source.tar.gz",
+      "sha256": "7994ab91dd0df27a56f9488827a39091fa46cbe050f53f77969063d247389064",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/runtime.wasm",
+      "sha256": "81811ba74cc7e3bb70557b00da28ee3bff92b03750ac3d8de66ba080f9641b07",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/source.tar.gz",
+      "sha256": "9c97d2f50a29d1add7d4e468a2e2c2d883ed2135eba10933d25a2bafe6e1fbfe",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/runtime.wasm",
+      "sha256": "bef813070a708316890d071e3c0a19550fd61e0799f39fd2ebf716cabb2cccd0",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/source.tar.gz",
+      "sha256": "499dee0fb12a43faa4e04b95c2636b7f1ae9e7f6ce67370b880748528f6bb13c",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/runtime-receipt.json#source_archive_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/runtime.wasm",
+      "sha256": "ebc7146c171a722310eeb2a2c76c207c86b1d118e2abbbcf0d95aa19a6edd01b",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/runtime-receipt.json#wasm_sha256"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/source.tar.gz",
+      "sha256": "ae6c000cbc4831d1072501dded0257ab67a110b3119f7457bb320ffda4af2d54",
+      "verified_against": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/runtime-receipt.json#source_archive_sha256"
+    }
+  ],
+  "latest_gpu_source_hashes_verified": true,
+  "parallel_archives_verified": true,
+  "documentation_links_verified": true,
+  "files": [
+    {
+      "path": ".local/cache/data-check/profile-1789374993928/0.cpuprofile",
+      "bytes": 66310,
+      "sha256": "319d1e8931bbe8bb5c4a25e2e7e53ced510003430cf8e86ad34c8c434a77acc1"
+    },
+    {
+      "path": ".local/cache/data-check/profile-1789374993928/1.cpuprofile",
+      "bytes": 68619,
+      "sha256": "510e81bd53fc23122a5f44a9534dd26e03f8cb2596dda4e62265a302b7af45c7"
+    },
+    {
+      "path": ".local/cache/data-check/profile-1789374993928/2.cpuprofile",
+      "bytes": 73121,
+      "sha256": "4db5e0056fb5f4c3675874fd5c04fcf51ee65ea4e6059e3acaf8cce1265e3229"
+    },
+    {
+      "path": ".local/cache/data-check/profile-1789378194785/report.json",
+      "bytes": 80575,
+      "sha256": "6b48e705a8f9cf2cfa6cdc1fb764ff427462b0ad0ae990d01b575c2c9f716ab6"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789379393674-89112ed8-d219-47f3-a723-3a7ba844c570.json",
+      "bytes": 1071,
+      "sha256": "6dac866dde339ddcd120a7292ef0c1deb1ea231579195d25b93265faf164c5fa"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789379972951-656bec72-a96a-4405-b358-c8d8b72b122d.json",
+      "bytes": 929484,
+      "sha256": "56a74d2e709df3408cdea0789ec2158ed9f0cf1e1b7d2a75139a292504cd8145"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789380069121-ff3038e6-2a63-47b7-9f6d-2ec009bad1c0.json",
+      "bytes": 474,
+      "sha256": "692b399a8c0391246bec07209f5731454d4aa3da308c31bbfabcd2002752b320"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789380124416-5e057a06-6f1c-4827-aa95-2ea4b3cd833b.json",
+      "bytes": 10301,
+      "sha256": "aa4c27e46bc3b4a8cd2c25adae2a1e5c1fffd4713543edfeafaf94b6ed049eae"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789380412869-a314e03d-e81d-41a0-a25a-325b34d6cf01.json",
+      "bytes": 16366,
+      "sha256": "6aebb4a24e7cca7728354d7a1e9af0b75ea4a7778357dca40957a91f5b7a6177"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789380511757-64597024-8cdc-4b8c-ba9b-fe18df301e2f.json",
+      "bytes": 2317423,
+      "sha256": "576fe58972355a0f6a6ca70d3ec76edaf59c9e034744d8c4fb5d4f998b3ae8ea"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789380595605-b22ef3ba-ce78-49ef-92de-78e1eb200081.json",
+      "bytes": 2317380,
+      "sha256": "2340cf97e8281a864e8e12640090b4eb6ff3053d0e9f77c9c34036f02d2350fa"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789380670856-77d22b7c-83d7-46ee-874c-0996502198e0.json",
+      "bytes": 16016,
+      "sha256": "29e823d8f59eab8598d8c72a42e7c8d777c9e3aecac59207f83ddb2e5c086aa1"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789381902649-826a56fb-e2b8-4334-81de-981ac7d20934.json",
+      "bytes": 54711,
+      "sha256": "e6952e54479393d4a57945997d1165e7337362a0812a9691b7f89abeac35f9c0"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789381953797-1ef1e540-79f0-4b34-9bc3-b25a23a1a45a.json",
+      "bytes": 56252,
+      "sha256": "ec73507051e40bcd58f0a53db14548a6f9d8b9764dd35c2476803f550087d525"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789382129454-14e5b22b-083b-4ab3-917a-80abd427c35d.json",
+      "bytes": 37072,
+      "sha256": "5144d162e4080ede64cafac329f2d651875a1b6ef5df936913092e37659747b8"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789382150070-5512fc35-ccf1-444d-8ddc-e54e28f7e04c.json",
+      "bytes": 21414,
+      "sha256": "f9dcc59491e2f137721f97adc6d85b8404548f45094813303d6e4efbc27f1f86"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789383313731-3324be3b-ad28-4b89-9c82-ae40cb709035.json",
+      "bytes": 137272,
+      "sha256": "d8a487069d9a8410a75e5c40391f1a68064bdb154877c0a4b3f7aaa11df34269"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789383411831-29eff47a-4524-4397-8010-e9c01037881e.json",
+      "bytes": 129568,
+      "sha256": "53cd0f61213bba6d3cea53528396bba0ae6bb3f05a73baa352fae5c3a837085a"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789383501230-731fe588-3dc7-4cd4-aa4b-723e6aeb3d50.json",
+      "bytes": 129623,
+      "sha256": "b7750fa95bda4876d31ca6ca3067fc2470d08bf165a93ea52b91afe315cced05"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789383656225-8fe6613d-53c2-48c3-a872-78a20818e1f3.json",
+      "bytes": 129756,
+      "sha256": "4b4ffcc26217e6fd5afcdd18f97b583e9ec6b909a36546cad053a6376b4e2137"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789383762104-59b61361-03ea-4902-82ed-eb74bbe7e1c8.json",
+      "bytes": 129845,
+      "sha256": "c67740e022388ae5f7c4ac497463b7ad2fbaadd8ae686da8ee9d4df48ddb1277"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789383874939-44bd20b3-ef5b-4def-9839-bf607345bcb8.json",
+      "bytes": 129574,
+      "sha256": "dba122bd165e73b061f76c1458fee428acb10f1c7b2d4288a73765594c3b73d6"
+    },
+    {
+      "path": ".local/cache/runtime-bench/1789384018449-c3981a39-46e2-4797-a927-c114d752da9e.json",
+      "bytes": 368135,
+      "sha256": "5a21411d158a0559d50758c0a97ea8db8a959148b2b0b08362d995b1a9e1a7b8"
+    },
+    {
+      "path": ".local/cache/runtime-bench/cpu-build-v2.json",
+      "bytes": 1335,
+      "sha256": "73b4dba409e88e020884e970cb7b44a53ad4a6ac6a25296af0171321ff2d766e"
+    },
+    {
+      "path": ".local/cache/runtime-bench/cpu-build-v3.json",
+      "bytes": 1335,
+      "sha256": "fbfcd59687f128ebbd28b03212bd0816ab64900c77d18f1b36afa0be065f4757"
+    },
+    {
+      "path": ".local/cache/runtime-bench/cpu-build.json",
+      "bytes": 1335,
+      "sha256": "bad2bf674c0b8dd543596597954155840817b346d593860ae432cd4de9e1ec60"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-attention-v1/decode-worker.mjs",
+      "bytes": 3299,
+      "sha256": "cd84ffe309ac7a5d3fef3c04c8603a589dd1a20651fcf41df4f3ad1f10cc1e1a"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-attention-v1/result.json",
+      "bytes": 129574,
+      "sha256": "dba122bd165e73b061f76c1458fee428acb10f1c7b2d4288a73765594c3b73d6"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-attention-v1/source-and-evidence.tar.gz",
+      "bytes": 24530,
+      "sha256": "3e7ce47714c6b05b3c049d1f1a92d08e3233d38a3babd7a72c1975f94b8009be"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-attention-v1/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-attention-v1/webgpu-decode.mjs",
+      "bytes": 15324,
+      "sha256": "951a9300589630a61dd462169b82817951ae263779b7a25c8d1610981c91f615"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-attention-v1/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-final-v1/report.json",
+      "bytes": 368135,
+      "sha256": "5a21411d158a0559d50758c0a97ea8db8a959148b2b0b08362d995b1a9e1a7b8"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-final-v1/source-manifest.json",
+      "bytes": 721,
+      "sha256": "70fae37ff31b4130c83e1dfb396cf39b23af01491edba60b7958d674eae698ef"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-final-v1/source.tar.gz",
+      "bytes": 15840,
+      "sha256": "9d5894af7b7510dc65488d4c784ddae6de02da3919b77f1324136428c38c80ad"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v1/decode-worker.mjs",
+      "bytes": 2782,
+      "sha256": "0bc38f50f1449a1206fb7e67bfe0a5f8f5e73ed203f615dd0e4d17ffa8d27369"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v1/result.json",
+      "bytes": 129623,
+      "sha256": "b7750fa95bda4876d31ca6ca3067fc2470d08bf165a93ea52b91afe315cced05"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v1/source-and-evidence.tar.gz",
+      "bytes": 22269,
+      "sha256": "bbca874f658d1d6abaf3d58971d20b808b1062a56d956af1cd70e671508a07f4"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v1/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v1/webgpu-decode.mjs",
+      "bytes": 8372,
+      "sha256": "37683eb6fbb0c6355c850e00cbabacc5793eb6a2e46ef4b09b6c10918a35478f"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v1/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v2/decode-worker.mjs",
+      "bytes": 3181,
+      "sha256": "ce15eff5786d0d10763f1ae10a6b089377f1a60f72922ff4edf4aa1672608b5a"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v2/result.json",
+      "bytes": 129756,
+      "sha256": "4b4ffcc26217e6fd5afcdd18f97b583e9ec6b909a36546cad053a6376b4e2137"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v2/source-and-evidence.tar.gz",
+      "bytes": 23850,
+      "sha256": "c9e894d7643c1cc90c2a7c4e4e662b1a7477b4b24fda91fe75c8c2ac0041b6b1"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v2/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v2/webgpu-decode.mjs",
+      "bytes": 12969,
+      "sha256": "f25fb3693899ad1c3316d99bb1459b668e26866a13642f0033c0b9b78795bd84"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-fused-v2/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-mhc-v1/decode-worker.mjs",
+      "bytes": 2709,
+      "sha256": "5c3387581a7c2391c93896f1356b4438e4e9b9ebbd2c045e5be1e4bb19656fcf"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-mhc-v1/result.json",
+      "bytes": 129568,
+      "sha256": "53cd0f61213bba6d3cea53528396bba0ae6bb3f05a73baa352fae5c3a837085a"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-mhc-v1/source-and-evidence.tar.gz",
+      "bytes": 21209,
+      "sha256": "05f771a193b86fb8d4f9b49eabd901b72e9383b483f8031090f5ffa227df9c5b"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-mhc-v1/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-mhc-v1/webgpu-decode.mjs",
+      "bytes": 5614,
+      "sha256": "13c814a09210b963fe70abcbe053ba8554a4206b5dc0b5e100741df18a024a8f"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-mhc-v1/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-probability-v1/decode-worker.mjs",
+      "bytes": 3203,
+      "sha256": "0621f67c5f107ffcbcffe38115231ee7ee3d552810e12166e34cf6526712ae96"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-probability-v1/result.json",
+      "bytes": 129845,
+      "sha256": "c67740e022388ae5f7c4ac497463b7ad2fbaadd8ae686da8ee9d4df48ddb1277"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-probability-v1/source-and-evidence.tar.gz",
+      "bytes": 24222,
+      "sha256": "029d3024984d032eaeadb0b19e6c707e4d734a2a5521de7cf01a6c5b03f6e747"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-probability-v1/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-probability-v1/webgpu-decode.mjs",
+      "bytes": 14070,
+      "sha256": "82d117ae73f0d03e50c901e82f63bbe96e131b1a8927c78472c80bc91eaf5ae1"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-probability-v1/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-profile-v1/decode-worker.mjs",
+      "bytes": 1620,
+      "sha256": "9f2cb222f0d5e692d9d48f8ca3b456a2c290853c0e3242dc30ec188d36a0caaf"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-profile-v1/profile.json",
+      "bytes": 137272,
+      "sha256": "d8a487069d9a8410a75e5c40391f1a68064bdb154877c0a4b3f7aaa11df34269"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-profile-v1/source-and-evidence.tar.gz",
+      "bytes": 15229,
+      "sha256": "fee13d3218ab9d64465f88e0eecf75371c2058886f64de9446e5e82755108c77"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-profile-v1/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-profile-v1/webgpu-decode.mjs",
+      "bytes": 3828,
+      "sha256": "4a1468b5cd91e067e86b153801289f75b334cdc37b5388dadabd01b96f2b5b46"
+    },
+    {
+      "path": ".local/cache/runtime-bench/decode-profile-v1/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/final-numeric-comparison.json",
+      "bytes": 1464,
+      "sha256": "9a1047c0ff5a1bc87dc6bf19335f92a003b7acc7c79b70161d5eae86ba75b3c7"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v1-f32/benchmark.json",
+      "bytes": 10301,
+      "sha256": "aa4c27e46bc3b4a8cd2c25adae2a1e5c1fffd4713543edfeafaf94b6ed049eae"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v1-f32/source-manifest.json",
+      "bytes": 565,
+      "sha256": "a1c03da028ae1aa785ac00c7294315ccfdd014a95b621af59dd41b1cdd312673"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v1-f32/source.tar.gz",
+      "bytes": 11770,
+      "sha256": "49df75355cd816d704284ceb22f42b8f8cbcb9b5ea807edb0f0f0aa074505eda"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v2-split-attention/benchmark.json",
+      "bytes": 16366,
+      "sha256": "6aebb4a24e7cca7728354d7a1e9af0b75ea4a7778357dca40957a91f5b7a6177"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v2-split-attention/source-manifest.json",
+      "bytes": 565,
+      "sha256": "ba5f9a528764e476a661df614c581050fac7d7943088f61ecaa1dfa4616a604f"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v2-split-attention/source.tar.gz",
+      "bytes": 12487,
+      "sha256": "3533c43e4a03e113381042abeaf0199c646514ee04e14696673be6c352bf5c38"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/benchmark.json",
+      "bytes": 28363,
+      "sha256": "5cc6f7032016979be0b4a1112722408da22df358d32f85f31f3187851357076e"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/gpu-numeric.json",
+      "bytes": 2317380,
+      "sha256": "2340cf97e8281a864e8e12640090b4eb6ff3053d0e9f77c9c34036f02d2350fa"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/native-oracle.json",
+      "bytes": 2316389,
+      "sha256": "8b904c502845fe38dc0c0e28f3524da867a3070574d4606e9f93c614f5f3f51d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/numeric-comparison.json",
+      "bytes": 1464,
+      "sha256": "9a1047c0ff5a1bc87dc6bf19335f92a003b7acc7c79b70161d5eae86ba75b3c7"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/rust-tests.log",
+      "bytes": 4694,
+      "sha256": "823db0ddbb4614cefe7fa9f8f6f6c71a9a4c5694b802cc02eff27ad1f545f286"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/source-manifest.json",
+      "bytes": 1034,
+      "sha256": "6ced52e488af14e8cf15698ebffb1002abac8fe931fa797869ac5a0ec0fe3d64"
+    },
+    {
+      "path": ".local/cache/runtime-bench/gpu-v3-f32-stable/source.tar.gz",
+      "bytes": 20275,
+      "sha256": "16b39e7e3f9d1527cffb6a81d71bec1ff139940a71d03a439006435af5d26871"
+    },
+    {
+      "path": ".local/cache/runtime-bench/native-oracle-20260914-v2.json",
+      "bytes": 2316389,
+      "sha256": "8b904c502845fe38dc0c0e28f3524da867a3070574d4606e9f93c614f5f3f51d"
+    },
+    {
+      "path": ".local/cache/runtime-bench/native-oracle-20260914.json",
+      "bytes": 1389743,
+      "sha256": "c8e77d830a3741d75682761ee0a07765842883b8052377516b9546a5a63a8c0b"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-all-tests.log",
+      "bytes": 6281,
+      "sha256": "2aa14924f0af1e978df9962d0b60cc9a6d8372cc64ae9f62419486449a91220e"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-build-v1.json",
+      "bytes": 1387,
+      "sha256": "f0d21ce3595d2c696f2688719025ed2dbb9496a2f58505a2a98d9a6321fc94b0"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-build-v2.json",
+      "bytes": 1387,
+      "sha256": "0d02f3fde919e64ea6fb36d61cc7fe7647c289e01b2867c2c10d2253f8ac2119"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-core-tests.log",
+      "bytes": 1862,
+      "sha256": "4a5a9b00dd1abaa847711a8298f99ddb8d87dba270341e37a815bf884acac272"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v1/browser-source.tar.gz",
+      "bytes": 21082,
+      "sha256": "86e7d45b9488b349c9ebc7dfd58f4bef4e3d9ca7e134653f8f004647bf5c0dee"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v1/cpu-sweep.json",
+      "bytes": 54711,
+      "sha256": "e6952e54479393d4a57945997d1165e7337362a0812a9691b7f89abeac35f9c0"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v1/gpu-sweep.json",
+      "bytes": 56252,
+      "sha256": "ec73507051e40bcd58f0a53db14548a6f9d8b9764dd35c2476803f550087d525"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v1/source-manifest.json",
+      "bytes": 1160,
+      "sha256": "9e57362d17cee8b99075e9f570cd5278004e8b55cecc4083b6f6984c92a7b1ec"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v2/browser-source.tar.gz",
+      "bytes": 25237,
+      "sha256": "a55211b7ac33d39054a996beec03fae47f007641b2212a7c53a141a114a97b0b"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v2/cpu-focused.json",
+      "bytes": 37072,
+      "sha256": "5144d162e4080ede64cafac329f2d651875a1b6ef5df936913092e37659747b8"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v2/gpu-focused.json",
+      "bytes": 21414,
+      "sha256": "f9dcc59491e2f137721f97adc6d85b8404548f45094813303d6e4efbc27f1f86"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v2/parallel-all-tests.log",
+      "bytes": 6281,
+      "sha256": "2aa14924f0af1e978df9962d0b60cc9a6d8372cc64ae9f62419486449a91220e"
+    },
+    {
+      "path": ".local/cache/runtime-bench/parallel-v2/source-manifest.json",
+      "bytes": 1267,
+      "sha256": "26c0198c3b97c1803c5f2dee147dd8ef756f607a6aeee63eee957dbfb92dc4eb"
+    },
+    {
+      "path": ".local/cache/runtime-bench/rust-tests.log",
+      "bytes": 4694,
+      "sha256": "823db0ddbb4614cefe7fa9f8f6f6c71a9a4c5694b802cc02eff27ad1f545f286"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/build.log",
+      "bytes": 328,
+      "sha256": "05493c7acb8067a41607aee435729c49dad603ab8540ed182637a7e2d66d4dda"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/runtime-receipt.json",
+      "bytes": 1208,
+      "sha256": "e637caec16f8380421a5cba164e420365f7be677d38a8b88dbcae0db144ac0a9"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/runtime.wasm",
+      "bytes": 2420510,
+      "sha256": "ebc7146c171a722310eeb2a2c76c207c86b1d118e2abbbcf0d95aa19a6edd01b"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/source-manifest.json",
+      "bytes": 8951,
+      "sha256": "96b42ae9e9bac9fc27612cfd3d0d533803fd4fd1fe2fc3442d2348b2eec860e3"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v1/source.tar.gz",
+      "bytes": 163027,
+      "sha256": "ae6c000cbc4831d1072501dded0257ab67a110b3119f7457bb320ffda4af2d54"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/build.log",
+      "bytes": 328,
+      "sha256": "d1e42e91b27b9a5ef062cd4dad90b9d30324b7383908d323ac13f3fab1f083df"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/runtime-receipt.json",
+      "bytes": 1208,
+      "sha256": "018829726be889d3ac52420f16bc27a8656645d9ea10376750a743ec3891c356"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/runtime.wasm",
+      "bytes": 2421006,
+      "sha256": "d0a9767b8805e0b1a9465ff4706eaf546c3b2a9c8aabbd428920e7fe27da3207"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/source-manifest.json",
+      "bytes": 8951,
+      "sha256": "36970e2000c3904af0f31b9d1fd06041e06fe3e36f9bc86c86cffdbefaf53b6d"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v2/source.tar.gz",
+      "bytes": 163093,
+      "sha256": "d2ea290ad038d2cab142fdeae1b01abeae5c4242a941cb624f36aa6179ac0a6b"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/build.log",
+      "bytes": 328,
+      "sha256": "250eb8ac6d87868d1514afa36de8a6f28a1e9bdd9a73af5ef2bbdc1c5f6990b4"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/runtime-receipt.json",
+      "bytes": 1208,
+      "sha256": "09e506e73596044058c4a5fcbd8324447014a63adccbfa58fd09017fb7de93a7"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/runtime.wasm",
+      "bytes": 2421006,
+      "sha256": "e599b8d1f13a6dbbff5100d499216f747dc48363b407617261934dc222bf91b1"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/source-manifest.json",
+      "bytes": 8951,
+      "sha256": "34758fc31430c60e14509a6dd63dc3e012fcf19f88d926e1d6a14e039fb4b2bf"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-cpu-gpu-bench-20260914-v3/source.tar.gz",
+      "bytes": 163235,
+      "sha256": "f27dadb3ef111644201df3a60394d27d20e83cbe4627943113bc2ec730940dea"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/build.log",
+      "bytes": 328,
+      "sha256": "09af9aeb5e924c33009a509c89cdad9ea1fe4b1195dbafed609162bbbb9acff9"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/runtime-receipt.json",
+      "bytes": 1265,
+      "sha256": "5e35db92ab71da394c9a51bb5ce0842cfa71268883070a7be9e494ca5477ed8f"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/runtime.wasm",
+      "bytes": 2426775,
+      "sha256": "01d4c16f41b4f6eb58984f8d79e71116bf6ef51160032b36e6559abc541c05af"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/source-manifest.json",
+      "bytes": 9079,
+      "sha256": "4e1dbc5862a4f1e828bc9b92f6fdbd9a4734089ea5015018ed6717760bcdb101"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v1/source.tar.gz",
+      "bytes": 164735,
+      "sha256": "37dae6e46821a3ce8f4db375343f690ad786a1453090f0efbdd5fa2650c7c4a1"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/build.log",
+      "bytes": 328,
+      "sha256": "e46ddfbfac89bc7e497869530c939fa1b9e3375c146d081847cc8912d4a52a39"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/runtime-receipt.json",
+      "bytes": 1265,
+      "sha256": "23664e7a1c58056ac7a646021da5fff393f0e8d2c5677db001439515af4385a6"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/runtime.wasm",
+      "bytes": 2427020,
+      "sha256": "e2e1a2fb63df6c9bcd84a65f4c87fc89b8530cfdc3ee990f8051fcb6f98c7d1e"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/source-manifest.json",
+      "bytes": 9079,
+      "sha256": "80b63251cd102dce5918c2d6330d2446beeda01ec9d0f473afa5632dfd02961f"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-parallel-20260914-v2/source.tar.gz",
+      "bytes": 164712,
+      "sha256": "6a6eccc05589d1b2ba7b4b12dcf5d1264ed5ecccc1f86fa33f225fff6a64b4e1"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/build.log",
+      "bytes": 328,
+      "sha256": "cc79ab312bf8e37bb7c3454870f41a0da802b1570f5671f13c2fb30f86483d40"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/checks.json",
+      "bytes": 15736,
+      "sha256": "0fb5666e188504d4a194dfd8928ce123d517b06ea428b8b352b43e3e9935f019"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/paired.json",
+      "bytes": 8497,
+      "sha256": "4f28c091e49de26a8a2c66dc3747e7be83abc96f85964f74ee13186717b4d237"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/performance.json",
+      "bytes": 14270,
+      "sha256": "3a7c77e65a8395383074758f2add19f677f8b5b406b4865ba8c5fc2fcd9dd78c"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/runtime-receipt.json",
+      "bytes": 1052,
+      "sha256": "243e777590d64c433b8c3ed31e75ef847bbaf4cc61c6b1832742d210e9de6fbf"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/runtime.wasm",
+      "bytes": 2411987,
+      "sha256": "7c985ff44ea375b69f4f3f264d7a7e4a7b35a82dc4198107c75abb27f3b73b90"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/source-manifest.json",
+      "bytes": 8816,
+      "sha256": "cb967636c71e613674f275d69f25941c90c587fe29b13db159c6bd271cadd706"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v1/source.tar.gz",
+      "bytes": 161129,
+      "sha256": "4b860bf5d7271f812ff1ffffcc0adf0e570cfe793a7dc7161086ce769a7a5aac"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/build.log",
+      "bytes": 329,
+      "sha256": "135a363cc94b748fe89cb97d3b26cba3c01ee63de2c88918f94a9061bcb80775"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/runtime-receipt.json",
+      "bytes": 1052,
+      "sha256": "3a99a393a90bbcf873e7def7450f13914ffe3f0e92077c88754b75e7a063dbda"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/runtime.wasm",
+      "bytes": 2412776,
+      "sha256": "27ccafac5058abded1a8156edc1355fb45c83a881b21e1eeb27cc766bb4ccb05"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/source-manifest.json",
+      "bytes": 8816,
+      "sha256": "292380ee604a41994d5a9ba9db303ae1d541a27585fb2b0654588b4524b733e7"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v2/source.tar.gz",
+      "bytes": 161361,
+      "sha256": "7994ab91dd0df27a56f9488827a39091fa46cbe050f53f77969063d247389064"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/build.log",
+      "bytes": 329,
+      "sha256": "68f1fb7b2599fa3fee4704dfccea5247d6609271ab27924cab44014955b8cadf"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/checks.json",
+      "bytes": 16202,
+      "sha256": "5acc5d94b89768821b1323f323f3073141b569c0444091d88aede7692829cb3e"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/runtime-receipt.json",
+      "bytes": 1052,
+      "sha256": "ae704238723033d92e7821b973d8ff7b66e57b7b5b02989d101f64a93c53a76a"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/runtime.wasm",
+      "bytes": 2412831,
+      "sha256": "81811ba74cc7e3bb70557b00da28ee3bff92b03750ac3d8de66ba080f9641b07"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/source-manifest.json",
+      "bytes": 8816,
+      "sha256": "b6df804c1b53c69df17bf596220521160ca3dcdc4006429666ef42a8f4a2b9d4"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v3/source.tar.gz",
+      "bytes": 161480,
+      "sha256": "9c97d2f50a29d1add7d4e468a2e2c2d883ed2135eba10933d25a2bafe6e1fbfe"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/build.log",
+      "bytes": 329,
+      "sha256": "7cef95fa69e55faeade6c735b0581e1a8707e87d1bfd8c014697871f1bd3acc3"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/checks.json",
+      "bytes": 16509,
+      "sha256": "c2afd29dd92ed841cbb545a1499d1380f037a02aa9b4ead88842439edc5f56a2"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/paired.json",
+      "bytes": 8962,
+      "sha256": "724600f5c511eb7ff89291c2a3eb7bfc328e5b0ba40467b64157e5c631cfc715"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/runtime-receipt.json",
+      "bytes": 1147,
+      "sha256": "a6ac9a56aa18ce94f558d4f23dcd885615b9c39457d7ee136d646c4787157f8e"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/runtime.wasm",
+      "bytes": 2417303,
+      "sha256": "bef813070a708316890d071e3c0a19550fd61e0799f39fd2ebf716cabb2cccd0"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/source-manifest.json",
+      "bytes": 8816,
+      "sha256": "6fde7260819d6f931f11a05c08b52d7a8e1b3a6188d5815957034f12d5c6d4fa"
+    },
+    {
+      "path": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/source.tar.gz",
+      "bytes": 161827,
+      "sha256": "499dee0fb12a43faa4e04b95c2636b7f1ae9e7f6ce67370b880748528f6bb13c"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 9494,
+      "sha256": "866d04e58e543c5649170fe3319490f2f91c417abb2e129e87233a30f6850ddc"
+    },
+    {
+      "path": "docs/draft/2026-09-14-Mei运行时性能探索交接.md",
+      "bytes": 12300,
+      "sha256": "747eb4ff6dfdaa0a0f5434169d95861a99c66d628a87b6a8bd2fc14b680312e6"
+    },
+    {
+      "path": "docs/draft/2026-09-14-WASM运行时提速实验.md",
+      "bytes": 6240,
+      "sha256": "80908d2b3cbab80d8741fd21f9edbaa8909fb309aa61241d6d3ffe161c623495"
+    },
+    {
+      "path": "docs/draft/2026-09-14-WASM速率与请求耗时分解.md",
+      "bytes": 4729,
+      "sha256": "dabfcbd09072f1910e98ace0481b3570142d8ff2524a79127612f53969a08260"
+    },
+    {
+      "path": "docs/draft/2026-09-14-WebGPU解码剖析与算子融合.md",
+      "bytes": 7741,
+      "sha256": "aa89efa8f1658e381d33475404edbc255f32099a9a3f6ca12cedd0b30e9b0f70"
+    },
+    {
+      "path": "docs/draft/2026-09-14-浏览器CPU与WebGPU同包实验.md",
+      "bytes": 7188,
+      "sha256": "eec0e3af5223b4aac0ac44a85c278a337b0ee527cc6325b0e2d952a95ffcf066"
+    },
+    {
+      "path": "docs/draft/2026-09-14-浏览器CPU多线程与GPU并行粒度实验.md",
+      "bytes": 9228,
+      "sha256": "0ad3ff6aae9fe6e71f777a09ee1244bae83373df8b37efdf3fef7bcb0484b55b"
+    },
+    {
+      "path": "src/demos/data-check/README.md",
+      "bytes": 7846,
+      "sha256": "43fc195c9e3fbb759575b583e1cc2a880093a1e620ab4c94c3cde04331474cd6"
+    },
+    {
+      "path": "src/demos/data-check/app.mjs",
+      "bytes": 13997,
+      "sha256": "beaffe495531cbc0e6317a3d1e93007721a0a20803eac1fa0851f46a51f580ac"
+    },
+    {
+      "path": "src/demos/data-check/browser-checks.cjs",
+      "bytes": 2061,
+      "sha256": "a6442fdc31b74673af8e9d9bb42d88509fe4aae82003312cc5847510ea2ac313"
+    },
+    {
+      "path": "src/demos/data-check/catalog.mjs",
+      "bytes": 1315,
+      "sha256": "b1a818df0fc7ce5fa9f0372c5336680847dadef2c63ec2516a53cd9aa741772e"
+    },
+    {
+      "path": "src/demos/data-check/checks.mjs",
+      "bytes": 4740,
+      "sha256": "0ee14ff5915b64d3ae668224acfb2a8ccce6749665cc4f317a7e402018504797"
+    },
+    {
+      "path": "src/demos/data-check/checks.test.mjs",
+      "bytes": 3721,
+      "sha256": "fa54f1de49e73371b3c3fc1798199d137458d787aa0e7ed6a3f527fd70d89ede"
+    },
+    {
+      "path": "src/demos/data-check/collector-checks.mjs",
+      "bytes": 1777,
+      "sha256": "895d33bb6478ae84e45bfe4ef197cb37c50742acfedcbcc1cab968da1aadc263"
+    },
+    {
+      "path": "src/demos/data-check/e2e.cjs",
+      "bytes": 4925,
+      "sha256": "a24c6cb1ed08837baaf362ea4b5284bc0593f6d0b6f6618ae06fa9fe22e2be92"
+    },
+    {
+      "path": "src/demos/data-check/index.html",
+      "bytes": 3705,
+      "sha256": "e0202b3b7682e9816d5a8c44b89fd357c73d29e81a6ec5fc127e9004e8256e18"
+    },
+    {
+      "path": "src/demos/data-check/mei-worker.mjs",
+      "bytes": 1433,
+      "sha256": "b07f671d35564fcae0ef6bb0bb3c2bb1a0a002601a744cd28a0a596f5deca780"
+    },
+    {
+      "path": "src/demos/data-check/node-runtime.mjs",
+      "bytes": 8954,
+      "sha256": "aa3468d9eca23c9f885c19bed33a4591347162a259783d69b76af492adca2962"
+    },
+    {
+      "path": "src/demos/data-check/node-task.mjs",
+      "bytes": 1973,
+      "sha256": "3e3aea750a39a5eb5546e98a48ddde104e944373440d49649030fc760a22271a"
+    },
+    {
+      "path": "src/demos/data-check/parse-worker.js",
+      "bytes": 1501,
+      "sha256": "abf894c3dec9a5a99941cdaca74468abab0edaf86fb32c1a5e67343d043c0493"
+    },
+    {
+      "path": "src/demos/data-check/performance.cjs",
+      "bytes": 3973,
+      "sha256": "b10eaa15a3b400abc0b68d84c8bc880d0b13936bd4c2cfbd059ed7f2dbc0741f"
+    },
+    {
+      "path": "src/demos/data-check/prepare.mjs",
+      "bytes": 5153,
+      "sha256": "81daae17151689f64b9d60c2febdc6b1a22b908001352ff422fc220a165874c7"
+    },
+    {
+      "path": "src/demos/data-check/probe.mjs",
+      "bytes": 1039,
+      "sha256": "3e43cc3844e04843b5e46a13db1569311dd71fe057a0c959a373a2c127b6f29a"
+    },
+    {
+      "path": "src/demos/data-check/profile.cjs",
+      "bytes": 6353,
+      "sha256": "d1673578c165e1aabd83333d5e893cccec2ced39c50acee68a4e833db1412d3c"
+    },
+    {
+      "path": "src/demos/data-check/server.mjs",
+      "bytes": 10369,
+      "sha256": "135987ed1c20d824dac87b00241ea76187ffb6ce9cbadb0f1a26b140c5bdbfbf"
+    },
+    {
+      "path": "src/demos/data-check/speed-checks.cjs",
+      "bytes": 4088,
+      "sha256": "58b8cb56b9a054096d4c676a57e2fbaefa563951936bdcd2a1d23ae366a549bc"
+    },
+    {
+      "path": "src/demos/data-check/speed-paired.cjs",
+      "bytes": 4280,
+      "sha256": "a5b40aa1f57e7904cacfaae1a3bce4e0b37642a61827f156f3dff4e005dfc17b"
+    },
+    {
+      "path": "src/demos/data-check/storage.mjs",
+      "bytes": 754,
+      "sha256": "ca5ffe700ec529f5585cb600600e0a51136445775badb38fecaef847080cddcb"
+    },
+    {
+      "path": "src/demos/data-check/style.css",
+      "bytes": 4243,
+      "sha256": "4beb2a3086088d73e8796e958e802bd3327c0681440f1541765c02e30d8456c5"
+    },
+    {
+      "path": "src/demos/data-check/sw.js",
+      "bytes": 797,
+      "sha256": "b7c5626fed7b492f364646975858f8114dc7d9df02528caa8d57176a5d0bf1e9"
+    },
+    {
+      "path": "src/demos/data-check/validation/2026-09-13-performance.json",
+      "bytes": 11748,
+      "sha256": "b09d5c555040268955ff67d88195e5a05f5d62027dc0c39e14541c61a0ccc007"
+    },
+    {
+      "path": "src/demos/data-check/validation/2026-09-13.json",
+      "bytes": 16439,
+      "sha256": "3840ceec09e31e9ecb163d3715820a41e67fa02fd7b6a8771988b29f28cf87fb"
+    },
+    {
+      "path": "src/demos/data-check/validation/2026-09-14-performance.json",
+      "bytes": 11773,
+      "sha256": "6fd1134fc4563264f5d5ad04b68ed78b4f15dd324c51bfff25e8ee82956d3f88"
+    },
+    {
+      "path": "src/demos/data-check/validation/2026-09-14-profile.json",
+      "bytes": 74110,
+      "sha256": "d912ef5d2b6a46dc005a2ccd509cf7e5c163cf25345e56d4ca1af46f7bae6e6a"
+    },
+    {
+      "path": "src/demos/data-check/validation/2026-09-14-wasm-speed.json",
+      "bytes": 30624,
+      "sha256": "7a51a83331af0fa03ae6ee85d9ac0c2572db76caafa016b6ebce1f24c5d31c24"
+    },
+    {
+      "path": "src/demos/data-check/vendor/SheetJS-LICENSE",
+      "bytes": 11355,
+      "sha256": "4d2a38ac35cda06a555c84074a819d413339cd3691b822cae50f8f322fe01f64"
+    },
+    {
+      "path": "src/demos/data-check/vendor/xlsx.full.min.js",
+      "bytes": 951904,
+      "sha256": "cc015130aa8521e7f088f88898eba949ccdcbfb38df0bd129b44b7273c3a6f41"
+    },
+    {
+      "path": "src/demos/runtime-bench/README.md",
+      "bytes": 8159,
+      "sha256": "846c691aab52cb4f3965ea32d1719dfa59b385ff1effb12d5f379259beca3655"
+    },
+    {
+      "path": "src/demos/runtime-bench/bench-worker.mjs",
+      "bytes": 5991,
+      "sha256": "1b76a44fdad6db6fe4493780cd9a9c53f97aab4a8a902d5f572e344caffba354"
+    },
+    {
+      "path": "src/demos/runtime-bench/compare-oracle.py",
+      "bytes": 1387,
+      "sha256": "b4a71461bccfad287a501fd8a36e84ef78e258b041c15c58187a5750d7281cd9"
+    },
+    {
+      "path": "src/demos/runtime-bench/decode-worker.mjs",
+      "bytes": 5589,
+      "sha256": "e90e368ffede20534701d041cbe48f2d0d7951ad8317854165f8880643b888db"
+    },
+    {
+      "path": "src/demos/runtime-bench/decode.html",
+      "bytes": 1208,
+      "sha256": "36921930ee877a923ab0b5e5fb7a56c09903380cbbd93e33f5d803accacedaa1"
+    },
+    {
+      "path": "src/demos/runtime-bench/index.html",
+      "bytes": 409,
+      "sha256": "f910589b7369792e49c107c65ce5d18b9f978a3536538c12ec521c3859a3bca1"
+    },
+    {
+      "path": "src/demos/runtime-bench/parallel-helper.mjs",
+      "bytes": 1982,
+      "sha256": "944efff0a148944311df83dd9a90163817c14de91d191a3930254e77367f7f5b"
+    },
+    {
+      "path": "src/demos/runtime-bench/parallel-pool.mjs",
+      "bytes": 3706,
+      "sha256": "4ddb8915ef8636b5459256e9cbec1883ca2142d526bfc1c627b9a520b1b7557b"
+    },
+    {
+      "path": "src/demos/runtime-bench/parallel-worker.mjs",
+      "bytes": 6330,
+      "sha256": "c347c136a6a69d1c4dce3b4c27c52e91c321982dee24845e97710c33021bb5da"
+    },
+    {
+      "path": "src/demos/runtime-bench/parallel.html",
+      "bytes": 2224,
+      "sha256": "753be3037c06faad84f8308690a76d432649f8ee79e25f54126c8185182b4cd6"
+    },
+    {
+      "path": "src/demos/runtime-bench/probe.mjs",
+      "bytes": 3271,
+      "sha256": "7df601554642b4b87b6c1d894037b5ed0002d3c3a52544f358b027e49a466684"
+    },
+    {
+      "path": "src/demos/runtime-bench/server.mjs",
+      "bytes": 3045,
+      "sha256": "5408e2aec656bac6a8ac2b11294bb9718fa3542b627bdc6d10ec9aedad98a3c6"
+    },
+    {
+      "path": "src/demos/runtime-bench/validation/2026-09-14-browser-cpu-gpu.json",
+      "bytes": 37760,
+      "sha256": "764a6399fcf73f22a880b723ead60ffbe8e6d70b60495b3cb8eaa03fd9d93eaf"
+    },
+    {
+      "path": "src/demos/runtime-bench/validation/2026-09-14-browser-parallel.json",
+      "bytes": 346330,
+      "sha256": "6a37207155b1bcfe26d8394ae6192ea6663b3e53993d8c9410485140ba2c62ed"
+    },
+    {
+      "path": "src/demos/runtime-bench/validation/2026-09-14-webgpu-decode.json",
+      "bytes": 1020423,
+      "sha256": "a709d15b65a3ba57f0d9b6a9ea83c8915665d8d9d17a6a36f1032cf08bbd6cd2"
+    },
+    {
+      "path": "src/platform/_shared/.cargo/config.toml",
+      "bytes": 411,
+      "sha256": "4316a1d8c7a7b7eaaba9dd95263bf0d50ed7bed4572d05c826925f334f12c5f7"
+    },
+    {
+      "path": "src/platform/_shared/Cargo.lock",
+      "bytes": 8246,
+      "sha256": "35284208618fc321853c492f3c18ea7790e50d65e62736608ecdfcef48042aa2"
+    },
+    {
+      "path": "src/platform/_shared/Cargo.toml",
+      "bytes": 970,
+      "sha256": "1be4e01aadf0dc1b3dbf449125f7dabe547166e3ea50c38bf972abc201cb1c09"
+    },
+    {
+      "path": "src/platform/_shared/rust/README.md",
+      "bytes": 513,
+      "sha256": "657a57529eb8a802d1e1079eb496c7144cd01c2ba0bf2b1786d0622315f25294"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-cli/Cargo.toml",
+      "bytes": 270,
+      "sha256": "180aa60e99748cdc91f49ff0c76c97501c0254b50235042dbfca0a1a43374278"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-cli/src/main.rs",
+      "bytes": 4826,
+      "sha256": "f2ad2d7900496469772e1ca49470fd2a9cec4b88d9a7d34358a75a1eee55a0c1"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/Cargo.toml",
+      "bytes": 698,
+      "sha256": "6e9e4fcab03eaf54c6302b48ff4157df4a8ff0ba507456522883401d5f2de823"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/examples/gpu_oracle.rs",
+      "bytes": 1718,
+      "sha256": "6f5ee1a1b647a56ab38e34628891cb198bf1d5a80b29733c87060b793731624c"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/examples/resource_51m.rs",
+      "bytes": 2472,
+      "sha256": "a9f8f4f160928aaad1d4e7957b857d1bb6c5bf9e9301d0f1e531704d1c17e714"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/byte_grammar.rs",
+      "bytes": 22339,
+      "sha256": "0d91ffe299a37e71f08d3936c5d93953d82b548e614574163adcfbb1115ba389"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/canonical.rs",
+      "bytes": 9682,
+      "sha256": "7fbcdb0271597cc0e68113a839318b993319d8ca6d43d1354689ac58da333d3f"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/context_budget.rs",
+      "bytes": 33351,
+      "sha256": "4902212b9e03a923936aef64956a04fe8e6a579c74173599f91eca419f935524"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/cq2.rs",
+      "bytes": 33500,
+      "sha256": "534dc1fd4e3399f99d8215bff92e26edb629e54b6a90ad79a0e8c53cdd23e4ab"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/engine.rs",
+      "bytes": 77595,
+      "sha256": "dbf1ec4b424a2faac18bc3ef5927df20ae947248b9e90ce22bd55c8d7c058c6b"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/error.rs",
+      "bytes": 1523,
+      "sha256": "647d00c5787d42895452eb3124520fdb02994f23759d64d0e228cd8d79a5fded"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/infer.rs",
+      "bytes": 40527,
+      "sha256": "4907f4320d89302406c1ae4a3831b3221629a614e9e932629e89623666193bdf"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/lib.rs",
+      "bytes": 2420,
+      "sha256": "ee7bbe466f6aa04980830f74608c2a56d169c78916fce21cf6d2be83a7a9206b"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/model.rs",
+      "bytes": 86237,
+      "sha256": "308ba4e00a68d01670e8f3788596e5d74caee0c5c851c61b52b9870918e2c234"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/package.rs",
+      "bytes": 91422,
+      "sha256": "b13c87b3b56d5f5f7bf725fab84272eb1f5715db4f3393beef638ca91ad62af7"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/packed.rs",
+      "bytes": 46430,
+      "sha256": "5dbd5f260826ad93ae0ca9da298468afdc30fcec65eaab42a32e624e4eda5c0c"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/parallel.rs",
+      "bytes": 1834,
+      "sha256": "2e800702f346759dff4c41e6c18d910be4b6353411877da130eaa5024b8d4b98"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/protocol.rs",
+      "bytes": 49320,
+      "sha256": "3b0d1ba978a062bc88fd080752c33036cd64164eb5c705940a044ed1f62b1ee6"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/retrieval.rs",
+      "bytes": 1243,
+      "sha256": "dee2268d65c38e78bea5a4e9d5a206cffe066a977eeddf701f9e399e01653a4a"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/tokenizer.rs",
+      "bytes": 1450,
+      "sha256": "10773a11a48c41b1407ec14f8ed00d237f7fe78977f5bf47cb2d172940a09623"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/tool_index.rs",
+      "bytes": 12001,
+      "sha256": "cdf8ede89e2ba3afc22c139b2f307867961af0b4e91d53ea662e358e038eefaa"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/version.rs",
+      "bytes": 3262,
+      "sha256": "a819e230cadc38eac4e31ee5418664be37c1f548f6aca9808d30611affd36119"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/src/vocab.rs",
+      "bytes": 23308,
+      "sha256": "21be87bdc9d582dc764d56f835bf259678df7dd1c8c46d53bbbf1d7cbc1dc564"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/tests/context_budget.rs",
+      "bytes": 10165,
+      "sha256": "510639a24bbe2a1d9e8686d1a6650ebd58d03fc5d0f3047ec57abfa5977cf2f6"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/tests/golden.rs",
+      "bytes": 4898,
+      "sha256": "f4503596190d83f989782b06494fe0e8df29065a15e9a1eb7e96663c328a2394"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/tests/lossless_tokenizer.rs",
+      "bytes": 1132,
+      "sha256": "8d9378f40da0c8a165be7da851c98ecd19ffe9151a37a0cfb4ec8982cc69c818"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/tests/q4_pack.rs",
+      "bytes": 9929,
+      "sha256": "9fa3c9763fbd657fcb96a480e2f4eefbd9ccb85f746ad47229e099bec9dd9871"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/tests/tokenizer_v2.rs",
+      "bytes": 2264,
+      "sha256": "cb526c5415905d7e87fd0640f4e7c45fac18bec61b7d9369b051e3e87a4d5284"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-core/tests/v2_contract.rs",
+      "bytes": 46506,
+      "sha256": "c160228701ecb30a8664e9c91e7f6b41d289093cc69a45ca93cfb2e89b0a866c"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-ffi/Cargo.toml",
+      "bytes": 370,
+      "sha256": "b8ce88e2de282da5052c0142e5c588f05231e920fe208928447ebed4ea59fec0"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-ffi/src/lib.rs",
+      "bytes": 11014,
+      "sha256": "af23f66c2c913571e52d413500a0596217c6b82de64181630077a53247afc101"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-wasm/Cargo.toml",
+      "bytes": 677,
+      "sha256": "4a6df39908bfe4d57b3d982cf3eb15e97cd4f2e369a5bad318fad68f93e2e0dd"
+    },
+    {
+      "path": "src/platform/_shared/rust/mei-sdk-wasm/src/lib.rs",
+      "bytes": 20094,
+      "sha256": "a7ae8fd10aa70bb2386986a4d91b779978d94b7b82c31c2020cdc7a820ed8d0a"
+    },
+    {
+      "path": "src/platform/_shared/spec/api.md",
+      "bytes": 6080,
+      "sha256": "2c6a0e68afbd2b48cce336a63ff2dbc127d79934e42891b78d097742e55ad7e0"
+    },
+    {
+      "path": "src/platform/_shared/spec/compatibility-matrix.json",
+      "bytes": 1410,
+      "sha256": "b73f80919e2ba1ef74f86c8c91afc4578e351e988cde2fea5faa2b0928b717cc"
+    },
+    {
+      "path": "src/platform/_shared/spec/cq2-v2.json",
+      "bytes": 2468,
+      "sha256": "e1f5e5a64350c1e28c0e92cc134fb89c3c67b94bd6923b0b9a8d9c768109df5d"
+    },
+    {
+      "path": "src/platform/_shared/spec/errors.json",
+      "bytes": 2913,
+      "sha256": "736506b41d45fbf25fc979f1da3455bddb6df3a3c2702bfdc041c48c28ebac33"
+    },
+    {
+      "path": "src/platform/_shared/spec/gates.md",
+      "bytes": 2546,
+      "sha256": "afb8598d445096eb1d61600ab0abd1997e7756ce7066cac26db661c1ca24a5f1"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/canonical_numbers_v2.json",
+      "bytes": 482,
+      "sha256": "8ecf76ae50fee335a690bb2502ed49c9841994ce7944dafc6519b5b38f5d68e2"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/catalog_fingerprint_v2.json",
+      "bytes": 611,
+      "sha256": "d039a804559b38e5f4f16ffb747f08ef5d7cb65ce56ffbd766609aaa7cc6123d"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/context_budget_v2.json",
+      "bytes": 1378,
+      "sha256": "866881acd1dab80b4bf7d0ce3f5f38e94199ca70dad7145918c021a287ba8bd7"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/cq2_v2.json",
+      "bytes": 531,
+      "sha256": "eba904ca5ec4f694bd465d8e05552cd116ed91d8a6c2a638e44e4ffb83c3e5b1"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/format_cases_v2.json",
+      "bytes": 1541,
+      "sha256": "f258e0bf3f4899ec1a038deac6a0ce60d745032be462342a96b06bb5f1635466"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/package_capabilities.json",
+      "bytes": 2989,
+      "sha256": "4d7fda62c7e2953a0902412431d4e2244a3687f7caec3c254b3e4b81c55b7f9b"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/parse_cases.json",
+      "bytes": 1063,
+      "sha256": "deabe15cc8650f84ae195070b12cc05eb22c1e92be53571f0d0d8c9f66a287c0"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/render_request.json",
+      "bytes": 2603,
+      "sha256": "7dc12f8eda1b205cbd003399041310158f16d9a150c717bb5cf7898afdfa691b"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/schema_fingerprint.json",
+      "bytes": 717,
+      "sha256": "79248b7f63d42bcb72af0ddc72ccd96824393292ecb7d797e31caf5582bfc66b"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/tokenizer_v2.json",
+      "bytes": 3906,
+      "sha256": "ebcb2695b5274c5cdaffc2de6e599d9e494a1f2bebe257621b861536e5ea7d44"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/tool_index_v2.json",
+      "bytes": 1109,
+      "sha256": "02f040c7e35ff2729c13fb373ef3a44d73680931847b8f0b13abe2050fbb1613"
+    },
+    {
+      "path": "src/platform/_shared/spec/golden/turn_results.json",
+      "bytes": 28616,
+      "sha256": "da83581d01d7411299300ead98134e444bafcf7083a8f5b8eddaac187cb7901a"
+    },
+    {
+      "path": "src/platform/_shared/spec/loop-result-v2.schema.json",
+      "bytes": 618,
+      "sha256": "4cf18aec92d7213c6825d44bffe0bdda3a117d791d3484c2ea4d1320446e5c37"
+    },
+    {
+      "path": "src/platform/_shared/spec/loop-result.schema.json",
+      "bytes": 540,
+      "sha256": "9d4de6ff8c13bd2828df0689089219c8dfeb3ec894b335e8a7df5bae1a070da8"
+    },
+    {
+      "path": "src/platform/_shared/spec/model-package-v2.schema.json",
+      "bytes": 21387,
+      "sha256": "1104d51fa7db0fedeb73ab7b4602a41b92d63e5e36fbe793e869cc74b043af1a"
+    },
+    {
+      "path": "src/platform/_shared/spec/model-package.schema.json",
+      "bytes": 5539,
+      "sha256": "ee0afdd2ec04723e7c91a1262641997497ab112c85989dbf5dd160952c15bf13"
+    },
+    {
+      "path": "src/platform/_shared/spec/narration-result-v2.schema.json",
+      "bytes": 932,
+      "sha256": "9da0ea734232f6e73a7035b6c3b9765f10b0a4f32c2cd1d084f86d8d9ee1a476"
+    },
+    {
+      "path": "src/platform/_shared/spec/needle2-reference.json",
+      "bytes": 2495,
+      "sha256": "dce31b3e93625b85aaabdb6fcba71fce3a9a9636cc0eeb8a4846bb5cde6f9d94"
+    },
+    {
+      "path": "src/platform/_shared/spec/protocol.json",
+      "bytes": 522,
+      "sha256": "e217271e4ae358ee8839d40629be5186999b1177a5eaf6fdb6affe3b51bc7fee"
+    },
+    {
+      "path": "src/platform/_shared/spec/request-v2.schema.json",
+      "bytes": 6058,
+      "sha256": "e5536d8d2496bf91d61ca11fd6c0a9707648fd3249ab4d551e6ba93eca720bb7"
+    },
+    {
+      "path": "src/platform/_shared/spec/request.schema.json",
+      "bytes": 1780,
+      "sha256": "d4731ef01555145f5c9c440efaeb62bc0932134d1bdca85d23f0c56fdf682f1b"
+    },
+    {
+      "path": "src/platform/_shared/spec/resource-measurement-receipt-v1.schema.json",
+      "bytes": 1593,
+      "sha256": "eaa1af6d803676a43ab307cd3d337d2bf3a25e8115bfef8fcc3b851a32999299"
+    },
+    {
+      "path": "src/platform/_shared/spec/schemas.json",
+      "bytes": 834,
+      "sha256": "378750a74524855d9b4a058e7d73d552f8d3cede6ea3b66d181d6e767231b258"
+    },
+    {
+      "path": "src/platform/_shared/spec/split-criteria.md",
+      "bytes": 1379,
+      "sha256": "380adbdcc913be39c3c131b24d228a8bff3b20c88d0472828cd19a65cd715454"
+    },
+    {
+      "path": "src/platform/_shared/spec/tool-index-v2.schema.json",
+      "bytes": 1499,
+      "sha256": "819dc30bbd81fd3ed7565319f5ab4f8a0b96df337375fa3950fd33467d12f396"
+    },
+    {
+      "path": "src/platform/_shared/spec/tool-result-v2.schema.json",
+      "bytes": 1351,
+      "sha256": "6c4f4518b7b453555593ef8d7cdf47e360114b764f886397e282c6199c42c751"
+    },
+    {
+      "path": "src/platform/_shared/spec/training-receipt-v2.schema.json",
+      "bytes": 1888,
+      "sha256": "12075566366684fc3c30b4895e7bbfe1db8215a656e5c777caebff2534a377b5"
+    },
+    {
+      "path": "src/platform/_shared/spec/turn-result-v2.schema.json",
+      "bytes": 3683,
+      "sha256": "55ce228711e5c704f422cab5b60d4cf055672fb564e2b47fe090093faa45e542"
+    },
+    {
+      "path": "src/platform/_shared/spec/turn-result.schema.json",
+      "bytes": 2083,
+      "sha256": "e77986580d152b604a33bb9e12f43b4281750c605e3f1494ff9d363f6f1e899e"
+    },
+    {
+      "path": "src/platform/_shared/spec/versions.json",
+      "bytes": 1169,
+      "sha256": "9732f950ae4c17a160ce27e69024f786fd607e6d59cd057aab719d5c2c289cd7"
+    },
+    {
+      "path": "src/platform/browser-sdk/build_speed.py",
+      "bytes": 4003,
+      "sha256": "efffa42a0f0d1c223863d58942646905e8fd3ead2bb8ce8a631ce30bd80aa3c4"
+    },
+    {
+      "path": "src/platform/browser-sdk/experimental/webgpu-51m.mjs",
+      "bytes": 27379,
+      "sha256": "0bce2a9d2d2eebc5e25b43bdc8d4f7b455342037d184de3e327de544bdf9a464"
+    },
+    {
+      "path": "src/platform/browser-sdk/experimental/webgpu-decode.mjs",
+      "bytes": 13598,
+      "sha256": "c784d9a271f17b55d715591c7ff57ff1201595fbf51278d59992db79e1ce7b72"
+    },
+    {
+      "path": "src/platform/browser-sdk/experimental/webgpu-parallel.mjs",
+      "bytes": 2511,
+      "sha256": "13e0bd481889f48c85a1950bc07926c50fca103f09e2d419e522ca13420fdf5d"
+    },
+    {
+      "path": "src/platform/browser-sdk/wasm-abi.mjs",
+      "bytes": 13869,
+      "sha256": "17d66973ba2bbe5adc224ac9aa672822ebf9cccd2e1bb0efbda0e845de74f7c0"
+    }
+  ],
+  "snapshot_directory": ".local/cache/runtime-bench/performance-handoff-20260914-v1",
+  "snapshot_checksum_file": "snapshot.sha256",
+  "notes": [
+    "Snapshot includes current source and frozen historical builds; use each measurement's hashes to select source.",
+    "No model weights, corpus, environment configuration or credentials included. Original model package must exist separately.",
+    "Local snapshot is not external backup or a release."
+  ]
+}

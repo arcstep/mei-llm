@@ -1,0 +1,10 @@
+{
+  "mode": "specimen_compatibility_audit",
+  "specimen_pack": "corpus/pools/task-trials/2026-09-14-qualified-sft-specimens-r03",
+  "specimen_report_sha256": "010ef4491483bb2ade1afcd2a1905c21a4caa59bb11509867e7f40ebd8c0db43",
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+  "cpt_run": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-encoding-20260914-v1",
+  "cpt_freeze_config": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v2/freeze-config.json",
+  "evidence_sources": ["risawoz", "crosswoz", "toolace", "nemotron-tool_calling", "nemotron-interactive_agent", "technical-guides", "constraint-tests", "json-schema-tests-f6fd52a", "openapi-directory-latest-half-f04b8d0"],
+  "per_source_limit": 4
+}

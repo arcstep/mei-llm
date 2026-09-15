@@ -1,0 +1,577 @@
+{
+  "mode": "public_sft_scale_review",
+  "views_path": "corpus/pools/task-trials/2026-09-14-public-sft-1000-r03/views.jsonl",
+  "views_sha256": "2156afcd7ec700409a83fb0b461826bc7af67b5062c85edf7b9802e7b3dbfb7d",
+  "decisions": [
+    {
+      "id": "moss:3de1bda6d61e773035a8:event-1",
+      "view_sha256": "fd277853f236aecee61a3d73e410d1e6a7de839467eb54b66dadaecc661703a6",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "将介绍Google AI策略转为等义英文搜索词，未补造实体或参数。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:e6f422490812a46f0ee4:event-1",
+      "view_sha256": "99ae172bd53f106345f8c06527d16509455b82510599a203ed93b88c5878d6e0",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "搜索关键词保留阿里巴巴、腾讯与竞争关系。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:7c5f80dfd0fe6e682934:event-1",
+      "view_sha256": "e506b2c32579451b3bd9741f340327ddc37591e325081cac8a6ea6d80c0db841",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "搜索莎士比亚代表作品数量符合要求；只接受调用，不接受后续未经结果支持的数量解说。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:af1472843089037633cd:event-1",
+      "view_sha256": "3d0fbb32146a564f2e0eed5a148d723d652a41ac0aab67b5407a2427bc56be12",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "币值方程形式对应原题，但60枚最低面值10c已超过总额4.90；原题无非负整数解，不宜直接用作正常执行成功样例。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:2ed1904abd2f61609d60:event-1",
+      "view_sha256": "6b97e3fbaa5483c3930c4af57fd282ec38dd343fd0e2aa269ff58c14c92c5569",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "3x+2x=90对应两锐角3:2及直角三角形；这是求中间变量的调用，后续仍须算3x、2x，不能标任务完成。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:4e961e90968bb74f6a2d:event-1",
+      "view_sha256": "3927721226f39d63cab999d361f2e8cc7b3ac2df9292f6fb0f06b375ff019b36",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "保留Facebook Libra与经济学原理的查询意图。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:c003594ffd59e210e746:event-1",
+      "view_sha256": "b8aab4178dbd0d79db0361349e3dad376325c0fda15172a9db5064ebea63e8fa",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "历史与近代化条件两次检索均相关，可作为独立检索批次。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:a459559a63adae5477d2:event-1",
+      "view_sha256": "71e96fc2c8945b15720419b42cae0bc30617df3754f69c946e732629b68fb60e",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "分别查询两个机构以支持比较；不是已完成比较的答案。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:9e98cf6dfff3fb124813:event-1",
+      "view_sha256": "d57a0f297f5f7e3505f80c62ea9bfb25fdb0fa53cf501c53d41e5549adcb8307",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "电影名及剧情检索与用户要求一致。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:c23088e0bd319b20b2b6:event-1",
+      "view_sha256": "3eb1699ba77440f6b46c5f47505c5c626ee17876cedbbd862623ebbd6ee9074b",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "将提高医疗保健转为人工智能医疗应用检索，未生成医疗建议。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:f3c396904efc3aa61681:event-1",
+      "view_sha256": "16d5581cbdc238f1c5b2e3903a4cace6b4eece38aa11bdccd054639ef273bc13",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "沃尔玛社会责任改善方案与需求对应，结果仍需查证。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:4581f32794450f1cde70:event-1",
+      "view_sha256": "8313c652b4dba2cc832c25070d57bf107defdf3eff4a0e6d336a157d35295de2",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "电子商务、购物方式、改变三要素均保留。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:d0d75ed57e97a68d0a90:event-1",
+      "view_sha256": "48523eac0926bac11cb7e71dc5034e6e9d28538b485bade752523d52a7a9adc0",
+      "sample": "first_call",
+      "lm": "reject_source_gold",
+      "reason": "题目问节省金额且预算60不足购机；第二个算式60-700不是节省金额，不能作为正确调用gold。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:ccd98b2b992b497105bb:event-1",
+      "view_sha256": "f883d821d84c0abf4afdf7a2f18538f7c4fd063a16b72db633fb6bc520ac0ad7",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "括号正确表达先720/2+10，再除以3。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:6a09c0499f5fb3f3499e:event-1",
+      "view_sha256": "a54465c31230c9844e016d99dcbd7d27e8a6ae06bba52188a34af3820d4bde0b",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "以用户给出的诗句检索出处和上半句，不预先认定引文真实。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:c9dacd588c4a5286ad67:event-1",
+      "view_sha256": "9c3d4ba7e1b31e58eaee83053ef7dcef6651172485a19dab3ff9916fe7fd67d6",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "按用户的日本节日问题检索，主观最高级未变成确定答案。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:c86155c92b75c14f415d:event-1",
+      "view_sha256": "3adf33c5fd4f389d237148971b47e7217027c3d77ac768e4ab42e571a256d436",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "查询戴尔创始人与请求对应。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:6540e147dcc32abe1c3e:event-1",
+      "view_sha256": "ec90bcc9e21dbeafcaef89b42b59c4a225a3696a514894c4f1588678330a4f8e",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "400乘6乘0.9对应六台单价400且九折的总价。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:c1875475c6eeeacf4f0d:event-1",
+      "view_sha256": "9563d38ae0cd9bc3358d92232d2bc6a5a4673fff3a80f5b1db97dd5721378fc4",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "二元方程缺唯一数值解；符号解及求解变量的工具合同尚未冻结，暂不作为正常求值gold。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:abbfbed79576269a64f3:event-1",
+      "view_sha256": "27826de2d763c1cfeba23a276b69e068a5cfec2152b398cb542f6b170866a88c",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "25+8需要混合体积可加的教学假设，原文未明确；物理混合体积不可无条件等同相加。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:64958a674d78d9f6ea29:event-1",
+      "view_sha256": "426f057528254ad2eed05a2d1b7d82e7cc2189796e90daeb79a4f66e8c9fc1ef",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "中文成功因素问题转为等义英文关键词，未添参数。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:27730caf28c9e395ac2a:event-1",
+      "view_sha256": "51a9a9487852f6719d707365b77899fe9c93e1bb6845b6c7e0e427fb9686642b",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "以用户给定135和112计算增长率，不宣称企业历史营收事实真实。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:11c77f2f929df1544a24:event-1",
+      "view_sha256": "137355443f346df4c134cf3cf63cf10dc708aa2705620fb628796fa0dbbca758",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "加拿大教育体系的设计、特点查询符合解释请求。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:923d8443c7d37092ff0f:event-1",
+      "view_sha256": "df6f7682122e27f0f3d5db52a986904d651c4a29d9e1bfa0ce4ec2e31235c236",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "检索保护消费者隐私的法律是合理起步；没有地点不能直接给确定适用法律。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:475bcc0c02719e2c7e05:event-1",
+      "view_sha256": "0b37078d4fd8e32b20409cbea3be15c34c490e50708a28f639c0c9292d18a803",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "联合国气候变化应对策略关键词完整。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:c6e98bf738bfbbaf9674:event-1",
+      "view_sha256": "0e94fe9ba3b29862c62e106a8d9a7c6f0473b9e390116d7a74c459d89758f642",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "伏尔泰重要历史事件的中英转换保留意图。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:722e12646321c3f5edf1:event-1",
+      "view_sha256": "ad789a206b62c0a6a345488726c33d594e2dacac9ea82aac2f75d982b79224b6",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "中国经济发展主要推动力关键词一致。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:69e146c2a7e3274abf05:event-1",
+      "view_sha256": "a2e5c7e61ae2b96a9415109eef17a7c59dbf50debb1b8b945a32ef45e198f69f",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "游戏介绍和种族数量两次检索均可帮助原问题，未新增副作用。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:7587122fcff75598e932:event-1",
+      "view_sha256": "cb4b67152a0dc4c578908174f453cc4d29f25003def9e397c10f9dd4b6b87ee8",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "GPT-2与NLP应用的检索表达对应。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:8140c8916808b159e1ce:event-1",
+      "view_sha256": "d2ec8c6b5656d2e5574937f70c8309bdc931256e19c976138d901043c229491e",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "环形湖并不明确等于实心圆；仅一个周长不足确定环形面积，且^运算符的计算器语义未冻结。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:40d5d748d42a23f87360:event-1",
+      "view_sha256": "454720417aea520e6e82f3c90a6f3acc69ea89aec60bd3f17afea12213db9939",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "多数参数有用户依据，但updateTime取schema的2022默认值与本次更新时刻语义冲突；另有pattern检查尚未支持。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:b17508a88fe67402a53e:event-1",
+      "view_sha256": "7c64d707a66fe18ac2c1cc046a52b43063cfb54c7f12408ae5f17e5838df68c9",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "视频ID有依据；webtoon genre说明要求先取得genre code，romance是否可直接当code没有来源证据。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:0c78cfea81a1c4a44a48:event-1",
+      "view_sha256": "3ef52364c631d6157fc64d8973514a9a67338fc24bcce15b431f07cff5aa65b9",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "Texas、全部国家、三条WikiHow步骤逐项对应三个独立查询。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:267bebf70e339413bbea:event-1",
+      "view_sha256": "b07aa3aa92d2d329daf3b5e1b1334a127197daf1e1c35ef0e140855b17ce9a06",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "四个赛事ID逐一保留；源码schema为number，.0符合其类型，不擅改为整数合同。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:ed095dd0c1234d672b91:event-1",
+      "view_sha256": "3e5c66935f0cc3ac0df1c281c59496abeda24d6f26244a94db4eef5c0a22bd25",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "纽约UV查询参数有原文依据，可选时段未猜测。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:7b2d2c602cb058c1773f:event-1",
+      "view_sha256": "30bfb7af256451f1a6f0c9cf08f2b81d7f7febd38c53012123927b511f5b0e4b",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "用户要求near my area，但工具仅列Aeries学校，缺位置或系统辖区绑定，不能宣称满足附近限定。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:c08e83e50781c50c7f3d:event-1",
+      "view_sha256": "35d2d00a627c2fbbb3c6ac4cf817dd05ac7c15754b4ab33db00414ee64915d43",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "两组气候与水质嵌套数值、日期逐项对应用户数据；程序pattern/format支持欠缺另记，不把原文判坏。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:eae5e6c5e6d4e2fc6701:event-1",
+      "view_sha256": "6b84ebb41a0adbeb10c99c8f94a20d82bee1401c0f007b17197f897bc7388c6d",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "Instagram mediaid来自用户123456，number类型转换不改变数值。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:2da1cd221f1c6853763f:event-1",
+      "view_sha256": "721013eececbb35415f5134f2543b55d3c0aef56a1e34fb8c41c26d0f0e7b4cd",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "两个球员ID分别调用，属于独立读取。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:f3cee40890f7ee2d194a:event-1",
+      "view_sha256": "7f957478e64725f2db06ff5168c4addffe4a5b5734913fc4026d961dee88ca38",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "三个查询方向相关，但if available条件与TikTok存在性/失败处理未表达；先保留，不能标完整并行执行方案。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:6d3d543ec4bdf17de793:event-1",
+      "view_sha256": "479ca74e991f8184a17764f1e7c436a05fa66159e184a4f1fda01fcf60d2e123",
+      "sample": "first_call",
+      "lm": "reject_source_gold",
+      "reason": "right now被转换为2021-04-08，输入及schema均无该日期依据。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:396b16edc3c063ef7280:event-1",
+      "view_sha256": "1aca3f5660ba019983551261e3067ee93a7049443a03e1a11e8cc70cb13325d8",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "两个应用、源与目标机房逐一对应明确要求；只认可调用参数语义，实际副作用授权和并行调度不在本审核内。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:130c6e68b76fcdf29437:event-1",
+      "view_sha256": "a59a7ad5bb4b5fe208b30983e393c7cae22f9d63e497fe5087dadf456bae7355",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "工具说明明确为本赛季所有NFL球员，无需补造season参数。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:33c6c9b9d595c9950347:event-1",
+      "view_sha256": "d7fb914a3d1e3f47f7d9487c9cf80587518cb8cb5ee83e99e6708a0bbd3dd4c6",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "工具返回直飞航线，不保证今天实际航班；可作中间查询，缺后续核实步骤，不作为已满足请求的完整样例。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:7d427e1da7f887cdc706:event-1",
+      "view_sha256": "93cbc238692147d96cb5c5ecea59e8cbbc6ab981830258b0d387959fd193e00d",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "当前发送与设备查询参数有依据，但原需求还含重发邀请；剩余意图及前次是否查过设备不明确。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:f408d264f5ec9aaf7567:event-1",
+      "view_sha256": "2671e244c0275c05c4f54106857af93f8c932076bfdfe8164eb3e7c0b1c4a3cb",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "创建新工单与查询旧工单独立；故障说明为忠实转述，优先级、邮箱及旧ID均有依据。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:e18e10317f280e4bd73e:event-1",
+      "view_sha256": "2530f94127b6088973883bac8cb7b6d5b30aab96a25f016c85b8b6f37471feda",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "瓷器类型与300mm尺寸对应原文及工具单位。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:0a40fdb3ab09b38f3585:event-1",
+      "view_sha256": "559c757dce4a68d11b6ccb21e5a01311e1617ff12fd6e27c0c104eaee45f5b07",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "控制器C3与5.4设定值逐项对应原文；未执行设备操作，权限仍由后续runtime合同保证。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:9c831a039efb14663372:event-1",
+      "view_sha256": "ec221692f69f7969a597b8280f05e56ff72233520db43ffd2c8f0e3db2d6c8f4",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "101与202两个比赛ID分别读取客队门将球衣。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:762f3334755d79488364:event-1",
+      "view_sha256": "6b83a840c0e12e5fa49f593e107ed47b76aa1ef26b06741e94dd4b94ee66bcef",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "可用语音清单与无参数列表工具对应。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:34f0b56493d90a8275c9:event-1",
+      "view_sha256": "a731f1100c49faccec7737e40b877ca1b221e49875b5441261f49348fff7399e",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "两位画家及流派对应，2021年初至2022年末按分钟精度展开为闭区间；pattern程序支持单独待补。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:5882af659a5aa07da72c:event-1",
+      "view_sha256": "27f8e60de60dceb7e5926f6d94f95c04892d7253b1d17d4c5246edb3be97bcbe",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "Bitcoin/Ethereum没有给报价币种，调用补入USDT交易对及spot市场；缺依据，不能把常见交易对当明确要求。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:18ff518b90219e3ce134:event-1",
+      "view_sha256": "3223bbf80ed3826da267c59a1afc4a8dca1a3d1d48a00a76b93662c3f0333f10",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "输入内历史给出会话ID、参与者且用户确认基础设置；可选会议室与设备未补猜。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:5ff1688dbfa72605c7b0:event-1",
+      "view_sha256": "6f761564d3cb038da7db060dc4b68c6d97bc4a7a28b08bfc060fff56245d8d51",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "2000KWH水电转换为HydroElectric符合description，调用仅完成碳足迹子任务；树木折算须后续，不标完成。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:79b09fca50302508fd56:event-1",
+      "view_sha256": "30ed0a3c4d50c2097f7c39eabd6b9f734f6908d078ac66d5b3b354103925ef72",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "原文对话已明确season ID 2023，不是根据年份擅自猜ID。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:a8f313f9a528c41e9735:event-1",
+      "view_sha256": "d5f40f4084e2c2162b99518de6d6f3ecd96a6bcdb72a6bf580f55bb325797563",
+      "sample": "first_call",
+      "lm": "reject_source_gold",
+      "reason": "National Ice Hockey League没有映射到tournamentId=1的证据；两个调用都补猜了比赛ID。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:0ac04be14754e6fc3737:event-1",
+      "view_sha256": "37984fd1f80e713a4e1c0f943d101a75bc43146a9cbdf66092c48f28da930103",
+      "sample": "first_call",
+      "lm": "hold",
+      "reason": "Autocomplete匹配输入文本不等同推荐旧金山周边新地点；工具用途与期望结果有差距。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:ff8d7b7768c1174f8e41:event-1",
+      "view_sha256": "3b4ac78cf3ba7ff20fd63db8560cff96654a5f47cf1d591002e085aaae00a8f6",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "四段公交线路端点全部已给出，查询彼此不依赖返回值；出行顺序不等于工具读取必须串行。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:75cb377fb384dec40ff4:event-1",
+      "view_sha256": "a4226873528fcbc939e80c8e8d77a69575a14566b75b5262af36e6fe5f95b7c6",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "两个摩托车型号和护照请求ID分别对应三个独立读取。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:2291deb8c1a025f04c73:event-7",
+      "view_sha256": "c669564990ef68fb9f92fbea9be8accfea16b44d0e0a37574ff587ffd9ef4c55",
+      "sample": "first_call",
+      "lm": "accept_call_semantics",
+      "reason": "最新要求只列测试自定义域名，与getDomains对应；之前安全分数不作为参数依据。",
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "toolace:35ad325c517261fbc9d6:event-3",
+      "view_sha256": "859e1a38f2b7387b109340a2c89df3dcb33add8bb6f016ec894bae9f883fab6f",
+      "sample": "targeted_dependency_or_grounding",
+      "lm": "accept_call_semantics",
+      "reason": "先前tool事件2明确返回genre=Country；第二个工具genre_name准确引用该结果，Last Year对应用户last year且是schema合法enum。原文没有把结果提前放到第一步。",
+      "verified_result_dependency": true,
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:3581a49454ed571369ff:event-5",
+      "view_sha256": "e2d904a5030bb50b4a89a4d841603142c85e372dbb7d2d40e932b0cabbd9ec93",
+      "sample": "targeted_dependency_or_grounding",
+      "lm": "reject_source_gold",
+      "reason": "面积49π的圆半径应为sqrt(49π/π)=7；当前sqrt(49*pi)漏除π。先前工具结果虽存在，调用语义仍错误，不能把历史有结果当顺序监督通过。",
+      "verified_result_dependency": false,
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    },
+    {
+      "id": "moss:7c5f80dfd0fe6e682934:event-5",
+      "view_sha256": "a3ab74f1b0d17a29c072e57cd45fa7c3daa7c49eb023b6aace007e3929029685",
+      "sample": "targeted_dependency_or_grounding",
+      "lm": "hold",
+      "reason": "当前搜索作品名相关，但历史工具只给莎士比亚出生信息，助手却说约39部作品；此整段历史存在无依据解说，不直接准入。",
+      "verified_result_dependency": false,
+      "reviewer": "assistant",
+      "human_confirmation": "pending"
+    }
+  ]
+}

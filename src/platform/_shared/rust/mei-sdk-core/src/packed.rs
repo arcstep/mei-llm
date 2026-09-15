@@ -830,6 +830,230 @@ impl PackedWeights {
         }
         Ok(y)
     }
+
+    /// A worker computes a disjoint row range without changing dot order.
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-parallel"))]
+    pub fn parallel_rows(
+        &self,
+        name: &str,
+        x: &[f32],
+        start: usize,
+        end: usize,
+    ) -> Result<Vec<f32>, SdkError> {
+        let entry = self.entry(name)?;
+        if entry.shape.len() != 2
+            || entry.shape[1] != 512
+            || start >= end
+            || end > entry.shape[0]
+            || start % 4 != 0
+            || end % 4 != 0
+            || x.is_empty()
+            || x.len() % 512 != 0
+            || x.len() > 512 * 512
+        {
+            return Err(SdkError::new("invalid_argument", "parallel row geometry"));
+        }
+        let bits = entry.uniform_bits.ok_or_else(|| {
+            SdkError::new("invalid_argument", "parallel uniform codebook required")
+        })?;
+        let rows = end - start;
+        let groups = 4;
+        let group_bytes = 128 * bits as usize / 8;
+        let packed = slice(
+            &self.bytes,
+            entry.packed_offset + start * groups * group_bytes,
+            rows * groups * group_bytes,
+        )?;
+        let scales = slice(
+            &self.bytes,
+            entry.scale_offset + start * groups * 2,
+            rows * groups * 2,
+        )?;
+        let inputs = x
+            .chunks_exact(512)
+            .map(|v| self.prepare_matvec_input(v))
+            .collect::<Result<Vec<_>, _>>()?;
+        if inputs.len() >= 4 && entry.shape[0] * 512 <= 512 * 512 {
+            let mut view = entry.clone();
+            view.shape[0] = rows;
+            view.n_params = rows * 512;
+            view.n_blocks = rows * groups;
+            return self.matmul_tiled(&view, &inputs, packed, scales, &[]);
+        }
+        let mut out = vec![0.0; inputs.len() * rows];
+        for (ti, input) in inputs.iter().enumerate() {
+            for r in 0..rows {
+                let mut sum = 0.0;
+                for (g, activation) in input.groups.iter().enumerate() {
+                    let i = r * groups + g;
+                    let q = &packed[i * group_bytes..(i + 1) * group_bytes];
+                    let scale = f16_to_f32(u16::from_le_bytes([scales[i * 2], scales[i * 2 + 1]]));
+                    sum += if bits == 2 {
+                        activation.dot_q2_validated(q, scale)
+                    } else {
+                        activation.dot_q4_validated(q, scale)
+                    };
+                }
+                out[ti * rows + r] = sum;
+            }
+        }
+        Ok(out)
+    }
+
+    /// Weight-stationary prefill: unpack each transformed-domain group once,
+    /// reuse it across all input rows, and keep scratch storage bounded.
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+    pub fn matmul_prepared(
+        &self,
+        name: &str,
+        inputs: &[PreparedMatVecInput],
+    ) -> Result<Vec<f32>, SdkError> {
+        use crate::cq2::{Q2_CODEBOOK, Q4_CODEBOOK};
+        let entry = self.entry(name)?;
+        if entry.shape.len() != 2 || !matches!(entry.dtype.as_str(), "cq2" | "cq4") {
+            return Err(SdkError::new(
+                "invalid_argument",
+                "batched CQ2 matrix required",
+            ));
+        }
+        let rows = entry.shape[0];
+        let cols = entry.shape[1];
+        let groups = cols / GROUP_SIZE;
+        if cols % GROUP_SIZE != 0
+            || entry.n_blocks != rows * groups
+            || inputs
+                .iter()
+                .any(|x| x.cols != cols || x.groups.len() != groups)
+        {
+            return Err(SdkError::new(
+                "invalid_argument",
+                "batched CQ2 geometry mismatch",
+            ));
+        }
+        let packed = slice(&self.bytes, entry.packed_offset, entry.packed_nbytes)?;
+        let scales = slice(&self.bytes, entry.scale_offset, entry.scale_nbytes)?;
+        let bitmap = slice(&self.bytes, entry.bit_map_offset, entry.bit_map_nbytes)?;
+        #[cfg(feature = "wasm-tiled-prefill")]
+        if rows % 4 == 0 && rows * cols <= 512 * 512 {
+            return self.matmul_tiled(entry, inputs, packed, scales, bitmap);
+        }
+        let mut output = vec![0.0; inputs.len() * rows];
+        let mut unpacked = [0.0; GROUP_SIZE];
+        let mut cursor = 0;
+        for row in 0..rows {
+            for group_in_row in 0..groups {
+                let group = row * groups + group_in_row;
+                let bits = match entry.uniform_bits {
+                    Some(bits) => bits,
+                    None => cq2_group_bits(bitmap, group)?,
+                };
+                let nbytes = GROUP_SIZE * bits as usize / 8;
+                let bytes = &packed[cursor..cursor + nbytes];
+                cursor += nbytes;
+                if bits == 2 {
+                    for (i, byte) in bytes.iter().copied().enumerate() {
+                        for j in 0..4 {
+                            unpacked[i * 4 + j] = Q2_CODEBOOK[((byte >> (2 * j)) & 3) as usize];
+                        }
+                    }
+                } else {
+                    for (i, byte) in bytes.iter().copied().enumerate() {
+                        unpacked[i * 2] = Q4_CODEBOOK[(byte & 15) as usize];
+                        unpacked[i * 2 + 1] = Q4_CODEBOOK[(byte >> 4) as usize];
+                    }
+                }
+                let scale = f16_to_f32(u16::from_le_bytes([
+                    scales[group * 2],
+                    scales[group * 2 + 1],
+                ]));
+                for (token, input) in inputs.iter().enumerate() {
+                    output[token * rows + row] +=
+                        input.groups[group_in_row].dot_unpacked(&unpacked) * scale;
+                }
+            }
+        }
+        Ok(output)
+    }
+
+    #[cfg(all(target_arch = "wasm32", feature = "wasm-tiled-prefill"))]
+    fn matmul_tiled(
+        &self,
+        entry: &TensorEntry,
+        inputs: &[PreparedMatVecInput],
+        packed: &[u8],
+        scales: &[u8],
+        bitmap: &[u8],
+    ) -> Result<Vec<f32>, SdkError> {
+        use crate::cq2::{Q2_CODEBOOK, Q4_CODEBOOK};
+        use core::arch::wasm32::*;
+        let rows = entry.shape[0];
+        let cols = entry.shape[1];
+        let groups = cols / GROUP_SIZE;
+        // At most 1 MiB, per call, never a resident full-model f32 copy.
+        let mut weights = vec![0.0f32; rows * cols];
+        let mut cursor = 0;
+        for row in 0..rows {
+            for g in 0..groups {
+                let group = row * groups + g;
+                let bits = match entry.uniform_bits {
+                    Some(b) => b,
+                    None => cq2_group_bits(bitmap, group)?,
+                };
+                let scale = f16_to_f32(u16::from_le_bytes([
+                    scales[group * 2],
+                    scales[group * 2 + 1],
+                ]));
+                for c in 0..GROUP_SIZE {
+                    let value = if bits == 2 {
+                        Q2_CODEBOOK[((packed[cursor + c / 4] >> ((c & 3) * 2)) & 3) as usize]
+                    } else {
+                        Q4_CODEBOOK[((packed[cursor + c / 2] >> ((c & 1) * 4)) & 15) as usize]
+                    };
+                    weights[((row / 4) * cols + g * GROUP_SIZE + c) * 4 + row % 4] = value * scale;
+                }
+                cursor += GROUP_SIZE * bits as usize / 8;
+            }
+        }
+        let mut x = Vec::with_capacity(inputs.len() * cols);
+        for input in inputs {
+            for group in &input.groups {
+                x.extend_from_slice(group.transformed_values());
+            }
+        }
+        let mut output = vec![0.0f32; inputs.len() * rows];
+        // SAFETY: four output rows are packed contiguously; the final input
+        // tile clamps read lanes and writes only existing tokens.
+        unsafe {
+            for token in (0..inputs.len()).step_by(4) {
+                let count = (inputs.len() - token).min(4);
+                let p0 = x.as_ptr().add(token * cols);
+                let p1 = x.as_ptr().add((token + (count - 1).min(1)) * cols);
+                let p2 = x.as_ptr().add((token + (count - 1).min(2)) * cols);
+                let p3 = x.as_ptr().add((token + (count - 1).min(3)) * cols);
+                for row in (0..rows).step_by(4) {
+                    let mut a = f32x4_splat(0.0);
+                    let mut b = a;
+                    let mut c = a;
+                    let mut d = a;
+                    let w = weights.as_ptr().add((row / 4) * cols * 4);
+                    for col in 0..cols {
+                        let weight = v128_load(w.add(col * 4).cast());
+                        a = crate::cq2::simd_madd(weight, v128_load32_splat(p0.add(col).cast()), a);
+                        b = crate::cq2::simd_madd(weight, v128_load32_splat(p1.add(col).cast()), b);
+                        c = crate::cq2::simd_madd(weight, v128_load32_splat(p2.add(col).cast()), c);
+                        d = crate::cq2::simd_madd(weight, v128_load32_splat(p3.add(col).cast()), d);
+                    }
+                    for (lane, sum) in [a, b, c, d].into_iter().enumerate().take(count) {
+                        v128_store(
+                            output.as_mut_ptr().add((token + lane) * rows + row).cast(),
+                            sum,
+                        );
+                    }
+                }
+            }
+        }
+        Ok(output)
+    }
 }
 
 #[inline(always)]

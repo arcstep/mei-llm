@@ -1,0 +1,4 @@
+{
+  "mode": "pool_layout_migration",
+  "migration_manifest": ".internal/registry/migrations/2026-09-corpus-pools.json"
+}

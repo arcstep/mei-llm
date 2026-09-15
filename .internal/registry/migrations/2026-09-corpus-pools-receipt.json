@@ -1,0 +1,94 @@
+{
+  "status": "moved_and_verified",
+  "moves": 48,
+  "filesystem_entries": 1641,
+  "metadata_hashes": 103,
+  "verification": "same device/inode/size/mtime/mode and selected metadata hashes",
+  "payload_rehashed": false,
+  "legacy_symlinks_created": 0,
+  "mappings": {
+    "corpus/pools/.mei-v12-cpt-hans-en-20260914-v1.staging": "corpus/pools/incomplete/2026-09-14-mei-51m-v1.3-cpt-hans-en-r01.staging",
+    "corpus/pools/chinese-author-novel-candidate-20260914-v1": "corpus/pools/incomplete/2026-09-14-chinese-author-novel-candidate-r01",
+    "corpus/pools/chinese-author-novel-candidate-20260914-v2": "corpus/pools/candidates/literature/2026-09-14-chinese-author-novel-candidate-r02",
+    "corpus/pools/code-scale-20260913-v1": "corpus/pools/candidates/code-structure/2026-09-13-code-scale-r01",
+    "corpus/pools/delivery-scale-20260913-v1": "corpus/pools/history/2026-09-13-delivery-scale-r01",
+    "corpus/pools/dialogue-expanded-candidate-20260913-v1": "corpus/pools/candidates/mixed/2026-09-13-dialogue-expanded-candidate-r01",
+    "corpus/pools/gutenberg-literary-expansion-20260913-v2": "corpus/pools/candidates/literature/2026-09-13-gutenberg-literary-expansion-r02",
+    "corpus/pools/hk-traditional-foundation-expansion-20260913-v1": "corpus/pools/candidates/foundation/2026-09-13-hk-traditional-foundation-expansion-r01",
+    "corpus/pools/hq-foundation-scale-20260913-v1": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r01",
+    "corpus/pools/hq-foundation-scale-20260913-v2": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r02",
+    "corpus/pools/hq-foundation-scale-20260913-v3": "corpus/pools/candidates/foundation/2026-09-13-hq-foundation-scale-r03",
+    "corpus/pools/hq-random40-candidate-20260913-v1": "corpus/pools/candidates/foundation/2026-09-13-hq-random40-candidate-r01",
+    "corpus/pools/lccc-complete-filtered-20260913-v1": "corpus/pools/candidates/oral/2026-09-13-lccc-complete-filtered-r01",
+    "corpus/pools/literary-expansion-candidate-20260913-v1": "corpus/pools/candidates/literature/2026-09-13-literary-expansion-candidate-r01",
+    "corpus/pools/literary-public-candidate-20260913-v1": "corpus/pools/candidates/literature/2026-09-13-literary-public-candidate-r01",
+    "corpus/pools/mei-node-task-preparation-20260914-v1": "corpus/pools/incomplete/2026-09-14-mei-node-task-preparation-r01",
+    "corpus/pools/mei-node-task-preparation-20260914-v2": "corpus/pools/task-trials/2026-09-14-mei-node-task-preparation-r02",
+    "corpus/pools/mei-public-five-head-trial-20260914-v1": "corpus/pools/incomplete/2026-09-14-mei-public-five-head-trial-r01",
+    "corpus/pools/mei-public-five-head-trial-20260914-v2": "corpus/pools/task-trials/2026-09-14-mei-public-five-head-trial-r02",
+    "corpus/pools/mei-v12-cpt-inputs-20260914-v1": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r01",
+    "corpus/pools/mei-v12-cpt-inputs-20260914-v2": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r02",
+    "corpus/pools/mei-v12-cpt-inputs-20260914-v3": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r03",
+    "corpus/pools/mei-v12-cpt-inputs-20260914-v4": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r04",
+    "corpus/pools/mei-v12-task-preparation-20260914-v1": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r01",
+    "corpus/pools/mei-v12-task-preparation-20260914-v2": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r02",
+    "corpus/pools/mei-v12-task-preparation-20260914-v3": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r03",
+    "corpus/pools/mei-v12-task-preparation-20260914-v4": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r04",
+    "corpus/pools/mei-v12-task-preparation-20260914-v5": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r05",
+    "corpus/pools/mei-v12-task-preparation-20260914-v6": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06",
+    "corpus/pools/nemotron-cpt-full-20260913-v1": "corpus/pools/incomplete/2026-09-13-nemotron-cpt-full-r01",
+    "corpus/pools/nemotron-cpt-full-20260913-v2": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-full-r02",
+    "corpus/pools/nemotron-cpt-pilot-20260913-v1": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-pilot-r01",
+    "corpus/pools/nemotron-raw-20260913-v1": "corpus/pools/raw/2026-09-13-nemotron-raw-r01",
+    "corpus/pools/nemotron-windows-full-20260913-v1": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-full-r01",
+    "corpus/pools/nemotron-windows-pilot-20260913-v1": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r01",
+    "corpus/pools/nemotron-windows-pilot-20260913-v2": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r02",
+    "corpus/pools/openapi-latest-half-expansion-20260913-v1": "corpus/pools/candidates/code-structure/2026-09-13-openapi-latest-half-expansion-r01",
+    "corpus/pools/public-raw-candidate-20260913-v1": "corpus/pools/candidates/mixed/2026-09-13-public-raw-candidate-r01",
+    "corpus/pools/public-raw-delivery-20260913-v1.json": "corpus/pools/history/2026-09-13-public-raw-delivery-r01.json",
+    "corpus/pools/structured-archives-expansion-20260913-v1": "corpus/pools/candidates/code-structure/2026-09-13-structured-archives-expansion-r01",
+    "corpus/pools/subtitle-scale-20260913-v1": "corpus/pools/candidates/oral/2026-09-13-subtitle-scale-r01",
+    "corpus/pools/toolace-cpt-candidate-20260913-v1": "corpus/pools/candidates/task-tools/2026-09-13-toolace-cpt-candidate-r01",
+    "corpus/pools/translated-literature-candidate-20260913-v1": "corpus/pools/incomplete/2026-09-13-translated-literature-candidate-r01",
+    "corpus/pools/translated-literature-candidate-20260913-v2": "corpus/pools/candidates/literature/2026-09-13-translated-literature-candidate-r02",
+    "corpus/pools/tutorial-complete-candidate-20260913-v2": "corpus/pools/candidates/code-structure/2026-09-13-tutorial-complete-candidate-r02",
+    "corpus/pools/wiki-en-foundation-expansion-20260913-v1": "corpus/pools/candidates/foundation/2026-09-13-wiki-en-foundation-expansion-r01",
+    "corpus/pools/wiki-foundation-scale-20260913-v1": "corpus/pools/candidates/foundation/2026-09-13-wiki-foundation-scale-r01",
+    "corpus/pools/wiki-raw-candidate-20260913-v1": "corpus/pools/candidates/foundation/2026-09-13-wiki-raw-candidate-r01"
+  },
+  "migration_sha256": "166195bc6b61697478410b89546769567c657687c8a0b557f9d43a8a9c47067a",
+  "current_unchanged": true,
+  "compatibility": {
+    "moved_paths_resolve": 48,
+    "old_pool_entries_remaining": 0,
+    "date_first_names": 48,
+    "frozen_source_shards_resolve": 25,
+    "packed_token_read": true,
+    "successor_candidate_files_resolve": 90
+  },
+  "tests_passed": 13,
+  "navigation_links_checked": 179,
+  "navigation_metadata_hashes_checked": 149,
+  "evidence": [
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-pool-layout-migration/receipt.json",
+      "sha256": "a3f97fe55723f152e53735e206d807f26a83c1e2c020b3ff18669b22fbffbb19"
+    },
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-pool-layout-migration/compatibility.json",
+      "sha256": "54529acf336bb0de48ce183e37e810523b4f7cb03dca7a7969dee38cbb66fa38"
+    },
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-pool-layout-migration/before.json",
+      "sha256": "7510f5a240aa3a205b1268d6863f52b6849415adbee168b060bd9be830c15b7c"
+    },
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-pool-layout-migration/config.json",
+      "sha256": "d3d50d6158d726d5e80fc0e177e072364f10cd3196cdd15e410d7b6138df4f37"
+    },
+    {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-pool-layout-migration/implementation.py.snapshot",
+      "sha256": "818189270001e533e87f0ca464862beddc61e0cc91bd4b9803a2cf8863bdc5ac"
+    }
+  ]
+}

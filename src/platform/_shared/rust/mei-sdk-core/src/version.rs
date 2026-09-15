@@ -62,6 +62,20 @@ pub fn sdk_versions() -> Value {
         "serializer_id": v.serializer_id,
         "release_class": v.release_class,
         "product": v.product,
+        "compute_profile": compute_profile(),
+    })
+}
+
+pub fn compute_profile() -> Value {
+    json!({
+        "fast_kernels": cfg!(feature = "wasm-fast-kernels"),
+        "parallel_kernels": cfg!(feature = "wasm-parallel"),
+        "tiled_prefill": cfg!(feature = "wasm-tiled-prefill"),
+        "prefix_cache": cfg!(feature = "wasm-prefix-cache"),
+        "approximate_integer_codebooks_and_exp": cfg!(feature = "wasm-approx-kernels"),
+        "requires_relaxed_simd": false,
+        "canonical_numeric_parity_claimed": false,
+        "experimental": cfg!(feature = "wasm-fast-kernels") || cfg!(feature = "wasm-prefix-cache"),
     })
 }
 

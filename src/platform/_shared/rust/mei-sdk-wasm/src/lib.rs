@@ -177,6 +177,8 @@ pub extern "C" fn mei_sdk_wasm_load_quantized(
             clear_error();
             ENGINE.with(|slot| *slot.borrow_mut() = Some(engine));
             SESSIONS.with(|slot| slot.borrow_mut().clear());
+            #[cfg(feature = "numeric-bench")]
+            clear_bench_state();
             0
         }
         Err(err) => {
@@ -218,6 +220,8 @@ pub extern "C" fn mei_sdk_wasm_load_package_v2(
             clear_error();
             ENGINE.with(|slot| *slot.borrow_mut() = Some(engine));
             SESSIONS.with(|slot| slot.borrow_mut().clear());
+            #[cfg(feature = "numeric-bench")]
+            clear_bench_state();
             0
         }
         Err(err) => {
@@ -270,6 +274,8 @@ pub extern "C" fn mei_sdk_wasm_load_package_v2_owned(
             clear_error();
             ENGINE.with(|slot| *slot.borrow_mut() = Some(engine));
             SESSIONS.with(|slot| slot.borrow_mut().clear());
+            #[cfg(feature = "numeric-bench")]
+            clear_bench_state();
             0
         }
         Err(err) => {
@@ -527,6 +533,8 @@ pub extern "C" fn mei_sdk_wasm_string_free(ptr: *mut c_char) -> i32 {
 #[no_mangle]
 pub extern "C" fn mei_sdk_wasm_unload() -> i32 {
     SESSIONS.with(|slot| slot.borrow_mut().clear());
+    #[cfg(feature = "numeric-bench")]
+    clear_bench_state();
     ENGINE.with(|slot| *slot.borrow_mut() = None);
     0
 }
@@ -538,4 +546,118 @@ pub unsafe extern "C" fn mei_sdk_wasm_copy(dst: *mut u8, src: *const u8, n: usiz
     }
     ptr::copy_nonoverlapping(src, dst, n);
     0
+}
+
+// This opt-in benchmark ABI returns numerical logits only. It never selects or
+// executes tools, and cannot be interpreted as a released inference binding.
+#[cfg(feature = "numeric-bench")]
+thread_local! {
+    static BENCH_KV: RefCell<Option<Vec<mei_sdk_core::model::LayerCache>>> = const {RefCell::new(None)};
+    static BENCH_HISTORY: RefCell<Vec<u32>> = const {RefCell::new(Vec::new())};
+}
+#[cfg(feature = "numeric-bench")]
+#[no_mangle]
+pub extern "C" fn mei_sdk_wasm_numeric_forward(
+    tokens: *const u32,
+    count: usize,
+    reset: i32,
+    logits: *mut f32,
+    capacity: usize,
+) -> i32 {
+    if tokens.is_null() || logits.is_null() || count == 0 || count > 512 {
+        return 1;
+    }
+    let ids = unsafe { std::slice::from_raw_parts(tokens, count) };
+    ENGINE.with(|slot| {
+        let e = slot.borrow();
+        let Some(model) = e.as_ref().and_then(|e| e.diagnostic_model()) else {
+            return 1;
+        };
+        if capacity < model.arch.vocab_size
+            || ids.iter().any(|id| *id as usize >= model.arch.vocab_size)
+        {
+            return 1;
+        }
+        BENCH_HISTORY.with(|h| {
+            BENCH_KV.with(|kv| {
+                let mut history = h.borrow_mut();
+                let mut cache = kv.borrow_mut();
+                if reset != 0 {
+                    history.clear();
+                    *cache = None;
+                }
+                if history.len() + count > 2048 || (history.is_empty() && reset == 0) {
+                    return 1;
+                }
+                match model.forward_bounded_last_logits(ids, &mut cache, false, Some(&history), 0) {
+                    Ok(out) => {
+                        let values = out.last_logits().expect("last logits");
+                        unsafe {
+                            std::ptr::copy_nonoverlapping(values.as_ptr(), logits, values.len());
+                        }
+                        *cache = Some(out.cache);
+                        history.extend_from_slice(ids);
+                        0
+                    }
+                    Err(e) => {
+                        remember_error(&e);
+                        1
+                    }
+                }
+            })
+        })
+    })
+}
+
+#[cfg(feature = "numeric-bench")]
+fn clear_bench_state() {
+    BENCH_KV.with(|kv| *kv.borrow_mut() = None);
+    BENCH_HISTORY.with(|h| h.borrow_mut().clear());
+}
+
+/// Worker-only numerical kernel. No host callbacks or task execution.
+#[cfg(all(target_arch = "wasm32", feature = "parallel-kernels"))]
+#[no_mangle]
+pub extern "C" fn mei_sdk_wasm_parallel_rows(
+    name: *const c_char,
+    input: *const f32,
+    tokens: usize,
+    start: usize,
+    end: usize,
+    output: *mut f32,
+    capacity: usize,
+) -> i32 {
+    if input.is_null()
+        || output.is_null()
+        || tokens == 0
+        || tokens > 512
+        || start >= end
+        || end > 24000
+        || capacity < tokens * (end - start)
+    {
+        return 1;
+    }
+    let name = match cstr(name) {
+        Ok(v) => v,
+        Err(_) => return 1,
+    };
+    let x = unsafe { std::slice::from_raw_parts(input, tokens * 512) };
+    ENGINE.with(|slot| {
+        let e = slot.borrow();
+        let Some(m) = e.as_ref().and_then(|e| e.diagnostic_model()) else {
+            return 1;
+        };
+        match m.weights.parallel_rows(name, x, start, end) {
+            Ok(v) => {
+                unsafe {
+                    std::ptr::copy_nonoverlapping(v.as_ptr(), output, v.len());
+                }
+                0
+            }
+            Err(e) => {
+                remember_error(&e);
+                1
+            }
+        }
+    })
 }

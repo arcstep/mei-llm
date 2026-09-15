@@ -29,6 +29,16 @@ ROOT = Path(__file__).resolve().parents[3]
 GIB = 1024 ** 3
 
 
+def resolve_path(value: str | Path) -> Path:
+    """Resolve relocated corpus inputs using the shared repository resolver."""
+    import sys
+    factory = str(ROOT / "src/model-factory")
+    if factory not in sys.path:
+        sys.path.insert(0, factory)
+    from common.paths import resolve_repo_path
+    return resolve_repo_path(value)
+
+
 def canonical(value: Any) -> bytes:
     return (json.dumps(value, ensure_ascii=False, sort_keys=True, allow_nan=False) + "\n").encode()
 

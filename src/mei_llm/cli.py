@@ -584,6 +584,12 @@ def build_parser() -> argparse.ArgumentParser:
     cpt = top.add_parser("cpt")
     cpt_sub = cpt.add_subparsers(dest="action", required=True)
     cpt_sub.add_parser("doctor")
+    a10 = cpt_sub.add_parser("a10")
+    a10.add_argument("a10_action", choices=("prepare", "run", "supervise"))
+    a10.add_argument("--config", type=Path, required=True)
+    a10.add_argument("--confirm-training", action="store_true")
+    snapshot_eval = cpt_sub.add_parser("snapshot-eval")
+    snapshot_eval.add_argument("--config", type=Path, required=True)
     diagnose = cpt_sub.add_parser("diagnose")
     diagnose.add_argument("--config", type=Path, required=True)
     resource_probe = cpt_sub.add_parser("resource-probe")
@@ -725,6 +731,14 @@ def main(argv: list[str] | None = None) -> int:
             args.arguments,
         )
     if args.domain == "cpt":
+        if args.action == "snapshot-eval":
+            pipeline = _pipeline(registry,"mei-51m-a10-mlx-snapshot-eval-v1")
+            return _forward_module(registry,pipeline["entrypoint"],["--config",str(args.config)])
+        if args.action == "a10":
+            if args.a10_action in ("run", "supervise"):
+                _training_arguments(["--confirm-training"] if args.confirm_training else [],action="cpt a10 run")
+            pipeline = _pipeline(registry,"mei-51m-cpt-cuda-v1")
+            return _forward_module(registry,pipeline["entrypoint"],[args.a10_action,"--config",str(args.config)])
         if args.action == "replay":
             _training_arguments(["--confirm-training"] if args.confirm_training else [], action="cpt replay")
             pipeline = _pipeline(registry, "mei-51m-cpt-batch-replay-v1")

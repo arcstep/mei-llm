@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-from profiling import ROOT,digest
+from profiling import resolve_path, ROOT,digest
 
 
 def run(config,out):
@@ -20,12 +20,12 @@ def run(config,out):
             time.sleep(5)
     jobs=[]
     for i,job in enumerate(config['jobs']):
-        if job.get('requires') and not (ROOT/job['requires']).is_file():
+        if job.get('requires') and not (resolve_path(ROOT/job['requires'])).is_file():
             jobs.append({'job':job,'status':'blocked_missing_input'});continue
-        recipe=ROOT/job['config'];log=out/f'{i:02d}-{job["name"]}.log'
-        args=[sys.executable,'-m','mei_llm','corpus','source',job['action'],'--config',str(recipe),'--out',str(ROOT/job['out'])]
+        recipe=resolve_path(ROOT/job['config']);log=out/f'{i:02d}-{job["name"]}.log'
+        args=[sys.executable,'-m','mei_llm','corpus','source',job['action'],'--config',str(recipe),'--out',str(resolve_path(ROOT/job['out']))]
         if job.get('network'):args.append('--allow-network')
-        if job.get('resume_from'):args+=['--resume-from',str(ROOT/job['resume_from'])]
+        if job.get('resume_from'):args+=['--resume-from',str(resolve_path(ROOT/job['resume_from']))]
         start=time.time()
         with log.open('x') as f:
             process=subprocess.run(args,cwd=ROOT,env={**os.environ,'PYTHONPATH':str(ROOT/'src')},stdout=f,stderr=subprocess.STDOUT)

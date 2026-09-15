@@ -10,7 +10,7 @@ import random
 import shutil
 import time
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 
 
 def dump(path, value):
@@ -37,14 +37,14 @@ def fragment(text, rng, width):
 
 
 def sample(config, out):
-    plan = json.loads((ROOT / config['inventory']).read_text())
+    plan = json.loads((resolve_path(ROOT / config['inventory'])).read_text())
     buckets = defaultdict(list)
     seen = set()
     weights = config['source_weights']
     seed = config['seed']
     files = []
     for item in plan['candidate_files']:
-        path = ROOT / item['file']
+        path = resolve_path(ROOT / item['file'])
         with path.open() as f:
             first = json.loads(next(f))
         sid = first['source_id']
@@ -173,7 +173,7 @@ def run(config, out):
     dump(out / 'config.json', config)
     shutil.copyfile(__file__, out / 'tokenizer_compare.py.snapshot')
     shutil.copyfile(Path(__file__).with_name('materialize.py'), out / 'materialize.py.snapshot')
-    dump(out / 'source-binding.json', {'inventory_sha256': digest(ROOT / config['inventory']),
+    dump(out / 'source-binding.json', {'inventory_sha256': digest(resolve_path(ROOT / config['inventory'])),
          'sentencepiece_version': spm.__version__, 'pointer_hashes': immutable})
     samples = sample(config, out)
     if samples['train']['characters'] < config['train_chars'] * .8:
@@ -192,7 +192,7 @@ def run(config, out):
         dump(dest / 'report.json', result)
         results[str(size)] = result
         print(json.dumps({'completed_vocab_size': size, 'seconds': result['elapsed_seconds_including_audit']}), flush=True)
-    results['legacy_24k'] = evaluate(ROOT / config['legacy_model'], out / 'dev.jsonl', config['source_domains'], config['probes'])
+    results['legacy_24k'] = evaluate(resolve_path(ROOT / config['legacy_model']), out / 'dev.jsonl', config['source_domains'], config['probes'])
     for p, h in immutable.items():
         if digest(Path(p)) != h:
             raise ValueError(f'pointer changed during experiment: {p}')

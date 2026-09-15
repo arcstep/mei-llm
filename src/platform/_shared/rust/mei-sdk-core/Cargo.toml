@@ -14,3 +14,11 @@ thiserror = { workspace = true }
 hex = { workspace = true }
 regex = { workspace = true }
 unicode-normalization = { workspace = true }
+
+[features]
+wasm-fast-kernels = []
+wasm-prefix-cache = []
+wasm-approx-kernels = ["wasm-fast-kernels"]
+wasm-tiled-prefill = ["wasm-fast-kernels"]
+numeric-bench = ["wasm-fast-kernels"]
+wasm-parallel = ["numeric-bench", "wasm-tiled-prefill"]

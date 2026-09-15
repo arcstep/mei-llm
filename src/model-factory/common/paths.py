@@ -127,6 +127,29 @@ def phase_binding_identity() -> dict[str, str] | None:
     return {key: str(value) for key, value in names.items()}
 
 
+def relocate_corpus_path(value: str | Path) -> Path:
+    """Apply the explicit corpus folder move map without editing old receipts."""
+    path = Path(value)
+    path = path if path.is_absolute() else ROOT / path
+    try:
+        relative = path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return path
+    if not relative.startswith("corpus/pools/"):
+        return path
+    manifest = ROOT / ".internal/registry/migrations/2026-09-corpus-pools.json"
+    if not manifest.is_file():
+        return path
+    moves = json.loads(manifest.read_text(encoding="utf-8"))["exact"]
+    for old, new in moves.items():
+        if relative == old or relative.startswith(old + "/"):
+            target = ROOT / new / relative[len(old):].lstrip("/")
+            if not target.resolve().is_relative_to((ROOT / "corpus/pools").resolve()):
+                raise ValueError("corpus relocation escapes pools")
+            return target
+    return path
+
+
 def resolve_repo_path(value: str | Path) -> Path:
     """Resolve a current path or an immutable pre-migration receipt path."""
 
@@ -142,7 +165,7 @@ def resolve_repo_path(value: str | Path) -> Path:
                 continue
         else:
             return candidate
-    direct = ROOT / candidate
+    direct = relocate_corpus_path(ROOT / candidate)
     if direct.exists():
         return direct
 
@@ -185,15 +208,15 @@ def resolve_repo_path(value: str | Path) -> Path:
         migration = json.loads(migration_path.read_text(encoding="utf-8"))
         exact = migration.get("exact") or {}
         if raw in exact:
-            return ROOT / str(exact[raw])
+            return relocate_corpus_path(ROOT / str(exact[raw]))
         for old, new in sorted(exact.items(), key=lambda item: -len(item[0])):
             prefix = old.rstrip("/") + "/"
             if raw.startswith(prefix):
-                return ROOT / str(new) / raw[len(prefix) :]
+                return relocate_corpus_path(ROOT / str(new) / raw[len(prefix) :])
         prefixes = migration.get("prefix") or {}
         for old, new in sorted(prefixes.items(), key=lambda item: -len(item[0])):
             if raw.startswith(old):
-                return ROOT / str(new) / raw[len(old) :]
+                return relocate_corpus_path(ROOT / str(new) / raw[len(old) :])
     return direct
 
 

@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import sys
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 from local_diagnostics import map_schema_types, parse_declared_tool_calls
 
 
@@ -86,7 +86,7 @@ def convert_nemotron(row, validator):
 
 
 def run(config, out):
-    source = ROOT / config['path']
+    source = resolve_path(ROOT / config['path'])
     if digest(source) != config['sha256']:
         raise ValueError('source hash changed')
     if shutil.disk_usage(ROOT).free < 100 * 1024**3:

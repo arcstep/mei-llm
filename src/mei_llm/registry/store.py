@@ -66,7 +66,7 @@ class Registry:
         artifacts = self.artifacts()["entries"]
         match = next((item for item in artifacts if item["uri"] == value), None)
         if match is not None:
-            return (self.root / match["path"]).resolve()
+            value = match["path"]
 
         import sys
 

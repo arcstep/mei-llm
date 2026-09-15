@@ -8,7 +8,7 @@ from pathlib import Path
 import shutil
 import time
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 
 
 def write_new(path: Path, value) -> None:
@@ -58,9 +58,9 @@ def run(config: dict, out: Path) -> dict:
 
     if int(config["vocab_size"]) != 24_000:
         raise ValueError("this production candidate route is fixed at 24K")
-    train = ROOT / config["train_jsonl"]
-    dev = ROOT / config["dev_jsonl"]
-    sample_manifest = ROOT / config["sample_manifest"]
+    train = resolve_path(ROOT / config["train_jsonl"])
+    dev = resolve_path(ROOT / config["dev_jsonl"])
+    sample_manifest = resolve_path(ROOT / config["sample_manifest"])
     expected = config["input_sha256"]
     actual = {"train": digest(train), "dev": digest(dev), "manifest": digest(sample_manifest)}
     if actual != expected:
@@ -116,7 +116,7 @@ def run(config: dict, out: Path) -> dict:
     failures = []
     domains = defaultdict(lambda: Counter(records=0, characters=0, utf8_bytes=0, tokens=0))
     source_domains = config.get("source_domains") or json.loads(
-        (ROOT / config["source_domains_config"]).read_text(encoding="utf-8")
+        (resolve_path(ROOT / config["source_domains_config"])).read_text(encoding="utf-8")
     )["source_domains"]
     for row in rows(dev):
         text = row["text"]

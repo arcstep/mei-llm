@@ -1,0 +1,70 @@
+{
+  "schema_revision": 1,
+  "purpose": "navigation_evidence_not_executable_training_binding",
+  "snapshot_date": "2026-09-14",
+  "generation": "v1.1",
+  "coverage": "explicitly listed evidence only; not a complete history or new quality audit",
+  "role": "historical_archived_line",
+  "old_names": [
+    "mei-1.0-51m"
+  ],
+  "cycles": [
+    {
+      "cycle": "cycles/mei-1.1-51m/exp-00300m",
+      "reported_cumulative_tokens": 300000485,
+      "reported_release_eligible": false,
+      "evidence": [
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/CYCLE.json",
+          "exists": true,
+          "sha256": "fdab255aca00e02457c03f49623b0118951c593a2566b5c50c86bae69800f8be"
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/cpt.json",
+          "exists": true,
+          "sha256": "a1fcc70dc6f9173014cd0c7ad95f43848e718efe6dac256de2fb6096a01f318b"
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft.json",
+          "exists": true,
+          "sha256": "b38553c1b2cad6101e3e964005cfcbef78ee0fe39cb32664a054e97a14670c30"
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/eval.json",
+          "exists": true,
+          "sha256": "1380fb155e7fb77a7aa263571728097adc81ff7b1964174670eefb61a6c923cc"
+        }
+      ],
+      "per_run_consumption_audit": "pending"
+    },
+    {
+      "cycle": "cycles/mei-1.1-51m/exp-00600m",
+      "reported_cumulative_tokens": 600001765,
+      "reported_release_eligible": false,
+      "evidence": [
+        {
+          "path": "cycles/mei-1.1-51m/exp-00600m/CYCLE.json",
+          "exists": true,
+          "sha256": "c7374b4753d8e9f3bf4041b2b9dee5bda8bcc61c3e22c953ac6151fab0b8a9b3"
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00600m/corpus/cpt.json",
+          "exists": true,
+          "sha256": "3a8990bb91baa48f5a817e667d846bbfeb6e2edd2976a8c393b89a2602ed2938"
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00600m/corpus/sft.json",
+          "exists": true,
+          "sha256": "db319e5befada1957e540fe93465dcae81fe6f85ce5ea6c694ba8cc3718d8eb1"
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00600m/corpus/eval.json",
+          "exists": true,
+          "sha256": "05ed6ff4e9c7961aaed4222869409a9dbc455ca990cc29ee029d8d7c1c8802e4"
+        }
+      ],
+      "per_run_consumption_audit": "pending"
+    }
+  ],
+  "physical_migration": ".internal/registry/migrations/2026-09-corpus-pools.json"
+}

@@ -1,0 +1,145 @@
+{
+  "schema_revision": 1,
+  "purpose": "navigation_evidence_not_executable_training_binding",
+  "snapshot_date": "2026-09-14",
+  "generation": "v1.2",
+  "coverage": "explicitly listed evidence only; not a complete history or new quality audit",
+  "role": "historical_1800m_baseline_line",
+  "base_display_name": "mei-51m-v1.2-1800m-base",
+  "cpt": {
+    "evidence": [
+      {
+        "path": "models/mei-1.2-51m/releases/exp-01800m/base/mei-1.2-51m-base-cpt1800m-v1/RELEASE.json",
+        "exists": true,
+        "sha256": "9327a4d2a76695147df9309aca67b8061d2ff0de2f108980a853031ae089b095"
+      },
+      {
+        "path": "cycles/mei-1.2-51m/exp-01800m/runs/mei-1.2-51m/cpt-1800m-v1-c03/RUN.json",
+        "exists": true,
+        "sha256": "92a1c3fe475804288b2a45249d0bbb8940d1e408ce01835dbb0011a7bb931621"
+      }
+    ],
+    "layout": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001800m-v1-v1",
+    "reported_cumulative_tokens": 1800001024,
+    "reported_increment_tokens": 299998208,
+    "tokenizer_sha256": "5aa8bb7b426db8e3c6327066568b37e194090af3900d4c2ead09144756124945",
+    "quality_status_from_base_release": "not_audited",
+    "scope": "1800M last delta binding; cumulative prior deltas require parent traversal, not repetition of this layout"
+  },
+  "downstream_declared_bindings": [
+    {
+      "stage": "qat-cq2-v1",
+      "evidence": {
+        "path": "cycles/mei-1.2-51m/exp-01800m/runs/mei-1.2-51m/qat-cq2-v1/binding.json",
+        "exists": true,
+        "sha256": "7e72b432cff4961b8a0bad8e8fa3bbffb7a22992e31c58c3b8e56f1efea48f0d"
+      },
+      "declared_input_references": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-300m-v1/manifest.json",
+          "exists": true,
+          "sha256": "d659b90f9952afc7c589b2aa675a8869994d8e8a0382574d29b0d784841a22a5",
+          "role": "replay_corpus",
+          "expected_sha256": "d659b90f9952afc7c589b2aa675a8869994d8e8a0382574d29b0d784841a22a5",
+          "hash_matches": true
+        }
+      ],
+      "consumed_rows_and_retry_lineage": "pending_per_run_receipt_audit"
+    },
+    {
+      "stage": "sft-bootstrap-v4",
+      "evidence": {
+        "path": "cycles/mei-1.2-51m/exp-01800m/runs/mei-1.2-51m/sft-bootstrap-v4/binding.json",
+        "exists": true,
+        "sha256": "7896997f9b95464f1e9844b5cef97baa85c307dfdfe036b4d544bb62c8caa431"
+      },
+      "declared_input_references": [
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4/manifest.json",
+          "exists": true,
+          "sha256": "5ff8357389aa48559334a15af2a3b76fd517f374e75ac69510f0a1f24054f95b",
+          "role": "data_release",
+          "expected_sha256": "5ff8357389aa48559334a15af2a3b76fd517f374e75ac69510f0a1f24054f95b",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.1-51m/_legacy/notebook/evaluation/banks/mei-51m-longitudinal-eval-v7/lock.json",
+          "exists": true,
+          "sha256": "dc707fed2c6925dbdd35f7b0e4734b764dff321a7eadd93d5e7d18b389fc600d",
+          "role": "eval_lock",
+          "expected_sha256": "dc707fed2c6925dbdd35f7b0e4734b764dff321a7eadd93d5e7d18b389fc600d",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-linguistic-aug300m-v2/manifest.json",
+          "exists": true,
+          "sha256": "76b4c994674e9ab5756fdb454d3ecc8b8cee6d41d922841e00a4bbfa6fef8f1b",
+          "role": "linguistic_augmentation",
+          "expected_sha256": "76b4c994674e9ab5756fdb454d3ecc8b8cee6d41d922841e00a4bbfa6fef8f1b",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3/manifest.json",
+          "exists": true,
+          "sha256": "639fdd4e196c88172760ffd035a68351c5ce5a34d136dc6364452256e8cb460d",
+          "role": "narration_release",
+          "expected_sha256": "639fdd4e196c88172760ffd035a68351c5ce5a34d136dc6364452256e8cb460d",
+          "hash_matches": true
+        }
+      ],
+      "consumed_rows_and_retry_lineage": "pending_per_run_receipt_audit"
+    },
+    {
+      "stage": "sft-adaptive-v5",
+      "evidence": {
+        "path": "cycles/mei-1.2-51m/exp-01800m/runs/mei-1.2-51m/sft-adaptive-v5/binding.json",
+        "exists": true,
+        "sha256": "b587dda36eaa5ea0af592ab0131e70266d2b48520ca4cc8db3399fc2a14f772d"
+      },
+      "declared_input_references": [
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-v4-300m-v4/manifest.json",
+          "exists": true,
+          "sha256": "5ff8357389aa48559334a15af2a3b76fd517f374e75ac69510f0a1f24054f95b",
+          "role": "data_release",
+          "expected_sha256": "5ff8357389aa48559334a15af2a3b76fd517f374e75ac69510f0a1f24054f95b",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.1-51m/_legacy/notebook/evaluation/banks/mei-51m-longitudinal-eval-v7/lock.json",
+          "exists": true,
+          "sha256": "dc707fed2c6925dbdd35f7b0e4734b764dff321a7eadd93d5e7d18b389fc600d",
+          "role": "eval_lock",
+          "expected_sha256": "dc707fed2c6925dbdd35f7b0e4734b764dff321a7eadd93d5e7d18b389fc600d",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-tool-sft-linguistic-aug300m-v2/manifest.json",
+          "exists": true,
+          "sha256": "76b4c994674e9ab5756fdb454d3ecc8b8cee6d41d922841e00a4bbfa6fef8f1b",
+          "role": "linguistic_augmentation",
+          "expected_sha256": "76b4c994674e9ab5756fdb454d3ecc8b8cee6d41d922841e00a4bbfa6fef8f1b",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.1-51m/exp-00300m/corpus/sft-suite/historical-notebook-releases/releases/mei-1.0-51m-narration-sft-agent300m-v3/manifest.json",
+          "exists": true,
+          "sha256": "639fdd4e196c88172760ffd035a68351c5ce5a34d136dc6364452256e8cb460d",
+          "role": "narration_release",
+          "expected_sha256": "639fdd4e196c88172760ffd035a68351c5ce5a34d136dc6364452256e8cb460d",
+          "hash_matches": true
+        },
+        {
+          "path": "cycles/mei-1.2-51m/exp-01800m/runs/mei-1.2-51m/sft-bootstrap-v4-a8572c854e10/plan.json",
+          "exists": true,
+          "sha256": "165b965d2f4ef0dbb647244ef9894509adeff3a52af0b716fa26085cfb34170e",
+          "role": "sft_bootstrap_run",
+          "expected_sha256": "165b965d2f4ef0dbb647244ef9894509adeff3a52af0b716fa26085cfb34170e",
+          "hash_matches": true
+        }
+      ],
+      "consumed_rows_and_retry_lineage": "pending_per_run_receipt_audit"
+    }
+  ],
+  "physical_migration": ".internal/registry/migrations/2026-09-corpus-pools.json"
+}

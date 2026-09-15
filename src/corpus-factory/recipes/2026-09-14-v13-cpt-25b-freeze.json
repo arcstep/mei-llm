@@ -1,0 +1,18 @@
+{
+  "mode": "v12_inputs_freeze",
+  "release_id": "2026-09-14-mei-51m-v1.3-cpt-25b-r01",
+  "seed": 20260914,
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+  "tokenizer_train_sample": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v2/train.jsonl",
+  "tokenizer_dev_sample": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v2/dev.jsonl",
+  "corpus_plan": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v2/corpus-plan.json",
+  "release_dir": "corpus/pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01",
+  "generation": "v1.3",
+  "stage_target_tokens": [
+    800000000,
+    800000000,
+    900000000
+  ],
+  "reuse_encoded_run": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-encoding-20260914-v1",
+  "reuse_encoded_config": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v2/freeze-config.json"
+}

@@ -1,0 +1,2142 @@
+{
+  "setup": {
+    "load_ms": 304.40000009536743,
+    "wasm_sha256": "8255ddf213f2ef85916eaf3e8330177c3cd8a8283e5e96806cb9cf537db0e8d3",
+    "weights_sha256": "3da0427a5aa53226d9c77947831a96497f3131199cf0564dc981815affffa49c",
+    "columns": [
+      "订单号",
+      "数量",
+      "单价",
+      "金额",
+      "状态"
+    ]
+  },
+  "runs": [
+    {
+      "elapsed_ms": 3950.5999999046326,
+      "result": {
+        "wire_version": "mei-runtime-wire-v2",
+        "ok": true,
+        "error": null,
+        "refuse": true,
+        "execution": "refuse",
+        "selected_tools": [
+          "check_unique",
+          "check_required",
+          "check_enum",
+          "check_number",
+          "check_product"
+        ],
+        "schema_fingerprint": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+        "schema_budget": {
+          "packer_id": "mei-tool-context-packer-v1",
+          "projection_serializer_id": "mei-schema-projection-v1",
+          "profile": "compact",
+          "cap": 1024,
+          "used": 467,
+          "compression_level": "none",
+          "omitted_description_tokens": 0,
+          "dropped_tools": [],
+          "context_unrepresentable": false
+        },
+        "input_budget": {
+          "cap": 1920,
+          "original_prompt_tokens": 545,
+          "dropped_history": 0,
+          "compacted_tool_results": [],
+          "dropped_evidence": 0,
+          "dropped_context_keys": [],
+          "query_clipped": false,
+          "used": 545,
+          "compression_level": "none",
+          "visible_query_tokens": 9
+        },
+        "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+        "function_calls": [],
+        "raw_text": "[]",
+        "generated_token_ids": [
+          12451
+        ],
+        "prefill_topk_ids": [
+          490,
+          487,
+          1007,
+          488,
+          494
+        ],
+        "runtime_cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 72,
+          "visible_tokens": 539,
+          "next_position": 539,
+          "storage_bytes": 7916832,
+          "cache_growth_bounded": true
+        },
+        "mw_disposition": {
+          "decision": "stop",
+          "source": "mw-head",
+          "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+          "reason_code": 2,
+          "top_probability": 0.2591915726661682,
+          "margin": 0.15141922235488892,
+          "continue_min_probability": 0.7,
+          "continue_min_margin": 0.15
+        },
+        "confidence": {
+          "available": true,
+          "value": 0.46801596879959106,
+          "source": "mei-1.0-51m-q4",
+          "version": "conf-head-v1"
+        },
+        "provenance": {
+          "validated": true,
+          "ok": true,
+          "detail": null,
+          "arguments": {},
+          "gates": [
+            {
+              "gate": "grammar",
+              "ok": true,
+              "detail": null
+            },
+            {
+              "gate": "schema",
+              "ok": true,
+              "detail": null
+            }
+          ]
+        },
+        "capabilities": {
+          "package_id": "data-check-d919985609f9",
+          "package_format": "mei-model-package-v2",
+          "release_class": "candidate",
+          "inference": false,
+          "diagnostic_inference": true,
+          "protocol": true,
+          "heads": {
+            "lm": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "embed",
+                "blocks",
+                "final_norm",
+                "engrams",
+                "mhc_phi_pre",
+                "mhc_phi_post",
+                "mhc_phi_res",
+                "mhc_b_pre",
+                "mhc_b_post",
+                "mhc_b_res",
+                "mhc_a_pre",
+                "mhc_a_post",
+                "mhc_a_res",
+                "conf_probes",
+                "conf_proj"
+              ],
+              "training_receipt_sha256": "4d5ececf0670c76fc4333ae6bfdb478b642b37fc664515f4249ddf6006152edf",
+              "label_codebook_sha256": null
+            },
+            "contrastive": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.contrastive"
+              ],
+              "training_receipt_sha256": "0f6e95394a96ab8d2d4d6840d2d449992ea4a296bb46727d4bb16f85421d7379",
+              "label_codebook_sha256": null
+            },
+            "mw_disposition": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.mw_disposition"
+              ],
+              "training_receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+              "label_codebook_sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+            },
+            "confidence": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.confidence"
+              ],
+              "training_receipt_sha256": "c3b24c5cb8a4feb42e1849e57c33f71a965147ea60e2d860629b1e1d1e928ea7",
+              "label_codebook_sha256": null
+            },
+            "narration_adapter": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.narration_adapter"
+              ],
+              "training_receipt_sha256": "30af52362c61bd1cc8e8d984ce12c4e1a8ef2e9db3b62678fea3cc7f11b9f9de",
+              "label_codebook_sha256": null
+            }
+          },
+          "missing_or_untrained_heads": [],
+          "hash_verified": false,
+          "inference_payload_verified": true,
+          "resource_measurement_verified": false,
+          "resource_limits_reported": false,
+          "tensor_identity_complete": true,
+          "portable_quantization_policy_complete": true,
+          "runtime_quantization_complete": true,
+          "tool_index_payload_complete": true,
+          "compatibility_mode": "v2-native",
+          "read_only": false,
+          "degraded": true,
+          "implementation_complete": true,
+          "open_capabilities": [
+            "int8-bounded-kv",
+            "trusted-resource-measurement"
+          ],
+          "product_ready": false,
+          "resource_eligible": false,
+          "release_eligible": false,
+          "quantized_only": true,
+          "compatibility": {
+            "mode": "native_v2",
+            "source_format": "mei-model-package-v2",
+            "capability_complete": false
+          },
+          "declared_capabilities": {
+            "confidence": true,
+            "full_call": true,
+            "multi_step": true,
+            "mw_disposition": true,
+            "narration": true,
+            "retrieval": true
+          },
+          "versions": {
+            "sdk_semver": "0.2.0-experimental",
+            "wire_version": "mei-runtime-wire-v2",
+            "model_package_version": "mei-model-package-v2",
+            "runtime_abi_version": "mei-runtime-abi-2",
+            "protocol_id": "mei-tool-call-protocol-v2",
+            "serializer_id": "mei-tool-call-serializer-v2",
+            "release_class": "experimental",
+            "product": "mei-1.0-51m Runtime"
+          },
+          "retrieval": false,
+          "full_call": false,
+          "mw_disposition": false,
+          "confidence": false,
+          "multi_step": false,
+          "narration": false,
+          "backend_loaded": true,
+          "backend": "rust-portable",
+          "stateful_tool_loop": true,
+          "max_steps_default": 4,
+          "max_steps_hard": 8,
+          "runtime_profiles": {
+            "compact": 1024,
+            "standard": 1536
+          },
+          "candidate_batch_size": 5,
+          "candidate_batch_scan": true
+        },
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "constrained",
+          "prompt_tokens": 545,
+          "output_tokens": 1,
+          "quantized_only": true
+        },
+        "retrieval": {
+          "policy_id": "mei-retrieval-fixed-five-batches-v1",
+          "calibration_id": "mei-retrieval-platt-v1",
+          "calibration_validated": false,
+          "candidates": [
+            {
+              "tool_id": "check_unique",
+              "rank": 1,
+              "raw_score": 0.696008563041687,
+              "retrieval_relevance": 0.6673022259104021
+            },
+            {
+              "tool_id": "check_required",
+              "rank": 2,
+              "raw_score": 0.6665283441543579,
+              "retrieval_relevance": 0.6607253620630709
+            },
+            {
+              "tool_id": "check_enum",
+              "rank": 3,
+              "raw_score": 0.6026971936225891,
+              "retrieval_relevance": 0.6462731389152554
+            },
+            {
+              "tool_id": "check_number",
+              "rank": 4,
+              "raw_score": 0.5077373385429382,
+              "retrieval_relevance": 0.6242759041995576
+            },
+            {
+              "tool_id": "check_product",
+              "rank": 5,
+              "raw_score": 0.2598186135292053,
+              "retrieval_relevance": 0.5645917024681874
+            }
+          ],
+          "scanned_batches": [
+            {
+              "batch": 1,
+              "tools": [
+                "check_unique",
+                "check_required",
+                "check_enum",
+                "check_number",
+                "check_product"
+              ],
+              "schema_budget": {
+                "packer_id": "mei-tool-context-packer-v1",
+                "projection_serializer_id": "mei-schema-projection-v1",
+                "profile": "compact",
+                "cap": 1024,
+                "used": 467,
+                "compression_level": "none",
+                "omitted_description_tokens": 0,
+                "dropped_tools": [],
+                "context_unrepresentable": false
+              },
+              "input_budget": {
+                "cap": 1920,
+                "original_prompt_tokens": 545,
+                "dropped_history": 0,
+                "compacted_tool_results": [],
+                "dropped_evidence": 0,
+                "dropped_context_keys": [],
+                "query_clipped": false,
+                "used": 545,
+                "compression_level": "none",
+                "visible_query_tokens": 9
+              },
+              "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+              "outcome": "terminal_disposition"
+            }
+          ],
+          "scanned_tools": [
+            {
+              "tool_id": "check_unique",
+              "rank": 1,
+              "raw_score": 0.696008563041687,
+              "retrieval_relevance": 0.6673022259104021
+            },
+            {
+              "tool_id": "check_required",
+              "rank": 2,
+              "raw_score": 0.6665283441543579,
+              "retrieval_relevance": 0.6607253620630709
+            },
+            {
+              "tool_id": "check_enum",
+              "rank": 3,
+              "raw_score": 0.6026971936225891,
+              "retrieval_relevance": 0.6462731389152554
+            },
+            {
+              "tool_id": "check_number",
+              "rank": 4,
+              "raw_score": 0.5077373385429382,
+              "retrieval_relevance": 0.6242759041995576
+            },
+            {
+              "tool_id": "check_product",
+              "rank": 5,
+              "raw_score": 0.2598186135292053,
+              "retrieval_relevance": 0.5645917024681874
+            }
+          ],
+          "remaining_candidates": [],
+          "thresholds": {
+            "discard": 0,
+            "expand": 0
+          },
+          "non_expandable": [],
+          "discarded": []
+        },
+        "kind": "refuse",
+        "call": null,
+        "refusal": {
+          "reason": "model_refusal",
+          "detail": null
+        },
+        "state": {
+          "step": 1,
+          "pending_call_id": null,
+          "cancelled": false
+        }
+      },
+      "sampled_stage_ms": {
+        "retrieval": 73.531,
+        "forward_bounded": 3829.03,
+        "grammar": 0,
+        "other_wasm": 8.818,
+        "host_and_profiler": 46.694
+      },
+      "top_samples": [
+        [
+          "_ZN12mei_sdk_core6packed13PackedWeights15matvec_prepared17h7b9d63838dcdef12E",
+          2083
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel5block17hd9e6be30c3a87b2eE",
+          374
+        ],
+        [
+          "_ZN17compiler_builtins4math9libm_math4expf4expf17h9effc6313e90a7eeE",
+          209
+        ],
+        [
+          "_ZN12mei_sdk_core5model19quantize_i8_vectors17h98f19aaf042c46b1E",
+          93
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel16forward_internal17h5e48d1a9a85b59e6E",
+          70
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel12hadamard_mlp17h1a58aa2dc6213aaeE",
+          53
+        ],
+        [
+          "_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haaad40527f0988e6E",
+          39
+        ],
+        [
+          "_ZN12mei_sdk_core5model5mhc_h17hfb8215257cc12f9bE",
+          37
+        ],
+        [
+          "_ZN12mei_sdk_core6packed13PackedWeights20prepare_matvec_input17h1d1693b8ff5c2f21E",
+          28
+        ],
+        [
+          "_ZN12mei_sdk_core5model7mhc_res17h70494a7f363fce93E",
+          25
+        ],
+        [
+          "roundf",
+          24
+        ],
+        [
+          "_ZN12mei_sdk_core5model8sinkhorn17h7743beeabeae5609E",
+          16
+        ],
+        [
+          "_ZN12mei_sdk_core5model11zc_rms_norm17h0c410fc26751f2d6E",
+          15
+        ],
+        [
+          "_ZN12mei_sdk_core5model14rms_unit_lanes17hffd4cea0bb518c61E",
+          13
+        ],
+        [
+          "_ZN12mei_sdk_core3cq215wht_orthonormal17hcc24a2ba1441d685E",
+          12
+        ]
+      ],
+      "query": "检查订单号列是否存在空值"
+    },
+    {
+      "elapsed_ms": 3900.7999999523163,
+      "result": {
+        "wire_version": "mei-runtime-wire-v2",
+        "ok": true,
+        "error": null,
+        "refuse": true,
+        "execution": "refuse",
+        "selected_tools": [
+          "check_unique",
+          "check_required",
+          "check_enum",
+          "check_number",
+          "check_product"
+        ],
+        "schema_fingerprint": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+        "schema_budget": {
+          "packer_id": "mei-tool-context-packer-v1",
+          "projection_serializer_id": "mei-schema-projection-v1",
+          "profile": "compact",
+          "cap": 1024,
+          "used": 467,
+          "compression_level": "none",
+          "omitted_description_tokens": 0,
+          "dropped_tools": [],
+          "context_unrepresentable": false
+        },
+        "input_budget": {
+          "cap": 1920,
+          "original_prompt_tokens": 545,
+          "dropped_history": 0,
+          "compacted_tool_results": [],
+          "dropped_evidence": 0,
+          "dropped_context_keys": [],
+          "query_clipped": false,
+          "used": 545,
+          "compression_level": "none",
+          "visible_query_tokens": 9
+        },
+        "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+        "function_calls": [],
+        "raw_text": "[]",
+        "generated_token_ids": [
+          12451
+        ],
+        "prefill_topk_ids": [
+          490,
+          487,
+          1007,
+          488,
+          494
+        ],
+        "runtime_cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 72,
+          "visible_tokens": 539,
+          "next_position": 539,
+          "storage_bytes": 7916832,
+          "cache_growth_bounded": true
+        },
+        "mw_disposition": {
+          "decision": "stop",
+          "source": "mw-head",
+          "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+          "reason_code": 2,
+          "top_probability": 0.2591915726661682,
+          "margin": 0.15141922235488892,
+          "continue_min_probability": 0.7,
+          "continue_min_margin": 0.15
+        },
+        "confidence": {
+          "available": true,
+          "value": 0.46801596879959106,
+          "source": "mei-1.0-51m-q4",
+          "version": "conf-head-v1"
+        },
+        "provenance": {
+          "validated": true,
+          "ok": true,
+          "detail": null,
+          "arguments": {},
+          "gates": [
+            {
+              "gate": "grammar",
+              "ok": true,
+              "detail": null
+            },
+            {
+              "gate": "schema",
+              "ok": true,
+              "detail": null
+            }
+          ]
+        },
+        "capabilities": {
+          "package_id": "data-check-d919985609f9",
+          "package_format": "mei-model-package-v2",
+          "release_class": "candidate",
+          "inference": false,
+          "diagnostic_inference": true,
+          "protocol": true,
+          "heads": {
+            "lm": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "embed",
+                "blocks",
+                "final_norm",
+                "engrams",
+                "mhc_phi_pre",
+                "mhc_phi_post",
+                "mhc_phi_res",
+                "mhc_b_pre",
+                "mhc_b_post",
+                "mhc_b_res",
+                "mhc_a_pre",
+                "mhc_a_post",
+                "mhc_a_res",
+                "conf_probes",
+                "conf_proj"
+              ],
+              "training_receipt_sha256": "4d5ececf0670c76fc4333ae6bfdb478b642b37fc664515f4249ddf6006152edf",
+              "label_codebook_sha256": null
+            },
+            "contrastive": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.contrastive"
+              ],
+              "training_receipt_sha256": "0f6e95394a96ab8d2d4d6840d2d449992ea4a296bb46727d4bb16f85421d7379",
+              "label_codebook_sha256": null
+            },
+            "mw_disposition": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.mw_disposition"
+              ],
+              "training_receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+              "label_codebook_sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+            },
+            "confidence": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.confidence"
+              ],
+              "training_receipt_sha256": "c3b24c5cb8a4feb42e1849e57c33f71a965147ea60e2d860629b1e1d1e928ea7",
+              "label_codebook_sha256": null
+            },
+            "narration_adapter": {
+              "present": true,
+              "trained": true,
+              "status": "ready",
+              "tensor_prefixes": [
+                "heads.narration_adapter"
+              ],
+              "training_receipt_sha256": "30af52362c61bd1cc8e8d984ce12c4e1a8ef2e9db3b62678fea3cc7f11b9f9de",
+              "label_codebook_sha256": null
+            }
+          },
+          "missing_or_untrained_heads": [],
+          "hash_verified": false,
+          "inference_payload_verified": true,
+          "resource_measurement_verified": false,
+          "resource_limits_reported": false,
+          "tensor_identity_complete": true,
+          "portable_quantization_policy_complete": true,
+          "runtime_quantization_complete": true,
+          "tool_index_payload_complete": true,
+          "compatibility_mode": "v2-native",
+          "read_only": false,
+          "degraded": true,
+          "implementation_complete": true,
+          "open_capabilities": [
+            "int8-bounded-kv",
+            "trusted-resource-measurement"
+          ],
+          "product_ready": false,
+          "resource_eligible": false,
+          "release_eligible": false,
+          "quantized_only": true,
+          "compatibility": {
+            "mode": "native_v2",
+            "source_format": "mei-model-package-v2",
+            "capability_complete": false
+          },
+          "declared_capabilities": {
+            "confidence": true,
+            "full_call": true,
+            "multi_step": true,
+            "mw_disposition": true,
+            "narration": true,
+            "retrieval": true
+          },
+          "versions": {
+            "sdk_semver": "0.2.0-experimental",
+            "wire_version": "mei-runtime-wire-v2",
+            "model_package_version": "mei-model-package-v2",
+            "runtime_abi_version": "mei-runtime-abi-2",
+            "protocol_id": "mei-tool-call-protocol-v2",
+            "serializer_id": "mei-tool-call-serializer-v2",
+            "release_class": "experimental",
+            "product": "mei-1.0-51m Runtime"
+          },
+          "retrieval": false,
+          "full_call": false,
+          "mw_disposition": false,
+          "confidence": false,
+          "multi_step": false,
+          "narration": false,
+          "backend_loaded": true,
+          "backend": "rust-portable",
+          "stateful_tool_loop": true,
+          "max_steps_default": 4,
+          "max_steps_hard": 8,
+          "runtime_profiles": {
+            "compact": 1024,
+            "standard": 1536
+          },
+          "candidate_batch_size": 5,
+          "candidate_batch_scan": true
+        },
+        "stats": {
+          "backend": "portable-q4",
+          "wall_ms": 0,
+          "decode_mode": "constrained",
+          "prompt_tokens": 545,
+          "output_tokens": 1,
+          "quantized_only": true
+        },
+        "retrieval": {
+          "policy_id": "mei-retrieval-fixed-five-batches-v1",
+          "calibration_id": "mei-retrieval-platt-v1",
+          "calibration_validated": false,
+          "candidates": [
+            {
+              "tool_id": "check_unique",
+              "rank": 1,
+              "raw_score": 0.696008563041687,
+              "retrieval_relevance": 0.6673022259104021
+            },
+            {
+              "tool_id": "check_required",
+              "rank": 2,
+              "raw_score": 0.6665283441543579,
+              "retrieval_relevance": 0.6607253620630709
+            },
+            {
+              "tool_id": "check_enum",
+              "rank": 3,
+              "raw_score": 0.6026971936225891,
+              "retrieval_relevance": 0.6462731389152554
+            },
+            {
+              "tool_id": "check_number",
+              "rank": 4,
+              "raw_score": 0.5077373385429382,
+              "retrieval_relevance": 0.6242759041995576
+            },
+            {
+              "tool_id": "check_product",
+              "rank": 5,
+              "raw_score": 0.2598186135292053,
+              "retrieval_relevance": 0.5645917024681874
+            }
+          ],
+          "scanned_batches": [
+            {
+              "batch": 1,
+              "tools": [
+                "check_unique",
+                "check_required",
+                "check_enum",
+                "check_number",
+                "check_product"
+              ],
+              "schema_budget": {
+                "packer_id": "mei-tool-context-packer-v1",
+                "projection_serializer_id": "mei-schema-projection-v1",
+                "profile": "compact",
+                "cap": 1024,
+                "used": 467,
+                "compression_level": "none",
+                "omitted_description_tokens": 0,
+                "dropped_tools": [],
+                "context_unrepresentable": false
+              },
+              "input_budget": {
+                "cap": 1920,
+                "original_prompt_tokens": 545,
+                "dropped_history": 0,
+                "compacted_tool_results": [],
+                "dropped_evidence": 0,
+                "dropped_context_keys": [],
+                "query_clipped": false,
+                "used": 545,
+                "compression_level": "none",
+                "visible_query_tokens": 9
+              },
+              "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+              "outcome": "terminal_disposition"
+            }
+          ],
+          "scanned_tools": [
+            {
+              "tool_id": "check_unique",
+              "rank": 1,
+              "raw_score": 0.696008563041687,
+              "retrieval_relevance": 0.6673022259104021
+            },
+            {
+              "tool_id": "check_required",
+              "rank": 2,
+              "raw_score": 0.6665283441543579,
+              "retrieval_relevance": 0.6607253620630709
+            },
+            {
+              "tool_id": "check_enum",
+              "rank": 3,
+              "raw_score": 0.6026971936225891,
+              "retrieval_relevance": 0.6462731389152554
+            },
+            {
+              "tool_id": "check_number",
+              "rank": 4,
+              "raw_score": 0.5077373385429382,
+              "retrieval_relevance": 0.6242759041995576
+            },
+            {
+              "tool_id": "check_product",
+              "rank": 5,
+              "raw_score": 0.2598186135292053,
+              "retrieval_relevance": 0.5645917024681874
+            }
+          ],
+          "remaining_candidates": [],
+          "thresholds": {
+            "discard": 0,
+            "expand": 0
+          },
+          "non_expandable": [],
+          "discarded": []
+        },
+        "kind": "refuse",
+        "call": null,
+        "refusal": {
+          "reason": "model_refusal",
+          "detail": null
+        },
+        "state": {
+          "step": 1,
+          "pending_call_id": null,
+          "cancelled": false
+        }
+      },
+      "sampled_stage_ms": {
+        "retrieval": 57.449,
+        "forward_bounded": 3820.108,
+        "grammar": 0,
+        "other_wasm": 3.774,
+        "host_and_profiler": 24.748
+      },
+      "top_samples": [
+        [
+          "_ZN12mei_sdk_core6packed13PackedWeights15matvec_prepared17h7b9d63838dcdef12E",
+          2139
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel5block17hd9e6be30c3a87b2eE",
+          338
+        ],
+        [
+          "_ZN17compiler_builtins4math9libm_math4expf4expf17h9effc6313e90a7eeE",
+          190
+        ],
+        [
+          "_ZN12mei_sdk_core5model19quantize_i8_vectors17h98f19aaf042c46b1E",
+          90
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel16forward_internal17h5e48d1a9a85b59e6E",
+          70
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel12hadamard_mlp17h1a58aa2dc6213aaeE",
+          43
+        ],
+        [
+          "_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haaad40527f0988e6E",
+          39
+        ],
+        [
+          "_ZN12mei_sdk_core5model5mhc_h17hfb8215257cc12f9bE",
+          31
+        ],
+        [
+          "_ZN12mei_sdk_core6packed13PackedWeights20prepare_matvec_input17h1d1693b8ff5c2f21E",
+          23
+        ],
+        [
+          "_ZN12mei_sdk_core5model8sinkhorn17h7743beeabeae5609E",
+          21
+        ],
+        [
+          "roundf",
+          18
+        ],
+        [
+          "_ZN12mei_sdk_core5model14rms_unit_lanes17hffd4cea0bb518c61E",
+          17
+        ],
+        [
+          "_ZN12mei_sdk_core5model7mhc_res17h70494a7f363fce93E",
+          16
+        ],
+        [
+          "_ZN12mei_sdk_core3cq215wht_orthonormal17hcc24a2ba1441d685E",
+          15
+        ],
+        [
+          "_ZN12mei_sdk_core5model11zc_rms_norm17h0c410fc26751f2d6E",
+          12
+        ]
+      ],
+      "query": "检查订单号列是否存在空值"
+    },
+    {
+      "error": "mei_sdk_wasm_complete failed code=10 (protocol_violation)",
+      "code": "protocol_violation",
+      "elapsed_ms": 4145.200000047684,
+      "sampled_stage_ms": {
+        "retrieval": 96.564,
+        "forward_bounded": 3888.81,
+        "grammar": 1.272,
+        "other_wasm": 133,
+        "host_and_profiler": 29.408
+      },
+      "top_samples": [
+        [
+          "_ZN12mei_sdk_core6packed13PackedWeights15matvec_prepared17h7b9d63838dcdef12E",
+          2234
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel5block17hd9e6be30c3a87b2eE",
+          391
+        ],
+        [
+          "_ZN17compiler_builtins4math9libm_math4expf4expf17h9effc6313e90a7eeE",
+          173
+        ],
+        [
+          "_ZN12mei_sdk_core5model19quantize_i8_vectors17h98f19aaf042c46b1E",
+          98
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel16forward_internal17h5e48d1a9a85b59e6E",
+          76
+        ],
+        [
+          "_ZN12mei_sdk_core5model11NeedleModel12hadamard_mlp17h1a58aa2dc6213aaeE",
+          46
+        ],
+        [
+          "_ZN106_$LT$core..iter..adapters..GenericShunt$LT$I$C$R$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haaad40527f0988e6E",
+          46
+        ],
+        [
+          "_ZN12mei_sdk_core5model5mhc_h17hfb8215257cc12f9bE",
+          35
+        ],
+        [
+          "roundf",
+          29
+        ],
+        [
+          "_ZN12mei_sdk_core5model14rms_unit_lanes17hffd4cea0bb518c61E",
+          24
+        ],
+        [
+          "_ZN12mei_sdk_core6packed13PackedWeights20prepare_matvec_input17h1d1693b8ff5c2f21E",
+          23
+        ],
+        [
+          "_ZN12mei_sdk_core5model7mhc_res17h70494a7f363fce93E",
+          19
+        ],
+        [
+          "_ZN12mei_sdk_core5model8sinkhorn17h7743beeabeae5609E",
+          17
+        ],
+        [
+          "_ZN12mei_sdk_core5model11zc_rms_norm17h0c410fc26751f2d6E",
+          11
+        ],
+        [
+          "logf",
+          11
+        ]
+      ],
+      "query": "检查数量列是否为数字且在1到1000之间"
+    }
+  ],
+  "worker": {
+    "init_ms": 84.30000019073486,
+    "requests": [
+      {
+        "roundtrip_ms": 3853.5,
+        "id": 0,
+        "report": {
+          "rule": {
+            "id": "r1",
+            "instruction": "检查订单号列是否存在空值",
+            "tool": "check_required",
+            "args": {
+              "column": "订单号"
+            },
+            "severity": "block"
+          },
+          "executor": null,
+          "check": null,
+          "turn": {
+            "wire_version": "mei-runtime-wire-v2",
+            "ok": true,
+            "error": null,
+            "refuse": true,
+            "execution": "refuse",
+            "selected_tools": [
+              "check_unique",
+              "check_required",
+              "check_enum",
+              "check_number",
+              "check_product"
+            ],
+            "schema_fingerprint": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+            "schema_budget": {
+              "packer_id": "mei-tool-context-packer-v1",
+              "projection_serializer_id": "mei-schema-projection-v1",
+              "profile": "compact",
+              "cap": 1024,
+              "used": 467,
+              "compression_level": "none",
+              "omitted_description_tokens": 0,
+              "dropped_tools": [],
+              "context_unrepresentable": false
+            },
+            "input_budget": {
+              "cap": 1920,
+              "original_prompt_tokens": 545,
+              "dropped_history": 0,
+              "compacted_tool_results": [],
+              "dropped_evidence": 0,
+              "dropped_context_keys": [],
+              "query_clipped": false,
+              "used": 545,
+              "compression_level": "none",
+              "visible_query_tokens": 9
+            },
+            "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+            "function_calls": [],
+            "raw_text": "[]",
+            "generated_token_ids": [
+              12451
+            ],
+            "prefill_topk_ids": [
+              490,
+              487,
+              1007,
+              488,
+              494
+            ],
+            "runtime_cache": {
+              "kv_storage_dtype": "int8",
+              "kv_scale_granularity": "per-head-vector",
+              "layers": 27,
+              "stable_prefix_tokens": 467,
+              "rolling_tokens": 72,
+              "visible_tokens": 539,
+              "next_position": 539,
+              "storage_bytes": 7916832,
+              "cache_growth_bounded": true
+            },
+            "mw_disposition": {
+              "decision": "stop",
+              "source": "mw-head",
+              "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+              "reason_code": 2,
+              "top_probability": 0.2591915726661682,
+              "margin": 0.15141922235488892,
+              "continue_min_probability": 0.7,
+              "continue_min_margin": 0.15
+            },
+            "confidence": {
+              "available": true,
+              "value": 0.46801596879959106,
+              "source": "mei-1.0-51m-q4",
+              "version": "conf-head-v1"
+            },
+            "provenance": {
+              "validated": true,
+              "ok": true,
+              "detail": null,
+              "arguments": {},
+              "gates": [
+                {
+                  "gate": "grammar",
+                  "ok": true,
+                  "detail": null
+                },
+                {
+                  "gate": "schema",
+                  "ok": true,
+                  "detail": null
+                }
+              ]
+            },
+            "capabilities": {
+              "package_id": "data-check-d919985609f9",
+              "package_format": "mei-model-package-v2",
+              "release_class": "candidate",
+              "inference": false,
+              "diagnostic_inference": true,
+              "protocol": true,
+              "heads": {
+                "lm": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "embed",
+                    "blocks",
+                    "final_norm",
+                    "engrams",
+                    "mhc_phi_pre",
+                    "mhc_phi_post",
+                    "mhc_phi_res",
+                    "mhc_b_pre",
+                    "mhc_b_post",
+                    "mhc_b_res",
+                    "mhc_a_pre",
+                    "mhc_a_post",
+                    "mhc_a_res",
+                    "conf_probes",
+                    "conf_proj"
+                  ],
+                  "training_receipt_sha256": "4d5ececf0670c76fc4333ae6bfdb478b642b37fc664515f4249ddf6006152edf",
+                  "label_codebook_sha256": null
+                },
+                "contrastive": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.contrastive"
+                  ],
+                  "training_receipt_sha256": "0f6e95394a96ab8d2d4d6840d2d449992ea4a296bb46727d4bb16f85421d7379",
+                  "label_codebook_sha256": null
+                },
+                "mw_disposition": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.mw_disposition"
+                  ],
+                  "training_receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+                  "label_codebook_sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+                },
+                "confidence": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.confidence"
+                  ],
+                  "training_receipt_sha256": "c3b24c5cb8a4feb42e1849e57c33f71a965147ea60e2d860629b1e1d1e928ea7",
+                  "label_codebook_sha256": null
+                },
+                "narration_adapter": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.narration_adapter"
+                  ],
+                  "training_receipt_sha256": "30af52362c61bd1cc8e8d984ce12c4e1a8ef2e9db3b62678fea3cc7f11b9f9de",
+                  "label_codebook_sha256": null
+                }
+              },
+              "missing_or_untrained_heads": [],
+              "hash_verified": false,
+              "inference_payload_verified": true,
+              "resource_measurement_verified": false,
+              "resource_limits_reported": false,
+              "tensor_identity_complete": true,
+              "portable_quantization_policy_complete": true,
+              "runtime_quantization_complete": true,
+              "tool_index_payload_complete": true,
+              "compatibility_mode": "v2-native",
+              "read_only": false,
+              "degraded": true,
+              "implementation_complete": true,
+              "open_capabilities": [
+                "int8-bounded-kv",
+                "trusted-resource-measurement"
+              ],
+              "product_ready": false,
+              "resource_eligible": false,
+              "release_eligible": false,
+              "quantized_only": true,
+              "compatibility": {
+                "mode": "native_v2",
+                "source_format": "mei-model-package-v2",
+                "capability_complete": false
+              },
+              "declared_capabilities": {
+                "confidence": true,
+                "full_call": true,
+                "multi_step": true,
+                "mw_disposition": true,
+                "narration": true,
+                "retrieval": true
+              },
+              "versions": {
+                "sdk_semver": "0.2.0-experimental",
+                "wire_version": "mei-runtime-wire-v2",
+                "model_package_version": "mei-model-package-v2",
+                "runtime_abi_version": "mei-runtime-abi-2",
+                "protocol_id": "mei-tool-call-protocol-v2",
+                "serializer_id": "mei-tool-call-serializer-v2",
+                "release_class": "experimental",
+                "product": "mei-1.0-51m Runtime"
+              },
+              "retrieval": false,
+              "full_call": false,
+              "mw_disposition": false,
+              "confidence": false,
+              "multi_step": false,
+              "narration": false,
+              "backend_loaded": true,
+              "backend": "rust-portable",
+              "stateful_tool_loop": true,
+              "max_steps_default": 4,
+              "max_steps_hard": 8,
+              "runtime_profiles": {
+                "compact": 1024,
+                "standard": 1536
+              },
+              "candidate_batch_size": 5,
+              "candidate_batch_scan": true
+            },
+            "stats": {
+              "backend": "portable-q4",
+              "wall_ms": 0,
+              "decode_mode": "constrained",
+              "prompt_tokens": 545,
+              "output_tokens": 1,
+              "quantized_only": true
+            },
+            "retrieval": {
+              "policy_id": "mei-retrieval-fixed-five-batches-v1",
+              "calibration_id": "mei-retrieval-platt-v1",
+              "calibration_validated": false,
+              "candidates": [
+                {
+                  "tool_id": "check_unique",
+                  "rank": 1,
+                  "raw_score": 0.696008563041687,
+                  "retrieval_relevance": 0.6673022259104021
+                },
+                {
+                  "tool_id": "check_required",
+                  "rank": 2,
+                  "raw_score": 0.6665283441543579,
+                  "retrieval_relevance": 0.6607253620630709
+                },
+                {
+                  "tool_id": "check_enum",
+                  "rank": 3,
+                  "raw_score": 0.6026971936225891,
+                  "retrieval_relevance": 0.6462731389152554
+                },
+                {
+                  "tool_id": "check_number",
+                  "rank": 4,
+                  "raw_score": 0.5077373385429382,
+                  "retrieval_relevance": 0.6242759041995576
+                },
+                {
+                  "tool_id": "check_product",
+                  "rank": 5,
+                  "raw_score": 0.2598186135292053,
+                  "retrieval_relevance": 0.5645917024681874
+                }
+              ],
+              "scanned_batches": [
+                {
+                  "batch": 1,
+                  "tools": [
+                    "check_unique",
+                    "check_required",
+                    "check_enum",
+                    "check_number",
+                    "check_product"
+                  ],
+                  "schema_budget": {
+                    "packer_id": "mei-tool-context-packer-v1",
+                    "projection_serializer_id": "mei-schema-projection-v1",
+                    "profile": "compact",
+                    "cap": 1024,
+                    "used": 467,
+                    "compression_level": "none",
+                    "omitted_description_tokens": 0,
+                    "dropped_tools": [],
+                    "context_unrepresentable": false
+                  },
+                  "input_budget": {
+                    "cap": 1920,
+                    "original_prompt_tokens": 545,
+                    "dropped_history": 0,
+                    "compacted_tool_results": [],
+                    "dropped_evidence": 0,
+                    "dropped_context_keys": [],
+                    "query_clipped": false,
+                    "used": 545,
+                    "compression_level": "none",
+                    "visible_query_tokens": 9
+                  },
+                  "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+                  "outcome": "terminal_disposition"
+                }
+              ],
+              "scanned_tools": [
+                {
+                  "tool_id": "check_unique",
+                  "rank": 1,
+                  "raw_score": 0.696008563041687,
+                  "retrieval_relevance": 0.6673022259104021
+                },
+                {
+                  "tool_id": "check_required",
+                  "rank": 2,
+                  "raw_score": 0.6665283441543579,
+                  "retrieval_relevance": 0.6607253620630709
+                },
+                {
+                  "tool_id": "check_enum",
+                  "rank": 3,
+                  "raw_score": 0.6026971936225891,
+                  "retrieval_relevance": 0.6462731389152554
+                },
+                {
+                  "tool_id": "check_number",
+                  "rank": 4,
+                  "raw_score": 0.5077373385429382,
+                  "retrieval_relevance": 0.6242759041995576
+                },
+                {
+                  "tool_id": "check_product",
+                  "rank": 5,
+                  "raw_score": 0.2598186135292053,
+                  "retrieval_relevance": 0.5645917024681874
+                }
+              ],
+              "remaining_candidates": [],
+              "thresholds": {
+                "discard": 0,
+                "expand": 0
+              },
+              "non_expandable": [],
+              "discarded": []
+            },
+            "kind": "refuse",
+            "call": null,
+            "refusal": {
+              "reason": "model_refusal",
+              "detail": null
+            },
+            "state": {
+              "step": 1,
+              "pending_call_id": null,
+              "cancelled": false
+            }
+          },
+          "narration": null,
+          "attempted": true,
+          "error": "Mei 未执行：model_refusal",
+          "elapsed_ms": 3852.5
+        }
+      },
+      {
+        "roundtrip_ms": 3905.7999999523163,
+        "id": 1,
+        "report": {
+          "rule": {
+            "id": "r1",
+            "instruction": "检查订单号列是否存在空值",
+            "tool": "check_required",
+            "args": {
+              "column": "订单号"
+            },
+            "severity": "block"
+          },
+          "executor": null,
+          "check": null,
+          "turn": {
+            "wire_version": "mei-runtime-wire-v2",
+            "ok": true,
+            "error": null,
+            "refuse": true,
+            "execution": "refuse",
+            "selected_tools": [
+              "check_unique",
+              "check_required",
+              "check_enum",
+              "check_number",
+              "check_product"
+            ],
+            "schema_fingerprint": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+            "schema_budget": {
+              "packer_id": "mei-tool-context-packer-v1",
+              "projection_serializer_id": "mei-schema-projection-v1",
+              "profile": "compact",
+              "cap": 1024,
+              "used": 467,
+              "compression_level": "none",
+              "omitted_description_tokens": 0,
+              "dropped_tools": [],
+              "context_unrepresentable": false
+            },
+            "input_budget": {
+              "cap": 1920,
+              "original_prompt_tokens": 545,
+              "dropped_history": 0,
+              "compacted_tool_results": [],
+              "dropped_evidence": 0,
+              "dropped_context_keys": [],
+              "query_clipped": false,
+              "used": 545,
+              "compression_level": "none",
+              "visible_query_tokens": 9
+            },
+            "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+            "function_calls": [],
+            "raw_text": "[]",
+            "generated_token_ids": [
+              12451
+            ],
+            "prefill_topk_ids": [
+              490,
+              487,
+              1007,
+              488,
+              494
+            ],
+            "runtime_cache": {
+              "kv_storage_dtype": "int8",
+              "kv_scale_granularity": "per-head-vector",
+              "layers": 27,
+              "stable_prefix_tokens": 467,
+              "rolling_tokens": 72,
+              "visible_tokens": 539,
+              "next_position": 539,
+              "storage_bytes": 7916832,
+              "cache_growth_bounded": true
+            },
+            "mw_disposition": {
+              "decision": "stop",
+              "source": "mw-head",
+              "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+              "reason_code": 2,
+              "top_probability": 0.2591915726661682,
+              "margin": 0.15141922235488892,
+              "continue_min_probability": 0.7,
+              "continue_min_margin": 0.15
+            },
+            "confidence": {
+              "available": true,
+              "value": 0.46801596879959106,
+              "source": "mei-1.0-51m-q4",
+              "version": "conf-head-v1"
+            },
+            "provenance": {
+              "validated": true,
+              "ok": true,
+              "detail": null,
+              "arguments": {},
+              "gates": [
+                {
+                  "gate": "grammar",
+                  "ok": true,
+                  "detail": null
+                },
+                {
+                  "gate": "schema",
+                  "ok": true,
+                  "detail": null
+                }
+              ]
+            },
+            "capabilities": {
+              "package_id": "data-check-d919985609f9",
+              "package_format": "mei-model-package-v2",
+              "release_class": "candidate",
+              "inference": false,
+              "diagnostic_inference": true,
+              "protocol": true,
+              "heads": {
+                "lm": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "embed",
+                    "blocks",
+                    "final_norm",
+                    "engrams",
+                    "mhc_phi_pre",
+                    "mhc_phi_post",
+                    "mhc_phi_res",
+                    "mhc_b_pre",
+                    "mhc_b_post",
+                    "mhc_b_res",
+                    "mhc_a_pre",
+                    "mhc_a_post",
+                    "mhc_a_res",
+                    "conf_probes",
+                    "conf_proj"
+                  ],
+                  "training_receipt_sha256": "4d5ececf0670c76fc4333ae6bfdb478b642b37fc664515f4249ddf6006152edf",
+                  "label_codebook_sha256": null
+                },
+                "contrastive": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.contrastive"
+                  ],
+                  "training_receipt_sha256": "0f6e95394a96ab8d2d4d6840d2d449992ea4a296bb46727d4bb16f85421d7379",
+                  "label_codebook_sha256": null
+                },
+                "mw_disposition": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.mw_disposition"
+                  ],
+                  "training_receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+                  "label_codebook_sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+                },
+                "confidence": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.confidence"
+                  ],
+                  "training_receipt_sha256": "c3b24c5cb8a4feb42e1849e57c33f71a965147ea60e2d860629b1e1d1e928ea7",
+                  "label_codebook_sha256": null
+                },
+                "narration_adapter": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.narration_adapter"
+                  ],
+                  "training_receipt_sha256": "30af52362c61bd1cc8e8d984ce12c4e1a8ef2e9db3b62678fea3cc7f11b9f9de",
+                  "label_codebook_sha256": null
+                }
+              },
+              "missing_or_untrained_heads": [],
+              "hash_verified": false,
+              "inference_payload_verified": true,
+              "resource_measurement_verified": false,
+              "resource_limits_reported": false,
+              "tensor_identity_complete": true,
+              "portable_quantization_policy_complete": true,
+              "runtime_quantization_complete": true,
+              "tool_index_payload_complete": true,
+              "compatibility_mode": "v2-native",
+              "read_only": false,
+              "degraded": true,
+              "implementation_complete": true,
+              "open_capabilities": [
+                "int8-bounded-kv",
+                "trusted-resource-measurement"
+              ],
+              "product_ready": false,
+              "resource_eligible": false,
+              "release_eligible": false,
+              "quantized_only": true,
+              "compatibility": {
+                "mode": "native_v2",
+                "source_format": "mei-model-package-v2",
+                "capability_complete": false
+              },
+              "declared_capabilities": {
+                "confidence": true,
+                "full_call": true,
+                "multi_step": true,
+                "mw_disposition": true,
+                "narration": true,
+                "retrieval": true
+              },
+              "versions": {
+                "sdk_semver": "0.2.0-experimental",
+                "wire_version": "mei-runtime-wire-v2",
+                "model_package_version": "mei-model-package-v2",
+                "runtime_abi_version": "mei-runtime-abi-2",
+                "protocol_id": "mei-tool-call-protocol-v2",
+                "serializer_id": "mei-tool-call-serializer-v2",
+                "release_class": "experimental",
+                "product": "mei-1.0-51m Runtime"
+              },
+              "retrieval": false,
+              "full_call": false,
+              "mw_disposition": false,
+              "confidence": false,
+              "multi_step": false,
+              "narration": false,
+              "backend_loaded": true,
+              "backend": "rust-portable",
+              "stateful_tool_loop": true,
+              "max_steps_default": 4,
+              "max_steps_hard": 8,
+              "runtime_profiles": {
+                "compact": 1024,
+                "standard": 1536
+              },
+              "candidate_batch_size": 5,
+              "candidate_batch_scan": true
+            },
+            "stats": {
+              "backend": "portable-q4",
+              "wall_ms": 0,
+              "decode_mode": "constrained",
+              "prompt_tokens": 545,
+              "output_tokens": 1,
+              "quantized_only": true
+            },
+            "retrieval": {
+              "policy_id": "mei-retrieval-fixed-five-batches-v1",
+              "calibration_id": "mei-retrieval-platt-v1",
+              "calibration_validated": false,
+              "candidates": [
+                {
+                  "tool_id": "check_unique",
+                  "rank": 1,
+                  "raw_score": 0.696008563041687,
+                  "retrieval_relevance": 0.6673022259104021
+                },
+                {
+                  "tool_id": "check_required",
+                  "rank": 2,
+                  "raw_score": 0.6665283441543579,
+                  "retrieval_relevance": 0.6607253620630709
+                },
+                {
+                  "tool_id": "check_enum",
+                  "rank": 3,
+                  "raw_score": 0.6026971936225891,
+                  "retrieval_relevance": 0.6462731389152554
+                },
+                {
+                  "tool_id": "check_number",
+                  "rank": 4,
+                  "raw_score": 0.5077373385429382,
+                  "retrieval_relevance": 0.6242759041995576
+                },
+                {
+                  "tool_id": "check_product",
+                  "rank": 5,
+                  "raw_score": 0.2598186135292053,
+                  "retrieval_relevance": 0.5645917024681874
+                }
+              ],
+              "scanned_batches": [
+                {
+                  "batch": 1,
+                  "tools": [
+                    "check_unique",
+                    "check_required",
+                    "check_enum",
+                    "check_number",
+                    "check_product"
+                  ],
+                  "schema_budget": {
+                    "packer_id": "mei-tool-context-packer-v1",
+                    "projection_serializer_id": "mei-schema-projection-v1",
+                    "profile": "compact",
+                    "cap": 1024,
+                    "used": 467,
+                    "compression_level": "none",
+                    "omitted_description_tokens": 0,
+                    "dropped_tools": [],
+                    "context_unrepresentable": false
+                  },
+                  "input_budget": {
+                    "cap": 1920,
+                    "original_prompt_tokens": 545,
+                    "dropped_history": 0,
+                    "compacted_tool_results": [],
+                    "dropped_evidence": 0,
+                    "dropped_context_keys": [],
+                    "query_clipped": false,
+                    "used": 545,
+                    "compression_level": "none",
+                    "visible_query_tokens": 9
+                  },
+                  "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+                  "outcome": "terminal_disposition"
+                }
+              ],
+              "scanned_tools": [
+                {
+                  "tool_id": "check_unique",
+                  "rank": 1,
+                  "raw_score": 0.696008563041687,
+                  "retrieval_relevance": 0.6673022259104021
+                },
+                {
+                  "tool_id": "check_required",
+                  "rank": 2,
+                  "raw_score": 0.6665283441543579,
+                  "retrieval_relevance": 0.6607253620630709
+                },
+                {
+                  "tool_id": "check_enum",
+                  "rank": 3,
+                  "raw_score": 0.6026971936225891,
+                  "retrieval_relevance": 0.6462731389152554
+                },
+                {
+                  "tool_id": "check_number",
+                  "rank": 4,
+                  "raw_score": 0.5077373385429382,
+                  "retrieval_relevance": 0.6242759041995576
+                },
+                {
+                  "tool_id": "check_product",
+                  "rank": 5,
+                  "raw_score": 0.2598186135292053,
+                  "retrieval_relevance": 0.5645917024681874
+                }
+              ],
+              "remaining_candidates": [],
+              "thresholds": {
+                "discard": 0,
+                "expand": 0
+              },
+              "non_expandable": [],
+              "discarded": []
+            },
+            "kind": "refuse",
+            "call": null,
+            "refusal": {
+              "reason": "model_refusal",
+              "detail": null
+            },
+            "state": {
+              "step": 1,
+              "pending_call_id": null,
+              "cancelled": false
+            }
+          },
+          "narration": null,
+          "attempted": true,
+          "error": "Mei 未执行：model_refusal",
+          "elapsed_ms": 3904.9000000953674
+        }
+      },
+      {
+        "roundtrip_ms": 3861.2000000476837,
+        "id": 2,
+        "report": {
+          "rule": {
+            "id": "r1",
+            "instruction": "检查订单号列是否存在空值",
+            "tool": "check_required",
+            "args": {
+              "column": "订单号"
+            },
+            "severity": "block"
+          },
+          "executor": null,
+          "check": null,
+          "turn": {
+            "wire_version": "mei-runtime-wire-v2",
+            "ok": true,
+            "error": null,
+            "refuse": true,
+            "execution": "refuse",
+            "selected_tools": [
+              "check_unique",
+              "check_required",
+              "check_enum",
+              "check_number",
+              "check_product"
+            ],
+            "schema_fingerprint": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+            "schema_budget": {
+              "packer_id": "mei-tool-context-packer-v1",
+              "projection_serializer_id": "mei-schema-projection-v1",
+              "profile": "compact",
+              "cap": 1024,
+              "used": 467,
+              "compression_level": "none",
+              "omitted_description_tokens": 0,
+              "dropped_tools": [],
+              "context_unrepresentable": false
+            },
+            "input_budget": {
+              "cap": 1920,
+              "original_prompt_tokens": 545,
+              "dropped_history": 0,
+              "compacted_tool_results": [],
+              "dropped_evidence": 0,
+              "dropped_context_keys": [],
+              "query_clipped": false,
+              "used": 545,
+              "compression_level": "none",
+              "visible_query_tokens": 9
+            },
+            "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+            "function_calls": [],
+            "raw_text": "[]",
+            "generated_token_ids": [
+              12451
+            ],
+            "prefill_topk_ids": [
+              490,
+              487,
+              1007,
+              488,
+              494
+            ],
+            "runtime_cache": {
+              "kv_storage_dtype": "int8",
+              "kv_scale_granularity": "per-head-vector",
+              "layers": 27,
+              "stable_prefix_tokens": 467,
+              "rolling_tokens": 72,
+              "visible_tokens": 539,
+              "next_position": 539,
+              "storage_bytes": 7916832,
+              "cache_growth_bounded": true
+            },
+            "mw_disposition": {
+              "decision": "stop",
+              "source": "mw-head",
+              "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+              "reason_code": 2,
+              "top_probability": 0.2591915726661682,
+              "margin": 0.15141922235488892,
+              "continue_min_probability": 0.7,
+              "continue_min_margin": 0.15
+            },
+            "confidence": {
+              "available": true,
+              "value": 0.46801596879959106,
+              "source": "mei-1.0-51m-q4",
+              "version": "conf-head-v1"
+            },
+            "provenance": {
+              "validated": true,
+              "ok": true,
+              "detail": null,
+              "arguments": {},
+              "gates": [
+                {
+                  "gate": "grammar",
+                  "ok": true,
+                  "detail": null
+                },
+                {
+                  "gate": "schema",
+                  "ok": true,
+                  "detail": null
+                }
+              ]
+            },
+            "capabilities": {
+              "package_id": "data-check-d919985609f9",
+              "package_format": "mei-model-package-v2",
+              "release_class": "candidate",
+              "inference": false,
+              "diagnostic_inference": true,
+              "protocol": true,
+              "heads": {
+                "lm": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "embed",
+                    "blocks",
+                    "final_norm",
+                    "engrams",
+                    "mhc_phi_pre",
+                    "mhc_phi_post",
+                    "mhc_phi_res",
+                    "mhc_b_pre",
+                    "mhc_b_post",
+                    "mhc_b_res",
+                    "mhc_a_pre",
+                    "mhc_a_post",
+                    "mhc_a_res",
+                    "conf_probes",
+                    "conf_proj"
+                  ],
+                  "training_receipt_sha256": "4d5ececf0670c76fc4333ae6bfdb478b642b37fc664515f4249ddf6006152edf",
+                  "label_codebook_sha256": null
+                },
+                "contrastive": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.contrastive"
+                  ],
+                  "training_receipt_sha256": "0f6e95394a96ab8d2d4d6840d2d449992ea4a296bb46727d4bb16f85421d7379",
+                  "label_codebook_sha256": null
+                },
+                "mw_disposition": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.mw_disposition"
+                  ],
+                  "training_receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+                  "label_codebook_sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+                },
+                "confidence": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.confidence"
+                  ],
+                  "training_receipt_sha256": "c3b24c5cb8a4feb42e1849e57c33f71a965147ea60e2d860629b1e1d1e928ea7",
+                  "label_codebook_sha256": null
+                },
+                "narration_adapter": {
+                  "present": true,
+                  "trained": true,
+                  "status": "ready",
+                  "tensor_prefixes": [
+                    "heads.narration_adapter"
+                  ],
+                  "training_receipt_sha256": "30af52362c61bd1cc8e8d984ce12c4e1a8ef2e9db3b62678fea3cc7f11b9f9de",
+                  "label_codebook_sha256": null
+                }
+              },
+              "missing_or_untrained_heads": [],
+              "hash_verified": false,
+              "inference_payload_verified": true,
+              "resource_measurement_verified": false,
+              "resource_limits_reported": false,
+              "tensor_identity_complete": true,
+              "portable_quantization_policy_complete": true,
+              "runtime_quantization_complete": true,
+              "tool_index_payload_complete": true,
+              "compatibility_mode": "v2-native",
+              "read_only": false,
+              "degraded": true,
+              "implementation_complete": true,
+              "open_capabilities": [
+                "int8-bounded-kv",
+                "trusted-resource-measurement"
+              ],
+              "product_ready": false,
+              "resource_eligible": false,
+              "release_eligible": false,
+              "quantized_only": true,
+              "compatibility": {
+                "mode": "native_v2",
+                "source_format": "mei-model-package-v2",
+                "capability_complete": false
+              },
+              "declared_capabilities": {
+                "confidence": true,
+                "full_call": true,
+                "multi_step": true,
+                "mw_disposition": true,
+                "narration": true,
+                "retrieval": true
+              },
+              "versions": {
+                "sdk_semver": "0.2.0-experimental",
+                "wire_version": "mei-runtime-wire-v2",
+                "model_package_version": "mei-model-package-v2",
+                "runtime_abi_version": "mei-runtime-abi-2",
+                "protocol_id": "mei-tool-call-protocol-v2",
+                "serializer_id": "mei-tool-call-serializer-v2",
+                "release_class": "experimental",
+                "product": "mei-1.0-51m Runtime"
+              },
+              "retrieval": false,
+              "full_call": false,
+              "mw_disposition": false,
+              "confidence": false,
+              "multi_step": false,
+              "narration": false,
+              "backend_loaded": true,
+              "backend": "rust-portable",
+              "stateful_tool_loop": true,
+              "max_steps_default": 4,
+              "max_steps_hard": 8,
+              "runtime_profiles": {
+                "compact": 1024,
+                "standard": 1536
+              },
+              "candidate_batch_size": 5,
+              "candidate_batch_scan": true
+            },
+            "stats": {
+              "backend": "portable-q4",
+              "wall_ms": 0,
+              "decode_mode": "constrained",
+              "prompt_tokens": 545,
+              "output_tokens": 1,
+              "quantized_only": true
+            },
+            "retrieval": {
+              "policy_id": "mei-retrieval-fixed-five-batches-v1",
+              "calibration_id": "mei-retrieval-platt-v1",
+              "calibration_validated": false,
+              "candidates": [
+                {
+                  "tool_id": "check_unique",
+                  "rank": 1,
+                  "raw_score": 0.696008563041687,
+                  "retrieval_relevance": 0.6673022259104021
+                },
+                {
+                  "tool_id": "check_required",
+                  "rank": 2,
+                  "raw_score": 0.6665283441543579,
+                  "retrieval_relevance": 0.6607253620630709
+                },
+                {
+                  "tool_id": "check_enum",
+                  "rank": 3,
+                  "raw_score": 0.6026971936225891,
+                  "retrieval_relevance": 0.6462731389152554
+                },
+                {
+                  "tool_id": "check_number",
+                  "rank": 4,
+                  "raw_score": 0.5077373385429382,
+                  "retrieval_relevance": 0.6242759041995576
+                },
+                {
+                  "tool_id": "check_product",
+                  "rank": 5,
+                  "raw_score": 0.2598186135292053,
+                  "retrieval_relevance": 0.5645917024681874
+                }
+              ],
+              "scanned_batches": [
+                {
+                  "batch": 1,
+                  "tools": [
+                    "check_unique",
+                    "check_required",
+                    "check_enum",
+                    "check_number",
+                    "check_product"
+                  ],
+                  "schema_budget": {
+                    "packer_id": "mei-tool-context-packer-v1",
+                    "projection_serializer_id": "mei-schema-projection-v1",
+                    "profile": "compact",
+                    "cap": 1024,
+                    "used": 467,
+                    "compression_level": "none",
+                    "omitted_description_tokens": 0,
+                    "dropped_tools": [],
+                    "context_unrepresentable": false
+                  },
+                  "input_budget": {
+                    "cap": 1920,
+                    "original_prompt_tokens": 545,
+                    "dropped_history": 0,
+                    "compacted_tool_results": [],
+                    "dropped_evidence": 0,
+                    "dropped_context_keys": [],
+                    "query_clipped": false,
+                    "used": 545,
+                    "compression_level": "none",
+                    "visible_query_tokens": 9
+                  },
+                  "schema_projection_sha256": "f0c8552b022071ed6746ad62b887a4ee9fe447b881385092f406f4878683e5e5",
+                  "outcome": "terminal_disposition"
+                }
+              ],
+              "scanned_tools": [
+                {
+                  "tool_id": "check_unique",
+                  "rank": 1,
+                  "raw_score": 0.696008563041687,
+                  "retrieval_relevance": 0.6673022259104021
+                },
+                {
+                  "tool_id": "check_required",
+                  "rank": 2,
+                  "raw_score": 0.6665283441543579,
+                  "retrieval_relevance": 0.6607253620630709
+                },
+                {
+                  "tool_id": "check_enum",
+                  "rank": 3,
+                  "raw_score": 0.6026971936225891,
+                  "retrieval_relevance": 0.6462731389152554
+                },
+                {
+                  "tool_id": "check_number",
+                  "rank": 4,
+                  "raw_score": 0.5077373385429382,
+                  "retrieval_relevance": 0.6242759041995576
+                },
+                {
+                  "tool_id": "check_product",
+                  "rank": 5,
+                  "raw_score": 0.2598186135292053,
+                  "retrieval_relevance": 0.5645917024681874
+                }
+              ],
+              "remaining_candidates": [],
+              "thresholds": {
+                "discard": 0,
+                "expand": 0
+              },
+              "non_expandable": [],
+              "discarded": []
+            },
+            "kind": "refuse",
+            "call": null,
+            "refusal": {
+              "reason": "model_refusal",
+              "detail": null
+            },
+            "state": {
+              "step": 1,
+              "pending_call_id": null,
+              "cancelled": false
+            }
+          },
+          "narration": null,
+          "attempted": true,
+          "error": "Mei 未执行：model_refusal",
+          "elapsed_ms": 3860.5
+        }
+      }
+    ]
+  },
+  "cpu": "Apple M4 Max",
+  "browser": "151.0.7922.34",
+  "date": "2026-09-14T08:36:58.178Z",
+  "measurement": "Original immutable WASM sampled at 1 ms. forward_bounded is prefill for one-output-token [] requests; errors may also include later forward passes. Stage times are sampling estimates, not exact instrumentation.",
+  "raw_profiles": [
+    {
+      "path": ".local/cache/data-check/profile-1789374993928/0.cpuprofile",
+      "sha256": "319d1e8931bbe8bb5c4a25e2e7e53ced510003430cf8e86ad34c8c434a77acc1"
+    },
+    {
+      "path": ".local/cache/data-check/profile-1789374993928/1.cpuprofile",
+      "sha256": "510e81bd53fc23122a5f44a9534dd26e03f8cb2596dda4e62265a302b7af45c7"
+    },
+    {
+      "path": ".local/cache/data-check/profile-1789374993928/2.cpuprofile",
+      "sha256": "4db5e0056fb5f4c3675874fd5c04fcf51ee65ea4e6059e3acaf8cce1265e3229"
+    }
+  ],
+  "source_scripts": {
+    "src/demos/data-check/profile.cjs": "255a149a87b190fd078e39dc0b4eba8fb5f7423b4a84ca1558af3116ce9d7443",
+    "src/demos/data-check/performance.cjs": "b26fe4aa3c8c03caa99a13800ff6dd4db37e6d5a6abb4191a1e6c14631d25e18"
+  }
+}

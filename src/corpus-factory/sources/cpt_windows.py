@@ -6,7 +6,7 @@ import shutil
 from collections import Counter
 from pathlib import Path
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 
 
 def structural_breaks(text):
@@ -159,7 +159,7 @@ def split_record(row, tok, limit=2048, overlap_budget=128, context_budget=256):
 
 def run(config, out):
     from source_manager import load_tokenizer, tokenizer_pointer
-    source = ROOT/config['path']; parent = ROOT/config['parent_manifest']
+    source = resolve_path(ROOT/config['path']); parent = resolve_path(ROOT/config['parent_manifest'])
     if digest(source) != config['sha256'] or digest(parent) != config['parent_manifest_sha256']:
         raise ValueError('parent_hash_changed')
     tok = load_tokenizer(); pointer = tokenizer_pointer()

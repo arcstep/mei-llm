@@ -10,7 +10,20 @@ __pycache__/
 # 语料/过程为大体积本地资产，不进 git（哈希证据绑定于 receipts/CYCLE.json）。
 # 例外：合成语料与评测锁不可复现且体量可控，必须入仓。
 corpus/**
+!corpus/README.md
+!corpus/catalog/
+!corpus/catalog/*.md
+!corpus/catalog/*.json
+!corpus/adoptions/
+!corpus/adoptions/**/
+!corpus/adoptions/**/*.md
+!corpus/adoptions/**/*.json
 !corpus/pools/
+!corpus/pools/README.md
+!corpus/pools/*/
+!corpus/pools/*/README.md
+!corpus/pools/candidates/*/
+!corpus/pools/candidates/*/README.md
 !corpus/pools/zh-v2-pool/
 !corpus/pools/zh-v2-pool/candidates/
 !corpus/pools/zh-v2-pool/candidates/**
@@ -40,9 +53,13 @@ models/*/exp-*/**/*.bin
 models/*/exp-*/**/tokenizer.model
 models/*/exp-*/**/heads/**/*.npz
 models/*/releases/**/*.npz
+models/*/releases/**/*.bin
+models/*/releases/**/tokenizer.model
+models/*/releases/**/heads/**/*.npz
 
 # 导出 staging 临时目录（证据已进包内 receipts）
 models/*/exp-*/products/.*.staging/
+models/*/releases/**/products/.*.staging/
 
 # runtime 构建产物不入 git（manifest 保留，wasm 可由 cargo 9 秒重建）
 models/*/runtime/wasm/*.wasm

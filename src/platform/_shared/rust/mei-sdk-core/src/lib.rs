@@ -83,3 +83,6 @@ pub fn close_session(session: &mut Session) {
 pub fn close_engine(engine: &mut Engine) {
     engine.close();
 }
+
+#[cfg(feature = "wasm-parallel")]
+pub mod parallel;

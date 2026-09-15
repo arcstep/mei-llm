@@ -13,7 +13,7 @@ import shutil
 from concurrent.futures import ThreadPoolExecutor
 from collections import Counter
 
-from profiling import ROOT, Budget, RangeReader, digest, seeded
+from profiling import resolve_path, ROOT, Budget, RangeReader, digest, seeded
 from source_manager import load_tokenizer, tokenizer_pointer
 
 
@@ -47,7 +47,7 @@ def bulk(config, out, allow_network=False):
     budget = Budget(out, int(config.get('max_network_bytes', 30*1024**3)), reserve)
     rawdir = out/'original-columns'; rawdir.mkdir()
     for evidence in config.get('locks', []):
-        if digest(ROOT/evidence['path']) != evidence['sha256']:
+        if digest(resolve_path(ROOT/evidence['path'])) != evidence['sha256']:
             raise ValueError('source selection lock changed')
 
     def acquire(pair):
@@ -57,7 +57,7 @@ def bulk(config, out, allow_network=False):
         try:
             # Adoption only uses immutable, hash-checked original-column artifacts.
             if item.get('adopt_receipt'):
-                old_path = ROOT/item['adopt_receipt']
+                old_path = resolve_path(ROOT/item['adopt_receipt'])
                 if digest(old_path) != item['adopt_receipt_sha256']:
                     raise ValueError('adoption receipt changed')
                 old = json.loads(old_path.read_text())
@@ -73,7 +73,7 @@ def bulk(config, out, allow_network=False):
                 old.update(raw_file=raw.name, adopted_from=str(old_path), network_reused=True)
                 dump(receipt, old)
                 return old
-            handle = RangeReader(item['url'], budget) if 'url' in item else ROOT/item['path']
+            handle = RangeReader(item['url'], budget) if 'url' in item else resolve_path(ROOT/item['path'])
             pf = pq.ParquetFile(handle, pre_buffer=False)
             groups, probability = group_selection(pf.metadata, config['row_group_fraction'], config['seed'], item['path'])
             columns = [c for c in config.get('columns', ['text','id','url','title']) if c in pf.schema_arrow.names]
@@ -118,7 +118,7 @@ def bulk(config, out, allow_network=False):
     from materialize import lines, text_of
     seen = set(); exclusions=[]
     for rel in config.get('exclude_jsonl',[]):
-        path=ROOT/rel
+        path=resolve_path(ROOT/rel)
         with lines(path) as f:
             for line in f:
                 if line.strip(): seen.add(hashlib.sha256(text_of(json.loads(line)).encode()).digest())

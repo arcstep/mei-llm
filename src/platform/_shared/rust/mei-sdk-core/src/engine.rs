@@ -377,6 +377,12 @@ pub struct Engine {
 }
 
 impl Engine {
+    /// Experimental numerical benchmark access; never an Agent execution path.
+    #[cfg(feature = "numeric-bench")]
+    pub fn diagnostic_model(&self) -> Option<&NeedleModel> {
+        self.infer.as_ref().map(|r| r.model.as_ref())
+    }
+
     pub fn load(package_dir: &std::path::Path, verify_hashes: bool) -> Result<Self, SdkError> {
         let package = crate::package::load_package(package_dir, verify_hashes)?;
         let infer = if package.packed_inference_ready() {
@@ -508,6 +514,12 @@ impl Engine {
                 Value::Bool(loaded && self.package.packed_inference_ready()),
             );
             obj.insert("backend_loaded".into(), Value::Bool(loaded));
+            obj.insert("compute_profile".into(), crate::version::compute_profile());
+            if cfg!(feature = "wasm-fast-kernels") || cfg!(feature = "wasm-prefix-cache") {
+                obj.insert("release_eligible".into(), Value::Bool(false));
+                obj.insert("inference".into(), Value::Bool(false));
+                obj.insert("experimental_runtime".into(), Value::Bool(true));
+            }
             obj.insert(
                 "backend".into(),
                 json!(if loaded { "rust-portable" } else { "protocol" }),

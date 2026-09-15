@@ -1,0 +1,8 @@
+{
+  "mode": "sft_candidate_triage",
+  "inputs": [
+    {"path": "corpus/pools/task-trials/2026-09-14-public-sft-multihead-conversion-r05/units.jsonl", "sha256": "7499a2e143b2531eeffc9624c97c1acf10f5b39983c6e1fe08432f531c603870"},
+    {"source": "ToolACE", "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/sources/toolace-pilot-candidates.jsonl", "sha256": "dc6f4324379103c140d4932009092f4dc6255bdc8ff9fbb19dacdc6d51065fe3"},
+    {"source": "Nemotron", "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/sources/nemotron-pilot-candidates.jsonl", "sha256": "2f122c975e5e8da61b00c3ebe25f212db3fface6f5688b5d2bb2a229215a2300"}
+  ]
+}

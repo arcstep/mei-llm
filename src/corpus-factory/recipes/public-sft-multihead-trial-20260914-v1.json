@@ -1,0 +1,56 @@
+{
+  "mode": "public_sft_multihead_trial",
+  "model_generation": "v1.3",
+  "count_per_source": 100,
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+  "sources": {
+    "moss": {
+      "files": [
+        {
+          "path": "corpus/pools/raw/2026-09-14-moss-003-with-tools-raw-r01/moss-003-sft-with-tools-no-text2image.zip",
+          "sha256": "4d4f57df0dd5ad1442b6c08ca69ec1a59705837bb9813e7aae3bd3a9e3adb085"
+        },
+        {
+          "path": "corpus/pools/raw/2026-09-14-moss-003-with-tools-raw-r01/moss-003-sft-with-tools-text2image.zip",
+          "sha256": "edf4c2647d65c5c8f78df4f4e77b4b9f1a76992aebc20fc0baadde14f21c5f40"
+        }
+      ]
+    },
+    "api_bank": {
+      "levels": {
+        "1": {
+          "api_path": "corpus/pools/raw/2026-09-14-api-bank-training-raw-r01/training-data__lv1-api-train.json",
+          "api_sha256": "df55440a51e1ed86c261b3c1be1e636ac41a0f337eb3d3c23c7f1c8d5ba8154e",
+          "response_path": "corpus/pools/raw/2026-09-14-api-bank-training-raw-r01/training-data__lv1-response-train.json",
+          "response_sha256": "c32f6ae5925d3f998c6c766f55ca0a2eb5dd22df34b57954bbe4942d5611b0b6"
+        },
+        "2": {
+          "api_path": "corpus/pools/raw/2026-09-14-api-bank-training-raw-r01/training-data__lv2-api-train.json",
+          "api_sha256": "bc6c806333ab279cb36396f983ce80fff80c114da2e83a17a9a9e380e5c65db1",
+          "response_path": "corpus/pools/raw/2026-09-14-api-bank-training-raw-r01/training-data__lv2-response-train.json",
+          "response_sha256": "ad3062324482a641231a5f1b13b9613e276facf24a9b251d4a796846b639db5f"
+        },
+        "3": {
+          "api_path": "corpus/pools/raw/2026-09-14-api-bank-training-raw-r01/training-data__lv3-api-train.json",
+          "api_sha256": "f9223633cb0ea4f26182aa3bca48590dff26e6b620163377d2b3059e7660413f",
+          "response_path": "corpus/pools/raw/2026-09-14-api-bank-training-raw-r01/training-data__lv3-response-train.json",
+          "response_sha256": "68f912b4928b0b903ea41ff567bb347236c8de70b9756734efb2f9cb5b0e7b0f"
+        }
+      }
+    },
+    "crosswoz": {
+      "candidate_path": "corpus/pools/candidates/mixed/2026-09-13-dialogue-expanded-candidate-r01/crosswoz.jsonl",
+      "candidate_sha256": "5ce80e6cbc66c154975368e34433d7e89d36ea52bccf7d88322fd466118f1cac",
+      "archive_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/relation-survey-20260913-v1/crosswoz/raw-3ad844b33d46313ff4b0",
+      "archive_sha256": "b81f6a0845011bb4593d21dd58e2d76af4dd5d52e300ecc68cb8dee17ccc3cf8",
+      "archive_member": "train.json"
+    },
+    "risawoz": {
+      "candidate_path": "corpus/pools/candidates/mixed/2026-09-13-dialogue-expanded-candidate-r01/risawoz.jsonl",
+      "candidate_sha256": "849174be21c0d8a8fd6f47318c2a824ae30c1f81e5ff5f06128d65c6be786966",
+      "archive_path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-artifact-20260913-v1/risawoz/raw-98b8e0470543833bcff9",
+      "archive_sha256": "8f2396b96a5254df06ff7d856f78ff1f5438e1ce7d037e7a7f40152bb6e0c1cd",
+      "archive_member": "source-data/all_train10000.json"
+    }
+  }
+}

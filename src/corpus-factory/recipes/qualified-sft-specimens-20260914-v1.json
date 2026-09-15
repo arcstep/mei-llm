@@ -1,0 +1,1900 @@
+{
+  "mode": "qualified_sft_specimens",
+  "target_source_groups": 30,
+  "raw_sources": {"risawoz":{"path":"cycles/mei-1.2-51m/exp-corpus-survey/runs/dialogue-artifact-20260913-v1/risawoz/raw-98b8e0470543833bcff9","sha256":"8f2396b96a5254df06ff7d856f78ff1f5438e1ce7d037e7a7f40152bb6e0c1cd","member":"source-data/all_train10000.json"},"moss":{"path":"corpus/pools/raw/2026-09-14-moss-003-with-tools-raw-r01/moss-003-sft-with-tools-no-text2image.zip","sha256":"4d4f57df0dd5ad1442b6c08ca69ec1a59705837bb9813e7aae3bd3a9e3adb085"},"toolace":{"path":"cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-tool-content-20260913-v1/toolace/raw-99377c63fbe5425d01e6","sha256":"ba12c083fca7e8da48c67ad5b895e495447da7c66e39a2e19742c082e6cb537e"}},
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+  "inputs": {
+    "modern": {
+      "path": "corpus/pools/task-trials/2026-09-14-public-sft-multihead-conversion-r05/units.jsonl",
+      "sha256": "7499a2e143b2531eeffc9624c97c1acf10f5b39983c6e1fe08432f531c603870"
+    },
+    "toolace": {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/sources/toolace-pilot-candidates.jsonl",
+      "sha256": "dc6f4324379103c140d4932009092f4dc6255bdc8ff9fbb19dacdc6d51065fe3"
+    },
+    "groups": {
+      "path": "corpus/pools/task-trials/2026-09-14-public-sft-multihead-conversion-r05/task-groups.jsonl",
+      "sha256": "3b9d2018d7bc665470b89caf1b0b76a9152331473db00a425ea571555796ad81"
+    }
+  },
+  "specimens": [
+    {
+      "id": "R0052",
+      "input": "modern",
+      "line": 52,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "query"
+          ],
+          "value": "Notify When Nearby 工作原理",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "“Notify When Nearby”是怎么工作的？它能够检测到多远的Echo设备？"
+            }
+          ],
+          "reason": "分别搜索工作原理与检测距离；两次只读搜索互不依赖。删除旧回答，仅查用户询问的术语，不认可旧回答中的事实。"
+        },
+        {
+          "call_index": 1,
+          "argument_path": [
+            "query"
+          ],
+          "value": "Notify When Nearby 检测距离",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "“Notify When Nearby”是怎么工作的？它能够检测到多远的Echo设备？"
+            }
+          ],
+          "reason": "分别搜索工作原理与检测距离；两次只读搜索互不依赖。删除旧回答，仅查用户询问的术语，不认可旧回答中的事实。"
+        }
+      ],
+      "review": "分别搜索工作原理与检测距离；两次只读搜索互不依赖。删除旧回答，仅查用户询问的术语，不认可旧回答中的事实。"
+    },
+    {
+      "id": "R0147",
+      "input": "modern",
+      "line": 147,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "query"
+          ],
+          "value": "上海大学 创新性",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "上海大学和复旦大学哪一所更具创新性？"
+            }
+          ],
+          "reason": "分别查两校创新资料是合法第一步，不代表已完成排名，也不认可原回答认定复旦更好的结论。"
+        },
+        {
+          "call_index": 1,
+          "argument_path": [
+            "query"
+          ],
+          "value": "复旦大学 创新性",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "上海大学和复旦大学哪一所更具创新性？"
+            }
+          ],
+          "reason": "分别查两校创新资料是合法第一步，不代表已完成排名，也不认可原回答认定复旦更好的结论。"
+        }
+      ],
+      "review": "分别查两校创新资料是合法第一步，不代表已完成排名，也不认可原回答认定复旦更好的结论。"
+    },
+    {
+      "id": "R0200",
+      "input": "modern",
+      "line": 200,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "query"
+          ],
+          "value": "Google AI 介绍",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "什么是Google AI，它如何帮助企业应对挑战？"
+            }
+          ],
+          "reason": "当前问题自足，分别了解Google AI及企业用途；删除无关数学历史，两个搜索互不依赖。"
+        },
+        {
+          "call_index": 1,
+          "argument_path": [
+            "query"
+          ],
+          "value": "Google AI 对企业的益处",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "什么是Google AI，它如何帮助企业应对挑战？"
+            }
+          ],
+          "reason": "当前问题自足，分别了解Google AI及企业用途；删除无关数学历史，两个搜索互不依赖。"
+        }
+      ],
+      "review": "当前问题自足，分别了解Google AI及企业用途；删除无关数学历史，两个搜索互不依赖。"
+    },
+    {
+      "id": "R0239",
+      "input": "modern",
+      "line": 239,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "query"
+          ],
+          "value": "machine learning basics",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "How does machine learning work and how can it be used effectively?"
+            }
+          ],
+          "reason": "分别搜索机器学习原理与应用；删除无关且有错误的旧历史，搜索不等于问题已解答。"
+        },
+        {
+          "call_index": 1,
+          "argument_path": [
+            "query"
+          ],
+          "value": "effective applications of machine learning",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "How does machine learning work and how can it be used effectively?"
+            }
+          ],
+          "reason": "分别搜索机器学习原理与应用；删除无关且有错误的旧历史，搜索不等于问题已解答。"
+        }
+      ],
+      "review": "分别搜索机器学习原理与应用；删除无关且有错误的旧历史，搜索不等于问题已解答。",
+      "language": "en"
+    },
+    {
+      "id": "R1199",
+      "input": "modern",
+      "line": 1199,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "星级"
+          ],
+          "value": "1",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "一星级"
+            }
+          ],
+          "reason": "一星级转换字符串1，常熟对应区域；不提前填入本轮推荐酒店名称。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "常熟",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "常熟"
+            }
+          ],
+          "reason": "一星级转换字符串1，常熟对应区域；不提前填入本轮推荐酒店名称。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好，最近想去苏州玩，麻烦您帮我在常熟找个一星级酒店。"
+            }
+          ],
+          "reason": "一星级转换字符串1，常熟对应区域；不提前填入本轮推荐酒店名称。"
+        }
+      ],
+      "review": "一星级转换字符串1，常熟对应区域；不提前填入本轮推荐酒店名称。",
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "名称",
+          "value": "常熟有意思连锁酒店",
+          "reply_quote": "常熟有意思连锁酒店"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的名称，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1200",
+      "input": "modern",
+      "line": 1200,
+      "retain_history": true,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "星级"
+          ],
+          "value": "1",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "一星级"
+            }
+          ],
+          "reason": "这家由上一轮推荐解析；标准间来自本轮用户。保留已确认约束并修正标注分词空格。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "常熟",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "常熟"
+            }
+          ],
+          "reason": "这家由上一轮推荐解析；标准间来自本轮用户。保留已确认约束并修正标注分词空格。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "名称"
+          ],
+          "value": "常熟有意思连锁酒店",
+          "quotes": [
+            {
+              "event_id": "history_1",
+              "text": "常熟有意思连锁酒店"
+            }
+          ],
+          "reason": "这家由上一轮推荐解析；标准间来自本轮用户。保留已确认约束并修正标注分词空格。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "房型"
+          ],
+          "value": "标准间",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "标准间"
+            }
+          ],
+          "reason": "这家由上一轮推荐解析；标准间来自本轮用户。保留已确认约束并修正标注分词空格。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "这家有标准间吗？"
+            }
+          ],
+          "reason": "这家由上一轮推荐解析；标准间来自本轮用户。保留已确认约束并修正标注分词空格。"
+        }
+      ],
+      "review": "这家由上一轮推荐解析；标准间来自本轮用户。保留已确认约束并修正标注分词空格。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_hotel",
+          "arguments": {
+            "constraints": {
+              "星级": "1",
+              "区域": "常熟",
+              "名称": "常熟有意思连锁酒店",
+              "房型": "标准间"
+            },
+            "requested_fields": []
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "房型",
+          "value": "标准间",
+          "reply_quote": "标准间有的"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的房型，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1201",
+      "input": "modern",
+      "line": 1201,
+      "retain_history": true,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "星级"
+          ],
+          "value": "1",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "一星级"
+            }
+          ],
+          "reason": "查询已确认酒店标准间的房费；不推断每晚或含税等未定义条件。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "常熟",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "常熟"
+            }
+          ],
+          "reason": "查询已确认酒店标准间的房费；不推断每晚或含税等未定义条件。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "名称"
+          ],
+          "value": "常熟有意思连锁酒店",
+          "quotes": [
+            {
+              "event_id": "history_1",
+              "text": "常熟有意思连锁酒店"
+            }
+          ],
+          "reason": "查询已确认酒店标准间的房费；不推断每晚或含税等未定义条件。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "房型"
+          ],
+          "value": "标准间",
+          "quotes": [
+            {
+              "event_id": "history_2",
+              "text": "标准间"
+            }
+          ],
+          "reason": "查询已确认酒店标准间的房费；不推断每晚或含税等未定义条件。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields",
+            0
+          ],
+          "value": "房费",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "房费"
+            }
+          ],
+          "reason": "查询已确认酒店标准间的房费；不推断每晚或含税等未定义条件。"
+        }
+      ],
+      "review": "查询已确认酒店标准间的房费；不推断每晚或含税等未定义条件。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_hotel",
+          "arguments": {
+            "constraints": {
+              "星级": "1",
+              "区域": "常熟",
+              "名称": "常熟有意思连锁酒店",
+              "房型": "标准间"
+            },
+            "requested_fields": [
+              "房费"
+            ]
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ]
+    },
+    {
+      "id": "R1202",
+      "input": "modern",
+      "line": 1202,
+      "retain_history": true,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "星级"
+          ],
+          "value": "1",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "一星级"
+            }
+          ],
+          "reason": "查询既有酒店停车场；免费来自结果，不能作为调用前参数依据。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "常熟",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "常熟"
+            }
+          ],
+          "reason": "查询既有酒店停车场；免费来自结果，不能作为调用前参数依据。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "名称"
+          ],
+          "value": "常熟有意思连锁酒店",
+          "quotes": [
+            {
+              "event_id": "history_1",
+              "text": "常熟有意思连锁酒店"
+            }
+          ],
+          "reason": "查询既有酒店停车场；免费来自结果，不能作为调用前参数依据。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "房型"
+          ],
+          "value": "标准间",
+          "quotes": [
+            {
+              "event_id": "history_2",
+              "text": "标准间"
+            }
+          ],
+          "reason": "查询既有酒店停车场；免费来自结果，不能作为调用前参数依据。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields",
+            0
+          ],
+          "value": "停车场",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "停车场"
+            }
+          ],
+          "reason": "查询既有酒店停车场；免费来自结果，不能作为调用前参数依据。"
+        }
+      ],
+      "review": "查询既有酒店停车场；免费来自结果，不能作为调用前参数依据。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_hotel",
+          "arguments": {
+            "constraints": {
+              "星级": "1",
+              "区域": "常熟",
+              "名称": "常熟有意思连锁酒店",
+              "房型": "标准间"
+            },
+            "requested_fields": [
+              "停车场"
+            ]
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "停车场",
+          "value": "免费",
+          "reply_quote": "免费停车场"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的停车场，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1203",
+      "input": "modern",
+      "line": 1203,
+      "retain_history": true,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "星级"
+          ],
+          "value": "1",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "一星级"
+            }
+          ],
+          "reason": "查询既有酒店地址；地址值不能从未来结果预填。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "常熟",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "常熟"
+            }
+          ],
+          "reason": "查询既有酒店地址；地址值不能从未来结果预填。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "名称"
+          ],
+          "value": "常熟有意思连锁酒店",
+          "quotes": [
+            {
+              "event_id": "history_1",
+              "text": "常熟有意思连锁酒店"
+            }
+          ],
+          "reason": "查询既有酒店地址；地址值不能从未来结果预填。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "房型"
+          ],
+          "value": "标准间",
+          "quotes": [
+            {
+              "event_id": "history_2",
+              "text": "标准间"
+            }
+          ],
+          "reason": "查询既有酒店地址；地址值不能从未来结果预填。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields",
+            0
+          ],
+          "value": "地址",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "地址"
+            }
+          ],
+          "reason": "查询既有酒店地址；地址值不能从未来结果预填。"
+        }
+      ],
+      "review": "查询既有酒店地址；地址值不能从未来结果预填。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_hotel",
+          "arguments": {
+            "constraints": {
+              "星级": "1",
+              "区域": "常熟",
+              "名称": "常熟有意思连锁酒店",
+              "房型": "标准间"
+            },
+            "requested_fields": [
+              "地址"
+            ]
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "地址",
+          "value": "常熟红旗北路12号",
+          "reply_quote": "常熟红旗北路12号"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的地址，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1204",
+      "input": "modern",
+      "line": 1204,
+      "retain_history": true,
+      "evidence": [],
+      "review": "用户明确道别且没有新任务，[]表示本轮结束，不是拒绝执行。",
+      "no_call_reason": "user_closes_conversation"
+    },
+    {
+      "id": "R1220",
+      "input": "modern",
+      "line": 1220,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "年级"
+          ],
+          "value": "五年级",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "五年级"
+            }
+          ],
+          "reason": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "科目"
+          ],
+          "value": "语文",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "语文"
+            }
+          ],
+          "reason": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "每周"
+          ],
+          "value": "日",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "周日"
+            }
+          ],
+          "reason": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "时段"
+          ],
+          "value": "下午",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "下午"
+            }
+          ],
+          "reason": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "吴中区",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "吴中区"
+            }
+          ],
+          "reason": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好，我家孩子在上小学五年级，请你帮我查找一个在吴中区的语文辅导班，最好是周日下午的。"
+            }
+          ],
+          "reason": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。"
+        }
+      ],
+      "review": "五年级、语文、吴中区明确；周日下午是优先偏好，可用于首轮搜索，但不能固化为永不放宽的硬约束。删去用户未请求的班号字段，查找默认返回记录身份。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_tutoring",
+          "arguments": {
+            "constraints": {
+              "年级": "五年级",
+              "科目": "语文",
+              "每周": "日",
+              "时段": "下午",
+              "区域": "吴中区"
+            },
+            "requested_fields": []
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "班号",
+          "value": "PC5P05068",
+          "reply_quote": "PC5P05068"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的班号，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1226",
+      "input": "modern",
+      "line": 1226,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "工业园区",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "工业园区"
+            }
+          ],
+          "reason": "工业园区和粤菜直接来自用户；好吃不转换为凭空指定的评分阈值。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "菜系"
+          ],
+          "value": "粤菜",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "粤菜"
+            }
+          ],
+          "reason": "工业园区和粤菜直接来自用户；好吃不转换为凭空指定的评分阈值。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好，我是外地来苏州的，工业园区有好吃的粤菜餐厅吗？"
+            }
+          ],
+          "reason": "工业园区和粤菜直接来自用户；好吃不转换为凭空指定的评分阈值。"
+        }
+      ],
+      "review": "工业园区和粤菜直接来自用户；好吃不转换为凭空指定的评分阈值。",
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "名称",
+          "value": "臻品粤茶餐厅",
+          "reply_quote": "臻品粤茶餐厅"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的名称，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1227",
+      "input": "modern",
+      "line": 1227,
+      "retain_history": true,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "工业园区",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "工业园区"
+            }
+          ],
+          "reason": "这里指上一轮餐厅；本轮同时请求评分和人均，不能漏字段。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "菜系"
+          ],
+          "value": "粤菜",
+          "quotes": [
+            {
+              "event_id": "history_0",
+              "text": "粤菜"
+            }
+          ],
+          "reason": "这里指上一轮餐厅；本轮同时请求评分和人均，不能漏字段。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "名称"
+          ],
+          "value": "臻品粤茶餐厅",
+          "quotes": [
+            {
+              "event_id": "history_1",
+              "text": "臻品粤茶餐厅"
+            }
+          ],
+          "reason": "这里指上一轮餐厅；本轮同时请求评分和人均，不能漏字段。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields",
+            0
+          ],
+          "value": "人均消费",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "人均消费"
+            }
+          ],
+          "reason": "这里指上一轮餐厅；本轮同时请求评分和人均，不能漏字段。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields",
+            1
+          ],
+          "value": "评分",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "评分"
+            }
+          ],
+          "reason": "这里指上一轮餐厅；本轮同时请求评分和人均，不能漏字段。"
+        }
+      ],
+      "review": "这里指上一轮餐厅；本轮同时请求评分和人均，不能漏字段。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_restaurant",
+          "arguments": {
+            "constraints": {
+              "区域": "工业园区",
+              "菜系": "粤菜",
+              "名称": "臻品粤茶餐厅"
+            },
+            "requested_fields": [
+              "人均消费",
+              "评分"
+            ]
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "评分",
+          "value": 4.4,
+          "reply_quote": "4.4分"
+        },
+        {
+          "record_index": 0,
+          "field": "人均消费",
+          "value": "99元",
+          "reply_quote": "99元"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的评分、人均消费，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1236",
+      "input": "modern",
+      "line": 1236,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "类别"
+          ],
+          "value": "综合医院",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "综合医院"
+            }
+          ],
+          "reason": "综合医院及泌尿外科目录查询；只修正类别分词空格，不提供诊断。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "重点科室"
+          ],
+          "value": "泌尿外科",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "泌尿外科"
+            }
+          ],
+          "reason": "综合医院及泌尿外科目录查询；只修正类别分词空格，不提供诊断。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好，家人身体不太舒服，需要去看泌尿外科，你能帮我任意找一家擅长这方面的综合医院吗？"
+            }
+          ],
+          "reason": "综合医院及泌尿外科目录查询；只修正类别分词空格，不提供诊断。"
+        }
+      ],
+      "review": "综合医院及泌尿外科目录查询；只修正类别分词空格，不提供诊断。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_hospital",
+          "arguments": {
+            "constraints": {
+              "类别": "综合医院",
+              "重点科室": "泌尿外科"
+            },
+            "requested_fields": []
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "名称",
+          "value": "苏州大学附属第一医院",
+          "reply_quote": "苏州大学附属第一医院"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的名称，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1284",
+      "input": "modern",
+      "line": 1284,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "工业园区",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "工业园区"
+            }
+          ],
+          "reason": "区域与情侣约会来自原句；修复分词空格，不采纳来源的暗示语。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "最适合人群"
+          ],
+          "value": "情侣约会",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "情侣约会"
+            }
+          ],
+          "reason": "区域与情侣约会来自原句；修复分词空格，不采纳来源的暗示语。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好，我想在工业园区找一个适合情侣约会的地方玩，求推荐。"
+            }
+          ],
+          "reason": "区域与情侣约会来自原句；修复分词空格，不采纳来源的暗示语。"
+        }
+      ],
+      "review": "区域与情侣约会来自原句；修复分词空格，不采纳来源的暗示语。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_attraction",
+          "arguments": {
+            "constraints": {
+              "区域": "工业园区",
+              "最适合人群": "情侣约会"
+            },
+            "requested_fields": []
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ]
+    },
+    {
+      "id": "R1339",
+      "input": "modern",
+      "line": 1339,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "消费"
+          ],
+          "value": "中等",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "中等"
+            }
+          ],
+          "reason": "消费中等和商业中心分别对应消费、景点类型；主观好坏不用于事实解说。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "景点类型"
+          ],
+          "value": "商业中心",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "商业中心"
+            }
+          ],
+          "reason": "消费中等和商业中心分别对应消费、景点类型；主观好坏不用于事实解说。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "我来苏州办事儿，顺便准备逛逛景点，我想问问有没有消费在中等的商业中心推荐一下。"
+            }
+          ],
+          "reason": "消费中等和商业中心分别对应消费、景点类型；主观好坏不用于事实解说。"
+        }
+      ],
+      "review": "消费中等和商业中心分别对应消费、景点类型；主观好坏不用于事实解说。"
+    },
+    {
+      "id": "R1347",
+      "input": "modern",
+      "line": 1347,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "最适合人群"
+          ],
+          "value": "家庭亲子",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "家庭亲子"
+            }
+          ],
+          "reason": "吴中区与家庭亲子明确，不生成年龄或门票预算；主观称赞不纳入解说。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "吴中区",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "吴中区"
+            }
+          ],
+          "reason": "吴中区与家庭亲子明确，不生成年龄或门票预算；主观称赞不纳入解说。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好！我想在吴中区找一个景点，一定要适合家庭亲子的那种，麻烦你帮我查找一个呀！"
+            }
+          ],
+          "reason": "吴中区与家庭亲子明确，不生成年龄或门票预算；主观称赞不纳入解说。"
+        }
+      ],
+      "review": "吴中区与家庭亲子明确，不生成年龄或门票预算；主观称赞不纳入解说。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_attraction",
+          "arguments": {
+            "constraints": {
+              "最适合人群": "家庭亲子",
+              "区域": "吴中区"
+            },
+            "requested_fields": []
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ]
+    },
+    {
+      "id": "R1354",
+      "input": "modern",
+      "line": 1354,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "名称"
+          ],
+          "value": "金鸡湖景区",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "金鸡湖景区"
+            }
+          ],
+          "reason": "给定金鸡湖景区询问特色，映射特点字段；名称还原为原句连写形式。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields",
+            0
+          ],
+          "value": "特点",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "特色"
+            }
+          ],
+          "reason": "给定金鸡湖景区询问特色，映射特点字段；名称还原为原句连写形式。"
+        }
+      ],
+      "review": "给定金鸡湖景区询问特色，映射特点字段；名称还原为原句连写形式。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_attraction",
+          "arguments": {
+            "constraints": {
+              "名称": "金鸡湖景区"
+            },
+            "requested_fields": [
+              "特点"
+            ]
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ],
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "特点",
+          "value": "看东方之门等高楼，坐摩天轮，乘船夜游，感受苏州现代化的一面。",
+          "reply_quote": "看东方之门等高楼，坐摩天轮，乘船夜游，感受苏州现代化的一面。"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的特点，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1358",
+      "input": "modern",
+      "line": 1358,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "星级"
+          ],
+          "value": "1",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "1星级"
+            }
+          ],
+          "reason": "吴江与1星级明确，先查询这些约束；缺钱不虚构成房费数字上限，来源推荐确为便宜档。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "吴江",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "吴江"
+            }
+          ],
+          "reason": "吴江与1星级明确，先查询这些约束；缺钱不虚构成房费数字上限，来源推荐确为便宜档。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "最近想去苏州旅行，咨询一下苏州吴江这区附近有没有1星级的酒店呢？我比较缺钱。"
+            }
+          ],
+          "reason": "吴江与1星级明确，先查询这些约束；缺钱不虚构成房费数字上限，来源推荐确为便宜档。"
+        }
+      ],
+      "review": "吴江与1星级明确，先查询这些约束；缺钱不虚构成房费数字上限，来源推荐确为便宜档。",
+      "narration_facts": [
+        {
+          "record_index": 0,
+          "field": "名称",
+          "value": "苏州明月快捷酒店",
+          "reply_quote": "苏州明月快捷酒店"
+        }
+      ],
+      "narration_review": "逐句核对原回复，仅表达当前结果中的名称，未新增数值、地址或执行状态；全部返回记录另作约束校验。"
+    },
+    {
+      "id": "R1364",
+      "input": "modern",
+      "line": 1364,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "区域"
+          ],
+          "value": "姑苏区",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "姑苏区"
+            }
+          ],
+          "reason": "姑苏区与情侣约会来自用户，移除标注分词空格；主观评价不纳入解说。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "constraints",
+            "最适合人群"
+          ],
+          "value": "情侣约会",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "情侣约会"
+            }
+          ],
+          "reason": "姑苏区与情侣约会来自用户，移除标注分词空格；主观评价不纳入解说。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "requested_fields"
+          ],
+          "value": [],
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "你好，我来苏州旅游，想去姑苏区找个适合情侣约会的景点。"
+            }
+          ],
+          "reason": "姑苏区与情侣约会来自用户，移除标注分词空格；主观评价不纳入解说。"
+        }
+      ],
+      "review": "姑苏区与情侣约会来自用户，移除标注分词空格；主观评价不纳入解说。",
+      "reviewed_calls": [
+        {
+          "name": "public_risawoz_attraction",
+          "arguments": {
+            "constraints": {
+              "区域": "姑苏区",
+              "最适合人群": "情侣约会"
+            },
+            "requested_fields": []
+          }
+        }
+      ],
+      "edits": [
+        "修复标注分词或多余请求字段，source_view保留原始调用。"
+      ]
+    },
+    {
+      "id": "T0001",
+      "input": "toolace",
+      "line": 1,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "word"
+          ],
+          "value": "inspiration",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "inspiration"
+            }
+          ],
+          "reason": "关键字从引号中逐字提取，工具按关键字查引语。"
+        }
+      ],
+      "review": "关键字从引号中逐字提取，工具按关键字查引语。"
+    },
+    {
+      "id": "T0003",
+      "input": "toolace",
+      "line": 3,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [],
+          "value": {},
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "Hey, can you show me the list of football competitions that are currently televised in Peru?"
+            }
+          ],
+          "reason": "工具本身限定秘鲁电视足球赛事，无需添加国家参数。"
+        }
+      ],
+      "review": "工具本身限定秘鲁电视足球赛事，无需添加国家参数。"
+    },
+    {
+      "id": "T0005",
+      "input": "toolace",
+      "line": 5,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "page"
+          ],
+          "value": 1,
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "first page"
+            }
+          ],
+          "reason": "first page转换整数1，未来语义由工具定义，不猜日期。"
+        }
+      ],
+      "review": "first page转换整数1，未来语义由工具定义，不猜日期。"
+    },
+    {
+      "id": "T0008",
+      "input": "toolace",
+      "line": 8,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "nphrase"
+          ],
+          "value": 2,
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "two phrases"
+            }
+          ],
+          "reason": "two phrases转换整数2，schema说明只接受1或2。"
+        }
+      ],
+      "review": "two phrases转换整数2，schema说明只接受1或2。"
+    },
+    {
+      "id": "T0021",
+      "input": "toolace",
+      "line": 21,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "srcPath"
+          ],
+          "value": "/documents/my_notes.md",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "/documents/my_notes.md"
+            }
+          ],
+          "reason": "路径与Google Drive分别进入srcPath和storage，不增删路径字符。源描述有string措辞瑕疵，但API名、路径示例与请求一致。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "storage"
+          ],
+          "value": "Google Drive",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "Google Drive"
+            }
+          ],
+          "reason": "路径与Google Drive分别进入srcPath和storage，不增删路径字符。源描述有string措辞瑕疵，但API名、路径示例与请求一致。"
+        }
+      ],
+      "review": "路径与Google Drive分别进入srcPath和storage，不增删路径字符。源描述有string措辞瑕疵，但API名、路径示例与请求一致。"
+    },
+    {
+      "id": "T0025",
+      "input": "toolace",
+      "line": 25,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [],
+          "value": {},
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "Hey, could you get me a list of all the tags in the system? I need to see what's available. Thanks!"
+            }
+          ],
+          "reason": "所有标签对应无参数工具；空参数对象不等于空调用。"
+        }
+      ],
+      "review": "所有标签对应无参数工具；空参数对象不等于空调用。"
+    },
+    {
+      "id": "T0029",
+      "input": "toolace",
+      "line": 29,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "url"
+          ],
+          "value": "https://www.facebook.com/GreenEarthGrocery",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "https://www.facebook.com/GreenEarthGrocery"
+            }
+          ],
+          "reason": "Facebook URL原样进入url，不把业务名称代替URL。"
+        }
+      ],
+      "review": "Facebook URL原样进入url，不把业务名称代替URL。"
+    },
+    {
+      "id": "T0031",
+      "input": "toolace",
+      "line": 31,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "page"
+          ],
+          "value": 1,
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "1"
+            }
+          ],
+          "reason": "topic逐字提取；page 1使用number值1.0合法。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "topic"
+          ],
+          "value": "artificial intelligence",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "artificial intelligence"
+            }
+          ],
+          "reason": "topic逐字提取；page 1使用number值1.0合法。"
+        }
+      ],
+      "review": "topic逐字提取；page 1使用number值1.0合法。"
+    },
+    {
+      "id": "T0033",
+      "input": "toolace",
+      "line": 33,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "symbol"
+          ],
+          "value": "AAPL",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "AAPL"
+            }
+          ],
+          "reason": "用户已明确AAPL，不靠模型将公司名猜成代码。"
+        }
+      ],
+      "review": "用户已明确AAPL，不靠模型将公司名猜成代码。"
+    },
+    {
+      "id": "T0036",
+      "input": "toolace",
+      "line": 36,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "limit"
+          ],
+          "value": 5,
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "5"
+            }
+          ],
+          "reason": "top 5映射整数limit=5；today由工具定义，不猜日期。"
+        }
+      ],
+      "review": "top 5映射整数limit=5；today由工具定义，不猜日期。"
+    },
+    {
+      "id": "T0037",
+      "input": "toolace",
+      "line": 37,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "hashtag"
+          ],
+          "value": "#Halloween2026",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "#Halloween2026"
+            }
+          ],
+          "reason": "hashtag保留#及2026，不转换成日期。"
+        }
+      ],
+      "review": "hashtag保留#及2026，不转换成日期。"
+    },
+    {
+      "id": "T0043",
+      "input": "toolace",
+      "line": 43,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "currency"
+          ],
+          "value": "USD",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "USD"
+            }
+          ],
+          "reason": "Venice和USD分别对应location及currency，不声称获得真实租金。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "location"
+          ],
+          "value": "Venice",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "Venice"
+            }
+          ],
+          "reason": "Venice和USD分别对应location及currency，不声称获得真实租金。"
+        }
+      ],
+      "review": "Venice和USD分别对应location及currency，不声称获得真实租金。"
+    },
+    {
+      "id": "T0047",
+      "input": "toolace",
+      "line": 47,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "url"
+          ],
+          "value": "https://pinterest.com/pin/123456789/",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "https://pinterest.com/pin/123456789/"
+            }
+          ],
+          "reason": "给定URL原样传入，保留末尾斜杠。"
+        }
+      ],
+      "review": "给定URL原样传入，保留末尾斜杠。"
+    },
+    {
+      "id": "T0055",
+      "input": "toolace",
+      "line": 55,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "folder"
+          ],
+          "value": "work_docs",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "work_docs"
+            }
+          ],
+          "reason": "名称、目录与存储分别映射，不自行加.pdf后缀。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "name"
+          ],
+          "value": "project_overview",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "project_overview"
+            }
+          ],
+          "reason": "名称、目录与存储分别映射，不自行加.pdf后缀。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "storage"
+          ],
+          "value": "Google Drive",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "Google Drive"
+            }
+          ],
+          "reason": "名称、目录与存储分别映射，不自行加.pdf后缀。"
+        }
+      ],
+      "review": "名称、目录与存储分别映射，不自行加.pdf后缀。"
+    },
+    {
+      "id": "T0056",
+      "input": "toolace",
+      "line": 56,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "postcode"
+          ],
+          "value": "EC1A 1BB",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "EC1A 1BB"
+            }
+          ],
+          "reason": "邮编EC1A 1BB中间空格必须保留。"
+        }
+      ],
+      "review": "邮编EC1A 1BB中间空格必须保留。"
+    },
+    {
+      "id": "T0058",
+      "input": "toolace",
+      "line": 58,
+      "retain_history": false,
+      "evidence": [
+        {
+          "call_index": 0,
+          "argument_path": [
+            "location"
+          ],
+          "value": "Brazil",
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "Brazil"
+            }
+          ],
+          "reason": "Brazil与2025映射location及year；number型2025.0合法，只核对调用不证明赛事事实。"
+        },
+        {
+          "call_index": 0,
+          "argument_path": [
+            "year"
+          ],
+          "value": 2025,
+          "quotes": [
+            {
+              "event_id": "query",
+              "text": "2025"
+            }
+          ],
+          "reason": "Brazil与2025映射location及year；number型2025.0合法，只核对调用不证明赛事事实。"
+        }
+      ],
+      "review": "Brazil与2025映射location及year；number型2025.0合法，只核对调用不证明赛事事实。"
+    }
+  ],
+  "gaps": [
+    "数据上传检查的规则配置、正整数与小数等业务语义，尚未形成合格公开任务闭环。",
+    "澄清、拒绝、局部等待、部分执行、失败重试、取消和恢复仍缺合格样板；唯一无调用例仅为道别。",
+    "4个多调用批次仅覆盖同工具独立搜索，跨工具依赖和ToolResult到下一批调用仍需补。",
+    "检索仅正工具对；核实负例、no-match及10/20/50/100/200规模尚未完成。",
+    "Confidence待实际模型结果；解说仅依历史来源快照，不证明真实服务可执行。",
+    "正式训练需绑定批量runtime、serializer/scorer和family split；本包仅开发诊断，不进入锁定Eval或词表训练。",
+    "词表影响报告与CPT能力衔接证据仍待完成，本包不单独批准冻结CPT。"
+  ]
+}

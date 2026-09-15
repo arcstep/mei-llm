@@ -13,7 +13,7 @@ import sqlite3
 import sys
 import time
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 
 SEED = 20260914
 SPLIT_BUCKETS = ((50, "test"), (100, "calibration"), (200, "dev"))
@@ -162,7 +162,7 @@ def _eval_hashes() -> set[str]:
             if len(norm) >= 8:
                 values.add(hashlib.sha256(norm.encode()).hexdigest())
 
-    for path in sorted((ROOT / "corpus/eval-lock").glob("*/banks/*.jsonl")):
+    for path in sorted((resolve_path(ROOT / "corpus/eval-lock")).glob("*/banks/*.jsonl")):
         with path.open(encoding="utf-8", errors="strict") as handle:
             for line in handle:
                 if line.strip():
@@ -219,10 +219,11 @@ def _progress(db: sqlite3.Connection, out: Path, started: float, status: str) ->
 
 
 def encode_inventory(config: dict, out: Path, db: sqlite3.Connection, tokenizer) -> None:
-    plan = json.loads((ROOT / config["corpus_plan"]).read_text(encoding="utf-8"))
+    plan = json.loads((resolve_path(ROOT / config["corpus_plan"])).read_text(encoding="utf-8"))
     domain_for = {source: item["domain"] for item in plan["domains"] for source in item["source_ids"]}
-    train_groups = _sample_groups(ROOT / config["tokenizer_train_sample"])
-    dev_groups = _sample_groups(ROOT / config["tokenizer_dev_sample"])
+    reserved_sources = set(plan.get("reserved_source_ids", []))
+    train_groups = _sample_groups(resolve_path(ROOT / config["tokenizer_train_sample"]))
+    dev_groups = _sample_groups(resolve_path(ROOT / config["tokenizer_dev_sample"]))
     overlap = train_groups & dev_groups
     if overlap:
         raise ValueError(f"tokenizer train/dev association overlap: {sorted(overlap)[:5]}")
@@ -233,12 +234,12 @@ def encode_inventory(config: dict, out: Path, db: sqlite3.Connection, tokenizer)
     for file_index, spec in enumerate(plan["candidate_files"]):
         existing = db.execute("SELECT status,bin_path,bin_sha FROM input_files WHERE file_index=?", (file_index,)).fetchone()
         if existing and existing[0] == "complete":
-            bin_path = ROOT / existing[1]
+            bin_path = resolve_path(ROOT / existing[1])
             if not bin_path.is_file() or digest(bin_path) != existing[2]:
                 raise ValueError(f"completed encoded candidate changed: {bin_path}")
             continue
         rel = spec["file"]
-        path = ROOT / rel
+        path = resolve_path(ROOT / rel)
         tmp = out / "encoded-candidates" / f"file-{file_index:04d}.bin.tmp"
         final = out / "encoded-candidates" / f"file-{file_index:04d}.bin"
         tmp.unlink(missing_ok=True); final.unlink(missing_ok=True)
@@ -255,6 +256,8 @@ def encode_inventory(config: dict, out: Path, db: sqlite3.Connection, tokenizer)
                     records += 1
                     row, text, text_sha = _strict_row(raw, path, row_number)
                     source = str(row.get("source_id") or "")
+                    if source in reserved_sources:
+                        continue
                     domain = domain_for.get(source)
                     if not domain:
                         raise ValueError(f"unmapped source {source!r} at {path}:{row_number}")
@@ -280,6 +283,8 @@ def encode_inventory(config: dict, out: Path, db: sqlite3.Connection, tokenizer)
                     unique += 1; tokens += length; offset += length
                     total_now = db.execute("SELECT coalesce(sum(tokens),0) FROM input_files WHERE status='complete'").fetchone()[0] + tokens
                     if total_now >= next_report:
+                        if shutil.disk_usage(out).free < 100 * 1024**3:
+                            raise RuntimeError("100 GiB free disk reserve reached during encoding")
                         db.commit(); db.execute("BEGIN")
                         _progress(db, out, started, "encoding")
                         next_report = (total_now // 10_000_000 + 1) * 10_000_000
@@ -316,7 +321,7 @@ def _allocate(capacities: dict[str, int], target: int) -> dict[str, int]:
 
 
 def select_records(config: dict, db: sqlite3.Connection) -> dict:
-    plan = json.loads((ROOT / config["corpus_plan"]).read_text(encoding="utf-8"))
+    plan = json.loads((resolve_path(ROOT / config["corpus_plan"])).read_text(encoding="utf-8"))
     db.execute("DELETE FROM selected")
     allocation = []
     for phase_spec in plan["phases"]:
@@ -325,7 +330,15 @@ def select_records(config: dict, db: sqlite3.Connection) -> dict:
             rows = db.execute("SELECT source,language,sum(token_length) FROM records WHERE split='train' AND phase=? AND domain=? GROUP BY source,language", (phase,domain)).fetchall()
             cells = {(source,language): int(tokens) for source,language,tokens in rows}
             cell_targets: dict[tuple[str,str],int] = {}
-            if domain == "foundation":
+            language_weights = plan.get("language_weights", {}).get(domain)
+            if language_weights is not None:
+                if not language_weights or any(v <= 0 for v in language_weights.values()):
+                    raise ValueError("language weights must be positive")
+                lang_targets = _allocate({k: int(v) * requested for k, v in language_weights.items()}, requested)
+                for language, lang_target in lang_targets.items():
+                    subset = {source: tokens for (source,lang),tokens in cells.items() if lang == language}
+                    for source,target in _allocate(subset,lang_target).items(): cell_targets[(source,language)] = target
+            elif domain == "foundation":
                 lang_targets = {"zh_hans": round(requested*.8), "zh_hant": round(requested*.1)}
                 lang_targets["en"] = requested - sum(lang_targets.values())
                 for language, lang_target in lang_targets.items():
@@ -359,14 +372,35 @@ def _copy_tokens(source_handle, source_path: Path, source_offset: int, length: i
     target_handle.write(payload); target_sha.update(payload)
 
 
+def rounded_stage_quotas(source_total: dict, targets: list[int], seq_len: int = 2048) -> dict:
+    """Allocate whole windows, preserving unique capacity and reporting real exposure.
+
+    The existing sampler counts complete windows. Round targets up to windows
+    explicitly instead of advertising exact quotas that it would overrun.
+    """
+    if len(targets) != 3 or any(type(t) is not int or t <= 0 for t in targets):
+        raise ValueError("three positive integer stage targets required")
+    available = {s: max(0, (int(n)-1)//seq_len) for s,n in source_total.items()}
+    wanted = [(t+seq_len-1)//seq_len for t in targets]
+    if sum(wanted) > sum(available.values()):
+        raise ValueError("insufficient unique window capacity; repetition forbidden")
+    result = {s: {} for s in available}
+    for phase, target in enumerate(wanted, 1):
+        allocated = _allocate(available, target)
+        for source, n in allocated.items():
+            result[source][phase] = n*seq_len
+            available[source] -= n
+    return result
+
+
 def materialize_release(config: dict, out: Path, db: sqlite3.Connection, selection: dict, tokenizer_manifest: Path) -> dict:
-    release = ROOT / config["release_dir"]
+    release = resolve_path(ROOT / config["release_dir"])
     staging = release.with_name("." + release.name + ".staging")
     if release.exists():
         raise FileExistsError(release)
     if staging.exists(): shutil.rmtree(staging)
     (staging / "tokens").mkdir(parents=True)
-    file_bins = {row[0]: ROOT / row[1] for row in db.execute("SELECT file_index,bin_path FROM input_files WHERE status='complete'")}
+    file_bins = {row[0]: resolve_path(ROOT / row[1]) for row in db.execute("SELECT file_index,bin_path FROM input_files WHERE status='complete'")}
     sources = [row[0] for row in db.execute("SELECT DISTINCT source FROM records ORDER BY source")]
     token_files=[]; source_phase=defaultdict(Counter); source_total=Counter()
     db.execute("DELETE FROM selected_offsets")
@@ -413,6 +447,8 @@ def materialize_release(config: dict, out: Path, db: sqlite3.Connection, selecti
         q2=(int(source_phase[(source,2)]["tokens"])//2048)*2048
         q3=max(0,int(source_total[source])-1-q1-q2)
         aligned[source]={1:q1,2:q2,3:q3}
+    if config.get("stage_target_tokens"):
+        aligned = rounded_stage_quotas(source_total, config["stage_target_tokens"])
     phases=[]; cumulative=0
     for phase in (1,2,3):
         quotas={source:aligned[source][phase] for source in sources if aligned[source][phase]}
@@ -437,7 +473,7 @@ def materialize_release(config: dict, out: Path, db: sqlite3.Connection, selecti
     tokenizer_release=json.loads(tokenizer_manifest.read_text(encoding="utf-8"))
     split_counts=[dict(zip(("split","domain","language","records","tokens"),row)) for row in db.execute("SELECT split,domain,language,count(*),sum(token_length) FROM records GROUP BY split,domain,language ORDER BY split,domain,language")]
     selected_counts=[dict(zip(("phase","domain","language","records","tokens"),row)) for row in db.execute("SELECT s.phase,r.domain,r.language,count(*),sum(r.token_length) FROM records r JOIN selected s ON s.record_id=r.id GROUP BY s.phase,r.domain,r.language ORDER BY s.phase,r.domain,r.language")]
-    books={"candidate_batch_old_tokenizer":json.loads((ROOT/config["corpus_plan"]).read_text())["candidate_total_tokens"],
+    books={"candidate_batch_old_tokenizer":json.loads((resolve_path(ROOT/config["corpus_plan"])).read_text()).get("candidate_total_tokens"),
            "eligible_unique_new_tokenizer":db.execute("SELECT coalesce(sum(token_length),0) FROM records WHERE split!='existing_eval_overlap'").fetchone()[0],
            "selected_net_new_tokenizer":sum(source_total.values()),"planned_exposure":cumulative}
     manifest={"schema":"mei-v12-cpt-input-release-v1","release_id":config["release_id"],"status":"validating","tokenizer":{
@@ -450,6 +486,14 @@ def materialize_release(config: dict, out: Path, db: sqlite3.Connection, selecti
         "format":{"dtype":"little-endian uint16","document_boundaries":"BOS/EOS in every indexed record","loss_mask":"all document tokens; runtime windows derive padding masks","long_content":"retained and packed across 2048-token windows; never rejected for length"},
         "limitations":["source-level public-data rights metadata is preserved; this freeze is not a commercial rights clearance","known eval isolation checks exact normalized records and lines plus association groups; semantic paraphrase leakage remains an evaluation audit task","CPT reserves are base-language diagnostics, not substitutes for separately frozen SFT/task eval"],
         "current_mutated":False,"a10_started":False,"cpt_started":False}
+    if config.get("stage_target_tokens"):
+        manifest["stage_partition"] = {
+            "requested_new_exposure":config["stage_target_tokens"],
+            "actual_new_exposure":[p["stage_tokens"] for p in phases],
+            "rule":"whole 2048-token windows; stable source cursors; no repeated exposure",
+            "record_phase_field":"original physical selection bucket, not the new exposure stage",
+            "unexposed_selected_tokens":sum(source_total.values())-cumulative,
+        }
     tokenizer_model = tokenizer_manifest.parent / tokenizer_release["model_file"]
     tokenizer_model_target = staging / tokenizer_release["model_file"]
     shutil.copyfile(tokenizer_model, tokenizer_model_target)
@@ -485,7 +529,7 @@ def validate_sampler(config: dict, release: Path) -> dict:
         plans.append({"stage":stage["id"],"windows":len(p1),"plan_sha256":hashlib.sha256("\n".join(p1).encode()).hexdigest(),"source_windows":dict(Counter(p1))})
     first=schedule["curriculum"][0]; names=sorted(first["sources"])
     sample_names=names[:min(5,len(names))]
-    sources={name:PackedTokenSource([ROOT/schedule["sources"][name]["paths"][0]],2048,0) for name in sample_names}
+    sources={name:PackedTokenSource([resolve_path(ROOT/schedule["sources"][name]["paths"][0])],2048,0) for name in sample_names}
     quotas={name:min(int(first["sources"][name]["token_quota"]),2048*1600) for name in sample_names}
     a=QuotaPackedSources(sources,quotas,seed=SEED,seq_len=2048,stage_id="replay")
     before=a.take_windows(1024); state=a.state_dict(); expected=a.take_windows(1024)
@@ -502,10 +546,10 @@ def validate_sampler(config: dict, release: Path) -> dict:
 
 
 def run(config: dict, out: Path) -> dict:
-    out = (ROOT / out).resolve() if not out.is_absolute() else out.resolve()
+    out = (resolve_path(ROOT / out)).resolve() if not out.is_absolute() else out.resolve()
     if int(config.get("seed",0)) != SEED: raise ValueError("split seed must be 20260914")
     if shutil.disk_usage(ROOT).free < 100*1024**3: raise ValueError("100 GiB disk reserve reached")
-    tokenizer_manifest=(ROOT/config["tokenizer_manifest"]).resolve()
+    tokenizer_manifest=(resolve_path(ROOT/config["tokenizer_manifest"])).resolve()
     sys.path.insert(0,str(ROOT/"src/corpus-factory/sources"))
     from source_manager import load_tokenizer
     tokenizer=load_tokenizer(tokenizer_manifest)
@@ -517,9 +561,36 @@ def run(config: dict, out: Path) -> dict:
     else:
         _atomic_json(lock,{"schema":"mei-v12-input-run-v1","config_sha256":config_hash,"status":"active"})
         shutil.copyfile(__file__,out/"implementation.py.snapshot")
+    cache = config.get("reuse_encoded_run")
+    if cache and not (out/"index.sqlite").exists():
+        previous = resolve_path(ROOT/cache)
+        previous_config = json.loads(resolve_path(ROOT/config["reuse_encoded_config"]).read_text())
+        previous_lock = json.loads((previous/"RUN.json").read_text())
+        if hashlib.sha256(_json_bytes(previous_config)).hexdigest() != previous_lock["config_sha256"]:
+            raise ValueError("cached encoding config binding mismatch")
+        if digest(resolve_path(ROOT/previous_config["tokenizer_manifest"])) != digest(tokenizer_manifest):
+            raise ValueError("cached encoding uses another tokenizer")
+        old = sqlite3.connect(f"file:{previous/'index.sqlite'}?mode=ro", uri=True)
+        bins = old.execute("SELECT bin_path,bin_sha,tokens,status FROM input_files").fetchall()
+        if not bins or any(row[3] != "complete" for row in bins):
+            raise ValueError("cached encoding is incomplete")
+        for name, expected, tokens, _ in bins:
+            path = resolve_path(ROOT/name)
+            if path.stat().st_size != tokens*2 or digest(path) != expected:
+                raise ValueError("cached token bytes mismatch: " + name)
+        temp_index = out/"index.sqlite.partial"
+        if temp_index.exists():
+            raise FileExistsError(temp_index)
+        target = sqlite3.connect(temp_index)
+        old.backup(target); target.close(); old.close()
+        temp_index.replace(out/"index.sqlite")
+        _atomic_json(out/"CACHED-ENCODING.json",{"run":cache,"config_sha256":previous_lock["config_sha256"],
+            "tokenizer_manifest_sha256":digest(tokenizer_manifest),"verified_files":len(bins),
+            "index_sha256":digest(out/"index.sqlite"),"original_run_mutated":False})
     db=sqlite3.connect(out/"index.sqlite",timeout=60); _schema(db)
-    encode_inventory(config,out,db,tokenizer)
-    release=ROOT/config["release_dir"]
+    if not cache:
+        encode_inventory(config,out,db,tokenizer)
+    release=resolve_path(ROOT/config["release_dir"])
     if release.exists():
         manifest=json.loads((release/"RELEASE.json").read_text(encoding="utf-8"))
         if manifest.get("release_id") != config["release_id"] or manifest.get("status") != "validating":
@@ -527,7 +598,14 @@ def run(config: dict, out: Path) -> dict:
         if manifest.get("tokenizer",{}).get("model_sha256") != tokenizer.model_sha256:
             raise ValueError("existing validating release uses another tokenizer")
     else:
-        selection=select_records(config,db)
+        if cache:
+            if not (out/"CACHED-ENCODING.json").exists():
+                raise ValueError("cached input reuse receipt missing")
+            selection={"reuse_selected_records":True,"run":cache}
+            if db.execute("SELECT count(*) FROM selected").fetchone()[0] == 0:
+                raise ValueError("no selected cached records")
+        else:
+            selection=select_records(config,db)
         _atomic_json(out/"selection.json",selection)
         manifest=materialize_release(config,out,db,selection,tokenizer_manifest)
     sampler=validate_sampler(config,release)

@@ -1,0 +1,17 @@
+{
+  "mode": "public_sft_scale_trial",
+  "seed": 20260914,
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+  "sources": {
+    "MOSS": {
+      "path": "corpus/pools/raw/2026-09-14-moss-003-with-tools-raw-r01/moss-003-sft-with-tools-no-text2image.zip",
+      "sha256": "4d4f57df0dd5ad1442b6c08ca69ec1a59705837bb9813e7aae3bd3a9e3adb085",
+      "count": 600
+    },
+    "ToolACE": {
+      "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tutorial-tool-content-20260913-v1/toolace/raw-99377c63fbe5425d01e6",
+      "sha256": "ba12c083fca7e8da48c67ad5b895e495447da7c66e39a2e19742c082e6cb537e",
+      "count": 400
+    }
+  }
+}

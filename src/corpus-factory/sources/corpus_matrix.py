@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 import shutil
 import opencc
-from profiling import ROOT,digest
+from profiling import resolve_path, ROOT,digest
 from source_manager import load_tokenizer,tokenizer_pointer
 
 DOMAINS={'web-hq-zh':'基础语言理解','wiki-zh':'基础语言理解','wiki-en':'基础语言理解',
@@ -53,7 +53,7 @@ def matrix(config,out):
     cells=defaultdict(Counter);by_source=defaultdict(Counter);totals=Counter();files=[];examples=defaultdict(list)
     with (out/'document-classification.jsonl').open('x') as ledger:
         for rel in config['pools']:
-            pool=ROOT/rel;manifest=json.loads((pool/'manifest.json').read_text())
+            pool=resolve_path(ROOT/rel);manifest=json.loads((pool/'manifest.json').read_text())
             countfile=pool/'token-count.json'
             count=json.loads(countfile.read_text()) if countfile.exists() else manifest
             expected_hash=count.get('tokenizer_model_sha256') or count.get('tokenizer',{}).get('model_sha256')

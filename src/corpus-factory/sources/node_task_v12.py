@@ -13,6 +13,8 @@ import sys
 import re
 from typing import Any, Iterable
 
+from profiling import resolve_path
+
 ROOT = Path(__file__).resolve().parents[3]
 
 BEHAVIORS = (
@@ -316,7 +318,7 @@ def verify_qat_references(cpt_release: Path, qat: dict[str, Any], out: Path) -> 
                     expected_sha = row["token_file_sha256"]
                     offset = int(row["output_offset"])
                 else:
-                    token_path = ROOT / row["bin_path"]
+                    token_path = resolve_path(ROOT / row["bin_path"])
                     expected_sha = row["bin_sha"]
                     offset = int(row["token_offset"])
                 key = str(token_path)
@@ -352,8 +354,8 @@ def source_capacity_audit(config: dict[str, Any], cpt_release: Path, out: Path) 
     db.close()
     rows = []
     for source in config.get("local_task_sources", []):
-        manifest_path = ROOT / source["manifest"]
-        data_path = ROOT / source["path"]
+        manifest_path = resolve_path(ROOT / source["manifest"])
+        data_path = resolve_path(ROOT / source["path"])
         if digest(manifest_path) != source["manifest_sha256"] or digest(data_path) != source["sha256"]:
             raise ValueError(f"local task source binding changed: {source['id']}")
         manifest = json.loads(manifest_path.read_text())
@@ -444,7 +446,7 @@ def task_candidate_pilots(config: dict[str, Any], out: Path) -> dict[str, Any]:
         if source["id"] not in {"toolace", "nemotron"}: continue
         parser = _toolace_views if source["id"] == "toolace" else _nemotron_views
         candidates = []; source_rows = 0; source_with_views = 0; calls = 0; rejected = Counter()
-        with (ROOT / source["path"]).open() as handle:
+        with (resolve_path(ROOT / source["path"])).open() as handle:
             for line in handle:
                 if source_rows >= 200: break
                 source_rows += 1; row = json.loads(line)
@@ -515,7 +517,7 @@ def cpt_alignment_audit(cpt_release: Path, tokenizer_model: Path, out: Path) -> 
                     WHERE r.split='dev' AND {spec['where']} ORDER BY r.priority,r.id LIMIT 2000"""
         for row in db.execute(query):
             if len(selected) >= 50: break
-            scanned += 1; item = dict(row); path = ROOT / item["bin_path"]
+            scanned += 1; item = dict(row); path = resolve_path(ROOT / item["bin_path"])
             ids = _read_tokens(path, int(item["token_offset"]), min(int(item["token_length"]), 2048))
             if ids and ids[0] == 2: ids = ids[1:]
             if ids and ids[-1] == 1: ids = ids[:-1]
@@ -581,7 +583,7 @@ def tokenizer_task_audit(tokenizer_model: Path, legacy_manifest: Path, cases: li
         boundary_rows.append({"text": text, "tokens": len(ids), "exact": decoded == text})
     lengths.sort(); p95 = lengths[min(len(lengths) - 1, int(len(lengths) * .95))] if lengths else 0
     cpt = json.loads(cpt_release.read_text()); runtime = cpt["tokenizer"]["runtime_audit"]
-    runtime_path = ROOT / runtime["path"]
+    runtime_path = resolve_path(ROOT / runtime["path"])
     runtime_ok = (digest(runtime_path) == runtime["sha256"] and runtime["real_browser_passed"]
                   and runtime["rust_passed"] and cpt["tokenizer"]["model_sha256"] == digest(tokenizer_model))
     cell_report = {}
@@ -609,8 +611,8 @@ def run(config: dict[str, Any], out: Path) -> dict[str, Any]:
     if out.exists(): raise ValueError("use a new output ID")
     if shutil.disk_usage(ROOT).free < int(config.get("reserve_free_bytes", 100 * 1024**3)):
         raise ValueError("disk reserve reached")
-    cpt = ROOT / config["cpt_release"]; tokenizer = ROOT / config["tokenizer_model"]
-    legacy = ROOT / config["legacy_sft_manifest"]
+    cpt = resolve_path(ROOT / config["cpt_release"]); tokenizer = resolve_path(ROOT / config["tokenizer_model"])
+    legacy = resolve_path(ROOT / config["legacy_sft_manifest"])
     expected = config["input_sha256"]
     actual = {"cpt_release": digest(cpt), "tokenizer_model": digest(tokenizer), "legacy_sft_manifest": digest(legacy)}
     if actual != expected: raise ValueError(f"input binding changed: {actual}")

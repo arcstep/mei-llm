@@ -9,14 +9,14 @@ import subprocess
 import sys
 import time
 
-from profiling import ROOT, digest
+from profiling import resolve_path, ROOT, digest
 from tokenizer_candidate import LosslessProcessor, rows, write_new
 
 
 def run(config: dict, out: Path) -> dict:
-    model = ROOT / config["model"]
-    candidate = ROOT / config["candidate_manifest"]
-    dev = ROOT / config["dev_jsonl"]
+    model = resolve_path(ROOT / config["model"])
+    candidate = resolve_path(ROOT / config["candidate_manifest"])
+    dev = resolve_path(ROOT / config["dev_jsonl"])
     if digest(model) != config["model_sha256"] or digest(candidate) != config["manifest_sha256"]:
         raise ValueError("candidate binding changed")
     out.mkdir(parents=True, exist_ok=False)

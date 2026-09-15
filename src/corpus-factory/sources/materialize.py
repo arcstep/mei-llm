@@ -10,7 +10,7 @@ from pathlib import Path
 import random
 import shutil
 
-from profiling import ROOT, digest, safe_id
+from profiling import resolve_path, ROOT, digest, safe_id
 
 
 def text_of(value):
@@ -35,7 +35,7 @@ def materialize(config, out):
     with (out/'implementation.py.snapshot').open('xb') as f: f.write(Path(__file__).read_bytes())
     excluded, exclusions = set(), []
     for rel in config.get('exclude_jsonl', []):
-        path = ROOT/rel
+        path = resolve_path(ROOT/rel)
         with lines(path) as f:
             for raw in f:
                 if raw.strip(): excluded.add(hashlib.sha256(text_of(json.loads(raw)).encode()).hexdigest())
@@ -68,7 +68,7 @@ def materialize(config, out):
                 chars += len(text); counts['written'] += 1
                 if tokenizer is not None: counts['tokens'] += len(tokenizer.encode_document(text))
             if source['kind'] == 'survey':
-                directory = ROOT/source['survey']
+                directory = resolve_path(ROOT/source['survey'])
                 lock_path = directory/'survey.json'
                 manifest = json.loads(lock_path.read_text())
                 evidence.append({'path':str(lock_path),'sha256':digest(lock_path)})
@@ -92,7 +92,7 @@ def materialize(config, out):
             elif source['kind'] == 'wiki_onlyinclude':
                 import re
                 import html
-                path = ROOT/source['path']
+                path = resolve_path(ROOT/source['path'])
                 if digest(path) != source['sha256']:
                     raise ValueError('translation source changed')
                 pages = {p['title']:p for p in json.loads(path.read_text())['query']['pages'].values()}
@@ -116,7 +116,7 @@ def materialize(config, out):
                      'translation':True,'scope':'all listed narrative chapters; prefaces not included',
                      'semantic_review':'pending','register':'historical translation'})
             elif source['kind'] == 'jsonl_stream':
-                path = ROOT/source['path']
+                path = resolve_path(ROOT/source['path'])
                 source_hash = digest(path)
                 evidence.append({'path':str(path),'sha256':source_hash,'sampling':'all supplied train records'})
                 with lines(path) as f:
@@ -132,7 +132,7 @@ def materialize(config, out):
                             'original_split':'train','source_line':original.get('source_line') if isinstance(original,dict) else None},
                             original.get('group_id') if isinstance(original,dict) else None)
             elif source['kind'] == 'jsonl_reservoir':
-                path = ROOT/source['path']; take = int(source['records'])
+                path = resolve_path(ROOT/source['path']); take = int(source['records'])
                 if not 1 <= take <= 1_000_000: raise ValueError('bounded raw batch requires 1..1M records')
                 rng = random.Random(f"{config.get('seed',20260913)}:{sid}")
                 reservoir=[]; total=0
@@ -178,7 +178,63 @@ def main(argv=None):
     parser.add_argument('--out',type=Path,required=True)
     parser.add_argument('--allow-network',action='store_true')
     args=parser.parse_args(argv)
+    args.config = resolve_path(args.config)
+    args.out = resolve_path(args.out)
     config=json.loads(args.config.read_text())
+    if config.get('mode') == 'public_sft_scale_review':
+        if args.allow_network:
+            raise ValueError('public SFT scale review is offline only')
+        from public_sft_scale_trial import review_run
+        print(json.dumps(review_run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'public_sft_scale_trial':
+        if args.allow_network:
+            raise ValueError('public SFT scale trial is offline only')
+        from public_sft_scale_trial import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'specimen_compatibility_audit':
+        if args.allow_network:
+            raise ValueError('specimen audit is offline only')
+        from specimen_compatibility_audit import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'qualified_sft_specimens':
+        if args.allow_network:
+            raise ValueError('qualified SFT specimens are offline only')
+        from qualified_sft_specimens import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'pool_layout_migration':
+        if args.allow_network:
+            raise ValueError('pool layout migration is offline only')
+        from pool_layout_migration import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'public_five_head_trial':
+        if args.allow_network:
+            raise ValueError('public five-head trial is offline only')
+        from public_five_head_trial import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'sft_candidate_triage':
+        if args.allow_network:
+            raise ValueError('SFT candidate triage is offline only')
+        from sft_candidate_triage import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'public_sft_multihead_trial':
+        if args.allow_network:
+            raise ValueError('public SFT multi-head trial is offline only')
+        from public_sft_multihead_trial import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
+    if config.get('mode') == 'v12_language_scope':
+        if args.allow_network:
+            raise ValueError('language scope preparation is offline only')
+        from v12_language_scope import run
+        print(json.dumps(run(config, args.out), ensure_ascii=False))
+        return 0
     if config.get('mode') == 'node_task_preparation':
         if args.allow_network:
             raise ValueError('node task preparation is offline only')

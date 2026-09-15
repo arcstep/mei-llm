@@ -1,0 +1,15 @@
+{
+  "mode": "v12_language_scope",
+  "tokenizer_id": "mei-24k-lossless-hans-en-20260914-v1",
+  "release_id": "mei-v12-cpt-hans-en-20260914-v1",
+  "plan_id": "mei-v12-hans-en-20260914-v1",
+  "reserved_source_ids": ["hk-traditional-foundation-expansion-20260913-v1", "opensubtitles-zh-TW", "chinese-author-novel-cc-by-4", "literature-zh-translation"],
+  "candidate_recipe": "src/corpus-factory/recipes/tokenizer-24k-lossless-20260914-v1.json",
+  "corpus_plan": "src/corpus-factory/recipes/v12-three-stage-corpus-20260914-v1.json",
+  "freeze_recipe": "src/corpus-factory/recipes/v12-inputs-freeze-20260914-v1.json",
+  "baseline_model": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-20260914-v2/tokenizer.model",
+  "pilots": {
+    "toolace": "corpus/pools/mei-v12-task-preparation-20260914-v6/sources/toolace-pilot-candidates.jsonl",
+    "nemotron": "corpus/pools/mei-v12-task-preparation-20260914-v6/sources/nemotron-pilot-candidates.jsonl"
+  }
+}

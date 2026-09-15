@@ -1,0 +1,106 @@
+{
+  "schema_revision": 1,
+  "purpose": "navigation_evidence_not_executable_training_binding",
+  "snapshot_date": "2026-09-14",
+  "generation": "v1.3",
+  "coverage": "explicitly listed evidence only; not a complete history or new quality audit",
+  "role": "current_hans_en_training_preparation",
+  "legacy_preparation_id_prefix": "mei-v12-",
+  "model_training_started": true,
+  "current_locked_inputs": {
+    "cpt": {
+      "path": "corpus/pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json",
+      "sha256": "9412f9563e26dd5e160b6ef0911b0891d719a6702fb9a8c32d3ad56530338f0f",
+      "exists": true
+    },
+    "qat": null,
+    "sft": null,
+    "eval": null
+  },
+  "tokenizer": {
+    "status": "adopted_preparation_release",
+    "evidence": {
+      "path": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+      "exists": true,
+      "sha256": "c26beca4c02381ec0239048f121fbe8bf79731081c6dd442213dc1176b993009"
+    }
+  },
+  "cpt": {
+    "status": "training",
+    "input_release": {
+      "path": "corpus/pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json",
+      "sha256": "9412f9563e26dd5e160b6ef0911b0891d719a6702fb9a8c32d3ad56530338f0f",
+      "exists": true
+    },
+    "selected_tokens": 2550204074,
+    "planned_exposure_tokens": 2500001792,
+    "stage_incremental_tokens": [
+      800000000,
+      800000000,
+      900001792
+    ],
+    "training_source_capsule": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-a10-cpt-preparation/source-r05",
+    "checkpoint_policy": "latest two plus three protected milestones; full state continuation",
+    "generation": "v1.3",
+    "server": "A10-aliyun",
+    "run": {
+      "run_dir": "/root/mei-cpt-v1.3/campaign/attempt-20260914T120410655685Z",
+      "config": {
+        "path": "/root/mei-cpt-v1.3/campaign/attempt-20260914T120410655685Z.json",
+        "sha256": "2ad9a7c4a7beac7b8b9d595fd8e40606d9e5cea6e94e3dcd3613d62d69a33f72"
+      }
+    },
+    "approved_config": {
+      "path": "/root/mei-cpt-v1.3/campaign/train-approved.json",
+      "sha256": "4140acb6c8b843d331f8ed40c60c765840288fa9e2635eae074ac1414b8ef105"
+    },
+    "started_at": "2026-09-14T20:04:10+08:00",
+    "effective_domain_quotas": {
+      "foundation": 1475923968,
+      "oral": 322109440,
+      "literature": 50608128,
+      "code_structure": 308236288,
+      "task_tools": 343123968
+    }
+  },
+  "task_preparation": {
+    "status": "candidate_not_formal_admission",
+    "evidence": [
+      {
+        "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/REPORT.json",
+        "exists": true,
+        "sha256": "e7946de66410ee97b9af8d2e018070fe2e38bceab4aed0c7516faff39757b9f3",
+        "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v6/REPORT.json"
+      },
+      {
+        "path": "corpus/pools/task-trials/2026-09-14-mei-public-five-head-trial-r02/REPORT.json",
+        "exists": true,
+        "sha256": "f88b0d9c17182d6394bf0a980f9382e996110e735f7cd872b234972b65c7b53c",
+        "legacy_path": "corpus/pools/mei-public-five-head-trial-20260914-v2/REPORT.json"
+      }
+    ],
+    "qat": "old tokenizer references pending migration",
+    "confidence": "pending_model"
+  },
+  "physical_migration": ".internal/registry/migrations/2026-09-corpus-pools.json",
+  "superseded_preparations": [
+    {
+      "status": "encoding_done_packaging_failed",
+      "selected_tokens_provisional": 2550204074,
+      "planned_reference_tokens": 2590000000,
+      "run_evidence": {
+        "path": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-encoding-20260914-v1/RUN.json",
+        "exists": true,
+        "sha256": "3347386e434e297a0a331faac579a0803e4e209bbb3ef768d9c51a4ed35f5b99"
+      },
+      "staging": "corpus/pools/incomplete/2026-09-14-mei-51m-v1.3-cpt-hans-en-r01.staging",
+      "failure": "candidate_total_tokens missing during final materialization; no successor release",
+      "historical_superseded_input": {
+        "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r04/RELEASE.json",
+        "exists": true,
+        "sha256": "9dc46b0d7e808a97a8cfb51b4291174f148909c0bf98cae38ad3418ff2bda148",
+        "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/RELEASE.json"
+      }
+    }
+  ]
+}

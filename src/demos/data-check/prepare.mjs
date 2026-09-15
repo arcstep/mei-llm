@@ -7,7 +7,7 @@ import {resolve,join} from 'node:path';
 import {loadModel} from '../../platform/browser-sdk/browser.mjs';
 import {TOOLS} from './catalog.mjs';
 const root=fileURLToPath(new URL('../../../',import.meta.url));
-const pkg=join(root,'models/mei-1.2-51m/exp-00900m/products/mei-1.2-51m-cpt900m-tool-sft-cq2-v1');
+const pkg=join(root,'models/mei-1.2-51m/releases/exp-00900m/products/mei-1.2-51m-cpt900m-tool-sft-cq2-v1');
 const wasmPath=join(root,'models/mei-1.2-51m/runtime/wasm/mei_sdk_wasm-v1.wasm');
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const [manifestBytes,wasm]=await Promise.all([readFile(join(pkg,'mei-model.json')),readFile(wasmPath)]);

@@ -2,6 +2,24 @@
   "schema": "mei-model-factory-pipeline-registry-v1",
   "pipelines": [
     {
+      "pipeline_id": "mei-51m-a10-mlx-snapshot-eval-v1",
+      "status": "current",
+      "entrypoint": "evaluation.base.a10_snapshot",
+      "changes_weights": false,
+      "track": "diagnostic",
+      "automatic_parent_promotion": false,
+      "purpose": "read-only local MLX audit of copied CUDA milestone on explicitly bound dev material; independent of server training"
+    },
+    {
+      "pipeline_id": "mei-51m-cpt-cuda-v1",
+      "status": "current",
+      "entrypoint": "orchestration.cpt_a10",
+      "changes_weights": true,
+      "track": "research_candidate",
+      "automatic_parent_promotion": false,
+      "purpose": "explicit v1.3 frozen-input CUDA CPT with bounded rolling checkpoints; backend resource/restart acceptance required; no CURRENT mutation"
+    },
+    {
       "pipeline_id": "mei-51m-cpt-batch-replay-v1",
       "status": "current",
       "entrypoint": "diagnostics.cpt_batch_replay",
@@ -45,7 +63,12 @@
       "purpose": "plan, run, resume, register and propose freeze for arbitrary cumulative CPT exposure",
       "recipe": "src/model-factory/recipes/cpt-training-v1.json",
       "track": "cpt",
-      "stages": ["corpus_freeze", "cpt_readiness", "cpt", "cpt_gate"]
+      "stages": [
+        "corpus_freeze",
+        "cpt_readiness",
+        "cpt",
+        "cpt_gate"
+      ]
     },
     {
       "pipeline_id": "mei-51m-qat-cq2-v1",

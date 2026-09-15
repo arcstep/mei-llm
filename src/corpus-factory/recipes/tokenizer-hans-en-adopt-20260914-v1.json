@@ -1,0 +1,6 @@
+{
+  "mode": "tokenizer_adopt",
+  "tokenizer_id": "mei-24k-lossless-hans-en-20260914-v1",
+  "candidate_dir": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-24k-hans-en-20260914-v1",
+  "runtime_audit_dir": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-hans-en-runtime-audit-20260914-v1"
+}

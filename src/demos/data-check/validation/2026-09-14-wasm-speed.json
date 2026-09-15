@@ -1,0 +1,959 @@
+{
+  "schema": "mei-wasm-speed-validation-v1",
+  "runtime": {
+    "schema": "mei-wasm-speed-experiment-v1",
+    "id": "mei-51m-wasm-speed-20260914-v4",
+    "mode": "approx",
+    "features": "fast-kernels,prefix-cache,tiled-prefill,approx-kernels",
+    "command": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "--release",
+      "-p",
+      "mei-sdk-wasm",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--features",
+      "fast-kernels,prefix-cache,tiled-prefill,approx-kernels"
+    ],
+    "rustflags": "-C panic=abort -C target-feature=+simd128 -C link-arg=--initial-memory=33554432 -C link-arg=--max-memory=536870912",
+    "rustc": "rustc 1.93.0 (254b59607 2026-01-19)",
+    "source_archive_sha256": "499dee0fb12a43faa4e04b95c2636b7f1ae9e7f6ce67370b880748528f6bb13c",
+    "wasm_sha256": "bef813070a708316890d071e3c0a19550fd61e0799f39fd2ebf716cabb2cccd0",
+    "bytes": 2417303,
+    "weights_changed": false,
+    "experimental": true,
+    "release_eligible": false,
+    "canonical_numeric_parity_claimed": false,
+    "requires_simd128": true,
+    "approximate_integer_codebooks_and_exp": true,
+    "prefix_cache_max_tokens": 576,
+    "retrieval_embedding_cache_entries": 8,
+    "retrieval_embedding_cache_max_query_tokens": 128
+  },
+  "paired": {
+    "date": "2026-09-14T09:29:01.907Z",
+    "browser": "151.0.7922.34",
+    "hashes": {
+      "baseline": "8255ddf213f2ef85916eaf3e8330177c3cd8a8283e5e96806cb9cf537db0e8d3",
+      "candidate": "bef813070a708316890d071e3c0a19550fd61e0799f39fd2ebf716cabb2cccd0"
+    },
+    "summary": {
+      "baseline": {
+        "decode_tok_s": 78.3521801957175,
+        "prefill512_plus_one_ms": 3596.5000001192093,
+        "task_cold_ms": 3889.75,
+        "task_warm_ms": 3855,
+        "peak_heap_mib": 76.3125
+      },
+      "candidate": {
+        "decode_tok_s": 144.72458808063234,
+        "prefill512_plus_one_ms": 2027.6000000238419,
+        "task_cold_ms": 2261.8499999046326,
+        "task_warm_ms": 13.649999976158142,
+        "peak_heap_mib": 85.125
+      }
+    },
+    "rounds": [
+      {
+        "key": "baseline",
+        "decode_tok_s": [
+          78.46114904777535,
+          78.4412955370942,
+          78.64028411022359
+        ],
+        "prefill512_plus_one_ms": 3534.9000000953674,
+        "task_cold_ms": 3896.600000143051,
+        "task_warm_ms": 3862,
+        "cold": {
+          "ms": 3896.600000143051,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true
+          }
+        },
+        "warm": {
+          "ms": 3862,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true
+          }
+        },
+        "heap_mib": 76.3125
+      },
+      {
+        "key": "candidate",
+        "decode_tok_s": [
+          141.48790512776512,
+          144.25314093179594,
+          144.79215326393486
+        ],
+        "prefill512_plus_one_ms": 2030.2000000476837,
+        "task_cold_ms": 2262.899999856949,
+        "task_warm_ms": 13.700000047683716,
+        "cold": {
+          "ms": 2262.899999856949,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true,
+            "prefix_cache": {
+              "entries": 1,
+              "max_prefix_tokens": 576,
+              "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+              "stored_tokens": 538,
+              "hits": 0,
+              "retrieval_embedding_cache_hits": 0
+            }
+          }
+        },
+        "warm": {
+          "ms": 13.700000047683716,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true,
+            "prefix_cache": {
+              "entries": 1,
+              "max_prefix_tokens": 576,
+              "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+              "stored_tokens": 538,
+              "hits": 1,
+              "retrieval_embedding_cache_hits": 1
+            }
+          }
+        },
+        "heap_mib": 85.125
+      },
+      {
+        "key": "candidate",
+        "decode_tok_s": [
+          144.65702289732982,
+          144.92753600572797,
+          144.85981308411215
+        ],
+        "prefill512_plus_one_ms": 2025,
+        "task_cold_ms": 2260.7999999523163,
+        "task_warm_ms": 13.599999904632568,
+        "cold": {
+          "ms": 2260.7999999523163,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true,
+            "prefix_cache": {
+              "entries": 1,
+              "max_prefix_tokens": 576,
+              "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+              "stored_tokens": 538,
+              "hits": 0,
+              "retrieval_embedding_cache_hits": 0
+            }
+          }
+        },
+        "warm": {
+          "ms": 13.599999904632568,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true,
+            "prefix_cache": {
+              "entries": 1,
+              "max_prefix_tokens": 576,
+              "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+              "stored_tokens": 538,
+              "hits": 1,
+              "retrieval_embedding_cache_hits": 1
+            }
+          }
+        },
+        "heap_mib": 85.125
+      },
+      {
+        "key": "baseline",
+        "decode_tok_s": [
+          78.12500000938833,
+          78.26306485434077,
+          76.61888291046543
+        ],
+        "prefill512_plus_one_ms": 3658.100000143051,
+        "task_cold_ms": 3882.899999856949,
+        "task_warm_ms": 3848,
+        "cold": {
+          "ms": 3882.899999856949,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true
+          }
+        },
+        "warm": {
+          "ms": 3848,
+          "stats": {
+            "backend": "portable-q4",
+            "wall_ms": 0,
+            "decode_mode": "constrained",
+            "prompt_tokens": 545,
+            "output_tokens": 1,
+            "quantized_only": true
+          },
+          "generated": [
+            12451
+          ],
+          "kind": "refuse",
+          "cache": {
+            "kv_storage_dtype": "int8",
+            "kv_scale_granularity": "per-head-vector",
+            "layers": 27,
+            "stable_prefix_tokens": 467,
+            "rolling_tokens": 72,
+            "visible_tokens": 539,
+            "next_position": 539,
+            "storage_bytes": 7916832,
+            "cache_growth_bounded": true
+          }
+        },
+        "heap_mib": 76.3125
+      }
+    ],
+    "scope": "Kernel throughput uses in-memory experimental manifest only. Task probes use original candidate policy. Other host processes remain running. No accuracy claim."
+  },
+  "cache_checks": {
+    "capabilities": {
+      "package_id": "data-check-d919985609f9",
+      "package_format": "mei-model-package-v2",
+      "release_class": "candidate",
+      "inference": false,
+      "diagnostic_inference": true,
+      "protocol": true,
+      "heads": {
+        "lm": {
+          "present": true,
+          "trained": true,
+          "status": "ready",
+          "tensor_prefixes": [
+            "embed",
+            "blocks",
+            "final_norm",
+            "engrams",
+            "mhc_phi_pre",
+            "mhc_phi_post",
+            "mhc_phi_res",
+            "mhc_b_pre",
+            "mhc_b_post",
+            "mhc_b_res",
+            "mhc_a_pre",
+            "mhc_a_post",
+            "mhc_a_res",
+            "conf_probes",
+            "conf_proj"
+          ],
+          "training_receipt_sha256": "4d5ececf0670c76fc4333ae6bfdb478b642b37fc664515f4249ddf6006152edf",
+          "label_codebook_sha256": null
+        },
+        "contrastive": {
+          "present": true,
+          "trained": true,
+          "status": "ready",
+          "tensor_prefixes": [
+            "heads.contrastive"
+          ],
+          "training_receipt_sha256": "0f6e95394a96ab8d2d4d6840d2d449992ea4a296bb46727d4bb16f85421d7379",
+          "label_codebook_sha256": null
+        },
+        "mw_disposition": {
+          "present": true,
+          "trained": true,
+          "status": "ready",
+          "tensor_prefixes": [
+            "heads.mw_disposition"
+          ],
+          "training_receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+          "label_codebook_sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+        },
+        "confidence": {
+          "present": true,
+          "trained": true,
+          "status": "ready",
+          "tensor_prefixes": [
+            "heads.confidence"
+          ],
+          "training_receipt_sha256": "c3b24c5cb8a4feb42e1849e57c33f71a965147ea60e2d860629b1e1d1e928ea7",
+          "label_codebook_sha256": null
+        },
+        "narration_adapter": {
+          "present": true,
+          "trained": true,
+          "status": "ready",
+          "tensor_prefixes": [
+            "heads.narration_adapter"
+          ],
+          "training_receipt_sha256": "30af52362c61bd1cc8e8d984ce12c4e1a8ef2e9db3b62678fea3cc7f11b9f9de",
+          "label_codebook_sha256": null
+        }
+      },
+      "missing_or_untrained_heads": [],
+      "hash_verified": false,
+      "inference_payload_verified": true,
+      "resource_measurement_verified": false,
+      "resource_limits_reported": false,
+      "tensor_identity_complete": true,
+      "portable_quantization_policy_complete": true,
+      "runtime_quantization_complete": true,
+      "tool_index_payload_complete": true,
+      "compatibility_mode": "v2-native",
+      "read_only": false,
+      "degraded": true,
+      "implementation_complete": true,
+      "open_capabilities": [
+        "int8-bounded-kv",
+        "trusted-resource-measurement"
+      ],
+      "product_ready": false,
+      "resource_eligible": false,
+      "release_eligible": false,
+      "quantized_only": true,
+      "compatibility": {
+        "mode": "native_v2",
+        "source_format": "mei-model-package-v2",
+        "capability_complete": false
+      },
+      "declared_capabilities": {
+        "confidence": true,
+        "full_call": true,
+        "multi_step": true,
+        "mw_disposition": true,
+        "narration": true,
+        "retrieval": true
+      },
+      "versions": {
+        "sdk_semver": "0.2.0-experimental",
+        "wire_version": "mei-runtime-wire-v2",
+        "model_package_version": "mei-model-package-v2",
+        "runtime_abi_version": "mei-runtime-abi-2",
+        "protocol_id": "mei-tool-call-protocol-v2",
+        "serializer_id": "mei-tool-call-serializer-v2",
+        "release_class": "experimental",
+        "product": "mei-1.2-51m Runtime",
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        }
+      },
+      "retrieval": false,
+      "full_call": false,
+      "mw_disposition": false,
+      "confidence": false,
+      "multi_step": false,
+      "narration": false,
+      "backend_loaded": true,
+      "compute_profile": {
+        "fast_kernels": true,
+        "tiled_prefill": true,
+        "prefix_cache": true,
+        "approximate_integer_codebooks_and_exp": true,
+        "requires_relaxed_simd": false,
+        "canonical_numeric_parity_claimed": false,
+        "experimental": true
+      },
+      "experimental_runtime": true,
+      "backend": "rust-portable",
+      "stateful_tool_loop": true,
+      "max_steps_default": 4,
+      "max_steps_hard": 8,
+      "runtime_profiles": {
+        "compact": 1024,
+        "standard": 1536
+      },
+      "candidate_batch_size": 5,
+      "candidate_batch_scan": true,
+      "wasm_tier": 1,
+      "in_memory_unverified": true
+    },
+    "runs": [
+      {
+        "label": "cold A",
+        "ms": 2305.399999856949,
+        "signature": {
+          "kind": "refuse",
+          "raw_text": "[]",
+          "generated": [
+            12451
+          ],
+          "topk": [
+            490,
+            487,
+            1007,
+            488,
+            494
+          ],
+          "confidence": {
+            "available": true,
+            "value": 0.5378440022468567,
+            "source": "mei-1.0-51m-q4",
+            "version": "conf-head-v1"
+          },
+          "mw": {
+            "decision": "stop",
+            "source": "mw-head",
+            "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+            "reason_code": 2,
+            "top_probability": 0.26103395223617554,
+            "margin": 0.15267392992973328,
+            "continue_min_probability": 0.7,
+            "continue_min_margin": 0.15
+          },
+          "call": null,
+          "refusal": {
+            "reason": "model_refusal",
+            "detail": null
+          }
+        },
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 72,
+          "visible_tokens": 539,
+          "next_position": 539,
+          "storage_bytes": 7916832,
+          "cache_growth_bounded": true,
+          "prefix_cache": {
+            "entries": 1,
+            "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": 538,
+            "hits": 0,
+            "retrieval_embedding_cache_hits": 0
+          }
+        },
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        },
+        "heap_bytes": 88670208
+      },
+      {
+        "label": "warm A",
+        "ms": 15.200000047683716,
+        "signature": {
+          "kind": "refuse",
+          "raw_text": "[]",
+          "generated": [
+            12451
+          ],
+          "topk": [
+            490,
+            487,
+            1007,
+            488,
+            494
+          ],
+          "confidence": {
+            "available": true,
+            "value": 0.5378440022468567,
+            "source": "mei-1.0-51m-q4",
+            "version": "conf-head-v1"
+          },
+          "mw": {
+            "decision": "stop",
+            "source": "mw-head",
+            "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+            "reason_code": 2,
+            "top_probability": 0.26103395223617554,
+            "margin": 0.15267392992973328,
+            "continue_min_probability": 0.7,
+            "continue_min_margin": 0.15
+          },
+          "call": null,
+          "refusal": {
+            "reason": "model_refusal",
+            "detail": null
+          }
+        },
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 72,
+          "visible_tokens": 539,
+          "next_position": 539,
+          "storage_bytes": 7916832,
+          "cache_growth_bounded": true,
+          "prefix_cache": {
+            "entries": 1,
+            "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": 538,
+            "hits": 1,
+            "retrieval_embedding_cache_hits": 1
+          }
+        },
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        },
+        "heap_bytes": 89325568
+      },
+      {
+        "label": "changed context B with cached prefix",
+        "ms": 381.40000009536743,
+        "signature": {
+          "kind": "refuse",
+          "raw_text": "[]",
+          "generated": [
+            12451
+          ],
+          "topk": [
+            490,
+            487,
+            1007,
+            488,
+            498
+          ],
+          "confidence": {
+            "available": true,
+            "value": 0.45888209342956543,
+            "source": "mei-1.0-51m-q4",
+            "version": "conf-head-v1"
+          },
+          "mw": {
+            "decision": "stop",
+            "source": "mw-head",
+            "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+            "reason_code": 2,
+            "top_probability": 0.25763431191444397,
+            "margin": 0.14768314361572266,
+            "continue_min_probability": 0.7,
+            "continue_min_margin": 0.15
+          },
+          "call": null,
+          "refusal": {
+            "reason": "model_refusal",
+            "detail": null
+          }
+        },
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 70,
+          "visible_tokens": 537,
+          "next_position": 537,
+          "storage_bytes": 7887456,
+          "cache_growth_bounded": true,
+          "prefix_cache": {
+            "entries": 1,
+            "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": 536,
+            "hits": 2,
+            "retrieval_embedding_cache_hits": 2
+          }
+        },
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        },
+        "heap_bytes": 89325568
+      },
+      {
+        "label": "fresh model B",
+        "ms": 2320.7000000476837,
+        "signature": {
+          "kind": "refuse",
+          "raw_text": "[]",
+          "generated": [
+            12451
+          ],
+          "topk": [
+            490,
+            487,
+            1007,
+            488,
+            498
+          ],
+          "confidence": {
+            "available": true,
+            "value": 0.45888209342956543,
+            "source": "mei-1.0-51m-q4",
+            "version": "conf-head-v1"
+          },
+          "mw": {
+            "decision": "stop",
+            "source": "mw-head",
+            "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+            "reason_code": 2,
+            "top_probability": 0.25763431191444397,
+            "margin": 0.14768314361572266,
+            "continue_min_probability": 0.7,
+            "continue_min_margin": 0.15
+          },
+          "call": null,
+          "refusal": {
+            "reason": "model_refusal",
+            "detail": null
+          }
+        },
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 70,
+          "visible_tokens": 537,
+          "next_position": 537,
+          "storage_bytes": 7887456,
+          "cache_growth_bounded": true,
+          "prefix_cache": {
+            "entries": 1,
+            "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": 536,
+            "hits": 0,
+            "retrieval_embedding_cache_hits": 0
+          }
+        },
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        },
+        "heap_bytes": 89325568
+      },
+      {
+        "label": "changed task",
+        "ms": 445.7000000476837,
+        "signature": {
+          "kind": "refuse",
+          "raw_text": "[]",
+          "generated": [
+            810,
+            699
+          ],
+          "topk": [
+            490,
+            487,
+            523,
+            488,
+            499
+          ],
+          "confidence": {
+            "available": true,
+            "value": 0.5958460569381714,
+            "source": "mei-1.0-51m-q4",
+            "version": "conf-head-v1"
+          },
+          "mw": {
+            "decision": "stop",
+            "source": "mw-head",
+            "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+            "reason_code": 2,
+            "top_probability": 0.266949325799942,
+            "margin": 0.15123946964740753,
+            "continue_min_probability": 0.7,
+            "continue_min_margin": 0.15
+          },
+          "call": null,
+          "refusal": {
+            "reason": "model_refusal",
+            "detail": null
+          }
+        },
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 72,
+          "visible_tokens": 539,
+          "next_position": 539,
+          "storage_bytes": 7916832,
+          "cache_growth_bounded": true,
+          "prefix_cache": {
+            "entries": 1,
+            "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": 537,
+            "hits": 1,
+            "retrieval_embedding_cache_hits": 0
+          }
+        },
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        },
+        "heap_bytes": 89325568
+      },
+      {
+        "label": "A after task change",
+        "ms": 393.40000009536743,
+        "signature": {
+          "kind": "refuse",
+          "raw_text": "[]",
+          "generated": [
+            12451
+          ],
+          "topk": [
+            490,
+            487,
+            1007,
+            488,
+            494
+          ],
+          "confidence": {
+            "available": true,
+            "value": 0.5378440022468567,
+            "source": "mei-1.0-51m-q4",
+            "version": "conf-head-v1"
+          },
+          "mw": {
+            "decision": "stop",
+            "source": "mw-head",
+            "receipt_sha256": "1b9ca6b6ffbf21268e53651260efa3302ee19f23245a14977f996ef31a720efd",
+            "reason_code": 2,
+            "top_probability": 0.26103395223617554,
+            "margin": 0.15267392992973328,
+            "continue_min_probability": 0.7,
+            "continue_min_margin": 0.15
+          },
+          "call": null,
+          "refusal": {
+            "reason": "model_refusal",
+            "detail": null
+          }
+        },
+        "cache": {
+          "kv_storage_dtype": "int8",
+          "kv_scale_granularity": "per-head-vector",
+          "layers": 27,
+          "stable_prefix_tokens": 467,
+          "rolling_tokens": 72,
+          "visible_tokens": 539,
+          "next_position": 539,
+          "storage_bytes": 7916832,
+          "cache_growth_bounded": true,
+          "prefix_cache": {
+            "entries": 1,
+            "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": 538,
+            "hits": 2,
+            "retrieval_embedding_cache_hits": 1
+          }
+        },
+        "compute_profile": {
+          "fast_kernels": true,
+          "tiled_prefill": true,
+          "prefix_cache": true,
+          "approximate_integer_codebooks_and_exp": true,
+          "requires_relaxed_simd": false,
+          "canonical_numeric_parity_claimed": false,
+          "experimental": true
+        },
+        "heap_bytes": 89325568
+      }
+    ],
+    "ok": true,
+    "wasm_sha256": "bef813070a708316890d071e3c0a19550fd61e0799f39fd2ebf716cabb2cccd0",
+    "browser": "151.0.7922.34"
+  },
+  "source_archive": ".local/cache/wasm-speed/mei-51m-wasm-speed-20260914-v4/source.tar.gz",
+  "scope": "CPU-WASM performance experiment with unchanged existing v1.2 900M-SFT weights; no task accuracy or release claim",
+  "tests": {
+    "core_unit_tests_passed": 20,
+    "context_budget_tests_passed": 5,
+    "golden_tests_passed": 7,
+    "v2_contract_tests_passed": 21,
+    "total_rust_tests_passed": 53,
+    "browser_ui_smoke": {
+      "runtime_label": "速度实验版 · 近似计算 · 固定前缀缓存 · 质量未验收",
+      "page_errors": []
+    }
+  },
+  "source_files": {
+    "src/demos/data-check/speed-paired.cjs": "a5b40aa1f57e7904cacfaae1a3bce4e0b37642a61827f156f3dff4e005dfc17b",
+    "src/demos/data-check/speed-checks.cjs": "58b8cb56b9a054096d4c676a57e2fbaefa563951936bdcd2a1d23ae366a549bc",
+    "src/demos/data-check/profile.cjs": "d1673578c165e1aabd83333d5e893cccec2ced39c50acee68a4e833db1412d3c",
+    "src/demos/data-check/server.mjs": "135987ed1c20d824dac87b00241ea76187ffb6ce9cbadb0f1a26b140c5bdbfbf",
+    "src/demos/data-check/mei-worker.mjs": "b07f671d35564fcae0ef6bb0bb3c2bb1a0a002601a744cd28a0a596f5deca780",
+    "src/demos/data-check/app.mjs": "beaffe495531cbc0e6317a3d1e93007721a0a20803eac1fa0851f46a51f580ac"
+  },
+  "demo_worker_validation": {
+    "source_report": ".local/cache/data-check/profile-1789378194785/report.json",
+    "source_report_sha256": "6b48e705a8f9cf2cfa6cdc1fb764ff427462b0ad0ae990d01b575c2c9f716ab6",
+    "wasm_sha256": "bef813070a708316890d071e3c0a19550fd61e0799f39fd2ebf716cabb2cccd0",
+    "browser": "151.0.7922.34",
+    "cpu": "Apple M4 Max",
+    "init_ms": 84.79999995231628,
+    "request_roundtrip_ms": [
+      2342.2000000476837,
+      15.399999856948853,
+      14.400000095367432
+    ],
+    "served_runtime_override_interception": false,
+    "note": "The source report measurement label says original immutable WASM; its setup hash identifies the experimental binary actually served. Requests return one-token [] and do not demonstrate successful checks. Init used warm local resources, not cold network startup."
+  }
+}

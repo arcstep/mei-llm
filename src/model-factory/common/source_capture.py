@@ -44,7 +44,7 @@ def manifest(root: Path) -> dict:
             "manifest_sha256": json_digest(files)}
 
 
-def capture(root: Path, directory: Path, sources: dict, stages: list[str]) -> dict:
+def capture(root: Path, directory: Path, sources: dict, stages: list[str], *, exported_checkout: dict | None = None) -> dict:
     if sources.get("schema_version") != 2 or json_digest(sources["files"]) != sources["manifest_sha256"]:
         raise ValueError("invalid source manifest")
     directory.mkdir(parents=True, exist_ok=False)
@@ -62,8 +62,17 @@ def capture(root: Path, directory: Path, sources: dict, stages: list[str]) -> di
             member.mode = 0o644
             archive.addfile(member, io.BytesIO(payload))
     patch_path = directory / "dirty.patch"
-    patch_path.write_bytes(subprocess.check_output(["git", "diff", "--binary", "HEAD"], cwd=root))
-    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    if exported_checkout is None:
+        patch_path.write_bytes(subprocess.check_output(["git", "diff", "--binary", "HEAD"], cwd=root))
+        revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    else:
+        revision = exported_checkout["git_revision"]
+        if len(revision) != 40 or any(c not in "0123456789abcdef" for c in revision):
+            raise ValueError("invalid exported revision")
+        origin_patch = Path(exported_checkout["dirty_patch"])
+        if digest(origin_patch) != exported_checkout["dirty_patch_sha256"]:
+            raise ValueError("exported patch hash changed")
+        patch_path.write_bytes(origin_patch.read_bytes())
     closure = {"schema": "mei-source-capture-v2", "git_revision": revision,
                "manifest_sha256": sources["manifest_sha256"],
                "source_archive": str(archive_path.resolve()), "source_archive_sha256": digest(archive_path),

@@ -12,3 +12,11 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 mei-sdk-core = { workspace = true }
 serde_json = { workspace = true }
+
+[features]
+fast-kernels = ["mei-sdk-core/wasm-fast-kernels"]
+prefix-cache = ["mei-sdk-core/wasm-prefix-cache"]
+approx-kernels = ["mei-sdk-core/wasm-approx-kernels"]
+tiled-prefill = ["mei-sdk-core/wasm-tiled-prefill"]
+numeric-bench = ["mei-sdk-core/numeric-bench"]
+parallel-kernels = ["mei-sdk-core/wasm-parallel", "numeric-bench"]

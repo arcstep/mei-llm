@@ -25,7 +25,10 @@ fn ordinary_capacity(stable_prefix_tokens: usize) -> usize {
 /// the resulting cache below 16 MiB while avoiding per-token reconstruction of
 /// mHC, normalization, Hadamard-MLP and sidecar parameters.
 const PORTABLE_TENSOR_CACHE_MAX_PARAMS: usize = 1_000_000;
+#[cfg(not(feature = "wasm-fast-kernels"))]
 const PORTABLE_PREFILL_CHUNK_TOKENS: usize = 16;
+#[cfg(feature = "wasm-fast-kernels")]
+const PORTABLE_PREFILL_CHUNK_TOKENS: usize = 64;
 
 #[derive(Clone, Copy)]
 enum LogitsMode {
@@ -535,6 +538,14 @@ pub struct NeedleModel {
     /// When true, use packed row-wise kernels for large tensors. Small
     /// structural tensors remain eligible for the bounded cache.
     pub disable_tensor_cache: bool,
+    #[cfg(feature = "wasm-prefix-cache")]
+    stable_cache: std::sync::Mutex<Option<(Vec<u32>, usize, Vec<LayerCache>)>>,
+    #[cfg(feature = "wasm-prefix-cache")]
+    stable_cache_hits: std::sync::atomic::AtomicUsize,
+    #[cfg(feature = "wasm-prefix-cache")]
+    retrieval_cache: std::sync::Mutex<std::collections::VecDeque<(Vec<u32>, Vec<f32>)>>,
+    #[cfg(feature = "wasm-prefix-cache")]
+    retrieval_cache_hits: std::sync::atomic::AtomicUsize,
 }
 
 impl NeedleModel {
@@ -544,6 +555,14 @@ impl NeedleModel {
             weights,
             cache: std::sync::Mutex::new(HashMap::new()),
             disable_tensor_cache: cfg!(target_arch = "wasm32"),
+            #[cfg(feature = "wasm-prefix-cache")]
+            stable_cache: std::sync::Mutex::new(None),
+            #[cfg(feature = "wasm-prefix-cache")]
+            stable_cache_hits: std::sync::atomic::AtomicUsize::new(0),
+            #[cfg(feature = "wasm-prefix-cache")]
+            retrieval_cache: std::sync::Mutex::new(std::collections::VecDeque::new()),
+            #[cfg(feature = "wasm-prefix-cache")]
+            retrieval_cache_hits: std::sync::atomic::AtomicUsize::new(0),
         }
     }
 
@@ -631,7 +650,22 @@ impl NeedleModel {
         cols: usize,
     ) -> Result<Vec<f32>, SdkError> {
         let t = x.len() / cols;
+        #[cfg(feature = "wasm-parallel")]
+        if let Some(result) = crate::parallel::linear(name, x, rows, cols) {
+            return result;
+        }
         if self.rowwise() {
+            #[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+            if t >= 4
+                && cols % crate::cq2::GROUP_SIZE == 0
+                && matches!(self.weights.entry(name)?.dtype.as_str(), "cq2" | "cq4")
+            {
+                let prepared = x
+                    .chunks_exact(cols)
+                    .map(|row| self.weights.prepare_matvec_input(row))
+                    .collect::<Result<Vec<_>, _>>()?;
+                return self.weights.matmul_prepared(name, &prepared);
+            }
             let mut y = vec![0f32; t * rows];
             for ti in 0..t {
                 let yr = self.weights.matvec(name, &x[ti * cols..(ti + 1) * cols])?;
@@ -673,6 +707,10 @@ impl NeedleModel {
         prepared: &[PreparedMatVecInput],
         rows: usize,
     ) -> Result<Vec<f32>, SdkError> {
+        #[cfg(all(target_arch = "wasm32", feature = "wasm-fast-kernels"))]
+        if prepared.len() >= 4 {
+            return self.weights.matmul_prepared(name, prepared);
+        }
         let mut output = vec![0f32; prepared.len() * rows];
         for (token, activation) in prepared.iter().enumerate() {
             let row = self.weights.matvec_prepared(name, activation)?;
@@ -732,6 +770,13 @@ impl NeedleModel {
             0
         };
         let output_tokens = t.saturating_sub(first_token);
+        #[cfg(feature = "wasm-parallel")]
+        if let Some(result) =
+            crate::parallel::linear("embed.weight", &hidden[first_token * d..], a.vocab_size, d)
+        {
+            return result;
+        }
+
         if self.rowwise() {
             let mut logits = vec![0f32; output_tokens * a.vocab_size];
             for (output_token, ti) in (first_token..t).enumerate() {
@@ -878,12 +923,76 @@ impl NeedleModel {
             let mut local_cache = cache.take();
             let mut history = engram_prefix.unwrap_or(&[]).to_vec();
             let mut cursor = 0usize;
+            // One bounded KV prefix per immutable model. Exact token-prefix
+            // matching may reuse unchanged context but never a decision or
+            // tool result. Changed input is recomputed in private request KV.
+            #[cfg(feature = "wasm-prefix-cache")]
+            let cacheable = local_cache.is_none()
+                && engram_prefix.is_none()
+                && stable_prefix_tokens > 0
+                && stable_prefix_tokens < tokens.len()
+                && stable_prefix_tokens <= 576
+                && !self.arch.legacy_activation_qdq;
+            #[cfg(feature = "wasm-prefix-cache")]
+            let cache_target = tokens.len().saturating_sub(1).min(576);
+            #[cfg(feature = "wasm-prefix-cache")]
+            if cacheable {
+                let mut guard = self.stable_cache.lock().expect("stable prefix cache");
+                if let Some((ids, stable, layers)) = guard.as_ref() {
+                    let shared = ids
+                        .iter()
+                        .zip(tokens)
+                        .take_while(|(a, b)| a == b)
+                        .count()
+                        .min(cache_target);
+                    // Approximate row and batched kernels have different
+                    // rounding. Reuse only an original chunk boundary:
+                    // the full cached prefix, or the fixed schema boundary.
+                    let shared = if shared == cache_target && ids.len() == cache_target {
+                        shared
+                    } else if shared >= stable_prefix_tokens {
+                        stable_prefix_tokens
+                    } else {
+                        0
+                    };
+                    if *stable == stable_prefix_tokens && shared >= stable_prefix_tokens {
+                        let mut cloned = layers.clone();
+                        let row_width = self.arch.n_kv_heads * self.arch.head_dim;
+                        for layer in &mut cloned {
+                            layer.k.truncate(shared * row_width);
+                            layer.v.truncate(shared * row_width);
+                            layer.k_scales.truncate(shared * self.arch.n_kv_heads);
+                            layer.v_scales.truncate(shared * self.arch.n_kv_heads);
+                            layer.t = shared;
+                            layer.next_position = shared;
+                            layer.stable_t = stable_prefix_tokens;
+                            layer.rolling_t = shared - stable_prefix_tokens;
+                        }
+                        local_cache = Some(cloned);
+                        history.extend_from_slice(&tokens[..shared]);
+                        cursor = shared;
+                        self.stable_cache_hits
+                            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                    }
+                }
+                if cursor < cache_target {
+                    // Release the previous entry before constructing another
+                    // one; replacement must not temporarily retain two KVs.
+                    *guard = None;
+                }
+            }
             while cursor < tokens.len() {
                 let in_stable_prefix = cursor < stable_prefix_tokens;
                 let region_end = if in_stable_prefix {
                     stable_prefix_tokens
                 } else {
                     tokens.len()
+                };
+                #[cfg(feature = "wasm-prefix-cache")]
+                let region_end = if cacheable && cursor < cache_target {
+                    region_end.min(cache_target)
+                } else {
+                    region_end
                 };
                 let end = (cursor + PORTABLE_PREFILL_CHUNK_TOKENS)
                     .min(region_end)
@@ -901,6 +1010,14 @@ impl NeedleModel {
                     LogitsMode::Last,
                 )?;
                 history.extend_from_slice(chunk);
+                #[cfg(feature = "wasm-prefix-cache")]
+                if cacheable && end == cache_target {
+                    *self.stable_cache.lock().expect("stable prefix cache") = Some((
+                        tokens[..cache_target].to_vec(),
+                        stable_prefix_tokens,
+                        out.cache.clone(),
+                    ));
+                }
                 if is_last {
                     return Ok(out);
                 }
@@ -918,6 +1035,47 @@ impl NeedleModel {
             true,
             LogitsMode::Last,
         )
+    }
+
+    #[cfg(feature = "wasm-prefix-cache")]
+    pub fn prefix_cache_stats(&self) -> Value {
+        let guard = self.stable_cache.lock().expect("stable prefix cache");
+        json!({"entries": usize::from(guard.is_some()), "max_prefix_tokens": 576,
+            "kind": "exact-input-prefix-or-schema-prefix-kv-no-answer-cache",
+            "stored_tokens": guard.as_ref().map(|(ids,_,_)| ids.len()).unwrap_or(0),
+            "hits": self.stable_cache_hits.load(std::sync::atomic::Ordering::Relaxed),
+            "retrieval_embedding_cache_hits": self.retrieval_cache_hits.load(std::sync::atomic::Ordering::Relaxed)})
+    }
+
+    #[cfg(feature = "wasm-prefix-cache")]
+    pub fn cached_retrieval_embedding(&self, ids: &[u32]) -> Option<Vec<f32>> {
+        let mut cache = self
+            .retrieval_cache
+            .lock()
+            .expect("retrieval embedding cache");
+        let index = cache.iter().position(|(key, _)| key == ids)?;
+        let entry = cache.remove(index).expect("existing embedding");
+        let value = entry.1.clone();
+        cache.push_back(entry);
+        self.retrieval_cache_hits
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        Some(value)
+    }
+
+    #[cfg(feature = "wasm-prefix-cache")]
+    pub fn store_retrieval_embedding(&self, ids: &[u32], embedding: &[f32]) {
+        if ids.len() > 128 || embedding.len() > 4096 {
+            return;
+        }
+        let mut cache = self
+            .retrieval_cache
+            .lock()
+            .expect("retrieval embedding cache");
+        cache.retain(|(key, _)| key != ids);
+        if cache.len() >= 8 {
+            cache.pop_front();
+        }
+        cache.push_back((ids.to_vec(), embedding.to_vec()));
     }
 
     fn forward_internal(
@@ -1301,7 +1459,17 @@ impl NeedleModel {
             a.rms_eps,
         );
         self.activation_qdq(&mut xn, d);
-        let prepared = if self.rowwise() {
+        let parallel_active = {
+            #[cfg(feature = "wasm-parallel")]
+            {
+                crate::parallel::active()
+            }
+            #[cfg(not(feature = "wasm-parallel"))]
+            {
+                false
+            }
+        };
+        let prepared = if self.rowwise() && !parallel_active {
             Some(
                 xn.chunks_exact(d)
                     .map(|row| self.weights.prepare_matvec_input(row))
@@ -1659,7 +1827,29 @@ fn mean_last_token_across_cells(
 }
 
 fn sigmoid(x: f32) -> f32 {
-    1.0 / (1.0 + (-x).exp())
+    1.0 / (1.0 + runtime_exp(-x))
+}
+
+#[inline(always)]
+fn runtime_exp(x: f32) -> f32 {
+    #[cfg(feature = "wasm-approx-kernels")]
+    {
+        if x.is_nan() {
+            return x;
+        }
+        if x < -87.0 {
+            return 0.0;
+        }
+        if x > 88.0 {
+            return x.exp();
+        }
+        let k = (x * std::f32::consts::LOG2_E).round();
+        let r = x - k * std::f32::consts::LN_2;
+        let p = 1.0 + r * (1.0 + r * (0.5 + r * (1.0 / 6.0 + r * (1.0 / 24.0 + r / 120.0))));
+        return p * f32::from_bits(((k as i32 + 127) as u32) << 23);
+    }
+    #[cfg(not(feature = "wasm-approx-kernels"))]
+    x.exp()
 }
 
 fn silu(x: f32) -> f32 {
@@ -1670,7 +1860,7 @@ fn softmax_inplace(xs: &mut [f32]) {
     let m = xs.iter().copied().fold(f32::NEG_INFINITY, f32::max);
     let mut s = 0f32;
     for v in xs.iter_mut() {
-        *v = (*v - m).exp();
+        *v = runtime_exp(*v - m);
         s += *v;
     }
     let inv = 1.0 / s.max(1e-12);
@@ -1945,7 +2135,7 @@ fn sinkhorn(mat: &mut [f32], n: usize, iters: usize) {
             let m = row.iter().copied().fold(f32::NEG_INFINITY, f32::max);
             let mut s = 0f32;
             for v in row.iter() {
-                s += (*v - m).exp();
+                s += runtime_exp(*v - m);
             }
             let logz = m + s.ln();
             for v in row.iter_mut() {
@@ -1959,7 +2149,7 @@ fn sinkhorn(mat: &mut [f32], n: usize, iters: usize) {
             }
             let mut s = 0f32;
             for i in 0..n {
-                s += (mat[i * n + j] - m).exp();
+                s += runtime_exp(mat[i * n + j] - m);
             }
             let logz = m + s.ln();
             for i in 0..n {
@@ -1968,7 +2158,7 @@ fn sinkhorn(mat: &mut [f32], n: usize, iters: usize) {
         }
     }
     for v in mat.iter_mut() {
-        *v = v.exp();
+        *v = runtime_exp(*v);
     }
 }
 
@@ -2004,6 +2194,27 @@ fn ngram_ok(_tokens: &[u32], ti: usize, orders: &[usize], tbl: usize, heads: usi
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    #[cfg(feature = "wasm-approx-kernels")]
+    fn fast_exp_is_finite_monotone_and_bounded_on_normal_range() {
+        let mut previous = 0.0;
+        for step in -8700..=8800 {
+            let x = step as f32 / 100.0;
+            let actual = runtime_exp(x);
+            let reference = x.exp();
+            assert!(actual.is_finite() && actual > 0.0 && actual >= previous);
+            assert!(
+                (actual / reference - 1.0).abs() < 0.00003,
+                "x={x} got={actual} ref={reference}"
+            );
+            previous = actual;
+        }
+        assert_eq!(runtime_exp(f32::NEG_INFINITY), 0.0);
+        assert_eq!(runtime_exp(0.0), 1.0);
+        assert_eq!(runtime_exp(f32::INFINITY), f32::INFINITY);
+        assert!(runtime_exp(f32::NAN).is_nan());
+    }
 
     #[test]
     fn activation_qdq_is_real_int8_round_trip() {

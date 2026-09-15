@@ -1,6 +1,16 @@
 {
   "control_plane_entrypoints": [
     {
+      "path": "src/model-factory/evaluation/base/a10_snapshot.py",
+      "role": "read-only MLX stage-snapshot validation via mei_llm cpt snapshot-eval; independent of A10 training",
+      "status": "diagnostic"
+    },
+    {
+      "path": "src/model-factory/orchestration/cpt_a10.py",
+      "role": "explicit frozen-input CUDA CPT preparation/run; GPU and restart acceptance required",
+      "status": "current"
+    },
+    {
       "path": "src/model-factory/diagnostics/cpt_batch_replay.py",
       "role": "explicit same-slice 1200M to 1500M retraining and frozen comparison via mei_llm cpt replay",
       "status": "diagnostic"

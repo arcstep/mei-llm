@@ -9,7 +9,7 @@ import sqlite3
 import urllib.request
 import xml.etree.ElementTree as ET
 import zipfile
-from profiling import ROOT,digest,Budget
+from profiling import resolve_path, ROOT,digest,Budget
 from source_manager import load_tokenizer,tokenizer_pointer
 
 
@@ -51,7 +51,7 @@ def subtitle_bulk(config,out,allow_network=False):
     seen=set();tokenizer=load_tokenizer();outputs=[];evidence=[]
     from materialize import lines,text_of
     for rel in config.get('exclude_jsonl',[]):
-        p=ROOT/rel
+        p=resolve_path(ROOT/rel)
         with lines(p) as f:
             for line in f:
                 if line.strip():seen.add(hashlib.sha256(text_of(json.loads(line)).encode()).digest())

@@ -21,6 +21,21 @@ The model is experimental: a real probe produced `[]` on an unseen required-colu
 
 ## Scope
 
+Optional CPU-WASM speed experiment (2026-09-14):
+
+```sh
+.venv/bin/python src/platform/browser-sdk/build_speed.py --id my-speed-experiment --mode approx
+MEI_DEMO_PACKAGE=.local/cache/data-check/data-check-d919985609f9 \
+MEI_DEMO_WASM=.local/cache/wasm-speed/my-speed-experiment/runtime.wasm \
+node src/demos/data-check/server.mjs
+```
+
+This preserves the canonical model and binary. The loader checks the experimental binary receipt; the page labels approximate execution and invalidates saved results after a runtime change. Without `MEI_DEMO_WASM`, the original runtime is used. Build IDs cannot be overwritten.
+
+Alternating A/B on M4 Max: **78.35 → 144.72 raw decode tokens/s**, **3.60 → 2.03 s** for synthetic 512-token prefill plus first output, **3.89 → 2.26 s** for the first task request. Identical warm requests measured **13.65 ms** through KV and retrieval-vector reuse; changed context/tasks measured **0.38–0.45 s** in the cache checks. These are different workloads, not interchangeable throughput numbers. Measured heap peaked at **85.19 MiB**. First-request prefill still needs work; approximate arithmetic and full product quality are not certified. See [speed validation](validation/2026-09-14-wasm-speed.json).
+
+No-provider validation entry points: `speed-checks.cjs`, `speed-paired.cjs`, and `profile.cjs`. Set `MEI_BENCH_WASM` to the experiment binary; the first two also accept `MEI_BENCH_OUTPUT` for a new JSON output. They use actual WASM. `speed-paired.cjs` compares against the original canonical binary, not a mocked result.
+
 - XLSX/XLS/CSV, local SheetJS 0.20.3, browser parsing worker.
 - Required, unique, numeric bounds, enum, quantity × price checks.
 - Max 10 MiB, 10 sheets, 10,000 data rows and 100 columns/sheet. One selected sheet per report. No silent truncated pass.
@@ -55,3 +70,5 @@ See [validation/2026-09-13.json](validation/2026-09-13.json). Final real Qwen pl
 This validates the host workflow and exposes a model/runtime integration gap. It does **not** establish autonomous Mei tool competence or model narration quality. No release readiness claim follows from the demo. The existing SDK rejects/errs honestly; thresholds and frozen weights were not changed to make the demonstration pass.
 
 Performance diagnostic: with the server running, `node src/demos/data-check/performance.cjs` measures the same bytes in Chromium (raw mode enabled only through an in-memory experimental manifest). On M4 Max with existing training still running, three warm short-context pairs measured **35.70–35.95 tokens/s**; synthetic 512-token prefill plus first output took **7.82 s**. The single long-context difference estimated 28.98 tokens/s and is sensitive to prefill timing noise. See [performance evidence](validation/2026-09-13-performance.json). The demo's 8.8–9.5 s per rule is whole-request latency. These measurements do not establish hundreds of tokens/s, constrained task throughput, or task quality.
+
+2026-09-14 remeasurement, unchanged binary/weights: **77.77–78.09 raw tokens/s**, actual Worker request **3.85–3.91 s**. CPU sampling attributes about **3.82 s** of a 3.90 s one-output-token request to prefill and **57 ms** to retrieval. See [current throughput](validation/2026-09-14-performance.json) and [stage profile](validation/2026-09-14-profile.json). Run `node src/demos/data-check/profile.cjs` to reproduce profiles without a provider request. Sampling is approximate; no runtime optimization was made. Earlier training was concurrent, but the two dates were not a controlled load/power comparison. The benchmark now writes unique receipts and refuses to overwrite an existing output path.

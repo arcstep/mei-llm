@@ -1,9 +1,12 @@
 # mei-llm agent contract
 
-本仓模型族为 `mei-51m`（部署 LM 参数固定 51,463,797）。正式内部名采用
-`mei-51m-v1.1-1800m-base`、`mei-51m-v1.2-1b-base` / `-sft`：已有 1800M 一代为 v1.1，
-本次 A10 重训为 v1.2，以后新一代依次 v1.3、v1.4；同代续训/下游/重试用曝光、阶段及 run ID 区分。
-下文 `mei-1.2-51m` / `mei-1.1-51m` 均为尚未迁移的存储/兼容前缀，不可据此前缀推断新代际。
+本仓模型族为 `mei-51m`（部署 LM 参数固定 51,463,797）。2026-09-14 用户纠正代际：
+历史归档链为 v1.1，已有 1800M 所在链为 v1.2，本次待训新一代为 v1.3，以后依次 v1.4、v1.5。
+正式内部名采用 `mei-51m-v1.2-1800m-base`、`mei-51m-v1.3-1b-base` / `-sft`。
+历史 `mei-1.0-51m` 名下的 300M/600M 资产已迁至 `mei-1.1-51m`，不可因旧名另计一代。
+同代续训/下游/重试用曝光、阶段及 run ID 区分。现有待训语料/词表/过程 ID 中的 v12
+是纠正前遗留名称，须显式登记为 v1.3 准备材料，不改写旧 release 或 receipt。
+下文 `mei-1.2-51m` / `mei-1.1-51m` 是现存存储前缀；新准备材料也暂存其中，不仅凭路径推断采用代际。
 300M/1B 等均为累计 CPT token exposure，不是模型规模；新命名尚不代表 CLI 别名解析已实现。
 
 ## 四分离导航（源码/语料/过程/成果）
@@ -15,7 +18,7 @@
 - `corpus/`：语料成果（pools/sft-suite/eval-lock/archive），不按产品版本划分，训练按需引用。
 - `cycles/`：过程证据。`mei-1.2-51m/exp-XXXm` 现役序列；`mei-1.1-51m/` 旧链归档（只读）。
   每个 executed rung 绑定 corpus/model/evaluation/decision 证据。
-- `models/`：成果（发布面）。`mei-1.2-51m/{tokenizer,runtime,exp-XXXm/{base,products}}`；
+- `models/`：成果（发布面）。`mei-1.2-51m/{tokenizer,runtime,releases/exp-XXXm/{base,products}}`；
   `mei-1.1-51m/` 旧链成果。资产经 `mei-artifact://` URI 寻址。
 - 旧路径只经 `.internal/registry/migrations/` 路由表解析（历史前缀：`.local/artifacts/`、
   `artifacts/…`、`notebook/`、`sdk/…`、`training/…`），永不因文件搬家而改写旧 receipt。

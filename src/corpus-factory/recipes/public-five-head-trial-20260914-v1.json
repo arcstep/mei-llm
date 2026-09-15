@@ -1,0 +1,94 @@
+{
+  "mode": "public_five_head_trial",
+  "pilot": "corpus/pools/mei-v12-task-preparation-20260914-v6/sources/toolace-pilot-candidates.jsonl",
+  "pilot_sha256": "dc6f4324379103c140d4932009092f4dc6255bdc8ff9fbb19dacdc6d51065fe3",
+  "tokenizer_manifest": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+  "source_url": "https://huggingface.co/datasets/Team-ACE/ToolACE",
+  "source_license": "Apache-2.0 as declared by publisher",
+  "cases": [
+    {
+      "pilot_row": 26,
+      "case_id": "1cadf7d4681892dde537",
+      "category": "信息核验",
+      "label": "邮箱有效性",
+      "narration_review": "原文与返回值极性一致；只说明公开回放结果，不声称真实验证邮箱。"
+    },
+    {
+      "pilot_row": 291,
+      "case_id": "c554ae52f3e216fa864f",
+      "category": "信息核验",
+      "label": "账号是否存在",
+      "narration_review": "存在性和用户ID与返回值一致；英文原文保留，中文目标未构造。"
+    },
+    {
+      "pilot_row": 307,
+      "case_id": "cd382d9d7644772d48b0",
+      "category": "信息核验",
+      "label": "短信验证码校验",
+      "narration_review": "验证码和手机号来自用户原文，成功极性来自公开返回；未发送短信或请求认证服务。"
+    },
+    {
+      "pilot_row": 55,
+      "case_id": "b581a1f23db3c83581ca",
+      "category": "按编号查询",
+      "label": "邮编查地址",
+      "narration_review": "地址列表与原返回一致；未核实现实地址。"
+    },
+    {
+      "pilot_row": 77,
+      "case_id": "5f0357a3999b5f21ecb4",
+      "category": "按编号查询",
+      "label": "商品编号查详情",
+      "narration_review": "原文自行加入美元符号且较长，解说待审，不采用为Mei目标。"
+    },
+    {
+      "pilot_row": 323,
+      "case_id": "744e445c74b3f2aabc08",
+      "category": "按编号查询",
+      "label": "房产编号查详情",
+      "narration_review": "原文增加美元与面积单位，返回未明确单位；解说待审。"
+    },
+    {
+      "pilot_row": 52,
+      "case_id": "317abf311d32ff23a08d",
+      "category": "条件筛选",
+      "label": "地区与关键词筛选",
+      "narration_review": "原解说把search_volume称为月均搜索量，返回未给周期；解说待审。"
+    },
+    {
+      "pilot_row": 61,
+      "case_id": "f5e43bf4c850b8e63459",
+      "category": "条件筛选",
+      "label": "按品种类别筛选",
+      "narration_review": "原解说结尾泛化性格和适用性，超出具体返回描述；解说待审。"
+    },
+    {
+      "pilot_row": 285,
+      "case_id": "f881c0cc3a19b70f101f",
+      "category": "条件筛选",
+      "label": "多个评级条件筛选",
+      "narration_review": "调用保留A/B/A三个条件；原解说加入美元和百分号，解说待审。"
+    },
+    {
+      "pilot_row": 13,
+      "case_id": "294efcbdbeafbdc2fb9c",
+      "category": "文本处理",
+      "label": "分析客户反馈情绪",
+      "narration_review": "情绪和关键词与返回一致；原因解释需要进一步语义复核。"
+    },
+    {
+      "pilot_row": 261,
+      "case_id": "5a130a51ab5a93d9f2e8",
+      "category": "文本处理",
+      "label": "修订邮件措辞",
+      "narration_review": "修改文本来自返回，但“更专业”的评价需要另审；不生成中文改写。"
+    },
+    {
+      "pilot_row": 346,
+      "case_id": "d7a59475f86c89ab7574",
+      "category": "文本处理",
+      "label": "短语联想检索",
+      "narration_review": "列出的建议与返回一致；保留英文原文作为解说储备。"
+    }
+  ]
+}

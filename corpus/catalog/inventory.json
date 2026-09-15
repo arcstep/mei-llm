@@ -1,0 +1,1500 @@
+{
+  "snapshot_date": "2026-09-14",
+  "purpose": "human_navigation_not_training_authority",
+  "schema_revision": 1,
+  "scope": "Four existing corpus storage roots, immediate entries plus zh-v2-pool/layouts immediate directories; raw payload not scanned. Nested entries overlap parent and counts are not corpus capacity.",
+  "source_of_status": "explicit scope decisions and listed local metadata; not inferred from highest revision",
+  "counts": {
+    "history": 22,
+    "candidates": 26,
+    "locked": 22
+  },
+  "entries": [
+    {
+      "path": "corpus/pools/incomplete/2026-09-14-mei-51m-v1.3-cpt-hans-en-r01.staging",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [],
+      "section": "history",
+      "description": "未完成 staging；不可作为锁定输入",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/.mei-v12-cpt-hans-en-20260914-v1.staging"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-14-chinese-author-novel-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-14-chinese-author-novel-candidate-r01/config.json",
+          "sha256": "fb77da3ebd2ba5c7d28631af3b99f6c9e41c07f8948deade5c9f1f241a249122",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/chinese-author-novel-candidate-20260914-v1/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "未发现终端清单；完成性待核对",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/chinese-author-novel-candidate-20260914-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/literature/2026-09-14-chinese-author-novel-candidate-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-14-chinese-author-novel-candidate-r02/manifest.json",
+          "sha256": "a9290ff529c8a9cad1b8e7be36a3d8eb654b5d68aebf4232089e18500c9d2fe1",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/chinese-author-novel-candidate-20260914-v2/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-14-chinese-author-novel-candidate-r02/config.json",
+          "sha256": "0fab767409fc61197e414a08132213e4135cabba3381a25ce17f668d27089175",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/chinese-author-novel-candidate-20260914-v2/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/chinese-author-novel-candidate-20260914-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/code-structure/2026-09-13-code-scale-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-code-scale-r01/manifest.json",
+          "sha256": "39bb444c26ab31997e0b00d86c8114ae0a73e9db3f7a8d58a79aa55eec81a0a5",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/code-scale-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-code-scale-r01/config.json",
+          "sha256": "31d24dce85a86b35d9167ebeb645f4f06a4f3fcfff137fd87490301e73248e09",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/code-scale-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "代码与结构",
+      "legacy_path": "corpus/pools/code-scale-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/history/2026-09-13-delivery-scale-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/history/2026-09-13-delivery-scale-r01/manifest.json",
+          "sha256": "eb36809ce905c83226f6bfe9732d30cf4d0d384c67458be13f454ccbee8b65b8",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/delivery-scale-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/history/2026-09-13-delivery-scale-r01/config.json",
+          "sha256": "3cee9671668a03ea5093bd5aae519c0a3c57bbf8535d8b4be28cedfe0802cbfd",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/delivery-scale-20260913-v1/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "汇总/去重证据，不另计语料",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/delivery-scale-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/mixed/2026-09-13-dialogue-expanded-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/mixed/2026-09-13-dialogue-expanded-candidate-r01/manifest.json",
+          "sha256": "1923a1c319999195f587c6782adb3b75fb97de0b5089f6b199a27e99321e496e",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/dialogue-expanded-candidate-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/mixed/2026-09-13-dialogue-expanded-candidate-r01/config.json",
+          "sha256": "18c96cfcfcf8b6ab5f7144c44f7a00e607b1f7e82b1b9757e831df8f46adf44b",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/dialogue-expanded-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/dialogue-expanded-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/literature/2026-09-13-gutenberg-literary-expansion-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-gutenberg-literary-expansion-r02/manifest.json",
+          "sha256": "e852233bdc11e1131c6e147115aca5848e724c1c7e773000adcd16cd1cf55440",
+          "declared_status": "candidate_partial",
+          "legacy_path": "corpus/pools/gutenberg-literary-expansion-20260913-v2/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-gutenberg-literary-expansion-r02/config.json",
+          "sha256": "96b82d4a857d87de8157a892d8b30293f3f0cc86dcc2af30493b0409cb70c05b",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/gutenberg-literary-expansion-20260913-v2/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/gutenberg-literary-expansion-20260913-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/foundation/2026-09-13-hk-traditional-foundation-expansion-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-hk-traditional-foundation-expansion-r01/manifest.json",
+          "sha256": "6fbaf9e026ad5cc2d94ebc206d626e356108ee3beadc1972da2f8f725b8fdb05",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/hk-traditional-foundation-expansion-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-hk-traditional-foundation-expansion-r01/config.json",
+          "sha256": "d86ed726d874109829ec8c4c3ffcc7911904be0627e22b87ebe2b94e84b6238d",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/hk-traditional-foundation-expansion-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "繁体专项储备；本次 v1.3 未选",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/hk-traditional-foundation-expansion-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r01/config.json",
+          "sha256": "72d2bf4c337c911f0b414f2200a2210238ae2891fbdd7532920839f12de14b32",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v1/config.json"
+        },
+        {
+          "path": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r01/interruption.json",
+          "sha256": "c1cd3fe38b60fb450b3fc512d0ecc99b6c67e02801bf23dbfb2fb1459dd8339f",
+          "declared_status": "interrupted_for_narrower_column_projection",
+          "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v1/interruption.json"
+        }
+      ],
+      "section": "history",
+      "description": "中断获取记录；不是完成批次",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r02/config.json",
+          "sha256": "d9b45221adf423c40dfb8178e6f7f98636cb3d36ddcd922bb82000e36c5c106e",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v2/config.json"
+        },
+        {
+          "path": "corpus/pools/incomplete/2026-09-13-hq-foundation-scale-r02/interruption.json",
+          "sha256": "dcd4fc847f3888710efc795ee67d493c730b108555ce4564607a1c958425b27c",
+          "declared_status": "interrupted_after_misinterpreting_user_clarification",
+          "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v2/interruption.json"
+        }
+      ],
+      "section": "history",
+      "description": "中断获取记录；不是完成批次",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/foundation/2026-09-13-hq-foundation-scale-r03",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-hq-foundation-scale-r03/manifest.json",
+          "sha256": "c210bbd941ba2b4e6a34c49850fb2d140dc3d9104af76418bf4c94499b5887dc",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v3/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-hq-foundation-scale-r03/config.json",
+          "sha256": "504f79bda7d1d14bd005d7869ca6f8e60c2b7cb349fa402fbd91f59d5ac99ed7",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v3/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/hq-foundation-scale-20260913-v3"
+    },
+    {
+      "path": "corpus/pools/candidates/foundation/2026-09-13-hq-random40-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-hq-random40-candidate-r01/manifest.json",
+          "sha256": "0f6660a561f79dc1469d1cc16750f89cd528af0979ad2a00350809e4b0d1e4cf",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/hq-random40-candidate-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-hq-random40-candidate-r01/config.json",
+          "sha256": "9ab3bf96a9568151852c230e82aa1e659654cc69e70256cb70105a38b031636c",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/hq-random40-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/hq-random40-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/oral/2026-09-13-lccc-complete-filtered-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/oral/2026-09-13-lccc-complete-filtered-r01/manifest.json",
+          "sha256": "3317f021513f7e5eba5a8b30e7b217c23b1977d9dd77abf85c8564c00b31768e",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/lccc-complete-filtered-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/oral/2026-09-13-lccc-complete-filtered-r01/config.json",
+          "sha256": "ded5cce28a791b996c31a5d622626eb32f3a3e8109e336c91c479e3fef21efaa",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/lccc-complete-filtered-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "口语",
+      "legacy_path": "corpus/pools/lccc-complete-filtered-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/literature/2026-09-13-literary-expansion-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-literary-expansion-candidate-r01/manifest.json",
+          "sha256": "81689c2c61fd465540de3fbd4ddabbef9797ad8da4614d00ef67904b945a56a0",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/literary-expansion-candidate-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-literary-expansion-candidate-r01/config.json",
+          "sha256": "af04aace104457bf593b923dbdc9b322ee33943ff62f8994f73c1d0e7677d38b",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/literary-expansion-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/literary-expansion-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/literature/2026-09-13-literary-public-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-literary-public-candidate-r01/config.json",
+          "sha256": "932e1707abf2b74bbb26ce7715a93ef6593efc5f330b22f9c276ff22af611d02",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/literary-public-candidate-20260913-v1/config.json"
+        },
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-literary-public-candidate-r01/survey.json",
+          "sha256": "b44a723c40da816c6117f92dc8514cdc88374e77e1d0775c428536eda1c2fd57",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/literary-public-candidate-20260913-v1/survey.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/literary-public-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-14-mei-node-task-preparation-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-14-mei-node-task-preparation-r01/config.json",
+          "sha256": "ed1d78a377f67b7bafb0d02a9046b705e93cd6caeb21cf203011c4024af100dd",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-node-task-preparation-20260914-v1/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-node-task-preparation-20260914-v1"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-node-task-preparation-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-node-task-preparation-r02/REPORT.json",
+          "sha256": "89b4300dbfc4afbdf3ed84fddaaa5c7ed1b47c84a33aaca04c4afd3a5d5c52b1",
+          "declared_status": "prepared_candidates_not_training_ready",
+          "legacy_path": "corpus/pools/mei-node-task-preparation-20260914-v2/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-node-task-preparation-r02/config.json",
+          "sha256": "0c051163ef2676db57238541c1d52ca7103dffa5a322fa66cc1aa3e1311d419a",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-node-task-preparation-20260914-v2/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-node-task-preparation-r02/SOURCE-BINDING.json",
+          "sha256": "8107c55ef18290722721a761b76c1b8c2bf1774f43fa51b418cc51de7656dff7",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-node-task-preparation-20260914-v2/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-node-task-preparation-20260914-v2"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-14-mei-public-five-head-trial-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-14-mei-public-five-head-trial-r01/config.json",
+          "sha256": "ae6f719a3228ada8858b41dea0642a7c9d4623ebbaf26fea99adeea0e20e2e9d",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-public-five-head-trial-20260914-v1/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-public-five-head-trial-20260914-v1"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-public-five-head-trial-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-public-five-head-trial-r02/REPORT.json",
+          "sha256": "f88b0d9c17182d6394bf0a980f9382e996110e735f7cd872b234972b65c7b53c",
+          "declared_status": "reviewable_conversion_trial",
+          "legacy_path": "corpus/pools/mei-public-five-head-trial-20260914-v2/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-public-five-head-trial-r02/config.json",
+          "sha256": "ae6f719a3228ada8858b41dea0642a7c9d4623ebbaf26fea99adeea0e20e2e9d",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-public-five-head-trial-20260914-v2/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "当前12例公开工具试转换；正式准入0",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-public-five-head-trial-20260914-v2"
+    },
+    {
+      "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r01/RELEASE.json",
+          "sha256": "33969084023a207eadcb146621cc3ad3c3d8d6c3ce1e02be26ae902860adec6e",
+          "declared_status": "inputs_ready",
+          "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v1/RELEASE.json"
+        }
+      ],
+      "section": "locked",
+      "description": "本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v1"
+    },
+    {
+      "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r02/RELEASE.json",
+          "sha256": "a1f6e5ec989ffdb2b05f9f858a514e821429749bd11053027374a82b20827f0d",
+          "declared_status": "inputs_ready",
+          "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v2/RELEASE.json"
+        }
+      ],
+      "section": "locked",
+      "description": "本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v2"
+    },
+    {
+      "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r03",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r03/RELEASE.json",
+          "sha256": "631f087c94d0bcf433aadd437b75f7676c0aa736d0a6052b8448933788977032",
+          "declared_status": "inputs_ready",
+          "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v3/RELEASE.json"
+        }
+      ],
+      "section": "locked",
+      "description": "本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v3"
+    },
+    {
+      "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r04",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r04/RELEASE.json",
+          "sha256": "9dc46b0d7e808a97a8cfb51b4291174f148909c0bf98cae38ad3418ff2bda148",
+          "declared_status": "inputs_ready",
+          "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v4/RELEASE.json"
+        }
+      ],
+      "section": "locked",
+      "description": "本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-cpt-inputs-20260914-v4"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r01/REPORT.json",
+          "sha256": "b1b2b00d4d850ce81ef6147ca9de408c881217d3b57ace229a37c89aac732f15",
+          "declared_status": "engineering_and_audits_complete_static_training_data_incomplete",
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v1/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r01/config.json",
+          "sha256": "df889c968d67df21bb205cfce34e0fb9c0148183cb74818acc502c16acf19677",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v1/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r01/SOURCE-BINDING.json",
+          "sha256": "d8d670f695b9ba9e8bc0b959aebac5eb4ec2361b77f7fe5a9b1eb6c5ef3c29a3",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v1/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v1"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r02/REPORT.json",
+          "sha256": "658eaff360aae1d04d2653aa655ce87551295b18b26c460a4abfef479be65fff",
+          "declared_status": "engineering_and_audits_complete_static_training_data_incomplete",
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v2/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r02/config.json",
+          "sha256": "5a48547bf5e47f889ff9db4efd802618230673a4bd46e9e1c41d90db7286f938",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v2/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r02/SOURCE-BINDING.json",
+          "sha256": "3735cbab7dba9d7aa5d7d9327e3bb2182034098603d00277785bd9a9f27ed3b1",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v2/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v2"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r03",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r03/REPORT.json",
+          "sha256": "658eaff360aae1d04d2653aa655ce87551295b18b26c460a4abfef479be65fff",
+          "declared_status": "engineering_and_audits_complete_static_training_data_incomplete",
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v3/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r03/config.json",
+          "sha256": "5a48547bf5e47f889ff9db4efd802618230673a4bd46e9e1c41d90db7286f938",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v3/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r03/SOURCE-BINDING.json",
+          "sha256": "3735cbab7dba9d7aa5d7d9327e3bb2182034098603d00277785bd9a9f27ed3b1",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v3/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v3"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r04",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r04/REPORT.json",
+          "sha256": "66832b821ed2e4eb51cc14ab20643a6e2ec752d112f4d266369bb374ebf53013",
+          "declared_status": "engineering_and_audits_complete_static_training_data_incomplete",
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v4/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r04/config.json",
+          "sha256": "5a48547bf5e47f889ff9db4efd802618230673a4bd46e9e1c41d90db7286f938",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v4/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r04/SOURCE-BINDING.json",
+          "sha256": "8455d9337266b1b8562459a80701b9f8fc8ecbadcd607b6f772e0b4225c0834e",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v4/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v4"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r05",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r05/REPORT.json",
+          "sha256": "e7946de66410ee97b9af8d2e018070fe2e38bceab4aed0c7516faff39757b9f3",
+          "declared_status": "engineering_and_audits_complete_static_training_data_incomplete",
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v5/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r05/config.json",
+          "sha256": "5a48547bf5e47f889ff9db4efd802618230673a4bd46e9e1c41d90db7286f938",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v5/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r05/SOURCE-BINDING.json",
+          "sha256": "7509419b5221aa497a6c79f30cdadf01f0837f90890cb18cc1ebc691bb6ca162",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v5/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "任务准备或试转换；非正式训练锁定包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v5"
+    },
+    {
+      "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/REPORT.json",
+          "sha256": "e7946de66410ee97b9af8d2e018070fe2e38bceab4aed0c7516faff39757b9f3",
+          "declared_status": "engineering_and_audits_complete_static_training_data_incomplete",
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v6/REPORT.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/config.json",
+          "sha256": "5a48547bf5e47f889ff9db4efd802618230673a4bd46e9e1c41d90db7286f938",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v6/config.json"
+        },
+        {
+          "path": "corpus/pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/SOURCE-BINDING.json",
+          "sha256": "a52ca238aeaf7cd6180287ace5502177e9e32cf7f08c966ac96a456d0603f645",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v6/SOURCE-BINDING.json"
+        }
+      ],
+      "section": "history",
+      "description": "当前任务准备证据；120工程案例，正式任务未准入",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/mei-v12-task-preparation-20260914-v6"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-13-nemotron-cpt-full-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-13-nemotron-cpt-full-r01/config.json",
+          "sha256": "51dd8370b49d364db4e48231bf7100150a7d0daeba82b860418f6348fd4826dd",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-cpt-full-20260913-v1/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "未发现终端清单；完成性待核对",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-cpt-full-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-full-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-full-r02/manifest.json",
+          "sha256": "fb7b17f86ffc2fd71a8fd5b53f2b1a3dc16b5a0331447594767e915c61a829f6",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-cpt-full-20260913-v2/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-full-r02/config.json",
+          "sha256": "51dd8370b49d364db4e48231bf7100150a7d0daeba82b860418f6348fd4826dd",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-cpt-full-20260913-v2/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-cpt-full-20260913-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-pilot-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-pilot-r01/manifest.json",
+          "sha256": "867ea787566b41793e0766e88a9810895f0025a1fc42b3fea0ab8f6deca988e9",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-cpt-pilot-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-cpt-pilot-r01/config.json",
+          "sha256": "4bacc0960bc32476195cea2067eae21d8938f6e398c3601d5381b1a12f198f48",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-cpt-pilot-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-cpt-pilot-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/raw/2026-09-13-nemotron-raw-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/raw/2026-09-13-nemotron-raw-r01/download-manifest.json",
+          "sha256": "3dfe098068a859048a32f31af08580617f7909aafa36c90aa326a97a68047b05",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-raw-20260913-v1/download-manifest.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原始下载，工具/智能体来源",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-raw-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-full-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-full-r01/manifest.json",
+          "sha256": "23bf2d79960fc161b1d7ec685231ec8591bdb91fde943f98006b6eb5c7a11ee6",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-windows-full-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-full-r01/config.json",
+          "sha256": "dfad79beb49d301e32727a508ac3760cdd7c39db3f7864bb5c7397ea219814c2",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-windows-full-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-windows-full-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r01/manifest.json",
+          "sha256": "3d5dcb07f8265374d0d761d57e4f8726bff282e0ff2a5d363f7c885acb9e1174",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-windows-pilot-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r01/config.json",
+          "sha256": "61563edacaa2fa7b87dbaee94aa59819f58768142add23b445d8c1f5a05f371a",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-windows-pilot-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-windows-pilot-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r02/manifest.json",
+          "sha256": "1733de0129a02100d2051d7f70cd635db623ffaa399b289ff8632ce6aee708d5",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-windows-pilot-20260913-v2/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-nemotron-windows-pilot-r02/config.json",
+          "sha256": "61563edacaa2fa7b87dbaee94aa59819f58768142add23b445d8c1f5a05f371a",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/nemotron-windows-pilot-20260913-v2/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/nemotron-windows-pilot-20260913-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/code-structure/2026-09-13-openapi-latest-half-expansion-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-openapi-latest-half-expansion-r01/manifest.json",
+          "sha256": "daa13a11692d50eda6b307337bed96735287bb90c523c42c5485f34df74eacb2",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/openapi-latest-half-expansion-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-openapi-latest-half-expansion-r01/config.json",
+          "sha256": "24cf82d30dac8e2fff2ce1d6a6ec82af632a7974ed080d372e7078ebedcc381a",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/openapi-latest-half-expansion-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "代码与结构",
+      "legacy_path": "corpus/pools/openapi-latest-half-expansion-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/mixed/2026-09-13-public-raw-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/mixed/2026-09-13-public-raw-candidate-r01/manifest.json",
+          "sha256": "9694b8493d94beebf792008d7dfeadede1440309be68610b53be6a076eda81c6",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/public-raw-candidate-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/mixed/2026-09-13-public-raw-candidate-r01/config.json",
+          "sha256": "caa51fb74d696a66e959c3038c10bae0b79fd74dbb2b3c71b356c198f7267872",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/public-raw-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/public-raw-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/history/2026-09-13-public-raw-delivery-r01.json",
+      "kind": "file",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [],
+      "section": "history",
+      "description": "清单或日志（不另计语料）",
+      "domain": "混合/待分配",
+      "legacy_path": "corpus/pools/public-raw-delivery-20260913-v1.json"
+    },
+    {
+      "path": "corpus/pools/candidates/code-structure/2026-09-13-structured-archives-expansion-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-structured-archives-expansion-r01/manifest.json",
+          "sha256": "034eb40278d37a30e8836b3968110c0e3f30232be28e2a08a1b016953dd73a33",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/structured-archives-expansion-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-structured-archives-expansion-r01/config.json",
+          "sha256": "86ed5f968062f121732aa7528dd187551ca21386c0695c398b8643557dc3ae55",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/structured-archives-expansion-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "代码与结构",
+      "legacy_path": "corpus/pools/structured-archives-expansion-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/oral/2026-09-13-subtitle-scale-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/oral/2026-09-13-subtitle-scale-r01/manifest.json",
+          "sha256": "edc0a99662d98439cab105f416678e4ffbb25a49a7a05174af7e9410521e665f",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/subtitle-scale-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/oral/2026-09-13-subtitle-scale-r01/config.json",
+          "sha256": "75544f0a5cc82c288ce42dcae8e262da72325b05fda9cad256a817997f1e9aa7",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/subtitle-scale-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "口语",
+      "legacy_path": "corpus/pools/subtitle-scale-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/task-tools/2026-09-13-toolace-cpt-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-toolace-cpt-candidate-r01/manifest.json",
+          "sha256": "d9aa8e1118a9c32c20e0550cddc482c8fc12c706c69072130f3e3d2140439a70",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/toolace-cpt-candidate-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/task-tools/2026-09-13-toolace-cpt-candidate-r01/config.json",
+          "sha256": "7c89c832c8d994de215243b089de6927dabe03686cc69da841acdd8c73c355a3",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/toolace-cpt-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "任务与工具",
+      "legacy_path": "corpus/pools/toolace-cpt-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/incomplete/2026-09-13-translated-literature-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/incomplete/2026-09-13-translated-literature-candidate-r01/config.json",
+          "sha256": "23ef68ef14fcd74537aded71614c79a0d2d07375d5eb8a270552f3427be935fb",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/translated-literature-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "history",
+      "description": "未发现终端清单；完成性待核对",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/translated-literature-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/literature/2026-09-13-translated-literature-candidate-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-translated-literature-candidate-r02/manifest.json",
+          "sha256": "c21fc64854c9bdb1275d9b94dff30768f0714eabe5030ca93eab7a333db88ad0",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/translated-literature-candidate-20260913-v2/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/literature/2026-09-13-translated-literature-candidate-r02/config.json",
+          "sha256": "23ef68ef14fcd74537aded71614c79a0d2d07375d5eb8a270552f3427be935fb",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/translated-literature-candidate-20260913-v2/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "文学与剧本",
+      "legacy_path": "corpus/pools/translated-literature-candidate-20260913-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/code-structure/2026-09-13-tutorial-complete-candidate-r02",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-tutorial-complete-candidate-r02/manifest.json",
+          "sha256": "d92e090e46e68331034d52ee4dbe53c773fc24e9d497e63708b4f76b4c2a09cd",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/tutorial-complete-candidate-20260913-v2/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/code-structure/2026-09-13-tutorial-complete-candidate-r02/config.json",
+          "sha256": "cd84314cd53cfb90388f55e58b824bd5f5606485abac0a020990d7d17ecb0c0d",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/tutorial-complete-candidate-20260913-v2/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "代码与结构",
+      "legacy_path": "corpus/pools/tutorial-complete-candidate-20260913-v2"
+    },
+    {
+      "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-en-foundation-expansion-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-en-foundation-expansion-r01/manifest.json",
+          "sha256": "ebdc901c8d8e2324abad16e4a55422d68e8373f4be861e49532b22cc657195ff",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/wiki-en-foundation-expansion-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-en-foundation-expansion-r01/config.json",
+          "sha256": "348d248294326a04a81ee99c140c320daa1299344193451d9787ccd00ffdf9d0",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/wiki-en-foundation-expansion-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/wiki-en-foundation-expansion-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-foundation-scale-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-foundation-scale-r01/manifest.json",
+          "sha256": "ee7ae7e89a4597f24402838569f6b9ef0a99528843e3342b94affd806c6c238f",
+          "declared_status": "candidate_complete",
+          "legacy_path": "corpus/pools/wiki-foundation-scale-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-foundation-scale-r01/config.json",
+          "sha256": "3efe7c4690b182cb0b36d88eb741d96255239064edd0936d5691b69cc93eddc5",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/wiki-foundation-scale-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/wiki-foundation-scale-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-raw-candidate-r01",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-raw-candidate-r01/manifest.json",
+          "sha256": "c07c4131f0acfea4b7fe8b68a532595212af5159801b25452ba3466c2dfc44ee",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/wiki-raw-candidate-20260913-v1/manifest.json"
+        },
+        {
+          "path": "corpus/pools/candidates/foundation/2026-09-13-wiki-raw-candidate-r01/config.json",
+          "sha256": "10091e176b28e187b3aa3781f2163fcca4ef71adadb31dcddb49ba16bc43fba4",
+          "declared_status": null,
+          "legacy_path": "corpus/pools/wiki-raw-candidate-20260913-v1/config.json"
+        }
+      ],
+      "section": "candidates",
+      "description": "原文候选；用途与质量需依据具体选料包",
+      "domain": "基础语言",
+      "legacy_path": "corpus/pools/wiki-raw-candidate-20260913-v1"
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [],
+      "section": "history",
+      "description": "旧混合池；含实际训练 layout、候选、缓存与留出",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1/release-manifest.json",
+          "sha256": "cb0424617d8fd5c231556a59f11273d798e3c84639815b6778aa0220416cff69",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
+          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3/release-manifest.json",
+          "sha256": "c67885928907e454b517fdcab0299f5258c3db3ea1be75cf3360578c8661e150",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4/release-manifest.json",
+          "sha256": "08cc05b488d3a1f94b656bb7821057a1ebb813e88c6f90b04acb12d90a288746",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1/release-manifest.json",
+          "sha256": "b2120fb0318c94fd09d58f8cb9af77b1dda8c81490ac40f8833f37b07c2d60aa",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v2",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v2/release-manifest.json",
+          "sha256": "81a598dd53931328f423085c3f24585a95b9e4e0551644a3d13d9512c19a976a",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v3",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v3/release-manifest.json",
+          "sha256": "f4edf4bb17cfb79b0a5713cc69760526cd99fe42fc143dae477ccd0ec26b3019",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4/release-manifest.json",
+          "sha256": "0085b9ccdca5e5c5c98e0d9b52dd944654af2188acd628035a8e03b351bb537d",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "旧 SFT 编译包；不自动准入 v1.3",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/skeleton-build-v2.log",
+      "kind": "file",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [],
+      "section": "history",
+      "description": "清单或日志（不另计语料）",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/sft-suite/skeleton-build.log",
+      "kind": "file",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [],
+      "section": "history",
+      "description": "清单或日志（不另计语料）",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/eval-lock/mei-51m-longitudinal-eval-v10-zhv2-rebuild-argnorm",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/eval-lock/mei-51m-longitudinal-eval-v10-zhv2-rebuild-argnorm/lock.json",
+          "sha256": "7d0420d7c0e9930a5c2e22dfe6232b7952f4d7b9721b8657c0669bc4d8d115d6",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "历史 Eval lock；逐 run 使用情况待核对",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/eval-lock/mei-51m-longitudinal-eval-v11-zhv2-rebuild-trajectory",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/eval-lock/mei-51m-longitudinal-eval-v11-zhv2-rebuild-trajectory/lock.json",
+          "sha256": "0f48d5b55309528f3fcefdc4adba87afaa54382075a59e82a82ac4a97f707f95",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "历史 Eval lock；逐 run 使用情况待核对",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/eval-lock/mei-51m-longitudinal-eval-v9-zhv2-rebuild",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [
+        {
+          "path": "corpus/eval-lock/mei-51m-longitudinal-eval-v9-zhv2-rebuild/lock.json",
+          "sha256": "7ce3fdc4f26da056e8eab6223f898d93897c57fb65ef8cc7c1990f59dd63a273",
+          "declared_status": null
+        }
+      ],
+      "section": "locked",
+      "description": "历史 Eval lock；逐 run 使用情况待核对",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/archive/mei-lang-v1-corpus",
+      "kind": "directory",
+      "generation_inferred_from_name": false,
+      "quality_admission": "not_reaudited",
+      "evidence": [],
+      "section": "history",
+      "description": "历史归档；逐 run 关系待核对",
+      "domain": "混合/待分配"
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-300m-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-300m-v1/RELEASE.json",
+          "sha256": "455e11975365b8cf056a0eaafa81ef783b79f2d5fca0d8782aee0793873dfe51"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-300m-v1/manifest.json",
+          "sha256": "d659b90f9952afc7c589b2aa675a8869994d8e8a0382574d29b0d784841a22a5"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-300m-v1/mix.json",
+          "sha256": "b4435af044fd01672a07f915f4b77f15cd4eefeeeb0a5e602c7ccb20d79445ae"
+        }
+      ]
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000600m-v2-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000600m-v2-v1/RELEASE.json",
+          "sha256": "2ed619bf6c737c555ce6573b09bf3dc557b13b45137d55a4fccb1705ea2746d8"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000600m-v2-v1/manifest.json",
+          "sha256": "20ed2a2f0fdf2b11e850f41830654452a1de4846475c3294f8f99bfdd837f1c2"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000600m-v2-v1/mix.json",
+          "sha256": "04747df70d20a43f6d776d1f8a799b8b46062fcc64301d1acad15521a8ac3745"
+        }
+      ]
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000900m-v2-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000900m-v2-v1/RELEASE.json",
+          "sha256": "3c237f1eef4239b4edefd464a77b39b4e134ff2d65130c4aba77f99bbc46fdbc"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000900m-v2-v1/manifest.json",
+          "sha256": "20ed2a2f0fdf2b11e850f41830654452a1de4846475c3294f8f99bfdd837f1c2"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-000900m-v2-v1/mix.json",
+          "sha256": "0ed67d3046bd3b8f8605392872e9ddae959e8badd40610eea36525f1555bbda8"
+        }
+      ]
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001200m-v2-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001200m-v2-v1/RELEASE.json",
+          "sha256": "99553079d5c9f4677d427733bd301cc298f14fd96a14f411132f522eef58fe7a"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001200m-v2-v1/manifest.json",
+          "sha256": "20ed2a2f0fdf2b11e850f41830654452a1de4846475c3294f8f99bfdd837f1c2"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001200m-v2-v1/mix.json",
+          "sha256": "6b9335c6cc5bdfb232a71851ca499c155ca5c765deeff2c9a5f08ca70b606743"
+        }
+      ]
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001500m-v2-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001500m-v2-v1/RELEASE.json",
+          "sha256": "b4f6897ce5c11492f3718e96fe38a41ac156310d30944303221f1df8e03d2a5c"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001500m-v2-v1/manifest.json",
+          "sha256": "20ed2a2f0fdf2b11e850f41830654452a1de4846475c3294f8f99bfdd837f1c2"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001500m-v2-v1/mix.json",
+          "sha256": "4b3bc33c3194c99b235c3c0869e10ca6bc7515239ef06c19a4b843b63a00f7f6"
+        }
+      ]
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001800m-v1-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001800m-v1-v1/RELEASE.json",
+          "sha256": "57d75863e7df34e8e00a95981861258a9d007608aaed8d5f310c0ff50b0ba81c"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001800m-v1-v1/manifest.json",
+          "sha256": "073d984157818fac0ea416a84133b2ce7308149d51c7b36de3758dd11cd2938b"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-001800m-v1-v1/mix.json",
+          "sha256": "b0d72a86175e5e2bcf5caa1ace99ef686d122d5d8c58980f3b7e40d2b1e86a13"
+        }
+      ]
+    },
+    {
+      "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-002100m-v1-v1",
+      "kind": "directory",
+      "section": "locked",
+      "domain": "历史CPT",
+      "description": "旧链 layout；存在不等于已被执行，1800M 采用关系见 v1.2 清单",
+      "quality_admission": "not_reaudited",
+      "generation_inferred_from_name": false,
+      "evidence": [
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-002100m-v1-v1/RELEASE.json",
+          "sha256": "c39e05d32c198af4b1282b7e392bb105903ce07bc23aee2d2daaaf9654c249de"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-002100m-v1-v1/manifest.json",
+          "sha256": "d9ecc22f5b9f3f282acbe3c57bb8cab3a8ec688de05b5a4e61c54270017dfad4"
+        },
+        {
+          "path": "corpus/pools/zh-v2-pool/layouts/zh-v2-layout-exp-002100m-v1-v1/mix.json",
+          "sha256": "2863370f907309c9c4b4769027f8c0029759921d76de100cc308be9104e1a501"
+        }
+      ]
+    }
+  ],
+  "physical_migration": ".internal/registry/migrations/2026-09-corpus-pools.json"
+}
