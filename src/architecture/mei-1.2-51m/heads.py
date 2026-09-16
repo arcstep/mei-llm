@@ -123,12 +123,14 @@ class MWDispositionHead(nn.Module):
 
 
 class NarrationAdapterHead(nn.Module):
-    """Frozen-backbone rank-16 logit residual for grounded Chinese narration.
+    """Frozen-backbone low-rank logit residual for grounded Chinese narration.
 
     This sidecar is deliberately outside the canonical 51,463,797 LM weight
     contract.  It never receives an executor or Session handle; the runtime
     supplies only a sanitized verified-result prompt and accepts generated text
-    only when the deterministic grounding verifier approves it.
+    only when the deterministic grounding verifier approves it.  ``rank`` defaults
+    to ``NARRATION_ADAPTER_RANK`` (16) but is a train-time dial for capacity
+    ablation; runtime loading always uses the canonical 16.
     """
 
     def __init__(
@@ -138,8 +140,8 @@ class NarrationAdapterHead(nn.Module):
         rank: int = NARRATION_ADAPTER_RANK,
     ):
         super().__init__()
-        if int(rank) != NARRATION_ADAPTER_RANK:
-            raise ValueError(f"narration adapter rank must be {NARRATION_ADAPTER_RANK}")
+        if int(rank) < 1:
+            raise ValueError("narration adapter rank must be positive")
         self.d_model = int(d_model)
         self.vocab_size = int(vocab_size)
         self.rank = int(rank)

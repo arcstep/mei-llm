@@ -878,12 +878,18 @@ def train_narration_adapter(
     checkpoint_dir: Path | None = None,
     resume: bool = False,
     checkpoint_every_steps: int = 100,
+    rank: int | None = None,
 ) -> dict:
-    """Train only the rank-16 narration logit residual on a frozen backbone."""
+    """Train only the low-rank narration logit residual on a frozen backbone.
+
+    ``rank``（默认 None = NARRATION_ADAPTER_RANK 16）是容量消融旋钮；运行时
+    加载仍走 canonical 16，只有训练/评测驱动显式传 rank 才改变 adapter 容量。
+    """
 
     from common.checkpoint import load_train_state, save_train_state
     from heads import NARRATION_ADAPTER_RANK, NarrationAdapterHead
 
+    rank = int(rank) if rank is not None else NARRATION_ADAPTER_RANK
     tok = runtime.tokenizer
     train_pairs = [pair for row in train_rows if (pair := encode_narration(tok, row))]
     valid_pairs = [pair for row in valid_rows if (pair := encode_narration(tok, row))]
@@ -892,7 +898,7 @@ def train_narration_adapter(
     head = NarrationAdapterHead(
         runtime.model.cfg.d_model,
         runtime.model.cfg.vocab_size,
-        rank=NARRATION_ADAPTER_RANK,
+        rank=rank,
     )
     mx.eval(head.parameters())
     opt = optim.Adam(learning_rate=1e-3)
@@ -901,7 +907,7 @@ def train_narration_adapter(
     state_path = checkpoint_dir / "narration-adapter-state.npz" if checkpoint_dir else None
     expected_meta = {
         "kind": "frozen-backbone-grounded-narration-adapter-state",
-        "rank": NARRATION_ADAPTER_RANK,
+        "rank": rank,
         "n_train": len(train_pairs),
         "n_valid": len(valid_pairs),
         "target_steps": steps,
@@ -990,7 +996,7 @@ def train_narration_adapter(
         "valid_loss": sum(valid_losses) / max(len(valid_losses), 1),
         "n_train": len(train_pairs),
         "n_valid": len(valid_pairs),
-        "rank": NARRATION_ADAPTER_RANK,
+        "rank": rank,
         "parameter_count": parameter_count,
         "backbone_frozen": True,
         "verified_result_only": True,
