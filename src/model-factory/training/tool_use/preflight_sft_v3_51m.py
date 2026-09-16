@@ -21,7 +21,7 @@ from common.paths import CURRENT_PATH, ROOT
 
 PREFLIGHT_ID = "mei-51m-sft-v4-exhaustive-preflight-v1-quality-schema"
 CURRENT_BASELINE_SHA256 = (
-    "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+    "6fd615400dbb69d38bf497ae966c0ae3af14ac4f835104fa70a231a9e307ff53"
 )
 DEFAULT_OUT_ROOT = ROOT / "cycles/mei-1.1-51m/_legacy/notebook/evaluation/jobs/mei-1.0-51m"
 

@@ -23,6 +23,7 @@ import mlx.optimizers as optim
 import mlx.utils as xu
 
 from common.paths import (
+    ARCHITECTURE_DIR,
     ROOT,
     architecture_contracts,
     legacy_weight_contract_sha256,
@@ -39,7 +40,6 @@ DEFAULT_BASE_RELEASE = DEFAULT_BASE_DIR / "RELEASE.json"
 DEFAULT_BASE_WEIGHTS = DEFAULT_BASE_DIR / "mei-1.0-51m-base-scratch300m-v1.npz"
 DEFAULT_CORPUS = ROOT / "cycles/mei-1.1-51m/exp-00300m/corpus/cpt-delta/lm-v1"
 DEFAULT_ANCHOR = ROOT / "cycles/mei-1.1-51m/_legacy/notebook/evaluation/jobs/mei-1.0-51m/float-base-lm-anchor.json"
-ARCHITECTURE_DIR = ROOT / "src/architecture/mei-1.2-51m"
 
 
 def _canonical(value: Any) -> bytes:

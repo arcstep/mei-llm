@@ -35,7 +35,8 @@ from .shared import (
 from .version import SDK_ROOT
 
 _MEI_LLM = SDK_ROOT.parents[2]
-_ARCH_51 = _MEI_LLM / "src/architecture/mei-1.2-51m"
+_arch_env = os.environ.get("MEI_ARCHITECTURE_DIR")
+_ARCH_51 = Path(_arch_env).resolve() if _arch_env else (_MEI_LLM / "src/architecture/mei-1.2-51m")
 _MODEL_FACTORY = _MEI_LLM / "src/model-factory"
 _RUNTIME_SHARED = _MEI_LLM / "src/platform/_shared/runtime"
 

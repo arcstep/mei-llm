@@ -30,6 +30,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from common.paths import (
+    ARCHITECTURE_DIR,
     CURRENT_PATH,
     ROOT,
     architecture_contracts,
@@ -1044,7 +1045,7 @@ def load_jsonl(path: Path, limit: int | None = None) -> list[dict[str, Any]]:
 
 def _ensure_python_paths() -> None:
     for path in (
-        ROOT / "src/architecture/mei-1.2-51m",
+        ARCHITECTURE_DIR,
         ROOT / "src/model-factory",
         ROOT / "src/platform/python-sdk",
         ROOT / "src/platform/_shared/runtime",

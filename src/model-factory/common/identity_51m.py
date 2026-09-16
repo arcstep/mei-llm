@@ -12,9 +12,9 @@ os.environ["MEI_ARCHITECTURE_ID"] = "mei-1.0-51m-arch-v1"
 
 _HERE = Path(__file__).resolve().parent
 
-from common.paths import ROOT, TRAIN_RUNS, ensure_formal_on_path
+from common.paths import ARCHITECTURE_DIR, ROOT, TRAIN_RUNS, ensure_formal_on_path
 
-_ARCH = ROOT / "src/architecture/mei-1.2-51m"
+_ARCH = ARCHITECTURE_DIR
 for path in (_ARCH, ROOT / "src/model-factory"):
     text = str(path)
     if text not in sys.path:
@@ -26,7 +26,6 @@ ARCHITECTURE_ID = "mei-1.0-51m-arch-v1"
 MODEL_ID = "mei-1.0-51m-base-scratch300m-v1"
 RUN_NAME = "pretrain-mei-1.0-51m-base-scratch300m-v1"
 EXPECTED_PARAMS = 51_463_797
-ARCHITECTURE_DIR = ROOT / "src/architecture/mei-1.2-51m"
 ARCHITECTURE_SPEC = ARCHITECTURE_DIR / "spec" / "model.json"
 CYCLES_ROOT = ROOT / "cycles/mei-1.1-51m/exp-00300m"
 BASE_DIR = CYCLES_ROOT / "models/base" / MODEL_ID
