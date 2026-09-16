@@ -18,11 +18,25 @@ v1.3-800m 的 quant-aware 五头 SFT 产物（与 v1.2-sft-1.8b 同流程 `adapt
 | tool_lm | 生成（工具调用）| execute exact | 77.1% | **77.07%** | 持平（容量天花板）|
 | disposition | 判别（18 类 MW 偏离）| macro_f1 | 0.944 | **0.9585** | 略优 |
 | confidence | 判别（二分类）| AUROC | 0.9807 | **0.9918** | 略优 |
-| narration | 生成（设备解说）| adapter exact | 43%¹ | **65.6%** | 均 degraded，走模板 |
+| narration | 生成（设备解说）| adapter exact² | 43%¹ | **65.6%** | 均 degraded，走模板 |
 
 ¹ v1.2 的 43% 为 sidecar rank 消融「exact 天花板」口径（出处已归档）；v1.3 为同脚本复现的
 `adapter_exact_rate`（贪婪逐字，500 样本 328 命中）。两者词表不同（hans-en-24k-v1 vs zh-24k-v3），
 且 `learned_adapter_quality=degraded`，**narration 头两代均走确定性模板兜底，不追逐字 exact**。
+
+² narration 跑分口径 = **低秩解说头直接生成**（`runtime.generate_narration` 贪婪解码，冻结
+backbone + rank-128 logit residual），对比确定性模板 `target` 算逐字/事实/数值/极性。固定模板
+（`NarrationProvider.narrate`）是训练 target + 产品化兜底，确定性 100% 必需事实、无「跑分」概念。
+「低秩头直出」完整指标（500 样本，作为 1600M/2500M 对照基线）：
+
+| 低秩头直出指标 | v1.3-800m |
+|---|---|
+| adapter_exact_rate（逐字）| 65.6% |
+| adapter_nonempty_rate | 100% |
+| required_facts_match_rate | 68.8% |
+| numeric_exact_rate | 79.4% |
+| polarity_match_rate | 69.4% |
+| bounded（约束解码边界）| 500/500，max_new_reached 0 |
 
 ## productize 内置口径（16-stage learned-mode 指标，另一维度）
 
