@@ -1,0 +1,20 @@
+{
+  "schema": "mei-llm-model-contract-v1",
+  "model_id": "mei-51m-v1.3",
+  "storage_id": "mei-1.3-51m",
+  "status": "cpt_training",
+  "deployed_lm_parameters": 51463797,
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "architecture_policy": "existing 51M weight architecture retained for the current v1.3 CPT run",
+  "tokenizer_id": "hans-en-24k-v1",
+  "max_context_tokens": 2048,
+  "product_goal": "Chinese-first tool retrieval, constrained calling, multi-step continuation, execution disposition/confidence, and terminal narration",
+  "sidecars_are_outside_lm_parameter_identity": true,
+  "needle2_mechanism_reference_only": true,
+  "cactus_abi_compatible": false,
+  "architecture_path": "src/architecture/mei-1.2-51m",
+  "tokenizer_path": "models/mei-1.3-51m/tokenizer",
+  "canonical_releases_path": "models/mei-1.3-51m/releases",
+  "canonical_cycles_path": "cycles/mei-1.3-51m",
+  "weight_asset_policy": "immutable_hash_locked_not_rebuildable"
+}

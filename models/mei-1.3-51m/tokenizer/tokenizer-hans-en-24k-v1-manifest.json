@@ -1,0 +1,43 @@
+{
+  "schema": "mei-51m-tokenizer-manifest-v1",
+  "tokenizer_id": "hans-en-24k-v1",
+  "generation": "v1.3",
+  "model_type": "unigram",
+  "declared_vocab_size": 24000,
+  "spm_vocab_size": 24000,
+  "pad_id": 0,
+  "eos_id": 1,
+  "bos_id": 2,
+  "unk_id": 3,
+  "encoding_profile_id": "mei-lossless-identity-v1",
+  "byte_fallback": true,
+  "split_digits": true,
+  "model_file": "hans-en-24k-v1.model",
+  "model_bytes": 353306,
+  "model_sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346",
+  "vocab_file": "hans-en-24k-v1.vocab",
+  "vocab_bytes": 371814,
+  "vocab_sha256": "c7f3cf2e577b997449ca58db6dc206029112f4f1476172df4cad49a9c9666ac0",
+  "training_sample": {
+    "train": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v1/train.jsonl",
+    "train_sha256": "559650878426baa4f677fd47cbbaa4755edf714af2208885307fceaf6b4f84ed",
+    "dev": "cycles/mei-1.2-51m/exp-corpus-survey/runs/v12-hans-en-scope-20260914-v1/dev.jsonl",
+    "dev_sha256": "194e2a328f13f27b173d861e7f444812e92997b28caaf48f86d15ada071947cd"
+  },
+  "cpt_input": {
+    "path": "corpus/pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json",
+    "sha256": "9412f9563e26dd5e160b6ef0911b0891d719a6702fb9a8c32d3ad56530338f0f"
+  },
+  "legacy_preparation_release": {
+    "path": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
+    "sha256": "c26beca4c02381ec0239048f121fbe8bf79731081c6dd442213dc1176b993009"
+  },
+  "runtime_validation": {
+    "python_cases": 264,
+    "python_passed": true,
+    "rust_passed": true,
+    "real_browser_wasm_passed": true,
+    "report": "cycles/mei-1.2-51m/exp-corpus-survey/runs/tokenizer-hans-en-runtime-audit-20260914-v1/report.json",
+    "report_sha256": "ae2c9e46c0052700cfb17fe6c303e5b32d08fc34435e3def296fb5ddb8a36ac0"
+  }
+}
