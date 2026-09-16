@@ -1066,6 +1066,7 @@ def train_mw_disposition_v3(
     checkpoint_dir: Path | None = None,
     resume: bool = False,
     checkpoint_every_steps: int = 100,
+    excluded_classes: Sequence[int] | None = None,
 ) -> dict[str, Any]:
     import mlx.core as mx
     import mlx.nn as nn
@@ -1078,7 +1079,26 @@ def train_mw_disposition_v3(
         raise RuntimeError(
             "MW training requires frozen mei-mw-visible-batch-v1 rows; live retrieval is forbidden"
         )
-    eligible = [row for row in rows if row.get("mw_eligible") is True]
+    # 探索性「移判别」：class 0(ready_to_execute)/10(capability_insufficient) 是检索终态，
+    # 判别移给 retrieval 头。disposition 头只训其余 active 类（默认 None = 20 类不变）。
+    excluded = {int(value) for value in (excluded_classes or [])}
+    active_classes = sorted(set(range(MW_DISPOSITION_CLASSES)) - excluded)
+    if not excluded:
+        active_classes = list(range(MW_DISPOSITION_CLASSES))
+    excluded_mask = (
+        mx.array(
+            [1 if index in excluded else 0 for index in range(MW_DISPOSITION_CLASSES)],
+            dtype=mx.bool_,
+        )
+        if excluded
+        else None
+    )
+    eligible = [
+        row
+        for row in rows
+        if row.get("mw_eligible") is True
+        and int(row["effective_reason_class_id"]) not in excluded
+    ]
     by_class: dict[int, list[dict[str, Any]]] = defaultdict(list)
     by_cell: dict[tuple[int, str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in eligible:
@@ -1087,8 +1107,11 @@ def train_mw_disposition_v3(
         by_cell[
             (label, str(row.get("retrieval_mode") or ""), str(row.get("runtime_profile") or ""))
         ].append(row)
-    if set(by_class) != set(range(MW_DISPOSITION_CLASSES)):
-        raise RuntimeError("frozen MW batches require all 20 disposition classes")
+    if set(by_class) != set(active_classes):
+        raise RuntimeError(
+            f"frozen MW batches require all {len(active_classes)} disposition classes "
+            f"(missing {sorted(set(active_classes) - set(by_class))})"
+        )
     if any(mode not in {"oracle", "learned"} or profile not in {"compact", "standard"} for _, mode, profile in by_cell):
         raise RuntimeError("frozen MW batch mode/profile is invalid")
     head = MWDispositionHead(runtime.model.cfg.d_model)
@@ -1108,7 +1131,7 @@ def train_mw_disposition_v3(
         "implementation": TRAINING_ID,
         "sampler": MW_SAMPLER_ID,
         "prompt_id": MW_BATCH_PROMPT_ID,
-        "n_classes": MW_DISPOSITION_CLASSES,
+        "n_classes": len(active_classes),
         "data_fingerprint": data_fingerprint,
         "target_steps": steps,
     }
@@ -1118,7 +1141,7 @@ def train_mw_disposition_v3(
         meta = load_train_state(state_path, head, optimizer, mode="strict", expected_meta=expected_meta)
         start_step = int(meta.get("steps_completed") or 0)
         last_loss = meta.get("last_loss")
-    observed: dict[int, int] = {index: 0 for index in range(20)}
+    observed: dict[int, int] = {index: 0 for index in active_classes}
     view_counts: dict[str, int] = {
         "oracle_compact": 0,
         "oracle_standard": 0,
@@ -1127,8 +1150,8 @@ def train_mw_disposition_v3(
     }
     capability_relabels = 0
     for step in range(start_step, steps):
-        requested_class = step % 20
-        occurrence = step // 20
+        requested_class = active_classes[step % len(active_classes)]
+        occurrence = step // len(active_classes)
         cells = sorted(key for key in by_cell if key[0] == requested_class)
         if not cells:
             raise RuntimeError(f"MW frozen views have no cell for class {requested_class}")
@@ -1159,6 +1182,8 @@ def train_mw_disposition_v3(
 
         def loss_fn(candidate_head: Any) -> Any:
             logits = candidate_head(cells).astype(mx.float32)
+            if excluded_mask is not None:
+                logits = mx.where(excluded_mask, mx.array(-1e9, dtype=logits.dtype), logits)
             return -nn.log_softmax(logits, axis=-1)[0, label]
 
         loss, gradients = mx.value_and_grad(loss_fn)(head)
@@ -1193,7 +1218,8 @@ def train_mw_disposition_v3(
         "last_loss": last_loss,
         "n_rows": len(eligible),
         "retrieval_terminal_rows_excluded": len(rows) - len(eligible),
-        "n_classes": 20,
+        "n_classes": len(active_classes),
+        "excluded_classes": sorted(excluded),
         "sampler": MW_SAMPLER_ID,
         "prompt_id": MW_BATCH_PROMPT_ID,
         "source_class_counts": {str(key): len(by_class[key]) for key in sorted(by_class)},
