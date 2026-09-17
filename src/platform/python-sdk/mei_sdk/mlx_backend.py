@@ -9,6 +9,8 @@ runtime directory in the public API.
 from __future__ import annotations
 
 import hashlib
+import os
+from pathlib import Path
 from typing import Any
 
 from .errors import SdkError
@@ -16,7 +18,8 @@ from .package import ModelPackage
 from .version import PYTHON_SDK_ROOT, SDK_ROOT
 
 _MEI_LLM = SDK_ROOT.parents[2]
-_ARCH = _MEI_LLM / "src/architecture/mei-1.2-51m"
+_arch_env = os.environ.get("MEI_ARCHITECTURE_DIR")
+_ARCH = Path(_arch_env).resolve() if _arch_env else (_MEI_LLM / "src/architecture/mei-1.2-51m")
 _RUNTIME_SHARED = _MEI_LLM / "src/platform/_shared/runtime"
 
 _REFERENCE_REVISION_FILES = (

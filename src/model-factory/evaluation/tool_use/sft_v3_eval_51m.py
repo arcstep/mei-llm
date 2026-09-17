@@ -403,15 +403,33 @@ def evaluate_frozen_mw_batches(
     *,
     limit: int | None = None,
     progress_every: int = 100,
+    excluded_classes: Sequence[int] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    """Evaluate the independent 20-class head on frozen budgeted prompts."""
+    """Evaluate the independent 20-class head on frozen budgeted prompts.
+
+    ``excluded_classes``（默认 None = 20 类）是探索性「移判别」入口：把检索终态
+    （class 0/10）从 disposition 评测里剔除，argmax 只在保留的 MW 类里选。
+    """
 
     import mlx.core as mx
 
     head = getattr(runtime, "mw_disposition_head", None)
     if head is None:
         raise RuntimeError("MW disposition head is unavailable")
-    eligible = [row for row in rows if row.get("mw_eligible") is True]
+    excluded = {int(value) for value in (excluded_classes or [])}
+    excluded_mask = (
+        mx.array(
+            [1 if index in excluded else 0 for index in range(20)], dtype=mx.bool_
+        )
+        if excluded
+        else None
+    )
+    eligible = [
+        row
+        for row in rows
+        if row.get("mw_eligible") is True
+        and int(row["effective_reason_class_id"]) not in excluded
+    ]
     selected = eligible[:limit] if limit is not None else eligible
     if not selected:
         raise RuntimeError("frozen MW evaluation has no eligible rows")
@@ -428,6 +446,8 @@ def evaluate_frozen_mw_batches(
             raise RuntimeError(f"frozen MW prompt exceeds joint budget: {row.get('view_id')}")
         cells = runtime.model(mx.array([ids], dtype=mx.int32), return_cells=True)["cells"]
         logits = head(cells).astype(mx.float32)
+        if excluded_mask is not None:
+            logits = mx.where(excluded_mask, mx.array(-1e9, dtype=logits.dtype), logits)
         mx.eval(logits)
         sample_id = str(row.get("view_id") or "")
         label = int(row["effective_reason_class_id"])
@@ -456,7 +476,7 @@ def evaluate_frozen_mw_batches(
                 ).decode(),
                 flush=True,
             )
-    report = metrics.mw_metrics(gold_rows, predictions)
+    report = metrics.mw_metrics(gold_rows, predictions, excluded_classes=excluded_classes)
     report.update(
         {
             "evaluator_id": EVALUATOR_ID,

@@ -28,7 +28,12 @@ SRC_ROOT = ROOT / "src"
 CYCLES_ROOT = ROOT / "cycles"
 LEGACY_CYCLES_ROOT = CYCLES_ROOT / "mei-1.1-51m"
 CORPUS_ROOT = ROOT / "corpus"
-TOKENIZER_DIR = ROOT / "models/mei-1.2-51m/tokenizer"
+_tokenizer_dir_env = os.environ.get("MEI_TOKENIZER_DIR")
+TOKENIZER_DIR = (
+    Path(_tokenizer_dir_env).resolve()
+    if _tokenizer_dir_env
+    else ROOT / "models/mei-1.2-51m/tokenizer"
+)
 TOKENIZER_ZH_V1 = ROOT / "models/mei-1.1-51m/tokenizer/zh-24k-v1.model"
 
 
@@ -37,7 +42,7 @@ def frozen_tokenizer_path() -> Path:
     pointer = TOKENIZER_DIR / "TOKENIZER.json"
     if pointer.is_file():
         data = json.loads(pointer.read_text(encoding="utf-8"))
-        if data.get("status") == "frozen" and data.get("tokenizer_id"):
+        if data.get("status") in ("frozen", "frozen_in_training_use") and data.get("tokenizer_id"):
             return TOKENIZER_DIR / f"{data['tokenizer_id']}.model"
     return TOKENIZER_ZH_V1
 TOKENIZER_MANIFEST = TOKENIZER_DIR / "tokenizer-zh-24k-v3-manifest.json"
@@ -46,7 +51,12 @@ _ARCHITECTURE_ID_RE = re.compile(r"^mei-1\.0-51m-arch-v\d+$")
 ARCHITECTURE_ID = os.environ.get("MEI_ARCHITECTURE_ID", "mei-1.0-51m-arch-v1")
 if "/" in ARCHITECTURE_ID or "\\" in ARCHITECTURE_ID or not _ARCHITECTURE_ID_RE.fullmatch(ARCHITECTURE_ID):
     raise RuntimeError(f"unsupported architecture identity: {ARCHITECTURE_ID}")
-ARCHITECTURE_DIR = SRC_ROOT / "architecture/mei-1.2-51m"
+_architecture_dir_env = os.environ.get("MEI_ARCHITECTURE_DIR")
+ARCHITECTURE_DIR = (
+    Path(_architecture_dir_env).resolve()
+    if _architecture_dir_env
+    else SRC_ROOT / "architecture/mei-1.2-51m"
+)
 if not (ARCHITECTURE_DIR / "spec/model.json").is_file():
     raise RuntimeError(f"missing architecture spec: {ARCHITECTURE_DIR / 'spec/model.json'}")
 ARCHITECTURE_SPEC = ARCHITECTURE_DIR / "spec"

@@ -14,7 +14,7 @@ import math
 import re
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Sequence
 
 import contracts.sft_v4_contract_51m as contract
 
@@ -271,7 +271,10 @@ def classification_metrics(
 
 
 def mw_metrics(
-    gold: list[dict[str, Any]], predictions: list[dict[str, Any]]
+    gold: list[dict[str, Any]],
+    predictions: list[dict[str, Any]],
+    *,
+    excluded_classes: Sequence[int] | None = None,
 ) -> dict[str, Any]:
     joined = _join_predictions(gold, predictions)
     labels = [int(row[0]["reason_class_id"]) for row in joined]
@@ -281,9 +284,25 @@ def mw_metrics(
         else -1
         for row in joined
     ]
-    return classification_metrics(
-        labels, predicted, n_classes=20, allow_prediction_error=True
+    excluded = {int(value) for value in (excluded_classes or [])}
+    active = sorted(set(range(20)) - excluded)
+    if excluded:
+        remap = {orig: new for new, orig in enumerate(active)}
+        kept_labels: list[int] = []
+        kept_predicted: list[int] = []
+        for label, pred in zip(labels, predicted):
+            if label in remap:
+                kept_labels.append(remap[label])
+                kept_predicted.append(remap[pred] if pred in remap else -1)
+        labels = kept_labels
+        predicted = kept_predicted
+    result = classification_metrics(
+        labels, predicted, n_classes=len(active), allow_prediction_error=True
     )
+    if excluded:
+        result["class_index_map"] = {str(new): orig for new, orig in enumerate(active)}
+        result["excluded_classes"] = sorted(excluded)
+    return result
 
 
 def _auroc(labels: list[int], scores: list[float]) -> float:

@@ -14,7 +14,38 @@
       "exists": true
     },
     "qat": null,
-    "sft": null,
+    "sft": {
+      "decided_at": "2026-09-17",
+      "policy": "single-fivehead-release",
+      "release_root": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1",
+      "note": "2026-09-17 五头语料统一锁定到日期命名新 release，彻底脱离 skeleton-v2 / Mei 147 身份，独立自包含管理。tool_lm/retrieval 来自公开线 4k；confidence/disposition 样本克隆自 skeleton-v2（绕不开的样本底子，克隆为独立文件）、narration 为 freeze v2 代码合成。每头文件哈希见 release 内 manifest.json。",
+      "heads": {
+        "tool_lm": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/tool_lm/train.jsonl",
+          "lines": 4000,
+          "exists": true
+        },
+        "retrieval": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/retrieval/train.jsonl",
+          "lines": 4000,
+          "exists": true
+        },
+        "confidence": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/confidence/train.jsonl",
+          "lines": 824,
+          "exists": true
+        },
+        "disposition": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/disposition/train.jsonl",
+          "lines": 8367,
+          "exists": true
+        },
+        "narration": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/narration/freeze_narration_sft_release_v2_51m.py",
+          "exists": true
+        }
+      }
+    },
     "eval": null
   },
   "tokenizer": {

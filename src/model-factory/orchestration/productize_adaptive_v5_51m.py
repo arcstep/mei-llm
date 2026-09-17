@@ -41,6 +41,7 @@ import training.tool_use.sft_v3_training_51m as training  # noqa: E402
 import contracts.sft_v4_contract_51m as contract  # noqa: E402
 from release import freeze_sft_v3_release_51m as freeze_sft_v3_release  # noqa: E402
 from common.paths import (  # noqa: E402
+    ARCHITECTURE_DIR,
     CURRENT_PATH,
     ROOT,
     architecture_contracts,
@@ -54,7 +55,7 @@ RUNNER_ID = "mei-51m-adaptive-productizer-v5"
 PLAN_SCHEMA = "mei-51m-adaptive-productization-plan-v1"
 PROGRESS_SCHEMA = "mei-51m-adaptive-productization-progress-v1"
 CURRENT_BASELINE_SHA256 = (
-    "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+    "6fd615400dbb69d38bf497ae966c0ae3af14ac4f835104fa70a231a9e307ff53"
 )
 PREVIOUS_RUNTIME_PROFILE_SHA256 = (
     "74839b08155e624f14318ca8646166ddc68ee6496720dedac26aa91fdc8bdf43"
@@ -299,7 +300,7 @@ def _source_manifest() -> dict[str, str]:
     # runtimes appear to share one run fingerprint.
     roots_and_suffixes = (
         (Path(__file__).parent, {".py"}),
-        (ROOT / "src/architecture/mei-1.2-51m", {".py", ".json"}),
+        (ARCHITECTURE_DIR, {".py", ".json"}),
         (ROOT / "src/platform/_shared/runtime", {".py", ".json"}),
         (ROOT / "src/platform/python-sdk/mei_sdk", {".py"}),
         (ROOT / "src/platform/_shared/rust/mei-sdk-core/src", {".rs"}),
@@ -1692,7 +1693,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     def seed_views_action(directory: Path):
         runtime = _load_runtime(
             seed_agent,
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=seed_r1,
             tool_index=seed_index,
         )
@@ -1827,7 +1828,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
         run("agent_alignment_replay_v5", agent_alignment_action)
 
     def retrieval_r2_action(directory: Path):
-        runtime = _load_runtime(paths["agent"], quantized=True)
+        runtime = _load_runtime(paths["agent"], quantized=not args.float_mode)
         report = training.train_retrieval_v3(
             runtime,
             rows["retrieval_train"],
@@ -1856,7 +1857,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     def final_artifacts_action(directory: Path):
         runtime = _load_runtime(
             paths["agent"],
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=paths["r2"],
             tool_index=seed_index,
         )
@@ -1941,7 +1942,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
         calibration = contract.load_json(paths["calibration"])
         runtime = _load_runtime(
             paths["agent"],
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=paths["r2"],
             tool_index=paths["index"],
         )
@@ -2004,7 +2005,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     def mw_action(directory: Path):
         runtime = _load_runtime(
             paths["agent"],
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=paths["r2"],
             tool_index=paths["index"],
         )
@@ -2086,7 +2087,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
         calibration = contract.load_json(paths["calibration"])
         runtime = _load_runtime(
             paths["agent"],
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=paths["r2"],
             tool_index=paths["index"],
             mw_head=paths["mw"],
@@ -2152,7 +2153,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     def confidence_action(directory: Path):
         runtime = _load_runtime(
             paths["agent"],
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=paths["r2"],
             tool_index=paths["index"],
         )
@@ -2222,7 +2223,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     def narration_action(directory: Path):
         from training.tool_use.train_sft_ondisk_51m import train_narration_adapter
 
-        runtime = _load_runtime(paths["agent"], quantized=True)
+        runtime = _load_runtime(paths["agent"], quantized=not args.float_mode)
         report = train_narration_adapter(
             runtime,
             _load_rows(args.narration_release / "narration.train.jsonl"),
@@ -2251,7 +2252,7 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
     def sidecar_eval_action(directory: Path):
         runtime = _load_runtime(
             paths["agent"],
-            quantized=True,
+            quantized=not args.float_mode,
             retrieval_head=paths["r2"],
             tool_index=paths["index"],
             mw_head=paths["mw"],
@@ -2806,21 +2807,21 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-release", type=Path, default=DEFAULT_BASE_RELEASE)
-    parser.add_argument("--base-weights", type=Path, default=DEFAULT_BASE_WEIGHTS)
-    parser.add_argument("--qat-import-receipt", type=Path, default=DEFAULT_QAT_IMPORT)
+    parser.add_argument("--base-release", type=Path, default=None)
+    parser.add_argument("--base-weights", type=Path, default=None)
+    parser.add_argument("--qat-import-receipt", type=Path, default=None)
     parser.add_argument("--seed-run", type=Path, default=DEFAULT_SEED_RUN)
     parser.add_argument("--adopt-adaptive-prefix-run", type=Path)
     parser.add_argument("--adopt-packaged-run", type=Path)
-    parser.add_argument("--data-release", type=Path, default=DEFAULT_DATA_RELEASE)
+    parser.add_argument("--data-release", type=Path, default=None)
     parser.add_argument(
         "--linguistic-augmentation",
         type=Path,
-        default=DEFAULT_LINGUISTIC_AUGMENTATION,
+        default=None,
     )
-    parser.add_argument("--eval-lock", type=Path, default=DEFAULT_EVAL_LOCK)
+    parser.add_argument("--eval-lock", type=Path, default=None)
     parser.add_argument(
-        "--narration-release", type=Path, default=DEFAULT_NARRATION_RELEASE
+        "--narration-release", type=Path, default=None
     )
     parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
     parser.add_argument("--package-id", default=DEFAULT_PACKAGE_ID)
@@ -2846,6 +2847,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--narration-eval-limit", type=int, default=600)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--float-mode",
+        action="store_true",
+        help="Float Task Control: run every trainable head full-float "
+        "(quantized=False) on a float base, as an unquantized task ceiling.",
+    )
     parser.add_argument("--stop-after-stage", choices=STAGES)
     parser.add_argument("--phase-scope", choices=sorted(PHASE_SCOPE_STAGES))
     args = parser.parse_args(argv)
@@ -2861,6 +2868,25 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     for name, value in vars(args).items():
         if (name.endswith("steps") or name.endswith("limit")) and int(value) <= 0:
             parser.error(f"--{name.replace('_', '-')} must be positive")
+    required_inputs = {
+        "--base-release": args.base_release,
+        "--base-weights": args.base_weights,
+        "--qat-import-receipt": args.qat_import_receipt,
+        "--data-release": args.data_release,
+        "--linguistic-augmentation": args.linguistic_augmentation,
+        "--eval-lock": args.eval_lock,
+        "--narration-release": args.narration_release,
+    }
+    missing = [flag for flag, value in required_inputs.items() if value is None]
+    if missing:
+        parser.error(
+            "missing required inputs: "
+            + ", ".join(missing)
+            + ". Corpus/weight locked relative paths live in "
+            "corpus/adoptions/mei-51m-v1.3/adoption.json (current_locked_inputs); "
+            "pass them explicitly -- script defaults were removed to prevent "
+            "silently reusing stale v4-300m-v4."
+        )
     return args
 
 

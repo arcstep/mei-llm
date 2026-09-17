@@ -74,13 +74,13 @@ def _copy_rows(path: Path) -> tuple[list[dict[str, Any]], bytes]:
 
 
 def _load_tokenizer() -> Any:
-    architecture_dir = contract.ROOT / "src/architecture/mei-1.2-51m"
-    text = str(architecture_dir)
+    from common.paths import ARCHITECTURE_DIR, frozen_tokenizer_path
+
+    text = str(ARCHITECTURE_DIR)
     added = text not in sys.path
     if added:
         sys.path.insert(0, text)
     try:
-        from common.paths import frozen_tokenizer_path
         from tokenizer import ZhTokenizerV2
 
         path = frozen_tokenizer_path()

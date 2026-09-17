@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "legacy-architecture-hash-aliases",
+  "architecture_id": "mei-1.0-51m-arch-v1",
+  "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+  "aliases": [
+    {
+      "legacy_architecture_sha256": "84568ca0ecccab4316a39a8ec6d7e31901ea17218c084ac2e1140eafa05c9c41",
+      "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+      "compatibility": "weight_compatible",
+      "evidence": "frozen scratch300m release; exact 51463797-parameter tensor topology"
+    },
+    {
+      "legacy_architecture_sha256": "f02aebda393c7fca181af7b7225581577f689531245dec00ac549de1482c5ea7",
+      "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+      "compatibility": "weight_compatible",
+      "evidence": "600m launch tree; same exact 51463797-parameter tensor topology"
+    },
+    {
+      "legacy_architecture_sha256": "c52dad88b3ef52378ae4377a114e3010cdd8f343ab8ebb2a4537356c95a13857",
+      "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b",
+      "compatibility": "weight_compatible",
+      "evidence": "506914021-token interrupted 600m CPT state; all 400 parameter names/shapes and 802 Adam m/v slots verified against the canonical contract"
+    }
+  ],
+  "rule": "An alias only proves checkpoint tensor compatibility. It does not alias runtime or training-auxiliary policy."
+}

@@ -16,6 +16,9 @@
   `mei_llm/` 是唯一控制平面入口（`python -m mei_llm`），已取消 skills 体系。
   唯一实现一律放 `src/`，禁止藏进 `.internal/`；历史实现从 Git 取，不复制 exposure 目录。
 - `corpus/`：语料成果（pools/sft-suite/eval-lock/archive），不按产品版本划分，训练按需引用。
+  确定「当前该用哪个语料」只读 `corpus/adoptions/mei-51m-v1.3/adoption.json` 的
+  `current_locked_inputs`（cpt/sft/eval，每头指向锁定相对位置+哈希）；不得从文件名 vN、
+  目录修改时间或 `sft-suite/` 平铺顺序推断「最新」。被采纳语料锁定后禁止就地修改。
 - `cycles/`：过程证据。`mei-1.2-51m/exp-XXXm` 现役序列；`mei-1.1-51m/` 旧链归档（只读）。
   每个 executed rung 绑定 corpus/model/evaluation/decision 证据。
 - `models/`：成果（发布面）。`mei-1.2-51m/{tokenizer,runtime,releases/exp-XXXm/{base,products}}`；
