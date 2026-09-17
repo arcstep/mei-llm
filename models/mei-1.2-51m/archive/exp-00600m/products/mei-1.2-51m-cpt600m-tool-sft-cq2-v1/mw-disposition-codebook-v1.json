@@ -1,0 +1,32 @@
+{
+  "id": "mw-disposition-codebook-v1",
+  "source": "mw-governance-v0",
+  "n_classes": 20,
+  "classes": [
+    {"class_id": 0, "reason_code": "ready_to_execute", "act": "execute", "cell": "MW.OK"},
+    {"class_id": 1, "reason_code": "missing_slot", "act": "expand", "cell": "SF.PAR"},
+    {"class_id": 2, "reason_code": "missing_external_fact", "act": "expand", "cell": "SF.PAR"},
+    {"class_id": 3, "reason_code": "missing_permission_token", "act": "expand", "cell": "SF.PAR"},
+    {"class_id": 4, "reason_code": "ambiguous_scope", "act": "shape", "cell": "SF.AMB"},
+    {"class_id": 5, "reason_code": "mixed_intent", "act": "shape", "cell": "SF.AMB"},
+    {"class_id": 6, "reason_code": "deixis_unresolved", "act": "shape", "cell": "SF.AMB"},
+    {"class_id": 7, "reason_code": "correction_incomplete", "act": "shape", "cell": "SF.AMB"},
+    {"class_id": 8, "reason_code": "authority_required", "act": "escalate", "cell": "Unknown"},
+    {"class_id": 9, "reason_code": "safety_judgment", "act": "escalate", "cell": "Unknown"},
+    {"class_id": 10, "reason_code": "capability_insufficient", "act": "escalate", "cell": "Unknown"},
+    {"class_id": 11, "reason_code": "unsupported_scope", "act": "stop", "cell": "Unknown"},
+    {"class_id": 12, "reason_code": "scene_conflict", "act": "stop", "cell": "SF.PRE"},
+    {"class_id": 13, "reason_code": "illegal_pair", "act": "stop", "cell": "Unknown"},
+    {"class_id": 14, "reason_code": "injection_rejected", "act": "stop", "cell": "Unknown"},
+    {"class_id": 15, "reason_code": "unknown_tool", "act": "stop", "cell": "Unknown"},
+    {"class_id": 16, "reason_code": "unknown_slot_value", "act": "stop", "cell": "Unknown"},
+    {"class_id": 17, "reason_code": "offtopic", "act": "stop", "cell": "Unknown"},
+    {"class_id": 18, "reason_code": "negation_cancels", "act": "stop", "cell": "Unknown"},
+    {"class_id": 19, "reason_code": "partial_sequence_blocked", "act": "stop", "cell": "Unknown"}
+  ],
+  "rules": [
+    "Head target is reason_code only.",
+    "Runtime maps act/cell from this codebook.",
+    "Teachers must not edit reason_code/act/cell/gaps/function_calls."
+  ]
+}

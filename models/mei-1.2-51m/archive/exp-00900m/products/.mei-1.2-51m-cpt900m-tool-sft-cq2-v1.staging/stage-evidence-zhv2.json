@@ -1,0 +1,27 @@
+{
+  "lm": {
+    "status": "passed",
+    "stage_id": "sft2-quant-aware-zhv2",
+    "stage_fingerprint_sha256": "fa519b22af80f18f3d2e7f7f26207c5eb1c040f7bed3bf4a8bc666add28b2f0b"
+  },
+  "contrastive": {
+    "status": "passed",
+    "stage_id": "retrieval-rebuild-v4",
+    "stage_fingerprint_sha256": "4fac417ac9da7dd2802864e49dd072c489c18ca5bfbe3d69d9f949e2486d4cb9"
+  },
+  "mw_disposition": {
+    "status": "passed",
+    "stage_id": "mw-disposition-batched-v1",
+    "stage_fingerprint_sha256": "4f2386fccbee564a46e2af811a4ab5b6ee11372ac885ca8f0157975b161af8f1"
+  },
+  "confidence": {
+    "status": "passed",
+    "stage_id": "confidence-v3",
+    "stage_fingerprint_sha256": "d5fcca0a0181d2cb85dc92ae7e3f921e957f040fee1358f1db65c86f0aaf3f5b"
+  },
+  "narration_adapter": {
+    "status": "passed",
+    "stage_id": "zero-init-untrained-narration-adapter",
+    "stage_fingerprint_sha256": "7d50c9525350e717d05e207d8cd889c95efa6744f2610312417cb9239ff93a3a"
+  }
+}

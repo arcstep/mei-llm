@@ -1,0 +1,59 @@
+{
+  "assets": [
+    {
+      "path": "mei-model.json",
+      "bytes": 172543,
+      "sha256": "61404455cb0ca6a1f0ad4c4d710312977da9ae3dfeb6b86d4137590d0a043f56"
+    },
+    {
+      "path": "mw-disposition-codebook-v1.json",
+      "bytes": 2127,
+      "sha256": "913d2c4bca8a796c9baddb9a79539cc703aa6420af4260be2c5ca0e0d5a68d40"
+    },
+    {
+      "path": "retrieval-calibration.json",
+      "bytes": 805,
+      "sha256": "ca50bafc57a0178e12880385bac7e164e050af85c6b09af0cdd1f3282425bfb8"
+    },
+    {
+      "path": "tensors.bin",
+      "bytes": 18058392,
+      "sha256": "47ffaefac806aa3dc60a7341e0d097647bbf5f3fea77700bf4ac1e6bc697a1f0"
+    },
+    {
+      "path": "tokenizer.model",
+      "bytes": 591900,
+      "sha256": "5aa8bb7b426db8e3c6327066568b37e194090af3900d4c2ead09144756124945"
+    },
+    {
+      "path": "tool-index.json",
+      "bytes": 107388,
+      "sha256": "2c04afb4c2591607a73ef05b5589dc0bac99d6a7a787749f27b30eb854c02e6a"
+    },
+    {
+      "path": "training-receipt-confidence.json",
+      "bytes": 829,
+      "sha256": "6a9224411a3f0c78e0a12b5f6fec9a706a63f8f602c7542ab268a5e435edcb91"
+    },
+    {
+      "path": "training-receipt-contrastive.json",
+      "bytes": 827,
+      "sha256": "51c1b91397cf74317cf5b92dbc137c7d7379040f5e8d6761c8ff26f136963b30"
+    },
+    {
+      "path": "training-receipt-lm.json",
+      "bytes": 828,
+      "sha256": "db98dce67d15185ebf08777cee109b01009423f313867b95ea4bb8c3bd8fd043"
+    },
+    {
+      "path": "training-receipt-mw_disposition.json",
+      "bytes": 832,
+      "sha256": "6e8bece3ea73ec68e92e885a54b071c0e9d32a7cfde695a1e46dfa77fdb0183a"
+    },
+    {
+      "path": "training-receipt-narration_adapter.json",
+      "bytes": 838,
+      "sha256": "9cf0f03dd60f35135432a9514b48ebd615a14389a2df256d897a6abe5fab7343"
+    }
+  ]
+}

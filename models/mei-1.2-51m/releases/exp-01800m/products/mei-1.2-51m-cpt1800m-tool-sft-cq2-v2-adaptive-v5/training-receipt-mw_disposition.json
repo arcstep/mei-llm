@@ -1,0 +1,16 @@
+{
+  "component": "mw_disposition",
+  "contracts": {
+    "runtime_profile_sha256": "f3a4ab1151e82299fee0214c5f78a18c20d83367d24a9dc073bbcd56312fa512",
+    "training_aux_sha256": "83849db3926693e49c0896a58c172ae15e4b203550cee0ef12a4c37a8c1d48ac",
+    "weight_contract_sha256": "c468b96453f0a377b1ffbcfef00ed9e108c82b2c44847ee5345509a181581d9b"
+  },
+  "package_id": "mei-1.2-51m-cpt1800m-tool-sft-cq2-v2-adaptive-v5",
+  "product": "mei-1.2-51m",
+  "schema": "mei-training-receipt-v2",
+  "stage_fingerprint_sha256": "90bddc3dac547b77102a192842ec70c8298bdb4bab6e21dd9b791ad05075cc67",
+  "stage_id": "mw_disposition_v5",
+  "status": "passed",
+  "tensor_container_sha256": "47ffaefac806aa3dc60a7341e0d097647bbf5f3fea77700bf4ac1e6bc697a1f0",
+  "tensor_directory_sha256": "cd1726f723e6277a1e7071424154da664ea4d7232f0ec73d7fae4a66c9b0ef32"
+}

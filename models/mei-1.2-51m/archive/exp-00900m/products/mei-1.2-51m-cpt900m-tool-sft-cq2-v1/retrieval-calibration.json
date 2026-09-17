@@ -1,0 +1,1 @@
+{"bias":0.0,"calibration_id":"mei-retrieval-platt-v1","catalog_sizes":[10,20,50],"discard_threshold":0.0,"expand_threshold":0.0,"fallback_scan_all_eligible":true,"metrics":{"status":"calibration_missing"},"scale":1.0,"validated":false,"validation_manifest_sha256":"0000000000000000000000000000000000000000000000000000000000000000"}
