@@ -1,12 +1,12 @@
 {
   "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
-  "governance_status": "adopted",
+  "governance_status": "retired",
   "locked": true,
-  "adopted_scope": "v1.3 SFT 五头：retrieval / tool_lm(full_call) / mw_disposition / confidence / narration（Mei 147 工具线）",
+  "adopted_scope": "无（2026-09-17 废弃）",
   "decided_at": "2026-09-17",
+  "retired_reason": "THREE-HEAD-RECON.md（2026-09-16）判定为旧语料：narration 语义不兼容（通用任务解说 vs 设备控制模板，provenance 为字符串、refused 类 verified_terminal_result 为空）、confidence label 全 null（0/824）。是 9/16 探索明确否定的旧产物，不纳入 v1.3 SFT。",
   "evidence": [
-    "cycles/mei-1.2-51m/exp-corpus-survey/runs/SFT-CORPUS-STATUS-SUMMARY.md",
-    "corpus/pools/task-trials/2026-09-15-public-sft-scale-experiment/THREE-HEAD-CORPUS-EXPLORATION.md"
+    "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-16-three-head-loop/THREE-HEAD-RECON.md"
   ],
-  "note": "锁定后禁止就地修改；变更走新 release + 显式 reuse/replace/retire。"
+  "note": "锁定后禁止就地修改。最新五头语料需从 cycles/mei-1.2-51m/exp-corpus-survey/runs/ 的 9/15、9/16 探索成果重新提取，尚未锁定。"
 }

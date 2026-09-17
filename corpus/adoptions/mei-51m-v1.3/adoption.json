@@ -16,53 +16,33 @@
     "qat": null,
     "sft": {
       "decided_at": "2026-09-17",
-      "policy": "mei-147-skeleton-v2-unified",
-      "note": "五头统一 Mei 147 工具线（skeleton-v2）：retrieval / tool_lm(full_call) / disposition(mw_disposition) / confidence / narration 全部走 skeleton-v2 compiled，147 部署工具。锁定后禁止就地修改；变更走新 release + 显式 reuse/replace/retire。公开资料线（3388 通用工具）为能力画像探索、不纳入 SFT 输入。skeleton-v2 语料为 zh-24k-v3 词表时代的纯文本 semantic，重跑需用 hans-en-24k-v1 重新 encode。",
+      "policy": "single-fivehead-release",
+      "release_root": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1",
+      "note": "2026-09-17 五头语料统一锁定到日期命名新 release，彻底脱离 skeleton-v2 / Mei 147 身份，独立自包含管理。tool_lm/retrieval 来自公开线 4k；confidence/disposition 样本克隆自 skeleton-v2（绕不开的样本底子，克隆为独立文件）、narration 为 freeze v2 代码合成。每头文件哈希见 release 内 manifest.json。",
       "heads": {
-        "retrieval": {
-          "line": "mei-147-tools-skeleton-v2",
-          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
-          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
-          "exists": true,
-          "train": 2096,
-          "total": 2760,
-          "deploy_tools": 147
-        },
         "tool_lm": {
-          "line": "mei-147-tools-skeleton-v2",
-          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
-          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
-          "exists": true,
-          "train": 1643,
-          "total": 2340,
-          "deploy_tools": 147
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/tool_lm/train.jsonl",
+          "lines": 4000,
+          "exists": true
         },
-        "disposition": {
-          "line": "mei-147-tools-skeleton-v2",
-          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
-          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
-          "exists": true,
-          "train": 8367,
-          "total": 11800,
-          "deploy_tools": 147
+        "retrieval": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/retrieval/train.jsonl",
+          "lines": 4000,
+          "exists": true
         },
         "confidence": {
-          "line": "mei-147-tools-skeleton-v2",
-          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
-          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
-          "exists": true,
-          "train": 824,
-          "total": 1150,
-          "deploy_tools": 147
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/confidence/train.jsonl",
+          "lines": 824,
+          "exists": true
+        },
+        "disposition": {
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/disposition/train.jsonl",
+          "lines": 8367,
+          "exists": true
         },
         "narration": {
-          "line": "mei-147-tools-skeleton-v2",
-          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
-          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
-          "exists": true,
-          "train": 607,
-          "total": 900,
-          "deploy_tools": 147
+          "path": "corpus/sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1/narration/freeze_narration_sft_release_v2_51m.py",
+          "exists": true
         }
       }
     },

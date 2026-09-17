@@ -6,11 +6,11 @@
 
 - [治理规则](GOVERNANCE.md)：单一真相源、四态、锁定红线、脚本默认值红线（先读）。
 - [原料和备选](catalog/candidates.md)：公开来源、转换正文和待审核材料；按基础语言、口语、文学、代码结构、任务工具分组。
-- [锁定与编译包](catalog/locked.md)：CPT 冻结输入、历史 SFT 输入 release、当前 SFT 五头锁定（五头统一 Mei 147）、Eval lock，分别说明状态与使用证据；有 RELEASE 不等于当前采用。
+- [锁定与编译包](catalog/locked.md)：CPT 冻结输入、历史 SFT 输入 release、当前 SFT 五头锁定（`mei-1.3-51m-tool-sft-20260917-fivehead-v1`）、Eval lock，分别说明状态与使用证据；有 RELEASE 不等于当前采用。
 - [试批、历史与中断记录](catalog/history.md)：工程样例、转换试批、旧准备批次、未完成导出与混合旧池。
 - [v1.1 采用清单](adoptions/mei-51m-v1.1/README.md)：归档旧链；历史 v1.0 名称不另算一代。
 - [v1.2 采用清单](adoptions/mei-51m-v1.2/README.md)：已有 1800M 基线及下游绑定线索。
-- [v1.3 采用清单](adoptions/mei-51m-v1.3/README.md)：本次简英 CPT、词表，以及 SFT 五头（已锁定，五头统一 Mei 147）；QAT/Eval 仍待准入。
+- [v1.3 采用清单](adoptions/mei-51m-v1.3/README.md)：本次简英 CPT、词表，以及 SFT 五头（已锁定到 `mei-1.3-51m-tool-sft-20260917-fivehead-v1`）；QAT/Eval 仍待准入。
 
 ## 目前的物理目录
 
