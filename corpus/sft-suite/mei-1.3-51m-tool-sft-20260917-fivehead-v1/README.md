@@ -37,9 +37,11 @@ v1.3-800m 五头 SFT 语料的统一锁定版本（2026-09-17 日期命名）。
 ## 词表与编译契约
 
 - v1.3 训练词表 = `hans-en-24k-v1`（24000 unigram，`frozen_in_training_use`）。
-- **tool_lm / retrieval**：公开线原始语义 jsonl，直接用 v1.3 词表 encode。
-- **confidence / disposition**：克隆自 skeleton-v2（zh-24k-v3 时代 compiled），训练前需用
-  hans-en-24k-v1 重新 encode。
+- **五头语料均为纯文本语义层**：query / target_text / expected_call / reason_class_id 都是
+  纯文本字符串，非 token id，词表无关。训练 compile 阶段统一用 hans-en-24k-v1 词表 encode。
+- **confidence / disposition**：克隆自 skeleton-v2 的 compiled 层，但该层的「compile」只做
+  split 切分 + 加训练字段（task/split/label_state 等），字段仍是纯文本语义、未 tokenize；
+  与 tool_lm/retrieval 一样在训练时用 hans-en-24k-v1 encode。
 - **confidence label**：label 语义 = `exact_call_or_correct_refusal_after_r1`，只能 harvest
   实跑产生（检索头 + tool_lm 能力实跑 → 精确比对），不能离线标注。本目录 `train.jsonl`/
   `valid.jsonl` 是输入样本（含 expected_kind/expected_call），label 由 harvest 补全；已跑通的

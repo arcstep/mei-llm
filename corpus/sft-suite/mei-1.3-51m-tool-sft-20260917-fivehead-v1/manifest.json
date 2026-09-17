@@ -5,8 +5,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "7f18c26b8e385c541e84d3cebeadf8447300b2ed2b7b4e2b61920f68f93741a7",
-      "bytes": 4475
+      "sha256": "b28335d69fb25de8c29f3f887090d6ce2a315901111d96aaa3670a26cffe0181",
+      "bytes": 4759
     },
     {
       "path": "STATUS.json",
@@ -58,6 +58,11 @@
       "sha256": "a7b5a19ef82ad6611d814ec5d5a53decb987c50a652e7f5581af4df6bfd41e72",
       "bytes": 1223956,
       "lines": 1416
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "c298a4266f0f6b0440af977d01ea4f3d61ba621fa37251dd3f91fd868a5502b3",
+      "bytes": 2758
     },
     {
       "path": "narration/freeze_narration_sft_release_v2_51m.py",
