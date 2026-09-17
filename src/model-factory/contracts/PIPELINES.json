@@ -2,6 +2,24 @@
   "schema": "mei-model-factory-pipeline-registry-v1",
   "pipelines": [
     {
+      "pipeline_id": "mei-51m-base-qat-cuda-v1",
+      "status": "current",
+      "entrypoint": "orchestration.base_qat_a10",
+      "changes_weights": true,
+      "track": "research_candidate",
+      "automatic_parent_promotion": false,
+      "purpose": "Independent milestone Base CQ2 QAT with own Float LM Anchor, frozen replay/dev and full-state recovery; FTC deferred to local task comparison by user authorization 2026-09-16."
+    },
+    {
+      "pipeline_id": "mei-51m-cross-tokenizer-base-compare-v1",
+      "status": "current",
+      "entrypoint": "evaluation.base.cross_tokenizer_compare",
+      "changes_weights": false,
+      "track": "diagnostic",
+      "automatic_parent_promotion": false,
+      "purpose": "paired Float Base comparison on identical decoded text with tokenizer-normalized bits-per-byte and no SFT/QAT claim"
+    },
+    {
       "pipeline_id": "mei-51m-a10-mlx-snapshot-eval-v1",
       "status": "current",
       "entrypoint": "evaluation.base.a10_snapshot",

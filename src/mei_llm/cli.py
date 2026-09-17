@@ -581,6 +581,11 @@ def build_parser() -> argparse.ArgumentParser:
             leaf = child.add_parser(action, add_help=False)
             leaf.add_argument("arguments", nargs=argparse.REMAINDER)
 
+    base_qat = top.add_parser("base-qat")
+    base_qat.add_argument("action", choices=("prepare", "probe", "run", "supervise"))
+    base_qat.add_argument("--config", type=Path, required=True)
+    base_qat.add_argument("--confirm-training", action="store_true")
+
     cpt = top.add_parser("cpt")
     cpt_sub = cpt.add_subparsers(dest="action", required=True)
     cpt_sub.add_parser("doctor")
@@ -590,6 +595,8 @@ def build_parser() -> argparse.ArgumentParser:
     a10.add_argument("--confirm-training", action="store_true")
     snapshot_eval = cpt_sub.add_parser("snapshot-eval")
     snapshot_eval.add_argument("--config", type=Path, required=True)
+    base_compare = cpt_sub.add_parser("compare-base")
+    base_compare.add_argument("--config", type=Path, required=True)
     diagnose = cpt_sub.add_parser("diagnose")
     diagnose.add_argument("--config", type=Path, required=True)
     resource_probe = cpt_sub.add_parser("resource-probe")
@@ -730,7 +737,15 @@ def main(argv: list[str] | None = None) -> int:
             args.corpus_control_action,
             args.arguments,
         )
+    if args.domain == "base-qat":
+        if args.action != "prepare":
+            _training_arguments(["--confirm-training"] if args.confirm_training else [], action="base-qat")
+        pipeline = _pipeline(registry, "mei-51m-base-qat-cuda-v1")
+        return _forward_module(registry, pipeline["entrypoint"], [args.action, "--config", str(args.config)])
     if args.domain == "cpt":
+        if args.action == "compare-base":
+            pipeline = _pipeline(registry, "mei-51m-cross-tokenizer-base-compare-v1")
+            return _forward_module(registry, pipeline["entrypoint"], ["--config", str(args.config)])
         if args.action == "snapshot-eval":
             pipeline = _pipeline(registry,"mei-51m-a10-mlx-snapshot-eval-v1")
             return _forward_module(registry,pipeline["entrypoint"],["--config",str(args.config)])
