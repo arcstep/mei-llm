@@ -1,0 +1,73 @@
+{
+  "schema": "mei-51m-base-milestone-release-v1",
+  "release_id": "mei-51m-v1.3-1600m-base",
+  "model_id": "mei-51m-v1.3",
+  "release_class": "cpt_milestone_snapshot",
+  "status": "copied_verified",
+  "tokens_seen": 1600000000,
+  "stage_index": 1,
+  "files": [
+    {
+      "path": "SNAPSHOT.json",
+      "bytes": 1470,
+      "role": "snapshot_manifest",
+      "sha256": "643e59b2f4d8ed36586b11e991f33a05747ed47034ed3162b5a2a9e2c0ece413"
+    },
+    {
+      "path": "base-weights.npz",
+      "bytes": 205966898,
+      "role": "float_base_named_weights",
+      "sha256": "8f11eb010415e74af41b42e787d2e8040217db34cbb5d097f567747332439466"
+    },
+    {
+      "path": "state-0195314.pt",
+      "bytes": 617984222,
+      "role": "full_continuation_checkpoint",
+      "sha256": "38d8a4c6e36dd75176f44601bb27e3dd9b98ed5c698c73ec8dbfb82085852b8c"
+    },
+    {
+      "path": "state-0195314.json",
+      "bytes": 10919,
+      "role": "continuation_sidecar",
+      "sha256": "71435bef6d3fba9ae25da514e8a314397ae713ee4813c174fa0b5f41428d6312"
+    }
+  ],
+  "weights_validation": {
+    "format": "npz",
+    "tensor_count": 400,
+    "parameter_count": 51463797,
+    "dtypes": [
+      "float32"
+    ],
+    "all_finite": true
+  },
+  "checkpoint_validation": {
+    "archive_test": "passed",
+    "torch_restore": "passed_on_source_for_identical_sha256",
+    "restored_tokens_seen": 1600000000,
+    "contains": [
+      "model",
+      "optimizer",
+      "torch_rng",
+      "cuda_rng",
+      "sampler",
+      "stage_index",
+      "step",
+      "tokens_seen"
+    ]
+  },
+  "tokenizer": {
+    "path": "models/mei-1.3-51m/tokenizer/hans-en-24k-v1.model",
+    "sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346"
+  },
+  "input_release": {
+    "path": "corpus/pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json",
+    "sha256": "9412f9563e26dd5e160b6ef0911b0891d719a6702fb9a8c32d3ad56530338f0f"
+  },
+  "training": {
+    "fingerprint": "45e139621db85c8b9b337ac265f94f39fd6efaaebdf2734ff3527623c82ae74d",
+    "continues_after_milestone": true
+  },
+  "release_eligible": false,
+  "current_mutated": false
+}

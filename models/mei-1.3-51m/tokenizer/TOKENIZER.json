@@ -1,0 +1,12 @@
+{
+  "schema": "mei-51m-tokenizer-pointer-v1",
+  "current": "tokenizer/hans-en-24k-v1.model",
+  "frozen_at": "2026-09-14T18:46:00+08:00",
+  "manifest": "tokenizer-hans-en-24k-v1-manifest.json",
+  "model_sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346",
+  "status": "frozen_in_training_use",
+  "tokenizer_id": "hans-en-24k-v1",
+  "vocab_size": 24000,
+  "generation": "v1.3",
+  "current_mutated": false
+}

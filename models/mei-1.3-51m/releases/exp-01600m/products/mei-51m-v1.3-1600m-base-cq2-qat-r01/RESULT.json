@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "process_complete": true,
+  "quality_passed": true,
+  "tokens_seen": 20000000,
+  "base_tokens": 1600000000,
+  "best": {
+    "tokens": 20000000,
+    "quantized_ce": 2.898519959372122,
+    "master_ce": 3.6954723168378587,
+    "delta_vs_anchor": 0.13162064306809063,
+    "source_deltas": {
+      "crosswoz": 0.21597950275127697,
+      "github-code": 0.11212998069822788,
+      "lccc-dialogue": 0.14142854511737823,
+      "naturalconv": 0.19105876982212067,
+      "nemotron-interactive_agent": -0.11587264016270638,
+      "nemotron-tool_calling": 0.0941897127777338,
+      "openapi-directory-latest-half-f04b8d0": -0.021716495975852013,
+      "opensubtitles-zh-CN": 0.14489721599966288,
+      "project-gutenberg": 0.10420994460582733,
+      "risawoz": 0.2505562095081104,
+      "technical-guides": 0.1498352475464344,
+      "ted2020-zh-cn": 0.1462362043319212,
+      "toolace": 0.19558242335915565,
+      "web-hq-zh": 0.17028598487377167,
+      "wiki-en": 0.16954123973846436,
+      "wiki-en-foundation-expansion-20260913-v1": 0.16928162425756454,
+      "wiki-zh": 0.1919525321573019
+    },
+    "passed": true
+  },
+  "anchor": {
+    "path": "/root/mei-qat-v1.3/base-1600000000/anchor.json",
+    "sha256": "f0c5640ddd9ede615981b4ee50fd4b298735f5e3b482f42317b15c2f4db43de4"
+  },
+  "history": [
+    {
+      "tokens": 5000000,
+      "quantized_ce": 2.986627341572809,
+      "master_ce": 3.435483993926724,
+      "delta_vs_anchor": 0.21972802526877766,
+      "source_deltas": {
+        "crosswoz": 0.4113306861657362,
+        "github-code": 0.17773586697876453,
+        "lccc-dialogue": 0.216361865401268,
+        "naturalconv": 0.29111916571855545,
+        "nemotron-interactive_agent": -0.07777144014835358,
+        "nemotron-tool_calling": 0.16766849532723427,
+        "openapi-directory-latest-half-f04b8d0": 0.021021376363933086,
+        "opensubtitles-zh-CN": 0.22138522192835808,
+        "project-gutenberg": 0.2458731085062027,
+        "risawoz": 0.37502915017745075,
+        "technical-guides": 0.24919609352946281,
+        "ted2020-zh-cn": 0.22340959118258574,
+        "toolace": 0.27365149185061455,
+        "web-hq-zh": 0.26199982315301895,
+        "wiki-en": 0.24232272058725357,
+        "wiki-en-foundation-expansion-20260913-v1": 0.23895946890115738,
+        "wiki-zh": 0.3049216940999031
+      },
+      "passed": false
+    },
+    {
+      "tokens": 10000000,
+      "quantized_ce": 2.9421369348620545,
+      "master_ce": 3.615011440839804,
+      "delta_vs_anchor": 0.1752376185580231,
+      "source_deltas": {
+        "crosswoz": 0.332760214805603,
+        "github-code": 0.13169195130467415,
+        "lccc-dialogue": 0.1762429177761078,
+        "naturalconv": 0.24427569657564163,
+        "nemotron-interactive_agent": 0.014362897723913193,
+        "nemotron-tool_calling": 0.12991857156157494,
+        "openapi-directory-latest-half-f04b8d0": -0.013498145155608654,
+        "opensubtitles-zh-CN": 0.1726010642014444,
+        "project-gutenberg": 0.16732283681631088,
+        "risawoz": 0.30357388187857226,
+        "technical-guides": 0.1897462047636509,
+        "ted2020-zh-cn": 0.1791700163195209,
+        "toolace": 0.22023985907435417,
+        "web-hq-zh": 0.21273594349622726,
+        "wiki-en": 0.18073616921901703,
+        "wiki-en-foundation-expansion-20260913-v1": 0.181666299700737,
+        "wiki-zh": 0.24530913308262825
+      },
+      "passed": false
+    },
+    {
+      "tokens": 20000000,
+      "quantized_ce": 2.898519959372122,
+      "master_ce": 3.6954723168378587,
+      "delta_vs_anchor": 0.13162064306809063,
+      "source_deltas": {
+        "crosswoz": 0.21597950275127697,
+        "github-code": 0.11212998069822788,
+        "lccc-dialogue": 0.14142854511737823,
+        "naturalconv": 0.19105876982212067,
+        "nemotron-interactive_agent": -0.11587264016270638,
+        "nemotron-tool_calling": 0.0941897127777338,
+        "openapi-directory-latest-half-f04b8d0": -0.021716495975852013,
+        "opensubtitles-zh-CN": 0.14489721599966288,
+        "project-gutenberg": 0.10420994460582733,
+        "risawoz": 0.2505562095081104,
+        "technical-guides": 0.1498352475464344,
+        "ted2020-zh-cn": 0.1462362043319212,
+        "toolace": 0.19558242335915565,
+        "web-hq-zh": 0.17028598487377167,
+        "wiki-en": 0.16954123973846436,
+        "wiki-en-foundation-expansion-20260913-v1": 0.16928162425756454,
+        "wiki-zh": 0.1919525321573019
+      },
+      "passed": true
+    }
+  ],
+  "group_map": {
+    "path": "/root/mei-qat-v1.3/base-1600000000/group-map.json",
+    "sha256": "a80677296675d578476be9d4795fdf3943fe673a09f96bf5ab0824827b6e6d30"
+  },
+  "last_checkpoint": {
+    "path": "/root/mei-qat-v1.3/base-1600000000/checkpoints/state-0020000000.pt",
+    "sha256": "250df307a2414ccd320402eea970faccbe9477d273a12106c0a3a533a4bc18b9"
+  },
+  "release_eligible": false,
+  "fingerprint": "bd72fb66c32c46f7be15241752bb9f31fd119a7062e67bf06a22fbb9ae425535",
+  "last_loss": 3.8911833927549164,
+  "selected_checkpoint": {
+    "path": "/root/mei-qat-v1.3/base-1600000000/checkpoints/state-0020000000.pt",
+    "sha256": "250df307a2414ccd320402eea970faccbe9477d273a12106c0a3a533a4bc18b9"
+  },
+  "selected_weights": {
+    "path": "/root/mei-qat-v1.3/base-1600000000/selected-master.npz",
+    "sha256": "91f8701588f868e4a519c7e40a9d9b0f1e6306157e2c1f29acda1ca55cac1a21"
+  }
+}

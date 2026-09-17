@@ -1,0 +1,58 @@
+{
+  "schema": "mei-51m-base-milestone-release-v1",
+  "release_id": "mei-51m-v1.3-800m-base",
+  "model_id": "mei-51m-v1.3",
+  "release_class": "cpt_milestone_snapshot",
+  "status": "copied_verified_diagnostic_complete",
+  "tokens_seen": 800000000,
+  "stage_index": 0,
+  "files": [
+    {
+      "path": "SNAPSHOT.json",
+      "bytes": 1469,
+      "role": "snapshot_manifest",
+      "sha256": "c6a63410b5256a13f3a9a7e7b88c4689d3e6d0a0e56aed7e5a4128809ab65a45"
+    },
+    {
+      "path": "base-weights.npz",
+      "bytes": 205966898,
+      "role": "mlx_named_weights",
+      "sha256": "00478f0ff819aed2856d42de0b13ba11eaff1e755d0bf83b4a1ddd6efb4d9fe6"
+    },
+    {
+      "path": "state-0097657.pt",
+      "bytes": 617983262,
+      "role": "full_continuation_checkpoint",
+      "sha256": "47816fab91e95b20d298afdb401800a702632c7411917f7a3a658eae66dfc6e3"
+    },
+    {
+      "path": "state-0097657.json",
+      "bytes": 9219,
+      "role": "continuation_sidecar",
+      "sha256": "a496d24ec3965162db39200d3d50c14864d32fc38fad7bfc95937b539a3fba70"
+    }
+  ],
+  "tokenizer": {
+    "path": "models/mei-1.3-51m/tokenizer/hans-en-24k-v1.model",
+    "sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346"
+  },
+  "input_release": {
+    "path": "corpus/pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json",
+    "sha256": "9412f9563e26dd5e160b6ef0911b0891d719a6702fb9a8c32d3ad56530338f0f"
+  },
+  "training": {
+    "run_dir": "/root/mei-cpt-v1.3/campaign/attempt-20260914T120410655685Z",
+    "fingerprint": "45e139621db85c8b9b337ac265f94f39fd6efaaebdf2734ff3527623c82ae74d",
+    "continues_after_milestone": true
+  },
+  "diagnostic": {
+    "receipt": "cycles/mei-1.3-51m/exp-00800m/evaluation/2026-09-16-fixed-dev-r01/receipt.json",
+    "receipt_sha256": "deb8fb8082600ddf7945ecaeaa4cb3242c816cdecabf64129d4fa5dffaa50899",
+    "sources": 17,
+    "predicted_tokens": 1071409,
+    "loss": 2.905181748007438,
+    "scope": "fixed stratified dev LM loss; not SFT tool capability or release approval"
+  },
+  "release_eligible": false,
+  "current_mutated": false
+}

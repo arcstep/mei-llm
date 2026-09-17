@@ -1,0 +1,52 @@
+{
+  "tokens_seen": 800000000,
+  "stage_index": 0,
+  "model_config": {
+    "architecture_id": "mei-vocab-study-pytorch-v1-v24000",
+    "vocab_size": 24000,
+    "d_model": 512,
+    "n_layers": 27,
+    "n_heads": 8,
+    "n_kv_heads": 4,
+    "rope_theta": 100000.0,
+    "mlp": "FixedWalshHadamardMLP",
+    "engram_layers": [
+      2,
+      15
+    ],
+    "engram_orders": [
+      2,
+      3
+    ],
+    "engram_slots": 8192,
+    "engram_conv_taps": 4,
+    "mhc_lanes": 4,
+    "sinkhorn_iters": 20,
+    "max_seq_len": 2048,
+    "kv_window": 256,
+    "tie_embeddings": true,
+    "mtp_enabled": false,
+    "confidence_head": true,
+    "pad_id": 0,
+    "eos_id": 1,
+    "bos_id": 2,
+    "unk_id": 3,
+    "rms_eps": 1e-06,
+    "conf_probes": 8
+  },
+  "fingerprint": "45e139621db85c8b9b337ac265f94f39fd6efaaebdf2734ff3527623c82ae74d",
+  "tokenizer": {
+    "path": "/root/mei-cpt-v1.3/data/2026-09-14-mei-51m-v1.3-cpt-25b-r01/tokenizer.model",
+    "sha256": "747c0ad8b3df2db0bc3797ca607a3fb3b271127a9ddc196c1f16d710de759346"
+  },
+  "checkpoint": {
+    "path": "/root/mei-cpt-v1.3/checkpoints/state-0097657.pt",
+    "sha256": "47816fab91e95b20d298afdb401800a702632c7411917f7a3a658eae66dfc6e3"
+  },
+  "weights": {
+    "path": "/root/mei-cpt-v1.3/milestones/tokens-0800000000/base-weights.npz",
+    "sha256": "00478f0ff819aed2856d42de0b13ba11eaff1e755d0bf83b4a1ddd6efb4d9fe6"
+  },
+  "format": "numpy named tensors; MLX adoption/parity pending",
+  "evaluation_blocks_training": false
+}

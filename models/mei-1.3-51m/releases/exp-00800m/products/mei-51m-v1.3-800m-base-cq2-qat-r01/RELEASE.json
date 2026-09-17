@@ -1,0 +1,52 @@
+{
+  "schema": "mei-51m-base-cq2-qat-release-v1",
+  "release_id": "mei-51m-v1.3-800m-base-cq2-qat-r01",
+  "model_id": "mei-51m-v1.3",
+  "base_release_id": "mei-51m-v1.3-800m-base",
+  "release_class": "base_cq2_qat_training_result",
+  "status": "copied_hash_verified",
+  "base_tokens": 800000000,
+  "qat_tokens": 20000000,
+  "quality_passed": true,
+  "release_eligible": false,
+  "files": [
+    {
+      "path": "selected-master.npz",
+      "bytes": 205966898,
+      "role": "qat_float_master_weights",
+      "sha256": "2a7b577affb10b9dba8298c21a01cf8a0321af10eae93113302970713d61dae6"
+    },
+    {
+      "path": "group-map.json",
+      "bytes": 4476452,
+      "role": "cq2_quantization_group_map",
+      "sha256": "a80677296675d578476be9d4795fdf3943fe673a09f96bf5ab0824827b6e6d30"
+    },
+    {
+      "path": "RESULT.json",
+      "bytes": 5327,
+      "role": "selection_receipt",
+      "sha256": "44e6452fcb1bc8eaa277122bc80e3483a77f9130338b4e07f6e55c7e0fa848a0"
+    }
+  ],
+  "weights_validation": {
+    "format": "npz",
+    "tensor_count": 400,
+    "parameter_count": 51463797,
+    "dtypes": [
+      "float32"
+    ],
+    "all_finite": true
+  },
+  "selection": {
+    "quantized_dev_ce": 2.9774972427051187,
+    "float_master_dev_ce": 3.723061048664809,
+    "delta_vs_float_anchor": 0.08891641545569762
+  },
+  "training_evidence": "cycles/mei-1.3-51m/exp-00800m/qat/2026-09-16-base-cq2-r01/TRANSFER.json",
+  "current_mutated": false,
+  "limitations": [
+    "This is a QAT training result and selected float master, not a packaged CQ2 runtime release.",
+    "Task SFT, deployment packaging, cross-runtime validation, and product quality gates remain pending."
+  ]
+}

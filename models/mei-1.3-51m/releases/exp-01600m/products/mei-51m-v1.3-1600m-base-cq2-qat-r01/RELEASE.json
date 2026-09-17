@@ -1,0 +1,59 @@
+{
+  "schema": "mei-51m-base-cq2-qat-release-v1",
+  "release_id": "mei-51m-v1.3-1600m-base-cq2-qat-r01",
+  "model_id": "mei-51m-v1.3",
+  "base_release_id": "mei-51m-v1.3-1600m-base",
+  "release_class": "base_cq2_qat_training_result",
+  "status": "copied_hash_verified",
+  "base_tokens": 1600000000,
+  "qat_tokens": 20000000,
+  "quality_passed": true,
+  "release_eligible": false,
+  "files": [
+    {
+      "path": "selected-master.npz",
+      "bytes": 205966898,
+      "role": "qat_float_master_weights",
+      "sha256": "91f8701588f868e4a519c7e40a9d9b0f1e6306157e2c1f29acda1ca55cac1a21"
+    },
+    {
+      "path": "group-map.json",
+      "bytes": 4476452,
+      "role": "mei_cq2_quantization_group_map",
+      "sha256": "a80677296675d578476be9d4795fdf3943fe673a09f96bf5ab0824827b6e6d30"
+    },
+    {
+      "path": "RESULT.json",
+      "bytes": 5330,
+      "role": "selection_receipt",
+      "sha256": "6226831a44e92e77495ffe5f8b038c9ffb73288515e19b0792feef32eb83892b"
+    }
+  ],
+  "weights_validation": {
+    "format": "npz",
+    "tensor_count": 400,
+    "parameter_count": 51463797,
+    "dtypes": [
+      "float32"
+    ],
+    "all_finite": true
+  },
+  "selection": {
+    "float_anchor_dev_ce": 2.7668993163040314,
+    "quantized_dev_ce": 2.898519959372122,
+    "float_master_dev_ce": 3.6954723168378587,
+    "delta_vs_float_anchor": 0.13162064306809063
+  },
+  "quantization_contract": {
+    "name": "Mei CQ2",
+    "math_id": "mei-cq-v2-g128-wht-codebook",
+    "interoperability": "project_defined_not_industry_standard"
+  },
+  "training_evidence": "cycles/mei-1.3-51m/exp-01600m/qat/2026-09-17-base-cq2-r01/TRANSFER.json",
+  "current_mutated": false,
+  "limitations": [
+    "The 617981598-byte checkpoint is a resumable training asset containing FP32 master and optimizer state, not the packed inference model.",
+    "This release contains the selected QAT float master and Mei CQ2 training evidence; it is not a packaged Mei CQ2 runtime release.",
+    "Task SFT, runtime packaging, cross-runtime validation, and product quality gates remain pending."
+  ]
+}
