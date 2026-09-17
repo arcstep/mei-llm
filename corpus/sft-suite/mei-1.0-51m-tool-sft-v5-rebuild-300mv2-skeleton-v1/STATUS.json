@@ -1,0 +1,10 @@
+{
+  "release_id": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1",
+  "governance_status": "superseded",
+  "superseded_by": "mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2",
+  "decided_at": "2026-09-17",
+  "evidence": [
+    "cycles/mei-1.2-51m/exp-corpus-survey/runs/SFT-CORPUS-STATUS-SUMMARY.md"
+  ],
+  "note": "历史候选，验证未胜出，保留冻结事实但不再作为当前采用。"
+}

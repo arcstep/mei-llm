@@ -2807,21 +2807,21 @@ def execute(args: argparse.Namespace, plan: dict[str, Any], run_dir: Path) -> di
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-release", type=Path, default=DEFAULT_BASE_RELEASE)
-    parser.add_argument("--base-weights", type=Path, default=DEFAULT_BASE_WEIGHTS)
-    parser.add_argument("--qat-import-receipt", type=Path, default=DEFAULT_QAT_IMPORT)
+    parser.add_argument("--base-release", type=Path, default=None)
+    parser.add_argument("--base-weights", type=Path, default=None)
+    parser.add_argument("--qat-import-receipt", type=Path, default=None)
     parser.add_argument("--seed-run", type=Path, default=DEFAULT_SEED_RUN)
     parser.add_argument("--adopt-adaptive-prefix-run", type=Path)
     parser.add_argument("--adopt-packaged-run", type=Path)
-    parser.add_argument("--data-release", type=Path, default=DEFAULT_DATA_RELEASE)
+    parser.add_argument("--data-release", type=Path, default=None)
     parser.add_argument(
         "--linguistic-augmentation",
         type=Path,
-        default=DEFAULT_LINGUISTIC_AUGMENTATION,
+        default=None,
     )
-    parser.add_argument("--eval-lock", type=Path, default=DEFAULT_EVAL_LOCK)
+    parser.add_argument("--eval-lock", type=Path, default=None)
     parser.add_argument(
-        "--narration-release", type=Path, default=DEFAULT_NARRATION_RELEASE
+        "--narration-release", type=Path, default=None
     )
     parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
     parser.add_argument("--package-id", default=DEFAULT_PACKAGE_ID)
@@ -2868,6 +2868,25 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     for name, value in vars(args).items():
         if (name.endswith("steps") or name.endswith("limit")) and int(value) <= 0:
             parser.error(f"--{name.replace('_', '-')} must be positive")
+    required_inputs = {
+        "--base-release": args.base_release,
+        "--base-weights": args.base_weights,
+        "--qat-import-receipt": args.qat_import_receipt,
+        "--data-release": args.data_release,
+        "--linguistic-augmentation": args.linguistic_augmentation,
+        "--eval-lock": args.eval_lock,
+        "--narration-release": args.narration_release,
+    }
+    missing = [flag for flag, value in required_inputs.items() if value is None]
+    if missing:
+        parser.error(
+            "missing required inputs: "
+            + ", ".join(missing)
+            + ". Corpus/weight locked relative paths live in "
+            "corpus/adoptions/mei-51m-v1.3/adoption.json (current_locked_inputs); "
+            "pass them explicitly -- script defaults were removed to prevent "
+            "silently reusing stale v4-300m-v4."
+        )
     return args
 
 

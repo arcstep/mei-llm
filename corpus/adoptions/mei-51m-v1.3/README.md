@@ -7,9 +7,9 @@
 - **词表已投入本次训练**：[简英 24K release](../../../models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json)。仅本次新模型采用，历史模型和CURRENT不改。
 - **CPT 已锁定**：[25亿输入 release](../../pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json)，选中原文编码2,550,204,074 token，计划有效曝光2,500,001,792 token。三个阶段新增800,000,000／800,000,000／900,001,792 token；21个细来源全部进入三个阶段。旧打包失败证据保留，不能代替这个明确的新release。
 - **QAT 待迁移**：旧约 1 亿 token 引用储备仍绑定旧 CPT 和词表，不能直接给新链使用。
-- **SFT／Eval 待准入**：[任务准备批次](../../pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/REPORT.json) 包含 120 个工程案例；[公开工具试转换](../../pools/task-trials/2026-09-14-mei-public-five-head-trial-r02/REVIEW.md) 有 12 个源对话。正式独立任务准入量仍为 0，模型结果型 confidence 保持 pending_model。
+- **SFT 五头已锁定（2026-09-17）**：按「用最新的」两条线拼接——retrieval/tool_lm 走[公开资料线](../../pools/task-trials/2026-09-15-public-sft-scale-experiment/)（3388 公开工具，retrieval 12755 / fullcall 9663），disposition/confidence/narration 走 [Mei 147 工具线](../../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/)（147 部署工具，8367/824/607）。锁定相对位置+哈希见 adoption.json 的 `current_locked_inputs.sft`。
 
-因此 [adoption.json](adoption.json) 的 `current_locked_inputs.cpt` 已显式绑定确切release及哈希，QAT／SFT／Eval未新增锁定。不能通过“取最大 vN”或“找到 RELEASE.json”自动继承。
+因此 [adoption.json](adoption.json) 的 `current_locked_inputs` 已显式绑定：CPT（确切 release+哈希）与 SFT（五头两条线）已锁定，QAT／Eval 仍未新增锁定。不能通过“取最大 vN”或“找到 RELEASE.json”自动继承。
 
 ## 当前 CPT 五类初选量
 

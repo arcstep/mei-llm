@@ -10,6 +10,15 @@ v1.3-800m 的 quant-aware 五头 SFT 产物（与 v1.2-sft-1.8b 同流程 `adapt
 - 状态：`process_complete=true`，`release_eligible=false`（2 个 runtime gate degraded，见下）
 - 产物：11 文件 + ASSETS.json（大二进制 tensors.bin 18MB / tokenizer.model 353KB gitignore，仓外备份）
 
+## SFT 语料（治理失败声明）
+
+**本产物 productize 主线实际使用了旧语料，不是 v1.3 应采用的「两条线拼接」。**
+
+- productize 主线 `data_release` = `mei-1.0-51m-tool-sft-v4-300m-v4`（v1.2 时代 data_release，manifest_sha256 `5ff8357389aa4855…`），连同 `linguistic-aug300m-v2`、`narration-sft-agent300m-v3`、eval_lock `v7`——整套沿用 v1.2 binding，未切到 v1.3 锁定语料。
+- v1.3 正确语料（`corpus/adoptions/mei-51m-v1.3/adoption.json` → `current_locked_inputs.sft`）：retrieval/tool_lm → 公开资料线（3388 工具，12755/9663）；disposition/confidence/narration → Mei 147 skeleton-v2（8367/824/607）。
+- head-eval 五头跑分（下表）在 float base 上独立训单头，语料为 skeleton-v2（147 工具），**retrieval/tool_lm 未用公开资料线（3388 工具）**。
+- **本产物不可作为 v1.3 最终 SFT 产物，需用「两条线拼接」语料重跑。**
+
 ## 五头跑分（口径 = float base 独立训单头 + holdout 评测，同 v1.2 STATUS.md）
 
 | head | 任务 | 指标 | v1.2-1.8b | v1.3-800m | 结论 |
@@ -58,6 +67,8 @@ backbone + rank-128 logit residual），对比确定性模板 `target` 算逐字
 - 这两个 gate 是量化 runtime 部署门，**不影响五头能力跑分**。
 
 ## 结论
+
+> ⚠️ 以上跑分基于**治理失败语料**（见「SFT 语料」节）：productize 主线用旧语料 v4-300m-v4，head-eval 五头用 skeleton-v2、未按两条线拼接。数值本身有效，但**不能作为 v1.3 最终产物能力结论**，正式结论待「两条线拼接」重跑后另立。
 
 - **判别三头（retrieval / disposition / confidence）可产品化**：v1.3 持平或略优于 v1.2，均达可用水平。
 - **tool_lm**：execute exact 0.7707 与 v1.2 持平，是 51.5M 架构容量天花板（与 CPT 规模无关）。

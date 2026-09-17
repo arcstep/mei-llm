@@ -11,6 +11,7 @@ __pycache__/
 # 例外：合成语料与评测锁不可复现且体量可控，必须入仓。
 corpus/**
 !corpus/README.md
+!corpus/GOVERNANCE.md
 !corpus/catalog/
 !corpus/catalog/*.md
 !corpus/catalog/*.json
