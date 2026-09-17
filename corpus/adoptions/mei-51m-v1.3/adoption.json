@@ -20,6 +20,11 @@
   "tokenizer": {
     "status": "adopted_preparation_release",
     "evidence": {
+      "path": "models/mei-1.3-51m/tokenizer/tokenizer-hans-en-24k-v1-manifest.json",
+      "exists": true,
+      "sha256": "1950f22fcfdafa1b5af9cbe3130f237a1cb6d965de4a346ba67d5d6917f669c7"
+    },
+    "legacy_evidence": {
       "path": "models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json",
       "exists": true,
       "sha256": "c26beca4c02381ec0239048f121fbe8bf79731081c6dd442213dc1176b993009"
@@ -39,7 +44,7 @@
       800000000,
       900001792
     ],
-    "training_source_capsule": "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-14-a10-cpt-preparation/source-r05",
+    "training_source_capsule": "cycles/mei-1.3-51m/exp-00800m/runs/2026-09-14-a10-cpt-campaign/source-r05",
     "checkpoint_policy": "latest two plus three protected milestones; full state continuation",
     "generation": "v1.3",
     "server": "A10-aliyun",

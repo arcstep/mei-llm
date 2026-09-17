@@ -1,13 +1,16 @@
 # Models
 
-这里同时回答“模型是什么”和“正式模型资产在哪里”。当前唯一主产品是
-[`mei-1.0-51m`](mei-1.0-51m/README.md)，其不可替代的 Base、QAT、SFT/heads 与端侧
-package 统一进入 [`mei-1.0-51m/releases/`](mei-1.0-51m/releases/)，并由逐周期
-`ASSETS.json` 固定大小、SHA-256 与训练 lineage。
+这里同时回答“模型是什么”和“正式模型资产在哪里”。产品代际按 `v1.1`、`v1.2`、
+`v1.3` 递增；曝光量和单项产物修订号不能代替产品代际。
 
-`cycles/` 解释每轮语料、过程、指标和决策；`models/*/releases/` 保存被这些周期产出的正式
-二进制成果。源码可以重建程序，却不能无成本重建训练权重，因此权重不再埋在 run 或泛化
-的 artifacts 目录里。
+- [`mei-1.1-51m/`](mei-1.1-51m/)：历史归档链，包含早期 300M／600M 成果。
+- [`mei-1.2-51m/`](mei-1.2-51m/)：已有 1800M Base 与下游成果所在链。
+- [`mei-1.3-51m/`](mei-1.3-51m/)：2026-09-14 开始的新一代；当前 A10 CPT 使用的
+  tokenizer 已正式登记，Base 权重将在阶段成果生成后按累计曝光登记。
 
-在上层组合 ASR/TTS 不会产生新的模型成员；只有原生接收图像、音频等模态的新模型，才在
-拥有明确架构合同、tokenizer/input contract 和首个 cycle 后创建，避免空目录冒充路线图。
+正式内部模型名采用 `mei-51m-v1.3-1b-base` 这一顺序；实际累计曝光与整点显示不同时，
+必须记录精确 token exposure。`cycles/` 保存过程证据，`corpus/` 保存训练输入，
+`models/*/` 保存按产品代际登记的 tokenizer、Base、QAT、SFT/heads 与端侧 package。
+
+纠正代际前生成的 `v12-*` 准备 ID 和 `models/mei-1.2-51m/tokenizer/candidates/` 物理路径
+只为哈希追溯保留，不再作为 v1.3 的人类导航入口。

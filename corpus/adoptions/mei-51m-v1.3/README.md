@@ -4,7 +4,7 @@
 
 ## 当前选择与锁定状态
 
-- **词表已投入本次训练**：[简英 24K release](../../../models/mei-1.2-51m/tokenizer/candidates/mei-24k-lossless-hans-en-20260914-v1/RELEASE.json)。仅本次新模型采用，历史模型和CURRENT不改。
+- **词表已投入本次训练**：[v1.3 简英 24K manifest](../../../models/mei-1.3-51m/tokenizer/tokenizer-hans-en-24k-v1-manifest.json)，实际模型和词表文件同目录保存。仅本次新模型采用，历史模型和CURRENT不改；纠正前的 v1.2 candidate 路径只保留为哈希血缘。
 - **CPT 已锁定**：[25亿输入 release](../../pools/frozen/2026-09-14-mei-51m-v1.3-cpt-25b-r01/RELEASE.json)，选中原文编码2,550,204,074 token，计划有效曝光2,500,001,792 token。三个阶段新增800,000,000／800,000,000／900,001,792 token；21个细来源全部进入三个阶段。旧打包失败证据保留，不能代替这个明确的新release。
 - **QAT 待迁移**：旧约 1 亿 token 引用储备仍绑定旧 CPT 和词表，不能直接给新链使用。
 - **SFT／Eval 待准入**：[任务准备批次](../../pools/task-trials/2026-09-14-mei-51m-v1.3-task-preparation-r06/REPORT.json) 包含 120 个工程案例；[公开工具试转换](../../pools/task-trials/2026-09-14-mei-public-five-head-trial-r02/REVIEW.md) 有 12 个源对话。正式独立任务准入量仍为 0，模型结果型 confidence 保持 pending_model。
