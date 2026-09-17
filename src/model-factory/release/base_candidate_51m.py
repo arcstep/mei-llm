@@ -680,6 +680,55 @@ def finalize_current(
     return {"ok": True, "base": current["base"], "current_sha256": current_hash()}
 
 
+def advance_generation_navigation(
+    *, expected_current_sha256: str, confirmation: str
+) -> dict:
+    """CAS 把 CURRENT 的代际导航字段切到 v1.3，base 保持最后冻结的 v1.2 1800m。
+
+    与 finalize_current 不同：这里不冻结 base（v1.3 base 还是 cpt_milestone_snapshot，
+    尚未 freeze），只更新主线指针的 tokenizer/product/corpus 到 v1.3 现役；
+    base/stage/base_model_id 仍指向 v1.2 1800m，v1.3 base 走完 freeze 后由
+    finalize_current 自然接管 base。
+    """
+    if confirmation != "switch mei-1.3-51m navigation":
+        raise PermissionError("explicit generation-switch confirmation is required")
+    if current_hash() != expected_current_sha256:
+        raise RuntimeError(
+            "CURRENT compare-and-swap failed; file changed after proposal"
+        )
+    current = load_json(CURRENT_PATH)
+    if current.get("product") != "mei-1.2-51m":
+        raise RuntimeError("CURRENT product not at expected v1.2 predecessor")
+    # tokenizer：对齐 v1.3 代际词表指针（frozen_in_training_use）
+    v13_pointer = ROOT / "models/mei-1.3-51m/tokenizer/TOKENIZER.json"
+    if not v13_pointer.is_file():
+        raise RuntimeError("v1.3 tokenizer pointer missing")
+    ptr = json.loads(v13_pointer.read_text(encoding="utf-8"))
+    if ptr.get("status") not in ("frozen", "frozen_in_training_use") or not ptr.get(
+        "tokenizer_id"
+    ):
+        raise RuntimeError("v1.3 tokenizer is not frozen/frozen_in_training_use")
+    current["tokenizer"] = f"tokenizer/{ptr['tokenizer_id']}"
+    current["product"] = "mei-1.3-51m"
+    # corpus：对齐 v1.3 采用清单的 CPT 冻结输入
+    adoption = load_json(ROOT / "corpus/adoptions/mei-51m-v1.3/adoption.json")
+    cpt_path = adoption.get("current_locked_inputs", {}).get("cpt", {}).get("path")
+    if not cpt_path or not (ROOT / cpt_path).is_file():
+        raise RuntimeError("v1.3 adopted CPT release path missing")
+    current["corpus"] = str(Path(cpt_path).parent)
+    # base / base_model_id / stage 保持 v1.2 1800m（v1.3 base 未冻结）
+    atomic_json(CURRENT_PATH, current)
+    return {
+        "ok": True,
+        "tokenizer": current["tokenizer"],
+        "product": current["product"],
+        "corpus": current["corpus"],
+        "base_kept": current.get("base"),
+        "stage_kept": current.get("stage"),
+        "current_sha256": current_hash(),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="action", required=True)
@@ -692,11 +741,19 @@ def main() -> int:
     finalize.add_argument("--candidate", type=Path, required=True)
     finalize.add_argument("--expected-current-sha256", required=True)
     finalize.add_argument("--confirmation", required=True)
+    advance = sub.add_parser("advance-generation")
+    advance.add_argument("--expected-current-sha256", required=True)
+    advance.add_argument("--confirmation", required=True)
     args = parser.parse_args()
     if args.action == "register-base-candidate":
         payload = register_base_candidate(args.run_id, args.candidate_id)
     elif args.action == "propose-freeze":
         payload = propose_freeze(args.candidate)
+    elif args.action == "advance-generation":
+        payload = advance_generation_navigation(
+            expected_current_sha256=args.expected_current_sha256,
+            confirmation=args.confirmation,
+        )
     else:
         payload = finalize_current(
             args.candidate,

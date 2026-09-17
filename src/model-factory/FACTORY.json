@@ -3,7 +3,9 @@
   "factory_id": "mei-51m-model-factory",
   "status": "current",
   "model_scope": [
-    "mei-1.0-51m"
+    "mei-1.1-51m",
+    "mei-1.2-51m",
+    "mei-1.3-51m"
   ],
   "source_policy": {
     "current_implementation_count": 1,
@@ -29,14 +31,15 @@
     "source_recovery_audit": "orchestration.audit_source_recovery"
   },
   "active_source_roots": [
-    "model-factory",
+    "src/model-factory",
+    "src/corpus-factory",
     "src/architecture/mei-1.2-51m",
-    "platform",
+    "src/platform",
     "src/mei_llm"
   ],
   "artifact_roots": {
     "canonical_models": "models/mei-1.2-51m/releases",
-    "cycle_records": "cycles/mei-1.0-51m",
+    "cycle_records": "cycles/mei-1.2-51m",
     "large_local_evidence": "cycles/mei-1.1-51m"
   }
 }
