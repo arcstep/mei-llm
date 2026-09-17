@@ -2,7 +2,7 @@
 
 2026-09-14 目录快照。仅做导航，不以目录存在或 metadata 状态证明质量通过；原文、窗口和编译副本不重复加总。
 
-**v1.3 SFT 五头语料已锁定（2026-09-17 决定）。** CPT 见[采用清单](../adoptions/mei-51m-v1.3/adoption.json)；SFT 五头两条线见下方「当前 SFT 锁定」。下列历史冻结记录须结合采用清单查看，不按目录名 vN 推断最新。
+**v1.3 SFT 五头语料已锁定（2026-09-17 决定）。** CPT 见[采用清单](../adoptions/mei-51m-v1.3/adoption.json)；SFT 五头统一 Mei 147 见下方「当前 SFT 锁定」。下列历史冻结记录须结合采用清单查看，不按目录名 vN 推断最新。
 
 ## 历史CPT
 
@@ -28,17 +28,17 @@
 
 ## 当前 SFT 锁定（v1.3，2026-09-17 决定）
 
-五头 SFT 语料按「用最新的」两条线锁定（依据 [THREE-HEAD-CORPUS-EXPLORATION.md](../pools/task-trials/2026-09-15-public-sft-scale-experiment/THREE-HEAD-CORPUS-EXPLORATION.md) 与 SFT-CORPUS-STATUS-SUMMARY.md）：
+五头 SFT 语料按「用最新的」**统一 Mei 147 skeleton-v2**（依据 SFT-CORPUS-STATUS-SUMMARY.md 第 66/74 行「质量>量，可进产品=Mei 147 小目录口径」）：
 
-| 头 | 语料线 | 锁定位置 | 规模 |
+| 头 | 语料线 | family | 规模（train/total） |
 |---|---|---|---|
-| retrieval | 公开资料线 | [2026-09-15-public-sft-scale-experiment](../pools/task-trials/2026-09-15-public-sft-scale-experiment/) | 12755 |
-| tool_lm | 公开资料线 | 同上 | 9663 |
-| disposition | Mei 147 线 | [skeleton-v2](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/) | 8367 |
-| confidence | Mei 147 线 | 同上 | harvest 实跑 label |
-| narration | Mei 147 线 | 同上 | 模板兜底 |
+| retrieval | Mei 147 skeleton-v2 | retrieval | 2096 / 2760 |
+| tool_lm | Mei 147 skeleton-v2 | full_call | 1643 / 2340 |
+| disposition | Mei 147 skeleton-v2 | mw_disposition | 8367 / 11800 |
+| confidence | Mei 147 skeleton-v2 | confidence | 824 / 1150 |
+| narration | Mei 147 skeleton-v2 | narration | 607 / 900 |
 
-retrieval/tool_lm 的公开资料线目前是平铺 jsonl（`data/` 下），打包成 productize 可引用的 release 是重跑前置，尚未完成。
+skeleton-v2 为 zh-24k-v3 词表时代的纯文本 semantic，重跑需用 hans-en-24k-v1 重新 encode。公开资料线（3388 通用工具）为能力画像探索、不纳入 SFT 输入。
 
 ## 混合/待分配
 
@@ -47,7 +47,7 @@ retrieval/tool_lm 的公开资料线目前是平铺 jsonl（`data/` 下），打
 - [2026-09-14-mei-51m-v1.3-cpt-inputs-r03](../pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r03)：本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入。
 - [2026-09-14-mei-51m-v1.3-cpt-inputs-r04](../pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r04)：本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入。
 - [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1)：superseded；未胜出，保留冻结事实。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2)：**已采用**（v1.3 SFT 三头 disposition/confidence/narration，Mei 147 线）。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2)：**已采用**（v1.3 SFT 五头统一 Mei 147）。
 - [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3)：superseded；未胜出，保留冻结事实。
 - [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4)：superseded；未胜出，保留冻结事实。
 - [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1)：superseded；teacher 蒸馏分支未胜出。

@@ -38,8 +38,10 @@
 
 ## 2026-09-17 决定记录
 
-- v1.3 SFT 五头「用最新的」= **两条线拼接**：retrieval/tool_lm 走公开资料线（3388 公开工具，
-  `pools/task-trials/2026-09-15-public-sft-scale-experiment/`）；disposition/confidence/narration 走
-  Mei 147 工具线（`sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/`，147 部署工具）。
+- v1.3 SFT 五头「用最新的」= **五头统一 Mei 147**（`sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/`，
+  147 部署工具）：retrieval / tool_lm(full_call) / disposition / confidence / narration 全部走 skeleton-v2。
+  依据 `SFT-CORPUS-STATUS-SUMMARY.md` 第 66/74 行「质量>量，可进产品=Mei 147 小目录口径」。
+- 公开资料线（`pools/task-trials/2026-09-15-public-sft-scale-experiment/`，3388 通用工具）为能力画像
+  探索语料，**不纳入 SFT 输入**（superseded）。
 - v1.3-800m 的 productize 主线（`mei-51m-v1.3-800m-tool-sft-cq2-v2-adaptive-v5`）误用旧语料
-  `v4-300m-v4`，已在其 STATUS.md 标记治理失败，需用两条线拼接语料重跑。
+  `v4-300m-v4`，已在其 STATUS.md 标记治理失败，需用「五头统一 Mei 147」语料重跑。

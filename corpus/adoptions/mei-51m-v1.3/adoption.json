@@ -16,28 +16,26 @@
     "qat": null,
     "sft": {
       "decided_at": "2026-09-17",
-      "policy": "two-line-splice-latest",
-      "note": "五头两条线：retrieval/tool_lm 走公开资料线（3388 公开工具），disposition/confidence/narration 走 Mei 147 工具线（skeleton-v2）。锁定后禁止就地修改；变更走新 release + 显式 reuse/replace/retire。tool_lm 对应编译包 family full_call；disposition 对应 mw_disposition。retrieval/tool_lm 尚未打包成 productize 可引用的 release，重跑前置。",
+      "policy": "mei-147-skeleton-v2-unified",
+      "note": "五头统一 Mei 147 工具线（skeleton-v2）：retrieval / tool_lm(full_call) / disposition(mw_disposition) / confidence / narration 全部走 skeleton-v2 compiled，147 部署工具。锁定后禁止就地修改；变更走新 release + 显式 reuse/replace/retire。公开资料线（3388 通用工具）为能力画像探索、不纳入 SFT 输入。skeleton-v2 语料为 zh-24k-v3 词表时代的纯文本 semantic，重跑需用 hans-en-24k-v1 重新 encode。",
       "heads": {
         "retrieval": {
-          "line": "public-data-3388-tools",
-          "path": "corpus/pools/task-trials/2026-09-15-public-sft-scale-experiment/data/manifest.json",
-          "sha256": "b10979d33b38134fe93a7522d8a5c2cb28a6b481914c9a41d040214e1b5965c8",
+          "line": "mei-147-tools-skeleton-v2",
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
+          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
           "exists": true,
-          "total": 12755,
-          "train_full": 12555,
-          "holdout": 200,
-          "packaged": false
+          "train": 2096,
+          "total": 2760,
+          "deploy_tools": 147
         },
         "tool_lm": {
-          "line": "public-data-3388-tools",
-          "path": "corpus/pools/task-trials/2026-09-15-public-sft-scale-experiment/data/manifest.json",
-          "sha256": "b10979d33b38134fe93a7522d8a5c2cb28a6b481914c9a41d040214e1b5965c8",
+          "line": "mei-147-tools-skeleton-v2",
+          "path": "corpus/sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2/release-manifest.json",
+          "sha256": "3a2144a14a8e60cdfdb2847601d0002f0a17a4feeb0687d67f90e2601e335ea1",
           "exists": true,
-          "total": 9663,
-          "train_full": 9363,
-          "holdout": 300,
-          "packaged": false
+          "train": 1643,
+          "total": 2340,
+          "deploy_tools": 147
         },
         "disposition": {
           "line": "mei-147-tools-skeleton-v2",
