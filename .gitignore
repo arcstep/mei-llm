@@ -44,6 +44,8 @@ src/platform/_shared/target/
 src/platform/_shared/target-check/
 
 # 权重/包载荷不进 git（人类可读清单与 receipt 保留；权重另行备份）。
+models/*/tokenizer/*.model
+models/*/tokenizer/*.vocab
 models/*/exp-*/base/
 models/*/exp-*/qat/
 models/*/exp-*/sft/
@@ -56,6 +58,8 @@ models/*/releases/**/*.npz
 models/*/releases/**/*.bin
 models/*/releases/**/tokenizer.model
 models/*/releases/**/heads/**/*.npz
+models/*/releases/**/*.pt
+models/*/exp-*/**/*.pt
 
 # 导出 staging 临时目录（证据已进包内 receipts）
 models/*/exp-*/products/.*.staging/
@@ -69,3 +73,4 @@ docs/
 # 本机 Claude/Cursor 工作区配置（信封遗留）
 .claude/
 .cursor/
+.vscode/
