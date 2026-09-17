@@ -184,6 +184,11 @@ def resolve_repo_path(value: str | Path) -> Path:
     if raw.startswith("mei-llm/"):
         raw = raw[len("mei-llm/"):]
         candidate = Path(raw)
+        # 剥掉旧内层根后先直接命中一次：这类路径的目标多半已在现布局原地，
+        # 不必再经迁移表。缺这一步会让 61 个历史 receipt 的绝对路径永远解析失败。
+        stripped = relocate_corpus_path(ROOT / candidate)
+        if stripped.exists():
+            return stripped
     # 旧扁平训练管线 → 现 factory 布局（LEGACY_PATH_MAP，唯一实现）
     legacy_map_path = ROOT / "src/model-factory/contracts/LEGACY_PATH_MAP.json"
     if legacy_map_path.is_file():

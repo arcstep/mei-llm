@@ -10,7 +10,7 @@ import evaluation.alignment.compare_longitudinal_products_51m as compare
 def record(*, exposure: int, weights: str, value: float) -> dict:
     source = {
         ".internal/src/mei_llm/training/pipelines/sft_v3_training_51m.py": "same-training",
-        ".internal/src/mei_llm/training/pipelines/productize_51m.py": "same-control",
+        ".internal/src/mei_llm/training/pipelines/productize_controller.py": "same-control",
     }
     return {
         "run_dir": f"/run/{exposure}",
@@ -37,7 +37,7 @@ def record(*, exposure: int, weights: str, value: float) -> dict:
         "qat_corpus_files": {"manifest.json": "corpus"},
         "qat_group_policy": {"group_size": 128},
         "qat_source_files": {
-            ".internal/src/mei_llm/training/pipelines/qat_cq2_v2_51m.py": "same-launcher",
+            ".internal/src/mei_llm/training/pipelines/qat_cq2.py": "same-launcher",
             ".internal/src/mei_llm/training/pipelines/cq2_qat_51m.py": "same-worker",
         },
         "qat_numerical_source_files": {
@@ -113,7 +113,7 @@ class LongitudinalComparisonTest(unittest.TestCase):
         candidate = record(exposure=600_000_000, weights="b", value=0.5)
         candidate["source_manifest"] = dict(candidate["source_manifest"])
         candidate["source_manifest"][
-            ".internal/src/mei_llm/training/pipelines/productize_51m.py"
+            ".internal/src/mei_llm/training/pipelines/productize_controller.py"
         ] = "control-fix"
         candidate["semantic_source_manifest"] = compare._semantic_source(
             candidate["source_manifest"]
@@ -140,7 +140,7 @@ class LongitudinalComparisonTest(unittest.TestCase):
         candidate = record(exposure=600_000_000, weights="b", value=0.5)
         candidate["qat_source_files"] = dict(candidate["qat_source_files"])
         candidate["qat_source_files"][
-            ".internal/src/mei_llm/training/pipelines/qat_cq2_v2_51m.py"
+            ".internal/src/mei_llm/training/pipelines/qat_cq2.py"
         ] = "changed-launcher"
         report = compare.build_comparison(baseline, candidate)
         self.assertFalse(report["comparability"]["qat_source_files_exact"])

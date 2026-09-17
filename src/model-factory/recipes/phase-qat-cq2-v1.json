@@ -2,7 +2,7 @@
   "schema": "mei-51m-bound-phase-recipe-v1",
   "id": "mei-51m-qat-cq2-v1",
   "phase": "qat",
-  "entrypoint": "training.qat.qat_cq2_v2_51m",
+  "entrypoint": "training.qat.qat_cq2",
   "required_inputs": [
     "architecture_contract",
     "base_release",

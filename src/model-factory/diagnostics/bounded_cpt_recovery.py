@@ -172,7 +172,7 @@ def run(config_path: Path, *, replay: bool = False) -> int:
         from common.checkpoint import flatten_params, load_train_state, save_params, save_train_state
         from common.data import PackedTokenSource, QuotaPackedSources
         from common.train_common import flatten_tree, train_lm_steps
-        from orchestration.lifecycle_51m import train_state_contract_report
+        from orchestration.lifecycle import train_state_contract_report
         from tokenizer import ZhTokenizerV2
 
         state_path = ROOT / config["parent_state"]

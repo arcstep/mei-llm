@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import orchestration.supervise_paired_adaptive_v5_51m as supervisor
+import orchestration.supervise_paired_adaptive as supervisor
 
 
 class PairedAdaptiveV5SupervisorTests(unittest.TestCase):

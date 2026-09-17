@@ -195,27 +195,27 @@
   ],
   "entrypoint_overrides": [
     {
-      "module": "orchestration.lifecycle_51m",
+      "module": "orchestration.lifecycle",
       "role": "arbitrary cumulative-exposure CPT lifecycle",
       "status": "current"
     },
     {
-      "module": "orchestration.productize_adaptive_v5_51m",
+      "module": "orchestration.productize_adaptive",
       "role": "adaptive fixed-five batched tool-use productization",
       "status": "current"
     },
     {
-      "module": "orchestration.supervise_paired_adaptive_v5_51m",
+      "module": "orchestration.supervise_paired_adaptive",
       "role": "historical 300M/600M paired productization comparison",
       "status": "maintained_compatibility"
     },
     {
-      "module": "orchestration.productize_51m",
+      "module": "orchestration.productize_controller",
       "role": "generic fingerprinted productization primitives",
       "status": "active_support"
     },
     {
-      "module": "orchestration.productize_sft_v3_300m",
+      "module": "orchestration.productize_sft_bootstrap",
       "role": "base-parameterized SFT-v4 bootstrap phase implementation; filename retained for compatibility",
       "status": "current"
     },
@@ -225,7 +225,7 @@
       "status": "maintained_compatibility"
     },
     {
-      "module": "training.qat.qat_cq2_v2_51m",
+      "module": "training.qat.qat_cq2",
       "role": "cycle-bound CQ2 QAT phase implementation",
       "status": "current"
     },

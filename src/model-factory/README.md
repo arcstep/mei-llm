@@ -32,9 +32,9 @@
 
 ## 当前正式流水线
 
-- CPT / 任意累计 exposure：`python -m orchestration.lifecycle_51m`
-- adaptive-v5 产品化：`python -m orchestration.productize_adaptive_v5_51m`
-- 300M/600M 同合同配对监督：`python -m orchestration.supervise_paired_adaptive_v5_51m`
+- CPT / 任意累计 exposure：`python -m orchestration.lifecycle`
+- adaptive-v5 产品化：`python -m orchestration.productize_adaptive`
+- 300M/600M 同合同配对监督：`python -m orchestration.supervise_paired_adaptive`
 
 推荐从仓根统一进入：
 

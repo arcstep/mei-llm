@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 import evaluation.tool_use.longitudinal_eval_metrics_51m as longitudinal_metrics
-import orchestration.productize_51m as lifecycle
+import orchestration.productize_controller as lifecycle
 import contracts.sft_v4_contract_51m as contract
 import evaluation.tool_use.sft_v3_eval_51m as evaluation
 import training.tool_use.sft_v3_training_51m as training
@@ -505,7 +505,7 @@ def _source_manifest() -> dict[str, str]:
         ROOT / "src/model-factory/evaluation/tool_use/freeze_longitudinal_eval_v7_51m.py",
         ROOT / "src/model-factory/evaluation/tool_use/longitudinal_eval_metrics_51m.py",
         ROOT / "src/model-factory/training/tool_use/preflight_sft_v3_51m.py",
-        ROOT / "src/model-factory/orchestration/productize_51m.py",
+        ROOT / "src/model-factory/orchestration/productize_controller.py",
         ROOT / "src/model-factory/training/qat/cq2_qat_51m.py",
         ROOT / "src/model-factory/release/pack_cq2_v2_51m.py",
         ROOT / "src/architecture/mei-1.2-51m/heads.py",

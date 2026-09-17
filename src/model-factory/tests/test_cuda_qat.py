@@ -1,12 +1,15 @@
 import copy
 import unittest
 
-import torch
+try:
+    import torch
+    from training.qat.cuda_qat import update,group_map
+    from training.torch_backend.model import NeedleZh,NeedleZhConfig
+except ModuleNotFoundError:  # CUDA 侧：torch 只在 A10 环境，本机 MLX 环境不装
+    torch=None
 
-from training.qat.cuda_qat import update,group_map
-from training.torch_backend.model import NeedleZh,NeedleZhConfig
 
-
+@unittest.skipIf(torch is None,"CUDA 侧测试：需要 torch（A10 环境），本机 MLX 环境跳过")
 class CudaQatTests(unittest.TestCase):
     def setUp(self):
         torch.set_num_threads(2);torch.manual_seed(51)

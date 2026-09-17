@@ -583,7 +583,7 @@ def train_fullcall(
     arch.QAT_ACTIVATION_STE = bool(activation_ste and group_map)
     activation_ste_probe = None
     if arch.QAT_ACTIVATION_STE:
-        from training.qat.qat_cq2_v2_51m import verify_activation_ste_contract
+        from training.qat.qat_cq2 import verify_activation_ste_contract
 
         activation_ste_probe = verify_activation_ste_contract(arch)
     try:

@@ -2,10 +2,16 @@ import tempfile
 import unittest
 from pathlib import Path
 import numpy as np
-import torch
-from training.qat.base_replay import make_references, Replay
-from training.qat.base_campaign import decision
 
+try:
+    import torch
+    from training.qat.base_replay import make_references, Replay
+    from training.qat.base_campaign import decision
+except ModuleNotFoundError:  # CUDA 侧：torch 只在 A10 环境
+    torch=None
+
+
+@unittest.skipIf(torch is None,"CUDA 侧测试：需要 torch（A10 环境），本机 MLX 环境跳过")
 class BaseQatTests(unittest.TestCase):
     def test_replay_consumed_prefix_unique_and_partial_masks(self):
         with tempfile.TemporaryDirectory() as tmp:

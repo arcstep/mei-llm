@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import release.base_candidate_51m as candidate
-import orchestration.lifecycle_51m as lifecycle
+import orchestration.lifecycle as lifecycle
 
 
 class BaseCandidateBoundaryTest(unittest.TestCase):

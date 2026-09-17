@@ -12,13 +12,13 @@
 .venv/bin/python .internal/src/mei_llm/training/pipelines/train_pretrain.py --count-params
 .venv/bin/python .internal/src/mei_llm/training/pipelines/train_pretrain.py --smoke
 .venv/bin/python .internal/src/mei_llm/training/pipelines/check_pretrain_readiness.py --require-formal
-.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle_51m.py baseline
-.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle_51m.py init \
+.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle.py baseline
+.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle.py init \
   --run-id <run-id> --corpus-dir <immutable-corpus-dir> --target-exposure 600000000
-.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle_51m.py plan --track cpt --run-id <run-id>
-.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle_51m.py resume --track cpt --run-id <run-id>
-.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle_51m.py status --run-id <run-id>
-.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle_51m.py verify
+.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle.py plan --track cpt --run-id <run-id>
+.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle.py resume --track cpt --run-id <run-id>
+.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle.py status --run-id <run-id>
+.venv/bin/python .internal/src/mei_llm/training/pipelines/lifecycle.py verify
 
 # CPT gate 通过后：注册候选与冻结建议均不修改 CURRENT.json
 .venv/bin/python .internal/src/mei_llm/training/pipelines/base_candidate_51m.py register-base-candidate --run-id <run-id>

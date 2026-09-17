@@ -36,7 +36,7 @@ for _p in (
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
 
-from orchestration.productize_51m import _load_runtime  # noqa: E402
+from orchestration.productize_controller import _load_runtime  # noqa: E402
 from training.tool_use.sft_v3_training_51m import encode_fullcall_row  # noqa: E402
 from mei_sdk.shared import parse_call_text  # noqa: E402
 

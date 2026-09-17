@@ -278,7 +278,7 @@ def main() -> int:
     print(f"转换产物已写：{out}")
 
     # 加载 1800M float runtime（不量化，最小闭环先 float）。
-    from orchestration.productize_51m import _load_runtime
+    from orchestration.productize_controller import _load_runtime
 
     runtime = _load_runtime(base_npz, quantized=False)
     tokenizer = runtime.tokenizer

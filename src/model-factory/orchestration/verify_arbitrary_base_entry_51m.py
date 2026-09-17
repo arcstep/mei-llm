@@ -19,13 +19,13 @@ from pathlib import Path
 from typing import Any
 
 from common.paths import CURRENT_PATH, ROOT, architecture_contracts
-from orchestration.productize_51m import build_plan, parse_args as parse_productize_args, validate_base
+from orchestration.productize_controller import build_plan, parse_args as parse_productize_args, validate_base
 
 
 DEFAULT_BASE = ROOT / "cycles/mei-1.1-51m/exp-00300m/models/base/mei-1.0-51m-base-scratch300m-v1"
 SOURCE_FILES = (
     "src/model-factory/orchestration/verify_arbitrary_base_entry_51m.py",
-    "src/model-factory/orchestration/productize_51m.py",
+    "src/model-factory/orchestration/productize_controller.py",
     "src/architecture/mei-1.2-51m/architecture_contract.py",
 )
 FIXTURE_EXPOSURES = (600_000_000, 900_000_000)
@@ -185,7 +185,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         },
         "future_exposure_schema_fixtures": fixture_views,
         "entrypoint": {
-            "script": "src/model-factory/orchestration/productize_51m.py",
+            "script": "src/model-factory/orchestration/productize_controller.py",
             "required_overrides": [
                 "--base-release",
                 "--base-weights",

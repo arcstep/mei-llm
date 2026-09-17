@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 
 import training.tool_use.preflight_sft_v3_51m as preflight
-import orchestration.productize_sft_v3_300m as productizer
+import orchestration.productize_sft_bootstrap as productizer
 
 
 class PreflightRunIdentityTests(unittest.TestCase):

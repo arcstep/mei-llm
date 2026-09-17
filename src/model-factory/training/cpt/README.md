@@ -1,7 +1,7 @@
 # CPT training
 
 这里实现 Base 的 scratch/continued pretraining、续训状态和语料门禁。新 cycle 的唯一正式
-入口是 `orchestration.lifecycle_51m`；本目录文件均为被该状态机调用的 worker 或 gate，不能
+入口是 `orchestration.lifecycle`；本目录文件均为被该状态机调用的 worker 或 gate，不能
 绕过 lifecycle 直接形成正式 lineage。
 
 - `train_pretrain.py`：数值训练 worker；

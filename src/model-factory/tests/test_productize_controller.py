@@ -7,11 +7,11 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from orchestration import productize_51m as productize
+from orchestration import productize_controller as productize
 from release import final_audit_51m as final_audit
 
 HERE = Path(__file__).resolve().parent
-PRODUCTIZE_SOURCE = HERE.parent / "orchestration" / "productize_51m.py"
+PRODUCTIZE_SOURCE = HERE.parent / "orchestration" / "productize_controller.py"
 
 
 class Productize51MTest(unittest.TestCase):

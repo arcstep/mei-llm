@@ -3,16 +3,82 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
-import orchestration.productize_adaptive_v5_51m as productizer
+import orchestration.productize_adaptive as productizer
+from common import paths as mei_paths
 from mei_sdk.protocol import normalize_request
+
+
+def fixture_argv(*extra: str) -> list[str]:
+    """v1.0 血统的 schema fixture 入参。
+
+    parse_args 已移除这七个输入的默认值（防止静默复用 stale v4-300m-v4），
+    真实运行必须从 corpus/adoptions/<代际>/adoption.json 显式传路径。测试断言的是
+    plan 结构 / stage 图 / 预算契约，与代际无关，所以固定用模块自带的 v1.0 常量。
+    """
+
+    return [
+        "--base-release",
+        str(productizer.DEFAULT_BASE_RELEASE),
+        "--base-weights",
+        str(productizer.DEFAULT_BASE_WEIGHTS),
+        "--qat-import-receipt",
+        str(productizer.DEFAULT_QAT_IMPORT),
+        "--data-release",
+        str(productizer.DEFAULT_DATA_RELEASE),
+        "--linguistic-augmentation",
+        str(productizer.DEFAULT_LINGUISTIC_AUGMENTATION),
+        "--eval-lock",
+        str(productizer.DEFAULT_EVAL_LOCK),
+        "--narration-release",
+        str(productizer.DEFAULT_NARRATION_RELEASE),
+        *extra,
+    ]
+
+
+FIXTURE_CURRENT = (
+    Path(__file__).resolve().parent / "fixtures/current-v1.0-scratch300m.json"
+)
+# 两个 recovery fixture run（plan.json 的 immutable.current_baseline_sha256）都记录了这个值；
+# 它是 v1.0 scratch300m 时代的 CURRENT.json 快照，逐字取自 git 8fd23c81。
+FIXTURE_CURRENT_SHA256 = (
+    "5b0b68eeb8322bb9cdbef112777b1b346b69a91f3bce7234b1c6370389a42607"
+)
 
 
 class AdaptiveV5ProductizerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.args = productizer.parse_args([])
+        # 这些用例断言的是 plan 结构 / stage 图 / 预算契约 / recovery 采纳边界，全部与
+        # 「当前代际是哪一代」无关。但 productizer 会拿两个随代际前进的真实全局做 guard：
+        #   1) frozen_tokenizer_path() —— 随 TOKENIZER.json 指针走（现为 v1.3 hans-en-24k-v1）
+        #   2) CURRENT_PATH / CURRENT_BASELINE_SHA256 —— CURRENT.json 每次 CAS 前进都会变
+        # fixture 是 v1.0 血统，永远对不上现役值。把这两个全局在测试内钉到 v1.0 快照，
+        # 才能让 guard 逻辑本身被真正测到，且不必每切一代重改一次基准。
+        cls._patchers = [
+            mock.patch.object(
+                module,
+                "frozen_tokenizer_path",
+                return_value=mei_paths.TOKENIZER_ZH_V1,
+            )
+            for module in (productizer, productizer.lifecycle, productizer.v4)
+        ]
+        cls._patchers += [
+            mock.patch.object(productizer, "CURRENT_PATH", FIXTURE_CURRENT),
+            mock.patch.object(
+                productizer, "CURRENT_BASELINE_SHA256", FIXTURE_CURRENT_SHA256
+            ),
+        ]
+        for patcher in cls._patchers:
+            patcher.start()
+        cls.args = productizer.parse_args(fixture_argv())
         cls.plan = productizer.build_plan(cls.args)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        for patcher in cls._patchers:
+            patcher.stop()
 
     def test_plan_freezes_exact_replay_budgets_and_runtime_policy(self) -> None:
         recipe = self.plan["immutable"]["recipe"]
@@ -30,13 +96,13 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
 
     def test_phase_boundary_is_an_explicit_stage(self) -> None:
         args = productizer.parse_args(
-            [
+            fixture_argv(
                 "--phase-scope",
                 "model-evaluation",
                 "--stop-after-stage",
                 "sidecar_runtime_eval_v5",
                 "--dry-run",
-            ]
+            )
         )
         self.assertEqual(args.stop_after_stage, "sidecar_runtime_eval_v5")
         self.assertEqual(args.phase_scope, "model-evaluation")
@@ -147,7 +213,7 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
             "productize-scratch300m-adaptive-v5-cq2-v2-164574857928"
         )
         args = productizer.parse_args(
-            ["--adopt-adaptive-prefix-run", str(source)]
+            fixture_argv("--adopt-adaptive-prefix-run", str(source))
         )
         plan = productizer.build_plan(args)
         stage_ids = [row["stage_id"] for row in plan["stages"]]
@@ -171,7 +237,9 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
             / "cycles/mei-1.1-51m/exp-00300m/runs/"
             "productize-scratch300m-adaptive-v5-cq2-v2-40ba9754076e"
         )
-        args = productizer.parse_args(["--adopt-packaged-run", str(source)])
+        args = productizer.parse_args(
+            fixture_argv("--adopt-packaged-run", str(source))
+        )
         plan = productizer.build_plan(args)
         stage_ids = [row["stage_id"] for row in plan["stages"]]
         self.assertEqual(
@@ -210,12 +278,12 @@ class AdaptiveV5ProductizerTests(unittest.TestCase):
             "productize-scratch300m-adaptive-v5-cq2-v2-40ba9754076e"
         )
         args = productizer.parse_args(
-            [
+            fixture_argv(
                 "--adopt-adaptive-prefix-run",
                 str(prefix),
                 "--adopt-packaged-run",
                 str(packaged),
-            ]
+            )
         )
         with self.assertRaisesRegex(RuntimeError, "mutually exclusive"):
             productizer.build_plan(args)

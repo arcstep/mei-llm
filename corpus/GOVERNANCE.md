@@ -33,7 +33,7 @@
 ## 脚本默认值红线
 
 - 禁止把语料版本默认值硬编码进脚本（只会默认用最旧版本）。
-- `productize_adaptive_v5_51m.py` 的语料/权重输入已改为必填，缺失 fail-fast（报错指向 adoption.json）。
+- `productize_adaptive.py` 的语料/权重输入已改为必填，缺失 fail-fast（报错指向 adoption.json）。
 - `freeze_*.py` 与 CPT 脚本的默认值只登记、不改，避免影响在跑 run。
 
 ## 2026-09-17 决定记录

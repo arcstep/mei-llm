@@ -594,8 +594,8 @@ def validate_quality_thresholds(
 
 def source_manifest() -> dict[str, str]:
     relative = (
-        "src/model-factory/orchestration/productize_51m.py",
-        "src/model-factory/training/qat/qat_cq2_v2_51m.py",
+        "src/model-factory/orchestration/productize_controller.py",
+        "src/model-factory/training/qat/qat_cq2.py",
         "src/model-factory/training/qat/cq2_qat_51m.py",
         "src/model-factory/training/qat/cq2_policy_51m.py",
         "src/model-factory/release/quant_pack_51m.py",
@@ -1909,7 +1909,7 @@ def _training_and_package_stages(
     from common.checkpoint import save_params
     from training.qat.cq2_qat_51m import explicit_group_map
     from release.pack_cq2_v2_51m import export as export_cq2
-    from training.qat.qat_cq2_v2_51m import run as run_qat
+    from training.qat.qat_cq2 import run as run_qat
     from training.tool_use.train_sft_ondisk_51m import (
         finalize_tool_index,
         float_task_control,

@@ -13,7 +13,7 @@ from typing import Any, Callable, Sequence
 
 import release.freeze_sft_v3_release_51m as freeze_sft
 import evaluation.tool_use.longitudinal_eval_metrics_51m as longitudinal
-import orchestration.productize_sft_v3_300m as productizer
+import orchestration.productize_sft_bootstrap as productizer
 import contracts.sft_v4_contract_51m as contract
 import training.tool_use.sft_v3_training_51m as training
 from common.paths import CURRENT_PATH, ROOT

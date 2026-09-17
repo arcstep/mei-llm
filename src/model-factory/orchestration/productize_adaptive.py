@@ -34,8 +34,8 @@ if _SDK_PYTHON not in sys.path:
     sys.path.insert(0, _SDK_PYTHON)
 
 import training.tool_use.adaptive_tool_context_51m as adaptive  # noqa: E402
-import orchestration.productize_51m as lifecycle  # noqa: E402
-import orchestration.productize_sft_v3_300m as v4  # noqa: E402
+import orchestration.productize_controller as lifecycle  # noqa: E402
+import orchestration.productize_sft_bootstrap as v4  # noqa: E402
 import evaluation.tool_use.sft_v3_eval_51m as evaluation  # noqa: E402
 import training.tool_use.sft_v3_training_51m as training  # noqa: E402
 import contracts.sft_v4_contract_51m as contract  # noqa: E402

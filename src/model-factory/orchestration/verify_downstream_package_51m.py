@@ -48,7 +48,7 @@ BOUND_SOURCES = (
     "platform/_shared/rust/mei-sdk-core/src/packed.rs",
     "platform/browser-sdk/package.mjs",
     "platform/browser-sdk/cq2.mjs",
-    "src/model-factory/orchestration/productize_sft_v3_300m.py",
+    "src/model-factory/orchestration/productize_sft_bootstrap.py",
 )
 
 
@@ -154,7 +154,7 @@ def _verify_v4_productization_run(
     *,
     current_source_reevaluation: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    import orchestration.productize_51m as lifecycle
+    import orchestration.productize_controller as lifecycle
 
     run_dir = run_dir.resolve()
     plan_path = run_dir / "plan.json"

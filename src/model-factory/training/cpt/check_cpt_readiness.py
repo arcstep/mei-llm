@@ -26,7 +26,7 @@ from training.cpt.cpt_gates import (
     refuse_cpt_source,
 )
 from common.data import classify_schedule, file_sha256, list_source_shards
-from orchestration.lifecycle_51m import atomic_json, corpus_snapshot, rung_name, schedule_path
+from orchestration.lifecycle import atomic_json, corpus_snapshot, rung_name, schedule_path
 
 FROZEN_TOK_SHA = "fcd07b3d49f5174bb60e81996f4d3f2d55f458f5b8420a271aea59ac5dc58629"
 

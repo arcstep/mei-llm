@@ -2,7 +2,7 @@
   "schema": "mei-51m-productization-recipe-v1",
   "id": "mei-51m-adaptive-productization-v5",
   "product": "mei-1.0-51m",
-  "entrypoint": "orchestration.productize_adaptive_v5_51m",
+  "entrypoint": "orchestration.productize_adaptive",
   "mode": "compatibility_orchestrator",
   "phase_binding_schema": "src/model-factory/contracts/PHASE_BINDING.schema.json",
   "phase_binding_required_for_new_cycles": true,

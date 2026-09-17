@@ -44,7 +44,7 @@ for _p in (
     if str(_p) not in sys.path:
         sys.path.insert(0, str(_p))
 
-from orchestration.productize_51m import _load_runtime  # noqa: E402
+from orchestration.productize_controller import _load_runtime  # noqa: E402
 from training.tool_use.sft_v3_training_51m import (  # noqa: E402
     AGENT_SAMPLER_ID,
     train_lm_sft_v3,

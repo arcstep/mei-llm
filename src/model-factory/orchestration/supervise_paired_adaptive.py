@@ -20,14 +20,14 @@ import time
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-import orchestration.productize_51m as lifecycle
-import orchestration.productize_adaptive_v5_51m as productizer
+import orchestration.productize_controller as lifecycle
+import orchestration.productize_adaptive as productizer
 from common.paths import CURRENT_PATH, ROOT, resolve_repo_path
 
 
 SUPERVISOR_ID = "mei-51m-paired-adaptive-v5-supervisor-v1"
 HERE = Path(__file__).resolve().parent
-PRODUCTIZER = HERE / "productize_adaptive_v5_51m.py"
+PRODUCTIZER = HERE / "productize_adaptive.py"
 DEFAULT_OUT_ROOT = (
     ROOT / "cycles/mei-1.1-51m/exp-00300m/runs/adaptive-v5-paired-supervisor"
 )

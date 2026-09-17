@@ -10,11 +10,26 @@ from unittest import mock
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-import orchestration.productize_sft_v3_300m as productizer
+import orchestration.productize_sft_bootstrap as productizer
 import contracts.sft_v4_contract_51m as contract
+from common import paths as mei_paths
 
 
 class SftV4ProductizerTests(unittest.TestCase):
+    def setUp(self) -> None:
+        # 本文件的 fixture 是 v1.0 血统的 300m base（词表 zh-24k-v1），断言对象是 plan
+        # 结构/stage 图/fingerprint，与「当前代际冻结词表」无关。frozen_tokenizer_path()
+        # 会随 TOKENIZER.json 指针漂移（v1.2 zh-24k-v3 / v1.3 hans-en-24k-v1），所以在
+        # 测试内把它固定到 fixture 血统对应的词表，避免每切一代就要改一次基准值。
+        fixture_tokenizer = mei_paths.TOKENIZER_ZH_V1
+        for module in (productizer, productizer.lifecycle):
+            patcher = mock.patch.object(
+                module, "frozen_tokenizer_path", return_value=fixture_tokenizer
+            )
+            patcher.start()
+            self.addCleanup(patcher.stop)
+        self.fixture_tokenizer = fixture_tokenizer
+
     def test_phase_boundary_is_an_explicit_stage(self) -> None:
         args = productizer.parse_args(
             ["--stop-after-stage", "narration_adapter_v4", "--dry-run"]
@@ -194,7 +209,7 @@ class SftV4ProductizerTests(unittest.TestCase):
                     "tokens_seen_exposure": exposure,
                     "weights_sha256": contract.sha_file(weights),
                     "weight_contract_sha256": contracts["weight_contract_sha256"],
-                    "tokenizer_sha256": contract.sha_file(productizer.TOKENIZER_ZH_V1),
+                    "tokenizer_sha256": contract.sha_file(self.fixture_tokenizer),
                     "fixture_scope": "schema_only_not_a_real_base",
                 }
             )

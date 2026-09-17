@@ -63,7 +63,7 @@ def run(config_path: Path) -> int:
         from config import NeedleZhConfig
         from common.checkpoint import load_train_state
         from common.train_common import flatten_tree, peak_bytes, train_lm_steps
-        from orchestration.lifecycle_51m import train_state_contract_report
+        from orchestration.lifecycle import train_state_contract_report
 
         contract = train_state_contract_report(state_path)
         for key in ("parameter_names_and_order_exact", "parameter_shapes_exact", "optimizer_slots_complete",

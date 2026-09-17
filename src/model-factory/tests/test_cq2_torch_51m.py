@@ -1,13 +1,17 @@
 import unittest
 import numpy as np
-import torch
 
-from mei_sdk.cq2 import quantize, dequantize
-from training.qat.cq2_torch_51m import fake_quant_weight, fake_quant_safe_f16, activation_int8, forward_qat
-from training.torch_backend.model import NeedleZh, NeedleZhConfig
+try:
+    import torch
+    from mei_sdk.cq2 import quantize, dequantize
+    from training.qat.cq2_torch_51m import fake_quant_weight, fake_quant_safe_f16, activation_int8, forward_qat
+    from training.torch_backend.model import NeedleZh, NeedleZhConfig
+except ModuleNotFoundError:  # CUDA 侧：torch/mei_sdk 只在 A10 环境
+    torch=None
 
 
-@unittest.skipUnless(torch.cuda.is_available(), "requires authorized A10 CUDA tests")
+@unittest.skipIf(torch is None, "CUDA 侧测试：需要 torch（A10 环境），本机 MLX 环境跳过")
+@unittest.skipUnless(torch is not None and torch.cuda.is_available(), "requires authorized A10 CUDA tests")
 class Cq2TorchTests(unittest.TestCase):
     def test_mixed_width_and_tail_matches_portable_decoder(self):
         data = np.asarray([np.sin(i * .173) * .8 + (i % 11 - 5) * .03 for i in range(200)], dtype=np.float32)

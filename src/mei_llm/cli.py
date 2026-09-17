@@ -785,7 +785,7 @@ def main(argv: list[str] | None = None) -> int:
                 init_args.extend(["--cycle-id", args.cycle_id])
             if getattr(args, "resume_checkpoint", None):
                 init_args.extend(["--resume-checkpoint", str(args.resume_checkpoint)])
-            return _forward_module(registry, "orchestration.lifecycle_51m", init_args)
+            return _forward_module(registry, "orchestration.lifecycle", init_args)
         rest = []
         if getattr(args, "until", None):
             rest.extend(["--until", args.until])

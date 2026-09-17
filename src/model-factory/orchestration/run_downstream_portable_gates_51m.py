@@ -13,12 +13,12 @@ from pathlib import Path
 from typing import Any
 
 from common.paths import CURRENT_PATH, ROOT
-from orchestration.productize_51m import _portable_gate_report
+from orchestration.productize_controller import _portable_gate_report
 
 
 SOURCE_FILES = (
     "src/model-factory/orchestration/run_downstream_portable_gates_51m.py",
-    "src/model-factory/orchestration/productize_51m.py",
+    "src/model-factory/orchestration/productize_controller.py",
     "src/model-factory/evaluation/head_eval/compare_portable_heads_51m.py",
     "src/model-factory/orchestration/verify_downstream_package_51m.py",
     "src/platform/_shared/tools/run_gates.py",

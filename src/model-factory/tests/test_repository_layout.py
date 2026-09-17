@@ -97,8 +97,8 @@ class FiveDomainLayoutTest(unittest.TestCase):
         cases = dict(mapping["intermediate_hidden_exact"])
         cases.update(
             {
-                ".internal/src/mei_llm/training/qat_cq2_v2_51m.py": (
-                    "src/model-factory/training/qat/qat_cq2_v2_51m.py"
+                ".internal/src/mei_llm/training/qat_cq2.py": (
+                    "src/model-factory/training/qat/qat_cq2.py"
                 ),
                 ".internal/src/mei_llm/training/recipes/cpt-lifecycle-v1.json": (
                     "src/model-factory/recipes/cpt-lifecycle-v1.json"

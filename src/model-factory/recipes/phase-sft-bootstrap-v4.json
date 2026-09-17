@@ -2,7 +2,7 @@
   "schema": "mei-51m-bound-phase-recipe-v1",
   "id": "mei-51m-sft-bootstrap-v4",
   "phase": "sft_alignment",
-  "entrypoint": "orchestration.productize_sft_v3_300m",
+  "entrypoint": "orchestration.productize_sft_bootstrap",
   "required_inputs": [
     "architecture_contract",
     "base_release",

@@ -47,7 +47,7 @@ def _ensure_python_paths() -> None:
 
 _ensure_python_paths()
 
-import orchestration.productize_51m as lifecycle  # noqa: E402
+import orchestration.productize_controller as lifecycle  # noqa: E402
 import training.tool_use.adaptive_tool_context_51m as adaptive  # noqa: E402
 import training.tool_use.sft_v3_training_51m as training  # noqa: E402
 import evaluation.tool_use.sft_v3_eval_51m as evaluation  # noqa: E402

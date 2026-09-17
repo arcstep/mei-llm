@@ -25,7 +25,7 @@ from common.paths import (
     cycle_lineage,
     frozen_tokenizer_path,
 )
-from orchestration.lifecycle_51m import (
+from orchestration.lifecycle import (
     EXPECTED_PARAMS,
     atomic_json,
     current_hash,

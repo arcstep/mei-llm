@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-import orchestration.lifecycle_51m as lc
+import orchestration.lifecycle as lc
 from common.identity_51m import ARCHITECTURE_ID, assert_51m_architecture_id
 
 

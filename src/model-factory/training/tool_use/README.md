@@ -9,5 +9,5 @@
 - `train_sft*.py`：通用/历史 worker，不能单独宣称得到完整产品；
 - `train_sft_ondisk_51m.py`：大数据集按盘读取 worker。
 
-新 cycle 必须从 `orchestration.productize_adaptive_v5_51m` 发起；不得在本目录按最大版本号
+新 cycle 必须从 `orchestration.productize_adaptive` 发起；不得在本目录按最大版本号
 猜测入口。

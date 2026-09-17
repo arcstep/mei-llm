@@ -2,7 +2,7 @@
   "schema": "mei-51m-bound-phase-recipe-v1",
   "id": "mei-51m-model-evaluation-v5",
   "phase": "model_evaluation",
-  "entrypoint": "orchestration.productize_adaptive_v5_51m",
+  "entrypoint": "orchestration.productize_adaptive",
   "required_inputs": [
     "architecture_contract",
     "base_release",

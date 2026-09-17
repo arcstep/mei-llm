@@ -52,8 +52,8 @@ SEMANTIC_SOURCE_SUFFIXES = {
 # numerical worker sources remain exact.  Every other QAT source file is part
 # of the numerical/training contract and remains fail-closed for a scale curve.
 QAT_CONTROL_SOURCE_SUFFIXES = {
-    ".internal/src/mei_llm/training/pipelines/qat_cq2_v2_51m.py",
-    "src/model-factory/training/qat/qat_cq2_v2_51m.py",
+    ".internal/src/mei_llm/training/pipelines/qat_cq2.py",
+    "src/model-factory/training/qat/qat_cq2.py",
 }
 
 
