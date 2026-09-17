@@ -33,6 +33,7 @@ corpus/**
 !corpus/sft-suite/
 !corpus/sft-suite/**
 cycles/**
+research/explore/**
 .local/artifacts/**
 !.local/artifacts/.gitkeep
 .local/dist/**
