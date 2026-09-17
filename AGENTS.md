@@ -23,6 +23,8 @@
   每个 executed rung 绑定 corpus/model/evaluation/decision 证据。
 - `models/`：成果（发布面）。`mei-1.2-51m/{tokenizer,runtime,releases/exp-XXXm/{base,products}}`；
   `mei-1.1-51m/` 旧链成果。资产经 `mei-artifact://` URI 寻址。
+- `research/`：研究探索与情报（不训练模型自身的工作）。探索实验 / demo / 诊断脚本放这里；
+  纯文字情报与新思路在独立文档仓 `docs/`（`intel/`、`draft/`）。
 - 旧路径只经 `.internal/registry/migrations/` 路由表解析（历史前缀：`.local/artifacts/`、
   `artifacts/…`、`notebook/`、`sdk/…`、`training/…`），永不因文件搬家而改写旧 receipt。
 - `docs/` 是独立文档仓（自有 `.git`，私有 SSOT：`draft/` 过程稿、`archive/` 归档、

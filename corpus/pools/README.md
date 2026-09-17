@@ -1,5 +1,6 @@
 # 语料池：按用途分组，批次按日期排序
 
+- [frozen](frozen/)：当前锁定的 CPT 训练输入（被 v1.3 adoption 引用为 `current_locked_inputs.cpt`）。
 - [raw](raw/)：原始下载。
 - [candidates](candidates/)：候选正文，内分基础语言、口语、文学、代码结构、任务工具及混合来源。
 - [task-trials](task-trials/)：任务工程案例、转换试批及旧准备修订。

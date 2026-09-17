@@ -46,14 +46,14 @@ tool_lm/retrieval 来自公开资料线（3388 通用工具，脱离 Mei 147）�
 - [2026-09-14-mei-51m-v1.3-cpt-inputs-r02](../pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r02)：本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入。
 - [2026-09-14-mei-51m-v1.3-cpt-inputs-r03](../pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r03)：本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入。
 - [2026-09-14-mei-51m-v1.3-cpt-inputs-r04](../pools/frozen-history/2026-09-14-mei-51m-v1.3-cpt-inputs-r04)：本次重训的历史冻结包；简英方案已取代，不是历史 v1.2 训练输入。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1)：superseded；未胜出，保留冻结事实。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2)：retired；confidence/disposition 样本克隆进 [`mei-1.3-51m-tool-sft-20260917-fivehead-v1`](../sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1)，不再作为独立 adopted release。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3)：superseded；未胜出，保留冻结事实。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4)：superseded；未胜出，保留冻结事实。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1)：superseded；teacher 蒸馏分支未胜出。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v2](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v2)：superseded；teacher 蒸馏分支未胜出。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v3](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v3)：superseded；teacher 蒸馏分支未胜出。
-- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4](../sft-suite/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4)：superseded；teacher 蒸馏分支未胜出。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v1)：superseded；未胜出，保留冻结事实。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v2)：retired；confidence/disposition 样本克隆进 [`mei-1.3-51m-tool-sft-20260917-fivehead-v1`](../sft-suite/mei-1.3-51m-tool-sft-20260917-fivehead-v1)，不再作为独立 adopted release。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v3)：superseded；未胜出，保留冻结事实。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-skeleton-v4)：superseded；未胜出，保留冻结事实。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v1)：superseded；teacher 蒸馏分支未胜出。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v2](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v2)：superseded；teacher 蒸馏分支未胜出。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v3](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v3)：superseded；teacher 蒸馏分支未胜出。
+- [mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4](../sft-suite/archive/mei-1.0-51m-tool-sft-v5-rebuild-300mv2-teacher-v4)：superseded；teacher 蒸馏分支未胜出。
 - [mei-51m-longitudinal-eval-v10-zhv2-rebuild-argnorm](../eval-lock/mei-51m-longitudinal-eval-v10-zhv2-rebuild-argnorm)：历史 Eval lock；逐 run 使用情况待核对。
 - [mei-51m-longitudinal-eval-v11-zhv2-rebuild-trajectory](../eval-lock/mei-51m-longitudinal-eval-v11-zhv2-rebuild-trajectory)：历史 Eval lock；逐 run 使用情况待核对。
 - [mei-51m-longitudinal-eval-v9-zhv2-rebuild](../eval-lock/mei-51m-longitudinal-eval-v9-zhv2-rebuild)：历史 Eval lock；逐 run 使用情况待核对。

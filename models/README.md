@@ -12,5 +12,12 @@
 必须记录精确 token exposure。`cycles/` 保存过程证据，`corpus/` 保存训练输入，
 `models/*/` 保存按产品代际登记的 tokenizer、Base、QAT、SFT/heads 与端侧 package。
 
+每代际 `models/mei-X-51m/` 目录约定（样板 = `mei-1.2-51m/`）：
+
+- `SHELF.md`：货架导航——一眼知道「用哪个跑」，非基线产物归档/标注，不留在 releases/ 混淆。
+- `releases/`：货架（活跃基线与阶段成果）；`archive/`：被归档的历史流程（不作基线）。
+- `tokenizer/`：该代际登记的词表（`.model`/`.vocab` 权重 gitignore，manifest/receipt 保留）。
+- `MODEL.json` 模型合同、`README.md` 代际总述、`ARCHITECTURE_HISTORY.md` 架构沿用记录。
+
 纠正代际前生成的 `v12-*` 准备 ID 和 `models/mei-1.2-51m/tokenizer/candidates/` 物理路径
 只为哈希追溯保留，不再作为 v1.3 的人类导航入口。

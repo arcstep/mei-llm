@@ -20,6 +20,7 @@ corpus/
   catalog/                  分类与目录证据
   adoptions/                v1.1 / v1.2 / v1.3 采用清单
   pools/
+    frozen/                 当前锁定的 CPT 训练输入（v1.3 在用）
     raw/                    原始下载
     candidates/             按五类领域及混合来源分组
     task-trials/            任务准备、转换试批

@@ -1,5 +1,9 @@
 # mei-llm 五域布局合同
 
+> ⚠️ **历史合同**：本文描述的「五域平铺」布局（corpus-factory / model-factory /
+> platform 在根目录）已被 [AGENTS.md](AGENTS.md) 的「四分离 + 研究线」取代——这三者现已收进
+> `src/`。本文保留作历史参考，不作为当前导航依据。
+
 ## 1. 五个域
 
 | 域 | 事实 | 历史 |
