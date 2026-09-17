@@ -1,0 +1,97 @@
+{
+  "release_id": "mei-1.3-51m-tool-sft-20260917-fivehead-v1",
+  "schema": "file-manifest-v1",
+  "generated_at": "2026-09-17",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "b28335d69fb25de8c29f3f887090d6ce2a315901111d96aaa3670a26cffe0181",
+      "bytes": 4759
+    },
+    {
+      "path": "STATUS.json",
+      "sha256": "465da02615957a746a858e219dab17f7100c51bd479bb0ff6ddb4bfe8254e285",
+      "bytes": 1664
+    },
+    {
+      "path": "confidence/harvest-train-receipt.json",
+      "sha256": "321d67cf2adf9ea056a75f3c8052462ecf08471d253488cb3e02c27fda922897",
+      "bytes": 790
+    },
+    {
+      "path": "confidence/harvest-valid-receipt.json",
+      "sha256": "4c8b6a172637ae4d4e15b44ab3d720ba0072832aeeb1bda19c9f78ea112b8079",
+      "bytes": 756
+    },
+    {
+      "path": "confidence/train.jsonl",
+      "sha256": "0ef93db7d14b6ee49b3b22714e8ad44807216d85fc19d6d029f1fc8ba2ff9581",
+      "bytes": 664594,
+      "lines": 824
+    },
+    {
+      "path": "confidence/valid.jsonl",
+      "sha256": "80aaabf9c2345e850771b168f1adbad3293f0c1aaecc3db47f7ebd77abaa44a1",
+      "bytes": 101842,
+      "lines": 126
+    },
+    {
+      "path": "disposition/dev.jsonl",
+      "sha256": "dcb55339324b17538f2b6f2e2359934983c5716cbc5f06eff796b9ec9fedfe35",
+      "bytes": 851885,
+      "lines": 989
+    },
+    {
+      "path": "disposition/test.jsonl",
+      "sha256": "39adfeb9c4ba912bde0fe7bed0d354232f89464c0207be5b3c1365ca61f89775",
+      "bytes": 890468,
+      "lines": 1028
+    },
+    {
+      "path": "disposition/train.jsonl",
+      "sha256": "3c256b8c5fd6ae3c575dd8d5dc20d61673940a28fc04fd3f1f34c537c8180d76",
+      "bytes": 7244481,
+      "lines": 8367
+    },
+    {
+      "path": "disposition/valid.jsonl",
+      "sha256": "a7b5a19ef82ad6611d814ec5d5a53decb987c50a652e7f5581af4df6bfd41e72",
+      "bytes": 1223956,
+      "lines": 1416
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "c298a4266f0f6b0440af977d01ea4f3d61ba621fa37251dd3f91fd868a5502b3",
+      "bytes": 2758
+    },
+    {
+      "path": "narration/freeze_narration_sft_release_v2_51m.py",
+      "sha256": "f9160719dba7c258b115fd98b81014eef9df1108bd07b48b3597c5d635893c83",
+      "bytes": 19892
+    },
+    {
+      "path": "retrieval/holdout.jsonl",
+      "sha256": "60a28194948764390d621ab2105da0dcaa9c1cd46271aac4e134f398c243a142",
+      "bytes": 530716,
+      "lines": 200
+    },
+    {
+      "path": "retrieval/train.jsonl",
+      "sha256": "e06223f947aac8a46e177118020e9de6310d26dbf86350f9f8b498aca8342627",
+      "bytes": 10560219,
+      "lines": 4000
+    },
+    {
+      "path": "tool_lm/holdout.jsonl",
+      "sha256": "947cc97a4e79fb1f1c6921d55bd61432d530cc0b08dcbbf1001edfe6902f59db",
+      "bytes": 443671,
+      "lines": 300
+    },
+    {
+      "path": "tool_lm/train.jsonl",
+      "sha256": "91c09893722cfdac07c2dbe7f1a32377b0541f367794f3d6691a53741552ef55",
+      "bytes": 6187631,
+      "lines": 4000
+    }
+  ]
+}

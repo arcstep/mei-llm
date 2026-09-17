@@ -1,0 +1,21 @@
+{
+  "schema": "mei-confidence-outcome-harvest-receipt-v3",
+  "status": "passed",
+  "rows": 110,
+  "positive": 60,
+  "negative": 50,
+  "head_eligible_rows": 110,
+  "head_eligible_positive": 60,
+  "head_eligible_negative": 50,
+  "deterministic_bypass_rows": 0,
+  "deterministic_bypass_contract": "validator-before-confidence-v1",
+  "minimum_class_rows": 40,
+  "sample_fingerprint": "bf8a1b81c59fc34be9bb0f70153e2a647007ab7aec471cf3533b84c9ba1a04d7",
+  "sampling_contract": "kind_then_family_then_tool_stratified_v1",
+  "label_contract": "actual-r1-model-exact-call-or-correct-refusal-v3",
+  "pipeline_validation_error_counts": {
+    "provenance_missing": 54
+  },
+  "correct_refusal_is_positive": true,
+  "score_contract": "mei-confidence-combined-score-v2"
+}

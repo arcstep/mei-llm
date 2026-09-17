@@ -1,0 +1,24 @@
+{
+  "release_id": "mei-1.3-51m-tool-sft-20260917-fivehead-v1",
+  "governance_status": "adopted",
+  "locked": true,
+  "adopted_scope": "v1.3-800m SFT 五头语料（2026-09-17 锁定）",
+  "decided_at": "2026-09-17",
+  "generation": "v1.3",
+  "tokenizer_for_compile": "hans-en-24k-v1",
+  "composition": {
+    "tool_lm": "公开线 fullcall 4k（9663→4000）+ holdout 300",
+    "retrieval": "公开线 retrieval 4k（12755→4000）+ holdout 200",
+    "confidence": "skeleton-v2 confidence 样本 824/126 + harvest 实跑 label（729/110，AUROC 0.9807）",
+    "disposition": "skeleton-v2 mw_disposition 样本 8367/1416/989/1028（训练用 18 类口径，macro_f1 0.944）",
+    "narration": "freeze v2 合成 20 family 设备控制语料（代码合成，确定性模板兜底）"
+  },
+  "evidence": [
+    "cycles/mei-1.2-51m/exp-corpus-survey/runs/SFT-CORPUS-STATUS-SUMMARY.md",
+    "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-16-three-head-loop/CONFIDENCE-BASELINE.md",
+    "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-16-three-head-loop/DISPOSITION-18CLASS-RESULT.md",
+    "cycles/mei-1.2-51m/exp-corpus-survey/runs/2026-09-16-three-head-loop/NARRATION-RANK-ABLATION-RESULT.md",
+    "corpus/pools/task-trials/2026-09-15-public-sft-scale-experiment/data/manifest.json"
+  ],
+  "note": "锁定后禁止就地修改。本 release 是 v1.3 SFT 五头语料唯一真相源：tool_lm/retrieval 来自公开线 4k（脱离 Mei 147），confidence/disposition 样本克隆自 skeleton-v2（绕不开的样本底子，克隆为独立管理的新文件）、narration 为 freeze v2 代码合成。不再以 skeleton-v2 或目录名 vN 推断最新。"
+}
