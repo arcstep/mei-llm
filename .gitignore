@@ -45,6 +45,8 @@ src/platform/_shared/target/
 src/platform/_shared/target-check/
 
 # 权重/包载荷不进 git（人类可读清单与 receipt 保留；权重另行备份）。
+models/*/tokenizer/*.model
+models/*/tokenizer/*.vocab
 models/*/exp-*/base/
 models/*/exp-*/qat/
 models/*/exp-*/sft/
